@@ -290,6 +290,22 @@ def main():
                 }
             )
 
+    # Salvaguarda: si esta corrida recupero MUCHOS menos validos que la ultima
+    # (tipico de un rate-limit de Yahoo en CI), no pisar los datos buenos.
+    anterior = 0
+    meta_prev = DIR_SALIDA / "meta.json"
+    if meta_prev.exists():
+        try:
+            anterior = int(json.loads(meta_prev.read_text(encoding="utf-8")).get("n_tickers", 0))
+        except Exception:  # noqa: BLE001
+            anterior = 0
+    if anterior and len(listado) < anterior * 0.5:
+        print(
+            f"\nABORTO la escritura: {len(listado)} validos vs {anterior} previos "
+            "(posible rate-limit). Se conservan los datos anteriores."
+        )
+        return
+
     meta = {
         "ultima_actualizacion": datetime.now(TZ).isoformat(),
         "n_tickers": len(listado),

@@ -37,14 +37,19 @@ src/                        # frontend React (pages/, components/, lib/)
 
 ## El Excel de entrada (`data/tickers.xlsx`)
 
-Una hoja con estas columnas en la primera fila:
+Una hoja con (al menos) la columna de tickers en la primera fila. **Solo la
+columna de tickers es obligatoria**; el resto, si no está, se completa solo
+desde Yahoo Finance:
 
-| Columna     | Obligatoria | Descripción |
-|-------------|-------------|-------------|
-| `Ticker`    | Sí          | Símbolo tal cual lo usa Yahoo Finance (ej. `AAPL`, `YPF`, `GGAL.BA`) |
-| `Industria` | Sí          | Para agrupar (ej. "Tech USA", "Finanzas", "Energía", "Argentina") |
-| `Pais`      | Sí          | Para el filtro por país (ej. "USA", "Argentina") |
-| `Nombre`    | No          | Nombre legible; si falta, se usa el que devuelva yfinance |
+| Columna                   | Obligatoria | Descripción |
+|---------------------------|-------------|-------------|
+| `Ticker` (o `Código`/`Symbol`) | Sí     | Símbolo tal cual lo usa Yahoo Finance (ej. `AAPL`, `YPF`, `GGAL.BA`) |
+| `Industria`               | No          | Para agrupar. Si falta, se usa el **sector** de yfinance |
+| `Pais`                    | No          | Para el filtro por país. Si falta, se usa el **country** de yfinance |
+| `Nombre`                  | No          | Nombre legible. Si falta, el que devuelva yfinance |
+
+Así, un Excel con una sola columna de tickers ya funciona: la app clasifica
+cada acción por sector y país automáticamente.
 
 Si un ticker no devuelve datos, queda registrado en `meta.json`
 (`tickers_invalidos`) y el resto se procesa igual.

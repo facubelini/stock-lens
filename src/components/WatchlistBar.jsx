@@ -5,11 +5,12 @@ import { parsearExcelTickers, descargarTickersXlsx } from '../lib/excel'
 const btn =
   'rounded border border-terminal-border bg-terminal-panel px-2.5 py-1 hover:border-terminal-accent hover:text-terminal-text'
 
-// Barra global: cargar / descargar / quitar la watchlist desde un Excel.
+// Barra global: armar "Mi lista" cargando un Excel o agregando tickers a mano.
 export default function WatchlistBar() {
-  const { watchlist, setWatchlist, limpiar } = useWatchlist()
+  const { watchlist, setWatchlist, limpiar, agregar } = useWatchlist()
   const inputRef = useRef(null)
   const [error, setError] = useState(null)
+  const [nuevo, setNuevo] = useState('')
 
   const onFile = async (e) => {
     const file = e.target.files?.[0]
@@ -26,6 +27,14 @@ export default function WatchlistBar() {
     }
   }
 
+  const onAgregar = (e) => {
+    e.preventDefault()
+    const tk = nuevo.trim()
+    if (!tk) return
+    agregar(tk)
+    setNuevo('')
+  }
+
   return (
     <div className="border-b border-terminal-border bg-terminal-panel/50">
       <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-2 px-4 py-2 text-xs text-terminal-dim">
@@ -39,6 +48,19 @@ export default function WatchlistBar() {
         <button type="button" className={btn} onClick={() => inputRef.current?.click()}>
           📄 Cargar Excel
         </button>
+
+        {/* Alta manual de un ticker */}
+        <form onSubmit={onAgregar} className="flex items-center gap-1">
+          <input
+            value={nuevo}
+            onChange={(e) => setNuevo(e.target.value)}
+            placeholder="+ ticker (ej. AAPL)"
+            className="w-36 rounded border border-terminal-border bg-terminal-panel px-2 py-1 text-terminal-text focus:border-terminal-accent focus:outline-none"
+          />
+          <button type="submit" className={btn}>
+            Agregar
+          </button>
+        </form>
 
         {watchlist ? (
           <>
@@ -58,8 +80,8 @@ export default function WatchlistBar() {
           </>
         ) : (
           <span>
-            Subí tu Excel (<code>Ticker · Industria · Pais · Nombre</code>) para ver sólo tu lista.
-            Se guarda en tu navegador.
+            Cargá un Excel o agregá tickers a mano para armar <b>tu lista</b> (filtra las 3
+            pestañas). Se guarda en tu navegador.
           </span>
         )}
 

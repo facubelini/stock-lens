@@ -31,8 +31,31 @@ export function WatchlistProvider({ children }) {
 
   const limpiar = useCallback(() => setWatchlist(null), [setWatchlist])
 
+  // Alta manual de un ticker (sin Excel). Lo agrega a "Mi lista".
+  const agregar = useCallback(
+    (ticker) => {
+      const tk = String(ticker).trim().toUpperCase()
+      if (!tk) return
+      const lista = watchlist ?? []
+      if (lista.some((w) => w.ticker === tk)) return // ya está
+      setWatchlist([...lista, { ticker: tk, industria: '', pais: '', nombre: '' }])
+    },
+    [watchlist, setWatchlist],
+  )
+
+  // Quita un ticker de la lista (si queda vacía, se desactiva la lista).
+  const quitar = useCallback(
+    (ticker) => {
+      if (!watchlist) return
+      setWatchlist(watchlist.filter((w) => w.ticker !== ticker))
+    },
+    [watchlist, setWatchlist],
+  )
+
   return (
-    <Ctx.Provider value={{ watchlist, setWatchlist, limpiar }}>{children}</Ctx.Provider>
+    <Ctx.Provider value={{ watchlist, setWatchlist, limpiar, agregar, quitar }}>
+      {children}
+    </Ctx.Provider>
   )
 }
 

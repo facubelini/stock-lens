@@ -10,6 +10,7 @@ Uso:
 
 import json
 import math
+import unicodedata
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -24,16 +25,28 @@ ARCHIVO_TICKERS = RAIZ / "data" / "tickers.xlsx"
 DIR_SALIDA = RAIZ / "public" / "data"
 TZ = ZoneInfo("America/Argentina/Buenos_Aires")
 
-COLUMNAS_REQUERIDAS = ["Ticker", "Industria", "Pais"]
+# Encabezados aceptados para la columna de tickers (se normalizan sin acentos).
+NOMBRES_TICKER = ["ticker", "codigo", "symbol", "simbolo", "code", "tickers"]
 PERIODO_HISTORICO = "2y"  # suficiente para SMA200 / EMA150 bien calentadas
+# Si el ticker "pelado" no trae datos, se reintenta con estos sufijos:
+# .SA = B3 (Brasil), .BA = BYMA (Argentina).
+SUFIJOS = ["", ".SA", ".BA"]
 
 
 # ---------------------------------------------------------------------------
 # Lectura del Excel de entrada
 # ---------------------------------------------------------------------------
+def _norm(s):
+    """Normaliza un encabezado: sin acentos, minúsculas, sin espacios extra."""
+    s = unicodedata.normalize("NFKD", str(s)).encode("ascii", "ignore").decode("ascii")
+    return s.strip().lower()
+
+
 def leer_tickers():
-    """Lee data/tickers.xlsx normalizando encabezados. Devuelve un DataFrame
-    con columnas Ticker, Industria, Pais, Nombre."""
+    """Lee data/tickers.xlsx. Sólo la columna de tickers es obligatoria
+    (acepta encabezados Ticker, Codigo, Symbol, etc.). Industria, Pais y
+    Nombre son opcionales: si faltan, se derivan de yfinance (sector/country/
+    nombre) en el procesamiento. Devuelve un DataFrame Ticker/Industria/Pais/Nombre."""
     if not ARCHIVO_TICKERS.exists():
         raise SystemExit(
             f"No se encontro {ARCHIVO_TICKERS}.\n"
@@ -42,31 +55,34 @@ def leer_tickers():
 
     df = pd.read_excel(ARCHIVO_TICKERS, engine="openpyxl")
     df.columns = [str(c).strip() for c in df.columns]
-    cols = {c.lower(): c for c in df.columns}
+    norm_map = {_norm(c): c for c in df.columns}
 
-    def col(nombre):
-        return cols.get(nombre.lower())
+    col_ticker = next((norm_map[n] for n in NOMBRES_TICKER if n in norm_map), None)
+    if col_ticker is None:
+        if len(df.columns) == 1:
+            col_ticker = df.columns[0]  # una sola columna => es la de tickers
+        else:
+            raise SystemExit(
+                "No encontre la columna de tickers. Usa un encabezado como "
+                f"'Ticker' o 'Codigo'. Columnas: {list(df.columns)}"
+            )
 
-    faltantes = [c for c in COLUMNAS_REQUERIDAS if col(c) is None]
-    if faltantes:
-        raise SystemExit(f"Faltan columnas obligatorias en el Excel: {faltantes}")
+    def opcional(nombre):
+        c = norm_map.get(nombre)
+        return df[c].astype(str).str.strip() if c is not None else ""
 
     out = pd.DataFrame(
-        {
-            "Ticker": df[col("Ticker")].astype(str).str.strip(),
-            "Industria": df[col("Industria")].astype(str).str.strip(),
-            "Pais": df[col("Pais")].astype(str).str.strip(),
-        }
+        {"Ticker": df[col_ticker].astype(str).str.upper().str.replace(r"\s+", "", regex=True)}
     )
-    nombre_col = col("Nombre")
-    out["Nombre"] = (
-        df[nombre_col].astype(str).str.strip() if nombre_col is not None else ""
-    )
-    out["Nombre"] = out["Nombre"].replace({"nan": "", "None": ""})
+    out["Industria"] = opcional("industria")
+    out["Pais"] = opcional("pais")
+    out["Nombre"] = opcional("nombre")
+    for c in ("Industria", "Pais", "Nombre"):
+        out[c] = out[c].replace({"nan": "", "NAN": "", "None": ""})
 
-    # Descartar filas sin ticker valido.
     out = out[out["Ticker"].str.len() > 0]
     out = out[~out["Ticker"].str.lower().isin(["nan", "none"])]
+    out = out.drop_duplicates(subset="Ticker")
     return out.reset_index(drop=True)
 
 
@@ -170,6 +186,25 @@ def escribir(nombre, obj):
     print(f"  -> {ruta.relative_to(RAIZ)}")
 
 
+def resolver_ticker(t):
+    """Descarga el historico probando el ticker tal cual y, si no hay datos,
+    con sufijos .SA (Brasil) y .BA (Argentina). Devuelve
+    (simbolo_resuelto, tk, hist, closes) o (None, None, None, None)."""
+    for suf in SUFIJOS:
+        sym = f"{t}{suf}"
+        try:
+            tk = yf.Ticker(sym)
+            hist = tk.history(period=PERIODO_HISTORICO, interval="1d", auto_adjust=True)
+        except Exception:  # noqa: BLE001
+            continue
+        if hist is None or hist.empty or "Close" not in hist.columns:
+            continue
+        closes = hist["Close"].dropna()
+        if len(closes) >= 2:
+            return sym, tk, hist, closes
+    return None, None, None, None
+
+
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
@@ -182,25 +217,10 @@ def main():
 
     for _, fila in tickers.iterrows():
         t = fila["Ticker"]
-        industria = fila["Industria"]
-        pais = fila["Pais"]
 
-        try:
-            tk = yf.Ticker(t)
-            hist = tk.history(period=PERIODO_HISTORICO, interval="1d", auto_adjust=True)
-        except Exception as e:  # noqa: BLE001
-            print(f"  ! {t}: error al descargar ({e})")
-            invalidos.append(t)
-            continue
-
-        if hist is None or hist.empty or "Close" not in hist.columns:
-            print(f"  ! {t}: sin datos de precio")
-            invalidos.append(t)
-            continue
-
-        closes = hist["Close"].dropna()
-        if len(closes) < 2:
-            print(f"  ! {t}: historico insuficiente")
+        sym, tk, hist, closes = resolver_ticker(t)
+        if sym is None:
+            print(f"  ! {t}: sin datos (probe .SA / .BA)")
             invalidos.append(t)
             continue
 
@@ -210,12 +230,10 @@ def main():
         except Exception:  # noqa: BLE001
             info = {}
 
-        nombre = (
-            fila["Nombre"]
-            or info.get("shortName")
-            or info.get("longName")
-            or t
-        )
+        # Industria/Pais/Nombre: del Excel si vienen; si no, se derivan de yfinance.
+        nombre = fila["Nombre"] or info.get("shortName") or info.get("longName") or sym
+        industria = fila["Industria"] or info.get("sector") or "Sin clasificar"
+        pais = fila["Pais"] or info.get("country") or "Sin país"
 
         precio = float(closes.iloc[-1])
         anterior = float(closes.iloc[-2])
@@ -227,7 +245,7 @@ def main():
         ema150 = closes.ewm(span=150, adjust=False).mean().iloc[-1]
         sma200 = closes.rolling(200).mean().iloc[-1] if len(closes) >= 200 else None
 
-        base = {"ticker": t, "nombre": nombre, "industria": industria, "pais": pais}
+        base = {"ticker": sym, "nombre": nombre, "industria": industria, "pais": pais}
 
         # Sparkline: ultimas ~30 ruedas de cierre para el mini-grafico del frontend.
         spark = [round(float(x), 2) for x in closes.tail(30).tolist()]
@@ -256,7 +274,7 @@ def main():
             }
         )
 
-        print(f"  ok {t} ({nombre})")
+        print(f"  ok {sym} ({nombre})")
 
     # Promedios por industria para listado.json
     promedios = []

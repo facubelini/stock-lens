@@ -9,11 +9,14 @@ on:
 
   # Programado (GitHub Actions usa horario UTC).
   # Mercado USA ~9:30-16:00 ET => 14:30-21:00 UTC (EST) / 13:30-20:00 UTC (EDT).
-  # Corremos cada 1 h en una ventana amplia de lunes a viernes (incluye el cierre).
-  # Ajustá la frecuencia comentando/agregando lineas de cron segun necesites.
+  # OJO: con cientos de tickers cada corrida tarda varios minutos y hace muchas
+  # llamadas a Yahoo; correr cada hora puede hacer que te limiten (rate-limit).
+  # Por eso corremos pocas veces: apertura, mediodia y cierre, dias habiles.
+  # Si tenés pocos tickers podés agregar más líneas de cron sin problema.
   schedule:
-    - cron: '0 13-21 * * 1-5'   # cada hora, 13:00 a 21:00 UTC, dias habiles
-    - cron: '0 21 * * 1-5'      # corrida extra al cierre (redundante pero segura)
+    - cron: '0 14 * * 1-5'   # ~apertura
+    - cron: '0 18 * * 1-5'   # ~mediodia
+    - cron: '0 21 * * 1-5'   # ~cierre
 
 permissions:
   contents: write   # necesario para commitear los JSON generados

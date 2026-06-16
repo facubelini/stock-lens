@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Header from './components/Header'
+import WatchlistBar from './components/WatchlistBar'
 import Listado from './pages/Listado'
 import Medias from './pages/Medias'
 import Fundamentales from './pages/Fundamentales'
@@ -8,6 +9,7 @@ export default function App() {
   return (
     <div className="flex min-h-full flex-col">
       <Header />
+      <WatchlistBar />
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-5">
         <Routes>
           <Route path="/" element={<Listado />} />

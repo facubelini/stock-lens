@@ -2,11 +2,13 @@ import { useMemo, useState } from 'react'
 import { useJson } from '../lib/useJson'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
+import { useWatchlist, aplicarWatchlist } from '../lib/watchlist'
 import { exportarCSV } from '../lib/csv'
 import Controles from '../components/Controles'
 import Tabla from '../components/Tabla'
 import BotonPin from '../components/BotonPin'
 import Leyenda from '../components/Leyenda'
+import Pendientes from '../components/Pendientes'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 import { fmtPct, fmtPrecio, estiloValor, promedio } from '../lib/formato'
 
@@ -84,7 +86,12 @@ function resumenGrupo(industria, fs, cols) {
 
 export default function Medias() {
   const { data, cargando, error } = useJson('medias.json')
-  const filas = Array.isArray(data) ? data : (data?.acciones ?? [])
+  const raw = useMemo(() => (Array.isArray(data) ? data : (data?.acciones ?? [])), [data])
+  const { watchlist } = useWatchlist()
+  const { filas, pendientes } = useMemo(
+    () => aplicarWatchlist(raw, watchlist),
+    [raw, watchlist],
+  )
   const { pins, isPinned, toggle } = usePins()
   const [agrupar, setAgrupar] = useState(false)
   const t = useTabla(filas, {
@@ -135,6 +142,7 @@ export default function Medias() {
       />
 
       <Leyenda />
+      <Pendientes pendientes={pendientes} watchlist={watchlist} />
 
       {cargando ? (
         <TablaSkeleton columnas={8} />

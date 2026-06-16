@@ -45,8 +45,19 @@ def main():
         precio = rng.uniform(15, 600)
         base = {"ticker": t, "nombre": nombre, "industria": industria, "pais": pais}
 
+        # Sparkline mock: pequena caminata aleatoria de 30 puntos.
+        spark, p = [], precio
+        for _ in range(30):
+            p *= 1 + rng.uniform(-0.03, 0.03)
+            spark.append(r2(p))
+
         listado.append(
-            {**base, "var_pct": r2(rng.uniform(-5, 5)), "rsi": r2(rng.uniform(20, 85))}
+            {
+                **base,
+                "var_pct": r2(rng.uniform(-5, 5)),
+                "rsi": r2(rng.uniform(20, 85)),
+                "spark": spark,
+            }
         )
 
         medias.append(
@@ -75,6 +86,9 @@ def main():
                 "roe": r2(rng.uniform(-10, 60)),
                 "dividend_yield": r2(rng.uniform(0, 5)),
                 "beta": r2(rng.uniform(0.4, 2.2)),
+                "debt_to_equity": r2(rng.uniform(0, 250)),
+                "current_ratio": r2(rng.uniform(0.5, 3.5)),
+                "sector": industria,
             }
         )
 

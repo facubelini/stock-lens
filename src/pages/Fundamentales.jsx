@@ -2,15 +2,21 @@ import { useMemo, useState } from 'react'
 import { useJson } from '../lib/useJson'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
+import { useWatchlist, aplicarWatchlist } from '../lib/watchlist'
 import { exportarCSV } from '../lib/csv'
+import { medianaDe } from '../lib/benchmarks'
+import { GLOSARIO_POR_CLAVE } from '../lib/glosario'
 import Controles from '../components/Controles'
 import Tabla from '../components/Tabla'
 import BotonPin from '../components/BotonPin'
 import Leyenda from '../components/Leyenda'
+import Glosario from '../components/Glosario'
+import Pendientes from '../components/Pendientes'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 import { fmtNum, fmtPct, fmtMarketCap, estiloPER, estiloPEG } from '../lib/formato'
 
 const CAMPOS = ['ticker', 'nombre']
+const ayudaDe = (key) => GLOSARIO_POR_CLAVE[key]?.def
 
 const numCol = (key, label, dec = 2) => ({
   key,
@@ -18,6 +24,7 @@ const numCol = (key, label, dec = 2) => ({
   align: 'right',
   valor: (r) => r[key],
   render: (r) => fmtNum(r[key], dec),
+  ayuda: ayudaDe(key),
 })
 
 const pctCol = (key, label) => ({
@@ -26,6 +33,7 @@ const pctCol = (key, label) => ({
   align: 'right',
   valor: (r) => r[key],
   render: (r) => fmtPct(r[key]),
+  ayuda: ayudaDe(key),
 })
 
 const columnas = [
@@ -46,8 +54,19 @@ const columnas = [
     align: 'left',
     valor: (r) => r.nombre,
     render: (r) => (
-      <span className="block max-w-[200px] truncate text-terminal-dim" title={r.nombre}>
+      <span className="block max-w-[180px] truncate text-terminal-dim" title={r.nombre}>
         {r.nombre || '—'}
+      </span>
+    ),
+  },
+  {
+    key: 'sector',
+    label: 'Sector',
+    align: 'left',
+    valor: (r) => r.sector,
+    render: (r) => (
+      <span className="block max-w-[130px] truncate text-terminal-dim" title={r.sector}>
+        {r.sector || '—'}
       </span>
     ),
   },
@@ -58,6 +77,7 @@ const columnas = [
     valor: (r) => r.per_trailing,
     estilo: (r) => estiloPER(r.per_trailing),
     render: (r) => fmtNum(r.per_trailing, 1),
+    ayuda: ayudaDe('per_trailing'),
   },
   {
     key: 'per_forward',
@@ -66,6 +86,7 @@ const columnas = [
     valor: (r) => r.per_forward,
     estilo: (r) => estiloPER(r.per_forward),
     render: (r) => fmtNum(r.per_forward, 1),
+    ayuda: ayudaDe('per_forward'),
   },
   {
     key: 'peg',
@@ -74,6 +95,7 @@ const columnas = [
     valor: (r) => r.peg,
     estilo: (r) => estiloPEG(r.peg),
     render: (r) => fmtNum(r.peg, 2),
+    ayuda: ayudaDe('peg'),
   },
   numCol('ev_sales', 'EV/Sales'),
   numCol('pb', 'P/B'),
@@ -84,19 +106,65 @@ const columnas = [
     align: 'right',
     valor: (r) => r.market_cap,
     render: (r) => fmtMarketCap(r.market_cap),
+    ayuda: ayudaDe('market_cap'),
   },
   numCol('eps', 'EPS'),
   pctCol('profit_margin', 'Margen'),
   pctCol('roe', 'ROE'),
   pctCol('dividend_yield', 'Div. Yield'),
   numCol('beta', 'Beta'),
+  numCol('debt_to_equity', 'Deuda/Eq.'),
+  numCol('current_ratio', 'Liquidez'),
 ]
+
+// Claves numéricas para la fila de mediana por industria (benchmark).
+const CLAVES_BENCH = [
+  'per_trailing', 'per_forward', 'peg', 'ev_sales', 'pb', 'ps', 'market_cap',
+  'eps', 'profit_margin', 'roe', 'dividend_yield', 'beta', 'debt_to_equity', 'current_ratio',
+]
+
+// Fila de resumen: mediana de cada ratio dentro de la industria (parámetro real del grupo).
+function resumenGrupo(industria, fs, cols) {
+  const med = {}
+  for (const k of CLAVES_BENCH) med[k] = medianaDe(fs, (f) => f[k])
+  return (
+    <tr className="border-t-2 border-terminal-border bg-terminal-panel2">
+      {cols.map((c) => {
+        if (c.key === '_pin') return <td key={c.key} />
+        if (c.key === 'ticker')
+          return (
+            <td key={c.key} className="whitespace-nowrap px-3 py-2 font-semibold text-terminal-accent">
+              {industria}
+            </td>
+          )
+        if (c.key === 'nombre')
+          return (
+            <td key={c.key} className="whitespace-nowrap px-3 py-2 text-terminal-dim">
+              mediana · n={fs.length}
+            </td>
+          )
+        if (CLAVES_BENCH.includes(c.key))
+          return (
+            <td key={c.key} className="px-3 py-2 text-right tabular text-terminal-info">
+              {c.render ? c.render(med) : ''}
+            </td>
+          )
+        return <td key={c.key} />
+      })}
+    </tr>
+  )
+}
 
 export default function Fundamentales() {
   const { data, cargando, error } = useJson('fundamentales.json')
-  const filas = Array.isArray(data) ? data : (data?.acciones ?? [])
+  const raw = useMemo(() => (Array.isArray(data) ? data : (data?.acciones ?? [])), [data])
+  const { watchlist } = useWatchlist()
+  const { filas, pendientes } = useMemo(
+    () => aplicarWatchlist(raw, watchlist),
+    [raw, watchlist],
+  )
   const { pins, isPinned, toggle } = usePins()
-  const [agrupar, setAgrupar] = useState(false)
+  const [agrupar, setAgrupar] = useState(true)
   const t = useTabla(filas, {
     camposBusqueda: CAMPOS,
     ordenInicial: { key: 'market_cap', dir: 'desc' },
@@ -123,11 +191,13 @@ export default function Fundamentales() {
       <div className="mb-4">
         <h1 className="text-lg font-bold text-terminal-text">Fundamentales</h1>
         <p className="text-xs text-terminal-dim">
-          Múltiplos y métricas clave por empresa. <code className="text-terminal-dim">N/D</code>{' '}
-          cuando el dato no está disponible. El color de PER/PEG es sólo una guía visual de
-          “barato/caro”, no una recomendación.
+          Múltiplos y métricas por empresa (<code>N/D</code> si falta el dato). Pasá el mouse por
+          el <span className="text-terminal-dim">ⓘ</span> de cada columna para ver qué significa.
+          Con <b>Agrupar por industria</b> ves la <b>mediana de cada grupo</b> como referencia.
         </p>
       </div>
+
+      <Glosario />
 
       <Controles
         busqueda={t.busqueda}
@@ -146,13 +216,14 @@ export default function Fundamentales() {
       />
 
       <Leyenda />
+      <Pendientes pendientes={pendientes} watchlist={watchlist} />
 
       {cargando ? (
         <TablaSkeleton columnas={10} />
       ) : error ? (
         <MensajeError mensaje={error} />
       ) : t.filtradas.length === 0 ? (
-        <Vacio />
+        <Vacio texto={watchlist ? 'Ningún ticker de tu lista tiene datos todavía.' : undefined} />
       ) : (
         <Tabla
           columnas={columnasConPin}
@@ -161,6 +232,7 @@ export default function Fundamentales() {
           sortDir={t.sortDir}
           onSort={t.ordenar}
           agrupar={agrupar}
+          resumenGrupo={agrupar ? resumenGrupo : undefined}
           pins={pins}
         />
       )}

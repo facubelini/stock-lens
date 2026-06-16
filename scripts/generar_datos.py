@@ -155,6 +155,8 @@ def extraer_fundamentales(info):
         "roe": roe * 100 if roe is not None else None,
         "dividend_yield": dividend_yield,
         "beta": g("beta"),
+        "debt_to_equity": g("debtToEquity"),
+        "current_ratio": g("currentRatio"),
     }
 
 
@@ -227,7 +229,10 @@ def main():
 
         base = {"ticker": t, "nombre": nombre, "industria": industria, "pais": pais}
 
-        listado.append({**base, "var_pct": num(var_pct, 2), "rsi": num(rsi, 2)})
+        # Sparkline: ultimas ~30 ruedas de cierre para el mini-grafico del frontend.
+        spark = [round(float(x), 2) for x in closes.tail(30).tolist()]
+
+        listado.append({**base, "var_pct": num(var_pct, 2), "rsi": num(rsi, 2), "spark": spark})
 
         medias.append(
             {
@@ -247,6 +252,7 @@ def main():
                 **base,
                 **{k: num(v, 2) for k, v in fund.items()},
                 "market_cap": int(mc) if mc else None,
+                "sector": info.get("sector") or None,
             }
         )
 

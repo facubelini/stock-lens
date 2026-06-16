@@ -93,6 +93,14 @@ export default function Tabla({
               } ${activa ? 'text-terminal-accent' : ''}`}
             >
               {col.label}
+              {col.ayuda && (
+                <span
+                  title={col.ayuda}
+                  className="ml-0.5 cursor-help font-normal text-terminal-dim"
+                >
+                  ⓘ
+                </span>
+              )}
               {activa ? (sortDir === 'asc' ? ' ▲' : ' ▼') : ''}
             </th>
           )

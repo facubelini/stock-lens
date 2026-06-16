@@ -4,153 +4,153 @@
     "nombre": "Apple",
     "industria": "Tech USA",
     "pais": "USA",
-    "precio": 299.11,
-    "dist_ema21": 0.07,
-    "dist_ema50": 3.34,
-    "dist_ema150": 10.12,
-    "dist_sma200": 12.11
+    "precio": 299.24,
+    "dist_ema21": 0.18,
+    "dist_ema50": 3.28,
+    "dist_ema150": 10.04,
+    "dist_sma200": 12.02
   },
   {
     "ticker": "MSFT",
     "nombre": "Microsoft",
     "industria": "Tech USA",
     "pais": "USA",
-    "precio": 392.66,
-    "dist_ema21": -4.69,
-    "dist_ema50": -4.78,
-    "dist_ema150": -8.15,
-    "dist_sma200": -13.0
+    "precio": 393.83,
+    "dist_ema21": -4.16,
+    "dist_ema50": -4.39,
+    "dist_ema150": -7.8,
+    "dist_sma200": -12.64
   },
   {
     "ticker": "NVDA",
     "nombre": "NVIDIA",
     "industria": "Tech USA",
     "pais": "USA",
-    "precio": 209.35,
-    "dist_ema21": -0.73,
-    "dist_ema50": 1.37,
-    "dist_ema150": 8.5,
-    "dist_sma200": 10.66
+    "precio": 207.41,
+    "dist_ema21": -1.62,
+    "dist_ema50": 0.35,
+    "dist_ema150": 7.36,
+    "dist_sma200": 9.55
   },
   {
     "ticker": "GOOGL",
     "nombre": "Alphabet",
     "industria": "Tech USA",
     "pais": "USA",
-    "precio": 372.67,
-    "dist_ema21": 0.65,
-    "dist_ema50": 3.15,
-    "dist_ema150": 14.89,
-    "dist_sma200": 20.84
+    "precio": 373.25,
+    "dist_ema21": 0.81,
+    "dist_ema50": 3.21,
+    "dist_ema150": 14.85,
+    "dist_sma200": 20.72
   },
   {
     "ticker": "JPM",
     "nombre": "JPMorgan Chase",
     "industria": "Finanzas",
     "pais": "USA",
-    "precio": 331.28,
-    "dist_ema21": 6.99,
-    "dist_ema50": 8.19,
-    "dist_ema150": 9.75,
-    "dist_sma200": 8.71
+    "precio": 331.14,
+    "dist_ema21": 6.61,
+    "dist_ema50": 7.96,
+    "dist_ema150": 9.62,
+    "dist_sma200": 8.62
   },
   {
     "ticker": "BAC",
     "nombre": "Bank of America",
     "industria": "Finanzas",
     "pais": "USA",
-    "precio": 57.02,
-    "dist_ema21": 6.96,
-    "dist_ema50": 9.17,
-    "dist_ema150": 11.4,
-    "dist_sma200": 10.51
+    "precio": 56.84,
+    "dist_ema21": 6.17,
+    "dist_ema50": 8.53,
+    "dist_ema150": 10.91,
+    "dist_sma200": 10.09
   },
   {
     "ticker": "XOM",
     "nombre": "Exxon Mobil",
     "industria": "Energia",
     "pais": "USA",
-    "precio": 141.24,
-    "dist_ema21": -5.51,
-    "dist_ema50": -6.03,
-    "dist_ema150": 0.01,
-    "dist_sma200": 6.51
+    "precio": 141.86,
+    "dist_ema21": -4.64,
+    "dist_ema50": -5.4,
+    "dist_ema150": 0.45,
+    "dist_sma200": 6.86
   },
   {
     "ticker": "CVX",
     "nombre": "Chevron",
     "industria": "Energia",
     "pais": "USA",
-    "precio": 179.72,
-    "dist_ema21": -3.77,
-    "dist_ema50": -3.86,
-    "dist_ema150": 1.34,
-    "dist_sma200": 6.48
+    "precio": 180.11,
+    "dist_ema21": -3.28,
+    "dist_ema50": -3.52,
+    "dist_ema150": 1.54,
+    "dist_sma200": 6.63
   },
   {
     "ticker": "KO",
     "nombre": "Coca-Cola",
     "industria": "Consumo",
     "pais": "USA",
-    "precio": 80.64,
-    "dist_ema21": 0.93,
-    "dist_ema50": 2.57,
-    "dist_ema150": 7.2,
-    "dist_sma200": 11.14
+    "precio": 80.28,
+    "dist_ema21": 0.4,
+    "dist_ema50": 2.01,
+    "dist_ema150": 6.62,
+    "dist_sma200": 10.53
   },
   {
     "ticker": "PG",
     "nombre": "Procter & Gamble",
     "industria": "Consumo",
     "pais": "USA",
-    "precio": 152.61,
-    "dist_ema21": 4.58,
-    "dist_ema50": 4.83,
-    "dist_ema150": 3.61,
-    "dist_sma200": 3.53
+    "precio": 152.49,
+    "dist_ema21": 4.2,
+    "dist_ema50": 4.61,
+    "dist_ema150": 3.5,
+    "dist_sma200": 3.45
   },
   {
     "ticker": "YPF",
     "nombre": "YPF",
     "industria": "Argentina",
     "pais": "Argentina",
-    "precio": 50.99,
-    "dist_ema21": -1.6,
-    "dist_ema50": 5.95,
-    "dist_ema150": 21.67,
-    "dist_sma200": 35.67
+    "precio": 51.24,
+    "dist_ema21": -1.16,
+    "dist_ema50": 6.45,
+    "dist_ema150": 22.25,
+    "dist_sma200": 36.33
   },
   {
     "ticker": "GGAL",
     "nombre": "Grupo Galicia",
     "industria": "Argentina",
     "pais": "Argentina",
-    "precio": 54.43,
-    "dist_ema21": 11.19,
-    "dist_ema50": 16.57,
-    "dist_ema150": 17.97,
-    "dist_sma200": 22.69
+    "precio": 54.44,
+    "dist_ema21": 9.8,
+    "dist_ema50": 15.69,
+    "dist_ema150": 17.65,
+    "dist_sma200": 22.45
   },
   {
     "ticker": "PAM",
     "nombre": "Pampa Energia",
     "industria": "Argentina",
     "pais": "Argentina",
-    "precio": 86.92,
-    "dist_ema21": 3.2,
-    "dist_ema50": 4.17,
-    "dist_ema150": 6.01,
-    "dist_sma200": 8.69
+    "precio": 85.72,
+    "dist_ema21": 1.91,
+    "dist_ema50": 2.79,
+    "dist_ema150": 4.56,
+    "dist_sma200": 7.19
   },
   {
     "ticker": "BMA",
     "nombre": "Banco Macro",
     "industria": "Argentina",
     "pais": "Argentina",
-    "precio": 96.55,
-    "dist_ema21": 12.02,
-    "dist_ema50": 18.87,
-    "dist_ema150": 23.4,
-    "dist_sma200": 29.61
+    "precio": 96.77,
+    "dist_ema21": 10.68,
+    "dist_ema50": 18.07,
+    "dist_ema150": 23.23,
+    "dist_sma200": 29.54
   }
 ]

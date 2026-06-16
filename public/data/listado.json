@@ -5,143 +5,143 @@
       "nombre": "Apple",
       "industria": "Tech USA",
       "pais": "USA",
-      "var_pct": 2.74,
-      "rsi": 51.87
+      "var_pct": 0.95,
+      "rsi": 52.16
     },
     {
       "ticker": "MSFT",
       "nombre": "Microsoft",
       "industria": "Tech USA",
       "pais": "USA",
-      "var_pct": 0.49,
-      "rsi": 38.49
+      "var_pct": -1.48,
+      "rsi": 40.27
     },
     {
       "ticker": "NVDA",
       "nombre": "NVIDIA",
       "industria": "Tech USA",
       "pais": "USA",
-      "var_pct": 2.03,
-      "rsi": 49.0
+      "var_pct": -2.37,
+      "rsi": 47.49
     },
     {
       "ticker": "GOOGL",
       "nombre": "Alphabet",
       "industria": "Tech USA",
       "pais": "USA",
-      "var_pct": 3.61,
-      "rsi": 52.09
+      "var_pct": 1.06,
+      "rsi": 52.62
     },
     {
       "ticker": "JPM",
       "nombre": "JPMorgan Chase",
       "industria": "Finanzas",
       "pais": "USA",
-      "var_pct": 3.29,
-      "rsi": 71.44
+      "var_pct": 3.68,
+      "rsi": 70.86
     },
     {
       "ticker": "BAC",
       "nombre": "Bank of America",
       "industria": "Finanzas",
       "pais": "USA",
-      "var_pct": 1.79,
-      "rsi": 76.73
+      "var_pct": 1.74,
+      "rsi": 75.47
     },
     {
       "ticker": "XOM",
       "nombre": "Exxon Mobil",
       "industria": "Energia",
       "pais": "USA",
-      "var_pct": -3.93,
-      "rsi": 36.38
+      "var_pct": 0.67,
+      "rsi": 37.87
     },
     {
       "ticker": "CVX",
       "nombre": "Chevron",
       "industria": "Energia",
       "pais": "USA",
-      "var_pct": -4.01,
-      "rsi": 39.72
+      "var_pct": -0.16,
+      "rsi": 40.11
     },
     {
       "ticker": "KO",
       "nombre": "Coca-Cola",
       "industria": "Consumo",
       "pais": "USA",
-      "var_pct": -1.76,
-      "rsi": 54.21
+      "var_pct": -0.78,
+      "rsi": 52.57
     },
     {
       "ticker": "PG",
       "nombre": "Procter & Gamble",
       "industria": "Consumo",
       "pais": "USA",
-      "var_pct": 2.01,
-      "rsi": 64.89
+      "var_pct": 1.35,
+      "rsi": 64.94
     },
     {
       "ticker": "YPF",
       "nombre": "YPF",
       "industria": "Argentina",
       "pais": "Argentina",
-      "var_pct": -3.04,
-      "rsi": 50.27
+      "var_pct": -2.57,
+      "rsi": 51.1
     },
     {
       "ticker": "GGAL",
       "nombre": "Grupo Galicia",
       "industria": "Argentina",
       "pais": "Argentina",
-      "var_pct": -1.32,
-      "rsi": 68.4
+      "var_pct": -2.72,
+      "rsi": 66.56
     },
     {
       "ticker": "PAM",
       "nombre": "Pampa Energia",
       "industria": "Argentina",
       "pais": "Argentina",
-      "var_pct": -1.76,
-      "rsi": 57.52
+      "var_pct": -3.12,
+      "rsi": 54.48
     },
     {
       "ticker": "BMA",
       "nombre": "Banco Macro",
       "industria": "Argentina",
       "pais": "Argentina",
-      "var_pct": -2.19,
-      "rsi": 67.76
+      "var_pct": -3.18,
+      "rsi": 66.59
     }
   ],
   "promedios_por_industria": [
     {
       "industria": "Argentina",
-      "rsi_promedio": 60.99,
-      "var_pct_promedio": -2.08,
+      "rsi_promedio": 59.68,
+      "var_pct_promedio": -2.9,
       "n": 4
     },
     {
       "industria": "Consumo",
-      "rsi_promedio": 59.55,
-      "var_pct_promedio": 0.12,
+      "rsi_promedio": 58.75,
+      "var_pct_promedio": 0.29,
       "n": 2
     },
     {
       "industria": "Energia",
-      "rsi_promedio": 38.05,
-      "var_pct_promedio": -3.97,
+      "rsi_promedio": 38.99,
+      "var_pct_promedio": 0.26,
       "n": 2
     },
     {
       "industria": "Finanzas",
-      "rsi_promedio": 74.09,
-      "var_pct_promedio": 2.54,
+      "rsi_promedio": 73.16,
+      "var_pct_promedio": 2.71,
       "n": 2
     },
     {
       "industria": "Tech USA",
-      "rsi_promedio": 47.86,
-      "var_pct_promedio": 2.22,
+      "rsi_promedio": 48.14,
+      "var_pct_promedio": -0.46,
       "n": 4
     }
   ]

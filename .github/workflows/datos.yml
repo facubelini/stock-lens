@@ -1,0 +1,50 @@
+name: Actualizar datos
+
+# Corre el pipeline de Python (yfinance) y commitea los JSON actualizados.
+# El deploy se encadena solo: ver deploy.yml (trigger workflow_run).
+
+on:
+  # Disparo manual desde la pestania Actions.
+  workflow_dispatch:
+
+  # Programado (GitHub Actions usa horario UTC).
+  # Mercado USA ~9:30-16:00 ET => 14:30-21:00 UTC (EST) / 13:30-20:00 UTC (EDT).
+  # Corremos cada 1 h en una ventana amplia de lunes a viernes (incluye el cierre).
+  # Ajustá la frecuencia comentando/agregando lineas de cron segun necesites.
+  schedule:
+    - cron: '0 13-21 * * 1-5'   # cada hora, 13:00 a 21:00 UTC, dias habiles
+    - cron: '0 21 * * 1-5'      # corrida extra al cierre (redundante pero segura)
+
+permissions:
+  contents: write   # necesario para commitear los JSON generados
+
+jobs:
+  generar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install -r scripts/requirements.txt
+
+      - name: Generar JSON
+        run: python scripts/generar_datos.py
+
+      - name: Commitear datos si cambiaron
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data
+          if git diff --staged --quiet; then
+            echo "Sin cambios en los datos."
+          else
+            git commit -m "datos: actualizacion automatica ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+            git push
+          fi

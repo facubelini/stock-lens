@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #070a0f;
+  color: #c9d4e0;
+  font-family: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Scrollbars estilo terminal */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #1d2733 #070a0f;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: #070a0f;
+}
+*::-webkit-scrollbar-thumb {
+  background: #1d2733;
+  border-radius: 6px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #2a3744;
+}
+
+/* Numeros tabulares: columnas alineadas en las tablas */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Animacion de skeletons */
+@keyframes pulso {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+.skeleton {
+  background: #111a25;
+  border-radius: 4px;
+  animation: pulso 1.4s ease-in-out infinite;
+}

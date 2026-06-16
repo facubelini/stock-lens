@@ -1,0 +1,19 @@
+# Dependencias
+node_modules/
+
+# Build
+dist/
+
+# Python
+scripts/.venv/
+__pycache__/
+*.pyc
+
+# Logs / temporales
+*.log
+.DS_Store
+.vite/
+
+# Entornos
+.env
+.env.local

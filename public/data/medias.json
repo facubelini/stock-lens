@@ -16,10 +16,10 @@
     "industria": "Basic Materials",
     "pais": "Argentina",
     "precio": 0.37,
-    "dist_ema21": -13.19,
-    "dist_ema50": -21.84,
-    "dist_ema150": -62.0,
-    "dist_sma200": -65.33
+    "dist_ema21": -13.17,
+    "dist_ema50": -21.82,
+    "dist_ema150": -61.99,
+    "dist_sma200": -65.32
   },
   {
     "ticker": "HSY",
@@ -48,11 +48,11 @@
     "nombre": "Brasilagro Brazilian Agric Real",
     "industria": "Consumer Defensive",
     "pais": "Brazil",
-    "precio": 3.57,
-    "dist_ema21": -4.32,
-    "dist_ema50": -6.54,
-    "dist_ema150": -7.75,
-    "dist_sma200": -7.17
+    "precio": 3.63,
+    "dist_ema21": -3.13,
+    "dist_ema50": -5.22,
+    "dist_ema150": -6.29,
+    "dist_sma200": -5.66
   },
   {
     "ticker": "RBLX",
@@ -302,10 +302,10 @@
     "industria": "Consumer Cyclical",
     "pais": "China",
     "precio": 0.77,
-    "dist_ema21": -16.18,
-    "dist_ema50": -30.87,
-    "dist_ema150": -53.82,
-    "dist_sma200": -58.1
+    "dist_ema21": -16.12,
+    "dist_ema50": -30.83,
+    "dist_ema150": -53.79,
+    "dist_sma200": -58.08
   },
   {
     "ticker": "EWZ",
@@ -620,11 +620,11 @@
     "nombre": "Microsoft Corporation",
     "industria": "Technology",
     "pais": "United States",
-    "precio": 379.4,
-    "dist_ema21": -6.42,
-    "dist_ema50": -7.33,
-    "dist_ema150": -10.91,
-    "dist_sma200": -15.61
+    "precio": 378.91,
+    "dist_ema21": -7.13,
+    "dist_ema50": -7.73,
+    "dist_ema150": -11.15,
+    "dist_sma200": -15.83
   },
   {
     "ticker": "AMD",
@@ -642,11 +642,11 @@
     "nombre": "AstraZeneca PLC",
     "industria": "Healthcare",
     "pais": "United Kingdom",
-    "precio": 174.93,
-    "dist_ema21": -3.44,
-    "dist_ema50": -5.45,
-    "dist_ema150": -4.52,
-    "dist_sma200": -3.54
+    "precio": 177.89,
+    "dist_ema21": -2.15,
+    "dist_ema50": -4.07,
+    "dist_ema150": -2.97,
+    "dist_sma200": -1.86
   },
   {
     "ticker": "BHP",
@@ -730,11 +730,11 @@
     "nombre": "Vodafone Group Plc",
     "industria": "Communication Services",
     "pais": "United Kingdom",
-    "precio": 14.3,
-    "dist_ema21": -3.8,
-    "dist_ema50": -3.99,
-    "dist_ema150": 1.81,
-    "dist_sma200": 6.74
+    "precio": 14.53,
+    "dist_ema21": -2.62,
+    "dist_ema50": -2.61,
+    "dist_ema150": 3.47,
+    "dist_sma200": 8.58
   },
   {
     "ticker": "SBS",
@@ -1358,10 +1358,10 @@
     "industria": "Basic Materials",
     "pais": "United States",
     "precio": 76.72,
-    "dist_ema21": 1.3,
-    "dist_ema50": 2.67,
-    "dist_ema150": 5.62,
-    "dist_sma200": 10.51
+    "dist_ema21": 1.79,
+    "dist_ema50": 3.19,
+    "dist_ema150": 6.17,
+    "dist_sma200": 11.09
   },
   {
     "ticker": "T",
@@ -1611,10 +1611,10 @@
     "industria": "Consumer Cyclical",
     "pais": "United States",
     "precio": 12.97,
-    "dist_ema21": 10.05,
-    "dist_ema50": 14.68,
-    "dist_ema150": 7.04,
-    "dist_sma200": -2.15
+    "dist_ema21": 10.08,
+    "dist_ema50": 14.73,
+    "dist_ema150": 7.08,
+    "dist_sma200": -2.11
   },
   {
     "ticker": "SPOT",
@@ -1974,10 +1974,10 @@
     "industria": "Sin clasificar",
     "pais": "Sin país",
     "precio": 746.74,
-    "dist_ema21": 0.53,
-    "dist_ema50": 2.47,
-    "dist_ema150": 7.17,
-    "dist_sma200": 8.82
+    "dist_ema21": 0.77,
+    "dist_ema50": 2.72,
+    "dist_ema150": 7.44,
+    "dist_sma200": 9.09
   },
   {
     "ticker": "HMY",
@@ -2084,10 +2084,10 @@
     "industria": "Sin clasificar",
     "pais": "Sin país",
     "precio": 515.52,
-    "dist_ema21": 1.17,
-    "dist_ema50": 2.96,
-    "dist_ema150": 6.34,
-    "dist_sma200": 7.49
+    "dist_ema21": 1.42,
+    "dist_ema50": 3.23,
+    "dist_ema150": 6.63,
+    "dist_sma200": 7.78
   },
   {
     "ticker": "AIG",
@@ -2468,11 +2468,11 @@
     "nombre": "ADECOAGRO S A CEDEAR EACH 1 REP",
     "industria": "Consumer Defensive",
     "pais": "Luxembourg",
-    "precio": 13920.0,
-    "dist_ema21": -19.52,
-    "dist_ema50": -23.07,
-    "dist_ema150": -15.34,
-    "dist_sma200": -5.41
+    "precio": 14330.0,
+    "dist_ema21": -15.84,
+    "dist_ema50": -20.15,
+    "dist_ema150": -12.7,
+    "dist_sma200": -2.72
   },
   {
     "ticker": "AEM",
@@ -2490,11 +2490,11 @@
     "nombre": "ALUAR ALUMINIO ARGENTINA SA",
     "industria": "Basic Materials",
     "pais": "Argentina",
-    "precio": 1010.0,
-    "dist_ema21": 1.53,
-    "dist_ema50": 4.16,
-    "dist_ema150": 8.56,
-    "dist_sma200": 10.72
+    "precio": 1000.0,
+    "dist_ema21": 0.48,
+    "dist_ema50": 3.0,
+    "dist_ema150": 7.38,
+    "dist_sma200": 9.44
   },
   {
     "ticker": "ANF",
@@ -2578,22 +2578,22 @@
     "nombre": "BRASIL      ON  EJ  NM",
     "industria": "Financial Services",
     "pais": "Brazil",
-    "precio": 19.53,
-    "dist_ema21": -1.88,
-    "dist_ema50": -7.0,
-    "dist_ema150": -11.49,
-    "dist_sma200": -11.61
+    "precio": 19.49,
+    "dist_ema21": -1.9,
+    "dist_ema50": -6.93,
+    "dist_ema150": -11.54,
+    "dist_sma200": -11.77
   },
   {
     "ticker": "BBV.BA",
     "nombre": "BANCO BILBAO VIZCAYA ARGENTAR C",
     "industria": "Sin clasificar",
     "pais": "Spain",
-    "precio": 37000.0,
-    "dist_ema21": 6.96,
-    "dist_ema50": 9.74,
-    "dist_ema150": 16.49,
-    "dist_sma200": 17.29
+    "precio": 36500.0,
+    "dist_ema21": 4.98,
+    "dist_ema50": 7.91,
+    "dist_ema150": 14.68,
+    "dist_sma200": 15.48
   },
   {
     "ticker": "BCS",
@@ -2633,11 +2633,11 @@
     "nombre": "BUNGE GLOBAL SA CEDEAR EACH REP",
     "industria": "Sin clasificar",
     "pais": "United States",
-    "precio": 33860.0,
-    "dist_ema21": -8.46,
-    "dist_ema50": -7.72,
-    "dist_ema150": 1.11,
-    "dist_sma200": 7.98
+    "precio": 34500.0,
+    "dist_ema21": -6.15,
+    "dist_ema50": -5.76,
+    "dist_ema150": 2.98,
+    "dist_sma200": 9.84
   },
   {
     "ticker": "BP",
@@ -2655,22 +2655,22 @@
     "nombre": "BERKSHIRE HATHAWAY INC CEDEAR E",
     "industria": "Financial Services",
     "pais": "United States",
-    "precio": 33420.0,
-    "dist_ema21": 1.21,
-    "dist_ema50": 2.09,
-    "dist_ema150": 2.69,
-    "dist_sma200": 0.49
+    "precio": 33600.0,
+    "dist_ema21": 1.59,
+    "dist_ema50": 2.53,
+    "dist_ema150": 3.2,
+    "dist_sma200": 0.99
   },
   {
     "ticker": "BYMA.BA",
     "nombre": "BOLSAS Y MERCADOS ARGENTINOS SA",
     "industria": "Financial Services",
     "pais": "Argentina",
-    "precio": 324.5,
-    "dist_ema21": 8.43,
-    "dist_ema50": 7.96,
-    "dist_ema150": 11.49,
-    "dist_sma200": 16.32
+    "precio": 318.0,
+    "dist_ema21": 5.66,
+    "dist_ema50": 5.56,
+    "dist_ema150": 9.12,
+    "dist_sma200": 13.7
   },
   {
     "ticker": "CAR",
@@ -2710,22 +2710,22 @@
     "nombre": "SOCIEDAD COMERCIAL DEL PLATA",
     "industria": "Industrials",
     "pais": "Argentina",
-    "precio": 45.8,
-    "dist_ema21": 0.75,
-    "dist_ema50": -0.6,
-    "dist_ema150": -8.08,
-    "dist_sma200": -7.22
+    "precio": 45.42,
+    "dist_ema21": -0.08,
+    "dist_ema50": -1.37,
+    "dist_ema150": -8.74,
+    "dist_sma200": -8.0
   },
   {
     "ticker": "CRES.BA",
     "nombre": "CRESUD S.A.C.I.F.Y.A.",
     "industria": "Industrials",
     "pais": "Argentina",
-    "precio": 1747.0,
-    "dist_ema21": -0.02,
-    "dist_ema50": 1.24,
-    "dist_ema150": 3.34,
-    "dist_sma200": 4.65
+    "precio": 1754.0,
+    "dist_ema21": 0.35,
+    "dist_ema50": 1.58,
+    "dist_ema150": 3.7,
+    "dist_sma200": 4.94
   },
   {
     "ticker": "CVS",
@@ -2820,22 +2820,22 @@
     "nombre": "Freddie Mac",
     "industria": "Financial Services",
     "pais": "United States",
-    "precio": 5.97,
-    "dist_ema21": -1.99,
-    "dist_ema50": -5.63,
-    "dist_ema150": -15.85,
-    "dist_sma200": -29.47
+    "precio": 5.98,
+    "dist_ema21": -1.84,
+    "dist_ema50": -5.47,
+    "dist_ema150": -15.72,
+    "dist_sma200": -29.35
   },
   {
     "ticker": "FNMA",
     "nombre": "Fannie Mae",
     "industria": "Financial Services",
     "pais": "United States",
-    "precio": 6.37,
-    "dist_ema21": -5.79,
-    "dist_ema50": -10.07,
-    "dist_ema150": -19.52,
-    "dist_sma200": -30.94
+    "precio": 6.36,
+    "dist_ema21": -5.93,
+    "dist_ema50": -10.21,
+    "dist_ema150": -19.64,
+    "dist_sma200": -31.04
   },
   {
     "ticker": "GOOGL",
@@ -2864,11 +2864,11 @@
     "nombre": "HAPVIDA     ON      NM",
     "industria": "Financial Services",
     "pais": "Brazil",
-    "precio": 10.58,
-    "dist_ema21": -8.28,
-    "dist_ema50": -10.19,
-    "dist_ema150": -31.75,
-    "dist_sma200": -44.0
+    "precio": 10.46,
+    "dist_ema21": -8.54,
+    "dist_ema50": -10.82,
+    "dist_ema150": -32.23,
+    "dist_sma200": -44.19
   },
   {
     "ticker": "HD",
@@ -2930,11 +2930,11 @@
     "nombre": "IRSA INVERSIONES Y REPRESENTACI",
     "industria": "Real Estate",
     "pais": "Argentina",
-    "precio": 2515.0,
-    "dist_ema21": 7.08,
-    "dist_ema50": 10.44,
-    "dist_ema150": 14.33,
-    "dist_sma200": 16.53
+    "precio": 2460.0,
+    "dist_ema21": 4.29,
+    "dist_ema50": 7.69,
+    "dist_ema150": 11.65,
+    "dist_sma200": 13.81
   },
   {
     "ticker": "KB",
@@ -2963,11 +2963,11 @@
     "nombre": "COCA-COLA FEMSA S.A.B. DE C.V. ",
     "industria": "Sin clasificar",
     "pais": "Mexico",
-    "precio": 82125.0,
-    "dist_ema21": 2.68,
-    "dist_ema50": 4.81,
-    "dist_ema150": 11.47,
-    "dist_sma200": 15.76
+    "precio": 83500.0,
+    "dist_ema21": 3.99,
+    "dist_ema50": 6.29,
+    "dist_ema150": 13.13,
+    "dist_sma200": 17.48
   },
   {
     "ticker": "LLY",
@@ -2985,22 +2985,22 @@
     "nombre": "LOJAS RENNERON      NM",
     "industria": "Consumer Cyclical",
     "pais": "Brazil",
-    "precio": 13.99,
-    "dist_ema21": -5.37,
-    "dist_ema50": -4.96,
-    "dist_ema150": -4.71,
-    "dist_sma200": -4.1
+    "precio": 14.28,
+    "dist_ema21": -3.11,
+    "dist_ema50": -2.87,
+    "dist_ema150": -2.7,
+    "dist_sma200": -2.07
   },
   {
     "ticker": "MBG",
     "nombre": "SPDR Bloomberg Barclays Mortgag",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "precio": 22.24,
-    "dist_ema21": 0.15,
-    "dist_ema50": 0.18,
-    "dist_ema150": 0.68,
-    "dist_sma200": 0.68
+    "precio": 22.29,
+    "dist_ema21": 0.34,
+    "dist_ema50": 0.39,
+    "dist_ema150": 0.89,
+    "dist_sma200": 0.88
   },
   {
     "ticker": "MBT.BA",
@@ -3018,22 +3018,22 @@
     "nombre": "METROGAS SA",
     "industria": "Utilities",
     "pais": "Argentina",
-    "precio": 1965.0,
-    "dist_ema21": 0.98,
-    "dist_ema50": 0.65,
-    "dist_ema150": -2.81,
-    "dist_sma200": -2.87
+    "precio": 1930.0,
+    "dist_ema21": -0.74,
+    "dist_ema50": -1.1,
+    "dist_ema150": -4.49,
+    "dist_sma200": -4.66
   },
   {
     "ticker": "MGLU3.SA",
     "nombre": "MAGAZ LUIZA ON      NM",
     "industria": "Consumer Cyclical",
     "pais": "Brazil",
-    "precio": 4.5,
-    "dist_ema21": -20.96,
-    "dist_ema50": -33.34,
-    "dist_ema150": -43.41,
-    "dist_sma200": -47.46
+    "precio": 4.61,
+    "dist_ema21": -17.61,
+    "dist_ema50": -30.85,
+    "dist_ema150": -41.71,
+    "dist_sma200": -46.08
   },
   {
     "ticker": "MO",
@@ -3052,10 +3052,10 @@
     "industria": "Consumer Defensive",
     "pais": "Argentina",
     "precio": 27.8,
-    "dist_ema21": -1.52,
-    "dist_ema50": -3.36,
-    "dist_ema150": -11.81,
-    "dist_sma200": -16.5
+    "dist_ema21": -1.39,
+    "dist_ema50": -3.23,
+    "dist_ema150": -11.68,
+    "dist_sma200": -16.51
   },
   {
     "ticker": "MUX",
@@ -3084,11 +3084,11 @@
     "nombre": "NOKIA OYJ CEDEAR EACH REP 1/5 A",
     "industria": "Sin clasificar",
     "pais": "Finland",
-    "precio": 20460.0,
-    "dist_ema21": -4.57,
-    "dist_ema50": 5.36,
-    "dist_ema150": 40.08,
-    "dist_sma200": 72.12
+    "precio": 19500.0,
+    "dist_ema21": -8.29,
+    "dist_ema50": 0.4,
+    "dist_ema150": 32.92,
+    "dist_sma200": 63.1
   },
   {
     "ticker": "NTCO.BA",
@@ -3128,11 +3128,11 @@
     "nombre": "PAMPA ENERGIA S.A.",
     "industria": "Industrials",
     "pais": "Argentina",
-    "precio": 5220.0,
-    "dist_ema21": 2.67,
-    "dist_ema50": 4.42,
-    "dist_ema150": 7.86,
-    "dist_sma200": 9.52
+    "precio": 5190.0,
+    "dist_ema21": 1.88,
+    "dist_ema50": 3.66,
+    "dist_ema150": 7.14,
+    "dist_sma200": 8.72
   },
   {
     "ticker": "PFE",
@@ -3150,11 +3150,11 @@
     "nombre": "POSCO HOLDINGS INC CEDEAR EACH ",
     "industria": "Basic Materials",
     "pais": "South Korea",
-    "precio": 30300.0,
-    "dist_ema21": -9.37,
-    "dist_ema50": -10.98,
-    "dist_ema150": -3.71,
-    "dist_sma200": 2.93
+    "precio": 32000.0,
+    "dist_ema21": -3.9,
+    "dist_ema50": -5.76,
+    "dist_ema150": 1.67,
+    "dist_sma200": 8.57
   },
   {
     "ticker": "PM",
@@ -3172,11 +3172,11 @@
     "nombre": "PRIO        ON      NM",
     "industria": "Energy",
     "pais": "Brazil",
-    "precio": 56.97,
-    "dist_ema21": -7.23,
-    "dist_ema50": -8.71,
-    "dist_ema150": 1.43,
-    "dist_sma200": 14.41
+    "precio": 57.0,
+    "dist_ema21": -6.57,
+    "dist_ema50": -8.35,
+    "dist_ema150": 1.46,
+    "dist_sma200": 14.26
   },
   {
     "ticker": "PYPL",
@@ -3205,11 +3205,11 @@
     "nombre": "LOCALIZA    ON      NM",
     "industria": "Industrials",
     "pais": "Brazil",
-    "precio": 40.09,
-    "dist_ema21": -3.87,
-    "dist_ema50": -8.21,
-    "dist_ema150": -8.77,
-    "dist_sma200": -7.33
+    "precio": 39.91,
+    "dist_ema21": -3.93,
+    "dist_ema50": -8.32,
+    "dist_ema150": -9.07,
+    "dist_sma200": -7.8
   },
   {
     "ticker": "SAN",
@@ -3238,11 +3238,11 @@
     "nombre": "Siemens AG",
     "industria": "Industrials",
     "pais": "Germany",
-    "precio": 159.16,
-    "dist_ema21": 2.57,
-    "dist_ema50": 5.54,
-    "dist_ema150": 11.14,
-    "dist_sma200": 12.62
+    "precio": 158.79,
+    "dist_ema21": 2.35,
+    "dist_ema50": 5.3,
+    "dist_ema150": 10.89,
+    "dist_sma200": 12.36
   },
   {
     "ticker": "SLB",
@@ -3271,33 +3271,33 @@
     "nombre": "TELECOM ARGENTINA SA",
     "industria": "Communication Services",
     "pais": "Argentina",
-    "precio": 4197.5,
-    "dist_ema21": 0.93,
-    "dist_ema50": 8.07,
-    "dist_ema150": 19.41,
-    "dist_sma200": 26.71
+    "precio": 4180.0,
+    "dist_ema21": 0.46,
+    "dist_ema50": 7.3,
+    "dist_ema150": 18.62,
+    "dist_sma200": 25.84
   },
   {
     "ticker": "TGNO4.BA",
     "nombre": "TRANSPORTADORA DE GAS DEL NORTE",
     "industria": "Energy",
     "pais": "Argentina",
-    "precio": 4100.0,
-    "dist_ema21": -0.2,
-    "dist_ema50": -0.73,
-    "dist_ema150": 1.02,
-    "dist_sma200": 4.19
+    "precio": 4067.5,
+    "dist_ema21": -0.9,
+    "dist_ema50": -1.45,
+    "dist_ema150": 0.21,
+    "dist_sma200": 3.23
   },
   {
     "ticker": "TGSU2.BA",
     "nombre": "TRANSPORTADORA DE GAS DEL SUR S",
     "industria": "Energy",
     "pais": "Argentina",
-    "precio": 9520.0,
-    "dist_ema21": 2.0,
-    "dist_ema50": 3.19,
-    "dist_ema150": 7.03,
-    "dist_sma200": 9.63
+    "precio": 9670.0,
+    "dist_ema21": 3.27,
+    "dist_ema50": 4.62,
+    "dist_ema150": 8.59,
+    "dist_sma200": 11.21
   },
   {
     "ticker": "TIIAY",
@@ -3315,11 +3315,11 @@
     "nombre": "TRAVELERS COMPANIES INC CEDEAR ",
     "industria": "Financial Services",
     "pais": "United States",
-    "precio": 76125.0,
-    "dist_ema21": 2.87,
-    "dist_ema50": 3.95,
-    "dist_ema150": 11.02,
-    "dist_sma200": 12.62
+    "precio": 73825.0,
+    "dist_ema21": 0.05,
+    "dist_ema50": 0.94,
+    "dist_ema150": 7.71,
+    "dist_sma200": 9.23
   },
   {
     "ticker": "TTM.BA",
@@ -3349,10 +3349,10 @@
     "industria": "Basic Materials",
     "pais": "Luxembourg",
     "precio": 17550.0,
-    "dist_ema21": -1.91,
-    "dist_ema50": 2.32,
-    "dist_ema150": 12.75,
-    "dist_sma200": 17.3
+    "dist_ema21": -1.74,
+    "dist_ema50": 2.23,
+    "dist_ema150": 12.56,
+    "dist_sma200": 17.04
   },
   {
     "ticker": "VALO.BA",
@@ -3360,43 +3360,43 @@
     "industria": "Financial Services",
     "pais": "Argentina",
     "precio": 637.0,
-    "dist_ema21": -0.97,
-    "dist_ema50": -1.14,
-    "dist_ema150": 10.01,
-    "dist_sma200": 22.8
+    "dist_ema21": -0.89,
+    "dist_ema50": -1.1,
+    "dist_ema150": 9.87,
+    "dist_sma200": 22.43
   },
   {
     "ticker": "WBO.BA",
     "nombre": "WEIBO CORPORATION CEDEARS EACH ",
     "industria": "Communication Services",
     "pais": "China",
-    "precio": 1859.0,
-    "dist_ema21": 2.3,
-    "dist_ema50": 2.44,
-    "dist_ema150": 2.51,
-    "dist_sma200": 2.53
+    "precio": 1813.0,
+    "dist_ema21": 0.0,
+    "dist_ema50": 0.0,
+    "dist_ema150": 0.0,
+    "dist_sma200": 0.0
   },
   {
     "ticker": "XROX.BA",
     "nombre": "XEROX HOLDINGS CORPORATION CEDE",
     "industria": "Industrials",
     "pais": "United States",
-    "precio": 4577.5,
-    "dist_ema21": -3.39,
-    "dist_ema50": 11.78,
-    "dist_ema150": 3.84,
-    "dist_sma200": 15.74
+    "precio": 4700.0,
+    "dist_ema21": -0.83,
+    "dist_ema50": 14.05,
+    "dist_ema150": 6.51,
+    "dist_sma200": 18.91
   },
   {
     "ticker": "YPFD.BA",
     "nombre": "YPF SOCIEDAD ANONIMA",
     "industria": "Energy",
     "pais": "Argentina",
-    "precio": 76125.0,
-    "dist_ema21": -2.21,
-    "dist_ema50": 5.14,
-    "dist_ema150": 22.26,
-    "dist_sma200": 35.41
+    "precio": 76300.0,
+    "dist_ema21": -1.8,
+    "dist_ema50": 5.16,
+    "dist_ema150": 22.18,
+    "dist_sma200": 35.3
   },
   {
     "ticker": "YZCA.BA",
@@ -3513,22 +3513,22 @@
     "nombre": "SAN MIGUEL SA",
     "industria": "Consumer Defensive",
     "pais": "Argentina",
-    "precio": 498.0,
-    "dist_ema21": 1.21,
-    "dist_ema50": -1.65,
-    "dist_ema150": -11.36,
-    "dist_sma200": -12.55
+    "precio": 497.0,
+    "dist_ema21": 0.92,
+    "dist_ema50": -1.78,
+    "dist_ema150": -11.41,
+    "dist_sma200": -12.72
   },
   {
     "ticker": "BHIP.BA",
     "nombre": "BANCO HIPOTECAIRO SA",
     "industria": "Financial Services",
     "pais": "Argentina",
-    "precio": 410.0,
-    "dist_ema21": 16.95,
-    "dist_ema50": 17.11,
-    "dist_ema150": 11.1,
-    "dist_sma200": 11.0
+    "precio": 392.5,
+    "dist_ema21": 10.35,
+    "dist_ema50": 11.43,
+    "dist_ema150": 6.29,
+    "dist_sma200": 5.98
   },
   {
     "ticker": "SEMI",
@@ -3547,10 +3547,10 @@
     "industria": "Industrials",
     "pais": "Argentina",
     "precio": 20.75,
-    "dist_ema21": -1.04,
-    "dist_ema50": -3.3,
-    "dist_ema150": -11.92,
-    "dist_sma200": -14.82
+    "dist_ema21": -0.94,
+    "dist_ema50": -3.17,
+    "dist_ema150": -11.79,
+    "dist_sma200": -14.85
   },
   {
     "ticker": "AGRO",
@@ -3580,21 +3580,21 @@
     "industria": "Healthcare",
     "pais": "United States",
     "precio": 0.75,
-    "dist_ema21": -10.24,
-    "dist_ema50": -20.58,
-    "dist_ema150": -40.83,
-    "dist_sma200": -48.35
+    "dist_ema21": -10.27,
+    "dist_ema50": -20.61,
+    "dist_ema150": -40.85,
+    "dist_sma200": -48.37
   },
   {
     "ticker": "CECO2.BA",
     "nombre": "CENTRAL COSTANERA SA",
     "industria": "Utilities",
     "pais": "Argentina",
-    "precio": 490.0,
-    "dist_ema21": 3.12,
-    "dist_ema50": 6.34,
-    "dist_ema150": 10.06,
-    "dist_sma200": 13.2
+    "precio": 482.0,
+    "dist_ema21": 1.31,
+    "dist_ema50": 4.42,
+    "dist_ema150": 8.14,
+    "dist_sma200": 11.14
   },
   {
     "ticker": "ETHA",
@@ -3932,10 +3932,10 @@
     "industria": "Sin clasificar",
     "pais": "Sin país",
     "precio": 33.9,
-    "dist_ema21": -1.42,
-    "dist_ema50": -2.84,
-    "dist_ema150": 1.06,
-    "dist_sma200": 4.47
+    "dist_ema21": -0.57,
+    "dist_ema50": -1.79,
+    "dist_ema150": 2.27,
+    "dist_sma200": 5.77
   },
   {
     "ticker": "ESGU",

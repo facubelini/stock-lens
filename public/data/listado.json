@@ -5,10 +5,9 @@
       "nombre": "Moderna, Inc.",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": 3.5,
-      "rsi": 74.9,
+      "var_pct": -5.98,
+      "rsi": 65.22,
       "spark": [
-        48.54,
         54.35,
         52.88,
         53.27,
@@ -37,7 +36,8 @@
         52.13,
         55.4,
         61.8,
-        63.96
+        63.96,
+        60.13
       ]
     },
     {
@@ -45,11 +45,9 @@
       "nombre": "Bioceres Crop Solutions Corp.",
       "industria": "Basic Materials",
       "pais": "Argentina",
-      "var_pct": -3.19,
-      "rsi": 38.85,
+      "var_pct": 2.98,
+      "rsi": 38.35,
       "spark": [
-        0.48,
-        0.47,
         0.47,
         0.54,
         0.45,
@@ -77,7 +75,9 @@
         0.42,
         0.43,
         0.41,
-        0.4
+        0.4,
+        0.37,
+        0.38
       ]
     },
     {
@@ -85,10 +85,9 @@
       "nombre": "The Hershey Company",
       "industria": "Consumer Defensive",
       "pais": "United States",
-      "var_pct": -1.53,
-      "rsi": 34.26,
+      "var_pct": -0.49,
+      "rsi": 33.48,
       "spark": [
-        185.63,
         184.52,
         187.79,
         190.45,
@@ -117,7 +116,8 @@
         181.11,
         182.52,
         175.31,
-        172.63
+        172.63,
+        171.78
       ]
     },
     {
@@ -125,11 +125,9 @@
       "nombre": "Fomento Economico Mexicano S.A.",
       "industria": "Consumer Defensive",
       "pais": "Mexico",
-      "var_pct": -1.04,
-      "rsi": 58.24,
+      "var_pct": -0.27,
+      "rsi": 59.11,
       "spark": [
-        122.17,
-        119.91,
         121.2,
         123.12,
         124.87,
@@ -157,7 +155,9 @@
         129.37,
         126.34,
         126.88,
-        125.56
+        125.56,
+        126.47,
+        126.13
       ]
     },
     {
@@ -165,11 +165,9 @@
       "nombre": "Brasilagro Brazilian Agric Real",
       "industria": "Consumer Defensive",
       "pais": "Brazil",
-      "var_pct": -1.63,
-      "rsi": 37.2,
+      "var_pct": 0.56,
+      "rsi": 35.78,
       "spark": [
-        3.84,
-        3.84,
         3.81,
         3.85,
         3.82,
@@ -197,7 +195,9 @@
         3.74,
         3.72,
         3.69,
-        3.63
+        3.63,
+        3.57,
+        3.59
       ]
     },
     {
@@ -205,10 +205,9 @@
       "nombre": "Roblox Corporation",
       "industria": "Communication Services",
       "pais": "United States",
-      "var_pct": 7.31,
-      "rsi": 61.98,
+      "var_pct": -9.41,
+      "rsi": 50.51,
       "spark": [
-        44.78,
         41.91,
         41.31,
         41.54,
@@ -237,7 +236,8 @@
         45.66,
         49.34,
         48.02,
-        51.53
+        51.53,
+        46.68
       ]
     },
     {
@@ -245,11 +245,9 @@
       "nombre": "First Solar, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -3.62,
-      "rsi": 47.31,
+      "var_pct": 2.92,
+      "rsi": 51.57,
       "spark": [
-        218.0,
-        214.57,
         219.95,
         233.27,
         228.06,
@@ -277,7 +275,9 @@
         267.31,
         273.51,
         264.36,
-        254.8
+        254.8,
+        257.7,
+        265.23
       ]
     },
     {
@@ -285,11 +285,9 @@
       "nombre": "NetEase, Inc.",
       "industria": "Communication Services",
       "pais": "China",
-      "var_pct": -0.75,
-      "rsi": 50.86,
+      "var_pct": 0.79,
+      "rsi": 54.02,
       "spark": [
-        117.68,
-        116.42,
         115.23,
         115.53,
         116.32,
@@ -317,7 +315,9 @@
         125.82,
         125.93,
         121.81,
-        120.9
+        120.9,
+        121.33,
+        122.29
       ]
     },
     {
@@ -325,10 +325,9 @@
       "nombre": "AbbVie Inc.",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": -2.14,
-      "rsi": 47.78,
+      "var_pct": 6.99,
+      "rsi": 63.61,
       "spark": [
-        202.71,
         201.55,
         202.78,
         207.86,
@@ -357,7 +356,8 @@
         221.59,
         222.47,
         221.23,
-        216.49
+        216.49,
+        231.62
       ]
     },
     {
@@ -365,10 +365,9 @@
       "nombre": "Lam Research Corporation",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 3.97,
-      "rsi": 68.64,
+      "var_pct": 2.17,
+      "rsi": 70.23,
       "spark": [
-        286.32,
         293.84,
         295.84,
         289.04,
@@ -397,7 +396,8 @@
         388.65,
         369.08,
         374.18,
-        389.04
+        389.04,
+        397.48
       ]
     },
     {
@@ -405,11 +405,9 @@
       "nombre": "Banco Santander Brasil SA",
       "industria": "Financial Services",
       "pais": "Brazil",
-      "var_pct": -0.74,
-      "rsi": 44.54,
+      "var_pct": 2.21,
+      "rsi": 43.91,
       "spark": [
-        5.98,
-        5.8,
         5.83,
         5.7,
         5.66,
@@ -437,7 +435,9 @@
         5.42,
         5.4,
         5.41,
-        5.37
+        5.37,
+        5.2,
+        5.32
       ]
     },
     {
@@ -445,10 +445,9 @@
       "nombre": "Sony Group Corporation",
       "industria": "Technology",
       "pais": "Japan",
-      "var_pct": 0.44,
-      "rsi": 38.85,
+      "var_pct": -3.86,
+      "rsi": 32.78,
       "spark": [
-        19.89,
         20.15,
         21.29,
         22.16,
@@ -477,7 +476,8 @@
         20.4,
         20.38,
         20.24,
-        20.33
+        20.33,
+        19.55
       ]
     },
     {
@@ -485,11 +485,9 @@
       "nombre": "Ultrapar Participacoes S.A. (Ne",
       "industria": "Energy",
       "pais": "Brazil",
-      "var_pct": 0.21,
-      "rsi": 28.05,
+      "var_pct": 2.19,
+      "rsi": 40.09,
       "spark": [
-        5.99,
-        5.9,
         6.11,
         6.02,
         6.08,
@@ -517,7 +515,9 @@
         4.89,
         4.77,
         4.69,
-        4.7
+        4.7,
+        4.8,
+        4.91
       ]
     },
     {
@@ -525,10 +525,9 @@
       "nombre": "Stellantis N.V.",
       "industria": "Consumer Cyclical",
       "pais": "Netherlands",
-      "var_pct": -2.01,
-      "rsi": 32.55,
+      "var_pct": 1.42,
+      "rsi": 34.94,
       "spark": [
-        7.48,
         7.74,
         7.46,
         7.4,
@@ -557,7 +556,8 @@
         7.04,
         6.64,
         6.47,
-        6.34
+        6.34,
+        6.43
       ]
     },
     {
@@ -565,11 +565,9 @@
       "nombre": "TotalEnergies SE",
       "industria": "Energy",
       "pais": "France",
-      "var_pct": -2.44,
-      "rsi": 27.31,
+      "var_pct": 0.42,
+      "rsi": 26.04,
       "spark": [
-        89.96,
-        88.73,
         88.48,
         90.69,
         91.76,
@@ -597,7 +595,9 @@
         88.02,
         84.07,
         84.17,
-        82.12
+        82.12,
+        80.43,
+        80.77
       ]
     },
     {
@@ -605,10 +605,9 @@
       "nombre": "Gerdau S.A.",
       "industria": "Basic Materials",
       "pais": "Brazil",
-      "var_pct": -7.13,
-      "rsi": 35.12,
+      "var_pct": 1.92,
+      "rsi": 38.8,
       "spark": [
-        4.71,
         4.81,
         4.77,
         4.75,
@@ -637,7 +636,8 @@
         4.67,
         4.62,
         4.49,
-        4.17
+        4.17,
+        4.25
       ]
     },
     {
@@ -645,11 +645,9 @@
       "nombre": "Itau Unibanco Banco Holding SA",
       "industria": "Financial Services",
       "pais": "Brazil",
-      "var_pct": 0.25,
-      "rsi": 51.35,
+      "var_pct": 1.99,
+      "rsi": 50.71,
       "spark": [
-        8.45,
-        8.18,
         8.37,
         8.18,
         8.1,
@@ -677,7 +675,9 @@
         7.99,
         7.95,
         7.95,
-        7.97
+        7.97,
+        7.79,
+        7.95
       ]
     },
     {
@@ -685,10 +685,9 @@
       "nombre": "Merck & Company, Inc.",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": -1.36,
-      "rsi": 44.34,
+      "var_pct": 1.13,
+      "rsi": 47.82,
       "spark": [
-        111.5,
         110.58,
         110.49,
         111.57,
@@ -717,7 +716,8 @@
         114.9,
         115.17,
         115.44,
-        113.87
+        113.87,
+        115.16
       ]
     },
     {
@@ -725,10 +725,9 @@
       "nombre": "Applied Materials, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 4.08,
-      "rsi": 76.02,
+      "var_pct": 1.44,
+      "rsi": 76.92,
       "spark": [
-        410.13,
         434.9,
         443.07,
         430.66,
@@ -757,7 +756,8 @@
         585.78,
         568.23,
         592.92,
-        617.11
+        617.11,
+        625.99
       ]
     },
     {
@@ -765,10 +765,9 @@
       "nombre": "NIO Inc.",
       "industria": "Consumer Cyclical",
       "pais": "China",
-      "var_pct": -0.59,
-      "rsi": 36.18,
+      "var_pct": 1.96,
+      "rsi": 39.63,
       "spark": [
-        5.87,
         5.85,
         6.07,
         6.08,
@@ -797,7 +796,8 @@
         5.2,
         5.01,
         5.05,
-        5.02
+        5.02,
+        5.12
       ]
     },
     {
@@ -805,11 +805,9 @@
       "nombre": "TIM S.A.",
       "industria": "Communication Services",
       "pais": "Brazil",
-      "var_pct": -2.37,
-      "rsi": 33.18,
+      "var_pct": 2.22,
+      "rsi": 37.95,
       "spark": [
-        25.02,
-        23.6,
         23.79,
         23.32,
         23.17,
@@ -837,7 +835,9 @@
         22.29,
         22.05,
         21.5,
-        20.99
+        20.99,
+        20.72,
+        21.18
       ]
     },
     {
@@ -845,10 +845,9 @@
       "nombre": "PagSeguro Digital Ltd.",
       "industria": "Technology",
       "pais": "Brazil",
-      "var_pct": -1.01,
-      "rsi": 43.33,
+      "var_pct": 0.68,
+      "rsi": 44.86,
       "spark": [
-        10.12,
         10.09,
         9.74,
         9.78,
@@ -877,7 +876,8 @@
         8.87,
         8.98,
         8.91,
-        8.82
+        8.82,
+        8.88
       ]
     },
     {
@@ -885,11 +885,9 @@
       "nombre": "Toyota Motor Corporation",
       "industria": "Consumer Cyclical",
       "pais": "Japan",
-      "var_pct": -3.04,
-      "rsi": 35.08,
+      "var_pct": -1.76,
+      "rsi": 34.06,
       "spark": [
-        195.05,
-        189.0,
         187.53,
         183.8,
         181.67,
@@ -917,7 +915,9 @@
         174.95,
         180.22,
         178.19,
-        172.77
+        172.77,
+        173.94,
+        170.89
       ]
     },
     {
@@ -925,11 +925,9 @@
       "nombre": "Tsakos Energy Navigation Ltd",
       "industria": "Energy",
       "pais": "Greece",
-      "var_pct": -1.84,
-      "rsi": 42.33,
+      "var_pct": 2.69,
+      "rsi": 52.2,
       "spark": [
-        43.17,
-        44.0,
         43.8,
         43.44,
         43.31,
@@ -957,7 +955,9 @@
         38.77,
         38.9,
         38.52,
-        37.81
+        37.81,
+        38.29,
+        39.32
       ]
     },
     {
@@ -965,10 +965,9 @@
       "nombre": "Adobe Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -0.57,
-      "rsi": 27.79,
+      "var_pct": -1.33,
+      "rsi": 26.96,
       "spark": [
-        256.51,
         253.04,
         246.15,
         240.83,
@@ -997,7 +996,8 @@
         206.36,
         207.32,
         196.28,
-        195.16
+        195.16,
+        192.57
       ]
     },
     {
@@ -1005,10 +1005,9 @@
       "nombre": "Novagold Resources Inc.",
       "industria": "Basic Materials",
       "pais": "Canada",
-      "var_pct": -3.7,
-      "rsi": 47.41,
+      "var_pct": -2.76,
+      "rsi": 44.98,
       "spark": [
-        8.52,
         8.75,
         9.22,
         9.14,
@@ -1037,7 +1036,8 @@
         8.12,
         8.33,
         8.1,
-        7.8
+        7.8,
+        7.59
       ]
     },
     {
@@ -1045,10 +1045,9 @@
       "nombre": "International Paper Company",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": 1.83,
-      "rsi": 63.89,
+      "var_pct": 1.58,
+      "rsi": 65.84,
       "spark": [
-        32.59,
         32.54,
         31.99,
         32.39,
@@ -1077,7 +1076,8 @@
         36.39,
         36.15,
         36.16,
-        36.82
+        36.82,
+        37.4
       ]
     },
     {
@@ -1085,11 +1085,9 @@
       "nombre": "SunCar Technology Group Inc.",
       "industria": "Consumer Cyclical",
       "pais": "China",
-      "var_pct": 5.74,
-      "rsi": 42.16,
+      "var_pct": 2.13,
+      "rsi": 41.53,
       "spark": [
-        1.07,
-        1.07,
         1.06,
         1.02,
         0.95,
@@ -1117,7 +1115,9 @@
         0.72,
         0.77,
         0.77,
-        0.81
+        0.81,
+        0.77,
+        0.79
       ]
     },
     {
@@ -1125,10 +1125,9 @@
       "nombre": "iShares MSCI Brazil ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -1.11,
-      "rsi": 35.31,
+      "var_pct": 1.7,
+      "rsi": 41.64,
       "spark": [
-        38.43,
         38.75,
         38.3,
         37.88,
@@ -1157,7 +1156,8 @@
         34.64,
         34.41,
         34.11,
-        33.73
+        33.73,
+        34.31
       ]
     },
     {
@@ -1165,10 +1165,9 @@
       "nombre": "Tesla, Inc.",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": 1.04,
-      "rsi": 47.03,
+      "var_pct": 1.76,
+      "rsi": 49.89,
       "spark": [
-        411.79,
         428.35,
         445.0,
         433.45,
@@ -1197,7 +1196,8 @@
         411.15,
         404.66,
         396.38,
-        400.49
+        400.49,
+        407.52
       ]
     },
     {
@@ -1205,11 +1205,9 @@
       "nombre": "Garmin Ltd.",
       "industria": "Technology",
       "pais": "Switzerland",
-      "var_pct": -1.31,
-      "rsi": 44.03,
+      "var_pct": 0.39,
+      "rsi": 48.05,
       "spark": [
-        241.75,
-        240.83,
         239.03,
         241.31,
         235.92,
@@ -1237,7 +1235,9 @@
         237.05,
         238.17,
         234.96,
-        231.89
+        231.89,
+        234.2,
+        235.12
       ]
     },
     {
@@ -1245,10 +1245,9 @@
       "nombre": "Petroleo Brasileiro S.A. Petrob",
       "industria": "Energy",
       "pais": "Brazil",
-      "var_pct": -0.24,
-      "rsi": 26.85,
+      "var_pct": 0.81,
+      "rsi": 29.43,
       "spark": [
-        20.21,
         20.17,
         20.59,
         20.34,
@@ -1277,7 +1276,8 @@
         17.34,
         17.05,
         16.79,
-        16.75
+        16.75,
+        16.89
       ]
     },
     {
@@ -1285,10 +1285,9 @@
       "nombre": "Companhia Siderurgica Nacional ",
       "industria": "Basic Materials",
       "pais": "Brazil",
-      "var_pct": -8.04,
-      "rsi": 31.76,
+      "var_pct": 2.91,
+      "rsi": 35.16,
       "spark": [
-        1.34,
         1.38,
         1.37,
         1.37,
@@ -1317,7 +1316,8 @@
         1.22,
         1.21,
         1.12,
-        1.03
+        1.03,
+        1.06
       ]
     },
     {
@@ -1325,11 +1325,9 @@
       "nombre": "Mondelez International, Inc.",
       "industria": "Consumer Defensive",
       "pais": "United States",
-      "var_pct": -2.08,
-      "rsi": 46.21,
+      "var_pct": -0.27,
+      "rsi": 42.05,
       "spark": [
-        61.87,
-        61.31,
         61.55,
         61.41,
         61.7,
@@ -1357,7 +1355,9 @@
         62.99,
         61.5,
         62.15,
-        60.86
+        60.86,
+        60.12,
+        59.96
       ]
     },
     {
@@ -1365,10 +1365,9 @@
       "nombre": "Geopark Ltd",
       "industria": "Energy",
       "pais": "Colombia",
-      "var_pct": -1.84,
-      "rsi": 47.07,
+      "var_pct": -1.56,
+      "rsi": 45.16,
       "spark": [
-        9.13,
         9.31,
         9.88,
         9.94,
@@ -1397,7 +1396,8 @@
         10.19,
         10.39,
         10.33,
-        10.14
+        10.14,
+        9.98
       ]
     },
     {
@@ -1405,10 +1405,9 @@
       "nombre": "Occidental Petroleum Corporatio",
       "industria": "Energy",
       "pais": "United States",
-      "var_pct": -2.3,
-      "rsi": 34.02,
+      "var_pct": -0.15,
+      "rsi": 33.83,
       "spark": [
-        53.69,
         52.79,
         54.89,
         56.01,
@@ -1437,7 +1436,8 @@
         54.46,
         53.67,
         53.04,
-        51.82
+        51.82,
+        51.74
       ]
     },
     {
@@ -1445,10 +1445,9 @@
       "nombre": "Halliburton Company",
       "industria": "Energy",
       "pais": "United States",
-      "var_pct": -3.59,
-      "rsi": 29.11,
+      "var_pct": -0.89,
+      "rsi": 28.24,
       "spark": [
-        38.95,
         39.66,
         40.09,
         41.52,
@@ -1477,7 +1476,8 @@
         38.18,
         37.2,
         36.23,
-        34.93
+        34.93,
+        34.62
       ]
     },
     {
@@ -1485,10 +1485,9 @@
       "nombre": "Baidu, Inc.",
       "industria": "Communication Services",
       "pais": "China",
-      "var_pct": 0.13,
-      "rsi": 34.45,
+      "var_pct": 0.45,
+      "rsi": 35.3,
       "spark": [
-        139.87,
         141.05,
         145.78,
         139.94,
@@ -1517,7 +1516,8 @@
         116.75,
         112.72,
         111.61,
-        111.76
+        111.76,
+        112.26
       ]
     },
     {
@@ -1525,10 +1525,9 @@
       "nombre": "UnitedHealth Group Incorporated",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": 0.36,
-      "rsi": 59.79,
+      "var_pct": 1.63,
+      "rsi": 63.65,
       "spark": [
-        367.64,
         377.82,
         382.26,
         394.14,
@@ -1557,7 +1556,8 @@
         411.04,
         407.65,
         399.53,
-        400.96
+        400.96,
+        407.5
       ]
     },
     {
@@ -1565,10 +1565,9 @@
       "nombre": "Netflix, Inc.",
       "industria": "Communication Services",
       "pais": "United States",
-      "var_pct": 0.55,
-      "rsi": 28.03,
+      "var_pct": -5.66,
+      "rsi": 21.56,
       "spark": [
-        88.25,
         87.49,
         85.45,
         87.66,
@@ -1597,7 +1596,8 @@
         81.67,
         78.72,
         76.96,
-        77.38
+        77.38,
+        73.0
       ]
     },
     {
@@ -1605,11 +1605,9 @@
       "nombre": "ICICI Bank Limited",
       "industria": "Financial Services",
       "pais": "India",
-      "var_pct": -0.82,
-      "rsi": 64.63,
+      "var_pct": 2.43,
+      "rsi": 70.36,
       "spark": [
-        26.75,
-        26.74,
         26.49,
         26.1,
         25.78,
@@ -1637,7 +1635,9 @@
         27.79,
         27.81,
         28.12,
-        27.89
+        27.89,
+        27.94,
+        28.62
       ]
     },
     {
@@ -1645,11 +1645,9 @@
       "nombre": "Honda Motor Company, Ltd.",
       "industria": "Consumer Cyclical",
       "pais": "Japan",
-      "var_pct": -2.46,
-      "rsi": 49.19,
+      "var_pct": -0.25,
+      "rsi": 49.21,
       "spark": [
-        24.71,
-        24.06,
         24.51,
         23.98,
         24.11,
@@ -1677,6 +1675,8 @@
         26.44,
         26.97,
         26.85,
+        26.19,
+        26.26,
         26.19
       ]
     },
@@ -1685,10 +1685,9 @@
       "nombre": "Rio Tinto Plc",
       "industria": "Basic Materials",
       "pais": "United Kingdom",
-      "var_pct": -2.52,
-      "rsi": 43.17,
+      "var_pct": -0.55,
+      "rsi": 42.27,
       "spark": [
-        103.11,
         105.38,
         107.9,
         109.5,
@@ -1717,7 +1716,8 @@
         105.89,
         105.74,
         102.67,
-        100.08
+        100.08,
+        99.53
       ]
     },
     {
@@ -1725,11 +1725,9 @@
       "nombre": "Etsy, Inc.",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": -0.7,
-      "rsi": 69.92,
+      "var_pct": -1.22,
+      "rsi": 67.95,
       "spark": [
-        64.97,
-        64.02,
         64.38,
         59.86,
         57.51,
@@ -1757,7 +1755,9 @@
         69.48,
         72.19,
         73.34,
-        72.83
+        72.83,
+        73.95,
+        73.05
       ]
     },
     {
@@ -1765,10 +1765,9 @@
       "nombre": "Ambev S.A.",
       "industria": "Consumer Defensive",
       "pais": "Brazil",
-      "var_pct": -0.64,
-      "rsi": 46.37,
+      "var_pct": 0.8,
+      "rsi": 48.56,
       "spark": [
-        3.28,
         3.29,
         3.28,
         3.26,
@@ -1797,7 +1796,8 @@
         3.25,
         3.2,
         3.14,
-        3.12
+        3.12,
+        3.14
       ]
     },
     {
@@ -1805,11 +1805,9 @@
       "nombre": "Unilever PLC",
       "industria": "Consumer Defensive",
       "pais": "United Kingdom",
-      "var_pct": -2.13,
-      "rsi": 51.22,
+      "var_pct": -0.75,
+      "rsi": 51.92,
       "spark": [
-        59.13,
-        58.17,
         57.84,
         56.7,
         57.37,
@@ -1837,7 +1835,9 @@
         58.92,
         58.69,
         59.02,
-        57.76
+        57.76,
+        58.4,
+        57.96
       ]
     },
     {
@@ -1845,10 +1845,9 @@
       "nombre": "Jumia Technologies AG",
       "industria": "Consumer Cyclical",
       "pais": "Germany",
-      "var_pct": 2.92,
-      "rsi": 48.76,
+      "var_pct": -2.98,
+      "rsi": 45.78,
       "spark": [
-        8.71,
         7.77,
         7.51,
         7.98,
@@ -1877,7 +1876,8 @@
         7.4,
         7.19,
         6.84,
-        7.04
+        7.04,
+        6.83
       ]
     },
     {
@@ -1885,10 +1885,9 @@
       "nombre": "Shell PLC",
       "industria": "Energy",
       "pais": "United Kingdom",
-      "var_pct": -1.95,
-      "rsi": 27.94,
+      "var_pct": 0.9,
+      "rsi": 31.57,
       "spark": [
-        83.48,
         83.22,
         84.59,
         84.58,
@@ -1917,7 +1916,8 @@
         82.61,
         82.25,
         80.38,
-        78.81
+        78.81,
+        79.52
       ]
     },
     {
@@ -1925,11 +1925,9 @@
       "nombre": "ENI S.p.A.",
       "industria": "Energy",
       "pais": "Italy",
-      "var_pct": -2.26,
-      "rsi": 31.79,
+      "var_pct": 1.28,
+      "rsi": 33.66,
       "spark": [
-        53.31,
-        52.0,
         52.83,
         54.84,
         55.21,
@@ -1957,7 +1955,9 @@
         53.5,
         51.27,
         50.89,
-        49.74
+        49.74,
+        48.95,
+        49.58
       ]
     },
     {
@@ -1965,11 +1965,9 @@
       "nombre": "Advance Auto Parts Inc.",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": -3.76,
-      "rsi": 51.17,
+      "var_pct": -5.37,
+      "rsi": 47.75,
       "spark": [
-        58.07,
-        57.23,
         56.15,
         51.83,
         52.62,
@@ -1997,7 +1995,9 @@
         60.8,
         61.04,
         60.37,
-        58.1
+        58.1,
+        60.1,
+        56.88
       ]
     },
     {
@@ -2005,11 +2005,9 @@
       "nombre": "Biogen Inc.",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": 1.56,
-      "rsi": 55.18,
+      "var_pct": 1.14,
+      "rsi": 55.02,
       "spark": [
-        190.68,
-        191.38,
         193.45,
         197.95,
         199.36,
@@ -2037,7 +2035,9 @@
         200.05,
         198.64,
         195.61,
-        198.67
+        198.67,
+        196.58,
+        198.82
       ]
     },
     {
@@ -2045,10 +2045,9 @@
       "nombre": "StoneCo Ltd.",
       "industria": "Technology",
       "pais": "Cayman Islands",
-      "var_pct": -1.67,
-      "rsi": 44.05,
+      "var_pct": 0.99,
+      "rsi": 45.96,
       "spark": [
-        11.04,
         10.77,
         10.42,
         10.38,
@@ -2077,7 +2076,8 @@
         10.99,
         10.99,
         10.77,
-        10.59
+        10.59,
+        10.69
       ]
     },
     {
@@ -2085,10 +2085,9 @@
       "nombre": "Coca-Cola Company (The)",
       "industria": "Consumer Defensive",
       "pais": "United States",
-      "var_pct": -0.68,
-      "rsi": 48.72,
+      "var_pct": 0.51,
+      "rsi": 50.55,
       "spark": [
-        77.93,
         77.92,
         78.16,
         79.52,
@@ -2117,7 +2116,8 @@
         80.91,
         80.28,
         79.93,
-        79.39
+        79.39,
+        79.79
       ]
     },
     {
@@ -2125,11 +2125,9 @@
       "nombre": "HDFC Bank Limited",
       "industria": "Financial Services",
       "pais": "India",
-      "var_pct": -2.02,
-      "rsi": 54.31,
+      "var_pct": 0.82,
+      "rsi": 58.73,
       "spark": [
-        25.63,
-        25.67,
         25.02,
         24.2,
         24.04,
@@ -2157,7 +2155,9 @@
         24.17,
         24.74,
         25.27,
-        24.76
+        24.76,
+        25.06,
+        25.26
       ]
     },
     {
@@ -2165,10 +2165,9 @@
       "nombre": "VALE S.A.",
       "industria": "Basic Materials",
       "pais": "Brazil",
-      "var_pct": -0.71,
-      "rsi": 42.7,
+      "var_pct": 1.91,
+      "rsi": 47.22,
       "spark": [
-        16.19,
         16.63,
         17.07,
         17.03,
@@ -2197,7 +2196,8 @@
         16.0,
         15.98,
         15.53,
-        15.42
+        15.42,
+        15.72
       ]
     },
     {
@@ -2205,11 +2205,9 @@
       "nombre": "Union Pacific Corporation",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": -3.51,
-      "rsi": 42.32,
+      "var_pct": 1.77,
+      "rsi": 46.52,
       "spark": [
-        266.84,
-        263.52,
         263.28,
         261.99,
         264.23,
@@ -2237,7 +2235,9 @@
         272.7,
         267.32,
         267.45,
-        258.05
+        258.05,
+        256.88,
+        261.42
       ]
     },
     {
@@ -2245,10 +2245,9 @@
       "nombre": "Microsoft Corporation",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 0.13,
-      "rsi": 34.98,
+      "var_pct": -2.49,
+      "rsi": 31.75,
       "spark": [
-        419.86,
         414.22,
         411.77,
         406.89,
@@ -2277,7 +2276,8 @@
         399.76,
         393.83,
         378.91,
-        379.4
+        379.4,
+        369.94
       ]
     },
     {
@@ -2285,10 +2285,9 @@
       "nombre": "Advanced Micro Devices, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 4.86,
-      "rsi": 61.19,
+      "var_pct": 1.67,
+      "rsi": 62.4,
       "spark": [
-        408.46,
         455.19,
         458.79,
         448.29,
@@ -2317,7 +2316,8 @@
         547.26,
         507.29,
         512.48,
-        537.37
+        537.37,
+        546.34
       ]
     },
     {
@@ -2325,11 +2325,9 @@
       "nombre": "AstraZeneca PLC",
       "industria": "Healthcare",
       "pais": "United Kingdom",
-      "var_pct": -0.46,
-      "rsi": 42.51,
+      "var_pct": 1.35,
+      "rsi": 43.04,
       "spark": [
-        184.92,
-        182.52,
         182.85,
         181.86,
         184.54,
@@ -2357,7 +2355,9 @@
         178.75,
         177.27,
         178.71,
-        177.89
+        177.89,
+        174.93,
+        177.29
       ]
     },
     {
@@ -2365,11 +2365,9 @@
       "nombre": "BHP Group Limited",
       "industria": "Basic Materials",
       "pais": "Australia",
-      "var_pct": -2.32,
-      "rsi": 57.0,
+      "var_pct": -1.99,
+      "rsi": 48.63,
       "spark": [
-        84.33,
-        82.55,
         84.72,
         87.65,
         88.32,
@@ -2397,7 +2395,9 @@
         90.82,
         92.13,
         92.51,
-        90.36
+        90.36,
+        87.87,
+        86.12
       ]
     },
     {
@@ -2405,11 +2405,9 @@
       "nombre": "Suzano S.A.",
       "industria": "Basic Materials",
       "pais": "Brazil",
-      "var_pct": -1.66,
-      "rsi": 46.36,
+      "var_pct": -1.85,
+      "rsi": 45.23,
       "spark": [
-        8.74,
-        8.77,
         8.87,
         8.74,
         8.75,
@@ -2437,7 +2435,9 @@
         8.23,
         8.45,
         8.42,
-        8.28
+        8.28,
+        8.39,
+        8.23
       ]
     },
     {
@@ -2445,10 +2445,9 @@
       "nombre": "Satellogic Inc.",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": -2.27,
-      "rsi": 37.7,
+      "var_pct": -4.64,
+      "rsi": 35.95,
       "spark": [
-        6.62,
         7.57,
         8.7,
         7.55,
@@ -2477,7 +2476,8 @@
         6.69,
         6.14,
         6.17,
-        6.03
+        6.03,
+        5.75
       ]
     },
     {
@@ -2485,10 +2485,9 @@
       "nombre": "Texas Instruments Incorporated",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 6.95,
-      "rsi": 62.01,
+      "var_pct": 2.11,
+      "rsi": 64.25,
       "spark": [
-        285.24,
         287.8,
         297.76,
         295.17,
@@ -2517,7 +2516,8 @@
         313.34,
         305.71,
         301.88,
-        322.86
+        322.86,
+        329.67
       ]
     },
     {
@@ -2525,11 +2525,9 @@
       "nombre": "Telefonica Brasil S.A.",
       "industria": "Communication Services",
       "pais": "Brazil",
-      "var_pct": -1.74,
-      "rsi": 38.77,
+      "var_pct": 2.46,
+      "rsi": 40.81,
       "spark": [
-        15.31,
-        14.78,
         14.99,
         14.16,
         14.2,
@@ -2557,7 +2555,9 @@
         13.36,
         13.21,
         13.19,
-        12.96
+        12.96,
+        12.59,
+        12.9
       ]
     },
     {
@@ -2565,10 +2565,9 @@
       "nombre": "Amgen Inc.",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": -1.19,
-      "rsi": 46.95,
+      "var_pct": 1.92,
+      "rsi": 52.21,
       "spark": [
-        326.62,
         329.21,
         327.12,
         333.77,
@@ -2597,7 +2596,8 @@
         350.53,
         347.84,
         341.66,
-        337.6
+        337.6,
+        344.09
       ]
     },
     {
@@ -2605,11 +2605,9 @@
       "nombre": "Sysco Corporation",
       "industria": "Consumer Defensive",
       "pais": "United States",
-      "var_pct": -0.55,
-      "rsi": 61.83,
+      "var_pct": -0.46,
+      "rsi": 57.79,
       "spark": [
-        73.33,
-        72.88,
         72.44,
         72.57,
         72.98,
@@ -2637,7 +2635,9 @@
         79.19,
         79.69,
         79.44,
-        79.0
+        79.0,
+        78.7,
+        78.33
       ]
     },
     {
@@ -2645,11 +2645,9 @@
       "nombre": "Vodafone Group Plc",
       "industria": "Communication Services",
       "pais": "United Kingdom",
-      "var_pct": -2.42,
-      "rsi": 42.87,
+      "var_pct": -0.94,
+      "rsi": 37.86,
       "spark": [
-        15.83,
-        15.4,
         15.9,
         16.02,
         14.82,
@@ -2677,7 +2675,9 @@
         15.53,
         15.0,
         14.89,
-        14.53
+        14.53,
+        14.3,
+        14.16
       ]
     },
     {
@@ -2685,11 +2685,9 @@
       "nombre": "Companhia de saneamento Basico ",
       "industria": "Utilities",
       "pais": "Brazil",
-      "var_pct": -2.36,
-      "rsi": 38.56,
+      "var_pct": 3.46,
+      "rsi": 43.05,
       "spark": [
-        6.63,
-        6.37,
         6.35,
         6.26,
         6.04,
@@ -2717,7 +2715,9 @@
         5.46,
         5.57,
         5.51,
-        5.38
+        5.38,
+        5.25,
+        5.43
       ]
     },
     {
@@ -2725,10 +2725,9 @@
       "nombre": "Mosaic Company (The)",
       "industria": "Basic Materials",
       "pais": "United States",
-      "var_pct": 1.73,
-      "rsi": 52.81,
+      "var_pct": -3.12,
+      "rsi": 48.38,
       "spark": [
-        22.68,
         21.97,
         21.57,
         22.16,
@@ -2757,7 +2756,8 @@
         22.52,
         21.69,
         22.51,
-        22.9
+        22.9,
+        22.18
       ]
     },
     {
@@ -2765,10 +2765,9 @@
       "nombre": "Costco Wholesale Corporation",
       "industria": "Consumer Defensive",
       "pais": "United States",
-      "var_pct": -1.46,
-      "rsi": 37.74,
+      "var_pct": -0.31,
+      "rsi": 37.0,
       "spark": [
-        1012.06,
         1008.79,
         999.47,
         1021.88,
@@ -2797,7 +2796,8 @@
         979.45,
         986.68,
         965.59,
-        951.45
+        951.45,
+        948.53
       ]
     },
     {
@@ -2805,11 +2805,9 @@
       "nombre": "National Grid Transco, PLC Nati",
       "industria": "Utilities",
       "pais": "United Kingdom",
-      "var_pct": -1.94,
-      "rsi": 44.23,
+      "var_pct": 2.2,
+      "rsi": 47.34,
       "spark": [
-        85.6,
-        83.71,
         84.66,
         84.93,
         85.01,
@@ -2837,7 +2835,9 @@
         81.84,
         81.57,
         82.28,
-        80.68
+        80.68,
+        79.44,
+        81.19
       ]
     },
     {
@@ -2845,11 +2845,9 @@
       "nombre": "Thermo Fisher Scientific Inc",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": -2.31,
-      "rsi": 44.98,
+      "var_pct": -0.49,
+      "rsi": 45.44,
       "spark": [
-        472.48,
-        473.98,
         464.53,
         452.15,
         458.84,
@@ -2877,7 +2875,9 @@
         468.87,
         473.72,
         472.63,
-        461.69
+        461.69,
+        464.61,
+        462.33
       ]
     },
     {
@@ -2885,10 +2885,9 @@
       "nombre": "Banco Bradesco Sa",
       "industria": "Financial Services",
       "pais": "Brazil",
-      "var_pct": -2.04,
-      "rsi": 40.9,
+      "var_pct": 1.98,
+      "rsi": 45.96,
       "spark": [
-        3.74,
         3.75,
         3.65,
         3.65,
@@ -2917,7 +2916,8 @@
         3.47,
         3.46,
         3.43,
-        3.36
+        3.36,
+        3.43
       ]
     },
     {
@@ -2925,10 +2925,9 @@
       "nombre": "Infosys Limited",
       "industria": "Technology",
       "pais": "India",
-      "var_pct": -9.66,
-      "rsi": 31.53,
+      "var_pct": 0.61,
+      "rsi": 32.64,
       "spark": [
-        12.3,
         12.56,
         12.04,
         11.8,
@@ -2957,7 +2956,8 @@
         11.6,
         11.97,
         11.7,
-        10.57
+        10.57,
+        10.64
       ]
     },
     {
@@ -2965,10 +2965,9 @@
       "nombre": "Dow Inc.",
       "industria": "Basic Materials",
       "pais": "United States",
-      "var_pct": -2.37,
-      "rsi": 31.7,
+      "var_pct": -3.01,
+      "rsi": 28.36,
       "spark": [
-        36.94,
         36.5,
         38.37,
         39.03,
@@ -2997,7 +2996,8 @@
         33.23,
         32.96,
         32.5,
-        31.73
+        31.73,
+        30.77
       ]
     },
     {
@@ -3005,10 +3005,9 @@
       "nombre": "Alibaba Group Holding Limited",
       "industria": "Consumer Cyclical",
       "pais": "China",
-      "var_pct": -0.32,
-      "rsi": 25.23,
+      "var_pct": -2.04,
+      "rsi": 23.4,
       "spark": [
-        139.72,
         138.79,
         136.05,
         133.55,
@@ -3037,7 +3036,8 @@
         112.55,
         110.97,
         107.44,
-        107.1
+        107.1,
+        104.91
       ]
     },
     {
@@ -3045,10 +3045,9 @@
       "nombre": "Coeur Mining, Inc.",
       "industria": "Basic Materials",
       "pais": "United States",
-      "var_pct": -0.11,
-      "rsi": 48.06,
+      "var_pct": -0.83,
+      "rsi": 47.3,
       "spark": [
-        18.1,
         18.54,
         19.78,
         20.15,
@@ -3077,7 +3076,8 @@
         18.66,
         18.79,
         17.53,
-        17.51
+        17.51,
+        17.36
       ]
     },
     {
@@ -3085,10 +3085,9 @@
       "nombre": "Skyworks Solutions, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 4.42,
-      "rsi": 49.75,
+      "var_pct": 6.78,
+      "rsi": 56.02,
       "spark": [
-        64.48,
         66.2,
         69.53,
         65.74,
@@ -3117,7 +3116,8 @@
         76.26,
         71.42,
         69.38,
-        72.45
+        72.45,
+        77.36
       ]
     },
     {
@@ -3125,11 +3125,9 @@
       "nombre": "Grupo Aeroportuario del Sureste",
       "industria": "Industrials",
       "pais": "Mexico",
-      "var_pct": -1.24,
-      "rsi": 53.62,
+      "var_pct": -2.9,
+      "rsi": 51.17,
       "spark": [
-        304.76,
-        306.44,
         303.24,
         308.05,
         303.53,
@@ -3157,7 +3155,9 @@
         287.09,
         301.0,
         305.18,
-        301.41
+        301.41,
+        308.21,
+        299.27
       ]
     },
     {
@@ -3165,10 +3165,9 @@
       "nombre": "Intel Corporation",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 10.64,
-      "rsi": 64.21,
+      "var_pct": 4.74,
+      "rsi": 67.02,
       "spark": [
-        109.62,
         124.92,
         129.44,
         120.61,
@@ -3197,7 +3196,8 @@
         127.86,
         117.05,
         121.1,
-        133.99
+        133.99,
+        140.34
       ]
     },
     {
@@ -3205,10 +3205,9 @@
       "nombre": "Analog Devices, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 4.83,
-      "rsi": 58.99,
+      "var_pct": 1.85,
+      "rsi": 61.3,
       "spark": [
-        407.4,
         415.38,
         421.58,
         418.5,
@@ -3237,7 +3236,8 @@
         427.58,
         416.0,
         414.45,
-        434.46
+        434.46,
+        442.48
       ]
     },
     {
@@ -3245,11 +3245,9 @@
       "nombre": "Loma Negra Compania Industrial ",
       "industria": "Basic Materials",
       "pais": "Argentina",
-      "var_pct": -1.74,
-      "rsi": 53.09,
+      "var_pct": -1.65,
+      "rsi": 53.06,
       "spark": [
-        11.7,
-        11.1,
         11.02,
         10.95,
         10.61,
@@ -3277,7 +3275,9 @@
         12.55,
         12.26,
         12.06,
-        11.85
+        11.85,
+        12.09,
+        11.89
       ]
     },
     {
@@ -3285,10 +3285,9 @@
       "nombre": "Phillips 66",
       "industria": "Energy",
       "pais": "United States",
-      "var_pct": -0.62,
-      "rsi": 37.15,
+      "var_pct": 1.14,
+      "rsi": 40.3,
       "spark": [
-        167.1,
         170.32,
         174.1,
         174.17,
@@ -3317,7 +3316,8 @@
         173.26,
         172.0,
         167.17,
-        166.14
+        166.14,
+        168.04
       ]
     },
     {
@@ -3325,11 +3325,9 @@
       "nombre": "HSBC Holdings, plc.",
       "industria": "Financial Services",
       "pais": "United Kingdom",
-      "var_pct": 0.83,
-      "rsi": 59.1,
+      "var_pct": 1.38,
+      "rsi": 61.06,
       "spark": [
-        90.9,
-        88.48,
         89.66,
         90.05,
         89.47,
@@ -3357,7 +3355,9 @@
         92.67,
         92.92,
         94.45,
-        95.23
+        95.23,
+        94.97,
+        96.28
       ]
     },
     {
@@ -3365,11 +3365,9 @@
       "nombre": "XP Inc.",
       "industria": "Financial Services",
       "pais": "Cayman Islands",
-      "var_pct": -1.66,
-      "rsi": 39.35,
+      "var_pct": 4.02,
+      "rsi": 45.79,
       "spark": [
-        19.32,
-        18.55,
         18.92,
         18.43,
         18.31,
@@ -3397,7 +3395,9 @@
         16.02,
         15.81,
         15.68,
-        15.42
+        15.42,
+        15.3,
+        15.91
       ]
     },
     {
@@ -3405,10 +3405,9 @@
       "nombre": "Freeport-McMoRan, Inc.",
       "industria": "Basic Materials",
       "pais": "United States",
-      "var_pct": -0.55,
-      "rsi": 56.28,
+      "var_pct": 1.31,
+      "rsi": 58.0,
       "spark": [
-        60.61,
         61.65,
         64.37,
         66.03,
@@ -3437,7 +3436,8 @@
         70.13,
         70.15,
         69.06,
-        68.68
+        68.68,
+        69.58
       ]
     },
     {
@@ -3445,10 +3445,9 @@
       "nombre": "Banco BBVA Argentina S.A.",
       "industria": "Financial Services",
       "pais": "Argentina",
-      "var_pct": 4.09,
-      "rsi": 73.48,
+      "var_pct": -3.38,
+      "rsi": 67.27,
       "spark": [
-        15.3,
         14.77,
         15.5,
         14.87,
@@ -3477,7 +3476,8 @@
         20.69,
         20.58,
         21.04,
-        21.9
+        21.9,
+        21.16
       ]
     },
     {
@@ -3485,10 +3485,9 @@
       "nombre": "iShares MSCI Emerging Index Fun",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": 3.25,
-      "rsi": 62.35,
+      "var_pct": 0.69,
+      "rsi": 63.5,
       "spark": [
-        66.25,
         67.59,
         67.54,
         65.48,
@@ -3517,7 +3516,8 @@
         69.75,
         68.64,
         68.56,
-        70.79
+        70.79,
+        71.28
       ]
     },
     {
@@ -3525,11 +3525,9 @@
       "nombre": "Vista Energy S.A.B. de C.V.",
       "industria": "Energy",
       "pais": "Mexico",
-      "var_pct": -1.07,
-      "rsi": 39.27,
+      "var_pct": -0.47,
+      "rsi": 38.61,
       "spark": [
-        68.59,
-        65.8,
         65.21,
         66.83,
         69.28,
@@ -3557,7 +3555,9 @@
         72.14,
         68.59,
         69.26,
-        68.52
+        68.52,
+        68.55,
+        68.23
       ]
     },
     {
@@ -3565,10 +3565,9 @@
       "nombre": "Nike, Inc.",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": 2.29,
-      "rsi": 53.43,
+      "var_pct": -3.87,
+      "rsi": 45.27,
       "spark": [
-        44.02,
         43.75,
         42.01,
         41.97,
@@ -3597,7 +3596,8 @@
         45.2,
         45.04,
         44.19,
-        45.2
+        45.2,
+        43.45
       ]
     },
     {
@@ -3605,10 +3605,9 @@
       "nombre": "Starbucks Corporation",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": 0.83,
-      "rsi": 51.27,
+      "var_pct": 0.22,
+      "rsi": 51.9,
       "spark": [
-        103.65,
         104.32,
         105.12,
         105.96,
@@ -3637,7 +3636,8 @@
         101.59,
         101.68,
         99.82,
-        100.65
+        100.65,
+        100.87
       ]
     },
     {
@@ -3645,10 +3645,9 @@
       "nombre": "State Street Energy Select Sect",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -1.65,
-      "rsi": 33.97,
+      "var_pct": 0.1,
+      "rsi": 34.32,
       "spark": [
-        55.95,
         55.7,
         57.17,
         57.57,
@@ -3677,7 +3676,8 @@
         55.55,
         55.36,
         54.67,
-        53.77
+        53.77,
+        53.83
       ]
     },
     {
@@ -3685,11 +3685,9 @@
       "nombre": "Procter & Gamble Company (The)",
       "industria": "Consumer Defensive",
       "pais": "United States",
-      "var_pct": -1.27,
-      "rsi": 59.67,
+      "var_pct": -1.16,
+      "rsi": 54.58,
       "spark": [
-        147.9,
-        146.06,
         146.42,
         143.36,
         143.91,
@@ -3717,7 +3715,9 @@
         149.61,
         150.46,
         152.49,
-        150.56
+        150.56,
+        150.38,
+        148.63
       ]
     },
     {
@@ -3725,11 +3725,9 @@
       "nombre": "Avery Dennison Corporation",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": -1.46,
-      "rsi": 51.16,
+      "var_pct": -0.6,
+      "rsi": 47.71,
       "spark": [
-        165.62,
-        164.48,
         162.47,
         160.99,
         159.09,
@@ -3757,7 +3755,9 @@
         159.25,
         159.82,
         161.92,
-        159.55
+        159.55,
+        158.68,
+        157.73
       ]
     },
     {
@@ -3765,10 +3765,9 @@
       "nombre": "Snap Inc.",
       "industria": "Communication Services",
       "pais": "United States",
-      "var_pct": -1.69,
-      "rsi": 33.48,
+      "var_pct": 1.82,
+      "rsi": 35.67,
       "spark": [
-        5.98,
         6.08,
         5.75,
         5.55,
@@ -3797,7 +3796,8 @@
         5.71,
         5.16,
         4.74,
-        4.66
+        4.66,
+        4.74
       ]
     },
     {
@@ -3805,11 +3805,9 @@
       "nombre": "Urban Outfitters, Inc.",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": -4.77,
-      "rsi": 48.69,
+      "var_pct": -4.89,
+      "rsi": 48.93,
       "spark": [
-        71.62,
-        70.44,
         71.5,
         68.4,
         67.01,
@@ -3837,7 +3835,9 @@
         77.0,
         77.01,
         76.1,
-        72.47
+        72.47,
+        76.42,
+        72.68
       ]
     },
     {
@@ -3845,10 +3845,9 @@
       "nombre": "Verizon Communications Inc.",
       "industria": "Communication Services",
       "pais": "United States",
-      "var_pct": -1.03,
-      "rsi": 39.87,
+      "var_pct": 0.18,
+      "rsi": 40.52,
       "spark": [
-        47.09,
         47.22,
         47.23,
         47.93,
@@ -3877,7 +3876,8 @@
         47.07,
         46.73,
         45.84,
-        45.37
+        45.37,
+        45.45
       ]
     },
     {
@@ -3885,10 +3885,9 @@
       "nombre": "JD.com, Inc.",
       "industria": "Consumer Cyclical",
       "pais": "China",
-      "var_pct": -1.22,
-      "rsi": 35.72,
+      "var_pct": -1.36,
+      "rsi": 33.54,
       "spark": [
-        30.21,
         30.13,
         30.53,
         31.49,
@@ -3917,7 +3916,8 @@
         28.68,
         28.38,
         27.91,
-        27.57
+        27.57,
+        27.19
       ]
     },
     {
@@ -3925,10 +3925,9 @@
       "nombre": "Exxon Mobil Corporation",
       "industria": "Energy",
       "pais": "United States",
-      "var_pct": -2.08,
-      "rsi": 33.25,
+      "var_pct": 0.34,
+      "rsi": 34.28,
       "spark": [
-        145.59,
         143.6,
         148.67,
         149.61,
@@ -3957,7 +3956,8 @@
         140.92,
         141.86,
         140.74,
-        137.81
+        137.81,
+        138.29
       ]
     },
     {
@@ -3965,10 +3965,9 @@
       "nombre": "QUALCOMM Incorporated",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 6.17,
-      "rsi": 55.45,
+      "var_pct": 0.76,
+      "rsi": 56.03,
       "spark": [
-        201.8,
         218.28,
         236.66,
         209.54,
@@ -3997,7 +3996,8 @@
         220.81,
         214.07,
         212.97,
-        226.11
+        226.11,
+        227.82
       ]
     },
     {
@@ -4005,11 +4005,9 @@
       "nombre": "Koninklijke Philips N.V. NY Reg",
       "industria": "Healthcare",
       "pais": "Netherlands",
-      "var_pct": -2.09,
-      "rsi": 49.83,
+      "var_pct": 0.65,
+      "rsi": 56.43,
       "spark": [
-        26.21,
-        26.14,
         26.19,
         25.73,
         26.0,
@@ -4037,7 +4035,9 @@
         26.46,
         26.69,
         26.8,
-        26.24
+        26.24,
+        26.78,
+        26.95
       ]
     },
     {
@@ -4045,10 +4045,9 @@
       "nombre": "Central Puerto S.A.",
       "industria": "Utilities",
       "pais": "Argentina",
-      "var_pct": -0.25,
-      "rsi": 56.24,
+      "var_pct": -0.26,
+      "rsi": 55.64,
       "spark": [
-        14.59,
         14.11,
         14.54,
         14.24,
@@ -4077,7 +4076,8 @@
         15.86,
         15.85,
         15.71,
-        15.67
+        15.67,
+        15.63
       ]
     },
     {
@@ -4085,11 +4085,9 @@
       "nombre": "Cardinal Health, Inc.",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": -0.63,
-      "rsi": 75.36,
+      "var_pct": 0.67,
+      "rsi": 67.98,
       "spark": [
-        191.49,
-        185.28,
         183.65,
         182.5,
         182.56,
@@ -4117,7 +4115,9 @@
         223.85,
         226.4,
         227.72,
-        226.28
+        226.28,
+        221.77,
+        223.26
       ]
     },
     {
@@ -4125,10 +4125,9 @@
       "nombre": "Southern Copper Corporation",
       "industria": "Basic Materials",
       "pais": "United States",
-      "var_pct": 0.65,
-      "rsi": 55.68,
+      "var_pct": -0.59,
+      "rsi": 54.77,
       "spark": [
-        176.84,
         182.5,
         182.44,
         188.86,
@@ -4157,7 +4156,8 @@
         193.22,
         194.53,
         191.68,
-        192.93
+        192.93,
+        191.79
       ]
     },
     {
@@ -4165,10 +4165,9 @@
       "nombre": "Nu Holdings Ltd.",
       "industria": "Financial Services",
       "pais": "Brazil",
-      "var_pct": -1.4,
-      "rsi": 50.27,
+      "var_pct": 1.49,
+      "rsi": 52.8,
       "spark": [
-        14.26,
         13.8,
         13.5,
         13.27,
@@ -4197,7 +4196,8 @@
         12.43,
         12.72,
         12.89,
-        12.71
+        12.71,
+        12.9
       ]
     },
     {
@@ -4205,11 +4205,9 @@
       "nombre": "Target Corporation",
       "industria": "Consumer Defensive",
       "pais": "United States",
-      "var_pct": -4.19,
-      "rsi": 51.22,
+      "var_pct": -0.81,
+      "rsi": 53.79,
       "spark": [
-        128.97,
-        124.7,
         124.08,
         117.33,
         120.66,
@@ -4237,7 +4235,9 @@
         135.23,
         133.17,
         133.4,
-        127.81
+        127.81,
+        130.74,
+        129.68
       ]
     },
     {
@@ -4245,11 +4245,9 @@
       "nombre": "VeriSign, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -3.27,
-      "rsi": 33.42,
+      "var_pct": -6.73,
+      "rsi": 25.09,
       "spark": [
-        275.03,
-        277.73,
         287.45,
         285.71,
         285.04,
@@ -4277,7 +4275,9 @@
         279.89,
         272.96,
         273.87,
-        264.92
+        264.92,
+        264.64,
+        246.84
       ]
     },
     {
@@ -4285,10 +4285,9 @@
       "nombre": "Amazon.com, Inc.",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": 2.9,
-      "rsi": 44.03,
+      "var_pct": -4.32,
+      "rsi": 37.1,
       "spark": [
-        271.17,
         272.68,
         268.99,
         265.82,
@@ -4317,7 +4316,8 @@
         246.02,
         246.0,
         237.5,
-        244.39
+        244.39,
+        233.83
       ]
     },
     {
@@ -4325,10 +4325,9 @@
       "nombre": "Ross Stores, Inc.",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": -0.19,
-      "rsi": 54.56,
+      "var_pct": 1.71,
+      "rsi": 58.73,
       "spark": [
-        224.04,
         225.37,
         214.13,
         217.24,
@@ -4357,7 +4356,8 @@
         236.77,
         234.49,
         233.25,
-        232.8
+        232.8,
+        236.79
       ]
     },
     {
@@ -4365,11 +4365,9 @@
       "nombre": "Pearson, Plc",
       "industria": "Communication Services",
       "pais": "United Kingdom",
-      "var_pct": -0.72,
-      "rsi": 52.18,
+      "var_pct": 0.37,
+      "rsi": 46.08,
       "spark": [
-        15.22,
-        15.07,
         14.86,
         14.7,
         14.73,
@@ -4397,7 +4395,9 @@
         15.41,
         15.25,
         15.29,
-        15.18
+        15.18,
+        14.88,
+        14.94
       ]
     },
     {
@@ -4405,11 +4405,9 @@
       "nombre": "MercadoLibre, Inc.",
       "industria": "Consumer Cyclical",
       "pais": "Uruguay",
-      "var_pct": -2.52,
-      "rsi": 46.98,
+      "var_pct": -2.21,
+      "rsi": 43.44,
       "spark": [
-        1841.14,
-        1870.01,
         1632.52,
         1557.3,
         1578.78,
@@ -4437,7 +4435,9 @@
         1589.6,
         1646.36,
         1674.08,
-        1631.82
+        1631.82,
+        1635.15,
+        1599.06
       ]
     },
     {
@@ -4445,11 +4445,9 @@
       "nombre": "Pitney Bowes Inc.",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": -0.8,
-      "rsi": 67.51,
+      "var_pct": -0.03,
+      "rsi": 68.6,
       "spark": [
-        14.93,
-        15.48,
         15.6,
         15.8,
         15.21,
@@ -4477,7 +4475,9 @@
         17.32,
         17.24,
         17.52,
-        17.38
+        17.38,
+        17.5,
+        17.5
       ]
     },
     {
@@ -4485,11 +4485,9 @@
       "nombre": "Pinterest, Inc.",
       "industria": "Communication Services",
       "pais": "United States",
-      "var_pct": -3.78,
-      "rsi": 47.83,
+      "var_pct": -3.68,
+      "rsi": 42.44,
       "spark": [
-        21.16,
-        21.55,
         21.27,
         20.76,
         20.56,
@@ -4517,7 +4515,9 @@
         20.21,
         21.33,
         21.16,
-        20.36
+        20.36,
+        20.27,
+        19.52
       ]
     },
     {
@@ -4525,10 +4525,9 @@
       "nombre": "ARK Innovation ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": 2.17,
-      "rsi": 56.86,
+      "var_pct": -1.45,
+      "rsi": 53.8,
       "spark": [
-        77.93,
         79.12,
         80.03,
         78.21,
@@ -4557,7 +4556,8 @@
         79.63,
         79.08,
         78.49,
-        80.19
+        80.19,
+        79.03
       ]
     },
     {
@@ -4565,11 +4565,9 @@
       "nombre": "Gold.com, Inc.",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -2.33,
-      "rsi": 51.62,
+      "var_pct": -0.92,
+      "rsi": 48.48,
       "spark": [
-        42.88,
-        43.29,
         45.16,
         43.16,
         41.95,
@@ -4597,7 +4595,9 @@
         44.23,
         43.66,
         43.73,
-        42.71
+        42.71,
+        42.25,
+        41.86
       ]
     },
     {
@@ -4605,10 +4605,9 @@
       "nombre": "eBay Inc.",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": 0.32,
-      "rsi": 48.41,
+      "var_pct": -2.61,
+      "rsi": 41.69,
       "spark": [
-        106.13,
         107.39,
         107.83,
         110.09,
@@ -4637,7 +4636,8 @@
         109.18,
         109.32,
         107.89,
-        108.24
+        108.24,
+        105.41
       ]
     },
     {
@@ -4645,10 +4645,9 @@
       "nombre": "Grupo Supervielle S.A.",
       "industria": "Financial Services",
       "pais": "Argentina",
-      "var_pct": 1.52,
-      "rsi": 69.01,
+      "var_pct": -8.75,
+      "rsi": 55.7,
       "spark": [
-        8.58,
         7.97,
         8.18,
         7.82,
@@ -4677,7 +4676,8 @@
         11.29,
         11.03,
         11.21,
-        11.38
+        11.38,
+        10.38
       ]
     },
     {
@@ -4685,11 +4685,9 @@
       "nombre": "S&P Global Inc.",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -3.52,
-      "rsi": 48.3,
+      "var_pct": -1.09,
+      "rsi": 42.5,
       "spark": [
-        422.59,
-        427.68,
         419.14,
         420.02,
         423.18,
@@ -4717,7 +4715,9 @@
         418.91,
         424.07,
         433.25,
-        418.02
+        418.02,
+        410.92,
+        406.44
       ]
     },
     {
@@ -4725,11 +4725,9 @@
       "nombre": "Arcos Dorados Holdings Inc.",
       "industria": "Consumer Cyclical",
       "pais": "Uruguay",
-      "var_pct": -1.5,
-      "rsi": 48.71,
+      "var_pct": -2.4,
+      "rsi": 43.52,
       "spark": [
-        9.04,
-        8.95,
         9.02,
         8.64,
         8.64,
@@ -4757,7 +4755,9 @@
         8.83,
         8.78,
         8.69,
-        8.56
+        8.56,
+        8.55,
+        8.35
       ]
     },
     {
@@ -4765,10 +4765,9 @@
       "nombre": "Hecla Mining Company",
       "industria": "Basic Materials",
       "pais": "United States",
-      "var_pct": -0.62,
+      "var_pct": 0.0,
       "rsi": 45.45,
       "spark": [
-        18.07,
         18.61,
         20.67,
         20.57,
@@ -4797,6 +4796,7 @@
         16.66,
         16.72,
         16.06,
+        15.96,
         15.96
       ]
     },
@@ -4805,10 +4805,9 @@
       "nombre": "Snowflake Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -0.95,
-      "rsi": 59.18,
+      "var_pct": -2.21,
+      "rsi": 55.97,
       "spark": [
-        153.72,
         152.45,
         151.5,
         151.98,
@@ -4837,7 +4836,8 @@
         240.78,
         238.32,
         234.52,
-        232.29
+        232.29,
+        227.15
       ]
     },
     {
@@ -4845,10 +4845,9 @@
       "nombre": "Citigroup, Inc.",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -0.5,
-      "rsi": 71.74,
+      "var_pct": 1.71,
+      "rsi": 74.47,
       "spark": [
-        129.09,
         125.55,
         125.85,
         126.44,
@@ -4877,7 +4876,8 @@
         141.21,
         142.99,
         143.78,
-        143.06
+        143.06,
+        145.51
       ]
     },
     {
@@ -4885,10 +4885,9 @@
       "nombre": "Uber Technologies, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 1.03,
-      "rsi": 48.93,
+      "var_pct": 0.97,
+      "rsi": 51.03,
       "spark": [
-        76.73,
         75.45,
         76.15,
         76.36,
@@ -4917,7 +4916,8 @@
         72.85,
         73.25,
         70.91,
-        71.64
+        71.64,
+        72.33
       ]
     },
     {
@@ -4925,11 +4925,9 @@
       "nombre": "International Flavors & Fragran",
       "industria": "Basic Materials",
       "pais": "United States",
-      "var_pct": -2.31,
-      "rsi": 51.91,
+      "var_pct": -0.5,
+      "rsi": 53.52,
       "spark": [
-        82.49,
-        77.85,
         80.62,
         78.34,
         78.06,
@@ -4957,7 +4955,9 @@
         77.86,
         77.95,
         77.44,
-        75.65
+        75.65,
+        76.72,
+        76.34
       ]
     },
     {
@@ -4965,10 +4965,9 @@
       "nombre": "AT&T Inc.",
       "industria": "Communication Services",
       "pais": "United States",
-      "var_pct": -1.92,
-      "rsi": 29.69,
+      "var_pct": 1.02,
+      "rsi": 33.01,
       "spark": [
-        25.26,
         25.16,
         24.87,
         25.23,
@@ -4997,7 +4996,8 @@
         23.29,
         23.16,
         22.44,
-        22.01
+        22.01,
+        22.24
       ]
     },
     {
@@ -5005,10 +5005,9 @@
       "nombre": "Pepsico, Inc.",
       "industria": "Consumer Defensive",
       "pais": "United States",
-      "var_pct": 0.3,
-      "rsi": 41.79,
+      "var_pct": -0.65,
+      "rsi": 39.89,
       "spark": [
-        154.66,
         153.01,
         147.85,
         150.27,
@@ -5037,7 +5036,8 @@
         146.25,
         146.12,
         141.59,
-        142.02
+        142.02,
+        141.1
       ]
     },
     {
@@ -5045,11 +5045,9 @@
       "nombre": "3M Company",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": -1.48,
-      "rsi": 63.89,
+      "var_pct": 1.52,
+      "rsi": 69.82,
       "spark": [
-        145.79,
-        143.01,
         142.55,
         142.6,
         142.47,
@@ -5077,7 +5075,9 @@
         158.32,
         158.23,
         161.63,
-        159.23
+        159.23,
+        160.6,
+        163.04
       ]
     },
     {
@@ -5085,11 +5085,9 @@
       "nombre": "Mizuho Financial Group, Inc. Sp",
       "industria": "Financial Services",
       "pais": "Japan",
-      "var_pct": 3.89,
-      "rsi": 70.32,
+      "var_pct": -1.36,
+      "rsi": 67.85,
       "spark": [
-        8.85,
-        8.66,
         8.69,
         8.81,
         8.85,
@@ -5117,7 +5115,9 @@
         9.68,
         9.68,
         9.76,
-        10.14
+        10.14,
+        10.3,
+        10.16
       ]
     },
     {
@@ -5125,10 +5125,9 @@
       "nombre": "SAP  SE",
       "industria": "Technology",
       "pais": "Germany",
-      "var_pct": -2.25,
-      "rsi": 33.9,
+      "var_pct": -3.42,
+      "rsi": 30.75,
       "spark": [
-        174.71,
         173.7,
         170.1,
         167.27,
@@ -5157,7 +5156,8 @@
         164.33,
         165.41,
         158.79,
-        155.22
+        155.22,
+        149.91
       ]
     },
     {
@@ -5165,11 +5165,9 @@
       "nombre": "Banco Macro S.A.",
       "industria": "Financial Services",
       "pais": "Argentina",
-      "var_pct": 1.82,
-      "rsi": 68.24,
+      "var_pct": -2.46,
+      "rsi": 66.09,
       "spark": [
-        75.92,
-        73.84,
         72.48,
         73.71,
         72.28,
@@ -5197,7 +5195,9 @@
         98.71,
         99.95,
         96.77,
-        98.53
+        98.53,
+        101.68,
+        99.18
       ]
     },
     {
@@ -5205,11 +5205,9 @@
       "nombre": "Yelp Inc.",
       "industria": "Communication Services",
       "pais": "United States",
-      "var_pct": -3.3,
-      "rsi": 43.79,
+      "var_pct": -1.14,
+      "rsi": 44.6,
       "spark": [
-        28.31,
-        28.5,
         27.08,
         25.28,
         23.09,
@@ -5237,7 +5235,9 @@
         23.1,
         22.57,
         23.3,
-        22.53
+        22.53,
+        22.88,
+        22.62
       ]
     },
     {
@@ -5245,10 +5245,9 @@
       "nombre": "Trip.com Group Limited",
       "industria": "Consumer Cyclical",
       "pais": "Singapore",
-      "var_pct": -3.49,
-      "rsi": 33.96,
+      "var_pct": 3.34,
+      "rsi": 42.95,
       "spark": [
-        53.37,
         52.68,
         52.2,
         52.01,
@@ -5277,7 +5276,8 @@
         47.4,
         46.23,
         46.73,
-        45.1
+        45.1,
+        46.6
       ]
     },
     {
@@ -5285,11 +5285,9 @@
       "nombre": "Empresa Distribuidora Y Comerci",
       "industria": "Utilities",
       "pais": "Argentina",
-      "var_pct": -0.04,
-      "rsi": 54.5,
+      "var_pct": -4.46,
+      "rsi": 50.18,
       "spark": [
-        25.75,
-        24.46,
         23.37,
         24.47,
         24.16,
@@ -5317,7 +5315,9 @@
         27.56,
         28.74,
         27.41,
-        27.4
+        27.4,
+        27.86,
+        26.62
       ]
     },
     {
@@ -5325,10 +5325,9 @@
       "nombre": "Medtronic plc.",
       "industria": "Healthcare",
       "pais": "Ireland",
-      "var_pct": 1.54,
-      "rsi": 49.92,
+      "var_pct": 0.03,
+      "rsi": 50.0,
       "spark": [
-        77.96,
         76.15,
         74.54,
         76.82,
@@ -5357,7 +5356,8 @@
         80.38,
         81.32,
         78.14,
-        79.34
+        79.34,
+        79.36
       ]
     },
     {
@@ -5365,10 +5365,9 @@
       "nombre": "Meta Platforms, Inc.",
       "industria": "Communication Services",
       "pais": "United States",
-      "var_pct": 1.7,
-      "rsi": 42.98,
+      "var_pct": -2.13,
+      "rsi": 39.78,
       "spark": [
-        616.24,
         609.07,
         598.31,
         602.44,
@@ -5397,7 +5396,8 @@
         593.48,
         600.21,
         567.58,
-        577.22
+        577.22,
+        564.9
       ]
     },
     {
@@ -5405,11 +5405,9 @@
       "nombre": "Novartis AG",
       "industria": "Healthcare",
       "pais": "Switzerland",
-      "var_pct": -0.03,
-      "rsi": 53.16,
+      "var_pct": 1.33,
+      "rsi": 49.41,
       "spark": [
-        148.36,
-        145.39,
         146.03,
         145.23,
         148.16,
@@ -5437,7 +5435,9 @@
         153.07,
         151.56,
         150.93,
-        150.88
+        150.88,
+        147.08,
+        149.04
       ]
     },
     {
@@ -5445,10 +5445,9 @@
       "nombre": "Hut 8 Corp.",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": 4.68,
-      "rsi": 59.81,
+      "var_pct": -2.43,
+      "rsi": 57.04,
       "spark": [
-        101.18,
         98.46,
         102.19,
         107.31,
@@ -5477,7 +5476,8 @@
         120.18,
         121.48,
         118.88,
-        124.44
+        124.44,
+        121.42
       ]
     },
     {
@@ -5485,10 +5485,9 @@
       "nombre": "Walmart Inc.",
       "industria": "Consumer Defensive",
       "pais": "United States",
-      "var_pct": -0.8,
-      "rsi": 38.59,
+      "var_pct": 0.01,
+      "rsi": 38.62,
       "spark": [
-        129.95,
         130.43,
         127.59,
         130.35,
@@ -5517,7 +5516,8 @@
         120.82,
         121.03,
         118.13,
-        117.18
+        117.18,
+        117.19
       ]
     },
     {
@@ -5525,10 +5525,9 @@
       "nombre": "Chevron Corporation",
       "industria": "Energy",
       "pais": "United States",
-      "var_pct": -2.22,
-      "rsi": 33.18,
+      "var_pct": 0.54,
+      "rsi": 34.98,
       "spark": [
-        180.84,
         179.97,
         183.06,
         184.26,
@@ -5557,7 +5556,8 @@
         180.4,
         180.11,
         177.58,
-        173.63
+        173.63,
+        174.57
       ]
     },
     {
@@ -5565,10 +5565,9 @@
       "nombre": "Invesco QQQ Trust, Series 1",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": 2.51,
-      "rsi": 59.09,
+      "var_pct": -0.41,
+      "rsi": 57.82,
       "spark": [
-        694.94,
         711.23,
         713.29,
         707.24,
@@ -5597,7 +5596,8 @@
         744.0,
         729.86,
         722.51,
-        740.62
+        740.62,
+        737.59
       ]
     },
     {
@@ -5605,11 +5605,9 @@
       "nombre": "Ferrari N.V.",
       "industria": "Consumer Cyclical",
       "pais": "Italy",
-      "var_pct": -3.24,
-      "rsi": 52.31,
+      "var_pct": -3.6,
+      "rsi": 49.5,
       "spark": [
-        336.25,
-        337.46,
         339.69,
         329.26,
         329.26,
@@ -5637,7 +5635,9 @@
         354.91,
         369.06,
         366.13,
-        354.28
+        354.28,
+        362.13,
+        349.11
       ]
     },
     {
@@ -5645,10 +5645,9 @@
       "nombre": "Apple Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 0.7,
-      "rsi": 50.98,
+      "var_pct": 0.21,
+      "rsi": 51.62,
       "spark": [
-        287.18,
         293.05,
         292.68,
         294.8,
@@ -5677,7 +5676,8 @@
         296.42,
         299.24,
         295.95,
-        298.01
+        298.01,
+        298.64
       ]
     },
     {
@@ -5685,10 +5685,9 @@
       "nombre": "Zoom Communications, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -1.18,
-      "rsi": 34.15,
+      "var_pct": -2.96,
+      "rsi": 31.7,
       "spark": [
-        108.36,
         109.21,
         107.12,
         102.96,
@@ -5717,7 +5716,8 @@
         94.25,
         92.07,
         87.39,
-        86.36
+        86.36,
+        83.8
       ]
     },
     {
@@ -5725,11 +5725,9 @@
       "nombre": "Diageo plc",
       "industria": "Consumer Defensive",
       "pais": "United Kingdom",
-      "var_pct": -2.11,
-      "rsi": 42.02,
+      "var_pct": -1.13,
+      "rsi": 45.22,
       "spark": [
-        84.61,
-        83.43,
         84.3,
         82.01,
         81.11,
@@ -5757,7 +5755,9 @@
         81.79,
         80.29,
         80.54,
-        78.84
+        78.84,
+        80.45,
+        79.54
       ]
     },
     {
@@ -5765,11 +5765,9 @@
       "nombre": "Corporacion America Airports SA",
       "industria": "Industrials",
       "pais": "Luxembourg",
-      "var_pct": -2.23,
-      "rsi": 57.29,
+      "var_pct": -3.47,
+      "rsi": 52.6,
       "spark": [
-        26.03,
-        25.78,
         25.23,
         25.1,
         24.94,
@@ -5797,7 +5795,9 @@
         26.43,
         28.06,
         27.78,
-        27.16
+        27.16,
+        27.54,
+        26.58
       ]
     },
     {
@@ -5805,11 +5805,9 @@
       "nombre": "Aegon Ltd. New York Registry Sh",
       "industria": "Financial Services",
       "pais": "Netherlands",
-      "var_pct": -1.5,
-      "rsi": 62.49,
+      "var_pct": 1.48,
+      "rsi": 61.69,
       "spark": [
-        8.15,
-        8.0,
         8.07,
         8.18,
         8.12,
@@ -5837,7 +5835,9 @@
         8.41,
         8.52,
         8.65,
-        8.52
+        8.52,
+        8.42,
+        8.55
       ]
     },
     {
@@ -5845,10 +5845,9 @@
       "nombre": "TripAdvisor, Inc.",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": 2.85,
-      "rsi": 70.56,
+      "var_pct": -1.66,
+      "rsi": 66.27,
       "spark": [
-        11.23,
         10.45,
         9.66,
         9.45,
@@ -5877,7 +5876,8 @@
         12.56,
         12.81,
         12.61,
-        12.97
+        12.97,
+        12.76
       ]
     },
     {
@@ -5885,11 +5885,9 @@
       "nombre": "Spotify Technology S.A.",
       "industria": "Communication Services",
       "pais": "Sweden",
-      "var_pct": -3.02,
-      "rsi": 40.04,
+      "var_pct": -1.72,
+      "rsi": 42.67,
       "spark": [
-        425.25,
-        427.43,
         417.83,
         419.5,
         432.75,
@@ -5917,7 +5915,9 @@
         482.0,
         479.85,
         469.81,
-        455.6
+        455.6,
+        468.08,
+        460.01
       ]
     },
     {
@@ -5925,10 +5925,9 @@
       "nombre": "Broadcom Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 4.7,
-      "rsi": 51.33,
+      "var_pct": -3.58,
+      "rsi": 47.41,
       "spark": [
-        412.56,
         430.0,
         428.43,
         419.3,
@@ -5957,7 +5956,8 @@
         393.94,
         376.71,
         392.9,
-        411.35
+        411.35,
+        396.61
       ]
     },
     {
@@ -5965,10 +5965,9 @@
       "nombre": "Ford Motor Company",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": 0.72,
-      "rsi": 46.41,
+      "var_pct": 0.92,
+      "rsi": 47.81,
       "spark": [
-        12.03,
         12.17,
         11.9,
         11.99,
@@ -5997,7 +5996,8 @@
         14.77,
         14.41,
         13.96,
-        14.06
+        14.06,
+        14.19
       ]
     },
     {
@@ -6005,10 +6005,9 @@
       "nombre": "Pan American Silver Corp.",
       "industria": "Basic Materials",
       "pais": "Canada",
-      "var_pct": -2.89,
-      "rsi": 43.69,
+      "var_pct": -0.27,
+      "rsi": 43.43,
       "spark": [
-        57.62,
         58.95,
         62.09,
         63.57,
@@ -6037,7 +6036,8 @@
         50.97,
         51.92,
         50.46,
-        49.0
+        49.0,
+        48.87
       ]
     },
     {
@@ -6045,10 +6045,9 @@
       "nombre": "Caterpillar, Inc.",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": 3.13,
-      "rsi": 65.46,
+      "var_pct": 3.31,
+      "rsi": 69.25,
       "spark": [
-        895.69,
         897.45,
         926.79,
         912.14,
@@ -6077,7 +6076,8 @@
         933.93,
         945.46,
         955.92,
-        985.82
+        985.82,
+        1018.45
       ]
     },
     {
@@ -6085,10 +6085,9 @@
       "nombre": "Johnson & Johnson",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": -2.48,
-      "rsi": 45.07,
+      "var_pct": 1.0,
+      "rsi": 48.75,
       "spark": [
-        221.24,
         220.05,
         220.16,
         222.98,
@@ -6117,7 +6116,8 @@
         235.66,
         235.18,
         234.2,
-        228.39
+        228.39,
+        230.68
       ]
     },
     {
@@ -6125,10 +6125,9 @@
       "nombre": "Shopify Inc.",
       "industria": "Technology",
       "pais": "Canada",
-      "var_pct": 0.7,
-      "rsi": 47.18,
+      "var_pct": -1.03,
+      "rsi": 45.92,
       "spark": [
-        111.74,
         110.41,
         102.54,
         99.84,
@@ -6157,7 +6156,8 @@
         112.49,
         113.23,
         108.09,
-        108.85
+        108.85,
+        107.73
       ]
     },
     {
@@ -6165,11 +6165,9 @@
       "nombre": "Johnson Controls International ",
       "industria": "Industrials",
       "pais": "Ireland",
-      "var_pct": -1.07,
-      "rsi": 52.67,
+      "var_pct": 1.58,
+      "rsi": 57.39,
       "spark": [
-        142.75,
-        138.87,
         139.14,
         141.39,
         140.65,
@@ -6197,7 +6195,9 @@
         144.56,
         146.06,
         145.17,
-        143.62
+        143.62,
+        144.82,
+        147.1
       ]
     },
     {
@@ -6205,11 +6205,9 @@
       "nombre": "Mitsubishi UFJ Financial Group,",
       "industria": "Financial Services",
       "pais": "Japan",
-      "var_pct": 2.22,
-      "rsi": 73.63,
+      "var_pct": -0.69,
+      "rsi": 72.77,
       "spark": [
-        18.39,
-        18.0,
         17.95,
         18.19,
         18.46,
@@ -6237,7 +6235,9 @@
         20.16,
         20.18,
         20.3,
-        20.75
+        20.75,
+        21.08,
+        20.93
       ]
     },
     {
@@ -6245,11 +6245,9 @@
       "nombre": "Las Vegas Sands Corp.",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": -1.66,
-      "rsi": 35.2,
+      "var_pct": -2.24,
+      "rsi": 34.92,
       "spark": [
-        53.22,
-        53.78,
         53.11,
         52.07,
         51.7,
@@ -6277,7 +6275,9 @@
         50.67,
         49.74,
         48.94,
-        48.13
+        48.13,
+        48.72,
+        47.63
       ]
     },
     {
@@ -6285,11 +6285,9 @@
       "nombre": "America Movil, S.A.B. de C.V.",
       "industria": "Communication Services",
       "pais": "Mexico",
-      "var_pct": -1.23,
-      "rsi": 52.22,
+      "var_pct": -0.36,
+      "rsi": 51.28,
       "spark": [
-        27.1,
-        26.75,
         27.21,
         27.42,
         27.15,
@@ -6317,7 +6315,9 @@
         27.75,
         27.18,
         26.78,
-        26.45
+        26.45,
+        26.46,
+        26.36
       ]
     },
     {
@@ -6325,10 +6325,9 @@
       "nombre": "Roku, Inc.",
       "industria": "Communication Services",
       "pais": "United States",
-      "var_pct": 0.57,
-      "rsi": 61.77,
+      "var_pct": -2.0,
+      "rsi": 58.13,
       "spark": [
-        126.67,
         129.53,
         128.07,
         127.63,
@@ -6357,7 +6356,8 @@
         140.9,
         137.95,
         137.29,
-        138.07
+        138.07,
+        135.32
       ]
     },
     {
@@ -6365,10 +6365,9 @@
       "nombre": "Strategy Inc",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -3.46,
-      "rsi": 34.04,
+      "var_pct": -2.1,
+      "rsi": 33.06,
       "spark": [
-        179.84,
         187.59,
         195.94,
         184.42,
@@ -6397,7 +6396,8 @@
         131.14,
         122.81,
         116.56,
-        112.53
+        112.53,
+        110.17
       ]
     },
     {
@@ -6405,10 +6405,9 @@
       "nombre": "Corning Incorporated",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 11.13,
-      "rsi": 55.89,
+      "var_pct": 6.92,
+      "rsi": 60.76,
       "spark": [
-        182.12,
         186.65,
         207.07,
         197.94,
@@ -6437,7 +6436,8 @@
         187.88,
         177.42,
         175.4,
-        194.92
+        194.92,
+        208.4
       ]
     },
     {
@@ -6445,10 +6445,9 @@
       "nombre": "Lloyds Banking Group Plc",
       "industria": "Financial Services",
       "pais": "United Kingdom",
-      "var_pct": -0.18,
-      "rsi": 57.12,
+      "var_pct": 3.34,
+      "rsi": 63.92,
       "spark": [
-        5.29,
         5.43,
         5.36,
         5.21,
@@ -6477,7 +6476,8 @@
         5.49,
         5.56,
         5.55,
-        5.54
+        5.54,
+        5.72
       ]
     },
     {
@@ -6485,10 +6485,9 @@
       "nombre": "General Motors Company",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": -0.36,
-      "rsi": 47.19,
+      "var_pct": 2.51,
+      "rsi": 52.14,
       "spark": [
-        78.24,
         78.63,
         75.13,
         76.27,
@@ -6517,7 +6516,8 @@
         84.07,
         82.51,
         79.58,
-        79.29
+        79.29,
+        81.28
       ]
     },
     {
@@ -6525,10 +6525,9 @@
       "nombre": "Abbott Laboratories",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": -0.1,
-      "rsi": 47.62,
+      "var_pct": -0.36,
+      "rsi": 46.65,
       "spark": [
-        87.01,
         84.32,
         82.56,
         84.35,
@@ -6557,7 +6556,8 @@
         88.67,
         90.62,
         88.5,
-        88.41
+        88.41,
+        88.1
       ]
     },
     {
@@ -6565,10 +6565,9 @@
       "nombre": "Coinbase Global, Inc.",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -1.01,
-      "rsi": 43.16,
+      "var_pct": 1.2,
+      "rsi": 44.61,
       "spark": [
-        192.96,
         201.16,
         216.6,
         207.64,
@@ -6597,7 +6596,8 @@
         169.62,
         169.27,
         164.92,
-        163.26
+        163.26,
+        165.21
       ]
     },
     {
@@ -6605,10 +6605,9 @@
       "nombre": "Kimberly-Clark Corporation",
       "industria": "Consumer Defensive",
       "pais": "United States",
-      "var_pct": 1.07,
-      "rsi": 60.01,
+      "var_pct": -0.78,
+      "rsi": 57.35,
       "spark": [
-        98.21,
         96.98,
         94.45,
         96.02,
@@ -6637,7 +6636,8 @@
         103.14,
         104.28,
         101.47,
-        102.56
+        102.56,
+        101.75
       ]
     },
     {
@@ -6645,10 +6645,9 @@
       "nombre": "NVIDIA Corporation",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 2.95,
-      "rsi": 50.46,
+      "var_pct": -0.83,
+      "rsi": 49.06,
       "spark": [
-        211.25,
         214.95,
         219.18,
         220.52,
@@ -6677,7 +6676,8 @@
         212.45,
         207.41,
         204.65,
-        210.69
+        210.69,
+        208.94
       ]
     },
     {
@@ -6685,10 +6685,9 @@
       "nombre": "HP Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 1.38,
-      "rsi": 48.18,
+      "var_pct": 1.77,
+      "rsi": 50.55,
       "spark": [
-        20.74,
         22.41,
         21.41,
         20.83,
@@ -6717,7 +6716,8 @@
         24.6,
         24.29,
         23.18,
-        23.5
+        23.5,
+        23.92
       ]
     },
     {
@@ -6725,10 +6725,9 @@
       "nombre": "Marvell Technology, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 7.27,
-      "rsi": 64.55,
+      "var_pct": -1.5,
+      "rsi": 63.24,
       "spark": [
-        160.01,
         170.13,
         170.84,
         164.5,
@@ -6757,7 +6756,8 @@
         308.88,
         278.67,
         289.54,
-        310.58
+        310.58,
+        305.93
       ]
     },
     {
@@ -6765,10 +6765,9 @@
       "nombre": "iShares Russell 2000 Index Fund",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": 1.97,
-      "rsi": 60.89,
+      "var_pct": 1.0,
+      "rsi": 63.34,
       "spark": [
-        281.59,
         283.5,
         284.65,
         281.9,
@@ -6797,7 +6796,8 @@
         294.64,
         292.08,
         289.88,
-        295.59
+        295.59,
+        298.55
       ]
     },
     {
@@ -6805,10 +6805,9 @@
       "nombre": "Lithium Americas Corp.",
       "industria": "Basic Materials",
       "pais": "Canada",
-      "var_pct": -1.13,
-      "rsi": 40.99,
+      "var_pct": -0.8,
+      "rsi": 40.35,
       "spark": [
-        5.66,
         5.57,
         5.79,
         5.57,
@@ -6837,7 +6836,8 @@
         4.58,
         4.45,
         4.42,
-        4.37
+        4.37,
+        4.34
       ]
     },
     {
@@ -6845,10 +6845,9 @@
       "nombre": "RTX Corporation",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": -3.62,
-      "rsi": 55.48,
+      "var_pct": -1.67,
+      "rsi": 51.48,
       "spark": [
-        176.05,
         175.36,
         177.87,
         178.15,
@@ -6877,7 +6876,8 @@
         183.64,
         186.77,
         192.58,
-        185.6
+        185.6,
+        182.5
       ]
     },
     {
@@ -6885,10 +6885,9 @@
       "nombre": "GE Aerospace",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": 0.17,
-      "rsi": 71.44,
+      "var_pct": -0.27,
+      "rsi": 70.59,
       "spark": [
-        302.63,
         297.15,
         300.77,
         297.45,
@@ -6917,7 +6916,8 @@
         342.26,
         351.73,
         357.03,
-        357.64
+        357.64,
+        356.69
       ]
     },
     {
@@ -6925,10 +6925,9 @@
       "nombre": "Airbnb, Inc.",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": 1.33,
-      "rsi": 63.03,
+      "var_pct": -2.23,
+      "rsi": 56.18,
       "spark": [
-        140.46,
         141.49,
         137.05,
         135.48,
@@ -6957,7 +6956,8 @@
         138.96,
         141.2,
         140.54,
-        142.41
+        142.41,
+        139.24
       ]
     },
     {
@@ -6965,10 +6965,9 @@
       "nombre": "Lockheed Martin Corporation",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": -4.01,
-      "rsi": 41.2,
+      "var_pct": -3.57,
+      "rsi": 34.99,
       "spark": [
-        509.08,
         503.22,
         508.92,
         517.61,
@@ -6997,7 +6996,8 @@
         530.36,
         535.95,
         532.32,
-        510.95
+        510.95,
+        492.71
       ]
     },
     {
@@ -7005,10 +7005,9 @@
       "nombre": "Micron Technology, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 8.7,
-      "rsi": 66.39,
+      "var_pct": 5.71,
+      "rsi": 69.26,
       "spark": [
-        646.63,
         746.81,
         795.33,
         766.58,
@@ -7037,7 +7036,8 @@
         1087.99,
         1020.76,
         1043.19,
-        1133.99
+        1133.99,
+        1198.75
       ]
     },
     {
@@ -7045,10 +7045,9 @@
       "nombre": "Nucor Corporation",
       "industria": "Basic Materials",
       "pais": "United States",
-      "var_pct": -3.47,
-      "rsi": 48.84,
+      "var_pct": -0.34,
+      "rsi": 48.16,
       "spark": [
-        226.7,
         227.5,
         232.0,
         229.83,
@@ -7077,7 +7076,8 @@
         259.32,
         259.08,
         252.6,
-        243.83
+        243.83,
+        243.01
       ]
     },
     {
@@ -7085,10 +7085,9 @@
       "nombre": "Kinross Gold Corporation",
       "industria": "Basic Materials",
       "pais": "Canada",
-      "var_pct": -2.24,
-      "rsi": 44.8,
+      "var_pct": -1.87,
+      "rsi": 42.93,
       "spark": [
-        30.38,
         31.47,
         31.77,
         31.69,
@@ -7117,7 +7116,8 @@
         27.34,
         27.99,
         27.28,
-        26.67
+        26.67,
+        26.17
       ]
     },
     {
@@ -7125,10 +7125,9 @@
       "nombre": "Palantir Technologies Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -1.65,
-      "rsi": 41.25,
+      "var_pct": -6.06,
+      "rsi": 35.31,
       "spark": [
-        137.05,
         137.8,
         136.89,
         136.0,
@@ -7157,7 +7156,8 @@
         134.71,
         133.25,
         130.63,
-        128.47
+        128.47,
+        120.68
       ]
     },
     {
@@ -7165,10 +7165,9 @@
       "nombre": "State Street SPDR S&P 500 ETF T",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": 1.04,
-      "rsi": 55.15,
+      "var_pct": -0.25,
+      "rsi": 53.87,
       "spark": [
-        729.7,
         735.72,
         737.4,
         736.28,
@@ -7197,7 +7196,8 @@
         752.89,
         748.4,
         739.06,
-        746.74
+        746.74,
+        744.85
       ]
     },
     {
@@ -7205,10 +7205,9 @@
       "nombre": "Harmony Gold Mining Company Lim",
       "industria": "Basic Materials",
       "pais": "South Africa",
-      "var_pct": -0.53,
-      "rsi": 52.0,
+      "var_pct": -4.97,
+      "rsi": 46.8,
       "spark": [
-        17.59,
         17.79,
         18.13,
         17.92,
@@ -7237,7 +7236,8 @@
         17.52,
         17.78,
         17.1,
-        17.01
+        17.01,
+        16.17
       ]
     },
     {
@@ -7245,10 +7245,9 @@
       "nombre": "Palo Alto Networks, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 2.0,
-      "rsi": 66.49,
+      "var_pct": -0.5,
+      "rsi": 65.38,
       "spark": [
-        196.53,
         207.88,
         213.66,
         215.6,
@@ -7277,7 +7276,8 @@
         284.54,
         279.9,
         282.13,
-        287.78
+        287.78,
+        286.34
       ]
     },
     {
@@ -7285,10 +7285,9 @@
       "nombre": "Salesforce, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -2.09,
-      "rsi": 30.82,
+      "var_pct": -1.86,
+      "rsi": 29.4,
       "spark": [
-        185.86,
         181.35,
         177.03,
         170.87,
@@ -7317,7 +7316,8 @@
         164.55,
         161.71,
         155.02,
-        151.78
+        151.78,
+        148.95
       ]
     },
     {
@@ -7325,10 +7325,9 @@
       "nombre": "Virgin Galactic Holdings, Inc.",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": 2.01,
-      "rsi": 47.46,
+      "var_pct": -10.67,
+      "rsi": 44.84,
       "spark": [
-        2.51,
         2.94,
         2.92,
         2.79,
@@ -7357,7 +7356,8 @@
         3.56,
         3.35,
         3.49,
-        3.56
+        3.56,
+        3.18
       ]
     },
     {
@@ -7365,10 +7365,9 @@
       "nombre": "Globant S.A.",
       "industria": "Technology",
       "pais": "Luxembourg",
-      "var_pct": -11.18,
-      "rsi": 28.28,
+      "var_pct": -5.43,
+      "rsi": 25.8,
       "spark": [
-        40.97,
         39.23,
         37.21,
         35.71,
@@ -7397,7 +7396,8 @@
         36.87,
         36.63,
         34.61,
-        30.74
+        30.74,
+        29.07
       ]
     },
     {
@@ -7405,10 +7405,9 @@
       "nombre": "Visa Inc.",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -0.95,
-      "rsi": 53.71,
+      "var_pct": 0.49,
+      "rsi": 55.19,
       "spark": [
-        320.62,
         318.13,
         323.19,
         326.42,
@@ -7437,7 +7436,8 @@
         323.82,
         333.12,
         330.38,
-        327.24
+        327.24,
+        328.86
       ]
     },
     {
@@ -7445,10 +7445,9 @@
       "nombre": "Oracle Corporation",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 0.41,
-      "rsi": 43.08,
+      "var_pct": -4.37,
+      "rsi": 39.49,
       "spark": [
-        194.59,
         195.95,
         193.84,
         186.83,
@@ -7477,7 +7476,8 @@
         192.64,
         188.33,
         183.53,
-        184.29
+        184.29,
+        176.23
       ]
     },
     {
@@ -7485,10 +7485,9 @@
       "nombre": "Grupo Financiero Galicia S.A.",
       "industria": "Financial Services",
       "pais": "Argentina",
-      "var_pct": 1.48,
-      "rsi": 70.01,
+      "var_pct": -5.57,
+      "rsi": 58.91,
       "spark": [
-        42.6,
         41.34,
         43.54,
         42.19,
@@ -7517,7 +7516,8 @@
         55.96,
         54.44,
         55.55,
-        56.37
+        56.37,
+        53.23
       ]
     },
     {
@@ -7525,10 +7525,9 @@
       "nombre": "Sea Limited",
       "industria": "Consumer Cyclical",
       "pais": "Singapore",
-      "var_pct": 0.48,
-      "rsi": 55.14,
+      "var_pct": -1.53,
+      "rsi": 52.77,
       "spark": [
-        88.64,
         86.73,
         84.87,
         96.02,
@@ -7557,7 +7556,8 @@
         86.66,
         86.81,
         90.84,
-        91.28
+        91.28,
+        89.88
       ]
     },
     {
@@ -7565,10 +7565,9 @@
       "nombre": "State Street SPDR Dow Jones Ind",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": 0.12,
-      "rsi": 59.56,
+      "var_pct": 0.29,
+      "rsi": 60.76,
       "spark": [
-        494.29,
         494.51,
         495.48,
         496.26,
@@ -7597,7 +7596,8 @@
         517.03,
         520.02,
         514.89,
-        515.52
+        515.52,
+        517.02
       ]
     },
     {
@@ -7605,11 +7605,9 @@
       "nombre": "American International Group, I",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -0.59,
-      "rsi": 49.33,
+      "var_pct": 3.16,
+      "rsi": 56.35,
       "spark": [
-        77.18,
-        75.93,
         75.86,
         75.56,
         75.9,
@@ -7637,7 +7635,9 @@
         75.24,
         74.88,
         75.21,
-        74.77
+        74.77,
+        74.02,
+        76.36
       ]
     },
     {
@@ -7645,10 +7645,9 @@
       "nombre": "Newmont Corporation",
       "industria": "Basic Materials",
       "pais": "United States",
-      "var_pct": -1.78,
-      "rsi": 47.28,
+      "var_pct": -2.21,
+      "rsi": 44.6,
       "spark": [
-        113.23,
         116.24,
         120.39,
         119.41,
@@ -7677,7 +7676,8 @@
         105.8,
         108.44,
         105.67,
-        103.79
+        103.79,
+        101.5
       ]
     },
     {
@@ -7685,11 +7685,9 @@
       "nombre": "Ericsson",
       "industria": "Technology",
       "pais": "Sweden",
-      "var_pct": -3.06,
-      "rsi": 38.26,
+      "var_pct": 2.24,
+      "rsi": 42.01,
       "spark": [
-        12.02,
-        11.76,
         11.88,
         12.49,
         12.33,
@@ -7717,7 +7715,9 @@
         12.28,
         12.22,
         11.75,
-        11.39
+        11.39,
+        11.38,
+        11.64
       ]
     },
     {
@@ -7725,11 +7725,9 @@
       "nombre": "Gold Fields Limited",
       "industria": "Basic Materials",
       "pais": "South Africa",
-      "var_pct": -1.87,
-      "rsi": 48.54,
+      "var_pct": -10.05,
+      "rsi": 37.95,
       "spark": [
-        46.2,
-        44.92,
         44.86,
         46.14,
         45.32,
@@ -7757,7 +7755,9 @@
         36.5,
         39.59,
         39.63,
-        38.89
+        38.89,
+        38.6,
+        34.72
       ]
     },
     {
@@ -7765,10 +7765,9 @@
       "nombre": "JP Morgan Chase & Co.",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -2.47,
-      "rsi": 62.02,
+      "var_pct": 1.97,
+      "rsi": 66.01,
       "spark": [
-        306.27,
         302.1,
         300.0,
         304.88,
@@ -7797,7 +7796,8 @@
         319.4,
         331.14,
         333.46,
-        325.22
+        325.22,
+        331.64
       ]
     },
     {
@@ -7805,10 +7805,9 @@
       "nombre": "Goldman Sachs Group, Inc. (The)",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -0.23,
-      "rsi": 65.71,
+      "var_pct": 0.62,
+      "rsi": 66.69,
       "spark": [
-        921.81,
         932.37,
         940.71,
         941.75,
@@ -7837,7 +7836,8 @@
         1076.17,
         1090.67,
         1099.14,
-        1096.56
+        1096.56,
+        1103.36
       ]
     },
     {
@@ -7845,10 +7845,9 @@
       "nombre": "Bank of America Corporation",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -0.58,
-      "rsi": 69.11,
+      "var_pct": 1.89,
+      "rsi": 73.27,
       "spark": [
-        52.48,
         51.04,
         50.29,
         50.52,
@@ -7877,7 +7876,8 @@
         55.87,
         56.84,
         56.53,
-        56.2
+        56.2,
+        57.26
       ]
     },
     {
@@ -7885,10 +7885,9 @@
       "nombre": "Twilio Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -1.03,
-      "rsi": 43.1,
+      "var_pct": -2.54,
+      "rsi": 40.53,
       "spark": [
-        197.07,
         201.7,
         198.59,
         192.78,
@@ -7917,7 +7916,8 @@
         202.0,
         192.68,
         188.11,
-        186.17
+        186.17,
+        181.45
       ]
     },
     {
@@ -7925,10 +7925,9 @@
       "nombre": "Riot Platforms, Inc.",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": 2.44,
-      "rsi": 63.33,
+      "var_pct": 2.42,
+      "rsi": 65.59,
       "spark": [
-        24.11,
         24.08,
         25.34,
         24.51,
@@ -7957,7 +7956,8 @@
         27.38,
         27.42,
         27.43,
-        28.1
+        28.1,
+        28.78
       ]
     },
     {
@@ -7965,10 +7965,9 @@
       "nombre": "Delta Air Lines, Inc.",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": 2.35,
-      "rsi": 62.8,
+      "var_pct": 2.52,
+      "rsi": 66.1,
       "spark": [
-        72.92,
         73.14,
         71.01,
         70.52,
@@ -7997,7 +7996,8 @@
         84.07,
         83.14,
         82.25,
-        84.18
+        84.18,
+        86.3
       ]
     },
     {
@@ -8005,10 +8005,9 @@
       "nombre": "Automatic Data Processing, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -0.16,
-      "rsi": 46.95,
+      "var_pct": -1.42,
+      "rsi": 43.27,
       "spark": [
-        212.48,
         211.4,
         210.08,
         212.2,
@@ -8037,7 +8036,8 @@
         223.22,
         222.0,
         218.76,
-        218.41
+        218.41,
+        215.31
       ]
     },
     {
@@ -8045,11 +8045,9 @@
       "nombre": "Pampa Energia S.A.",
       "industria": "Industrials",
       "pais": "Argentina",
-      "var_pct": 0.33,
-      "rsi": 54.89,
+      "var_pct": -1.81,
+      "rsi": 51.7,
       "spark": [
-        83.4,
-        82.5,
         78.72,
         81.9,
         82.4,
@@ -8077,7 +8075,9 @@
         88.48,
         87.0,
         85.72,
-        86.0
+        86.0,
+        86.58,
+        85.01
       ]
     },
     {
@@ -8085,10 +8085,9 @@
       "nombre": "Upstart Holdings, Inc.",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": 6.47,
-      "rsi": 54.55,
+      "var_pct": -3.39,
+      "rsi": 50.99,
       "spark": [
-        29.0,
         28.96,
         28.69,
         27.84,
@@ -8117,7 +8116,8 @@
         32.36,
         32.24,
         30.46,
-        32.43
+        32.43,
+        31.33
       ]
     },
     {
@@ -8125,11 +8125,9 @@
       "nombre": "Mastercard Incorporated",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -1.66,
-      "rsi": 49.86,
+      "var_pct": -0.79,
+      "rsi": 45.51,
       "spark": [
-        491.89,
-        500.94,
         495.48,
         497.81,
         499.81,
@@ -8157,7 +8155,9 @@
         489.98,
         490.64,
         501.33,
-        492.99
+        492.99,
+        489.79,
+        485.92
       ]
     },
     {
@@ -8165,10 +8165,9 @@
       "nombre": "International Business Machines",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -5.05,
-      "rsi": 41.88,
+      "var_pct": -1.26,
+      "rsi": 40.58,
       "spark": [
-        229.62,
         229.76,
         223.55,
         219.22,
@@ -8197,7 +8196,8 @@
         268.71,
         270.81,
         262.35,
-        249.1
+        249.1,
+        245.97
       ]
     },
     {
@@ -8205,10 +8205,9 @@
       "nombre": "Gilead Sciences, Inc.",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": -1.35,
-      "rsi": 40.43,
+      "var_pct": 0.95,
+      "rsi": 43.33,
       "spark": [
-        133.18,
         130.47,
         132.65,
         134.06,
@@ -8237,7 +8236,8 @@
         124.3,
         127.23,
         125.45,
-        123.76
+        123.76,
+        124.94
       ]
     },
     {
@@ -8245,10 +8245,9 @@
       "nombre": "American Airlines Group, Inc.",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": 3.7,
-      "rsi": 68.42,
+      "var_pct": 2.66,
+      "rsi": 70.81,
       "spark": [
-        13.18,
         13.35,
         12.79,
         12.69,
@@ -8277,7 +8276,8 @@
         15.46,
         15.71,
         15.42,
-        15.99
+        15.99,
+        16.42
       ]
     },
     {
@@ -8285,10 +8285,9 @@
       "nombre": "State Street Financial Select S",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -0.89,
-      "rsi": 61.52,
+      "var_pct": 0.25,
+      "rsi": 62.5,
       "spark": [
-        51.55,
         51.24,
         51.18,
         51.58,
@@ -8317,7 +8316,8 @@
         53.56,
         54.35,
         54.05,
-        53.57
+        53.57,
+        53.71
       ]
     },
     {
@@ -8325,10 +8325,9 @@
       "nombre": "Booking Holdings Inc. Common St",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": 0.09,
-      "rsi": 56.5,
+      "var_pct": -1.41,
+      "rsi": 52.98,
       "spark": [
-        170.85,
         165.51,
         157.4,
         160.16,
@@ -8357,7 +8356,8 @@
         174.64,
         175.72,
         171.63,
-        171.78
+        171.78,
+        169.36
       ]
     },
     {
@@ -8365,10 +8365,9 @@
       "nombre": "Carnival Corporation Ltd.",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": 3.21,
-      "rsi": 63.87,
+      "var_pct": -1.99,
+      "rsi": 60.4,
       "spark": [
-        26.84,
         26.22,
         25.29,
         24.7,
@@ -8397,7 +8396,8 @@
         30.12,
         30.9,
         29.91,
-        30.87
+        30.87,
+        30.25
       ]
     },
     {
@@ -8405,10 +8405,9 @@
       "nombre": "Taiwan Semiconductor Manufactur",
       "industria": "Technology",
       "pais": "Taiwan",
-      "var_pct": 6.94,
-      "rsi": 63.6,
+      "var_pct": 1.06,
+      "rsi": 64.73,
       "spark": [
-        413.18,
         410.72,
         403.59,
         396.35,
@@ -8437,7 +8436,8 @@
         441.4,
         425.83,
         432.15,
-        462.12
+        462.12,
+        467.03
       ]
     },
     {
@@ -8445,11 +8445,9 @@
       "nombre": "U.S. Bancorp",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -1.66,
-      "rsi": 59.17,
+      "var_pct": 0.82,
+      "rsi": 61.82,
       "spark": [
-        56.16,
-        55.31,
         55.53,
         54.49,
         54.48,
@@ -8477,7 +8475,9 @@
         58.94,
         57.79,
         58.89,
-        57.91
+        57.91,
+        58.14,
+        58.62
       ]
     },
     {
@@ -8485,10 +8485,9 @@
       "nombre": "Honeywell International Inc.",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": 0.17,
-      "rsi": 56.45,
+      "var_pct": -0.07,
+      "rsi": 56.28,
       "spark": [
-        214.89,
         211.96,
         217.91,
         217.35,
@@ -8517,7 +8516,8 @@
         227.41,
         229.49,
         228.61,
-        229.01
+        229.01,
+        228.86
       ]
     },
     {
@@ -8525,11 +8525,9 @@
       "nombre": "PACCAR Inc.",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": -3.06,
-      "rsi": 52.3,
+      "var_pct": 0.79,
+      "rsi": 56.63,
       "spark": [
-        116.15,
-        113.7,
         113.96,
         112.61,
         112.68,
@@ -8557,7 +8555,9 @@
         118.52,
         120.69,
         121.04,
-        117.34
+        117.34,
+        118.95,
+        119.89
       ]
     },
     {
@@ -8565,10 +8565,9 @@
       "nombre": "Wells Fargo & Company",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -1.92,
-      "rsi": 56.23,
+      "var_pct": 1.79,
+      "rsi": 60.38,
       "spark": [
-        78.71,
         75.64,
         73.58,
         75.18,
@@ -8597,7 +8596,8 @@
         83.14,
         85.05,
         83.81,
-        82.2
+        82.2,
+        83.68
       ]
     },
     {
@@ -8605,10 +8605,9 @@
       "nombre": "Charles Schwab Corporation (The",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -2.97,
-      "rsi": 54.32,
+      "var_pct": 0.57,
+      "rsi": 55.7,
       "spark": [
-        89.18,
         88.61,
         87.83,
         90.18,
@@ -8637,7 +8636,8 @@
         90.95,
         93.67,
         94.51,
-        91.7
+        91.7,
+        92.22
       ]
     },
     {
@@ -8645,10 +8645,9 @@
       "nombre": "McDonald's Corporation",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": -1.84,
-      "rsi": 44.87,
+      "var_pct": -2.74,
+      "rsi": 36.66,
       "spark": [
-        281.79,
         273.89,
         272.75,
         272.99,
@@ -8677,7 +8676,8 @@
         286.12,
         287.93,
         283.82,
-        278.61
+        278.61,
+        270.98
       ]
     },
     {
@@ -8685,11 +8685,9 @@
       "nombre": "DocuSign, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -4.16,
-      "rsi": 35.6,
+      "var_pct": -1.82,
+      "rsi": 37.12,
       "spark": [
-        46.53,
-        48.19,
         47.9,
         45.49,
         45.18,
@@ -8717,7 +8715,9 @@
         45.03,
         44.19,
         44.43,
-        42.58
+        42.58,
+        43.47,
+        42.68
       ]
     },
     {
@@ -8725,10 +8725,9 @@
       "nombre": "T-Mobile US, Inc.",
       "industria": "Communication Services",
       "pais": "United States",
-      "var_pct": 0.2,
-      "rsi": 42.33,
+      "var_pct": -0.13,
+      "rsi": 42.0,
       "spark": [
-        193.15,
         192.59,
         189.82,
         192.26,
@@ -8757,7 +8756,8 @@
         188.86,
         184.36,
         181.31,
-        181.67
+        181.67,
+        181.43
       ]
     },
     {
@@ -8766,9 +8766,8 @@
       "industria": "Technology",
       "pais": "United States",
       "var_pct": 1.88,
-      "rsi": 55.84,
+      "rsi": 58.83,
       "spark": [
-        92.16,
         96.57,
         98.72,
         99.29,
@@ -8797,7 +8796,8 @@
         120.17,
         119.57,
         117.33,
-        119.54
+        119.54,
+        121.79
       ]
     },
     {
@@ -8805,11 +8805,9 @@
       "nombre": "Motorola Solutions, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -0.75,
-      "rsi": 42.0,
+      "var_pct": 0.04,
+      "rsi": 38.55,
       "spark": [
-        432.36,
-        431.91,
         382.84,
         391.0,
         390.22,
@@ -8837,7 +8835,9 @@
         411.02,
         410.49,
         403.72,
-        400.7
+        400.7,
+        395.17,
+        395.33
       ]
     },
     {
@@ -8845,11 +8845,9 @@
       "nombre": "Snap-On Incorporated",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": -2.09,
-      "rsi": 53.63,
+      "var_pct": 0.78,
+      "rsi": 60.29,
       "spark": [
-        383.7,
-        368.16,
         371.46,
         367.95,
         366.73,
@@ -8877,7 +8875,9 @@
         387.48,
         386.63,
         389.39,
-        381.26
+        381.26,
+        387.25,
+        390.26
       ]
     },
     {
@@ -8885,10 +8885,9 @@
       "nombre": "United Airlines Holdings, Inc.",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": 2.15,
-      "rsi": 62.89,
+      "var_pct": 0.79,
+      "rsi": 63.73,
       "spark": [
-        99.7,
         99.58,
         96.62,
         95.84,
@@ -8917,7 +8916,8 @@
         119.97,
         118.51,
         115.83,
-        118.32
+        118.32,
+        119.26
       ]
     },
     {
@@ -8925,10 +8925,9 @@
       "nombre": "Accenture plc",
       "industria": "Technology",
       "pais": "Ireland",
-      "var_pct": -17.97,
-      "rsi": 20.86,
+      "var_pct": -6.18,
+      "rsi": 18.85,
       "spark": [
-        180.19,
         180.42,
         172.35,
         169.77,
@@ -8957,7 +8956,8 @@
         165.36,
         165.52,
         156.01,
-        127.98
+        127.98,
+        120.07
       ]
     },
     {
@@ -8965,10 +8965,9 @@
       "nombre": "ADECOAGRO S A CEDEAR EACH 1 REP",
       "industria": "Consumer Defensive",
       "pais": "Luxembourg",
-      "var_pct": 2.37,
-      "rsi": 26.64,
+      "var_pct": -1.26,
+      "rsi": 25.95,
       "spark": [
-        20000.0,
         19440.0,
         20340.0,
         19370.0,
@@ -8997,7 +8996,8 @@
         14880.0,
         14560.0,
         13920.0,
-        14250.0
+        14250.0,
+        14070.0
       ]
     },
     {
@@ -9005,10 +9005,9 @@
       "nombre": "Agnico Eagle Mines Limited",
       "industria": "Basic Materials",
       "pais": "Canada",
-      "var_pct": -3.66,
-      "rsi": 44.16,
+      "var_pct": -0.44,
+      "rsi": 43.67,
       "spark": [
-        187.31,
         192.74,
         196.36,
         196.57,
@@ -9037,7 +9036,8 @@
         171.8,
         175.82,
         172.99,
-        166.66
+        166.66,
+        165.93
       ]
     },
     {
@@ -9045,10 +9045,9 @@
       "nombre": "ALUAR ALUMINIO ARGENTINA SA",
       "industria": "Basic Materials",
       "pais": "Argentina",
-      "var_pct": -0.99,
-      "rsi": 52.91,
+      "var_pct": 0.5,
+      "rsi": 54.14,
       "spark": [
-        920.0,
         926.5,
         945.0,
         944.5,
@@ -9077,7 +9076,8 @@
         985.0,
         1001.0,
         1010.0,
-        1000.0
+        1000.0,
+        1005.0
       ]
     },
     {
@@ -9085,10 +9085,9 @@
       "nombre": "Abercrombie & Fitch Company",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": 2.99,
-      "rsi": 57.53,
+      "var_pct": -1.72,
+      "rsi": 54.76,
       "spark": [
-        78.51,
         77.99,
         72.33,
         73.06,
@@ -9117,7 +9116,8 @@
         91.1,
         89.06,
         84.71,
-        87.24
+        87.24,
+        85.74
       ]
     },
     {
@@ -9165,10 +9165,9 @@
       "nombre": "American Express Company",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -0.75,
-      "rsi": 66.06,
+      "var_pct": -0.11,
+      "rsi": 65.6,
       "spark": [
-        318.69,
         316.03,
         312.32,
         314.31,
@@ -9197,7 +9196,8 @@
         335.38,
         340.74,
         340.54,
-        338.0
+        338.0,
+        337.62
       ]
     },
     {
@@ -9205,10 +9205,9 @@
       "nombre": "Boeing Company (The)",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": -1.29,
-      "rsi": 50.71,
+      "var_pct": -0.82,
+      "rsi": 49.12,
       "spark": [
-        231.03,
         237.36,
         238.21,
         236.87,
@@ -9237,7 +9236,8 @@
         228.95,
         227.49,
         225.63,
-        222.72
+        222.72,
+        220.88
       ]
     },
     {
@@ -9245,10 +9245,9 @@
       "nombre": "Braskem SA",
       "industria": "Basic Materials",
       "pais": "Brazil",
-      "var_pct": -12.5,
-      "rsi": 28.04,
+      "var_pct": -0.85,
+      "rsi": 27.7,
       "spark": [
-        3.69,
         3.69,
         3.8,
         4.79,
@@ -9277,7 +9276,8 @@
         3.73,
         3.33,
         3.36,
-        2.94
+        2.94,
+        2.91
       ]
     },
     {
@@ -9325,10 +9325,9 @@
       "nombre": "BlackBerry Limited",
       "industria": "Technology",
       "pais": "Canada",
-      "var_pct": -5.1,
-      "rsi": 51.43,
+      "var_pct": 7.52,
+      "rsi": 58.56,
       "spark": [
-        6.1,
         6.37,
         6.22,
         6.22,
@@ -9357,18 +9356,18 @@
         9.24,
         9.17,
         8.83,
-        8.38
+        8.38,
+        9.01
       ]
     },
     {
       "ticker": "BBAS3.SA",
-      "nombre": "BRASIL      ON  EJ  NM",
+      "nombre": "BRASIL      ON      NM",
       "industria": "Financial Services",
       "pais": "Brazil",
-      "var_pct": -0.56,
-      "rsi": 36.06,
+      "var_pct": 0.93,
+      "rsi": 40.4,
       "spark": [
-        21.65,
         21.39,
         21.17,
         20.61,
@@ -9397,7 +9396,8 @@
         19.4,
         19.41,
         19.53,
-        19.42
+        19.42,
+        19.6
       ]
     },
     {
@@ -9405,10 +9405,9 @@
       "nombre": "BANCO BILBAO VIZCAYA ARGENTAR C",
       "industria": "Sin clasificar",
       "pais": "Spain",
-      "var_pct": 6.38,
-      "rsi": 75.09,
+      "var_pct": -4.01,
+      "rsi": 64.2,
       "spark": [
-        32540.0,
         33060.0,
         32500.0,
         32180.0,
@@ -9437,7 +9436,8 @@
         36480.0,
         36820.0,
         37000.0,
-        39360.0
+        39360.0,
+        37780.0
       ]
     },
     {
@@ -9445,11 +9445,9 @@
       "nombre": "Barclays PLC",
       "industria": "Financial Services",
       "pais": "United Kingdom",
-      "var_pct": 1.35,
-      "rsi": 66.99,
+      "var_pct": 3.67,
+      "rsi": 72.04,
       "spark": [
-        24.02,
-        23.29,
         23.71,
         23.17,
         22.73,
@@ -9477,7 +9475,9 @@
         25.47,
         25.64,
         25.98,
-        26.33
+        26.33,
+        26.31,
+        27.27
       ]
     },
     {
@@ -9485,13 +9485,9 @@
       "nombre": "The Bank of New York Mellon Cor",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": 1.33,
-      "rsi": 62.14,
+      "var_pct": -1.67,
+      "rsi": 57.74,
       "spark": [
-        133.78,
-        131.88,
-        132.36,
-        133.64,
         130.69,
         130.5,
         132.49,
@@ -9517,7 +9513,11 @@
         143.25,
         139.75,
         142.09,
-        143.98
+        143.98,
+        142.5,
+        144.45,
+        146.07,
+        143.63
       ]
     },
     {
@@ -9525,10 +9525,9 @@
       "nombre": "Bristol-Myers Squibb Company",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": -2.32,
-      "rsi": 38.3,
+      "var_pct": 0.92,
+      "rsi": 41.03,
       "spark": [
-        56.25,
         56.16,
         55.67,
         56.45,
@@ -9557,7 +9556,8 @@
         56.24,
         55.92,
         55.28,
-        54.0
+        54.0,
+        54.49
       ]
     },
     {
@@ -9565,10 +9565,9 @@
       "nombre": "BUNGE GLOBAL SA CEDEAR EACH REP",
       "industria": "Sin clasificar",
       "pais": "United States",
-      "var_pct": 1.83,
-      "rsi": 37.24,
+      "var_pct": -0.75,
+      "rsi": 36.22,
       "spark": [
-        36613.3,
         36871.84,
         37249.7,
         36971.27,
@@ -9597,7 +9596,8 @@
         35940.0,
         35060.0,
         33860.0,
-        34480.0
+        34480.0,
+        34220.0
       ]
     },
     {
@@ -9605,10 +9605,9 @@
       "nombre": "BP p.l.c.",
       "industria": "Energy",
       "pais": "United Kingdom",
-      "var_pct": -2.59,
-      "rsi": 29.14,
+      "var_pct": 1.46,
+      "rsi": 33.47,
       "spark": [
-        43.31,
         42.85,
         43.72,
         43.9,
@@ -9637,7 +9636,8 @@
         41.59,
         41.15,
         40.14,
-        39.1
+        39.1,
+        39.67
       ]
     },
     {
@@ -9645,10 +9645,9 @@
       "nombre": "BERKSHIRE HATHAWAY INC CEDEAR E",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": 1.92,
-      "rsi": 65.51,
+      "var_pct": -0.59,
+      "rsi": 61.89,
       "spark": [
-        32260.0,
         32580.0,
         32780.0,
         32560.0,
@@ -9677,7 +9676,8 @@
         33640.0,
         33560.0,
         33420.0,
-        34060.0
+        34060.0,
+        33860.0
       ]
     },
     {
@@ -9685,10 +9685,9 @@
       "nombre": "BOLSAS Y MERCADOS ARGENTINOS SA",
       "industria": "Financial Services",
       "pais": "Argentina",
-      "var_pct": -2.08,
-      "rsi": 64.04,
+      "var_pct": 0.63,
+      "rsi": 65.15,
       "spark": [
-        297.5,
         296.0,
         287.75,
         280.0,
@@ -9717,7 +9716,8 @@
         304.25,
         313.75,
         324.5,
-        317.75
+        317.75,
+        319.75
       ]
     },
     {
@@ -9725,11 +9725,9 @@
       "nombre": "Avis Budget Group, Inc.",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": -2.49,
-      "rsi": 48.62,
+      "var_pct": -0.67,
+      "rsi": 51.71,
       "spark": [
-        164.23,
-        154.06,
         145.75,
         151.19,
         150.54,
@@ -9757,7 +9755,9 @@
         187.12,
         190.07,
         185.49,
-        180.88
+        180.88,
+        188.43,
+        187.16
       ]
     },
     {
@@ -9805,11 +9805,9 @@
       "nombre": "Colgate-Palmolive Company",
       "industria": "Consumer Defensive",
       "pais": "United States",
-      "var_pct": -0.09,
-      "rsi": 56.99,
+      "var_pct": 0.14,
+      "rsi": 53.19,
       "spark": [
-        88.16,
-        87.36,
         87.55,
         86.74,
         87.44,
@@ -9837,7 +9835,9 @@
         89.45,
         90.58,
         90.66,
-        90.58
+        90.58,
+        89.48,
+        89.61
       ]
     },
     {
@@ -9845,10 +9845,9 @@
       "nombre": "SOCIEDAD COMERCIAL DEL PLATA",
       "industria": "Industrials",
       "pais": "Argentina",
-      "var_pct": -0.74,
-      "rsi": 49.69,
+      "var_pct": -1.89,
+      "rsi": 46.6,
       "spark": [
-        42.35,
         44.63,
         43.09,
         43.17,
@@ -9877,7 +9876,8 @@
         43.88,
         45.02,
         45.8,
-        45.46
+        45.46,
+        44.6
       ]
     },
     {
@@ -9885,10 +9885,9 @@
       "nombre": "CRESUD S.A.C.I.F.Y.A.",
       "industria": "Industrials",
       "pais": "Argentina",
-      "var_pct": 3.26,
-      "rsi": 56.28,
+      "var_pct": -3.1,
+      "rsi": 50.5,
       "spark": [
-        1656.0,
         1600.0,
         1575.0,
         1584.0,
@@ -9917,7 +9916,8 @@
         1804.0,
         1755.0,
         1747.0,
-        1804.0
+        1804.0,
+        1748.0
       ]
     },
     {
@@ -9925,10 +9925,9 @@
       "nombre": "CVS Health Corporation",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": -0.85,
-      "rsi": 61.13,
+      "var_pct": 3.91,
+      "rsi": 68.35,
       "spark": [
-        87.36,
         90.55,
         92.22,
         95.15,
@@ -9957,7 +9956,8 @@
         100.68,
         100.72,
         99.16,
-        98.32
+        98.32,
+        102.17
       ]
     },
     {
@@ -9965,11 +9965,9 @@
       "nombre": "Cemex, S.A.B. de C.V. Sponsored",
       "industria": "Basic Materials",
       "pais": "Mexico",
-      "var_pct": -2.7,
-      "rsi": 49.67,
+      "var_pct": -1.37,
+      "rsi": 48.88,
       "spark": [
-        13.52,
-        13.11,
         13.08,
         13.26,
         13.14,
@@ -9997,7 +9995,9 @@
         12.95,
         12.86,
         12.95,
-        12.6
+        12.6,
+        12.73,
+        12.56
       ]
     },
     {
@@ -10005,11 +10005,9 @@
       "nombre": "DuPont de Nemours, Inc.",
       "industria": "Basic Materials",
       "pais": "United States",
-      "var_pct": -0.19,
-      "rsi": 51.39,
+      "var_pct": 0.58,
+      "rsi": 51.58,
       "spark": [
-        49.87,
-        48.17,
         49.56,
         50.38,
         50.34,
@@ -10037,7 +10035,9 @@
         48.26,
         48.54,
         48.04,
-        47.95
+        47.95,
+        47.71,
+        47.99
       ]
     },
     {
@@ -10045,11 +10045,9 @@
       "nombre": "Deere & Company",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": 0.54,
-      "rsi": 58.14,
+      "var_pct": 1.93,
+      "rsi": 62.67,
       "spark": [
-        591.64,
-        580.54,
         574.84,
         588.74,
         589.19,
@@ -10077,7 +10075,9 @@
         577.48,
         575.47,
         585.29,
-        588.47
+        588.47,
+        589.24,
+        600.64
       ]
     },
     {
@@ -10085,10 +10085,9 @@
       "nombre": "Walt Disney Company (The)",
       "industria": "Communication Services",
       "pais": "United States",
-      "var_pct": 3.0,
-      "rsi": 57.4,
+      "var_pct": -1.73,
+      "rsi": 51.27,
       "spark": [
-        108.66,
         108.02,
         104.72,
         106.16,
@@ -10117,7 +10116,8 @@
         101.69,
         101.28,
         100.86,
-        103.89
+        103.89,
+        102.1
       ]
     },
     {
@@ -10125,10 +10125,9 @@
       "nombre": "Electronic Arts Inc.",
       "industria": "Communication Services",
       "pais": "United States",
-      "var_pct": -0.43,
-      "rsi": 48.44,
+      "var_pct": 0.37,
+      "rsi": 55.35,
       "spark": [
-        200.66,
         200.25,
         200.03,
         200.0,
@@ -10157,7 +10156,8 @@
         203.12,
         203.02,
         203.02,
-        202.15
+        202.15,
+        202.89
       ]
     },
     {
@@ -10165,11 +10165,9 @@
       "nombre": "Equifax, Inc.",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": -7.35,
-      "rsi": 36.83,
+      "var_pct": -0.26,
+      "rsi": 35.79,
       "spark": [
-        172.61,
-        175.02,
         175.23,
         167.24,
         166.19,
@@ -10197,7 +10195,9 @@
         163.71,
         165.13,
         167.13,
-        154.84
+        154.84,
+        153.93,
+        153.54
       ]
     },
     {
@@ -10205,10 +10205,9 @@
       "nombre": "FedEx Corporation",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": 0.08,
-      "rsi": 51.54,
+      "var_pct": 1.01,
+      "rsi": 53.87,
       "spark": [
-        302.93,
         305.06,
         305.32,
         303.32,
@@ -10237,7 +10236,8 @@
         338.75,
         335.74,
         325.93,
-        326.2
+        326.2,
+        329.48
       ]
     },
     {
@@ -10245,11 +10245,9 @@
       "nombre": "Freddie Mac",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -1.49,
-      "rsi": 44.92,
+      "var_pct": -2.51,
+      "rsi": 42.88,
       "spark": [
-        7.42,
-        7.14,
         7.02,
         6.95,
         6.89,
@@ -10277,7 +10275,9 @@
         5.81,
         6.06,
         6.03,
-        5.94
+        5.94,
+        5.98,
+        5.83
       ]
     },
     {
@@ -10285,11 +10285,9 @@
       "nombre": "Fannie Mae",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -4.68,
-      "rsi": 40.34,
+      "var_pct": -1.73,
+      "rsi": 39.78,
       "spark": [
-        8.25,
-        8.0,
         7.86,
         7.78,
         7.74,
@@ -10317,7 +10315,9 @@
         6.49,
         6.73,
         6.62,
-        6.31
+        6.31,
+        6.36,
+        6.25
       ]
     },
     {
@@ -10325,10 +10325,9 @@
       "nombre": "Alphabet Inc.",
       "industria": "Communication Services",
       "pais": "United States",
-      "var_pct": 1.17,
-      "rsi": 49.18,
+      "var_pct": -5.45,
+      "rsi": 38.29,
       "spark": [
-        397.75,
         400.56,
         388.41,
         387.12,
@@ -10357,7 +10356,8 @@
         369.35,
         373.25,
         363.79,
-        368.03
+        368.03,
+        347.97
       ]
     },
     {
@@ -10365,11 +10365,9 @@
       "nombre": "GSK plc",
       "industria": "Healthcare",
       "pais": "United Kingdom",
-      "var_pct": -0.13,
-      "rsi": 53.8,
+      "var_pct": 0.68,
+      "rsi": 46.95,
       "spark": [
-        50.07,
-        50.04,
         49.95,
         49.36,
         50.44,
@@ -10397,7 +10395,9 @@
         53.04,
         52.23,
         52.22,
-        52.15
+        52.15,
+        50.67,
+        51.01
       ]
     },
     {
@@ -10405,10 +10405,9 @@
       "nombre": "HAPVIDA     ON      NM",
       "industria": "Financial Services",
       "pais": "Brazil",
-      "var_pct": -2.55,
-      "rsi": 34.11,
+      "var_pct": 1.36,
+      "rsi": 36.42,
       "spark": [
-        11.81,
         11.44,
         12.5,
         12.74,
@@ -10437,7 +10436,8 @@
         11.21,
         10.58,
         10.58,
-        10.31
+        10.31,
+        10.45
       ]
     },
     {
@@ -10445,10 +10445,9 @@
       "nombre": "Home Depot, Inc. (The)",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": 2.08,
-      "rsi": 61.67,
+      "var_pct": -1.98,
+      "rsi": 55.53,
       "spark": [
-        320.24,
         315.09,
         309.08,
         308.15,
@@ -10477,7 +10476,8 @@
         329.82,
         337.09,
         327.48,
-        334.28
+        334.28,
+        327.65
       ]
     },
     {
@@ -10525,11 +10525,9 @@
       "nombre": "Harley-Davidson, Inc.",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": -0.82,
-      "rsi": 56.93,
+      "var_pct": -2.88,
+      "rsi": 52.33,
       "spark": [
-        23.66,
-        23.46,
         25.22,
         25.33,
         25.14,
@@ -10557,7 +10555,9 @@
         25.64,
         26.07,
         25.62,
-        25.41
+        25.41,
+        25.67,
+        24.93
       ]
     },
     {
@@ -10565,11 +10565,9 @@
       "nombre": "Howmet Aerospace Inc.",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": 2.09,
-      "rsi": 67.22,
+      "var_pct": 0.07,
+      "rsi": 62.22,
       "spark": [
-        256.32,
-        272.42,
         270.56,
         273.58,
         269.76,
@@ -10597,7 +10595,9 @@
         264.67,
         270.44,
         277.42,
-        283.23
+        283.23,
+        277.66,
+        277.86
       ]
     },
     {
@@ -10605,11 +10605,9 @@
       "nombre": "ING Group, N.V.",
       "industria": "Financial Services",
       "pais": "Netherlands",
-      "var_pct": 0.35,
-      "rsi": 61.14,
+      "var_pct": 2.22,
+      "rsi": 66.3,
       "spark": [
-        29.96,
-        29.78,
         30.12,
         30.1,
         29.77,
@@ -10637,7 +10635,9 @@
         30.21,
         30.43,
         31.13,
-        31.24
+        31.24,
+        31.36,
+        32.06
       ]
     },
     {
@@ -10645,10 +10645,9 @@
       "nombre": "IRSA INVERSIONES Y REPRESENTACI",
       "industria": "Real Estate",
       "pais": "Argentina",
-      "var_pct": -0.6,
-      "rsi": 63.41,
+      "var_pct": -1.6,
+      "rsi": 59.56,
       "spark": [
-        2090.0,
         2030.0,
         1985.0,
         2030.0,
@@ -10677,7 +10676,8 @@
         2510.0,
         2495.0,
         2515.0,
-        2500.0
+        2500.0,
+        2460.0
       ]
     },
     {
@@ -10685,11 +10685,9 @@
       "nombre": "KB Financial Group Inc",
       "industria": "Financial Services",
       "pais": "South Korea",
-      "var_pct": -6.8,
+      "var_pct": -0.3,
       "rsi": 50.76,
       "spark": [
-        110.89,
-        109.79,
         111.14,
         108.98,
         104.83,
@@ -10717,7 +10715,9 @@
         107.8,
         113.63,
         114.17,
-        106.41
+        106.41,
+        106.77,
+        106.45
       ]
     },
     {
@@ -10725,11 +10725,9 @@
       "nombre": "Korea Electric Power Corporatio",
       "industria": "Utilities",
       "pais": "South Korea",
-      "var_pct": -0.3,
-      "rsi": 49.37,
+      "var_pct": -2.12,
+      "rsi": 44.08,
       "spark": [
-        15.65,
-        15.12,
         15.46,
         14.76,
         13.98,
@@ -10757,7 +10755,9 @@
         12.76,
         13.6,
         13.23,
-        13.19
+        13.19,
+        13.0,
+        12.73
       ]
     },
     {
@@ -10765,10 +10765,9 @@
       "nombre": "COCA-COLA FEMSA S.A.B. DE C.V. ",
       "industria": "Sin clasificar",
       "pais": "Mexico",
-      "var_pct": 1.4,
-      "rsi": 63.01,
+      "var_pct": -1.02,
+      "rsi": 59.18,
       "spark": [
-        79125.0,
         78100.0,
         77775.0,
         77800.0,
@@ -10797,7 +10796,8 @@
         80075.0,
         80575.0,
         82125.0,
-        83275.0
+        83275.0,
+        82425.0
       ]
     },
     {
@@ -10805,10 +10805,9 @@
       "nombre": "Eli Lilly and Company",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": -1.21,
-      "rsi": 54.05,
+      "var_pct": 0.93,
+      "rsi": 56.14,
       "spark": [
-        973.28,
         946.82,
         965.33,
         988.17,
@@ -10837,7 +10836,8 @@
         1129.35,
         1122.5,
         1112.0,
-        1098.57
+        1098.57,
+        1108.74
       ]
     },
     {
@@ -10845,10 +10845,9 @@
       "nombre": "LOJAS RENNERON      NM",
       "industria": "Consumer Cyclical",
       "pais": "Brazil",
-      "var_pct": 2.14,
-      "rsi": 44.55,
+      "var_pct": 0.07,
+      "rsi": 44.69,
       "spark": [
-        14.35,
         13.72,
         13.69,
         13.14,
@@ -10877,7 +10876,8 @@
         14.89,
         14.45,
         13.99,
-        14.29
+        14.29,
+        14.3
       ]
     },
     {
@@ -10885,10 +10885,9 @@
       "nombre": "SPDR Bloomberg Barclays Mortgag",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -0.4,
-      "rsi": 52.77,
+      "var_pct": 0.22,
+      "rsi": 56.0,
       "spark": [
-        22.28,
         22.23,
         22.31,
         22.24,
@@ -10917,7 +10916,8 @@
         22.27,
         22.29,
         22.33,
-        22.24
+        22.24,
+        22.29
       ]
     },
     {
@@ -10965,10 +10965,9 @@
       "nombre": "METROGAS SA",
       "industria": "Utilities",
       "pais": "Argentina",
-      "var_pct": -0.61,
-      "rsi": 50.91,
+      "var_pct": -0.97,
+      "rsi": 49.15,
       "spark": [
-        1803.0,
         1778.0,
         1733.0,
         1747.0,
@@ -10997,7 +10996,8 @@
         1900.0,
         1954.0,
         1965.0,
-        1953.0
+        1953.0,
+        1934.0
       ]
     },
     {
@@ -11005,10 +11005,9 @@
       "nombre": "MAGAZ LUIZA ON      NM",
       "industria": "Consumer Cyclical",
       "pais": "Brazil",
-      "var_pct": 2.67,
-      "rsi": 25.52,
+      "var_pct": 1.08,
+      "rsi": 26.96,
       "spark": [
-        7.15,
         6.93,
         7.16,
         6.96,
@@ -11037,7 +11036,8 @@
         5.0,
         4.74,
         4.5,
-        4.62
+        4.62,
+        4.67
       ]
     },
     {
@@ -11045,10 +11045,9 @@
       "nombre": "Altria Group, Inc.",
       "industria": "Consumer Defensive",
       "pais": "United States",
-      "var_pct": 0.25,
-      "rsi": 46.98,
+      "var_pct": 0.38,
+      "rsi": 48.15,
       "spark": [
-        68.02,
         67.12,
         67.6,
         68.86,
@@ -11077,7 +11076,8 @@
         69.59,
         70.19,
         68.95,
-        69.12
+        69.12,
+        69.39
       ]
     },
     {
@@ -11085,10 +11085,9 @@
       "nombre": "MORIXE HERMANOS",
       "industria": "Consumer Defensive",
       "pais": "Argentina",
-      "var_pct": -1.08,
-      "rsi": 43.13,
+      "var_pct": -1.45,
+      "rsi": 40.15,
       "spark": [
-        26.6,
         27.0,
         26.7,
         27.0,
@@ -11117,7 +11116,8 @@
         27.5,
         27.5,
         27.8,
-        27.5
+        27.5,
+        27.1
       ]
     },
     {
@@ -11125,11 +11125,9 @@
       "nombre": "McEwen Inc.",
       "industria": "Basic Materials",
       "pais": "Canada",
-      "var_pct": -3.74,
-      "rsi": 44.59,
+      "var_pct": -0.67,
+      "rsi": 43.3,
       "spark": [
-        22.82,
-        23.38,
         24.23,
         25.07,
         26.16,
@@ -11157,7 +11155,9 @@
         18.91,
         20.1,
         20.3,
-        19.54
+        19.54,
+        19.38,
+        19.25
       ]
     },
     {
@@ -11165,11 +11165,9 @@
       "nombre": "Nomura Holdings Inc",
       "industria": "Financial Services",
       "pais": "Japan",
-      "var_pct": 2.13,
-      "rsi": 70.31,
+      "var_pct": 0.5,
+      "rsi": 66.04,
       "spark": [
-        8.16,
-        7.9,
         7.95,
         7.9,
         7.9,
@@ -11197,7 +11195,9 @@
         8.73,
         8.81,
         8.91,
-        9.1
+        9.1,
+        8.97,
+        9.02
       ]
     },
     {
@@ -11205,10 +11205,9 @@
       "nombre": "NOKIA OYJ CEDEAR EACH REP 1/5 A",
       "industria": "Sin clasificar",
       "pais": "Finland",
-      "var_pct": 1.27,
-      "rsi": 48.34,
+      "var_pct": 4.83,
+      "rsi": 52.72,
       "spark": [
-        18330.0,
         19070.0,
         20520.0,
         19490.0,
@@ -11237,7 +11236,8 @@
         20950.0,
         20770.0,
         20460.0,
-        20720.0
+        20720.0,
+        21720.0
       ]
     },
     {
@@ -11310,7 +11310,7 @@
         13199.47,
         13199.47,
         13199.47,
-        13199.47,
+        13200.0,
         13200.0,
         13200.0,
         13200.0,
@@ -11325,11 +11325,9 @@
       "nombre": "Grupo Aeroportuario Del Pacific",
       "industria": "Industrials",
       "pais": "Mexico",
-      "var_pct": -0.79,
-      "rsi": 56.92,
+      "var_pct": -2.2,
+      "rsi": 55.58,
       "spark": [
-        249.29,
-        251.1,
         245.81,
         246.41,
         245.62,
@@ -11357,7 +11355,9 @@
         236.89,
         247.45,
         250.58,
-        248.6
+        248.6,
+        254.31,
+        248.72
       ]
     },
     {
@@ -11365,10 +11365,9 @@
       "nombre": "PAMPA ENERGIA S.A.",
       "industria": "Industrials",
       "pais": "Argentina",
-      "var_pct": -0.57,
-      "rsi": 56.28,
+      "var_pct": -0.1,
+      "rsi": 56.0,
       "spark": [
-        4832.5,
         4875.0,
         4732.5,
         4732.5,
@@ -11397,7 +11396,8 @@
         5110.0,
         5155.0,
         5220.0,
-        5190.0
+        5190.0,
+        5185.0
       ]
     },
     {
@@ -11405,10 +11405,9 @@
       "nombre": "Pfizer, Inc.",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": -2.74,
-      "rsi": 39.32,
+      "var_pct": -0.22,
+      "rsi": 38.64,
       "spark": [
-        26.05,
         25.68,
         25.81,
         25.87,
@@ -11437,7 +11436,8 @@
         26.0,
         26.04,
         25.92,
-        25.21
+        25.21,
+        25.16
       ]
     },
     {
@@ -11445,10 +11445,9 @@
       "nombre": "POSCO HOLDINGS INC CEDEAR EACH ",
       "industria": "Basic Materials",
       "pais": "South Korea",
-      "var_pct": 2.18,
-      "rsi": 35.17,
+      "var_pct": 4.44,
+      "rsi": 33.55,
       "spark": [
-        45139.87,
         45139.87,
         40219.88,
         40619.88,
@@ -11477,7 +11476,8 @@
         31720.0,
         31880.0,
         30240.0,
-        30900.0
+        28380.0,
+        29640.0
       ]
     },
     {
@@ -11485,11 +11485,9 @@
       "nombre": "Philip Morris International Inc",
       "industria": "Consumer Defensive",
       "pais": "United States",
-      "var_pct": -2.51,
-      "rsi": 50.5,
+      "var_pct": -3.42,
+      "rsi": 41.67,
       "spark": [
-        170.53,
-        171.11,
         170.99,
         182.11,
         186.93,
@@ -11517,7 +11515,9 @@
         184.3,
         181.81,
         184.06,
-        179.44
+        179.44,
+        178.4,
+        172.29
       ]
     },
     {
@@ -11525,10 +11525,9 @@
       "nombre": "PRIO        ON      NM",
       "industria": "Energy",
       "pais": "Brazil",
-      "var_pct": 0.4,
-      "rsi": 32.88,
+      "var_pct": -0.87,
+      "rsi": 31.67,
       "spark": [
-        63.27,
         63.63,
         64.63,
         65.45,
@@ -11557,7 +11556,8 @@
         56.85,
         56.74,
         56.97,
-        57.2
+        57.2,
+        56.7
       ]
     },
     {
@@ -11565,10 +11565,9 @@
       "nombre": "PayPal Holdings, Inc.",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": 1.02,
-      "rsi": 44.81,
+      "var_pct": -0.63,
+      "rsi": 43.49,
       "spark": [
-        46.07,
         45.22,
         44.92,
         45.29,
@@ -11597,7 +11596,8 @@
         42.49,
         43.65,
         42.08,
-        42.51
+        42.51,
+        42.24
       ]
     },
     {
@@ -11642,13 +11642,12 @@
     },
     {
       "ticker": "RENT3.SA",
-      "nombre": "LOCALIZA    ON      NM",
+      "nombre": "LOCALIZA    ON  ATZ NM",
       "industria": "Industrials",
       "pais": "Brazil",
-      "var_pct": 0.07,
-      "rsi": 39.89,
+      "var_pct": 2.42,
+      "rsi": 45.33,
       "spark": [
-        49.88,
         47.02,
         46.08,
         43.13,
@@ -11677,7 +11676,8 @@
         40.96,
         40.54,
         40.09,
-        40.12
+        40.12,
+        41.09
       ]
     },
     {
@@ -11685,10 +11685,9 @@
       "nombre": "Banco Santander, S.A. Sponsored",
       "industria": "Financial Services",
       "pais": "Spain",
-      "var_pct": 1.28,
-      "rsi": 67.03,
+      "var_pct": 1.44,
+      "rsi": 69.12,
       "spark": [
-        12.18,
         12.28,
         12.13,
         12.02,
@@ -11717,7 +11716,8 @@
         13.14,
         13.38,
         13.33,
-        13.5
+        13.5,
+        13.69
       ]
     },
     {
@@ -11725,11 +11725,9 @@
       "nombre": "Shoulder Innovations, Inc.",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -3.75,
-      "rsi": 65.11,
+      "var_pct": -2.7,
+      "rsi": 63.33,
       "spark": [
-        12.89,
-        12.77,
         13.2,
         13.22,
         13.37,
@@ -11757,7 +11755,9 @@
         18.7,
         18.12,
         18.67,
-        17.97
+        17.97,
+        18.55,
+        18.05
       ]
     },
     {
@@ -11765,11 +11765,9 @@
       "nombre": "Siemens AG",
       "industria": "Industrials",
       "pais": "Germany",
-      "var_pct": -0.65,
-      "rsi": 54.41,
+      "var_pct": 0.21,
+      "rsi": 57.76,
       "spark": [
-        158.6,
-        153.99,
         157.0,
         157.81,
         157.61,
@@ -11797,7 +11795,9 @@
         153.1,
         156.65,
         157.71,
-        156.69
+        156.69,
+        158.79,
+        159.12
       ]
     },
     {
@@ -11805,10 +11805,9 @@
       "nombre": "SLB Limited",
       "industria": "Energy",
       "pais": "United States",
-      "var_pct": -4.45,
-      "rsi": 29.22,
+      "var_pct": -1.5,
+      "rsi": 27.9,
       "spark": [
-        52.72,
         52.99,
         54.64,
         55.35,
@@ -11837,7 +11836,8 @@
         53.71,
         53.07,
         50.33,
-        48.09
+        48.09,
+        47.37
       ]
     },
     {
@@ -11885,10 +11885,9 @@
       "nombre": "TELECOM ARGENTINA SA",
       "industria": "Communication Services",
       "pais": "Argentina",
-      "var_pct": -0.77,
-      "rsi": 52.6,
+      "var_pct": -1.56,
+      "rsi": 50.39,
       "spark": [
-        3427.5,
         3440.0,
         3517.5,
         3660.0,
@@ -11917,7 +11916,8 @@
         4397.5,
         4375.0,
         4197.5,
-        4165.0
+        4165.0,
+        4100.0
       ]
     },
     {
@@ -11925,10 +11925,9 @@
       "nombre": "TRANSPORTADORA DE GAS DEL NORTE",
       "industria": "Energy",
       "pais": "Argentina",
-      "var_pct": 0.79,
-      "rsi": 51.11,
+      "var_pct": -0.48,
+      "rsi": 50.17,
       "spark": [
-        4045.0,
         3957.5,
         3845.0,
         3830.0,
@@ -11957,7 +11956,8 @@
         4095.0,
         4037.5,
         4100.0,
-        4132.5
+        4132.5,
+        4112.5
       ]
     },
     {
@@ -11965,10 +11965,9 @@
       "nombre": "TRANSPORTADORA DE GAS DEL SUR S",
       "industria": "Energy",
       "pais": "Argentina",
-      "var_pct": 2.21,
-      "rsi": 58.79,
+      "var_pct": -1.13,
+      "rsi": 56.13,
       "spark": [
-        9010.0,
         8875.0,
         8755.0,
         8805.0,
@@ -11997,7 +11996,8 @@
         9405.0,
         9550.0,
         9520.0,
-        9730.0
+        9730.0,
+        9620.0
       ]
     },
     {
@@ -12005,11 +12005,9 @@
       "nombre": "Telecom Italia S.p.A.",
       "industria": "Communication Services",
       "pais": "Italy",
-      "var_pct": 4.86,
-      "rsi": 88.0,
+      "var_pct": 0.18,
+      "rsi": 85.67,
       "spark": [
-        7.96,
-        8.2,
         8.28,
         8.35,
         8.24,
@@ -12037,7 +12035,9 @@
         9.4,
         9.4,
         10.49,
-        11.0
+        11.0,
+        10.92,
+        10.94
       ]
     },
     {
@@ -12045,8 +12045,8 @@
       "nombre": "TRAVELERS COMPANIES INC CEDEAR ",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": 0.0,
-      "rsi": 99.92,
+      "var_pct": 7.82,
+      "rsi": 100.0,
       "spark": [
         73824.8,
         73824.8,
@@ -12069,15 +12069,15 @@
         73824.8,
         73824.8,
         73824.8,
-        73824.8,
-        73824.8,
         73825.0,
         73825.0,
         73825.0,
         73825.0,
         73825.0,
         73825.0,
-        73825.0
+        73825.0,
+        73825.0,
+        79600.0
       ]
     },
     {
@@ -12125,11 +12125,9 @@
       "nombre": "Grupo Televisa S.A.B.",
       "industria": "Communication Services",
       "pais": "Mexico",
-      "var_pct": 2.03,
-      "rsi": 64.96,
+      "var_pct": -8.86,
+      "rsi": 43.35,
       "spark": [
-        2.88,
-        2.83,
         2.85,
         2.85,
         2.85,
@@ -12157,7 +12155,9 @@
         2.89,
         2.93,
         2.95,
-        3.01
+        3.01,
+        2.99,
+        2.72
       ]
     },
     {
@@ -12165,10 +12165,9 @@
       "nombre": "TERNIUM SA CEDEAR EACH 4  REP 1",
       "industria": "Basic Materials",
       "pais": "Luxembourg",
-      "var_pct": 0.0,
-      "rsi": 47.89,
+      "var_pct": 1.54,
+      "rsi": 51.23,
       "spark": [
-        17109.67,
         16829.68,
         16859.68,
         16350.0,
@@ -12197,7 +12196,8 @@
         18370.0,
         17780.0,
         17550.0,
-        17550.0
+        17550.0,
+        17820.0
       ]
     },
     {
@@ -12205,10 +12205,9 @@
       "nombre": "BANCO DE VALORES S.A.",
       "industria": "Financial Services",
       "pais": "Argentina",
-      "var_pct": -0.24,
-      "rsi": 43.88,
+      "var_pct": 1.1,
+      "rsi": 48.42,
       "spark": [
-        668.05,
         665.56,
         678.99,
         689.44,
@@ -12237,7 +12236,8 @@
         631.5,
         630.5,
         637.0,
-        635.5
+        635.5,
+        642.5
       ]
     },
     {
@@ -12245,7 +12245,7 @@
       "nombre": "WEIBO CORPORATION CEDEARS EACH ",
       "industria": "Communication Services",
       "pais": "China",
-      "var_pct": 5.35,
+      "var_pct": 2.76,
       "rsi": 100.0,
       "spark": [
         1813.0,
@@ -12277,7 +12277,7 @@
         1813.0,
         1813.0,
         1813.0,
-        1910.0
+        1863.0
       ]
     },
     {
@@ -12285,10 +12285,9 @@
       "nombre": "XEROX HOLDINGS CORPORATION CEDE",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": 2.54,
-      "rsi": 52.96,
+      "var_pct": 0.97,
+      "rsi": 51.79,
       "spark": [
-        3867.5,
         3757.5,
         3907.5,
         3770.0,
@@ -12317,7 +12316,8 @@
         4940.0,
         4940.0,
         4632.5,
-        4750.0
+        4632.5,
+        4677.5
       ]
     },
     {
@@ -12325,10 +12325,9 @@
       "nombre": "YPF SOCIEDAD ANONIMA",
       "industria": "Energy",
       "pais": "Argentina",
-      "var_pct": 0.39,
-      "rsi": 49.52,
+      "var_pct": -0.43,
+      "rsi": 48.59,
       "spark": [
-        66425.0,
         66475.0,
         64525.0,
         65300.0,
@@ -12357,7 +12356,8 @@
         76750.0,
         76675.0,
         76125.0,
-        76425.0
+        76425.0,
+        76100.0
       ]
     },
     {
@@ -12377,11 +12377,9 @@
       "nombre": "Equinor ASA",
       "industria": "Energy",
       "pais": "Norway",
-      "var_pct": -0.24,
-      "rsi": 34.24,
+      "var_pct": 1.22,
+      "rsi": 32.57,
       "spark": [
-        37.64,
-        36.54,
         36.32,
         37.83,
         38.13,
@@ -12409,7 +12407,9 @@
         36.18,
         34.26,
         33.84,
-        33.76
+        33.76,
+        32.38,
+        32.78
       ]
     },
     {
@@ -12417,10 +12417,9 @@
       "nombre": "Arm Holdings plc",
       "industria": "Technology",
       "pais": "United Kingdom",
-      "var_pct": 4.91,
-      "rsi": 68.98,
+      "var_pct": -6.94,
+      "rsi": 62.09,
       "spark": [
-        213.31,
         213.27,
         212.65,
         207.92,
@@ -12449,7 +12448,8 @@
         412.55,
         396.34,
         418.88,
-        439.46
+        439.46,
+        408.94
       ]
     },
     {
@@ -12457,10 +12457,9 @@
       "nombre": "Baker Hughes Company",
       "industria": "Energy",
       "pais": "United States",
-      "var_pct": -2.76,
-      "rsi": 34.23,
+      "var_pct": -0.02,
+      "rsi": 34.2,
       "spark": [
-        63.53,
         63.89,
         64.6,
         65.24,
@@ -12489,7 +12488,8 @@
         62.46,
         61.52,
         60.07,
-        58.41
+        58.41,
+        58.4
       ]
     },
     {
@@ -12497,11 +12497,9 @@
       "nombre": "Danaher Corporation",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": -1.98,
-      "rsi": 47.59,
+      "var_pct": 0.75,
+      "rsi": 48.88,
       "spark": [
-        174.92,
-        175.66,
         171.16,
         166.52,
         166.26,
@@ -12529,7 +12527,9 @@
         180.1,
         181.1,
         181.35,
-        177.76
+        177.76,
+        177.17,
+        178.49
       ]
     },
     {
@@ -12537,10 +12537,9 @@
       "nombre": "The Goodyear Tire & Rubber Comp",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": 0.49,
-      "rsi": 51.14,
+      "var_pct": -2.5,
+      "rsi": 47.07,
       "spark": [
-        6.86,
         6.51,
         5.95,
         5.86,
@@ -12569,7 +12568,8 @@
         6.59,
         6.31,
         6.16,
-        6.19
+        6.19,
+        6.03
       ]
     },
     {
@@ -12577,10 +12577,9 @@
       "nombre": "Intuitive Surgical, Inc.",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": 1.14,
-      "rsi": 40.46,
+      "var_pct": -1.22,
+      "rsi": 38.27,
       "spark": [
-        453.49,
         450.06,
         420.06,
         431.87,
@@ -12609,7 +12608,8 @@
         416.55,
         417.07,
         402.18,
-        406.78
+        406.78,
+        401.8
       ]
     },
     {
@@ -12617,10 +12617,9 @@
       "nombre": "Nexgen Energy Ltd.",
       "industria": "Energy",
       "pais": "Canada",
-      "var_pct": 1.53,
-      "rsi": 47.58,
+      "var_pct": -0.7,
+      "rsi": 46.84,
       "spark": [
-        12.38,
         12.14,
         12.66,
         12.32,
@@ -12649,7 +12648,8 @@
         10.54,
         10.62,
         10.49,
-        10.65
+        10.65,
+        10.57
       ]
     },
     {
@@ -12657,10 +12657,9 @@
       "nombre": "O'Reilly Automotive, Inc.",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": -1.76,
-      "rsi": 39.1,
+      "var_pct": -1.92,
+      "rsi": 34.97,
       "spark": [
-        94.58,
         92.96,
         91.35,
         91.84,
@@ -12689,7 +12688,8 @@
         90.26,
         90.68,
         88.4,
-        86.84
+        86.84,
+        85.17
       ]
     },
     {
@@ -12697,10 +12697,9 @@
       "nombre": "TJX Companies, Inc. (The)",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": -0.19,
-      "rsi": 57.92,
+      "var_pct": 0.49,
+      "rsi": 59.45,
       "spark": [
-        153.98,
         152.86,
         148.42,
         149.77,
@@ -12729,7 +12728,8 @@
         167.33,
         166.32,
         164.13,
-        163.81
+        163.81,
+        164.61
       ]
     },
     {
@@ -12737,10 +12737,9 @@
       "nombre": "SAN MIGUEL SA",
       "industria": "Consumer Defensive",
       "pais": "Argentina",
-      "var_pct": 2.01,
-      "rsi": 55.5,
+      "var_pct": -2.36,
+      "rsi": 50.46,
       "spark": [
-        505.0,
         483.0,
         467.0,
         460.0,
@@ -12769,7 +12768,8 @@
         490.0,
         500.0,
         498.0,
-        508.0
+        508.0,
+        496.0
       ]
     },
     {
@@ -12777,10 +12777,9 @@
       "nombre": "BANCO HIPOTECAIRO SA",
       "industria": "Financial Services",
       "pais": "Argentina",
-      "var_pct": -4.51,
-      "rsi": 62.47,
+      "var_pct": -1.4,
+      "rsi": 60.35,
       "spark": [
-        333.0,
         322.5,
         307.5,
         305.5,
@@ -12809,7 +12808,8 @@
         349.0,
         378.0,
         410.0,
-        391.5
+        391.5,
+        386.0
       ]
     },
     {
@@ -12817,11 +12817,9 @@
       "nombre": "Columbia Select Technology ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": 0.23,
-      "rsi": 56.72,
+      "var_pct": -0.02,
+      "rsi": 62.17,
       "spark": [
-        36.51,
-        36.28,
         37.2,
         37.46,
         37.02,
@@ -12849,7 +12847,9 @@
         38.54,
         40.15,
         39.13,
-        39.22
+        39.22,
+        40.58,
+        40.57
       ]
     },
     {
@@ -12857,10 +12857,9 @@
       "nombre": "FERRUM SA DE CERAMICA Y METALUR",
       "industria": "Industrials",
       "pais": "Argentina",
-      "var_pct": 0.0,
-      "rsi": 46.64,
+      "var_pct": -1.2,
+      "rsi": 43.79,
       "spark": [
-        21.65,
         20.75,
         21.05,
         20.75,
@@ -12889,7 +12888,8 @@
         21.25,
         20.95,
         20.75,
-        20.75
+        20.75,
+        20.5
       ]
     },
     {
@@ -12897,11 +12897,9 @@
       "nombre": "Adecoagro S.A.",
       "industria": "Consumer Defensive",
       "pais": "Luxembourg",
-      "var_pct": -2.92,
-      "rsi": 25.42,
+      "var_pct": -0.87,
+      "rsi": 23.04,
       "spark": [
-        13.82,
-        13.37,
         13.13,
         13.49,
         13.07,
@@ -12929,7 +12927,9 @@
         11.65,
         10.9,
         9.93,
-        9.64
+        9.64,
+        9.24,
+        9.16
       ]
     },
     {
@@ -12937,11 +12937,9 @@
       "nombre": "IRSA Inversiones Y Representaci",
       "industria": "Real Estate",
       "pais": "Argentina",
-      "var_pct": -2.26,
-      "rsi": 58.67,
+      "var_pct": -2.05,
+      "rsi": 56.47,
       "spark": [
-        15.03,
-        14.7,
         13.94,
         13.98,
         13.74,
@@ -12969,7 +12967,9 @@
         16.69,
         17.28,
         16.81,
-        16.43
+        16.43,
+        16.62,
+        16.28
       ]
     },
     {
@@ -12977,11 +12977,9 @@
       "nombre": "Celularity Inc.",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": 8.14,
-      "rsi": 44.04,
+      "var_pct": -2.93,
+      "rsi": 39.62,
       "spark": [
-        0.93,
-        0.91,
         0.88,
         0.77,
         0.78,
@@ -13009,7 +13007,9 @@
         0.71,
         0.77,
         0.74,
-        0.8
+        0.8,
+        0.75,
+        0.73
       ]
     },
     {
@@ -13017,10 +13017,9 @@
       "nombre": "CENTRAL COSTANERA SA",
       "industria": "Utilities",
       "pais": "Argentina",
-      "var_pct": 0.0,
-      "rsi": 62.28,
+      "var_pct": -0.82,
+      "rsi": 58.93,
       "spark": [
-        457.0,
         456.0,
         454.0,
         438.0,
@@ -13049,7 +13048,8 @@
         486.0,
         486.0,
         490.0,
-        490.0
+        490.0,
+        486.0
       ]
     },
     {
@@ -13057,10 +13057,9 @@
       "nombre": "iShares Ethereum Trust ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -1.45,
-      "rsi": 37.21,
+      "var_pct": 2.14,
+      "rsi": 40.21,
       "spark": [
-        17.3,
         17.48,
         17.67,
         17.24,
@@ -13089,7 +13088,8 @@
         13.76,
         13.54,
         13.07,
-        12.88
+        12.88,
+        13.15
       ]
     },
     {
@@ -13097,10 +13097,9 @@
       "nombre": "iShares Bitcoin Trust ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -2.04,
-      "rsi": 35.27,
+      "var_pct": 2.74,
+      "rsi": 40.52,
       "spark": [
-        45.4,
         45.45,
         46.47,
         45.8,
@@ -13129,7 +13128,8 @@
         37.74,
         37.17,
         36.36,
-        35.62
+        35.62,
+        36.6
       ]
     },
     {
@@ -13137,10 +13137,9 @@
       "nombre": "ASML Holding N.V. - New York Re",
       "industria": "Technology",
       "pais": "Netherlands",
-      "var_pct": 3.31,
-      "rsi": 65.72,
+      "var_pct": -2.01,
+      "rsi": 62.29,
       "spark": [
-        1516.6,
         1592.02,
         1565.81,
         1520.94,
@@ -13169,7 +13168,8 @@
         1892.66,
         1803.89,
         1867.83,
-        1929.68
+        1929.68,
+        1890.82
       ]
     },
     {
@@ -13177,10 +13177,9 @@
       "nombre": "Atlassian Corporation",
       "industria": "Technology",
       "pais": "Australia",
-      "var_pct": -1.98,
-      "rsi": 41.62,
+      "var_pct": -3.86,
+      "rsi": 38.81,
       "spark": [
-        92.37,
         91.6,
         87.31,
         85.0,
@@ -13209,7 +13208,8 @@
         91.55,
         87.95,
         84.39,
-        82.72
+        82.72,
+        79.53
       ]
     },
     {
@@ -13217,10 +13217,9 @@
       "nombre": "C3.ai, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 0.1,
-      "rsi": 50.48,
+      "var_pct": -2.91,
+      "rsi": 46.62,
       "spark": [
-        9.58,
         9.87,
         9.48,
         8.79,
@@ -13249,7 +13248,8 @@
         11.03,
         10.93,
         10.29,
-        10.3
+        10.3,
+        10.0
       ]
     },
     {
@@ -13257,10 +13257,9 @@
       "nombre": "Celestica, Inc.",
       "industria": "Technology",
       "pais": "Canada",
-      "var_pct": -2.06,
-      "rsi": 47.25,
+      "var_pct": 0.02,
+      "rsi": 47.27,
       "spark": [
-        385.21,
         375.55,
         380.99,
         374.07,
@@ -13289,7 +13288,8 @@
         403.45,
         382.01,
         380.37,
-        372.55
+        372.55,
+        372.61
       ]
     },
     {
@@ -13297,10 +13297,9 @@
       "nombre": "Constellation Energy Corporatio",
       "industria": "Utilities",
       "pais": "United States",
-      "var_pct": 2.58,
-      "rsi": 51.73,
+      "var_pct": 0.9,
+      "rsi": 53.09,
       "spark": [
-        310.8,
         303.16,
         299.23,
         293.14,
@@ -13329,7 +13328,8 @@
         262.35,
         268.0,
         267.17,
-        274.06
+        274.06,
+        276.54
       ]
     },
     {
@@ -13337,11 +13337,9 @@
       "nombre": "Deckers Outdoor Corporation",
       "industria": "Consumer Cyclical",
       "pais": "United States",
-      "var_pct": -4.04,
-      "rsi": 45.83,
+      "var_pct": -2.92,
+      "rsi": 46.59,
       "spark": [
-        103.92,
-        102.72,
         100.42,
         96.65,
         94.89,
@@ -13369,7 +13367,9 @@
         113.83,
         112.5,
         110.17,
-        105.72
+        105.72,
+        109.11,
+        105.93
       ]
     },
     {
@@ -13377,10 +13377,9 @@
       "nombre": "Rigetti Computing, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 5.51,
-      "rsi": 50.5,
+      "var_pct": 3.23,
+      "rsi": 52.42,
       "spark": [
-        18.34,
         18.94,
         20.51,
         19.07,
@@ -13409,7 +13408,8 @@
         22.7,
         20.64,
         20.25,
-        21.36
+        21.36,
+        22.05
       ]
     },
     {
@@ -13417,10 +13417,9 @@
       "nombre": "ServiceNow, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -0.46,
-      "rsi": 40.81,
+      "var_pct": -2.71,
+      "rsi": 38.85,
       "spark": [
-        93.59,
         91.18,
         91.49,
         89.0,
@@ -13449,7 +13448,8 @@
         104.15,
         101.33,
         95.48,
-        95.04
+        95.04,
+        92.46
       ]
     },
     {
@@ -13457,10 +13457,9 @@
       "nombre": "Tempus AI, Inc.",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": 4.2,
-      "rsi": 52.91,
+      "var_pct": -4.61,
+      "rsi": 48.4,
       "spark": [
-        49.47,
         49.86,
         48.46,
         46.95,
@@ -13489,7 +13488,8 @@
         52.32,
         50.56,
         48.79,
-        50.84
+        50.84,
+        48.49
       ]
     },
     {
@@ -13497,10 +13497,9 @@
       "nombre": "UiPath, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 0.39,
-      "rsi": 41.7,
+      "var_pct": -1.7,
+      "rsi": 39.76,
       "spark": [
-        10.93,
         10.79,
         10.66,
         10.01,
@@ -13529,7 +13528,8 @@
         10.79,
         10.52,
         10.23,
-        10.27
+        10.27,
+        10.1
       ]
     },
     {
@@ -13537,11 +13537,9 @@
       "nombre": "Vertex Pharmaceuticals Incorpor",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": 1.28,
-      "rsi": 61.86,
+      "var_pct": 2.93,
+      "rsi": 62.82,
       "spark": [
-        427.65,
-        425.0,
         429.82,
         435.17,
         448.29,
@@ -13569,7 +13567,9 @@
         444.93,
         450.46,
         453.17,
-        458.99
+        458.99,
+        451.63,
+        464.85
       ]
     },
     {
@@ -13577,10 +13577,9 @@
       "nombre": "Vistra Corp.",
       "industria": "Utilities",
       "pais": "United States",
-      "var_pct": 3.1,
-      "rsi": 60.75,
+      "var_pct": 3.63,
+      "rsi": 64.92,
       "spark": [
-        153.95,
         147.72,
         152.05,
         146.87,
@@ -13609,7 +13608,8 @@
         153.52,
         158.61,
         158.83,
-        163.75
+        163.75,
+        169.69
       ]
     },
     {
@@ -13617,10 +13617,9 @@
       "nombre": "United States Oil Fund",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": 0.56,
-      "rsi": 33.16,
+      "var_pct": -2.72,
+      "rsi": 31.01,
       "spark": [
-        134.97,
         133.59,
         138.66,
         144.3,
@@ -13649,7 +13648,8 @@
         121.21,
         115.47,
         114.23,
-        114.87
+        114.87,
+        111.75
       ]
     },
     {
@@ -13657,11 +13657,9 @@
       "nombre": "iShares MSCI EAFE ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -0.51,
-      "rsi": 56.7,
+      "var_pct": 0.15,
+      "rsi": 59.55,
       "spark": [
-        103.18,
-        101.29,
         102.34,
         102.12,
         101.53,
@@ -13689,7 +13687,9 @@
         103.38,
         104.08,
         104.31,
-        103.78
+        103.78,
+        104.41,
+        104.57
       ]
     },
     {
@@ -13697,11 +13697,9 @@
       "nombre": "iShares Core MSCI Emerging Mark",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -0.16,
-      "rsi": 55.96,
+      "var_pct": 0.55,
+      "rsi": 62.83,
       "spark": [
-        81.89,
-        80.82,
         82.35,
         82.31,
         79.81,
@@ -13729,7 +13727,9 @@
         81.91,
         84.41,
         83.15,
-        83.02
+        83.02,
+        85.63,
+        86.1
       ]
     },
     {
@@ -13737,11 +13737,9 @@
       "nombre": "iShares MSCI ACWI ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -0.97,
-      "rsi": 53.32,
+      "var_pct": -0.07,
+      "rsi": 57.53,
       "spark": [
-        154.4,
-        152.94,
         154.38,
         154.53,
         153.65,
@@ -13769,7 +13767,9 @@
         155.46,
         158.04,
         157.34,
-        155.81
+        155.81,
+        157.74,
+        157.63
       ]
     },
     {
@@ -13777,10 +13777,9 @@
       "nombre": "VanEck Gold Miners ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -2.19,
-      "rsi": 46.46,
+      "var_pct": -1.64,
+      "rsi": 44.69,
       "spark": [
-        91.72,
         94.59,
         97.6,
         97.14,
@@ -13809,7 +13808,8 @@
         85.27,
         87.24,
         84.36,
-        82.51
+        82.51,
+        81.15
       ]
     },
     {
@@ -13817,10 +13817,9 @@
       "nombre": "Robinhood Markets, Inc.",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": 2.8,
-      "rsi": 71.2,
+      "var_pct": -1.38,
+      "rsi": 69.01,
       "spark": [
-        76.28,
         77.03,
         80.78,
         78.27,
@@ -13849,7 +13848,8 @@
         98.12,
         96.71,
         105.2,
-        108.15
+        108.15,
+        106.66
       ]
     },
     {
@@ -13857,10 +13857,9 @@
       "nombre": "CoreWeave, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 2.38,
-      "rsi": 58.12,
+      "var_pct": -5.33,
+      "rsi": 52.6,
       "spark": [
-        128.84,
         114.15,
         114.7,
         107.75,
@@ -13889,7 +13888,8 @@
         106.71,
         117.03,
         115.21,
-        117.95
+        117.95,
+        111.66
       ]
     },
     {
@@ -13897,10 +13897,9 @@
       "nombre": "Oklo Inc.",
       "industria": "Utilities",
       "pais": "United States",
-      "var_pct": 4.0,
-      "rsi": 48.55,
+      "var_pct": -3.28,
+      "rsi": 46.15,
       "spark": [
-        71.83,
         72.51,
         78.13,
         73.63,
@@ -13929,7 +13928,8 @@
         60.74,
         57.45,
         58.82,
-        61.17
+        61.17,
+        59.17
       ]
     },
     {
@@ -13937,10 +13937,9 @@
       "nombre": "Rocket Lab Corporation",
       "industria": "Industrials",
       "pais": "United States",
-      "var_pct": -0.69,
-      "rsi": 46.92,
+      "var_pct": -6.29,
+      "rsi": 43.27,
       "spark": [
-        78.58,
         105.47,
         117.35,
         117.56,
@@ -13969,7 +13968,8 @@
         109.25,
         104.63,
         107.98,
-        107.24
+        107.24,
+        100.5
       ]
     },
     {
@@ -13977,10 +13977,9 @@
       "nombre": "Astera Labs, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 11.31,
-      "rsi": 69.85,
+      "var_pct": 2.46,
+      "rsi": 71.09,
       "spark": [
-        195.65,
         199.79,
         207.35,
         204.42,
@@ -14009,7 +14008,8 @@
         389.2,
         361.71,
         374.68,
-        417.07
+        417.07,
+        427.31
       ]
     },
     {
@@ -14017,10 +14017,9 @@
       "nombre": "AST SpaceMobile, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": -5.58,
-      "rsi": 43.22,
+      "var_pct": -7.82,
+      "rsi": 40.22,
       "spark": [
-        65.35,
         75.05,
         82.55,
         72.96,
@@ -14049,7 +14048,8 @@
         87.57,
         82.25,
         85.43,
-        80.66
+        80.66,
+        74.35
       ]
     },
     {
@@ -14057,10 +14057,9 @@
       "nombre": "IREN LIMITED",
       "industria": "Financial Services",
       "pais": "Australia",
-      "var_pct": 3.18,
-      "rsi": 53.18,
+      "var_pct": -4.75,
+      "rsi": 49.56,
       "spark": [
-        56.85,
         61.2,
         55.15,
         56.56,
@@ -14089,7 +14088,8 @@
         60.85,
         59.18,
         58.11,
-        59.96
+        59.96,
+        57.11
       ]
     },
     {
@@ -14097,10 +14097,9 @@
       "nombre": "Ecolab Inc.",
       "industria": "Basic Materials",
       "pais": "United States",
-      "var_pct": 0.02,
-      "rsi": 59.02,
+      "var_pct": 0.24,
+      "rsi": 59.58,
       "spark": [
-        255.85,
         253.53,
         250.42,
         251.02,
@@ -14129,7 +14128,8 @@
         267.85,
         273.87,
         269.06,
-        269.12
+        269.12,
+        269.77
       ]
     },
     {
@@ -14137,11 +14137,9 @@
       "nombre": "Invesco S&P 500 Quality ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -0.45,
-      "rsi": 66.54,
+      "var_pct": 0.15,
+      "rsi": 70.42,
       "spark": [
-        82.67,
-        81.93,
         82.44,
         82.99,
         82.59,
@@ -14169,7 +14167,9 @@
         87.32,
         88.7,
         88.67,
-        88.27
+        88.27,
+        89.36,
+        89.5
       ]
     },
     {
@@ -14177,10 +14177,9 @@
       "nombre": "Global X Uranium ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": 1.44,
-      "rsi": 47.36,
+      "var_pct": -1.34,
+      "rsi": 45.76,
       "spark": [
-        56.26,
         55.18,
         57.23,
         54.35,
@@ -14209,7 +14208,8 @@
         48.06,
         47.87,
         47.1,
-        47.78
+        47.78,
+        47.14
       ]
     },
     {
@@ -14217,10 +14217,9 @@
       "nombre": "Global X Copper Miners ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -1.48,
-      "rsi": 50.32,
+      "var_pct": -0.97,
+      "rsi": 49.06,
       "spark": [
-        82.61,
         85.97,
         87.59,
         90.77,
@@ -14249,7 +14248,8 @@
         89.81,
         89.79,
         86.76,
-        85.48
+        85.48,
+        84.65
       ]
     },
     {
@@ -14257,11 +14257,9 @@
       "nombre": "iShares Latin America 40 ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -0.67,
-      "rsi": 48.11,
+      "var_pct": 0.49,
+      "rsi": 48.31,
       "spark": [
-        36.49,
-        35.68,
         35.97,
         35.77,
         35.53,
@@ -14289,7 +14287,9 @@
         34.41,
         34.41,
         34.3,
-        34.07
+        34.07,
+        33.9,
+        34.06
       ]
     },
     {
@@ -14297,11 +14297,9 @@
       "nombre": "iShares ESG Aware MSCI USA ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -1.17,
-      "rsi": 51.3,
+      "var_pct": -0.15,
+      "rsi": 54.48,
       "spark": [
-        159.54,
-        158.95,
         160.11,
         160.66,
         160.36,
@@ -14329,7 +14327,9 @@
         161.8,
         164.78,
         163.6,
-        161.68
+        161.68,
+        163.23,
+        162.99
       ]
     },
     {
@@ -14337,10 +14337,9 @@
       "nombre": "iShares Core S&P 500 ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": 1.01,
-      "rsi": 55.11,
+      "var_pct": -0.23,
+      "rsi": 53.96,
       "spark": [
-        732.99,
         738.99,
         740.76,
         739.62,
@@ -14369,7 +14368,8 @@
         756.35,
         752.01,
         742.61,
-        750.11
+        750.11,
+        748.4
       ]
     },
     {
@@ -14377,10 +14377,9 @@
       "nombre": "BitMine Immersion Technologies,",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": 2.8,
-      "rsi": 40.55,
+      "var_pct": -1.18,
+      "rsi": 39.75,
       "spark": [
-        22.0,
         22.17,
         23.02,
         21.67,
@@ -14409,7 +14408,8 @@
         17.11,
         16.21,
         15.7,
-        16.14
+        16.14,
+        15.95
       ]
     },
     {
@@ -14417,10 +14417,9 @@
       "nombre": "Blackstone Inc.",
       "industria": "Financial Services",
       "pais": "United States",
-      "var_pct": -0.98,
-      "rsi": 55.67,
+      "var_pct": -0.02,
+      "rsi": 55.61,
       "spark": [
-        122.33,
         123.77,
         121.4,
         122.76,
@@ -14449,7 +14448,8 @@
         124.63,
         127.87,
         125.01,
-        123.79
+        123.79,
+        123.76
       ]
     },
     {
@@ -14457,10 +14457,9 @@
       "nombre": "Invesco S&P 500 Equal Weight ET",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": 0.46,
-      "rsi": 55.97,
+      "var_pct": -0.1,
+      "rsi": 55.36,
       "spark": [
-        203.54,
         204.1,
         203.99,
         203.81,
@@ -14489,7 +14488,8 @@
         212.88,
         212.17,
         208.99,
-        209.96
+        209.96,
+        209.76
       ]
     },
     {
@@ -14497,11 +14497,9 @@
       "nombre": "iShares MSCI Italy ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -0.94,
-      "rsi": 61.55,
+      "var_pct": -0.45,
+      "rsi": 61.45,
       "spark": [
-        58.46,
-        57.25,
         57.99,
         58.14,
         57.72,
@@ -14529,7 +14527,9 @@
         59.5,
         59.88,
         60.73,
-        60.16
+        60.16,
+        60.6,
+        60.33
       ]
     },
     {
@@ -14537,11 +14537,9 @@
       "nombre": "State Street SPDR S&P Metals & ",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -0.79,
-      "rsi": 47.68,
+      "var_pct": -1.43,
+      "rsi": 43.59,
       "spark": [
-        124.14,
-        120.51,
         120.95,
         124.54,
         123.6,
@@ -14569,7 +14567,9 @@
         120.44,
         120.63,
         119.33,
-        118.39
+        118.39,
+        117.02,
+        115.35
       ]
     },
     {
@@ -14577,10 +14577,9 @@
       "nombre": "iShares Global Clean Energy ETF",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": 3.03,
-      "rsi": 48.28,
+      "var_pct": 2.74,
+      "rsi": 52.93,
       "spark": [
-        20.65,
         21.1,
         21.67,
         21.32,
@@ -14609,7 +14608,8 @@
         21.03,
         20.82,
         20.48,
-        21.1
+        21.1,
+        21.68
       ]
     },
     {
@@ -14617,10 +14617,9 @@
       "nombre": "CrowdStrike Holdings, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 0.28,
-      "rsi": 58.16,
+      "var_pct": -0.59,
+      "rsi": 57.12,
       "spark": [
-        505.72,
         527.77,
         542.26,
         546.18,
@@ -14649,7 +14648,8 @@
         692.91,
         679.49,
         682.96,
-        684.86
+        684.86,
+        680.8
       ]
     },
     {
@@ -14657,10 +14657,9 @@
       "nombre": "Arista Networks, Inc.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 2.87,
-      "rsi": 58.89,
+      "var_pct": 2.46,
+      "rsi": 61.66,
       "spark": [
-        141.75,
         141.77,
         136.43,
         142.54,
@@ -14689,7 +14688,8 @@
         169.09,
         168.01,
         164.93,
-        169.67
+        169.67,
+        173.85
       ]
     },
     {
@@ -14697,10 +14697,9 @@
       "nombre": "Realty Income Corporation",
       "industria": "Real Estate",
       "pais": "United States",
-      "var_pct": -0.54,
-      "rsi": 42.41,
+      "var_pct": 1.07,
+      "rsi": 46.77,
       "spark": [
-        61.52,
         61.65,
         62.09,
         62.26,
@@ -14729,7 +14728,8 @@
         62.14,
         62.17,
         60.57,
-        60.24
+        60.24,
+        60.88
       ]
     },
     {
@@ -14737,11 +14737,9 @@
       "nombre": "Golar LNG Limited",
       "industria": "Energy",
       "pais": "Bermuda",
-      "var_pct": -0.28,
-      "rsi": 35.89,
+      "var_pct": 2.78,
+      "rsi": 47.12,
       "spark": [
-        54.39,
-        54.75,
         55.42,
         56.53,
         57.07,
@@ -14769,7 +14767,9 @@
         51.17,
         51.2,
         49.59,
-        49.45
+        49.45,
+        49.6,
+        50.98
       ]
     },
     {
@@ -14777,10 +14777,9 @@
       "nombre": "Sandisk Corporation",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 11.54,
-      "rsi": 70.93,
+      "var_pct": 6.15,
+      "rsi": 73.9,
       "spark": [
-        1339.96,
         1562.34,
         1547.56,
         1452.02,
@@ -14809,7 +14808,8 @@
         2107.86,
         1991.55,
         1958.8,
-        2184.75
+        2184.75,
+        2319.04
       ]
     },
     {
@@ -14817,10 +14817,9 @@
       "nombre": "Nebius Group N.V.",
       "industria": "Communication Services",
       "pais": "Netherlands",
-      "var_pct": 2.06,
-      "rsi": 69.71,
+      "var_pct": -0.86,
+      "rsi": 68.56,
       "spark": [
-        184.77,
         177.05,
         186.1,
         179.11,
@@ -14849,7 +14848,8 @@
         260.07,
         265.1,
         280.91,
-        286.69
+        286.69,
+        284.22
       ]
     },
     {
@@ -14857,10 +14857,9 @@
       "nombre": "Hims & Hers Health, Inc.",
       "industria": "Healthcare",
       "pais": "United States",
-      "var_pct": 11.23,
-      "rsi": 71.08,
+      "var_pct": -4.85,
+      "rsi": 64.84,
       "spark": [
-        25.65,
         28.27,
         29.14,
         25.03,
@@ -14889,7 +14888,8 @@
         30.17,
         31.47,
         31.89,
-        35.47
+        35.47,
+        33.75
       ]
     },
     {
@@ -14897,10 +14897,9 @@
       "nombre": "Ondas Inc",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 1.64,
-      "rsi": 43.28,
+      "var_pct": -1.89,
+      "rsi": 42.15,
       "spark": [
-        8.89,
         9.06,
         9.42,
         9.04,
@@ -14929,7 +14928,8 @@
         9.51,
         9.21,
         9.12,
-        9.27
+        9.27,
+        9.1
       ]
     },
     {
@@ -14937,11 +14937,9 @@
       "nombre": "ConocoPhillips",
       "industria": "Energy",
       "pais": "United States",
-      "var_pct": -0.12,
-      "rsi": 38.68,
+      "var_pct": 1.23,
+      "rsi": 37.15,
       "spark": [
-        118.02,
-        114.03,
         113.03,
         115.55,
         117.87,
@@ -14969,7 +14967,9 @@
         116.98,
         112.26,
         111.34,
-        111.21
+        111.21,
+        107.74,
+        109.06
       ]
     },
     {
@@ -14977,10 +14977,9 @@
       "nombre": "NextEra Energy, Inc.",
       "industria": "Utilities",
       "pais": "United States",
-      "var_pct": 1.19,
+      "var_pct": 0.0,
       "rsi": 48.06,
       "spark": [
-        92.64,
         92.42,
         94.15,
         93.9,
@@ -15009,6 +15008,7 @@
         86.12,
         86.23,
         85.73,
+        86.75,
         86.75
       ]
     },
@@ -15017,10 +15017,9 @@
       "nombre": "MP Materials Corp.",
       "industria": "Basic Materials",
       "pais": "United States",
-      "var_pct": 0.07,
-      "rsi": 49.8,
+      "var_pct": 0.71,
+      "rsi": 50.51,
       "spark": [
-        69.13,
         67.43,
         67.41,
         65.59,
@@ -15049,7 +15048,8 @@
         58.26,
         57.05,
         60.84,
-        60.88
+        60.88,
+        61.31
       ]
     },
     {
@@ -15057,10 +15057,9 @@
       "nombre": "Cameco Corporation",
       "industria": "Energy",
       "pais": "Canada",
-      "var_pct": 0.78,
-      "rsi": 48.08,
+      "var_pct": 1.22,
+      "rsi": 49.62,
       "spark": [
-        118.71,
         116.75,
         120.14,
         116.93,
@@ -15089,7 +15088,8 @@
         107.02,
         107.88,
         105.67,
-        106.49
+        106.49,
+        107.79
       ]
     },
     {
@@ -15097,10 +15097,9 @@
       "nombre": "Fiserv, Inc.",
       "industria": "Sin clasificar",
       "pais": "Sin país",
-      "var_pct": -1.87,
-      "rsi": 33.86,
+      "var_pct": -0.7,
+      "rsi": 33.26,
       "spark": [
-        56.81,
         55.48,
         54.39,
         54.88,
@@ -15129,7 +15128,8 @@
         47.91,
         49.83,
         48.77,
-        47.86
+        47.86,
+        47.53
       ]
     },
     {
@@ -15137,10 +15137,9 @@
       "nombre": "Keel Infrastructure Corp.",
       "industria": "Technology",
       "pais": "United States",
-      "var_pct": 5.36,
-      "rsi": 68.77,
+      "var_pct": 10.73,
+      "rsi": 74.73,
       "spark": [
-        4.01,
         3.97,
         4.3,
         4.07,
@@ -15169,7 +15168,8 @@
         5.66,
         5.96,
         5.97,
-        6.29
+        6.29,
+        6.97
       ]
     },
     {
@@ -15177,10 +15177,9 @@
       "nombre": "Novo Nordisk A/S",
       "industria": "Healthcare",
       "pais": "Denmark",
-      "var_pct": -0.76,
-      "rsi": 48.63,
+      "var_pct": 6.87,
+      "rsi": 61.6,
       "spark": [
-        45.8,
         46.07,
         46.4,
         47.0,
@@ -15209,81 +15208,82 @@
         43.92,
         43.55,
         43.52,
-        43.19
+        43.19,
+        46.15
       ]
     }
   ],
   "promedios_por_industria": [
     {
       "industria": "Basic Materials",
-      "rsi_promedio": 46.25,
-      "var_pct_promedio": -2.12,
+      "rsi_promedio": 45.39,
+      "var_pct_promedio": -0.66,
       "n": 33
     },
     {
       "industria": "Communication Services",
-      "rsi_promedio": 52.1,
-      "var_pct_promedio": 0.14,
+      "rsi_promedio": 49.89,
+      "var_pct_promedio": -1.22,
       "n": 27
     },
     {
       "industria": "Consumer Cyclical",
-      "rsi_promedio": 48.62,
-      "var_pct_promedio": -0.12,
+      "rsi_promedio": 46.99,
+      "var_pct_promedio": -1.17,
       "n": 41
     },
     {
       "industria": "Consumer Defensive",
-      "rsi_promedio": 46.38,
-      "var_pct_promedio": -0.94,
+      "rsi_promedio": 44.92,
+      "var_pct_promedio": -0.64,
       "n": 22
     },
     {
       "industria": "Energy",
-      "rsi_promedio": 37.07,
-      "var_pct_promedio": -1.06,
+      "rsi_promedio": 38.55,
+      "var_pct_promedio": 0.4,
       "n": 25
     },
     {
       "industria": "Financial Services",
-      "rsi_promedio": 57.77,
-      "var_pct_promedio": -0.14,
+      "rsi_promedio": 57.89,
+      "var_pct_promedio": 0.2,
       "n": 53
     },
     {
       "industria": "Healthcare",
-      "rsi_promedio": 51.52,
-      "var_pct_promedio": 0.33,
+      "rsi_promedio": 52.37,
+      "var_pct_promedio": 0.56,
       "n": 27
     },
     {
       "industria": "Industrials",
-      "rsi_promedio": 54.13,
-      "var_pct_promedio": -0.51,
+      "rsi_promedio": 54.26,
+      "var_pct_promedio": -0.69,
       "n": 34
     },
     {
       "industria": "Real Estate",
-      "rsi_promedio": 54.83,
-      "var_pct_promedio": -1.13,
+      "rsi_promedio": 54.27,
+      "var_pct_promedio": -0.86,
       "n": 3
     },
     {
       "industria": "Sin clasificar",
-      "rsi_promedio": 62.03,
-      "var_pct_promedio": 0.14,
+      "rsi_promedio": 62.56,
+      "var_pct_promedio": -0.05,
       "n": 44
     },
     {
       "industria": "Technology",
-      "rsi_promedio": 49.42,
-      "var_pct_promedio": 0.9,
+      "rsi_promedio": 49.08,
+      "var_pct_promedio": -0.31,
       "n": 61
     },
     {
       "industria": "Utilities",
-      "rsi_promedio": 51.38,
-      "var_pct_promedio": 0.49,
+      "rsi_promedio": 50.96,
+      "var_pct_promedio": -0.16,
       "n": 11
     }
   ]

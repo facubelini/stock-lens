@@ -17,6 +17,7 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 
 from comparables_universo import INDUSTRIA_COMPARABLES
+from generar_datos import calcular_screener
 
 RAIZ = Path(__file__).resolve().parent.parent
 ARCHIVO_TICKERS = RAIZ / "data" / "tickers.xlsx"
@@ -59,6 +60,22 @@ def _fundamentales_random(rng):
         "debt_to_equity": r2(rng.uniform(0, 250)),
         "current_ratio": r2(rng.uniform(0.5, 3.5)),
     }
+
+
+def _hist_sintetico(rng, precio_final, dias=1260):
+    """Camino aleatorio de ~5 anios de habiles terminando 'hoy', calibrado para
+    llegar al precio final del resto del mock. Sirve para probar el screener
+    (calcular_screener espera un DataFrame con 'Close' y DatetimeIndex, igual
+    que el que devuelve yf.Ticker().history())."""
+    fechas = pd.bdate_range(end=pd.Timestamp.now(tz=TZ).tz_localize(None), periods=dias)
+    precios, p = [], precio_final / (1 + rng.uniform(-0.4, 0.6))  # arranque ~5 anios atras
+    for _ in range(dias):
+        p *= 1 + rng.uniform(-0.025, 0.025)
+        precios.append(p)
+    # Reescala para que termine justo en precio_final (consistente con el resto del mock).
+    factor = precio_final / precios[-1]
+    precios = [x * factor for x in precios]
+    return pd.DataFrame({"Close": precios}, index=fechas)
 
 
 def _mediana_de(filas, clave):
@@ -119,7 +136,7 @@ def main():
     df = pd.read_excel(ARCHIVO_TICKERS, engine="openpyxl")
     df.columns = [str(c).strip() for c in df.columns]
 
-    listado, medias, fundamentales = [], [], []
+    listado, medias, fundamentales, screener = [], [], [], []
 
     for _, fila in df.iterrows():
         t = str(fila["Ticker"]).strip()
@@ -181,6 +198,8 @@ def main():
             }
         )
 
+        screener.append({**base, **calcular_screener(_hist_sintetico(rng, precio))})
+
     promedios = []
     df_l = pd.DataFrame(listado)
     for industria, g in df_l.groupby("industria", sort=True):
@@ -210,6 +229,7 @@ def main():
     escribir("medias.json", medias)
     escribir("fundamentales.json", fundamentales)
     escribir("comparables.json", comparables)
+    escribir("screener.json", screener)
     escribir("meta.json", meta)
     print(f"Mock generado: {len(listado)} tickers en {DIR_SALIDA.relative_to(RAIZ)}")
 

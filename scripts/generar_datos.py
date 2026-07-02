@@ -37,7 +37,10 @@ CLAVES_BENCH = [
 
 # Encabezados aceptados para la columna de tickers (se normalizan sin acentos).
 NOMBRES_TICKER = ["ticker", "codigo", "symbol", "simbolo", "code", "tickers"]
-PERIODO_HISTORICO = "2y"  # suficiente para SMA200 / EMA150 bien calentadas
+# 5y (no cuesta requests extra, es el mismo history() con mas filas): hace
+# falta para que semanal (SMA52 ~ 1 ano) y mensual (SMA36 ~ 3 anos) del
+# screener tengan velas suficientes. 2y ya alcanzaba para SMA200/EMA150 diario.
+PERIODO_HISTORICO = "5y"
 # Si el ticker "pelado" no trae datos, se reintenta con estos sufijos:
 # .SA = B3 (Brasil), .BA = BYMA (Argentina).
 SUFIJOS = ["", ".SA", ".BA"]
@@ -138,6 +141,143 @@ def dist_pct(precio, media):
     if media is None or (isinstance(media, float) and (math.isnan(media) or media == 0)):
         return None
     return (precio / media - 1) * 100
+
+
+# ---------------------------------------------------------------------------
+# Screener multi-temporalidad (Estado/Trend/Score/Setup del indicador Pine)
+# ---------------------------------------------------------------------------
+# Perfiles de medias por temporalidad. "clave" es el indice (en "medias") de
+# la media usada para pullback/extension/tendencia (equivalente a "maKey" del
+# indicador: la media "media" en diario, la "larga" en semanal/mensual).
+# Los periodos de semanal/mensual son mas cortos que los del Pine original
+# (EMA40/SMA100/SMA200) porque ese usa el timeframe que tengas abierto en
+# TradingView (con anios de historial atras); aca se recalculan las 3
+# temporalidades juntas a partir de 5y de velas diarias, asi que se escalan
+# para tener margen real de velas (SMA52 semanal ~ 1 ano, SMA36 mensual ~ 3
+# anos) en vez de pedir de mas (SMA200 mensual pediria ~17 anos de historial).
+PERFIL_DIARIO = {
+    "medias": [("EMA21", "ema", 21), ("EMA50", "ema", 50), ("EMA150", "ema", 150)],
+    "clave": 1,
+    "slope_lookback": 10,
+}
+PERFIL_SEMANAL = {
+    "medias": [("EMA10", "ema", 10), ("EMA26", "ema", 26), ("SMA52", "sma", 52)],
+    "clave": 2,
+    "slope_lookback": 8,
+}
+PERFIL_MENSUAL = {
+    "medias": [("EMA6", "ema", 6), ("EMA18", "ema", 18), ("SMA36", "sma", 36)],
+    "clave": 2,
+    "slope_lookback": 3,
+}
+
+TOL_PULLBACK = 1.2  # % de distancia a la media clave para considerar "en pullback"
+TOL_EXTENSION = 6.0  # % de distancia para considerar "extendido"
+
+
+def _texto_tendencia(estado):
+    return {"Bull": "alcista", "Bear": "bajista"}.get(estado, "neutral")
+
+
+def _construir_motivo(estado, verdict, nombre_clave, dist_clave, rsi):
+    partes = [f"Tendencia {_texto_tendencia(estado)}"]
+    if dist_clave is not None:
+        lado = "sobre" if dist_clave >= 0 else "bajo"
+        partes.append(f"precio {lado} {nombre_clave} ({dist_clave:+.1f}%)")
+    if rsi is not None:
+        partes.append(f"RSI {rsi:.0f}")
+    extra = {
+        "COMPRA": "en pullback a la media, listo para entrar",
+        "CERCA": "acercándose a la zona de pullback",
+        "VENTA": "presión vendedora",
+        "EXTENDIDO": "muy extendido, esperar un retroceso",
+    }.get(verdict)
+    if extra:
+        partes.append(extra)
+    return " · ".join(partes)
+
+
+def perfil_setup(closes, medias, clave, slope_lookback):
+    """Aplica la logica de Estado/Trend/Score/Setup del indicador Pine (ver
+    indicator_v6_optimo_v2.pine) a una serie de cierres de CUALQUIER
+    temporalidad (diaria/semanal/mensual ya resampleada). Devuelve un dict
+    con veredicto (COMPRA/CERCA/VENTA/EXTENDIDO/NEUTRAL) + motivo, o None si
+    no hay velas suficientes para esa temporalidad todavia."""
+    periodo_max = max(p[2] for p in medias)
+    if len(closes) < periodo_max + slope_lookback + 1:
+        return None
+
+    series = {}
+    for nombre, tipo, periodo in medias:
+        series[nombre] = (
+            closes.ewm(span=periodo, adjust=False).mean()
+            if tipo == "ema"
+            else closes.rolling(periodo).mean()
+        )
+
+    nombre_clave = medias[clave][0]
+    serie_clave = series[nombre_clave]
+    ma_clave = serie_clave.iloc[-1]
+    ma_clave_prev = serie_clave.iloc[-1 - slope_lookback]
+    if pd.isna(ma_clave) or pd.isna(ma_clave_prev):
+        return None
+
+    precio = float(closes.iloc[-1])
+    rsi = rsi_wilder(closes.values, 14)
+
+    trend_up = ma_clave > ma_clave_prev
+    trend_dn = ma_clave < ma_clave_prev
+
+    ma_rapida = series[medias[0][0]].iloc[-1]
+    ma_media = series[medias[1][0]].iloc[-1]
+
+    score = 0
+    if precio > ma_clave:
+        score += 1
+    if not pd.isna(ma_rapida) and not pd.isna(ma_media) and ma_rapida > ma_media:
+        score += 1
+    if rsi is not None and rsi > 50:
+        score += 1
+
+    estado = "Bull" if (score >= 2 and trend_up) else ("Bear" if (score <= 1 and trend_dn) else "Neutral")
+
+    dist_clave = dist_pct(precio, ma_clave)
+    pullback_ok = dist_clave is not None and abs(dist_clave) <= TOL_PULLBACK
+    extendido = dist_clave is not None and abs(dist_clave) >= TOL_EXTENSION
+    cerca = dist_clave is not None and abs(dist_clave) <= TOL_PULLBACK * 2
+
+    if estado == "Bull" and pullback_ok and rsi is not None and rsi >= 50:
+        verdict = "COMPRA"
+    elif estado == "Bull" and not extendido and cerca:
+        verdict = "CERCA"
+    elif estado == "Bear" and rsi is not None and rsi <= 45:
+        verdict = "VENTA"
+    elif extendido:
+        verdict = "EXTENDIDO"
+    else:
+        verdict = "NEUTRAL"
+
+    return {
+        "verdict": verdict,
+        "estado": estado,
+        "rsi": num(rsi, 1),
+        "dist_clave": num(dist_clave, 2),
+        "ma_clave": nombre_clave,
+        "motivo": _construir_motivo(estado, verdict, nombre_clave, dist_clave, rsi),
+    }
+
+
+def calcular_screener(hist):
+    """Arma el veredicto diario/semanal/mensual a partir del historico diario
+    ya descargado (resamplea semanal/mensual, no pide datos nuevos)."""
+    diarias = hist["Close"].dropna()
+    semanales = hist["Close"].resample("W-FRI").last().dropna()
+    mensuales = hist["Close"].resample("ME").last().dropna()
+    return {
+        "diario": perfil_setup(diarias, **PERFIL_DIARIO),
+        "semanal": perfil_setup(semanales, **PERFIL_SEMANAL),
+        "mensual": perfil_setup(mensuales, **PERFIL_MENSUAL),
+    }
 
 
 def extraer_fundamentales(info):
@@ -303,7 +443,7 @@ def main():
     tickers = leer_tickers()
     print(f"Procesando {len(tickers)} tickers (periodo {PERIODO_HISTORICO})...\n")
 
-    listado, medias, fundamentales, invalidos = [], [], [], []
+    listado, medias, fundamentales, screener, invalidos = [], [], [], [], []
 
     for _, fila in tickers.iterrows():
         t = fila["Ticker"]
@@ -366,6 +506,8 @@ def main():
             }
         )
 
+        screener.append({**base, **calcular_screener(hist)})
+
         print(f"  ok {sym} ({nombre})")
 
     # Promedios por industria para listado.json
@@ -407,11 +549,17 @@ def main():
     print("\nArmando comparables por industria...")
     comparables = construir_comparables(fundamentales)
 
+    n_compra = sum(
+        1 for f in screener if any((f.get(tf) or {}).get("verdict") == "COMPRA" for tf in ("diario", "semanal", "mensual"))
+    )
+    print(f"Screener: {n_compra} ticker(s) con señal de COMPRA en alguna temporalidad.")
+
     print("\nEscribiendo JSON:")
     escribir("listado.json", {"acciones": listado, "promedios_por_industria": promedios})
     escribir("medias.json", medias)
     escribir("fundamentales.json", fundamentales)
     escribir("comparables.json", comparables)
+    escribir("screener.json", screener)
     escribir("meta.json", meta)
 
     print(f"\nListo. {len(listado)} validos, {len(invalidos)} invalidos.")

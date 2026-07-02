@@ -5,6 +5,7 @@ import Listado from './pages/Listado'
 import Medias from './pages/Medias'
 import Fundamentales from './pages/Fundamentales'
 import Comparables from './pages/Comparables'
+import Screener from './pages/Screener'
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="/medias" element={<Medias />} />
           <Route path="/fundamentales" element={<Fundamentales />} />
           <Route path="/comparables" element={<Comparables />} />
+          <Route path="/screener" element={<Screener />} />
           <Route path="*" element={<Listado />} />
         </Routes>
       </main>

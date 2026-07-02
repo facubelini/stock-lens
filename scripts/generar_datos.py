@@ -10,6 +10,7 @@ Uso:
 
 import json
 import math
+import re
 import unicodedata
 from datetime import datetime
 from pathlib import Path
@@ -19,11 +20,20 @@ import numpy as np
 import pandas as pd
 import yfinance as yf
 
+from comparables_universo import INDUSTRIA_COMPARABLES
+
 # --- Rutas y constantes ---
 RAIZ = Path(__file__).resolve().parent.parent
 ARCHIVO_TICKERS = RAIZ / "data" / "tickers.xlsx"
 DIR_SALIDA = RAIZ / "public" / "data"
 TZ = ZoneInfo("America/Argentina/Buenos_Aires")
+
+# Claves de ratios usadas tanto para la mediana de industria en Fundamentales
+# como para la mediana del universo de comparables.
+CLAVES_BENCH = [
+    "per_trailing", "per_forward", "peg", "ev_sales", "pb", "ps", "market_cap",
+    "eps", "profit_margin", "roe", "dividend_yield", "beta", "debt_to_equity", "current_ratio",
+]
 
 # Encabezados aceptados para la columna de tickers (se normalizan sin acentos).
 NOMBRES_TICKER = ["ticker", "codigo", "symbol", "simbolo", "code", "tickers"]
@@ -176,6 +186,86 @@ def extraer_fundamentales(info):
     }
 
 
+def _normalizar_industria(s):
+    """Normaliza un nombre de industria para matchear contra
+    INDUSTRIA_COMPARABLES sin depender del caracter de guion exacto que
+    devuelva Yahoo ("-", "–" o "—")."""
+    if not s:
+        return ""
+    s = str(s).replace("—", "-").replace("–", "-")
+    s = re.sub(r"\s*-\s*", " - ", s)
+    s = re.sub(r"\s+", " ", s)
+    return s.strip().lower()
+
+
+def mediana_de(filas, clave):
+    vals = sorted(f[clave] for f in filas if f.get(clave) is not None)
+    if not vals:
+        return None
+    n = len(vals)
+    m = n // 2
+    return vals[m] if n % 2 else (vals[m - 1] + vals[m]) / 2
+
+
+def construir_comparables(fundamentales):
+    """Para cada industria presente en tus tickers que tenga peers curados en
+    comparables_universo.INDUSTRIA_COMPARABLES, descarga fundamentales de esos
+    peers (livianos: solo .info, sin history) y arma la mediana del grupo."""
+    por_industria = {}
+    for f in fundamentales:
+        por_industria.setdefault(f["industria"], []).append(f)
+
+    tickers_propios = {f["ticker"] for f in fundamentales}
+    resultado, sin_mapeo = [], []
+
+    for industria, propios in sorted(por_industria.items()):
+        clave = _normalizar_industria(industria)
+        peers_curados = INDUSTRIA_COMPARABLES.get(clave)
+        if not peers_curados:
+            sin_mapeo.append(industria)
+            continue
+
+        pares = [{**p, "en_portfolio": True} for p in propios]
+        vistos = set(tickers_propios)
+        for peer in peers_curados:
+            if peer in vistos:
+                continue
+            vistos.add(peer)
+            try:
+                info = yf.Ticker(peer).info or {}
+            except Exception:  # noqa: BLE001
+                continue
+            if not info:
+                continue
+            nombre = info.get("shortName") or info.get("longName") or peer
+            fund = extraer_fundamentales(info)
+            mc = fund.pop("market_cap")
+            pares.append(
+                {
+                    "ticker": peer,
+                    "nombre": nombre,
+                    "industria": industria,
+                    "en_portfolio": False,
+                    **{k: num(v, 2) for k, v in fund.items()},
+                    "market_cap": int(mc) if mc else None,
+                    "sector": info.get("sector") or None,
+                }
+            )
+
+        resultado.append(
+            {
+                "industria": industria,
+                "pares": pares,
+                "mediana": {k: num(mediana_de(pares, k), 2) for k in CLAVES_BENCH},
+            }
+        )
+
+    if sin_mapeo:
+        print(f"\n(Sin comparables curados para: {', '.join(sin_mapeo)})")
+
+    return resultado
+
+
 # ---------------------------------------------------------------------------
 # Escritura de salidas
 # ---------------------------------------------------------------------------
@@ -231,8 +321,10 @@ def main():
             info = {}
 
         # Industria/Pais/Nombre: del Excel si vienen; si no, se derivan de yfinance.
+        # "industry" es la clasificacion granular de Yahoo (ej. "Semiconductors"),
+        # mas especifica que "sector" (ej. "Technology"). Si falta, cae a sector.
         nombre = fila["Nombre"] or info.get("shortName") or info.get("longName") or sym
-        industria = fila["Industria"] or info.get("sector") or "Sin clasificar"
+        industria = fila["Industria"] or info.get("industry") or info.get("sector") or "Sin clasificar"
         pais = fila["Pais"] or info.get("country") or "Sin país"
 
         precio = float(closes.iloc[-1])
@@ -312,10 +404,14 @@ def main():
         "tickers_invalidos": invalidos,
     }
 
+    print("\nArmando comparables por industria...")
+    comparables = construir_comparables(fundamentales)
+
     print("\nEscribiendo JSON:")
     escribir("listado.json", {"acciones": listado, "promedios_por_industria": promedios})
     escribir("medias.json", medias)
     escribir("fundamentales.json", fundamentales)
+    escribir("comparables.json", comparables)
     escribir("meta.json", meta)
 
     print(f"\nListo. {len(listado)} validos, {len(invalidos)} invalidos.")

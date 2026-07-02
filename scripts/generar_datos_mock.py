@@ -9,20 +9,109 @@ Uso:
 
 import json
 import random
+import re
 from datetime import datetime
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pandas as pd
 
+from comparables_universo import INDUSTRIA_COMPARABLES
+
 RAIZ = Path(__file__).resolve().parent.parent
 ARCHIVO_TICKERS = RAIZ / "data" / "tickers.xlsx"
 DIR_SALIDA = RAIZ / "public" / "data"
 TZ = ZoneInfo("America/Argentina/Buenos_Aires")
 
+CLAVES_BENCH = [
+    "per_trailing", "per_forward", "peg", "ev_sales", "pb", "ps", "market_cap",
+    "eps", "profit_margin", "roe", "dividend_yield", "beta", "debt_to_equity", "current_ratio",
+]
+
 
 def r2(v):
     return round(v, 2)
+
+
+def _normalizar_industria(s):
+    if not s:
+        return ""
+    s = str(s).replace("—", "-").replace("–", "-")
+    s = re.sub(r"\s*-\s*", " - ", s)
+    s = re.sub(r"\s+", " ", s)
+    return s.strip().lower()
+
+
+def _fundamentales_random(rng):
+    return {
+        "per_trailing": r2(rng.uniform(8, 45)),
+        "per_forward": r2(rng.uniform(7, 38)),
+        "peg": r2(rng.uniform(0.5, 3.5)),
+        "ev_sales": r2(rng.uniform(1, 15)),
+        "pb": r2(rng.uniform(0.8, 18)),
+        "ps": r2(rng.uniform(1, 14)),
+        "market_cap": int(rng.uniform(5e9, 3e12)),
+        "eps": r2(rng.uniform(0.5, 25)),
+        "profit_margin": r2(rng.uniform(-5, 40)),
+        "roe": r2(rng.uniform(-10, 60)),
+        "dividend_yield": r2(rng.uniform(0, 5)),
+        "beta": r2(rng.uniform(0.4, 2.2)),
+        "debt_to_equity": r2(rng.uniform(0, 250)),
+        "current_ratio": r2(rng.uniform(0.5, 3.5)),
+    }
+
+
+def _mediana_de(filas, clave):
+    vals = sorted(f[clave] for f in filas if f.get(clave) is not None)
+    if not vals:
+        return None
+    n = len(vals)
+    m = n // 2
+    return vals[m] if n % 2 else (vals[m - 1] + vals[m]) / 2
+
+
+def construir_comparables_mock(fundamentales):
+    """Version sin red de construir_comparables(): mismos peers curados, pero
+    con ratios sinteticos (deterministas por ticker) en vez de yfinance."""
+    por_industria = {}
+    for f in fundamentales:
+        por_industria.setdefault(f["industria"], []).append(f)
+
+    tickers_propios = {f["ticker"] for f in fundamentales}
+    resultado = []
+
+    for industria, propios in sorted(por_industria.items()):
+        peers_curados = INDUSTRIA_COMPARABLES.get(_normalizar_industria(industria))
+        if not peers_curados:
+            continue
+
+        pares = [{**p, "en_portfolio": True} for p in propios]
+        vistos = set(tickers_propios)
+        for peer in peers_curados:
+            if peer in vistos:
+                continue
+            vistos.add(peer)
+            rng = random.Random(peer)
+            pares.append(
+                {
+                    "ticker": peer,
+                    "nombre": peer,
+                    "industria": industria,
+                    "en_portfolio": False,
+                    **_fundamentales_random(rng),
+                    "sector": industria,
+                }
+            )
+
+        resultado.append(
+            {
+                "industria": industria,
+                "pares": pares,
+                "mediana": {k: r2(v) if (v := _mediana_de(pares, k)) is not None else None for k in CLAVES_BENCH},
+            }
+        )
+
+    return resultado
 
 
 def main():
@@ -115,9 +204,12 @@ def main():
         with open(DIR_SALIDA / nombre, "w", encoding="utf-8") as f:
             json.dump(obj, f, ensure_ascii=False, indent=2)
 
+    comparables = construir_comparables_mock(fundamentales)
+
     escribir("listado.json", {"acciones": listado, "promedios_por_industria": promedios})
     escribir("medias.json", medias)
     escribir("fundamentales.json", fundamentales)
+    escribir("comparables.json", comparables)
     escribir("meta.json", meta)
     print(f"Mock generado: {len(listado)} tickers en {DIR_SALIDA.relative_to(RAIZ)}")
 

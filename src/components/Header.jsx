@@ -6,6 +6,7 @@ const tabs = [
   { to: '/', label: 'Listado', end: true },
   { to: '/medias', label: 'Medias móviles' },
   { to: '/fundamentales', label: 'Fundamentales' },
+  { to: '/comparables', label: 'Comparables' },
 ]
 
 export default function Header() {

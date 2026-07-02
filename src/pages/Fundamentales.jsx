@@ -11,6 +11,7 @@ import Controles from '../components/Controles'
 import Tabla from '../components/Tabla'
 import BotonPin from '../components/BotonPin'
 import EditorClasificacion from '../components/EditorClasificacion'
+import FiltrosRango, { aplicarFiltrosRango } from '../components/FiltrosRango'
 import Leyenda from '../components/Leyenda'
 import Glosario from '../components/Glosario'
 import Pendientes from '../components/Pendientes'
@@ -188,6 +189,12 @@ export default function Fundamentales() {
     ordenInicial: { key: 'market_cap', dir: 'desc' },
   })
 
+  const [rangos, setRangos] = useState({})
+  const setRango = (clave, campo, valor) =>
+    setRangos((prev) => ({ ...prev, [clave]: { ...(prev[clave] ?? { min: '', max: '' }), [campo]: valor } }))
+  const limpiarRangos = () => setRangos({})
+  const filasFinal = useMemo(() => aplicarFiltrosRango(t.filtradas, rangos), [t.filtradas, rangos])
+
   const columnasConPin = useMemo(
     () => [
       {
@@ -228,6 +235,8 @@ export default function Fundamentales() {
 
       <Glosario />
 
+      <FiltrosRango rangos={rangos} setRango={setRango} onLimpiar={limpiarRangos} />
+
       <Controles
         busqueda={t.busqueda}
         setBusqueda={t.setBusqueda}
@@ -242,9 +251,9 @@ export default function Fundamentales() {
         sectores={t.sectores}
         agrupar={agrupar}
         setAgrupar={setAgrupar}
-        onExportCSV={() => exportarCSV('stock-lens-fundamentales.csv', columnas, t.filtradas)}
+        onExportCSV={() => exportarCSV('stock-lens-fundamentales.csv', columnas, filasFinal)}
         total={filas.length}
-        mostrados={t.filtradas.length}
+        mostrados={filasFinal.length}
       />
 
       <Leyenda />
@@ -254,12 +263,18 @@ export default function Fundamentales() {
         <TablaSkeleton columnas={11} />
       ) : error ? (
         <MensajeError mensaje={error} />
-      ) : t.filtradas.length === 0 ? (
-        <Vacio texto={watchlist ? 'Ningún ticker de tu lista tiene datos todavía.' : undefined} />
+      ) : filasFinal.length === 0 ? (
+        <Vacio
+          texto={
+            watchlist && !t.filtradas.length
+              ? 'Ningún ticker de tu lista tiene datos todavía.'
+              : 'Ninguna acción cumple los filtros de rango actuales.'
+          }
+        />
       ) : (
         <Tabla
           columnas={columnasConPin}
-          filas={t.filtradas}
+          filas={filasFinal}
           sortKey={t.sortKey}
           sortDir={t.sortDir}
           onSort={t.ordenar}

@@ -14,6 +14,9 @@ export default function Controles({
   industria,
   setIndustria,
   industrias,
+  sector,
+  setSector,
+  sectores,
   agrupar,
   setAgrupar,
   extra,
@@ -52,6 +55,17 @@ export default function Controles({
           </option>
         ))}
       </select>
+
+      {setSector && sectores?.length > 0 && (
+        <select className={selectCls} value={sector} onChange={(e) => setSector(e.target.value)}>
+          <option value="">Todos los sectores</option>
+          {sectores.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+      )}
 
       {setAgrupar && (
         <label className="flex cursor-pointer select-none items-center gap-1.5 rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-dim hover:text-terminal-text">

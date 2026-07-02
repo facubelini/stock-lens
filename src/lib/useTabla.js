@@ -7,6 +7,7 @@ export function useTabla(filas, { camposBusqueda = ['ticker', 'nombre'], ordenIn
   const [busqueda, setBusqueda] = useState('')
   const [pais, setPais] = useState('')
   const [industria, setIndustria] = useState('')
+  const [sector, setSector] = useState('')
   const [sortKey, setSortKey] = useState(ordenInicial?.key ?? null)
   const [sortDir, setSortDir] = useState(ordenInicial?.dir ?? 'desc')
 
@@ -26,11 +27,22 @@ export function useTabla(filas, { camposBusqueda = ['ticker', 'nombre'], ordenIn
     [filas],
   )
 
+  // Sector = clasificacion general (ej. "Technology"), mas amplia que
+  // industria (ej. "Semiconductors"). Solo existe si los datos la traen.
+  const sectores = useMemo(
+    () =>
+      [...new Set((filas ?? []).map((f) => f.sector).filter(Boolean))].sort((a, b) =>
+        a.localeCompare(b, 'es'),
+      ),
+    [filas],
+  )
+
   const camposKey = camposBusqueda.join(',')
   const filtradas = useMemo(() => {
     let r = filas ?? []
     if (pais) r = r.filter((f) => f.pais === pais)
     if (industria) r = r.filter((f) => f.industria === industria)
+    if (sector) r = r.filter((f) => f.sector === sector)
     const q = busqueda.trim().toLowerCase()
     if (q) {
       r = r.filter((f) =>
@@ -39,7 +51,7 @@ export function useTabla(filas, { camposBusqueda = ['ticker', 'nombre'], ordenIn
     }
     return r
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filas, pais, industria, busqueda, camposKey])
+  }, [filas, pais, industria, sector, busqueda, camposKey])
 
   const ordenar = (clave) => {
     if (sortKey === clave) {
@@ -57,8 +69,11 @@ export function useTabla(filas, { camposBusqueda = ['ticker', 'nombre'], ordenIn
     setPais,
     industria,
     setIndustria,
+    sector,
+    setSector,
     paises,
     industrias,
+    sectores,
     filtradas,
     sortKey,
     sortDir,

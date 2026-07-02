@@ -11,7 +11,7 @@ export default function App() {
     <div className="flex min-h-full flex-col">
       <Header />
       <WatchlistBar />
-      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-5">
+      <main className="w-full flex-1 px-4 py-5">
         <Routes>
           <Route path="/" element={<Listado />} />
           <Route path="/medias" element={<Medias />} />

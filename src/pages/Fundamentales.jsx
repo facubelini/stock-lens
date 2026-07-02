@@ -3,12 +3,14 @@ import { useJson } from '../lib/useJson'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
 import { useWatchlist, aplicarWatchlist } from '../lib/watchlist'
+import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { exportarCSV } from '../lib/csv'
 import { medianaDe } from '../lib/benchmarks'
 import { GLOSARIO_POR_CLAVE } from '../lib/glosario'
 import Controles from '../components/Controles'
 import Tabla from '../components/Tabla'
 import BotonPin from '../components/BotonPin'
+import EditorClasificacion from '../components/EditorClasificacion'
 import Leyenda from '../components/Leyenda'
 import Glosario from '../components/Glosario'
 import Pendientes from '../components/Pendientes'
@@ -18,12 +20,21 @@ import { fmtNum, fmtPct, fmtMarketCap, estiloPER, estiloPEG } from '../lib/forma
 const CAMPOS = ['ticker', 'nombre']
 const ayudaDe = (key) => GLOSARIO_POR_CLAVE[key]?.def
 
+// Wrapper con max-width + title: algunos CEDEAR (.BA) traen ratios con
+// magnitudes gigantescas (denominados en pesos) que si no, ensanchan toda la
+// columna. Se trunca visualmente y se puede ver el valor completo al pasar el mouse.
+const valorAcotado = (texto) => (
+  <span className="block max-w-[85px] truncate" title={texto}>
+    {texto}
+  </span>
+)
+
 const numCol = (key, label, dec = 2) => ({
   key,
   label,
   align: 'right',
   valor: (r) => r[key],
-  render: (r) => fmtNum(r[key], dec),
+  render: (r) => valorAcotado(fmtNum(r[key], dec)),
   ayuda: ayudaDe(key),
 })
 
@@ -32,7 +43,7 @@ const pctCol = (key, label) => ({
   label,
   align: 'right',
   valor: (r) => r[key],
-  render: (r) => fmtPct(r[key]),
+  render: (r) => valorAcotado(fmtPct(r[key])),
   ayuda: ayudaDe(key),
 })
 
@@ -54,7 +65,7 @@ const columnas = [
     align: 'left',
     valor: (r) => r.nombre,
     render: (r) => (
-      <span className="block max-w-[180px] truncate text-terminal-dim" title={r.nombre}>
+      <span className="block max-w-[95px] truncate text-terminal-dim" title={r.nombre}>
         {r.nombre || '—'}
       </span>
     ),
@@ -65,7 +76,7 @@ const columnas = [
     align: 'left',
     valor: (r) => r.sector,
     render: (r) => (
-      <span className="block max-w-[130px] truncate text-terminal-dim" title={r.sector}>
+      <span className="block max-w-[64px] truncate text-terminal-dim" title={r.sector}>
         {r.sector || '—'}
       </span>
     ),
@@ -76,7 +87,7 @@ const columnas = [
     align: 'right',
     valor: (r) => r.per_trailing,
     estilo: (r) => estiloPER(r.per_trailing),
-    render: (r) => fmtNum(r.per_trailing, 1),
+    render: (r) => valorAcotado(fmtNum(r.per_trailing, 1)),
     ayuda: ayudaDe('per_trailing'),
   },
   {
@@ -85,7 +96,7 @@ const columnas = [
     align: 'right',
     valor: (r) => r.per_forward,
     estilo: (r) => estiloPER(r.per_forward),
-    render: (r) => fmtNum(r.per_forward, 1),
+    render: (r) => valorAcotado(fmtNum(r.per_forward, 1)),
     ayuda: ayudaDe('per_forward'),
   },
   {
@@ -94,7 +105,7 @@ const columnas = [
     align: 'right',
     valor: (r) => r.peg,
     estilo: (r) => estiloPEG(r.peg),
-    render: (r) => fmtNum(r.peg, 2),
+    render: (r) => valorAcotado(fmtNum(r.peg, 2)),
     ayuda: ayudaDe('peg'),
   },
   numCol('ev_sales', 'EV/Sales'),
@@ -133,19 +144,21 @@ function resumenGrupo(industria, fs, cols) {
         if (c.key === '_pin') return <td key={c.key} />
         if (c.key === 'ticker')
           return (
-            <td key={c.key} className="whitespace-nowrap px-3 py-2 font-semibold text-terminal-accent">
-              {industria}
+            <td key={c.key} className="px-1.5 py-2 font-semibold text-terminal-accent">
+              <span className="block max-w-[90px] truncate" title={industria}>
+                {industria}
+              </span>
             </td>
           )
         if (c.key === 'nombre')
           return (
-            <td key={c.key} className="whitespace-nowrap px-3 py-2 text-terminal-dim">
+            <td key={c.key} className="whitespace-nowrap px-1.5 py-2 text-terminal-dim">
               mediana · n={fs.length}
             </td>
           )
         if (CLAVES_BENCH.includes(c.key))
           return (
-            <td key={c.key} className="px-3 py-2 text-right tabular text-terminal-info">
+            <td key={c.key} className="px-1.5 py-2 text-right tabular text-terminal-info">
               {c.render ? c.render(med) : ''}
             </td>
           )
@@ -159,9 +172,14 @@ export default function Fundamentales() {
   const { data, cargando, error } = useJson('fundamentales.json')
   const raw = useMemo(() => (Array.isArray(data) ? data : (data?.acciones ?? [])), [data])
   const { watchlist } = useWatchlist()
-  const { filas, pendientes } = useMemo(
+  const { overrides } = useClasificacion()
+  const { filas: conWatchlist, pendientes } = useMemo(
     () => aplicarWatchlist(raw, watchlist),
     [raw, watchlist],
+  )
+  const filas = useMemo(
+    () => aplicarClasificacion(conWatchlist, overrides),
+    [conWatchlist, overrides],
   )
   const { pins, isPinned, toggle } = usePins()
   const [agrupar, setAgrupar] = useState(true)
@@ -178,8 +196,19 @@ export default function Fundamentales() {
         align: 'center',
         sortable: false,
         csv: false,
-        tdClass: 'w-7 px-1',
+        tdClass: 'w-6 px-0.5',
         render: (r) => <BotonPin ticker={r.ticker} isPinned={isPinned} toggle={toggle} />,
+      },
+      {
+        key: '_editar',
+        label: '',
+        align: 'center',
+        sortable: false,
+        csv: false,
+        tdClass: 'w-6 px-0.5',
+        render: (r) => (
+          <EditorClasificacion ticker={r.ticker} industria={r.industria} sector={r.sector} />
+        ),
       },
       ...columnas,
     ],
@@ -208,6 +237,9 @@ export default function Fundamentales() {
         industria={t.industria}
         setIndustria={t.setIndustria}
         industrias={t.industrias}
+        sector={t.sector}
+        setSector={t.setSector}
+        sectores={t.sectores}
         agrupar={agrupar}
         setAgrupar={setAgrupar}
         onExportCSV={() => exportarCSV('stock-lens-fundamentales.csv', columnas, t.filtradas)}
@@ -219,7 +251,7 @@ export default function Fundamentales() {
       <Pendientes pendientes={pendientes} watchlist={watchlist} />
 
       {cargando ? (
-        <TablaSkeleton columnas={10} />
+        <TablaSkeleton columnas={11} />
       ) : error ? (
         <MensajeError mensaje={error} />
       ) : t.filtradas.length === 0 ? (

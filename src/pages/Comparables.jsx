@@ -89,12 +89,12 @@ export default function Comparables() {
             <table className="min-w-full border-collapse text-sm">
               <thead className="sticky top-0 z-10">
                 <tr className="bg-terminal-panel2 text-left text-xs uppercase tracking-wide text-terminal-dim">
-                  <th className="whitespace-nowrap px-3 py-2.5 font-semibold">Ticker</th>
-                  <th className="whitespace-nowrap px-3 py-2.5 font-semibold">Empresa</th>
+                  <th className="whitespace-nowrap px-1.5 py-2.5 font-semibold">Ticker</th>
+                  <th className="whitespace-nowrap px-1.5 py-2.5 font-semibold">Empresa</th>
                   {COLUMNAS.map((c) => (
                     <th
                       key={c.key}
-                      className={`whitespace-nowrap px-3 py-2.5 font-semibold ${claseAlineacion('right')}`}
+                      className={`px-1.5 py-2.5 font-semibold leading-tight ${claseAlineacion('right')}`}
                     >
                       {c.label}
                       {ayudaDe(c.key) && (
@@ -108,11 +108,11 @@ export default function Comparables() {
               </thead>
               <tbody>
                 <tr className="border-t-2 border-terminal-border bg-terminal-panel2">
-                  <td className="whitespace-nowrap px-3 py-2 font-semibold text-terminal-accent" colSpan={2}>
+                  <td className="whitespace-nowrap px-1.5 py-2 font-semibold text-terminal-accent" colSpan={2}>
                     Mediana · n={pares.length}
                   </td>
                   {COLUMNAS.map((c) => (
-                    <td key={c.key} className="px-3 py-2 text-right tabular text-terminal-info">
+                    <td key={c.key} className="px-1.5 py-2 text-right tabular text-terminal-info">
                       {renderValor(c, grupo?.mediana?.[c.key])}
                     </td>
                   ))}
@@ -124,17 +124,17 @@ export default function Comparables() {
                       p.en_portfolio ? 'bg-terminal-accent/5' : ''
                     }`}
                   >
-                    <td className="whitespace-nowrap px-3 py-1.5 font-semibold text-terminal-text">
+                    <td className="whitespace-nowrap px-1.5 py-1.5 font-semibold text-terminal-text">
                       {p.en_portfolio && <span className="text-terminal-accent">★ </span>}
                       {p.ticker}
                     </td>
-                    <td className="max-w-[180px] truncate px-3 py-1.5 text-terminal-dim" title={p.nombre}>
+                    <td className="max-w-[180px] truncate px-1.5 py-1.5 text-terminal-dim" title={p.nombre}>
                       {p.nombre || '—'}
                     </td>
                     {COLUMNAS.map((c) => (
                       <td
                         key={c.key}
-                        className="px-3 py-1.5 text-right tabular"
+                        className="px-1.5 py-1.5 text-right tabular"
                         style={c.estilo ? c.estilo(p[c.key]) : undefined}
                       >
                         {renderValor(c, p[c.key])}

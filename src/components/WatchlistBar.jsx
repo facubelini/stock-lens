@@ -37,7 +37,7 @@ export default function WatchlistBar() {
 
   return (
     <div className="border-b border-terminal-border bg-terminal-panel/50">
-      <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-2 px-4 py-2 text-xs text-terminal-dim">
+      <div className="flex w-full flex-wrap items-center gap-2 px-4 py-2 text-xs text-terminal-dim">
         <input
           ref={inputRef}
           type="file"

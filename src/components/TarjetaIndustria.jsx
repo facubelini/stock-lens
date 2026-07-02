@@ -1,6 +1,7 @@
 import { fmtPct, fmtNum, estiloValor, estiloRSI, promedio } from '../lib/formato'
 import { nivelScore } from '../lib/score'
 import BotonPin from './BotonPin'
+import EditorClasificacion from './EditorClasificacion'
 import Semaforo from './Semaforo'
 import Sparkline from './Sparkline'
 
@@ -61,6 +62,7 @@ export default function TarjetaIndustria({ industria, filas, isPinned, toggle, d
                   <span className="font-semibold" title={r.nombre}>
                     {r.ticker}
                   </span>
+                  <EditorClasificacion ticker={r.ticker} industria={r.industria} sector={r.sector} />
                 </span>
               </td>
               <td className="py-1 px-1 align-middle">

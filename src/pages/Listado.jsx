@@ -3,6 +3,7 @@ import { useDatosCombinados } from '../lib/useDatosCombinados'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
 import { useWatchlist, aplicarWatchlist } from '../lib/watchlist'
+import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { calcularScore } from '../lib/score'
 import { exportarCSV } from '../lib/csv'
 import Controles from '../components/Controles'
@@ -36,11 +37,16 @@ export default function Listado() {
   const { filas: merged, cargando, error } = useDatosCombinados()
   const { pins, isPinned, toggle } = usePins()
   const { watchlist } = useWatchlist()
+  const { overrides } = useClasificacion()
   const [orden, setOrden] = useState('score|desc')
 
-  const { filas: base, pendientes } = useMemo(
+  const { filas: conWatchlist, pendientes } = useMemo(
     () => aplicarWatchlist(merged, watchlist),
     [merged, watchlist],
+  )
+  const base = useMemo(
+    () => aplicarClasificacion(conWatchlist, overrides),
+    [conWatchlist, overrides],
   )
   const scored = useMemo(() => base.map((r) => ({ ...r, _score: calcularScore(r) })), [base])
   const t = useTabla(scored, { camposBusqueda: CAMPOS })
@@ -114,6 +120,9 @@ export default function Listado() {
         industria={t.industria}
         setIndustria={t.setIndustria}
         industrias={t.industrias}
+        sector={t.sector}
+        setSector={t.setSector}
+        sectores={t.sectores}
         extra={ordenSelect}
         onExportCSV={() => exportarCSV('stock-lens-listado.csv', COLS_CSV, t.filtradas)}
         total={base.length}

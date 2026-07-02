@@ -13,7 +13,7 @@ import { claseAlineacion } from '../lib/formato'
 function Celda({ col, row }) {
   return (
     <td
-      className={`px-3 py-1.5 tabular ${claseAlineacion(col.align)} ${col.tdClass ?? ''}`}
+      className={`px-1.5 py-1.5 tabular ${claseAlineacion(col.align)} ${col.tdClass ?? ''}`}
       style={col.estilo ? col.estilo(row) : undefined}
     >
       {col.render ? col.render(row) : (row[col.key] ?? '')}
@@ -88,7 +88,7 @@ export default function Tabla({
             <th
               key={col.key}
               onClick={ordenable ? () => onSort(col.key) : undefined}
-              className={`whitespace-nowrap px-3 py-2.5 font-semibold ${claseAlineacion(col.align)} ${
+              className={`px-1.5 py-2.5 font-semibold leading-tight ${claseAlineacion(col.align)} ${
                 ordenable ? 'cursor-pointer select-none hover:text-terminal-text' : ''
               } ${activa ? 'text-terminal-accent' : ''}`}
             >
@@ -127,7 +127,7 @@ export default function Tabla({
             <tr className="bg-terminal-panel2/80">
               <td
                 colSpan={columnas.length}
-                className="px-3 py-1.5 font-semibold text-terminal-accent"
+                className="px-1.5 py-1.5 font-semibold text-terminal-accent"
               >
                 {g} <span className="font-normal text-terminal-dim">· {fs.length}</span>
               </td>

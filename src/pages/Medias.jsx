@@ -3,6 +3,7 @@ import { useJson } from '../lib/useJson'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
 import { useWatchlist, aplicarWatchlist } from '../lib/watchlist'
+import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { exportarCSV } from '../lib/csv'
 import Controles from '../components/Controles'
 import Tabla from '../components/Tabla'
@@ -65,7 +66,7 @@ const CLAVES_DIST = ['dist_ema21', 'dist_ema50', 'dist_ema150', 'dist_sma200']
 function resumenGrupo(industria, fs, cols) {
   return (
     <tr className="border-t-2 border-terminal-border bg-terminal-panel2">
-      <td colSpan={cols.length - CLAVES_DIST.length} className="px-3 py-2 font-semibold text-terminal-accent">
+      <td colSpan={cols.length - CLAVES_DIST.length} className="px-1.5 py-2 font-semibold text-terminal-accent">
         {industria} <span className="font-normal text-terminal-dim">· {fs.length}</span>
       </td>
       {CLAVES_DIST.map((k) => {
@@ -73,7 +74,7 @@ function resumenGrupo(industria, fs, cols) {
         return (
           <td
             key={k}
-            className="px-3 py-2 text-right font-semibold tabular"
+            className="px-1.5 py-2 text-right font-semibold tabular"
             style={estiloValor(prom, ESCALA_DIST)}
           >
             {fmtPct(prom, { signo: true })}
@@ -88,9 +89,14 @@ export default function Medias() {
   const { data, cargando, error } = useJson('medias.json')
   const raw = useMemo(() => (Array.isArray(data) ? data : (data?.acciones ?? [])), [data])
   const { watchlist } = useWatchlist()
-  const { filas, pendientes } = useMemo(
+  const { overrides } = useClasificacion()
+  const { filas: conWatchlist, pendientes } = useMemo(
     () => aplicarWatchlist(raw, watchlist),
     [raw, watchlist],
+  )
+  const filas = useMemo(
+    () => aplicarClasificacion(conWatchlist, overrides),
+    [conWatchlist, overrides],
   )
   const { pins, isPinned, toggle } = usePins()
   const [agrupar, setAgrupar] = useState(false)
@@ -107,7 +113,7 @@ export default function Medias() {
         align: 'center',
         sortable: false,
         csv: false,
-        tdClass: 'w-7 px-1',
+        tdClass: 'w-6 px-0.5',
         render: (r) => <BotonPin ticker={r.ticker} isPinned={isPinned} toggle={toggle} />,
       },
       ...columnas,

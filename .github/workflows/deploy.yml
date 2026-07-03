@@ -9,7 +9,7 @@ on:
   # Necesario porque los commits hechos con GITHUB_TOKEN NO disparan el evento
   # 'push' en otros workflows (salvaguarda anti-recursion de GitHub).
   workflow_run:
-    workflows: ['Actualizar datos']
+    workflows: ['Actualizar datos', 'Historico fundamental']
     types: [completed]
 
   # Disparo manual.

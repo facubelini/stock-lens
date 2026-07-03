@@ -6,6 +6,7 @@ import Medias from './pages/Medias'
 import Fundamentales from './pages/Fundamentales'
 import Comparables from './pages/Comparables'
 import Screener from './pages/Screener'
+import HistoricoFundamental from './pages/HistoricoFundamental'
 
 export default function App() {
   return (
@@ -19,6 +20,7 @@ export default function App() {
           <Route path="/fundamentales" element={<Fundamentales />} />
           <Route path="/comparables" element={<Comparables />} />
           <Route path="/screener" element={<Screener />} />
+          <Route path="/historico" element={<HistoricoFundamental />} />
           <Route path="*" element={<Listado />} />
         </Routes>
       </main>

@@ -214,12 +214,18 @@ export default function Fundamentales() {
         csv: false,
         tdClass: 'w-6 px-0.5',
         render: (r) => (
-          <EditorClasificacion ticker={r.ticker} industria={r.industria} sector={r.sector} />
+          <EditorClasificacion
+            ticker={r.ticker}
+            industria={r.industria}
+            sector={r.sector}
+            industrias={t.industrias}
+            sectores={t.sectores}
+          />
         ),
       },
       ...columnas,
     ],
-    [isPinned, toggle],
+    [isPinned, toggle, t.industrias, t.sectores],
   )
 
   return (

@@ -7,7 +7,15 @@ import Sparkline from './Sparkline'
 
 // Recuadro de una industria: encabezado con promedios (Var%, RSI, score) +
 // lista de tickers con favorito, score, sparkline, Var% y RSI.
-export default function TarjetaIndustria({ industria, filas, isPinned, toggle, destacada = false }) {
+export default function TarjetaIndustria({
+  industria,
+  filas,
+  isPinned,
+  toggle,
+  destacada = false,
+  industrias = [],
+  sectores = [],
+}) {
   const varProm = promedio(filas, (f) => f.var_pct)
   const rsiProm = promedio(filas, (f) => f.rsi)
   const scoreProm = promedio(filas, (f) => f._score?.score)
@@ -62,7 +70,13 @@ export default function TarjetaIndustria({ industria, filas, isPinned, toggle, d
                   <span className="font-semibold" title={r.nombre}>
                     {r.ticker}
                   </span>
-                  <EditorClasificacion ticker={r.ticker} industria={r.industria} sector={r.sector} />
+                  <EditorClasificacion
+                    ticker={r.ticker}
+                    industria={r.industria}
+                    sector={r.sector}
+                    industrias={industrias}
+                    sectores={sectores}
+                  />
                 </span>
               </td>
               <td className="py-1 px-1 align-middle">

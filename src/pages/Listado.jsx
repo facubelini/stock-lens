@@ -147,6 +147,8 @@ export default function Listado() {
               isPinned={isPinned}
               toggle={toggle}
               destacada
+              industrias={t.industrias}
+              sectores={t.sectores}
             />
           )}
           {grupos.map((g) => (
@@ -156,6 +158,8 @@ export default function Listado() {
               filas={g.filas}
               isPinned={isPinned}
               toggle={toggle}
+              industrias={t.industrias}
+              sectores={t.sectores}
             />
           ))}
         </div>

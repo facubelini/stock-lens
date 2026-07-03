@@ -312,21 +312,20 @@ def main():
     DIR_SALIDA.mkdir(parents=True, exist_ok=True)
     tickers = leer_tickers_historico()
     print(f"Historico fundamental para {len(tickers)} ticker(s): {tickers}")
-    if not tickers:
-        print("Nada que hacer (data/historico_tickers.json vacio o inexistente).")
-        return
-
-    print("Resolviendo ticker -> CIK contra SEC...")
-    mapa_cik = _mapa_ticker_a_cik()
 
     resultados = []
-    for t in tickers:
-        print(f"  procesando {t}...")
-        try:
-            resultados.append(calcular_historico_ticker(t, mapa_cik))
-        except Exception as e:  # noqa: BLE001
-            resultados.append({"ticker": t, "disponible": False, "motivo": f"Error: {e}"})
-        time.sleep(0.3)  # cortesia con la API de la SEC (limite ~10 req/s)
+    if tickers:
+        print("Resolviendo ticker -> CIK contra SEC...")
+        mapa_cik = _mapa_ticker_a_cik()
+        for t in tickers:
+            print(f"  procesando {t}...")
+            try:
+                resultados.append(calcular_historico_ticker(t, mapa_cik))
+            except Exception as e:  # noqa: BLE001
+                resultados.append({"ticker": t, "disponible": False, "motivo": f"Error: {e}"})
+            time.sleep(0.3)  # cortesia con la API de la SEC (limite ~10 req/s)
+    else:
+        print("Lista vacia: se escribe igual un JSON valido (sin tickers) para que el front no vea 404.")
 
     salida = {
         "actualizado": datetime.now(TZ).isoformat(),

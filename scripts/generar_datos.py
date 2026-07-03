@@ -171,40 +171,97 @@ PERFIL_MENSUAL = {
     "slope_lookback": 3,
 }
 
-TOL_PULLBACK = 1.2  # % de distancia a la media clave para considerar "en pullback"
-TOL_EXTENSION = 6.0  # % de distancia para considerar "extendido"
+# Confluencia adoptada del "analizador v8" (scanner de CEDEARs/MERVAL del
+# usuario, perfil LARGO): en vez de un score aditivo, exige TODO a la vez
+# (MACD + SMI + RSI + tendencia) para la señal fuerte, y una zona de pullback
+# mas robusta (OR entre la media clave y el ASL, no un solo nivel).
+MACD_FAST, MACD_SLOW, MACD_SIGNAL = 12, 26, 9
+SMI_LEN, SMI_SMOOTH, SMI_SIGNAL = 14, 3, 3
+ASL_LEN = 21  # "Adaptive Support Line": promedio de EMA y WMA lineal, mismo periodo
+
+TOL_ASL = 3.0  # % de distancia al ASL para considerar "en pullback"
+TOL_CLAVE = 5.0  # % de distancia a la media clave para considerar "en pullback"
+TOL_EXTENSION = 8.0  # % de distancia (a ambas referencias) para considerar "extendido"
+NEAR_FACTOR = 1.5  # tolerancia x1.5 para el veredicto "CERCA"
+RSI_BULL, RSI_BEAR = 50, 45
 
 
 def _texto_tendencia(estado):
     return {"Bull": "alcista", "Bear": "bajista"}.get(estado, "neutral")
 
 
-def _construir_motivo(estado, verdict, nombre_clave, dist_clave, rsi):
+def _construir_motivo(estado, verdict, nombre_clave, dist_clave, rsi, macd_bull, smi_bull):
     partes = [f"Tendencia {_texto_tendencia(estado)}"]
     if dist_clave is not None:
         lado = "sobre" if dist_clave >= 0 else "bajo"
         partes.append(f"precio {lado} {nombre_clave} ({dist_clave:+.1f}%)")
     if rsi is not None:
         partes.append(f"RSI {rsi:.0f}")
+    partes.append(f"MACD {'alcista' if macd_bull else 'bajista'}")
+    partes.append(f"SMI {'alcista' if smi_bull else 'bajista'}")
     extra = {
-        "COMPRA": "en pullback a la media, listo para entrar",
+        "COMPRA": "en zona de pullback (media/ASL), listo para entrar",
         "CERCA": "acercándose a la zona de pullback",
-        "VENTA": "presión vendedora",
-        "EXTENDIDO": "muy extendido, esperar un retroceso",
+        "VENTA": "confluencia bajista confirmada",
+        "EXTENDIDO": "muy extendido de ambas referencias, esperar retroceso",
     }.get(verdict)
     if extra:
         partes.append(extra)
     return " · ".join(partes)
 
 
-def perfil_setup(closes, medias, clave, slope_lookback):
-    """Aplica la logica de Estado/Trend/Score/Setup del indicador Pine (ver
-    indicator_v6_optimo_v2.pine) a una serie de cierres de CUALQUIER
-    temporalidad (diaria/semanal/mensual ya resampleada). Devuelve un dict
-    con veredicto (COMPRA/CERCA/VENTA/EXTENDIDO/NEUTRAL) + motivo, o None si
-    no hay velas suficientes para esa temporalidad todavia."""
+def _wma_lineal(serie, periodo):
+    """WMA con pesos lineales crecientes (1,2,3...), igual que el analizador v8."""
+    return serie.rolling(window=periodo, min_periods=1).apply(
+        lambda x: np.average(x, weights=np.arange(1, len(x) + 1)), raw=True
+    )
+
+
+def _calcular_asl(closes, periodo=ASL_LEN):
+    ema = closes.ewm(span=periodo, adjust=False).mean()
+    wma = _wma_lineal(closes, periodo)
+    return (ema + wma) / 2
+
+
+def _calcular_macd(closes):
+    ema_fast = closes.ewm(span=MACD_FAST, adjust=False).mean()
+    ema_slow = closes.ewm(span=MACD_SLOW, adjust=False).mean()
+    macd = ema_fast - ema_slow
+    señal = macd.ewm(span=MACD_SIGNAL, adjust=False).mean()
+    return macd, señal
+
+
+def _calcular_smi(highs, lows, closes, length=SMI_LEN, smooth=SMI_SMOOTH, signal=SMI_SIGNAL):
+    """Stochastic Momentum Index doblemente suavizado con EMA (formula del v8)."""
+    h_high = highs.rolling(length).max()
+    l_low = lows.rolling(length).min()
+    mid = (h_high + l_low) / 2
+
+    diff = closes - mid
+    diff_e1 = diff.ewm(span=smooth, adjust=False).mean()
+    diff_e2 = diff_e1.ewm(span=smooth, adjust=False).mean()
+
+    rng = h_high - l_low
+    rng_e1 = rng.ewm(span=smooth, adjust=False).mean()
+    rng_e2 = rng_e1.ewm(span=smooth, adjust=False).mean()
+
+    with np.errstate(divide="ignore", invalid="ignore"):
+        smi = (diff_e2 / (rng_e2 / 2.0)) * 100
+    smi = smi.replace([np.inf, -np.inf], np.nan)
+    señal = smi.ewm(span=signal, adjust=False).mean()
+    return smi, señal
+
+
+def perfil_setup(df, medias, clave, slope_lookback):
+    """Veredicto de una temporalidad (diaria/semanal/mensual ya resampleada,
+    con columnas High/Low/Close). Combina la tendencia por medias adaptativas
+    (indicador Pine) con la confluencia MACD+SMI+RSI y la zona de pullback
+    ASL/media clave del analizador v8. Devuelve None si no hay velas
+    suficientes todavia para esa temporalidad."""
+    closes = df["Close"]
     periodo_max = max(p[2] for p in medias)
-    if len(closes) < periodo_max + slope_lookback + 1:
+    minimo = max(periodo_max + slope_lookback, ASL_LEN, MACD_SLOW, SMI_LEN) + 1
+    if len(closes) < minimo:
         return None
 
     series = {}
@@ -224,35 +281,46 @@ def perfil_setup(closes, medias, clave, slope_lookback):
 
     precio = float(closes.iloc[-1])
     rsi = rsi_wilder(closes.values, 14)
+    if rsi is None:
+        return None
+
+    asl = _calcular_asl(closes).iloc[-1]
+    macd, macd_sig = _calcular_macd(closes)
+    smi, smi_sig = _calcular_smi(df["High"], df["Low"], closes)
+    macd_bull = macd.iloc[-1] > macd_sig.iloc[-1]
+    smi_val, smi_sig_val = smi.iloc[-1], smi_sig.iloc[-1]
+    smi_bull = not pd.isna(smi_val) and not pd.isna(smi_sig_val) and smi_val > smi_sig_val
+    smi_bear = not pd.isna(smi_val) and not pd.isna(smi_sig_val) and smi_val < smi_sig_val
 
     trend_up = ma_clave > ma_clave_prev
     trend_dn = ma_clave < ma_clave_prev
-
-    ma_rapida = series[medias[0][0]].iloc[-1]
-    ma_media = series[medias[1][0]].iloc[-1]
-
-    score = 0
-    if precio > ma_clave:
-        score += 1
-    if not pd.isna(ma_rapida) and not pd.isna(ma_media) and ma_rapida > ma_media:
-        score += 1
-    if rsi is not None and rsi > 50:
-        score += 1
-
-    estado = "Bull" if (score >= 2 and trend_up) else ("Bear" if (score <= 1 and trend_dn) else "Neutral")
+    tendencia_alcista = precio >= ma_clave and trend_up
+    tendencia_bajista = precio < ma_clave and trend_dn
+    estado = "Bull" if tendencia_alcista else ("Bear" if tendencia_bajista else "Neutral")
 
     dist_clave = dist_pct(precio, ma_clave)
-    pullback_ok = dist_clave is not None and abs(dist_clave) <= TOL_PULLBACK
-    extendido = dist_clave is not None and abs(dist_clave) >= TOL_EXTENSION
-    cerca = dist_clave is not None and abs(dist_clave) <= TOL_PULLBACK * 2
+    dist_asl = dist_pct(precio, asl) if not pd.isna(asl) else None
 
-    if estado == "Bull" and pullback_ok and rsi is not None and rsi >= 50:
+    en_zona = (dist_clave is not None and abs(dist_clave) <= TOL_CLAVE) or (
+        dist_asl is not None and abs(dist_asl) <= TOL_ASL
+    )
+    cerca_zona = (dist_clave is not None and abs(dist_clave) <= TOL_CLAVE * NEAR_FACTOR) or (
+        dist_asl is not None and abs(dist_asl) <= TOL_ASL * NEAR_FACTOR
+    )
+    extendido = (dist_clave is None or abs(dist_clave) >= TOL_EXTENSION) and (
+        dist_asl is None or abs(dist_asl) >= TOL_EXTENSION
+    )
+
+    confluencia_alcista = tendencia_alcista and macd_bull and smi_bull and rsi >= RSI_BULL
+    confluencia_bajista = tendencia_bajista and (not macd_bull) and smi_bear and rsi <= RSI_BEAR
+
+    if confluencia_alcista and en_zona:
         verdict = "COMPRA"
-    elif estado == "Bull" and not extendido and cerca:
+    elif confluencia_alcista and cerca_zona:
         verdict = "CERCA"
-    elif estado == "Bear" and rsi is not None and rsi <= 45:
+    elif confluencia_bajista:
         verdict = "VENTA"
-    elif extendido:
+    elif tendencia_alcista and extendido:
         verdict = "EXTENDIDO"
     else:
         verdict = "NEUTRAL"
@@ -262,19 +330,21 @@ def perfil_setup(closes, medias, clave, slope_lookback):
         "estado": estado,
         "rsi": num(rsi, 1),
         "dist_clave": num(dist_clave, 2),
+        "dist_asl": num(dist_asl, 2),
         "ma_clave": nombre_clave,
-        "motivo": _construir_motivo(estado, verdict, nombre_clave, dist_clave, rsi),
+        "motivo": _construir_motivo(estado, verdict, nombre_clave, dist_clave, rsi, macd_bull, smi_bull),
     }
 
 
 def calcular_screener(hist):
     """Arma el veredicto diario/semanal/mensual a partir del historico diario
-    ya descargado (resamplea semanal/mensual, no pide datos nuevos)."""
-    diarias = hist["Close"].dropna()
-    semanales = hist["Close"].resample("W-FRI").last().dropna()
-    mensuales = hist["Close"].resample("ME").last().dropna()
+    ya descargado (resamplea High/Low/Close a semanal/mensual, no pide datos
+    nuevos)."""
+    ohlc = hist[["High", "Low", "Close"]].dropna()
+    semanales = ohlc.resample("W-FRI").agg({"High": "max", "Low": "min", "Close": "last"}).dropna()
+    mensuales = ohlc.resample("ME").agg({"High": "max", "Low": "min", "Close": "last"}).dropna()
     return {
-        "diario": perfil_setup(diarias, **PERFIL_DIARIO),
+        "diario": perfil_setup(ohlc, **PERFIL_DIARIO),
         "semanal": perfil_setup(semanales, **PERFIL_SEMANAL),
         "mensual": perfil_setup(mensuales, **PERFIL_MENSUAL),
     }

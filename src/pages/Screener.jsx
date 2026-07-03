@@ -99,12 +99,14 @@ export default function Screener() {
       <div className="mb-4">
         <h1 className="text-lg font-bold text-terminal-text">Screener</h1>
         <p className="text-xs text-terminal-dim">
-          Para cada acción de tu lista, un veredicto <b>Diario / Semanal / Mensual</b> según
-          tendencia (medias adaptativas por temporalidad) + RSI + distancia a la media clave —
-          misma lógica del indicador de TradingView, calculada acá para las 3 temporalidades a la
-          vez. <b>COMPRA</b> = en pullback sobre tendencia alcista · <b>CERCA</b> = acercándose ·{' '}
-          <b>EXTENDIDO</b> = alcista pero lejos de la media, esperar retroceso · <b>VENTA</b> =
-          tendencia bajista. Orientativo, no es recomendación de inversión.
+          Para cada acción de tu lista, un veredicto <b>Diario / Semanal / Mensual</b>: exige
+          confluencia de tendencia (medias adaptativas) + <b>MACD</b> + <b>SMI</b> + RSI, y una
+          zona de pullback contra la media clave o el <b>ASL</b> (soporte adaptativo, EMA+WMA) —
+          combina el indicador de TradingView con la lógica del analizador v8. <b>COMPRA</b> =
+          confluencia alcista en pullback · <b>CERCA</b> = confluencia alcista acercándose ·{' '}
+          <b>EXTENDIDO</b> = alcista pero lejos de ambas referencias, esperar retroceso ·{' '}
+          <b>VENTA</b> = confluencia bajista confirmada. Orientativo, no es recomendación de
+          inversión.
         </p>
       </div>
 

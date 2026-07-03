@@ -65,8 +65,8 @@ def _fundamentales_random(rng):
 def _hist_sintetico(rng, precio_final, dias=1260):
     """Camino aleatorio de ~5 anios de habiles terminando 'hoy', calibrado para
     llegar al precio final del resto del mock. Sirve para probar el screener
-    (calcular_screener espera un DataFrame con 'Close' y DatetimeIndex, igual
-    que el que devuelve yf.Ticker().history())."""
+    (calcular_screener espera un DataFrame con High/Low/Close y DatetimeIndex,
+    igual que el que devuelve yf.Ticker().history())."""
     fechas = pd.bdate_range(end=pd.Timestamp.now(tz=TZ).tz_localize(None), periods=dias)
     precios, p = [], precio_final / (1 + rng.uniform(-0.4, 0.6))  # arranque ~5 anios atras
     for _ in range(dias):
@@ -75,7 +75,9 @@ def _hist_sintetico(rng, precio_final, dias=1260):
     # Reescala para que termine justo en precio_final (consistente con el resto del mock).
     factor = precio_final / precios[-1]
     precios = [x * factor for x in precios]
-    return pd.DataFrame({"Close": precios}, index=fechas)
+    altos = [p * (1 + rng.uniform(0, 0.012)) for p in precios]
+    bajos = [p * (1 - rng.uniform(0, 0.012)) for p in precios]
+    return pd.DataFrame({"High": altos, "Low": bajos, "Close": precios}, index=fechas)
 
 
 def _mediana_de(filas, clave):

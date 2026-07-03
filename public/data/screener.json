@@ -7391,29 +7391,29 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 48.3,
-      "dist_clave": -6.0,
-      "dist_asl": 3.3,
+      "rsi": 48.6,
+      "dist_clave": -5.83,
+      "dist_asl": 3.48,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-6.0%) · RSI 48 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-5.8%) · RSI 49 · MACD alcista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 48.2,
-      "dist_clave": 11.37,
-      "dist_asl": -7.79,
+      "rsi": 48.3,
+      "dist_clave": 11.57,
+      "dist_asl": -7.63,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+11.4%) · RSI 48 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+11.6%) · RSI 48 · MACD bajista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 54.5,
-      "dist_clave": 12.36,
-      "dist_asl": 8.9,
+      "rsi": 54.6,
+      "dist_clave": 12.56,
+      "dist_asl": 9.09,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+12.4%) · RSI 55 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+12.6%) · RSI 55 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     }
   },
   {
@@ -7721,29 +7721,29 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 50.3,
-      "dist_clave": -2.74,
-      "dist_asl": 0.94,
+      "rsi": 50.8,
+      "dist_clave": -2.6,
+      "dist_asl": 1.08,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-2.7%) · RSI 50 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-2.6%) · RSI 51 · MACD alcista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 41.4,
-      "dist_clave": -7.31,
-      "dist_asl": -5.97,
+      "rsi": 41.6,
+      "dist_clave": -7.17,
+      "dist_asl": -5.84,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia bajista · precio bajo SMA52 (-7.3%) · RSI 41 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo SMA52 (-7.2%) · RSI 42 · MACD bajista · SMI alcista"
     },
     "mensual": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 44.2,
-      "dist_clave": -13.14,
-      "dist_asl": -9.6,
+      "rsi": 44.3,
+      "dist_clave": -13.01,
+      "dist_asl": -9.48,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia neutral · precio bajo SMA36 (-13.1%) · RSI 44 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia neutral · precio bajo SMA36 (-13.0%) · RSI 44 · MACD bajista · SMI bajista"
     }
   },
   {
@@ -7886,29 +7886,29 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 49.8,
-      "dist_clave": -1.27,
-      "dist_asl": 1.4,
+      "rsi": 45.3,
+      "dist_clave": -3.31,
+      "dist_asl": -0.59,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-1.3%) · RSI 50 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-3.3%) · RSI 45 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 52.8,
-      "dist_clave": 16.58,
-      "dist_asl": -0.97,
+      "rsi": 50.7,
+      "dist_clave": 14.12,
+      "dist_asl": -2.92,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+16.6%) · RSI 53 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+14.1%) · RSI 51 · MACD bajista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 67.9,
-      "dist_clave": 47.17,
-      "dist_asl": 20.88,
+      "rsi": 67.0,
+      "dist_clave": 44.12,
+      "dist_asl": 18.56,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+47.2%) · RSI 68 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+44.1%) · RSI 67 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     }
   },
   {
@@ -7985,29 +7985,29 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 51.1,
-      "dist_clave": 0.57,
-      "dist_asl": -0.33,
+      "rsi": 52.5,
+      "dist_clave": 1.12,
+      "dist_asl": 0.19,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+0.6%) · RSI 51 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.1%) · RSI 52 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 52.4,
-      "dist_clave": 13.63,
-      "dist_asl": 0.65,
+      "rsi": 52.9,
+      "dist_clave": 14.27,
+      "dist_asl": 1.18,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+13.6%) · RSI 52 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+14.3%) · RSI 53 · MACD bajista · SMI alcista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 64.8,
-      "dist_clave": 57.33,
-      "dist_asl": 15.08,
+      "rsi": 65.2,
+      "dist_clave": 58.19,
+      "dist_asl": 15.67,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+57.3%) · RSI 65 · MACD bajista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+58.2%) · RSI 65 · MACD bajista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     }
   },
   {
@@ -8117,29 +8117,29 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 41.8,
-      "dist_clave": -6.23,
-      "dist_asl": -2.75,
+      "rsi": 42.8,
+      "dist_clave": -5.78,
+      "dist_asl": -2.3,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-6.2%) · RSI 42 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-5.8%) · RSI 43 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 42.8,
-      "dist_clave": -15.4,
-      "dist_asl": -8.29,
+      "rsi": 43.1,
+      "dist_clave": -14.98,
+      "dist_asl": -7.87,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia bajista · precio bajo SMA52 (-15.4%) · RSI 43 · MACD bajista · SMI bajista · confluencia bajista confirmada"
+      "motivo": "Tendencia bajista · precio bajo SMA52 (-15.0%) · RSI 43 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
     "mensual": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 44.9,
-      "dist_clave": -31.8,
-      "dist_asl": -22.43,
+      "rsi": 45.0,
+      "dist_clave": -31.46,
+      "dist_asl": -22.07,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia neutral · precio bajo SMA36 (-31.8%) · RSI 45 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia neutral · precio bajo SMA36 (-31.5%) · RSI 45 · MACD bajista · SMI bajista"
     }
   },
   {
@@ -8150,29 +8150,29 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 51.5,
-      "dist_clave": 1.24,
-      "dist_asl": 0.24,
+      "rsi": 51.3,
+      "dist_clave": 1.13,
+      "dist_asl": 0.14,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.2%) · RSI 52 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.1%) · RSI 51 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 52.0,
-      "dist_clave": 7.53,
-      "dist_asl": 1.68,
+      "rsi": 51.9,
+      "dist_clave": 7.41,
+      "dist_asl": 1.57,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+7.5%) · RSI 52 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+7.4%) · RSI 52 · MACD bajista · SMI alcista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 60.1,
-      "dist_clave": 41.76,
-      "dist_asl": 10.24,
+      "rsi": 60.0,
+      "dist_clave": 41.61,
+      "dist_asl": 10.13,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+41.8%) · RSI 60 · MACD bajista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+41.6%) · RSI 60 · MACD bajista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     }
   },
   {
@@ -8777,29 +8777,29 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 58.3,
-      "dist_clave": 5.54,
-      "dist_asl": 1.55,
+      "rsi": 60.9,
+      "dist_clave": 6.57,
+      "dist_asl": 2.49,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+5.5%) · RSI 58 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+6.6%) · RSI 61 · MACD bajista · SMI alcista"
     },
     "semanal": {
-      "verdict": "NEUTRAL",
+      "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 57.7,
-      "dist_clave": 16.21,
-      "dist_asl": 7.9,
+      "rsi": 58.4,
+      "dist_clave": 17.37,
+      "dist_asl": 8.89,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+16.2%) · RSI 58 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+17.4%) · RSI 58 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 66.1,
-      "dist_clave": 66.13,
-      "dist_asl": 19.9,
+      "rsi": 66.5,
+      "dist_clave": 67.73,
+      "dist_asl": 20.99,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+66.1%) · RSI 66 · MACD bajista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+67.7%) · RSI 67 · MACD bajista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     }
   },
   {
@@ -8942,18 +8942,18 @@
     "diario": {
       "verdict": "COMPRA",
       "estado": "Bull",
-      "rsi": 55.2,
-      "dist_clave": 2.49,
-      "dist_asl": 1.78,
+      "rsi": 55.4,
+      "dist_clave": 2.56,
+      "dist_asl": 1.84,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+2.5%) · RSI 55 · MACD alcista · SMI alcista · en zona de pullback (media/ASL), listo para entrar"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+2.6%) · RSI 55 · MACD alcista · SMI alcista · en zona de pullback (media/ASL), listo para entrar"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 52.9,
-      "dist_clave": 2.36,
-      "dist_asl": 2.57,
+      "rsi": 53.0,
+      "dist_clave": 2.43,
+      "dist_asl": 2.63,
       "ma_clave": "SMA52",
       "motivo": "Tendencia neutral · precio sobre SMA52 (+2.4%) · RSI 53 · MACD alcista · SMI alcista"
     },
@@ -8961,8 +8961,8 @@
       "verdict": "NEUTRAL",
       "estado": "Neutral",
       "rsi": 51.1,
-      "dist_clave": 11.17,
-      "dist_asl": 3.3,
+      "dist_clave": 11.25,
+      "dist_asl": 3.36,
       "ma_clave": "SMA36",
       "motivo": "Tendencia neutral · precio sobre SMA36 (+11.2%) · RSI 51 · MACD alcista · SMI bajista"
     }
@@ -9008,29 +9008,29 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 54.0,
-      "dist_clave": 1.31,
-      "dist_asl": 2.56,
+      "rsi": 54.4,
+      "dist_clave": 1.56,
+      "dist_asl": 2.8,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia neutral · precio sobre EMA50 (+1.3%) · RSI 54 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia neutral · precio sobre EMA50 (+1.6%) · RSI 54 · MACD alcista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 49.0,
-      "dist_clave": -2.68,
-      "dist_asl": 0.47,
+      "rsi": 49.1,
+      "dist_clave": -2.43,
+      "dist_asl": 0.71,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia bajista · precio bajo SMA52 (-2.7%) · RSI 49 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo SMA52 (-2.4%) · RSI 49 · MACD alcista · SMI alcista"
     },
     "mensual": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 52.4,
-      "dist_clave": 24.31,
-      "dist_asl": -1.1,
+      "dist_clave": 24.61,
+      "dist_asl": -0.87,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+24.3%) · RSI 52 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+24.6%) · RSI 52 · MACD bajista · SMI bajista"
     }
   },
   {
@@ -9041,29 +9041,29 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 33.2,
-      "dist_clave": -25.46,
-      "dist_asl": -6.83,
+      "rsi": 33.5,
+      "dist_clave": -25.29,
+      "dist_asl": -6.64,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-25.5%) · RSI 33 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-25.3%) · RSI 33 · MACD alcista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
       "rsi": 24.6,
-      "dist_clave": -45.44,
-      "dist_asl": -34.31,
+      "dist_clave": -45.32,
+      "dist_asl": -34.17,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia bajista · precio bajo SMA52 (-45.4%) · RSI 25 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo SMA52 (-45.3%) · RSI 25 · MACD bajista · SMI alcista"
     },
     "mensual": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
       "rsi": 27.5,
-      "dist_clave": -58.18,
-      "dist_asl": -48.4,
+      "dist_clave": -58.08,
+      "dist_asl": -48.29,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia bajista · precio bajo SMA36 (-58.2%) · RSI 28 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia bajista · precio bajo SMA36 (-58.1%) · RSI 28 · MACD alcista · SMI bajista"
     }
   },
   {
@@ -9206,29 +9206,29 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 44.3,
-      "dist_clave": -0.92,
-      "dist_asl": -5.16,
+      "rsi": 41.0,
+      "dist_clave": -3.98,
+      "dist_asl": -7.95,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia neutral · precio bajo EMA50 (-0.9%) · RSI 44 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia neutral · precio bajo EMA50 (-4.0%) · RSI 41 · MACD bajista · SMI bajista"
     },
     "semanal": {
-      "verdict": "EXTENDIDO",
+      "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 66.2,
-      "dist_clave": 71.43,
-      "dist_asl": 9.48,
+      "rsi": 62.8,
+      "dist_clave": 66.11,
+      "dist_asl": 6.31,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+71.4%) · RSI 66 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+66.1%) · RSI 63 · MACD alcista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 77.5,
-      "dist_clave": 164.17,
-      "dist_asl": 62.76,
+      "rsi": 74.9,
+      "dist_clave": 156.29,
+      "dist_asl": 58.29,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+164.2%) · RSI 77 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+156.3%) · RSI 75 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     }
   },
   {
@@ -9330,29 +9330,29 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 52.1,
-      "dist_clave": 1.49,
-      "dist_asl": 0.27,
+      "rsi": 51.6,
+      "dist_clave": 1.3,
+      "dist_asl": 0.09,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.5%) · RSI 52 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.3%) · RSI 52 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 54.3,
-      "dist_clave": 9.69,
-      "dist_asl": 2.86,
+      "rsi": 54.1,
+      "dist_clave": 9.48,
+      "dist_asl": 2.68,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+9.7%) · RSI 54 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+9.5%) · RSI 54 · MACD alcista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 63.1,
-      "dist_clave": 47.38,
-      "dist_asl": 12.95,
+      "rsi": 63.0,
+      "dist_clave": 47.1,
+      "dist_asl": 12.75,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+47.4%) · RSI 63 · MACD bajista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+47.1%) · RSI 63 · MACD bajista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     }
   },
   {
@@ -9446,9 +9446,9 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 25.9,
-      "dist_clave": -11.21,
-      "dist_asl": -5.27,
+      "rsi": 26.1,
+      "dist_clave": -11.16,
+      "dist_asl": -5.22,
       "ma_clave": "EMA50",
       "motivo": "Tendencia bajista · precio bajo EMA50 (-11.2%) · RSI 26 · MACD bajista · SMI alcista"
     },
@@ -9456,19 +9456,19 @@
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 43.6,
-      "dist_clave": 7.81,
-      "dist_asl": -12.12,
+      "dist_clave": 7.87,
+      "dist_asl": -12.08,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+7.8%) · RSI 44 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+7.9%) · RSI 44 · MACD bajista · SMI bajista"
     },
     "mensual": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 56.2,
-      "dist_clave": 16.1,
-      "dist_asl": 7.84,
+      "dist_clave": 16.16,
+      "dist_asl": 7.9,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+16.1%) · RSI 56 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+16.2%) · RSI 56 · MACD alcista · SMI bajista"
     }
   },
   {
@@ -9727,29 +9727,29 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 49.8,
-      "dist_clave": 2.73,
-      "dist_asl": -1.1,
+      "rsi": 49.2,
+      "dist_clave": 2.43,
+      "dist_asl": -1.37,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+2.7%) · RSI 50 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+2.4%) · RSI 49 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 56.9,
-      "dist_clave": 25.37,
-      "dist_asl": 7.36,
+      "rsi": 56.7,
+      "dist_clave": 24.99,
+      "dist_asl": 7.06,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+25.4%) · RSI 57 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+25.0%) · RSI 57 · MACD alcista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 64.7,
-      "dist_clave": 62.32,
-      "dist_asl": 23.4,
+      "rsi": 64.5,
+      "dist_clave": 61.84,
+      "dist_asl": 23.06,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+62.3%) · RSI 65 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+61.8%) · RSI 65 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     }
   },
   {
@@ -9760,29 +9760,29 @@
     "diario": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 43.0,
-      "dist_clave": -3.9,
-      "dist_asl": -2.58,
+      "rsi": 43.5,
+      "dist_clave": -3.72,
+      "dist_asl": -2.41,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-3.9%) · RSI 43 · MACD bajista · SMI bajista · confluencia bajista confirmada"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-3.7%) · RSI 44 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 47.5,
-      "dist_clave": 2.66,
-      "dist_asl": -4.18,
+      "rsi": 47.6,
+      "dist_clave": 2.85,
+      "dist_asl": -4.01,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+2.7%) · RSI 47 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+2.9%) · RSI 48 · MACD bajista · SMI bajista"
     },
     "mensual": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 55.7,
-      "dist_clave": 37.71,
-      "dist_asl": 6.09,
+      "rsi": 55.8,
+      "dist_clave": 37.96,
+      "dist_asl": 6.27,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+37.7%) · RSI 56 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+38.0%) · RSI 56 · MACD bajista · SMI bajista"
     }
   },
   {
@@ -9791,31 +9791,31 @@
     "industria": "Oil & Gas Integrated",
     "pais": "Argentina",
     "diario": {
-      "verdict": "NEUTRAL",
+      "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 45.8,
-      "dist_clave": -1.54,
-      "dist_asl": -2.06,
+      "rsi": 44.4,
+      "dist_clave": -2.06,
+      "dist_asl": -2.55,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-1.5%) · RSI 46 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-2.1%) · RSI 44 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 50.6,
-      "dist_clave": 6.87,
-      "dist_asl": -0.97,
+      "rsi": 50.1,
+      "dist_clave": 6.3,
+      "dist_asl": -1.46,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+6.9%) · RSI 51 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+6.3%) · RSI 50 · MACD bajista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 61.5,
-      "dist_clave": 51.0,
-      "dist_asl": 11.41,
+      "rsi": 61.1,
+      "dist_clave": 50.2,
+      "dist_asl": 10.86,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+51.0%) · RSI 61 · MACD bajista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+50.2%) · RSI 61 · MACD bajista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     }
   },
   {
@@ -9958,18 +9958,18 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 44.8,
-      "dist_clave": -0.91,
-      "dist_asl": -1.89,
+      "rsi": 44.6,
+      "dist_clave": -0.96,
+      "dist_asl": -1.94,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-0.9%) · RSI 45 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-1.0%) · RSI 45 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 56.6,
-      "dist_clave": 17.53,
-      "dist_asl": 2.5,
+      "rsi": 56.5,
+      "dist_clave": 17.47,
+      "dist_asl": 2.44,
       "ma_clave": "SMA52",
       "motivo": "Tendencia alcista · precio sobre SMA52 (+17.5%) · RSI 57 · MACD bajista · SMI bajista"
     },
@@ -9977,8 +9977,8 @@
       "verdict": "EXTENDIDO",
       "estado": "Bull",
       "rsi": 64.5,
-      "dist_clave": 31.33,
-      "dist_asl": 20.76,
+      "dist_clave": 31.25,
+      "dist_asl": 20.7,
       "ma_clave": "SMA36",
       "motivo": "Tendencia alcista · precio sobre SMA36 (+31.3%) · RSI 64 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     }
@@ -9991,29 +9991,29 @@
     "diario": {
       "verdict": "COMPRA",
       "estado": "Bull",
-      "rsi": 53.1,
-      "dist_clave": 1.0,
-      "dist_asl": 1.02,
+      "rsi": 55.4,
+      "dist_clave": 1.52,
+      "dist_asl": 1.51,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.0%) · RSI 53 · MACD alcista · SMI alcista · en zona de pullback (media/ASL), listo para entrar"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.5%) · RSI 55 · MACD alcista · SMI alcista · en zona de pullback (media/ASL), listo para entrar"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 58.1,
-      "dist_clave": 30.17,
-      "dist_asl": 2.95,
+      "rsi": 58.6,
+      "dist_clave": 30.86,
+      "dist_asl": 3.46,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+30.2%) · RSI 58 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+30.9%) · RSI 59 · MACD bajista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 67.6,
-      "dist_clave": 77.3,
-      "dist_asl": 29.81,
+      "rsi": 67.9,
+      "dist_clave": 78.21,
+      "dist_asl": 30.43,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+77.3%) · RSI 68 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+78.2%) · RSI 68 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     }
   },
   {
@@ -10090,9 +10090,9 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 42.1,
-      "dist_clave": -0.91,
-      "dist_asl": -2.9,
+      "rsi": 42.2,
+      "dist_clave": -0.88,
+      "dist_asl": -2.87,
       "ma_clave": "EMA50",
       "motivo": "Tendencia bajista · precio bajo EMA50 (-0.9%) · RSI 42 · MACD bajista · SMI alcista"
     },
@@ -10100,8 +10100,8 @@
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 56.8,
-      "dist_clave": 29.9,
-      "dist_asl": 4.32,
+      "dist_clave": 29.94,
+      "dist_asl": 4.35,
       "ma_clave": "SMA52",
       "motivo": "Tendencia alcista · precio sobre SMA52 (+29.9%) · RSI 57 · MACD alcista · SMI bajista"
     },
@@ -10109,8 +10109,8 @@
       "verdict": "EXTENDIDO",
       "estado": "Bull",
       "rsi": 65.7,
-      "dist_clave": 81.58,
-      "dist_asl": 28.86,
+      "dist_clave": 81.64,
+      "dist_asl": 28.9,
       "ma_clave": "SMA36",
       "motivo": "Tendencia alcista · precio sobre SMA36 (+81.6%) · RSI 66 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     }
@@ -10421,29 +10421,29 @@
     "diario": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 68.1,
-      "dist_clave": 12.13,
-      "dist_asl": 12.3,
+      "rsi": 68.6,
+      "dist_clave": 12.51,
+      "dist_asl": 12.65,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+12.1%) · RSI 68 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+12.5%) · RSI 69 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 52.0,
-      "dist_clave": -1.05,
-      "dist_asl": 8.41,
+      "rsi": 52.1,
+      "dist_clave": -0.71,
+      "dist_asl": 8.75,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia bajista · precio bajo SMA52 (-1.0%) · RSI 52 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo SMA52 (-0.7%) · RSI 52 · MACD alcista · SMI alcista"
     },
     "mensual": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
       "rsi": 47.1,
-      "dist_clave": -26.09,
-      "dist_asl": -10.03,
+      "dist_clave": -25.84,
+      "dist_asl": -9.74,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia neutral · precio bajo SMA36 (-26.1%) · RSI 47 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia neutral · precio bajo SMA36 (-25.8%) · RSI 47 · MACD bajista · SMI alcista"
     }
   },
   {
@@ -10454,29 +10454,29 @@
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 53.4,
-      "dist_clave": 3.03,
-      "dist_asl": 0.88,
+      "rsi": 53.8,
+      "dist_clave": 3.3,
+      "dist_asl": 1.13,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+3.0%) · RSI 53 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+3.3%) · RSI 54 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 49.9,
-      "dist_clave": 0.64,
-      "dist_asl": 2.7,
+      "rsi": 50.1,
+      "dist_clave": 0.91,
+      "dist_asl": 2.95,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia neutral · precio sobre SMA52 (+0.6%) · RSI 50 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia neutral · precio sobre SMA52 (+0.9%) · RSI 50 · MACD alcista · SMI alcista"
     },
     "mensual": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 52.4,
-      "dist_clave": 16.33,
-      "dist_asl": -0.38,
+      "rsi": 52.5,
+      "dist_clave": 16.64,
+      "dist_asl": -0.13,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+16.3%) · RSI 52 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+16.6%) · RSI 52 · MACD bajista · SMI bajista"
     }
   },
   {
@@ -12418,6 +12418,39 @@
       "dist_asl": -13.06,
       "ma_clave": "SMA36",
       "motivo": "Tendencia bajista · precio bajo SMA36 (-26.1%) · RSI 46 · MACD bajista · SMI bajista"
+    }
+  },
+  {
+    "ticker": "SEMI.BA",
+    "nombre": "MOLINOS JUAN SEMINO S.A",
+    "industria": "Farm Products",
+    "pais": "Argentina",
+    "diario": {
+      "verdict": "NEUTRAL",
+      "estado": "Bear",
+      "rsi": 41.8,
+      "dist_clave": -4.06,
+      "dist_asl": -0.73,
+      "ma_clave": "EMA50",
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-4.1%) · RSI 42 · MACD alcista · SMI alcista"
+    },
+    "semanal": {
+      "verdict": "NEUTRAL",
+      "estado": "Neutral",
+      "rsi": 40.0,
+      "dist_clave": -11.1,
+      "dist_asl": -7.06,
+      "ma_clave": "SMA52",
+      "motivo": "Tendencia neutral · precio bajo SMA52 (-11.1%) · RSI 40 · MACD bajista · SMI bajista"
+    },
+    "mensual": {
+      "verdict": "NEUTRAL",
+      "estado": "Neutral",
+      "rsi": 48.5,
+      "dist_clave": -8.61,
+      "dist_asl": -10.38,
+      "ma_clave": "SMA36",
+      "motivo": "Tendencia neutral · precio bajo SMA36 (-8.6%) · RSI 48 · MACD bajista · SMI alcista"
     }
   }
 ]

@@ -8965,8 +8965,8 @@
       "nombre": "ADECOAGRO S A CEDEAR EACH 1 REP",
       "industria": "Farm Products",
       "pais": "Luxembourg",
-      "var_pct": 1.57,
-      "rsi": 44.32,
+      "var_pct": 4.52,
+      "rsi": 48.67,
       "spark": [
         19090.0,
         18620.0,
@@ -8997,7 +8997,7 @@
         14900.0,
         14940.0,
         15250.0,
-        15490.0
+        15940.0
       ]
     },
     {
@@ -9045,8 +9045,8 @@
       "nombre": "ALUAR ALUMINIO ARGENTINA SA",
       "industria": "Aluminum",
       "pais": "Argentina",
-      "var_pct": 0.66,
-      "rsi": 51.56,
+      "var_pct": -0.35,
+      "rsi": 48.5,
       "spark": [
         938.5,
         967.0,
@@ -9077,7 +9077,7 @@
         981.0,
         983.0,
         991.0,
-        997.5
+        987.5
       ]
     },
     {
@@ -9365,8 +9365,8 @@
       "nombre": "BRASIL      ON      NM",
       "industria": "Banks - Regional",
       "pais": "Brazil",
-      "var_pct": 0.5,
-      "rsi": 51.18,
+      "var_pct": 0.25,
+      "rsi": 50.31,
       "spark": [
         20.79,
         21.5,
@@ -9397,7 +9397,7 @@
         19.91,
         19.73,
         20.0,
-        20.1
+        20.05
       ]
     },
     {
@@ -9565,10 +9565,9 @@
       "nombre": "BUNGE GLOBAL SA CEDEAR EACH REP",
       "industria": "Sin clasificar",
       "pais": "United States",
-      "var_pct": 0.73,
-      "rsi": 36.26,
+      "var_pct": 5.89,
+      "rsi": 49.85,
       "spark": [
-        35459.81,
         35479.7,
         35640.0,
         35840.0,
@@ -9597,7 +9596,8 @@
         33700.0,
         33320.0,
         33060.0,
-        33300.0
+        33300.0,
+        35260.0
       ]
     },
     {
@@ -9645,8 +9645,8 @@
       "nombre": "BERKSHIRE HATHAWAY INC CEDEAR E",
       "industria": "Insurance - Diversified",
       "pais": "United States",
-      "var_pct": -0.44,
-      "rsi": 72.75,
+      "var_pct": 0.39,
+      "rsi": 76.13,
       "spark": [
         32820.0,
         32760.0,
@@ -9677,7 +9677,7 @@
         35460.0,
         35780.0,
         36300.0,
-        36140.0
+        36440.0
       ]
     },
     {
@@ -9685,8 +9685,8 @@
       "nombre": "BOLSAS Y MERCADOS ARGENTINOS SA",
       "industria": "Capital Markets",
       "pais": "Argentina",
-      "var_pct": 0.74,
-      "rsi": 50.69,
+      "var_pct": 0.99,
+      "rsi": 51.31,
       "spark": [
         285.25,
         287.25,
@@ -9717,7 +9717,7 @@
         310.0,
         304.25,
         302.25,
-        304.5
+        305.25
       ]
     },
     {
@@ -9845,8 +9845,8 @@
       "nombre": "SOCIEDAD COMERCIAL DEL PLATA",
       "industria": "Conglomerates",
       "pais": "Argentina",
-      "var_pct": 0.26,
-      "rsi": 41.14,
+      "var_pct": 0.6,
+      "rsi": 41.85,
       "spark": [
         43.7,
         44.31,
@@ -9877,7 +9877,7 @@
         41.92,
         41.41,
         41.76,
-        41.87
+        42.01
       ]
     },
     {
@@ -9885,8 +9885,8 @@
       "nombre": "CRESUD S.A.C.I.F.Y.A.",
       "industria": "Conglomerates",
       "pais": "Argentina",
-      "var_pct": 0.52,
-      "rsi": 50.55,
+      "var_pct": 1.04,
+      "rsi": 51.55,
       "spark": [
         1646.0,
         1681.0,
@@ -9917,7 +9917,7 @@
         1756.0,
         1711.0,
         1736.0,
-        1745.0
+        1754.0
       ]
     },
     {
@@ -10405,8 +10405,8 @@
       "nombre": "HAPVIDA     ON      NM",
       "industria": "Insurance - Life",
       "pais": "Brazil",
-      "var_pct": 1.92,
-      "rsi": 44.91,
+      "var_pct": 1.83,
+      "rsi": 44.74,
       "spark": [
         12.05,
         12.4,
@@ -10437,7 +10437,7 @@
         10.21,
         10.55,
         10.41,
-        10.61
+        10.6
       ]
     },
     {
@@ -10645,8 +10645,8 @@
       "nombre": "IRSA INVERSIONES Y REPRESENTACI",
       "industria": "Real Estate Services",
       "pais": "Argentina",
-      "var_pct": -0.6,
-      "rsi": 58.28,
+      "var_pct": -0.81,
+      "rsi": 57.71,
       "spark": [
         2095.0,
         2170.0,
@@ -10677,7 +10677,7 @@
         2420.0,
         2420.0,
         2480.0,
-        2465.0
+        2460.0
       ]
     },
     {
@@ -10845,8 +10845,8 @@
       "nombre": "LOJAS RENNERON  EJ  NM",
       "industria": "Department Stores",
       "pais": "Brazil",
-      "var_pct": 0.61,
-      "rsi": 54.93,
+      "var_pct": 0.74,
+      "rsi": 55.23,
       "spark": [
         14.83,
         15.17,
@@ -10877,47 +10877,7 @@
         14.76,
         14.86,
         14.8,
-        14.89
-      ]
-    },
-    {
-      "ticker": "MBG",
-      "nombre": "SPDR Bloomberg Barclays Mortgag",
-      "industria": "Sin clasificar",
-      "pais": "Sin país",
-      "var_pct": 0.09,
-      "rsi": 50.62,
-      "spark": [
-        21.98,
-        21.97,
-        22.02,
-        22.1,
-        22.1,
-        22.18,
-        22.19,
-        22.17,
-        22.16,
-        22.11,
-        22.14,
-        22.04,
-        22.02,
-        22.08,
-        22.08,
-        22.23,
-        22.2,
-        22.22,
-        22.26,
-        22.17,
-        22.22,
-        22.17,
-        22.19,
-        22.29,
-        22.31,
-        22.34,
-        22.34,
-        22.24,
-        22.18,
-        22.2
+        14.91
       ]
     },
     {
@@ -11005,8 +10965,8 @@
       "nombre": "MAGAZ LUIZA ON      NM",
       "industria": "Specialty Retail",
       "pais": "Brazil",
-      "var_pct": 2.34,
-      "rsi": 31.34,
+      "var_pct": 3.98,
+      "rsi": 33.46,
       "spark": [
         6.63,
         6.77,
@@ -11037,7 +10997,7 @@
         4.68,
         4.43,
         4.27,
-        4.37
+        4.44
       ]
     },
     {
@@ -11085,8 +11045,8 @@
       "nombre": "MORIXE HERMANOS",
       "industria": "Farm Products",
       "pais": "Argentina",
-      "var_pct": -0.76,
-      "rsi": 38.21,
+      "var_pct": -0.38,
+      "rsi": 39.01,
       "spark": [
         28.0,
         29.4,
@@ -11117,7 +11077,7 @@
         26.2,
         25.9,
         26.3,
-        26.1
+        26.2
       ]
     },
     {
@@ -11205,8 +11165,8 @@
       "nombre": "NOKIA OYJ CEDEAR EACH REP 1/5 A",
       "industria": "Sin clasificar",
       "pais": "Finland",
-      "var_pct": 2.83,
-      "rsi": 44.34,
+      "var_pct": 2.88,
+      "rsi": 44.39,
       "spark": [
         20950.0,
         22970.0,
@@ -11237,7 +11197,7 @@
         20810.0,
         20200.0,
         19090.0,
-        19630.0
+        19640.0
       ]
     },
     {
@@ -11365,8 +11325,8 @@
       "nombre": "PAMPA ENERGIA S.A.",
       "industria": "Conglomerates",
       "pais": "Argentina",
-      "var_pct": 1.28,
-      "rsi": 54.94,
+      "var_pct": 0.69,
+      "rsi": 53.46,
       "spark": [
         4782.5,
         4790.0,
@@ -11397,7 +11357,7 @@
         5120.0,
         5040.0,
         5090.0,
-        5155.0
+        5125.0
       ]
     },
     {
@@ -11445,8 +11405,8 @@
       "nombre": "POSCO HOLDINGS INC CEDEAR EACH ",
       "industria": "Steel",
       "pais": "South Korea",
-      "var_pct": 10.35,
-      "rsi": 44.65,
+      "var_pct": 9.59,
+      "rsi": 43.67,
       "spark": [
         36439.89,
         36439.89,
@@ -11477,7 +11437,7 @@
         26340.0,
         26280.0,
         26280.0,
-        29000.0
+        28800.0
       ]
     },
     {
@@ -11525,8 +11485,8 @@
       "nombre": "PRIO        ON  ATZ NM",
       "industria": "Oil & Gas E&P",
       "pais": "Brazil",
-      "var_pct": -0.02,
-      "rsi": 24.97,
+      "var_pct": 0.17,
+      "rsi": 25.64,
       "spark": [
         68.4,
         64.31,
@@ -11557,7 +11517,7 @@
         52.15,
         52.4,
         52.57,
-        52.56
+        52.66
       ]
     },
     {
@@ -11645,8 +11605,8 @@
       "nombre": "LOCALIZA    ON  ATZ NM",
       "industria": "Rental & Leasing Services",
       "pais": "Brazil",
-      "var_pct": 0.97,
-      "rsi": 50.66,
+      "var_pct": 0.68,
+      "rsi": 49.95,
       "spark": [
         42.81,
         44.34,
@@ -11677,7 +11637,7 @@
         41.54,
         41.08,
         41.25,
-        41.65
+        41.53
       ]
     },
     {
@@ -11885,8 +11845,8 @@
       "nombre": "TELECOM ARGENTINA SA",
       "industria": "Telecom Services",
       "pais": "Argentina",
-      "var_pct": 2.64,
-      "rsi": 51.41,
+      "var_pct": 1.7,
+      "rsi": 49.75,
       "spark": [
         3492.5,
         3790.0,
@@ -11917,7 +11877,7 @@
         4045.0,
         3967.5,
         3970.0,
-        4075.0
+        4037.5
       ]
     },
     {
@@ -11925,8 +11885,8 @@
       "nombre": "TRANSPORTADORA DE GAS DEL NORTE",
       "industria": "Oil & Gas Midstream",
       "pais": "Argentina",
-      "var_pct": 0.64,
-      "rsi": 43.96,
+      "var_pct": 0.45,
+      "rsi": 43.5,
       "spark": [
         3950.0,
         3917.5,
@@ -11957,7 +11917,7 @@
         3997.5,
         3910.0,
         3912.5,
-        3937.5
+        3930.0
       ]
     },
     {
@@ -11965,8 +11925,8 @@
       "nombre": "TRANSPORTADORA DE GAS DEL SUR S",
       "industria": "Oil & Gas Integrated",
       "pais": "Argentina",
-      "var_pct": 0.78,
-      "rsi": 44.43,
+      "var_pct": 1.39,
+      "rsi": 45.89,
       "spark": [
         8685.0,
         8685.0,
@@ -11997,7 +11957,7 @@
         9250.0,
         9015.0,
         8970.0,
-        9040.0
+        9095.0
       ]
     },
     {
@@ -12165,8 +12125,8 @@
       "nombre": "TERNIUM SA CEDEAR EACH 4  REP 1",
       "industria": "Steel",
       "pais": "Luxembourg",
-      "var_pct": 3.9,
-      "rsi": 45.91,
+      "var_pct": 3.41,
+      "rsi": 44.76,
       "spark": [
         17420.0,
         18380.0,
@@ -12197,7 +12157,7 @@
         16670.0,
         16430.0,
         16400.0,
-        17040.0
+        16960.0
       ]
     },
     {
@@ -12205,8 +12165,8 @@
       "nombre": "BANCO DE VALORES S.A.",
       "industria": "Banks - Diversified",
       "pais": "Argentina",
-      "var_pct": -0.08,
-      "rsi": 54.45,
+      "var_pct": -0.38,
+      "rsi": 53.1,
       "spark": [
         669.69,
         671.67,
@@ -12237,7 +12197,7 @@
         651.75,
         647.0,
         651.5,
-        651.0
+        649.0
       ]
     },
     {
@@ -12245,7 +12205,7 @@
       "nombre": "WEIBO CORPORATION CEDEARS EACH ",
       "industria": "Internet Content & Information",
       "pais": "China",
-      "var_pct": 0.0,
+      "var_pct": 6.51,
       "rsi": 100.0,
       "spark": [
         1813.0,
@@ -12277,7 +12237,7 @@
         1813.0,
         1813.0,
         1813.0,
-        1813.0
+        1931.0
       ]
     },
     {
@@ -12325,8 +12285,8 @@
       "nombre": "YPF SOCIEDAD ANONIMA",
       "industria": "Oil & Gas Integrated",
       "pais": "Argentina",
-      "var_pct": 1.96,
-      "rsi": 41.83,
+      "var_pct": 2.1,
+      "rsi": 42.2,
       "spark": [
         71025.0,
         72100.0,
@@ -12357,7 +12317,7 @@
         71125.0,
         70300.0,
         70075.0,
-        71450.0
+        71550.0
       ]
     },
     {
@@ -12737,8 +12697,8 @@
       "nombre": "SAN MIGUEL SA",
       "industria": "Farm Products",
       "pais": "Argentina",
-      "var_pct": -0.88,
-      "rsi": 66.71,
+      "var_pct": -0.18,
+      "rsi": 68.09,
       "spark": [
         474.0,
         471.0,
@@ -12769,7 +12729,7 @@
         520.0,
         545.0,
         570.0,
-        565.0
+        569.0
       ]
     },
     {
@@ -12777,8 +12737,8 @@
       "nombre": "BANCO HIPOTECAIRO SA",
       "industria": "Banks - Regional",
       "pais": "Argentina",
-      "var_pct": 2.1,
-      "rsi": 53.4,
+      "var_pct": 1.82,
+      "rsi": 53.03,
       "spark": [
         326.03,
         345.39,
@@ -12809,7 +12769,7 @@
         362.0,
         358.0,
         357.5,
-        365.0
+        364.0
       ]
     },
     {
@@ -13017,8 +12977,8 @@
       "nombre": "CENTRAL COSTANERA SA",
       "industria": "Utilities - Regulated Electric",
       "pais": "Argentina",
-      "var_pct": -0.39,
-      "rsi": 66.56,
+      "var_pct": 0.59,
+      "rsi": 69.4,
       "spark": [
         429.0,
         438.0,
@@ -13049,7 +13009,7 @@
         483.0,
         479.0,
         509.0,
-        507.0
+        512.0
       ]
     },
     {
@@ -15240,8 +15200,8 @@
     },
     {
       "industria": "Aluminum",
-      "rsi_promedio": 51.56,
-      "var_pct_promedio": 0.66,
+      "rsi_promedio": 48.5,
+      "var_pct_promedio": -0.35,
       "n": 1
     },
     {
@@ -15276,14 +15236,14 @@
     },
     {
       "industria": "Banks - Diversified",
-      "rsi_promedio": 62.09,
-      "var_pct_promedio": 0.57,
+      "rsi_promedio": 61.97,
+      "var_pct_promedio": 0.54,
       "n": 11
     },
     {
       "industria": "Banks - Regional",
-      "rsi_promedio": 56.58,
-      "var_pct_promedio": 1.46,
+      "rsi_promedio": 56.5,
+      "var_pct_promedio": 1.43,
       "n": 16
     },
     {
@@ -15330,8 +15290,8 @@
     },
     {
       "industria": "Capital Markets",
-      "rsi_promedio": 49.43,
-      "var_pct_promedio": -1.34,
+      "rsi_promedio": 49.48,
+      "var_pct_promedio": -1.31,
       "n": 11
     },
     {
@@ -15360,8 +15320,8 @@
     },
     {
       "industria": "Conglomerates",
-      "rsi_promedio": 49.93,
-      "var_pct_promedio": 1.14,
+      "rsi_promedio": 49.97,
+      "var_pct_promedio": 1.18,
       "n": 6
     },
     {
@@ -15390,8 +15350,8 @@
     },
     {
       "industria": "Department Stores",
-      "rsi_promedio": 54.93,
-      "var_pct_promedio": 0.61,
+      "rsi_promedio": 55.23,
+      "var_pct_promedio": 0.74,
       "n": 1
     },
     {
@@ -15444,8 +15404,8 @@
     },
     {
       "industria": "Farm Products",
-      "rsi_promedio": 45.64,
-      "var_pct_promedio": 0.38,
+      "rsi_promedio": 46.94,
+      "var_pct_promedio": 1.19,
       "n": 5
     },
     {
@@ -15504,14 +15464,14 @@
     },
     {
       "industria": "Insurance - Diversified",
-      "rsi_promedio": 67.11,
-      "var_pct_promedio": 1.46,
+      "rsi_promedio": 68.23,
+      "var_pct_promedio": 1.74,
       "n": 3
     },
     {
       "industria": "Insurance - Life",
-      "rsi_promedio": 44.91,
-      "var_pct_promedio": 1.92,
+      "rsi_promedio": 44.74,
+      "var_pct_promedio": 1.83,
       "n": 1
     },
     {
@@ -15529,7 +15489,7 @@
     {
       "industria": "Internet Content & Information",
       "rsi_promedio": 56.91,
-      "var_pct_promedio": -0.95,
+      "var_pct_promedio": -0.22,
       "n": 9
     },
     {
@@ -15564,8 +15524,8 @@
     },
     {
       "industria": "Oil & Gas E&P",
-      "rsi_promedio": 30.36,
-      "var_pct_promedio": -0.01,
+      "rsi_promedio": 30.49,
+      "var_pct_promedio": 0.03,
       "n": 5
     },
     {
@@ -15576,14 +15536,14 @@
     },
     {
       "industria": "Oil & Gas Integrated",
-      "rsi_promedio": 35.76,
-      "var_pct_promedio": 1.96,
+      "rsi_promedio": 35.94,
+      "var_pct_promedio": 2.03,
       "n": 10
     },
     {
       "industria": "Oil & Gas Midstream",
-      "rsi_promedio": 42.65,
-      "var_pct_promedio": 1.63,
+      "rsi_promedio": 42.49,
+      "var_pct_promedio": 1.57,
       "n": 3
     },
     {
@@ -15636,8 +15596,8 @@
     },
     {
       "industria": "Real Estate Services",
-      "rsi_promedio": 55.41,
-      "var_pct_promedio": 0.86,
+      "rsi_promedio": 55.12,
+      "var_pct_promedio": 0.76,
       "n": 2
     },
     {
@@ -15648,8 +15608,8 @@
     },
     {
       "industria": "Rental & Leasing Services",
-      "rsi_promedio": 47.6,
-      "var_pct_promedio": 6.1,
+      "rsi_promedio": 47.25,
+      "var_pct_promedio": 5.96,
       "n": 2
     },
     {
@@ -15684,9 +15644,9 @@
     },
     {
       "industria": "Sin clasificar",
-      "rsi_promedio": 58.18,
-      "var_pct_promedio": 0.42,
-      "n": 43
+      "rsi_promedio": 58.69,
+      "var_pct_promedio": 0.56,
+      "n": 42
     },
     {
       "industria": "Software - Application",
@@ -15720,20 +15680,20 @@
     },
     {
       "industria": "Specialty Retail",
-      "rsi_promedio": 31.34,
-      "var_pct_promedio": 2.34,
+      "rsi_promedio": 33.46,
+      "var_pct_promedio": 3.98,
       "n": 1
     },
     {
       "industria": "Steel",
-      "rsi_promedio": 38.23,
-      "var_pct_promedio": 3.48,
+      "rsi_promedio": 37.81,
+      "var_pct_promedio": 3.23,
       "n": 5
     },
     {
       "industria": "Telecom Services",
-      "rsi_promedio": 47.51,
-      "var_pct_promedio": 1.09,
+      "rsi_promedio": 47.36,
+      "var_pct_promedio": 1.0,
       "n": 11
     },
     {
@@ -15768,8 +15728,8 @@
     },
     {
       "industria": "Utilities - Regulated Electric",
-      "rsi_promedio": 51.33,
-      "var_pct_promedio": 1.59,
+      "rsi_promedio": 51.8,
+      "var_pct_promedio": 1.75,
       "n": 6
     },
     {

@@ -1,4 +1,1572 @@
 {
-  "actualizado": "2026-07-03T17:56:44.911436-03:00",
-  "tickers": []
+  "actualizado": "2026-07-03T18:05:07.513100-03:00",
+  "tickers": [
+    {
+      "ticker": "NVDA",
+      "nombre": "NVIDIA CORP",
+      "disponible": true,
+      "serie": [
+        {
+          "fecha": "2021-07-09",
+          "per_ltm": 19.2126,
+          "ev_sales_ltm": 2.935,
+          "ps_ltm": 2.5724
+        },
+        {
+          "fecha": "2021-07-16",
+          "per_ltm": 17.4023,
+          "ev_sales_ltm": 2.6927,
+          "ps_ltm": 2.33
+        },
+        {
+          "fecha": "2021-07-23",
+          "per_ltm": 18.7409,
+          "ev_sales_ltm": 2.8719,
+          "ps_ltm": 2.5092
+        },
+        {
+          "fecha": "2021-07-30",
+          "per_ltm": 18.6844,
+          "ev_sales_ltm": 2.8643,
+          "ps_ltm": 2.5016
+        },
+        {
+          "fecha": "2021-08-06",
+          "per_ltm": 11.6643,
+          "ev_sales_ltm": 2.6318,
+          "ps_ltm": 2.2977
+        },
+        {
+          "fecha": "2021-08-13",
+          "per_ltm": 11.5623,
+          "ev_sales_ltm": 2.6117,
+          "ps_ltm": 2.2776
+        },
+        {
+          "fecha": "2021-08-20",
+          "per_ltm": 11.922,
+          "ev_sales_ltm": 2.6826,
+          "ps_ltm": 2.3485
+        },
+        {
+          "fecha": "2021-08-27",
+          "per_ltm": 12.9644,
+          "ev_sales_ltm": 2.8879,
+          "ps_ltm": 2.5538
+        },
+        {
+          "fecha": "2021-09-03",
+          "per_ltm": 13.0852,
+          "ev_sales_ltm": 2.9117,
+          "ps_ltm": 2.5776
+        },
+        {
+          "fecha": "2021-09-10",
+          "per_ltm": 12.8761,
+          "ev_sales_ltm": 2.8705,
+          "ps_ltm": 2.5365
+        },
+        {
+          "fecha": "2021-09-17",
+          "per_ltm": 12.545,
+          "ev_sales_ltm": 2.8053,
+          "ps_ltm": 2.4712
+        },
+        {
+          "fecha": "2021-09-24",
+          "per_ltm": 12.6487,
+          "ev_sales_ltm": 2.8257,
+          "ps_ltm": 2.4917
+        },
+        {
+          "fecha": "2021-10-01",
+          "per_ltm": 11.8817,
+          "ev_sales_ltm": 2.6746,
+          "ps_ltm": 2.3406
+        },
+        {
+          "fecha": "2021-10-08",
+          "per_ltm": 11.9327,
+          "ev_sales_ltm": 2.6847,
+          "ps_ltm": 2.3506
+        },
+        {
+          "fecha": "2021-10-15",
+          "per_ltm": 12.5233,
+          "ev_sales_ltm": 2.801,
+          "ps_ltm": 2.4669
+        },
+        {
+          "fecha": "2021-10-22",
+          "per_ltm": 13.0182,
+          "ev_sales_ltm": 2.8985,
+          "ps_ltm": 2.5644
+        },
+        {
+          "fecha": "2021-10-29",
+          "per_ltm": 14.6456,
+          "ev_sales_ltm": 3.2191,
+          "ps_ltm": 2.885
+        },
+        {
+          "fecha": "2021-11-05",
+          "per_ltm": 13.5409,
+          "ev_sales_ltm": 3.4263,
+          "ps_ltm": 3.0285
+        },
+        {
+          "fecha": "2021-11-12",
+          "per_ltm": 13.8313,
+          "ev_sales_ltm": 3.4912,
+          "ps_ltm": 3.0934
+        },
+        {
+          "fecha": "2021-11-19",
+          "per_ltm": 15.0124,
+          "ev_sales_ltm": 3.7554,
+          "ps_ltm": 3.3576
+        },
+        {
+          "fecha": "2021-11-26",
+          "per_ltm": 14.3379,
+          "ev_sales_ltm": 3.6045,
+          "ps_ltm": 3.2067
+        },
+        {
+          "fecha": "2021-12-03",
+          "per_ltm": 13.9709,
+          "ev_sales_ltm": 3.5225,
+          "ps_ltm": 3.1247
+        },
+        {
+          "fecha": "2021-12-10",
+          "per_ltm": 13.7456,
+          "ev_sales_ltm": 3.4721,
+          "ps_ltm": 3.0743
+        },
+        {
+          "fecha": "2021-12-17",
+          "per_ltm": 12.6545,
+          "ev_sales_ltm": 3.228,
+          "ps_ltm": 2.8303
+        },
+        {
+          "fecha": "2021-12-24",
+          "per_ltm": 13.4916,
+          "ev_sales_ltm": 3.4153,
+          "ps_ltm": 3.0175
+        },
+        {
+          "fecha": "2021-12-31",
+          "per_ltm": 13.3874,
+          "ev_sales_ltm": 3.392,
+          "ps_ltm": 2.9942
+        },
+        {
+          "fecha": "2022-01-07",
+          "per_ltm": 12.4024,
+          "ev_sales_ltm": 3.1716,
+          "ps_ltm": 2.7739
+        },
+        {
+          "fecha": "2022-01-14",
+          "per_ltm": 12.2635,
+          "ev_sales_ltm": 3.1406,
+          "ps_ltm": 2.7428
+        },
+        {
+          "fecha": "2022-01-21",
+          "per_ltm": 10.6395,
+          "ev_sales_ltm": 2.7774,
+          "ps_ltm": 2.3796
+        },
+        {
+          "fecha": "2022-01-28",
+          "per_ltm": 10.3964,
+          "ev_sales_ltm": 2.723,
+          "ps_ltm": 2.3252
+        },
+        {
+          "fecha": "2022-02-04",
+          "per_ltm": 6.2001,
+          "ev_sales_ltm": 2.59,
+          "ps_ltm": 2.2572
+        },
+        {
+          "fecha": "2022-02-11",
+          "per_ltm": 6.1058,
+          "ev_sales_ltm": 2.5557,
+          "ps_ltm": 2.2229
+        },
+        {
+          "fecha": "2022-02-18",
+          "per_ltm": 6.0275,
+          "ev_sales_ltm": 2.5272,
+          "ps_ltm": 2.1944
+        },
+        {
+          "fecha": "2022-02-25",
+          "per_ltm": 6.1588,
+          "ev_sales_ltm": 2.575,
+          "ps_ltm": 2.2422
+        },
+        {
+          "fecha": "2022-03-04",
+          "per_ltm": 5.8485,
+          "ev_sales_ltm": 2.462,
+          "ps_ltm": 2.1292
+        },
+        {
+          "fecha": "2022-03-11",
+          "per_ltm": 5.6353,
+          "ev_sales_ltm": 2.3844,
+          "ps_ltm": 2.0516
+        },
+        {
+          "fecha": "2022-03-18",
+          "per_ltm": 6.7453,
+          "ev_sales_ltm": 2.7885,
+          "ps_ltm": 2.4557
+        },
+        {
+          "fecha": "2022-03-25",
+          "per_ltm": 7.0613,
+          "ev_sales_ltm": 2.9035,
+          "ps_ltm": 2.5708
+        },
+        {
+          "fecha": "2022-04-01",
+          "per_ltm": 6.8114,
+          "ev_sales_ltm": 2.8125,
+          "ps_ltm": 2.4798
+        },
+        {
+          "fecha": "2022-04-08",
+          "per_ltm": 5.8952,
+          "ev_sales_ltm": 2.479,
+          "ps_ltm": 2.1462
+        },
+        {
+          "fecha": "2022-04-15",
+          "per_ltm": 5.4206,
+          "ev_sales_ltm": 2.3062,
+          "ps_ltm": 1.9735
+        },
+        {
+          "fecha": "2022-04-22",
+          "per_ltm": 4.9762,
+          "ev_sales_ltm": 2.1444,
+          "ps_ltm": 1.8117
+        },
+        {
+          "fecha": "2022-04-29",
+          "per_ltm": 4.7293,
+          "ev_sales_ltm": 2.0546,
+          "ps_ltm": 1.7218
+        },
+        {
+          "fecha": "2022-05-06",
+          "per_ltm": 4.9128,
+          "ev_sales_ltm": 1.8185,
+          "ps_ltm": 1.5795
+        },
+        {
+          "fecha": "2022-05-13",
+          "per_ltm": 4.6578,
+          "ev_sales_ltm": 1.7365,
+          "ps_ltm": 1.4975
+        },
+        {
+          "fecha": "2022-05-20",
+          "per_ltm": 4.3916,
+          "ev_sales_ltm": 1.6509,
+          "ps_ltm": 1.412
+        },
+        {
+          "fecha": "2022-05-27",
+          "per_ltm": 4.9485,
+          "ev_sales_ltm": 1.83,
+          "ps_ltm": 1.591
+        },
+        {
+          "fecha": "2022-06-03",
+          "per_ltm": 4.9246,
+          "ev_sales_ltm": 1.8223,
+          "ps_ltm": 1.5833
+        },
+        {
+          "fecha": "2022-06-10",
+          "per_ltm": 4.4662,
+          "ev_sales_ltm": 1.6749,
+          "ps_ltm": 1.4359
+        },
+        {
+          "fecha": "2022-06-17",
+          "per_ltm": 4.1784,
+          "ev_sales_ltm": 1.5824,
+          "ps_ltm": 1.3434
+        },
+        {
+          "fecha": "2022-06-24",
+          "per_ltm": 4.5062,
+          "ev_sales_ltm": 1.6878,
+          "ps_ltm": 1.4488
+        },
+        {
+          "fecha": "2022-07-01",
+          "per_ltm": 3.8213,
+          "ev_sales_ltm": 1.4676,
+          "ps_ltm": 1.2286
+        },
+        {
+          "fecha": "2022-07-08",
+          "per_ltm": 4.1673,
+          "ev_sales_ltm": 1.5788,
+          "ps_ltm": 1.3398
+        },
+        {
+          "fecha": "2022-07-15",
+          "per_ltm": 4.1473,
+          "ev_sales_ltm": 1.5724,
+          "ps_ltm": 1.3334
+        },
+        {
+          "fecha": "2022-07-22",
+          "per_ltm": 4.557,
+          "ev_sales_ltm": 1.7041,
+          "ps_ltm": 1.4651
+        },
+        {
+          "fecha": "2022-07-29",
+          "per_ltm": 4.7791,
+          "ev_sales_ltm": 1.7755,
+          "ps_ltm": 1.5365
+        },
+        {
+          "fecha": "2022-08-05",
+          "per_ltm": 6.1085,
+          "ev_sales_ltm": 1.9046,
+          "ps_ltm": 1.5958
+        },
+        {
+          "fecha": "2022-08-12",
+          "per_ltm": 6.0185,
+          "ev_sales_ltm": 1.8811,
+          "ps_ltm": 1.5722
+        },
+        {
+          "fecha": "2022-08-19",
+          "per_ltm": 5.7418,
+          "ev_sales_ltm": 1.8088,
+          "ps_ltm": 1.5
+        },
+        {
+          "fecha": "2022-08-26",
+          "per_ltm": 5.2306,
+          "ev_sales_ltm": 1.6753,
+          "ps_ltm": 1.3664
+        },
+        {
+          "fecha": "2022-09-02",
+          "per_ltm": 4.3901,
+          "ev_sales_ltm": 1.4557,
+          "ps_ltm": 1.1468
+        },
+        {
+          "fecha": "2022-09-09",
+          "per_ltm": 4.6295,
+          "ev_sales_ltm": 1.5182,
+          "ps_ltm": 1.2094
+        },
+        {
+          "fecha": "2022-09-16",
+          "per_ltm": 4.2469,
+          "ev_sales_ltm": 1.4183,
+          "ps_ltm": 1.1094
+        },
+        {
+          "fecha": "2022-09-23",
+          "per_ltm": 4.0274,
+          "ev_sales_ltm": 1.361,
+          "ps_ltm": 1.0521
+        },
+        {
+          "fecha": "2022-09-30",
+          "per_ltm": 3.9061,
+          "ev_sales_ltm": 1.3293,
+          "ps_ltm": 1.0204
+        },
+        {
+          "fecha": "2022-10-07",
+          "per_ltm": 3.8859,
+          "ev_sales_ltm": 1.324,
+          "ps_ltm": 1.0151
+        },
+        {
+          "fecha": "2022-10-14",
+          "per_ltm": 3.6127,
+          "ev_sales_ltm": 1.2526,
+          "ps_ltm": 0.9438
+        },
+        {
+          "fecha": "2022-10-21",
+          "per_ltm": 4.0113,
+          "ev_sales_ltm": 1.3568,
+          "ps_ltm": 1.0479
+        },
+        {
+          "fecha": "2022-10-28",
+          "per_ltm": 4.4515,
+          "ev_sales_ltm": 1.4718,
+          "ps_ltm": 1.1629
+        },
+        {
+          "fecha": "2022-11-04",
+          "per_ltm": 5.9332,
+          "ev_sales_ltm": 1.5678,
+          "ps_ltm": 1.2388
+        },
+        {
+          "fecha": "2022-11-11",
+          "per_ltm": 6.8431,
+          "ev_sales_ltm": 1.7578,
+          "ps_ltm": 1.4288
+        },
+        {
+          "fecha": "2022-11-18",
+          "per_ltm": 6.4584,
+          "ev_sales_ltm": 1.6775,
+          "ps_ltm": 1.3484
+        },
+        {
+          "fecha": "2022-11-25",
+          "per_ltm": 6.8192,
+          "ev_sales_ltm": 1.7528,
+          "ps_ltm": 1.4238
+        },
+        {
+          "fecha": "2022-12-02",
+          "per_ltm": 7.075,
+          "ev_sales_ltm": 1.8062,
+          "ps_ltm": 1.4772
+        },
+        {
+          "fecha": "2022-12-09",
+          "per_ltm": 7.1274,
+          "ev_sales_ltm": 1.8172,
+          "ps_ltm": 1.4881
+        },
+        {
+          "fecha": "2022-12-16",
+          "per_ltm": 6.9472,
+          "ev_sales_ltm": 1.7795,
+          "ps_ltm": 1.4505
+        },
+        {
+          "fecha": "2022-12-23",
+          "per_ltm": 6.3749,
+          "ev_sales_ltm": 1.66,
+          "ps_ltm": 1.331
+        },
+        {
+          "fecha": "2022-12-30",
+          "per_ltm": 6.1267,
+          "ev_sales_ltm": 1.6082,
+          "ps_ltm": 1.2792
+        },
+        {
+          "fecha": "2023-01-06",
+          "per_ltm": 6.2294,
+          "ev_sales_ltm": 1.6297,
+          "ps_ltm": 1.3006
+        },
+        {
+          "fecha": "2023-01-13",
+          "per_ltm": 7.0847,
+          "ev_sales_ltm": 1.8082,
+          "ps_ltm": 1.4792
+        },
+        {
+          "fecha": "2023-01-20",
+          "per_ltm": 7.4788,
+          "ev_sales_ltm": 1.8905,
+          "ps_ltm": 1.5615
+        },
+        {
+          "fecha": "2023-01-27",
+          "per_ltm": 8.5378,
+          "ev_sales_ltm": 2.1116,
+          "ps_ltm": 1.7826
+        },
+        {
+          "fecha": "2023-02-03",
+          "per_ltm": 116.9623,
+          "ev_sales_ltm": 2.2515,
+          "ps_ltm": 1.9247
+        },
+        {
+          "fecha": "2023-02-10",
+          "per_ltm": 117.877,
+          "ev_sales_ltm": 2.2665,
+          "ps_ltm": 1.9398
+        },
+        {
+          "fecha": "2023-02-17",
+          "per_ltm": 118.5588,
+          "ev_sales_ltm": 2.2777,
+          "ps_ltm": 1.951
+        },
+        {
+          "fecha": "2023-02-24",
+          "per_ltm": 129.0799,
+          "ev_sales_ltm": 2.4509,
+          "ps_ltm": 2.1241
+        },
+        {
+          "fecha": "2023-03-03",
+          "per_ltm": 132.428,
+          "ev_sales_ltm": 2.506,
+          "ps_ltm": 2.1792
+        },
+        {
+          "fecha": "2023-03-10",
+          "per_ltm": 127.3221,
+          "ev_sales_ltm": 2.422,
+          "ps_ltm": 2.0952
+        },
+        {
+          "fecha": "2023-03-17",
+          "per_ltm": 142.624,
+          "ev_sales_ltm": 2.6738,
+          "ps_ltm": 2.347
+        },
+        {
+          "fecha": "2023-03-24",
+          "per_ltm": 148.4676,
+          "ev_sales_ltm": 2.7699,
+          "ps_ltm": 2.4432
+        },
+        {
+          "fecha": "2023-03-31",
+          "per_ltm": 154.0007,
+          "ev_sales_ltm": 2.861,
+          "ps_ltm": 2.5342
+        },
+        {
+          "fecha": "2023-04-07",
+          "per_ltm": 149.898,
+          "ev_sales_ltm": 2.7935,
+          "ps_ltm": 2.4667
+        },
+        {
+          "fecha": "2023-04-14",
+          "per_ltm": 148.3512,
+          "ev_sales_ltm": 2.768,
+          "ps_ltm": 2.4412
+        },
+        {
+          "fecha": "2023-04-21",
+          "per_ltm": 150.3526,
+          "ev_sales_ltm": 2.8009,
+          "ps_ltm": 2.4742
+        },
+        {
+          "fecha": "2023-04-28",
+          "per_ltm": 153.8454,
+          "ev_sales_ltm": 2.8584,
+          "ps_ltm": 2.5317
+        },
+        {
+          "fecha": "2023-05-05",
+          "per_ltm": 79.5035,
+          "ev_sales_ltm": 3.0027,
+          "ps_ltm": 2.7274
+        },
+        {
+          "fecha": "2023-05-12",
+          "per_ltm": 78.561,
+          "ev_sales_ltm": 2.9704,
+          "ps_ltm": 2.6951
+        },
+        {
+          "fecha": "2023-05-19",
+          "per_ltm": 86.6666,
+          "ev_sales_ltm": 3.2485,
+          "ps_ltm": 2.9731
+        },
+        {
+          "fecha": "2023-05-26",
+          "per_ltm": 107.9618,
+          "ev_sales_ltm": 3.979,
+          "ps_ltm": 3.7037
+        },
+        {
+          "fecha": "2023-06-02",
+          "per_ltm": 109.018,
+          "ev_sales_ltm": 4.0153,
+          "ps_ltm": 3.7399
+        },
+        {
+          "fecha": "2023-06-09",
+          "per_ltm": 107.485,
+          "ev_sales_ltm": 3.9627,
+          "ps_ltm": 3.6873
+        },
+        {
+          "fecha": "2023-06-16",
+          "per_ltm": 118.3583,
+          "ev_sales_ltm": 4.3357,
+          "ps_ltm": 4.0604
+        },
+        {
+          "fecha": "2023-06-23",
+          "per_ltm": 117.0193,
+          "ev_sales_ltm": 4.2897,
+          "ps_ltm": 4.0144
+        },
+        {
+          "fecha": "2023-06-30",
+          "per_ltm": 117.2771,
+          "ev_sales_ltm": 4.2986,
+          "ps_ltm": 4.0233
+        },
+        {
+          "fecha": "2023-07-07",
+          "per_ltm": 117.8343,
+          "ev_sales_ltm": 4.3177,
+          "ps_ltm": 4.0424
+        },
+        {
+          "fecha": "2023-07-14",
+          "per_ltm": 126.0572,
+          "ev_sales_ltm": 4.5998,
+          "ps_ltm": 4.3245
+        },
+        {
+          "fecha": "2023-07-21",
+          "per_ltm": 122.8413,
+          "ev_sales_ltm": 4.4895,
+          "ps_ltm": 4.2141
+        },
+        {
+          "fecha": "2023-07-28",
+          "per_ltm": 129.6086,
+          "ev_sales_ltm": 4.7216,
+          "ps_ltm": 4.4463
+        },
+        {
+          "fecha": "2023-08-04",
+          "per_ltm": 127.4089,
+          "ev_sales_ltm": 3.52,
+          "ps_ltm": 3.3648
+        },
+        {
+          "fecha": "2023-08-11",
+          "per_ltm": 116.5016,
+          "ev_sales_ltm": 3.232,
+          "ps_ltm": 3.0768
+        },
+        {
+          "fecha": "2023-08-18",
+          "per_ltm": 123.4709,
+          "ev_sales_ltm": 3.416,
+          "ps_ltm": 3.2608
+        },
+        {
+          "fecha": "2023-08-25",
+          "per_ltm": 131.2244,
+          "ev_sales_ltm": 3.6208,
+          "ps_ltm": 3.4656
+        },
+        {
+          "fecha": "2023-09-01",
+          "per_ltm": 138.3276,
+          "ev_sales_ltm": 3.8084,
+          "ps_ltm": 3.6532
+        },
+        {
+          "fecha": "2023-09-08",
+          "per_ltm": 129.9633,
+          "ev_sales_ltm": 3.5875,
+          "ps_ltm": 3.4323
+        },
+        {
+          "fecha": "2023-09-15",
+          "per_ltm": 125.195,
+          "ev_sales_ltm": 3.4616,
+          "ps_ltm": 3.3064
+        },
+        {
+          "fecha": "2023-09-22",
+          "per_ltm": 118.6643,
+          "ev_sales_ltm": 3.2891,
+          "ps_ltm": 3.1339
+        },
+        {
+          "fecha": "2023-09-29",
+          "per_ltm": 124.0514,
+          "ev_sales_ltm": 3.4314,
+          "ps_ltm": 3.2762
+        },
+        {
+          "fecha": "2023-10-06",
+          "per_ltm": 130.5051,
+          "ev_sales_ltm": 3.6018,
+          "ps_ltm": 3.4466
+        },
+        {
+          "fecha": "2023-10-13",
+          "per_ltm": 129.6467,
+          "ev_sales_ltm": 3.5791,
+          "ps_ltm": 3.4239
+        },
+        {
+          "fecha": "2023-10-20",
+          "per_ltm": 118.0284,
+          "ev_sales_ltm": 3.2723,
+          "ps_ltm": 3.1171
+        },
+        {
+          "fecha": "2023-10-27",
+          "per_ltm": 115.4988,
+          "ev_sales_ltm": 3.2055,
+          "ps_ltm": 3.0503
+        },
+        {
+          "fecha": "2023-11-03",
+          "per_ltm": 99.8249,
+          "ev_sales_ltm": 2.59,
+          "ps_ltm": 2.4688
+        },
+        {
+          "fecha": "2023-11-10",
+          "per_ltm": 107.2111,
+          "ev_sales_ltm": 2.7726,
+          "ps_ltm": 2.6515
+        },
+        {
+          "fecha": "2023-11-17",
+          "per_ltm": 109.3471,
+          "ev_sales_ltm": 2.8255,
+          "ps_ltm": 2.7043
+        },
+        {
+          "fecha": "2023-11-24",
+          "per_ltm": 105.9712,
+          "ev_sales_ltm": 2.742,
+          "ps_ltm": 2.6208
+        },
+        {
+          "fecha": "2023-12-01",
+          "per_ltm": 103.7287,
+          "ev_sales_ltm": 2.6865,
+          "ps_ltm": 2.5654
+        },
+        {
+          "fecha": "2023-12-08",
+          "per_ltm": 105.3816,
+          "ev_sales_ltm": 2.7274,
+          "ps_ltm": 2.6062
+        },
+        {
+          "fecha": "2023-12-15",
+          "per_ltm": 108.4517,
+          "ev_sales_ltm": 2.8033,
+          "ps_ltm": 2.6822
+        },
+        {
+          "fecha": "2023-12-22",
+          "per_ltm": 108.3186,
+          "ev_sales_ltm": 2.8,
+          "ps_ltm": 2.6789
+        },
+        {
+          "fecha": "2023-12-29",
+          "per_ltm": 109.8536,
+          "ev_sales_ltm": 2.838,
+          "ps_ltm": 2.7168
+        },
+        {
+          "fecha": "2024-01-05",
+          "per_ltm": 108.9109,
+          "ev_sales_ltm": 2.8147,
+          "ps_ltm": 2.6935
+        },
+        {
+          "fecha": "2024-01-12",
+          "per_ltm": 121.362,
+          "ev_sales_ltm": 3.1226,
+          "ps_ltm": 3.0015
+        },
+        {
+          "fecha": "2024-01-19",
+          "per_ltm": 131.9676,
+          "ev_sales_ltm": 3.3849,
+          "ps_ltm": 3.2638
+        },
+        {
+          "fecha": "2024-01-26",
+          "per_ltm": 135.3838,
+          "ev_sales_ltm": 3.4694,
+          "ps_ltm": 3.3482
+        },
+        {
+          "fecha": "2024-02-02",
+          "per_ltm": 54.5807,
+          "ev_sales_ltm": 26.7747,
+          "ps_ltm": 26.7143
+        },
+        {
+          "fecha": "2024-02-09",
+          "per_ltm": 59.5083,
+          "ev_sales_ltm": 29.1865,
+          "ps_ltm": 29.1261
+        },
+        {
+          "fecha": "2024-02-16",
+          "per_ltm": 59.9043,
+          "ev_sales_ltm": 29.3803,
+          "ps_ltm": 29.3199
+        },
+        {
+          "fecha": "2024-02-23",
+          "per_ltm": 65.0224,
+          "ev_sales_ltm": 31.8854,
+          "ps_ltm": 31.825
+        },
+        {
+          "fecha": "2024-03-01",
+          "per_ltm": 67.8785,
+          "ev_sales_ltm": 33.2833,
+          "ps_ltm": 33.2229
+        },
+        {
+          "fecha": "2024-03-08",
+          "per_ltm": 72.2122,
+          "ev_sales_ltm": 35.4044,
+          "ps_ltm": 35.344
+        },
+        {
+          "fecha": "2024-03-15",
+          "per_ltm": 72.4671,
+          "ev_sales_ltm": 35.5291,
+          "ps_ltm": 35.4688
+        },
+        {
+          "fecha": "2024-03-22",
+          "per_ltm": 77.7902,
+          "ev_sales_ltm": 38.1345,
+          "ps_ltm": 38.0741
+        },
+        {
+          "fecha": "2024-03-29",
+          "per_ltm": 74.5454,
+          "ev_sales_ltm": 36.5463,
+          "ps_ltm": 36.4859
+        },
+        {
+          "fecha": "2024-04-05",
+          "per_ltm": 72.6082,
+          "ev_sales_ltm": 35.5982,
+          "ps_ltm": 35.5378
+        },
+        {
+          "fecha": "2024-04-12",
+          "per_ltm": 72.7551,
+          "ev_sales_ltm": 35.6701,
+          "ps_ltm": 35.6097
+        },
+        {
+          "fecha": "2024-04-19",
+          "per_ltm": 62.8664,
+          "ev_sales_ltm": 30.8301,
+          "ps_ltm": 30.7697
+        },
+        {
+          "fecha": "2024-04-26",
+          "per_ltm": 72.383,
+          "ev_sales_ltm": 35.488,
+          "ps_ltm": 35.4276
+        },
+        {
+          "fecha": "2024-05-03",
+          "per_ltm": 90.4445,
+          "ev_sales_ltm": 27.4227,
+          "ps_ltm": 27.3804
+        },
+        {
+          "fecha": "2024-05-10",
+          "per_ltm": 91.5538,
+          "ev_sales_ltm": 27.7585,
+          "ps_ltm": 27.7163
+        },
+        {
+          "fecha": "2024-05-17",
+          "per_ltm": 94.2033,
+          "ev_sales_ltm": 28.5606,
+          "ps_ltm": 28.5183
+        },
+        {
+          "fecha": "2024-05-24",
+          "per_ltm": 108.4541,
+          "ev_sales_ltm": 32.8748,
+          "ps_ltm": 32.8325
+        },
+        {
+          "fecha": "2024-05-31",
+          "per_ltm": 111.6772,
+          "ev_sales_ltm": 33.8505,
+          "ps_ltm": 33.8082
+        },
+        {
+          "fecha": "2024-06-07",
+          "per_ltm": 123.142,
+          "ev_sales_ltm": 37.3213,
+          "ps_ltm": 37.279
+        },
+        {
+          "fecha": "2024-06-14",
+          "per_ltm": 134.35,
+          "ev_sales_ltm": 40.7143,
+          "ps_ltm": 40.672
+        },
+        {
+          "fecha": "2024-06-21",
+          "per_ltm": 128.9405,
+          "ev_sales_ltm": 39.0767,
+          "ps_ltm": 39.0344
+        },
+        {
+          "fecha": "2024-06-28",
+          "per_ltm": 125.8538,
+          "ev_sales_ltm": 38.1423,
+          "ps_ltm": 38.1
+        },
+        {
+          "fecha": "2024-07-05",
+          "per_ltm": 128.1867,
+          "ev_sales_ltm": 38.8485,
+          "ps_ltm": 38.8062
+        },
+        {
+          "fecha": "2024-07-12",
+          "per_ltm": 131.6606,
+          "ev_sales_ltm": 39.9002,
+          "ps_ltm": 39.8579
+        },
+        {
+          "fecha": "2024-07-19",
+          "per_ltm": 120.1387,
+          "ev_sales_ltm": 36.4121,
+          "ps_ltm": 36.3698
+        },
+        {
+          "fecha": "2024-07-26",
+          "per_ltm": 115.1775,
+          "ev_sales_ltm": 34.9102,
+          "ps_ltm": 34.8679
+        },
+        {
+          "fecha": "2024-08-02",
+          "per_ltm": 75.9528,
+          "ev_sales_ltm": 27.4019,
+          "ps_ltm": 27.403
+        },
+        {
+          "fecha": "2024-08-09",
+          "per_ltm": 74.1685,
+          "ev_sales_ltm": 26.7581,
+          "ps_ltm": 26.7593
+        },
+        {
+          "fecha": "2024-08-16",
+          "per_ltm": 88.2092,
+          "ev_sales_ltm": 31.8239,
+          "ps_ltm": 31.825
+        },
+        {
+          "fecha": "2024-08-23",
+          "per_ltm": 91.6008,
+          "ev_sales_ltm": 33.0475,
+          "ps_ltm": 33.0487
+        },
+        {
+          "fecha": "2024-08-30",
+          "per_ltm": 84.5203,
+          "ev_sales_ltm": 30.493,
+          "ps_ltm": 30.4941
+        },
+        {
+          "fecha": "2024-09-06",
+          "per_ltm": 72.8091,
+          "ev_sales_ltm": 26.2677,
+          "ps_ltm": 26.2688
+        },
+        {
+          "fecha": "2024-09-13",
+          "per_ltm": 84.3363,
+          "ev_sales_ltm": 30.4266,
+          "ps_ltm": 30.4277
+        },
+        {
+          "fecha": "2024-09-20",
+          "per_ltm": 82.1412,
+          "ev_sales_ltm": 29.6346,
+          "ps_ltm": 29.6357
+        },
+        {
+          "fecha": "2024-09-27",
+          "per_ltm": 85.965,
+          "ev_sales_ltm": 31.0142,
+          "ps_ltm": 31.0153
+        },
+        {
+          "fecha": "2024-10-04",
+          "per_ltm": 88.4575,
+          "ev_sales_ltm": 31.9135,
+          "ps_ltm": 31.9146
+        },
+        {
+          "fecha": "2024-10-11",
+          "per_ltm": 95.4537,
+          "ev_sales_ltm": 34.4376,
+          "ps_ltm": 34.4388
+        },
+        {
+          "fecha": "2024-10-18",
+          "per_ltm": 97.7197,
+          "ev_sales_ltm": 35.2552,
+          "ps_ltm": 35.2563
+        },
+        {
+          "fecha": "2024-10-25",
+          "per_ltm": 100.2264,
+          "ev_sales_ltm": 36.1596,
+          "ps_ltm": 36.1607
+        },
+        {
+          "fecha": "2024-11-01",
+          "per_ltm": 73.8736,
+          "ev_sales_ltm": 29.4062,
+          "ps_ltm": 29.4119
+        },
+        {
+          "fecha": "2024-11-08",
+          "per_ltm": 80.5463,
+          "ev_sales_ltm": 32.0628,
+          "ps_ltm": 32.0685
+        },
+        {
+          "fecha": "2024-11-15",
+          "per_ltm": 77.4637,
+          "ev_sales_ltm": 30.8355,
+          "ps_ltm": 30.8412
+        },
+        {
+          "fecha": "2024-11-22",
+          "per_ltm": 77.4473,
+          "ev_sales_ltm": 30.829,
+          "ps_ltm": 30.8347
+        },
+        {
+          "fecha": "2024-11-29",
+          "per_ltm": 75.4286,
+          "ev_sales_ltm": 30.0253,
+          "ps_ltm": 30.031
+        },
+        {
+          "fecha": "2024-12-06",
+          "per_ltm": 77.72,
+          "ev_sales_ltm": 30.9376,
+          "ps_ltm": 30.9433
+        },
+        {
+          "fecha": "2024-12-13",
+          "per_ltm": 73.2513,
+          "ev_sales_ltm": 29.1584,
+          "ps_ltm": 29.1641
+        },
+        {
+          "fecha": "2024-12-20",
+          "per_ltm": 73.4968,
+          "ev_sales_ltm": 29.2562,
+          "ps_ltm": 29.2619
+        },
+        {
+          "fecha": "2024-12-27",
+          "per_ltm": 74.7572,
+          "ev_sales_ltm": 29.758,
+          "ps_ltm": 29.7637
+        },
+        {
+          "fecha": "2025-01-03",
+          "per_ltm": 78.8276,
+          "ev_sales_ltm": 31.3786,
+          "ps_ltm": 31.3843
+        },
+        {
+          "fecha": "2025-01-10",
+          "per_ltm": 74.157,
+          "ev_sales_ltm": 29.519,
+          "ps_ltm": 29.5247
+        },
+        {
+          "fecha": "2025-01-17",
+          "per_ltm": 75.1391,
+          "ev_sales_ltm": 29.9101,
+          "ps_ltm": 29.9157
+        },
+        {
+          "fecha": "2025-01-24",
+          "per_ltm": 77.8182,
+          "ev_sales_ltm": 30.9767,
+          "ps_ltm": 30.9824
+        },
+        {
+          "fecha": "2025-01-31",
+          "per_ltm": 40.3673,
+          "ev_sales_ltm": 22.4867,
+          "ps_ltm": 22.4876
+        },
+        {
+          "fecha": "2025-02-07",
+          "per_ltm": 43.652,
+          "ev_sales_ltm": 24.3165,
+          "ps_ltm": 24.3174
+        },
+        {
+          "fecha": "2025-02-14",
+          "per_ltm": 46.6811,
+          "ev_sales_ltm": 26.0039,
+          "ps_ltm": 26.0049
+        },
+        {
+          "fecha": "2025-02-21",
+          "per_ltm": 45.1951,
+          "ev_sales_ltm": 25.1761,
+          "ps_ltm": 25.1771
+        },
+        {
+          "fecha": "2025-02-28",
+          "per_ltm": 41.9979,
+          "ev_sales_ltm": 23.395,
+          "ps_ltm": 23.396
+        },
+        {
+          "fecha": "2025-03-07",
+          "per_ltm": 37.8862,
+          "ev_sales_ltm": 21.1045,
+          "ps_ltm": 21.1055
+        },
+        {
+          "fecha": "2025-03-14",
+          "per_ltm": 40.909,
+          "ev_sales_ltm": 22.7884,
+          "ps_ltm": 22.7894
+        },
+        {
+          "fecha": "2025-03-21",
+          "per_ltm": 39.5742,
+          "ev_sales_ltm": 22.0448,
+          "ps_ltm": 22.0458
+        },
+        {
+          "fecha": "2025-03-28",
+          "per_ltm": 36.8743,
+          "ev_sales_ltm": 20.5408,
+          "ps_ltm": 20.5417
+        },
+        {
+          "fecha": "2025-04-04",
+          "per_ltm": 31.7098,
+          "ev_sales_ltm": 17.6638,
+          "ps_ltm": 17.6647
+        },
+        {
+          "fecha": "2025-04-11",
+          "per_ltm": 37.2979,
+          "ev_sales_ltm": 20.7768,
+          "ps_ltm": 20.7777
+        },
+        {
+          "fecha": "2025-04-18",
+          "per_ltm": 34.1239,
+          "ev_sales_ltm": 19.0086,
+          "ps_ltm": 19.0096
+        },
+        {
+          "fecha": "2025-04-25",
+          "per_ltm": 37.3248,
+          "ev_sales_ltm": 20.7918,
+          "ps_ltm": 20.7927
+        },
+        {
+          "fecha": "2025-05-02",
+          "per_ltm": 36.4139,
+          "ev_sales_ltm": 18.7989,
+          "ps_ltm": 18.8445
+        },
+        {
+          "fecha": "2025-05-09",
+          "per_ltm": 37.0977,
+          "ev_sales_ltm": 19.1528,
+          "ps_ltm": 19.1984
+        },
+        {
+          "fecha": "2025-05-16",
+          "per_ltm": 43.0607,
+          "ev_sales_ltm": 22.2387,
+          "ps_ltm": 22.2843
+        },
+        {
+          "fecha": "2025-05-23",
+          "per_ltm": 41.7536,
+          "ev_sales_ltm": 21.5623,
+          "ps_ltm": 21.6078
+        },
+        {
+          "fecha": "2025-05-30",
+          "per_ltm": 42.9748,
+          "ev_sales_ltm": 22.1942,
+          "ps_ltm": 22.2398
+        },
+        {
+          "fecha": "2025-06-06",
+          "per_ltm": 45.0706,
+          "ev_sales_ltm": 23.2788,
+          "ps_ltm": 23.3244
+        },
+        {
+          "fecha": "2025-06-13",
+          "per_ltm": 45.1532,
+          "ev_sales_ltm": 23.3216,
+          "ps_ltm": 23.3672
+        },
+        {
+          "fecha": "2025-06-20",
+          "per_ltm": 45.7512,
+          "ev_sales_ltm": 23.631,
+          "ps_ltm": 23.6766
+        },
+        {
+          "fecha": "2025-06-27",
+          "per_ltm": 50.172,
+          "ev_sales_ltm": 25.9189,
+          "ps_ltm": 25.9645
+        },
+        {
+          "fecha": "2025-07-04",
+          "per_ltm": 50.6777,
+          "ev_sales_ltm": 26.1806,
+          "ps_ltm": 26.2262
+        },
+        {
+          "fecha": "2025-07-11",
+          "per_ltm": 52.4524,
+          "ev_sales_ltm": 27.099,
+          "ps_ltm": 27.1446
+        },
+        {
+          "fecha": "2025-07-18",
+          "per_ltm": 54.8346,
+          "ev_sales_ltm": 28.3318,
+          "ps_ltm": 28.3774
+        },
+        {
+          "fecha": "2025-07-25",
+          "per_ltm": 55.1813,
+          "ev_sales_ltm": 28.5112,
+          "ps_ltm": 28.5568
+        },
+        {
+          "fecha": "2025-08-01",
+          "per_ltm": 49.0082,
+          "ev_sales_ltm": 25.6831,
+          "ps_ltm": 25.7023
+        },
+        {
+          "fecha": "2025-08-08",
+          "per_ltm": 51.5415,
+          "ev_sales_ltm": 27.0117,
+          "ps_ltm": 27.031
+        },
+        {
+          "fecha": "2025-08-15",
+          "per_ltm": 50.9068,
+          "ev_sales_ltm": 26.6789,
+          "ps_ltm": 26.6981
+        },
+        {
+          "fecha": "2025-08-22",
+          "per_ltm": 50.2128,
+          "ev_sales_ltm": 26.3149,
+          "ps_ltm": 26.3341
+        },
+        {
+          "fecha": "2025-08-29",
+          "per_ltm": 49.1379,
+          "ev_sales_ltm": 25.7512,
+          "ps_ltm": 25.7704
+        },
+        {
+          "fecha": "2025-09-05",
+          "per_ltm": 47.118,
+          "ev_sales_ltm": 24.6919,
+          "ps_ltm": 24.7111
+        },
+        {
+          "fecha": "2025-09-12",
+          "per_ltm": 50.1677,
+          "ev_sales_ltm": 26.2912,
+          "ps_ltm": 26.3104
+        },
+        {
+          "fecha": "2025-09-19",
+          "per_ltm": 49.8432,
+          "ev_sales_ltm": 26.1211,
+          "ps_ltm": 26.1403
+        },
+        {
+          "fecha": "2025-09-26",
+          "per_ltm": 50.272,
+          "ev_sales_ltm": 26.346,
+          "ps_ltm": 26.3652
+        },
+        {
+          "fecha": "2025-10-03",
+          "per_ltm": 52.9325,
+          "ev_sales_ltm": 27.7412,
+          "ps_ltm": 27.7604
+        },
+        {
+          "fecha": "2025-10-10",
+          "per_ltm": 51.6742,
+          "ev_sales_ltm": 27.0813,
+          "ps_ltm": 27.1005
+        },
+        {
+          "fecha": "2025-10-17",
+          "per_ltm": 51.6911,
+          "ev_sales_ltm": 27.0902,
+          "ps_ltm": 27.1094
+        },
+        {
+          "fecha": "2025-10-24",
+          "per_ltm": 52.5488,
+          "ev_sales_ltm": 27.54,
+          "ps_ltm": 27.5592
+        },
+        {
+          "fecha": "2025-10-31",
+          "per_ltm": 49.8109,
+          "ev_sales_ltm": 26.4399,
+          "ps_ltm": 26.4507
+        },
+        {
+          "fecha": "2025-11-07",
+          "per_ltm": 46.2833,
+          "ev_sales_ltm": 24.5667,
+          "ps_ltm": 24.5775
+        },
+        {
+          "fecha": "2025-11-14",
+          "per_ltm": 46.7802,
+          "ev_sales_ltm": 24.8306,
+          "ps_ltm": 24.8414
+        },
+        {
+          "fecha": "2025-11-21",
+          "per_ltm": 44.003,
+          "ev_sales_ltm": 23.3558,
+          "ps_ltm": 23.3666
+        },
+        {
+          "fecha": "2025-11-28",
+          "per_ltm": 43.5405,
+          "ev_sales_ltm": 23.1102,
+          "ps_ltm": 23.121
+        },
+        {
+          "fecha": "2025-12-05",
+          "per_ltm": 44.8738,
+          "ev_sales_ltm": 23.8182,
+          "ps_ltm": 23.829
+        },
+        {
+          "fecha": "2025-12-12",
+          "per_ltm": 43.0559,
+          "ev_sales_ltm": 22.8528,
+          "ps_ltm": 22.8636
+        },
+        {
+          "fecha": "2025-12-19",
+          "per_ltm": 44.5245,
+          "ev_sales_ltm": 23.6327,
+          "ps_ltm": 23.6435
+        },
+        {
+          "fecha": "2025-12-26",
+          "per_ltm": 46.8714,
+          "ev_sales_ltm": 24.879,
+          "ps_ltm": 24.8898
+        },
+        {
+          "fecha": "2026-01-02",
+          "per_ltm": 46.4581,
+          "ev_sales_ltm": 24.6595,
+          "ps_ltm": 24.6703
+        },
+        {
+          "fecha": "2026-01-09",
+          "per_ltm": 45.4766,
+          "ev_sales_ltm": 24.1383,
+          "ps_ltm": 24.1491
+        },
+        {
+          "fecha": "2026-01-16",
+          "per_ltm": 45.8136,
+          "ev_sales_ltm": 24.3172,
+          "ps_ltm": 24.328
+        },
+        {
+          "fecha": "2026-01-23",
+          "per_ltm": 46.1678,
+          "ev_sales_ltm": 24.5054,
+          "ps_ltm": 24.5162
+        },
+        {
+          "fecha": "2026-01-30",
+          "per_ltm": 38.7215,
+          "ev_sales_ltm": 21.4804,
+          "ps_ltm": 21.4856
+        },
+        {
+          "fecha": "2026-02-06",
+          "per_ltm": 37.5627,
+          "ev_sales_ltm": 20.8374,
+          "ps_ltm": 20.8426
+        },
+        {
+          "fecha": "2026-02-13",
+          "per_ltm": 37.036,
+          "ev_sales_ltm": 20.5451,
+          "ps_ltm": 20.5504
+        },
+        {
+          "fecha": "2026-02-20",
+          "per_ltm": 38.4561,
+          "ev_sales_ltm": 21.3331,
+          "ps_ltm": 21.3384
+        },
+        {
+          "fecha": "2026-02-27",
+          "per_ltm": 35.8974,
+          "ev_sales_ltm": 19.9133,
+          "ps_ltm": 19.9186
+        },
+        {
+          "fecha": "2026-03-06",
+          "per_ltm": 36.025,
+          "ev_sales_ltm": 19.9841,
+          "ps_ltm": 19.9894
+        },
+        {
+          "fecha": "2026-03-13",
+          "per_ltm": 36.5193,
+          "ev_sales_ltm": 20.2584,
+          "ps_ltm": 20.2637
+        },
+        {
+          "fecha": "2026-03-20",
+          "per_ltm": 34.9896,
+          "ev_sales_ltm": 19.4096,
+          "ps_ltm": 19.4149
+        },
+        {
+          "fecha": "2026-03-27",
+          "per_ltm": 33.9402,
+          "ev_sales_ltm": 18.8273,
+          "ps_ltm": 18.8326
+        },
+        {
+          "fecha": "2026-04-03",
+          "per_ltm": 35.9399,
+          "ev_sales_ltm": 19.9369,
+          "ps_ltm": 19.9421
+        },
+        {
+          "fecha": "2026-04-10",
+          "per_ltm": 38.2171,
+          "ev_sales_ltm": 21.2005,
+          "ps_ltm": 21.2057
+        },
+        {
+          "fecha": "2026-04-17",
+          "per_ltm": 40.8611,
+          "ev_sales_ltm": 22.6676,
+          "ps_ltm": 22.6728
+        },
+        {
+          "fecha": "2026-04-24",
+          "per_ltm": 42.1963,
+          "ev_sales_ltm": 23.4084,
+          "ps_ltm": 23.4137
+        },
+        {
+          "fecha": "2026-05-01",
+          "per_ltm": 30.2163,
+          "ev_sales_ltm": 18.9898,
+          "ps_ltm": 19.0047
+        },
+        {
+          "fecha": "2026-05-08",
+          "per_ltm": 32.7667,
+          "ev_sales_ltm": 20.5939,
+          "ps_ltm": 20.6087
+        },
+        {
+          "fecha": "2026-05-15",
+          "per_ltm": 34.3076,
+          "ev_sales_ltm": 21.563,
+          "ps_ltm": 21.5779
+        },
+        {
+          "fecha": "2026-05-22",
+          "per_ltm": 32.7865,
+          "ev_sales_ltm": 20.6063,
+          "ps_ltm": 20.6212
+        },
+        {
+          "fecha": "2026-05-29",
+          "per_ltm": 32.1485,
+          "ev_sales_ltm": 20.2051,
+          "ps_ltm": 20.2199
+        },
+        {
+          "fecha": "2026-06-05",
+          "per_ltm": 31.2652,
+          "ev_sales_ltm": 19.6495,
+          "ps_ltm": 19.6644
+        },
+        {
+          "fecha": "2026-06-12",
+          "per_ltm": 31.279,
+          "ev_sales_ltm": 19.6582,
+          "ps_ltm": 19.673
+        },
+        {
+          "fecha": "2026-06-19",
+          "per_ltm": 32.1174,
+          "ev_sales_ltm": 20.1855,
+          "ps_ltm": 20.2004
+        },
+        {
+          "fecha": "2026-06-26",
+          "per_ltm": 29.3491,
+          "ev_sales_ltm": 18.4444,
+          "ps_ltm": 18.4592
+        }
+      ]
+    }
+  ]
 }

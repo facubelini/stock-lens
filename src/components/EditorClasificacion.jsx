@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useClasificacion } from '../lib/clasificacion'
+import { getPat, quitarTickerRemoto } from '../lib/githubApi'
 
 const inputCls =
   'mt-1 w-full rounded border border-terminal-border bg-terminal-bg px-2 py-1.5 text-sm text-terminal-text ' +
@@ -15,11 +16,35 @@ export default function EditorClasificacion({ ticker, industria, sector }) {
   const o = overrides[ticker] ?? {}
   const [ind, setInd] = useState('')
   const [sec, setSec] = useState('')
+  const [confirmarBaja, setConfirmarBaja] = useState(false)
+  const [estadoBaja, setEstadoBaja] = useState(null) // { tipo: 'cargando'|'ok'|'error', texto? }
 
   const abrir = () => {
     setInd(o.industria ?? industria ?? '')
     setSec(o.sector ?? sector ?? '')
+    setConfirmarBaja(false)
+    setEstadoBaja(null)
     setAbierto(true)
+  }
+
+  const eliminarDelRepo = async () => {
+    if (!confirmarBaja) {
+      setConfirmarBaja(true)
+      return
+    }
+    setEstadoBaja({ tipo: 'cargando' })
+    try {
+      const r = await quitarTickerRemoto(ticker)
+      setEstadoBaja({
+        tipo: 'ok',
+        texto: r.eliminado
+          ? 'sacado de tickers.xlsx, la actualización de datos ya arrancó.'
+          : 'ya no estaba en tickers.xlsx.',
+      })
+    } catch (err) {
+      setConfirmarBaja(false)
+      setEstadoBaja({ tipo: 'error', texto: err.message })
+    }
   }
 
   const guardar = () => {
@@ -108,6 +133,45 @@ export default function EditorClasificacion({ ticker, industria, sector }) {
               Se guarda en tu navegador y reemplaza la clasificación de yfinance para este ticker
               en Listado, Medias y Fundamentales.
             </p>
+
+            <div className="mt-3 border-t border-terminal-border pt-3">
+              {getPat() ? (
+                estadoBaja?.tipo === 'ok' ? (
+                  <p className="text-xs text-terminal-accent">✓ {ticker}: {estadoBaja.texto}</p>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      onClick={eliminarDelRepo}
+                      disabled={estadoBaja?.tipo === 'cargando'}
+                      className={`rounded border px-2.5 py-1.5 text-xs disabled:opacity-50 ${
+                        confirmarBaja
+                          ? 'border-terminal-down bg-terminal-down/20 text-terminal-down'
+                          : 'border-terminal-border text-terminal-dim hover:border-terminal-down hover:text-terminal-down'
+                      }`}
+                    >
+                      {estadoBaja?.tipo === 'cargando'
+                        ? 'Eliminando…'
+                        : confirmarBaja
+                          ? `¿Seguro? Confirmar baja de ${ticker}`
+                          : '🗑️ Eliminar de tickers.xlsx'}
+                    </button>
+                    {estadoBaja?.tipo === 'error' && (
+                      <p className="mt-1.5 text-[11px] text-terminal-down">{estadoBaja.texto}</p>
+                    )}
+                    <p className="mt-1.5 text-[11px] text-terminal-dim">
+                      Lo saca del universo del pipeline para siempre (no solo de tu lista) — útil si
+                      se deslistó o ya no te interesa seguirlo.
+                    </p>
+                  </>
+                )
+              ) : (
+                <p className="text-[11px] text-terminal-dim">
+                  Para eliminar tickers del pipeline sin pasos manuales, activá el alta/baja
+                  automática con el botón 🔑 de la barra de arriba.
+                </p>
+              )}
+            </div>
           </div>
         </div>
       )}

@@ -1,6 +1,7 @@
-// Automatiza el alta manual de tickers: escribe el ticker en data/tickers.xlsx
-// del repo via la API de GitHub y dispara el workflow "Actualizar datos". Asi
-// el usuario no tiene que descargar/commitear el Excel a mano.
+// Automatiza el alta/baja manual de tickers: escribe/saca el ticker en
+// data/tickers.xlsx del repo via la API de GitHub y dispara el workflow
+// "Actualizar datos". Asi el usuario no tiene que descargar/commitear el
+// Excel a mano.
 //
 // Requiere un GitHub Personal Access Token (PAT) del propio usuario, guardado
 // solo en su navegador (localStorage) — mismo patron que el editor del
@@ -65,46 +66,52 @@ function _norm(s) {
 
 const NOMBRES_TICKER = ['ticker', 'codigo', 'symbol', 'simbolo', 'code', 'tickers']
 
-// Descarga tickers.xlsx, le agrega el ticker (si no está ya) preservando la
-// estructura de columnas existente (una sola columna o Ticker/Industria/...),
-// y lo sube de vuelta. Devuelve { agregado: bool }.
-async function leerYActualizarExcel(ticker) {
+// Descarga y parsea tickers.xlsx del repo, detectando la columna de tickers
+// (una sola columna, o un encabezado tipo Ticker/Codigo/Symbol).
+async function leerExcelRepo() {
   const XLSX = await import('xlsx')
   const actual = await ghFetch(`/repos/${OWNER}/${REPO}/contents/${ARCHIVO}?ref=${BRANCH}`)
   const wb = XLSX.read(actual.content, { type: 'base64' })
   const nombreHoja = wb.SheetNames[0]
-  const ws = wb.Sheets[nombreHoja]
-  const filas = XLSX.utils.sheet_to_json(ws, { header: 1, defval: '' })
-
+  const filas = XLSX.utils.sheet_to_json(wb.Sheets[nombreHoja], { header: 1, defval: '' })
   if (!filas.length) throw new Error('El tickers.xlsx del repo está vacío.')
-
   const encabezado = filas[0]
   let colTicker = encabezado.findIndex((h) => NOMBRES_TICKER.includes(_norm(h)))
   if (colTicker === -1) colTicker = 0 // una sola columna: es la de tickers
+  return { XLSX, wb, nombreHoja, filas, colTicker, sha: actual.sha }
+}
 
-  const yaExiste = filas
-    .slice(1)
-    .some((f) => String(f[colTicker] ?? '').trim().toUpperCase() === ticker)
-  if (yaExiste) return { agregado: false }
-
-  const nuevaFila = new Array(encabezado.length).fill('')
-  nuevaFila[colTicker] = ticker
-  filas.push(nuevaFila)
-
-  const wsNueva = XLSX.utils.aoa_to_sheet(filas)
-  wb.Sheets[nombreHoja] = wsNueva
+async function escribirExcelRepo({ XLSX, wb, nombreHoja, filas, sha }, mensaje) {
+  wb.Sheets[nombreHoja] = XLSX.utils.aoa_to_sheet(filas)
   const base64 = XLSX.write(wb, { type: 'base64', bookType: 'xlsx' })
-
   await ghFetch(`/repos/${OWNER}/${REPO}/contents/${ARCHIVO}`, {
     method: 'PUT',
-    body: JSON.stringify({
-      message: `watchlist: agregar ${ticker} (alta manual desde la app)`,
-      content: base64,
-      sha: actual.sha,
-      branch: BRANCH,
-    }),
+    body: JSON.stringify({ message: mensaje, content: base64, sha, branch: BRANCH }),
   })
+}
+
+async function agregarEnExcel(ticker) {
+  const ctx = await leerExcelRepo()
+  const yaExiste = ctx.filas
+    .slice(1)
+    .some((f) => String(f[ctx.colTicker] ?? '').trim().toUpperCase() === ticker)
+  if (yaExiste) return { agregado: false }
+  const nuevaFila = new Array(ctx.filas[0].length).fill('')
+  nuevaFila[ctx.colTicker] = ticker
+  ctx.filas.push(nuevaFila)
+  await escribirExcelRepo(ctx, `watchlist: agregar ${ticker} (alta manual desde la app)`)
   return { agregado: true }
+}
+
+async function quitarDeExcel(ticker) {
+  const ctx = await leerExcelRepo()
+  const encabezado = ctx.filas[0]
+  const cuerpo = ctx.filas.slice(1)
+  const restantes = cuerpo.filter((f) => String(f[ctx.colTicker] ?? '').trim().toUpperCase() !== ticker)
+  if (restantes.length === cuerpo.length) return { eliminado: false } // no estaba en el excel
+  ctx.filas = [encabezado, ...restantes]
+  await escribirExcelRepo(ctx, `watchlist: eliminar ${ticker} (baja manual desde la app)`)
+  return { eliminado: true }
 }
 
 async function dispararWorkflow() {
@@ -114,21 +121,32 @@ async function dispararWorkflow() {
   })
 }
 
+// Reintenta una vez si el commit choca por sha desactualizado (409 de GitHub,
+// ej. si el bot del pipeline commiteo datos justo en el medio).
+async function conReintento(fn) {
+  try {
+    return await fn()
+  } catch (e) {
+    if (String(e.message).toLowerCase().includes('sha')) return await fn()
+    throw e
+  }
+}
+
 // Agrega un ticker a data/tickers.xlsx en GitHub y dispara "Actualizar datos".
-// Reintenta una vez si el commit choca por sha desactualizado (409 de GitHub).
 export async function agregarTickerRemoto(ticker) {
   const tk = String(ticker).trim().toUpperCase()
   if (!tk) throw new Error('Ticker vacío.')
-  let resultado
-  try {
-    resultado = await leerYActualizarExcel(tk)
-  } catch (e) {
-    if (String(e.message).toLowerCase().includes('sha')) {
-      resultado = await leerYActualizarExcel(tk)
-    } else {
-      throw e
-    }
-  }
+  const resultado = await conReintento(() => agregarEnExcel(tk))
   if (resultado.agregado) await dispararWorkflow()
+  return resultado
+}
+
+// Saca un ticker de data/tickers.xlsx en GitHub y dispara "Actualizar datos"
+// (así el pipeline deja de traerlo y desaparece del resto de las pestañas).
+export async function quitarTickerRemoto(ticker) {
+  const tk = String(ticker).trim().toUpperCase()
+  if (!tk) throw new Error('Ticker vacío.')
+  const resultado = await conReintento(() => quitarDeExcel(tk))
+  if (resultado.eliminado) await dispararWorkflow()
   return resultado
 }

@@ -33,13 +33,15 @@ function ModalConfigPat({ onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         <h3 className="mb-2 text-sm font-semibold text-terminal-text">
-          Alta automática de tickers
+          Alta/baja automática de tickers
         </h3>
         <p className="mb-3 text-xs leading-relaxed text-terminal-dim">
           Con un GitHub token configurado, al apretar <b>Agregar</b> la app suma el ticker a{' '}
-          <code>data/tickers.xlsx</code> del repo y dispara "Actualizar datos" sola — no hace
-          falta descargar el Excel ni tocar nada a mano. El token se guarda solo en este
-          navegador y se usa únicamente para llamar a la API de GitHub.
+          <code>data/tickers.xlsx</code> del repo y dispara "Actualizar datos" sola. También podés
+          sacar un ticker para siempre (ej. se deslistó, ya no te interesa) desde el botón ✏️ de
+          cada fila en Listado/Fundamentales — no hace falta descargar el Excel ni tocar nada a
+          mano. El token se guarda solo en este navegador y se usa únicamente para llamar a la API
+          de GitHub.
         </p>
         <p className="mb-3 text-xs text-terminal-dim">
           Necesitás un{' '}

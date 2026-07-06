@@ -1,0 +1,47 @@
+name: Backtest Screener
+
+# Backtest de la logica del Screener (temporalidad diaria) contra 5 anios de
+# historial: mide si COMPRA/CERCA/VENTA/EXTENDIDO realmente predicen algo vs.
+# el retorno "base" (cualquier dia). Las estadisticas no cambian de un dia
+# para el otro, asi que corre mensual (no hace falta mas seguido) + disparo
+# manual. El deploy se encadena solo, igual que el resto de los pipelines.
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    - cron: '0 12 1 * *'   # dia 1 de cada mes al mediodia UTC
+
+permissions:
+  contents: write
+
+jobs:
+  backtest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install -r scripts/requirements.txt
+
+      - name: Correr backtest
+        run: python scripts/backtest_screener.py
+
+      - name: Commitear datos si cambiaron
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/backtest_screener.json
+          if git diff --staged --quiet; then
+            echo "Sin cambios en los datos."
+          else
+            git commit -m "backtest: actualizacion automatica ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+            git push
+          fi

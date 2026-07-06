@@ -9,6 +9,7 @@ import { TIMEFRAMES, ESTILO_VERDICT, tieneSenal, prioridadScreener } from '../li
 import Controles from '../components/Controles'
 import Pendientes from '../components/Pendientes'
 import TickerLink from '../components/TickerLink'
+import BacktestScreener from '../components/BacktestScreener'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 
 const CAMPOS = ['ticker', 'nombre']
@@ -270,6 +271,8 @@ export default function Screener() {
           </table>
         </div>
       )}
+
+      <BacktestScreener />
     </div>
   )
 }

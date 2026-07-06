@@ -1,0 +1,115 @@
+{
+  "actualizado": "2026-07-06T17:10:17.400111-03:00",
+  "temporalidad": "diario",
+  "horizontes_dias": [
+    5,
+    10,
+    20
+  ],
+  "n_tickers_evaluados": 372,
+  "n_tickers_fallidos": 51,
+  "stats": {
+    "BASELINE": {
+      "5": {
+        "n": 396067,
+        "retorno_prom": 1.0,
+        "hit_rate": 52.0
+      },
+      "10": {
+        "n": 394207,
+        "retorno_prom": 2.02,
+        "hit_rate": 53.1
+      },
+      "20": {
+        "n": 390487,
+        "retorno_prom": 4.02,
+        "hit_rate": 54.2
+      }
+    },
+    "CERCA": {
+      "5": {
+        "n": 14999,
+        "retorno_prom": 0.26,
+        "hit_rate": 52.3
+      },
+      "10": {
+        "n": 14941,
+        "retorno_prom": 0.61,
+        "hit_rate": 53.4
+      },
+      "20": {
+        "n": 14822,
+        "retorno_prom": 1.1,
+        "hit_rate": 53.3
+      }
+    },
+    "COMPRA": {
+      "5": {
+        "n": 23350,
+        "retorno_prom": 0.28,
+        "hit_rate": 53.4
+      },
+      "10": {
+        "n": 23268,
+        "retorno_prom": 0.56,
+        "hit_rate": 54.6
+      },
+      "20": {
+        "n": 23072,
+        "retorno_prom": 1.19,
+        "hit_rate": 55.9
+      }
+    },
+    "EXTENDIDO": {
+      "5": {
+        "n": 23668,
+        "retorno_prom": 1.33,
+        "hit_rate": 52.2
+      },
+      "10": {
+        "n": 23591,
+        "retorno_prom": 2.69,
+        "hit_rate": 54.9
+      },
+      "20": {
+        "n": 23419,
+        "retorno_prom": 4.8,
+        "hit_rate": 55.9
+      }
+    },
+    "NEUTRAL": {
+      "5": {
+        "n": 285979,
+        "retorno_prom": 1.11,
+        "hit_rate": 51.6
+      },
+      "10": {
+        "n": 284767,
+        "retorno_prom": 2.29,
+        "hit_rate": 52.6
+      },
+      "20": {
+        "n": 282057,
+        "retorno_prom": 4.61,
+        "hit_rate": 53.6
+      }
+    },
+    "VENTA": {
+      "5": {
+        "n": 48071,
+        "retorno_prom": 0.74,
+        "hit_rate": 45.6
+      },
+      "10": {
+        "n": 47640,
+        "retorno_prom": 1.2,
+        "hit_rate": 44.8
+      },
+      "20": {
+        "n": 47117,
+        "retorno_prom": 2.42,
+        "hit_rate": 43.6
+      }
+    }
+  }
+}

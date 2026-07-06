@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { getKlines } from '../lib/crypto/binanceApi'
+import { getKlines, getFundingRate, getOpenInterest, getLongShortRatio } from '../lib/crypto/binanceApi'
 import { analyzeKlines } from '../lib/crypto/indicadores'
 import { fmtPrice } from '../lib/crypto/formato'
 import { INTERVALOS, MULTIPLOS_ATR } from '../lib/crypto/constantes'
@@ -9,6 +9,19 @@ import BarraRSI from '../components/crypto/BarraRSI'
 import CalculadoraApalancamiento from '../components/crypto/CalculadoraApalancamiento'
 import Sparkline from '../components/Sparkline'
 import { Vacio } from '../components/Estados'
+
+function fmtHora(ts) {
+  if (!ts) return '—'
+  return new Date(ts).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })
+}
+
+function fmtCompacto(n) {
+  if (n == null) return '—'
+  if (n >= 1e9) return (n / 1e9).toFixed(2) + 'B'
+  if (n >= 1e6) return (n / 1e6).toFixed(2) + 'M'
+  if (n >= 1e3) return (n / 1e3).toFixed(2) + 'K'
+  return n.toFixed(2)
+}
 
 const selectCls =
   'rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-text ' +
@@ -23,6 +36,7 @@ export default function CryptoDetalle() {
   const [klines, setKlines] = useState(null)
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(null)
+  const [futuros, setFuturos] = useState(null) // { funding, oi, ls } — independiente de klines/intervalo
 
   useEffect(() => {
     let activo = true
@@ -44,6 +58,21 @@ export default function CryptoDetalle() {
       activo = false
     }
   }, [symbol, intervalo])
+
+  // Datos "de futuros" (funding/OI/long-short): no dependen de la
+  // temporalidad elegida, se piden una sola vez por símbolo.
+  useEffect(() => {
+    let activo = true
+    setFuturos(null)
+    Promise.all([getFundingRate(symbol), getOpenInterest(symbol), getLongShortRatio(symbol)]).then(
+      ([funding, oi, ls]) => {
+        if (activo) setFuturos({ funding, oi, ls })
+      },
+    )
+    return () => {
+      activo = false
+    }
+  }, [symbol])
 
   const fila = useMemo(() => (klines ? analyzeKlines(symbol, klines, multiploATR) : null), [symbol, klines, multiploATR])
   const closes = useMemo(() => (klines ? klines.map((k) => +k[4]) : []), [klines])
@@ -152,6 +181,87 @@ export default function CryptoDetalle() {
                   <span className="font-semibold text-terminal-text">{fila.atr_pct}%</span>
                 </div>
               </div>
+            </div>
+
+            <div className="rounded-lg border border-terminal-border bg-terminal-panel p-4">
+              <div className="mb-2 flex items-center justify-between">
+                <span className="text-[10px] font-bold uppercase tracking-wide text-terminal-dim">
+                  Datos de futuros
+                </span>
+                <span
+                  className="text-[10px] text-terminal-dim"
+                  title="No están disponibles para el escaneo masivo (demasiadas llamadas a Binance), solo acá."
+                >
+                  ⓘ solo en esta vista
+                </span>
+              </div>
+              {!futuros ? (
+                <p className="text-xs text-terminal-dim">Cargando…</p>
+              ) : (
+                <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                  <div>
+                    <span className="block text-[10px] uppercase text-terminal-dim">Funding rate</span>
+                    {futuros.funding ? (
+                      <>
+                        <span
+                          className={`font-semibold ${
+                            futuros.funding.tasa >= 0 ? 'text-terminal-down' : 'text-terminal-up'
+                          }`}
+                          title={
+                            futuros.funding.tasa >= 0
+                              ? 'Positivo: los long le pagan a los short (mercado sesgado a long)'
+                              : 'Negativo: los short le pagan a los long (mercado sesgado a short)'
+                          }
+                        >
+                          {futuros.funding.tasa >= 0 ? '+' : ''}
+                          {futuros.funding.tasa.toFixed(4)}%
+                        </span>
+                        <span className="ml-1.5 text-[10px] text-terminal-dim">
+                          próx. {fmtHora(futuros.funding.proximoFunding)}
+                        </span>
+                      </>
+                    ) : (
+                      <span className="text-terminal-dim">N/D</span>
+                    )}
+                  </div>
+                  <div>
+                    <span className="block text-[10px] uppercase text-terminal-dim">Open Interest</span>
+                    {futuros.oi != null ? (
+                      <span className="font-semibold text-terminal-text">
+                        {fmtCompacto(futuros.oi)} {symbol.replace('USDT', '')} · $
+                        {fmtCompacto(futuros.oi * fila.price)}
+                      </span>
+                    ) : (
+                      <span className="text-terminal-dim">N/D</span>
+                    )}
+                  </div>
+                  <div>
+                    <span className="block text-[10px] uppercase text-terminal-dim">Long / Short</span>
+                    {futuros.ls ? (
+                      <>
+                        <div className="flex h-3 overflow-hidden rounded-full bg-terminal-border">
+                          <div
+                            className="h-full bg-terminal-up"
+                            style={{ width: `${futuros.ls.largos}%` }}
+                            title={`${futuros.ls.largos.toFixed(1)}% en largo`}
+                          />
+                          <div
+                            className="h-full bg-terminal-down"
+                            style={{ width: `${futuros.ls.cortos}%` }}
+                            title={`${futuros.ls.cortos.toFixed(1)}% en corto`}
+                          />
+                        </div>
+                        <span className="text-[10px] text-terminal-dim">
+                          {futuros.ls.largos.toFixed(0)}% largo · {futuros.ls.cortos.toFixed(0)}% corto (ratio{' '}
+                          {futuros.ls.ratio.toFixed(2)})
+                        </span>
+                      </>
+                    ) : (
+                      <span className="text-terminal-dim">N/D</span>
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

@@ -21,4 +21,48 @@ export async function getKlines(symbol, interval, limit = 200) {
   }
 }
 
+// "Fundamentals" de futuros — solo se piden en la vista de un símbolo (no en
+// el escaneo masivo de la tabla: son 3 endpoints mas por simbolo, con ~530
+// simbolos seria demasiada carga extra sobre Binance).
+export async function getFundingRate(symbol) {
+  try {
+    const r = await fetch(`${BINANCE}/fapi/v1/premiumIndex?symbol=${symbol}`)
+    if (!r.ok) return null
+    const d = await r.json()
+    return { tasa: parseFloat(d.lastFundingRate) * 100, proximoFunding: d.nextFundingTime }
+  } catch {
+    return null
+  }
+}
+
+export async function getOpenInterest(symbol) {
+  try {
+    const r = await fetch(`${BINANCE}/fapi/v1/openInterest?symbol=${symbol}`)
+    if (!r.ok) return null
+    const d = await r.json()
+    return parseFloat(d.openInterest)
+  } catch {
+    return null
+  }
+}
+
+export async function getLongShortRatio(symbol) {
+  try {
+    const r = await fetch(
+      `${BINANCE}/futures/data/globalLongShortAccountRatio?symbol=${symbol}&period=5m&limit=1`,
+    )
+    if (!r.ok) return null
+    const d = await r.json()
+    const ultimo = d?.[0]
+    if (!ultimo) return null
+    return {
+      ratio: parseFloat(ultimo.longShortRatio),
+      largos: parseFloat(ultimo.longAccount) * 100,
+      cortos: parseFloat(ultimo.shortAccount) * 100,
+    }
+  } catch {
+    return null
+  }
+}
+
 export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))

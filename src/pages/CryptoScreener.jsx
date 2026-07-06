@@ -282,15 +282,25 @@ export default function CryptoScreener() {
                       style={{ backgroundColor: c.bg, color: c.text }}
                     >
                       <td className="whitespace-nowrap px-2 py-1.5 font-semibold">
+                        <Link
+                          to={`/cripto/${encodeURIComponent(r.symbol.replace('/USDT', 'USDT'))}`}
+                          onClick={(e) => e.stopPropagation()}
+                          className="hover:underline"
+                          style={{ color: 'inherit' }}
+                          title="Ver en su propia página"
+                        >
+                          {r.symbol}
+                        </Link>
                         <a
                           href={r.link}
                           target="_blank"
                           rel="noreferrer"
                           onClick={(e) => e.stopPropagation()}
-                          className="hover:underline"
+                          className="ml-1 opacity-60 hover:opacity-100"
                           style={{ color: 'inherit' }}
+                          title="Abrir en Binance Futures"
                         >
-                          {r.symbol}
+                          ↗
                         </a>
                       </td>
                       <td className="whitespace-nowrap px-2 py-1.5 tabular">{fmtPrice(r.price)}</td>

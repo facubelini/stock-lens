@@ -20,6 +20,14 @@ const RATIOS_DENOMINADOR = [
   { campo: 'eps_ttm', etiqueta: 'EPS (TTM)', color: '#38bdf8', formato: (v) => `$${v.toFixed(2)}` },
   { campo: 'revenue_ttm', etiqueta: 'Revenue (TTM)', color: '#facc15', formato: (v) => fmtMarketCap(v) },
 ]
+const RATIOS_MARGEN = [
+  {
+    campo: 'margen_neto_ttm',
+    etiqueta: 'Margen neto (TTM)',
+    color: '#2dd4bf',
+    formato: (v) => `${v >= 0 ? '+' : ''}${v.toFixed(1)}%`,
+  },
+]
 const RATIOS_YOY = [
   {
     campo: 'eps_ttm_yoy',
@@ -34,7 +42,7 @@ const RATIOS_YOY = [
     formato: (v) => `${v >= 0 ? '+' : ''}${v.toFixed(1)}%`,
   },
 ]
-const TODOS_RATIOS = [...RATIOS_MULTIPLO, ...RATIOS_DENOMINADOR, ...RATIOS_YOY]
+const TODOS_RATIOS = [...RATIOS_MULTIPLO, ...RATIOS_DENOMINADOR, ...RATIOS_MARGEN, ...RATIOS_YOY]
 
 const inputCls =
   'w-40 rounded border border-terminal-border bg-terminal-panel px-2 py-1.5 text-sm text-terminal-text ' +
@@ -133,12 +141,13 @@ export default function HistoricoFundamental() {
         <div>
           <h1 className="text-lg font-bold text-terminal-text">Histórico Fundamental</h1>
           <p className="text-xs text-terminal-dim">
-            Evolución de <b>P/E</b>, <b>EV/Sales</b>, <b>P/S</b> (LTM), <b>EPS</b> y{' '}
-            <b>Revenue</b> (TTM, con crecimiento interanual) para hasta {LIMITE} tickers elegidos a
-            mano, con datos oficiales de <b>SEC EDGAR</b> combinados con el precio histórico. Solo
-            funciona para empresas que reportan a la SEC (listadas en EEUU o con ADR) — acciones
-            que cotizan únicamente en Merval no van a tener datos acá. No incluye versiones "NTM"
-            (forward) ni PEG: requieren estimaciones de analistas históricas, que no existen gratis.
+            Evolución de <b>P/E</b>, <b>EV/Sales</b>, <b>P/S</b> (LTM), <b>EPS</b>, <b>Revenue</b>{' '}
+            (TTM, con crecimiento interanual) y <b>margen neto</b> (TTM) para hasta {LIMITE} tickers
+            elegidos a mano, con datos oficiales de <b>SEC EDGAR</b> combinados con el precio
+            histórico. Solo funciona para empresas que reportan a la SEC (listadas en EEUU o con
+            ADR) — acciones que cotizan únicamente en Merval no van a tener datos acá. No incluye
+            versiones "NTM" (forward) ni PEG: el crecimiento histórico del EPS puede ser muy
+            ruidoso o negativo, y dividir el PER por eso suele dar un número sin sentido.
           </p>
           {data?.actualizado && (
             <p className="mt-1 text-[11px] text-terminal-dim">
@@ -286,7 +295,7 @@ export default function HistoricoFundamental() {
                   </div>
                 ) : (
                   <div className="flex flex-col gap-3">
-                    {[...RATIOS_MULTIPLO, ...RATIOS_DENOMINADOR, ...RATIOS_YOY].map((r) => (
+                    {TODOS_RATIOS.map((r) => (
                       <GraficoRatio
                         key={r.campo}
                         ticker={t.ticker}

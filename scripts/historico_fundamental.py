@@ -87,6 +87,7 @@ TAGS_CASH = [
 ]
 TAGS_DEUDA_LARGO = ["LongTermDebtNoncurrent", "LongTermDebt"]
 TAGS_DEUDA_CORTO = ["LongTermDebtCurrent", "DebtCurrent"]
+TAGS_NET_INCOME = ["NetIncomeLoss", "ProfitLoss"]
 
 DIAS_TRIMESTRE = (75, 100)
 DIAS_ANUAL = (350, 380)
@@ -307,6 +308,7 @@ def calcular_historico_ticker(ticker, cik):
     cash_concepto, _ = _concepto_combinado(cik, TAGS_CASH)
     dlp_concepto, _ = _concepto_combinado(cik, TAGS_DEUDA_LARGO)
     dcp_concepto, _ = _concepto_combinado(cik, TAGS_DEUDA_CORTO)
+    ni_concepto, _ = _concepto_combinado(cik, TAGS_NET_INCOME)
     nombre = nombre_a or nombre_b or nombre_c or ticker
 
     hist = yf.Ticker(ticker).history(period=PERIODO_PRECIO, interval="1d", auto_adjust=True)
@@ -318,6 +320,7 @@ def calcular_historico_ticker(ticker, cik):
 
     eps_ttm = _serie_ttm(eps_concepto, "USD/shares")
     rev_ttm = _serie_ttm(rev_concepto, "USD")
+    ni_ttm = _serie_ttm(ni_concepto, "USD")
     shares = _serie_instantanea(shares_concepto, "shares")
     cash = _serie_instantanea(cash_concepto, "USD")
     deuda_lp = _serie_instantanea(dlp_concepto, "USD")
@@ -333,6 +336,7 @@ def calcular_historico_ticker(ticker, cik):
 
     eps_serie = _forward_fill_a_fechas(eps_ttm, fechas)
     rev_serie = _forward_fill_a_fechas(rev_ttm, fechas)
+    ni_serie = _forward_fill_a_fechas(ni_ttm, fechas)
     shares_serie = _forward_fill_a_fechas(shares, fechas)
     cash_serie = _forward_fill_a_fechas(cash, fechas)
     dlp_serie = _forward_fill_a_fechas(deuda_lp, fechas)
@@ -345,6 +349,15 @@ def calcular_historico_ticker(ticker, cik):
     per_ltm = precio / eps_serie.where(eps_serie > 0)
     ev_sales_ltm = ev / rev_serie.where(rev_serie > 0)
     ps_ltm = market_cap / rev_serie.where(rev_serie > 0)
+    margen_neto_ttm = (ni_serie / rev_serie.where(rev_serie > 0)) * 100
+    # Guardarail: bancos/fintechs (ej. SOFI) taggean su "Revenues" en XBRL como
+    # solo la parte de ingresos por comisiones (ASC 606), sin el ingreso por
+    # intereses que es la mayor parte de su negocio — el denominador queda
+    # incompleto y el margen calculado se dispara a valores que ninguna
+    # empresa real sostiene (ni las mas rentables del mundo superan ~55-60%
+    # de margen neto). Se oculta en vez de mostrar un numero que se sabe esta
+    # mal por una limitacion de los tags, no por el negocio en si.
+    margen_neto_ttm = margen_neto_ttm.where((margen_neto_ttm > -500) & (margen_neto_ttm < 60))
 
     serie = []
     for f in fechas:
@@ -361,6 +374,12 @@ def calcular_historico_ticker(ticker, cik):
                 # calcular crecimiento interanual en el frontend.
                 "eps_ttm": _num(eps_serie.get(f), 2),
                 "revenue_ttm": _num(rev_serie.get(f), 0),
+                # margen neto TTM en % (net income / revenue). No se calcula
+                # PEG: el crecimiento historico de EPS puede ser muy ruidoso o
+                # negativo (empresas que recien se vuelven rentables), y
+                # dividir el PER por eso da un numero sin sentido la mayoria
+                # de las veces.
+                "margen_neto_ttm": _num(margen_neto_ttm.get(f), 2),
             }
         )
 

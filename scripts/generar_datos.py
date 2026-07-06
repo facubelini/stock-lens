@@ -432,6 +432,44 @@ def obtener_holdings_etf(tk, quote_type):
         return None
 
 
+MAPA_BALANCE = {
+    "activos_totales": "Total Assets",
+    "pasivos_totales": "Total Liabilities Net Minority Interest",
+    "patrimonio": "Stockholders Equity",
+    "caja": "Cash And Cash Equivalents",
+    "deuda_total": "Total Debt",
+    "activo_corriente": "Current Assets",
+    "pasivo_corriente": "Current Liabilities",
+    "capital_trabajo": "Working Capital",
+}
+
+
+def obtener_balance(tk):
+    """Snapshot del ultimo balance anual (Activos/Pasivos/Patrimonio/Caja/
+    Deuda/Capital de trabajo) — solo para el perfil individual del ticker,
+    no para las tablas masivas. Un request mas por ticker ademas de .info y
+    .insider_transactions, tolerante a fallos: yfinance no siempre lo tiene
+    (ETFs, ADRs chicos, empresas que recien salieron a bolsa)."""
+    try:
+        bs = tk.balance_sheet
+        if bs is None or bs.empty:
+            return None
+        col = bs.columns[0]  # columna mas reciente (ultimo cierre de ejercicio)
+        fecha = col.strftime("%Y-%m-%d") if hasattr(col, "strftime") else str(col)
+        datos = {"fecha": fecha}
+        for clave_salida, clave_yf in MAPA_BALANCE.items():
+            if clave_yf in bs.index:
+                v = bs.loc[clave_yf, col]
+                datos[clave_salida] = None if pd.isna(v) else num(float(v), 0)
+            else:
+                datos[clave_salida] = None
+        if all(datos.get(k) is None for k in MAPA_BALANCE):
+            return None
+        return datos
+    except Exception:  # noqa: BLE001
+        return None
+
+
 TAGS_INSIDER_COMPRA = ("purchase", "buy")
 TAGS_INSIDER_VENTA = ("sale", "sell")
 DIAS_INSIDER = 180
@@ -812,6 +850,7 @@ def main():
         upside_pct = ((target_mean_price / precio - 1) * 100) if target_mean_price and precio else None
         insider = resumen_insider(tk)
         holdings = obtener_holdings_etf(tk, info.get("quoteType"))
+        balance = obtener_balance(tk)
         fundamentales.append(
             {
                 **base,
@@ -822,6 +861,7 @@ def main():
                 "upside_pct": num(upside_pct, 2),
                 "insider": insider,
                 "holdings": holdings,
+                "balance": balance,
             }
         )
 

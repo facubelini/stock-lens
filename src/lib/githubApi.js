@@ -15,7 +15,7 @@ const ARCHIVO = 'data/tickers.xlsx'
 const WORKFLOW = 'datos.yml'
 const ARCHIVO_HISTORICO = 'data/historico_tickers.json'
 const WORKFLOW_HISTORICO = 'historico.yml'
-const LIMITE_HISTORICO = 10
+const LIMITE_HISTORICO = 20
 const KEY_PAT = 'stocklens_gh_pat'
 
 export function getPat() {

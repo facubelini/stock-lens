@@ -1,11 +1,17 @@
+import { filtrarPorVentana, rangoYPercentil } from '../lib/historicoDerivados'
+
 // Grafico de linea (SVG, sin librerias) para un ratio fundamental a lo largo
 // del tiempo. `serie` es el array semanal de historico_fundamental.json;
 // `campo` es la clave del ratio dentro de cada punto (ej. "per_ltm").
+// `ventanaMeses` recorta lo que se DIBUJA (null/0 = todo); el rango/percentil
+// del header siempre se calcula sobre la serie completa.
 const ANCHO = 900
 const ALTO = 130
 
-export default function GraficoRatio({ ticker, nombre, etiqueta, color, serie, campo, formatoValor }) {
-  const puntos = (serie ?? []).filter((p) => p[campo] != null)
+export default function GraficoRatio({ ticker, nombre, etiqueta, color, serie, campo, formatoValor, ventanaMeses }) {
+  const puntosCompletos = (serie ?? []).filter((p) => p[campo] != null)
+  const puntos = filtrarPorVentana(puntosCompletos, ventanaMeses)
+  const stats = rangoYPercentil(puntosCompletos, campo)
 
   const header = (
     <div
@@ -15,9 +21,18 @@ export default function GraficoRatio({ ticker, nombre, etiqueta, color, serie, c
       <span className="font-semibold text-terminal-text">{ticker}</span>
       <span className="truncate text-sm text-terminal-dim">{nombre}</span>
       <span className="text-sm text-terminal-dim">{etiqueta}</span>
-      {puntos.length > 0 && (
+      {stats && (
+        <span
+          className="text-[11px] text-terminal-dim"
+          title="Percentil del valor actual dentro de todo el historico disponible (no de la ventana elegida)"
+        >
+          rango {stats.anios.toFixed(1)}A: {formatoValor(stats.min)}–{formatoValor(stats.max)} · percentil{' '}
+          {stats.percentil}%
+        </span>
+      )}
+      {puntosCompletos.length > 0 && (
         <span className="ml-auto font-semibold tabular" style={{ color }}>
-          {formatoValor(puntos[puntos.length - 1][campo])}
+          {formatoValor(puntosCompletos[puntosCompletos.length - 1][campo])}
         </span>
       )}
     </div>
@@ -28,7 +43,7 @@ export default function GraficoRatio({ ticker, nombre, etiqueta, color, serie, c
       <div className="overflow-hidden rounded-lg border border-terminal-border bg-terminal-panel">
         {header}
         <div className="px-3 py-6 text-center text-xs text-terminal-dim">
-          Sin datos suficientes para graficar este ratio.
+          Sin datos suficientes para graficar este ratio en la ventana elegida.
         </div>
       </div>
     )

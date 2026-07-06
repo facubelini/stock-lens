@@ -1,5 +1,5 @@
 """Historico de ratios fundamentales (P/E, EV/Sales, P/S) "LTM" (trailing
-twelve months) para hasta 10 tickers elegidos a mano, usando datos oficiales
+twelve months) para hasta 20 tickers elegidos a mano, usando datos oficiales
 de SEC EDGAR (XBRL) combinados con el historico de precio de yfinance.
 
 Por que EDGAR y no yfinance para esto: yfinance solo expone unos pocos
@@ -37,7 +37,7 @@ CACHE_CIK = RAIZ / "data" / "cik_cache.json"
 DIR_SALIDA = RAIZ / "public" / "data"
 TZ = ZoneInfo("America/Argentina/Buenos_Aires")
 
-LIMITE_TICKERS = 10
+LIMITE_TICKERS = 20
 PERIODO_PRECIO = "5y"
 WORKERS = 5  # tickers en paralelo (I/O-bound: la espera de red es el costo, no CPU)
 
@@ -356,6 +356,11 @@ def calcular_historico_ticker(ticker, cik):
                 "per_ltm": _num(per_ltm.get(f)),
                 "ev_sales_ltm": _num(ev_sales_ltm.get(f)),
                 "ps_ltm": _num(ps_ltm.get(f)),
+                # "denominadores" absolutos (no el multiplo): sirven para ver si
+                # un ratio se movio por precio o por fundamentals, y para
+                # calcular crecimiento interanual en el frontend.
+                "eps_ttm": _num(eps_serie.get(f), 2),
+                "revenue_ttm": _num(rev_serie.get(f), 0),
             }
         )
 

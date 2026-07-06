@@ -184,7 +184,7 @@
       },
       "HAL": {
         "diario": "VENTA",
-        "semanal": "EXTENDIDO",
+        "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
       "BIDU": {
@@ -268,7 +268,7 @@
         "mensual": "EXTENDIDO"
       },
       "HDB": {
-        "diario": "NEUTRAL",
+        "diario": "EXTENDIDO",
         "semanal": "NEUTRAL",
         "mensual": "VENTA"
       },
@@ -343,7 +343,7 @@
         "mensual": "EXTENDIDO"
       },
       "MOS": {
-        "diario": "NEUTRAL",
+        "diario": "VENTA",
         "semanal": "NEUTRAL",
         "mensual": "VENTA"
       },
@@ -458,7 +458,7 @@
         "mensual": "EXTENDIDO"
       },
       "XLE": {
-        "diario": "NEUTRAL",
+        "diario": "VENTA",
         "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
@@ -578,7 +578,7 @@
         "mensual": "EXTENDIDO"
       },
       "EBAY": {
-        "diario": "COMPRA",
+        "diario": "CERCA",
         "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
@@ -858,7 +858,7 @@
       },
       "RTX": {
         "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
+        "semanal": "EXTENDIDO",
         "mensual": "EXTENDIDO"
       },
       "GE": {
@@ -987,7 +987,7 @@
         "mensual": "EXTENDIDO"
       },
       "TWLO": {
-        "diario": "CERCA",
+        "diario": "NEUTRAL",
         "semanal": "EXTENDIDO",
         "mensual": "EXTENDIDO"
       },
@@ -1042,7 +1042,7 @@
         "mensual": "EXTENDIDO"
       },
       "BKNG": {
-        "diario": "COMPRA",
+        "diario": "CERCA",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
@@ -1157,7 +1157,7 @@
         "mensual": "EXTENDIDO"
       },
       "BAK": {
-        "diario": "VENTA",
+        "diario": "NEUTRAL",
         "semanal": "VENTA",
         "mensual": "NEUTRAL"
       },
@@ -1267,7 +1267,7 @@
         "mensual": "NEUTRAL"
       },
       "EA": {
-        "diario": "NEUTRAL",
+        "diario": "COMPRA",
         "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
@@ -1462,7 +1462,7 @@
         "diario": "EXTENDIDO"
       },
       "SIEGY": {
-        "diario": "CERCA",
+        "diario": "COMPRA",
         "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
@@ -1522,8 +1522,8 @@
         "mensual": "EXTENDIDO"
       },
       "WBO.BA": {
-        "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
+        "diario": "EXTENDIDO",
+        "semanal": "EXTENDIDO",
         "mensual": "EXTENDIDO"
       },
       "XROX.BA": {
@@ -1547,17 +1547,17 @@
         "semanal": "EXTENDIDO"
       },
       "BKR": {
-        "diario": "NEUTRAL",
+        "diario": "VENTA",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
       "DHR": {
-        "diario": "CERCA",
+        "diario": "COMPRA",
         "semanal": "NEUTRAL",
         "mensual": "VENTA"
       },
       "GT": {
-        "diario": "EXTENDIDO",
+        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "VENTA"
       },
@@ -1699,7 +1699,7 @@
         "mensual": "EXTENDIDO"
       },
       "ACWI": {
-        "diario": "COMPRA",
+        "diario": "NEUTRAL",
         "semanal": "CERCA",
         "mensual": "EXTENDIDO"
       },
@@ -1728,7 +1728,7 @@
         "mensual": "EXTENDIDO"
       },
       "ALAB": {
-        "diario": "EXTENDIDO",
+        "diario": "NEUTRAL",
         "semanal": "EXTENDIDO"
       },
       "ASTS": {
@@ -1838,9 +1838,9 @@
         "mensual": "EXTENDIDO"
       },
       "ONDS": {
-        "diario": "VENTA",
+        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
-        "mensual": "NEUTRAL"
+        "mensual": "EXTENDIDO"
       },
       "COP": {
         "diario": "NEUTRAL",

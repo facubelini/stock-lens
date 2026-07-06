@@ -1,4 +1,2361 @@
 {
-  "actualizado": "2026-07-06T15:01:10.862685-03:00",
-  "tickers": []
+  "actualizado": "2026-07-06T15:24:45.552225-03:00",
+  "tickers": [
+    {
+      "ticker": "DAL",
+      "nombre": "Delta Air Lines, Inc.",
+      "disponible": true,
+      "serie": [
+        {
+          "fecha": "2021-07-09",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -10.47,
+          "revenue_ttm": 18311000000.0,
+          "margen_neto_ttm": -36.37
+        },
+        {
+          "fecha": "2021-07-16",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -10.47,
+          "revenue_ttm": 18311000000.0,
+          "margen_neto_ttm": -36.37
+        },
+        {
+          "fecha": "2021-07-23",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -10.47,
+          "revenue_ttm": 18311000000.0,
+          "margen_neto_ttm": -36.37
+        },
+        {
+          "fecha": "2021-07-30",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -10.47,
+          "revenue_ttm": 18311000000.0,
+          "margen_neto_ttm": -36.37
+        },
+        {
+          "fecha": "2021-08-06",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -10.47,
+          "revenue_ttm": 18311000000.0,
+          "margen_neto_ttm": -36.37
+        },
+        {
+          "fecha": "2021-08-13",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -10.47,
+          "revenue_ttm": 18311000000.0,
+          "margen_neto_ttm": -36.37
+        },
+        {
+          "fecha": "2021-08-20",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -10.47,
+          "revenue_ttm": 18311000000.0,
+          "margen_neto_ttm": -36.37
+        },
+        {
+          "fecha": "2021-08-27",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -10.47,
+          "revenue_ttm": 18311000000.0,
+          "margen_neto_ttm": -36.37
+        },
+        {
+          "fecha": "2021-09-03",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -10.47,
+          "revenue_ttm": 18311000000.0,
+          "margen_neto_ttm": -36.37
+        },
+        {
+          "fecha": "2021-09-10",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -10.47,
+          "revenue_ttm": 18311000000.0,
+          "margen_neto_ttm": -36.37
+        },
+        {
+          "fecha": "2021-09-17",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -10.47,
+          "revenue_ttm": 18311000000.0,
+          "margen_neto_ttm": -36.37
+        },
+        {
+          "fecha": "2021-09-24",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -10.47,
+          "revenue_ttm": 18311000000.0,
+          "margen_neto_ttm": -36.37
+        },
+        {
+          "fecha": "2021-10-01",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -0.1,
+          "revenue_ttm": 24403000000.0,
+          "margen_neto_ttm": -0.28
+        },
+        {
+          "fecha": "2021-10-08",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -0.1,
+          "revenue_ttm": 24403000000.0,
+          "margen_neto_ttm": -0.28
+        },
+        {
+          "fecha": "2021-10-15",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -0.1,
+          "revenue_ttm": 24403000000.0,
+          "margen_neto_ttm": -0.28
+        },
+        {
+          "fecha": "2021-10-22",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -0.1,
+          "revenue_ttm": 24403000000.0,
+          "margen_neto_ttm": -0.28
+        },
+        {
+          "fecha": "2021-10-29",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -0.1,
+          "revenue_ttm": 24403000000.0,
+          "margen_neto_ttm": -0.28
+        },
+        {
+          "fecha": "2021-11-05",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -0.1,
+          "revenue_ttm": 24403000000.0,
+          "margen_neto_ttm": -0.28
+        },
+        {
+          "fecha": "2021-11-12",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -0.1,
+          "revenue_ttm": 24403000000.0,
+          "margen_neto_ttm": -0.28
+        },
+        {
+          "fecha": "2021-11-19",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -0.1,
+          "revenue_ttm": 24403000000.0,
+          "margen_neto_ttm": -0.28
+        },
+        {
+          "fecha": "2021-11-26",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -0.1,
+          "revenue_ttm": 24403000000.0,
+          "margen_neto_ttm": -0.28
+        },
+        {
+          "fecha": "2021-12-03",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -0.1,
+          "revenue_ttm": 24403000000.0,
+          "margen_neto_ttm": -0.28
+        },
+        {
+          "fecha": "2021-12-10",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -0.1,
+          "revenue_ttm": 24403000000.0,
+          "margen_neto_ttm": -0.28
+        },
+        {
+          "fecha": "2021-12-17",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -0.1,
+          "revenue_ttm": 24403000000.0,
+          "margen_neto_ttm": -0.28
+        },
+        {
+          "fecha": "2021-12-24",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -0.1,
+          "revenue_ttm": 24403000000.0,
+          "margen_neto_ttm": -0.28
+        },
+        {
+          "fecha": "2021-12-31",
+          "per_ltm": 85.9437,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.44,
+          "revenue_ttm": 29899000000.0,
+          "margen_neto_ttm": 0.94
+        },
+        {
+          "fecha": "2022-01-07",
+          "per_ltm": 91.2877,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.44,
+          "revenue_ttm": 29899000000.0,
+          "margen_neto_ttm": 0.94
+        },
+        {
+          "fecha": "2022-01-14",
+          "per_ltm": 88.6487,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.44,
+          "revenue_ttm": 29899000000.0,
+          "margen_neto_ttm": 0.94
+        },
+        {
+          "fecha": "2022-01-21",
+          "per_ltm": 83.2607,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.44,
+          "revenue_ttm": 29899000000.0,
+          "margen_neto_ttm": 0.94
+        },
+        {
+          "fecha": "2022-01-28",
+          "per_ltm": 84.1843,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.44,
+          "revenue_ttm": 29899000000.0,
+          "margen_neto_ttm": 0.94
+        },
+        {
+          "fecha": "2022-02-04",
+          "per_ltm": 87.637,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.44,
+          "revenue_ttm": 29899000000.0,
+          "margen_neto_ttm": 0.94
+        },
+        {
+          "fecha": "2022-02-11",
+          "per_ltm": 93.091,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.44,
+          "revenue_ttm": 29899000000.0,
+          "margen_neto_ttm": 0.94
+        },
+        {
+          "fecha": "2022-02-18",
+          "per_ltm": 94.2126,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.44,
+          "revenue_ttm": 29899000000.0,
+          "margen_neto_ttm": 0.94
+        },
+        {
+          "fecha": "2022-02-25",
+          "per_ltm": 91.3537,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.44,
+          "revenue_ttm": 29899000000.0,
+          "margen_neto_ttm": 0.94
+        },
+        {
+          "fecha": "2022-03-04",
+          "per_ltm": 75.9155,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.44,
+          "revenue_ttm": 29899000000.0,
+          "margen_neto_ttm": 0.94
+        },
+        {
+          "fecha": "2022-03-11",
+          "per_ltm": 70.5275,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.44,
+          "revenue_ttm": 29899000000.0,
+          "margen_neto_ttm": 0.94
+        },
+        {
+          "fecha": "2022-03-18",
+          "per_ltm": 82.8648,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.44,
+          "revenue_ttm": 29899000000.0,
+          "margen_neto_ttm": 0.94
+        },
+        {
+          "fecha": "2022-03-25",
+          "per_ltm": 83.3707,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.44,
+          "revenue_ttm": 29899000000.0,
+          "margen_neto_ttm": 0.94
+        },
+        {
+          "fecha": "2022-04-01",
+          "per_ltm": 46.9602,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.81,
+          "revenue_ttm": 35097000000.0,
+          "margen_neto_ttm": 1.47
+        },
+        {
+          "fecha": "2022-04-08",
+          "per_ltm": 43.8901,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.81,
+          "revenue_ttm": 35097000000.0,
+          "margen_neto_ttm": 1.47
+        },
+        {
+          "fecha": "2022-04-15",
+          "per_ltm": 50.6038,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.81,
+          "revenue_ttm": 35097000000.0,
+          "margen_neto_ttm": 1.47
+        },
+        {
+          "fecha": "2022-04-22",
+          "per_ltm": 52.1926,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.81,
+          "revenue_ttm": 35097000000.0,
+          "margen_neto_ttm": 1.47
+        },
+        {
+          "fecha": "2022-04-29",
+          "per_ltm": 51.4042,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.81,
+          "revenue_ttm": 35097000000.0,
+          "margen_neto_ttm": 1.47
+        },
+        {
+          "fecha": "2022-05-06",
+          "per_ltm": 48.9791,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.81,
+          "revenue_ttm": 35097000000.0,
+          "margen_neto_ttm": 1.47
+        },
+        {
+          "fecha": "2022-05-13",
+          "per_ltm": 45.7895,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.81,
+          "revenue_ttm": 35097000000.0,
+          "margen_neto_ttm": 1.47
+        },
+        {
+          "fecha": "2022-05-20",
+          "per_ltm": 46.1598,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.81,
+          "revenue_ttm": 35097000000.0,
+          "margen_neto_ttm": 1.47
+        },
+        {
+          "fecha": "2022-05-27",
+          "per_ltm": 50.4485,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.81,
+          "revenue_ttm": 35097000000.0,
+          "margen_neto_ttm": 1.47
+        },
+        {
+          "fecha": "2022-06-03",
+          "per_ltm": 46.0404,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.81,
+          "revenue_ttm": 35097000000.0,
+          "margen_neto_ttm": 1.47
+        },
+        {
+          "fecha": "2022-06-10",
+          "per_ltm": 41.9548,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.81,
+          "revenue_ttm": 35097000000.0,
+          "margen_neto_ttm": 1.47
+        },
+        {
+          "fecha": "2022-06-17",
+          "per_ltm": 36.149,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.81,
+          "revenue_ttm": 35097000000.0,
+          "margen_neto_ttm": 1.47
+        },
+        {
+          "fecha": "2022-06-24",
+          "per_ltm": 37.2719,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.81,
+          "revenue_ttm": 35097000000.0,
+          "margen_neto_ttm": 1.47
+        },
+        {
+          "fecha": "2022-07-01",
+          "per_ltm": 30.3879,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.94,
+          "revenue_ttm": 41795000000.0,
+          "margen_neto_ttm": 1.44
+        },
+        {
+          "fecha": "2022-07-08",
+          "per_ltm": 30.5938,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.94,
+          "revenue_ttm": 41795000000.0,
+          "margen_neto_ttm": 1.44
+        },
+        {
+          "fecha": "2022-07-15",
+          "per_ltm": 30.9746,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.94,
+          "revenue_ttm": 41795000000.0,
+          "margen_neto_ttm": 1.44
+        },
+        {
+          "fecha": "2022-07-22",
+          "per_ltm": 32.2717,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.94,
+          "revenue_ttm": 41795000000.0,
+          "margen_neto_ttm": 1.44
+        },
+        {
+          "fecha": "2022-07-29",
+          "per_ltm": 32.7349,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.94,
+          "revenue_ttm": 41795000000.0,
+          "margen_neto_ttm": 1.44
+        },
+        {
+          "fecha": "2022-08-05",
+          "per_ltm": 33.9084,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.94,
+          "revenue_ttm": 41795000000.0,
+          "margen_neto_ttm": 1.44
+        },
+        {
+          "fecha": "2022-08-12",
+          "per_ltm": 35.5143,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.94,
+          "revenue_ttm": 41795000000.0,
+          "margen_neto_ttm": 1.44
+        },
+        {
+          "fecha": "2022-08-19",
+          "per_ltm": 34.2275,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.94,
+          "revenue_ttm": 41795000000.0,
+          "margen_neto_ttm": 1.44
+        },
+        {
+          "fecha": "2022-08-26",
+          "per_ltm": 33.6408,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.94,
+          "revenue_ttm": 41795000000.0,
+          "margen_neto_ttm": 1.44
+        },
+        {
+          "fecha": "2022-09-02",
+          "per_ltm": 31.8496,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.94,
+          "revenue_ttm": 41795000000.0,
+          "margen_neto_ttm": 1.44
+        },
+        {
+          "fecha": "2022-09-09",
+          "per_ltm": 33.6202,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.94,
+          "revenue_ttm": 41795000000.0,
+          "margen_neto_ttm": 1.44
+        },
+        {
+          "fecha": "2022-09-16",
+          "per_ltm": 33.054,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.94,
+          "revenue_ttm": 41795000000.0,
+          "margen_neto_ttm": 1.44
+        },
+        {
+          "fecha": "2022-09-23",
+          "per_ltm": 29.8732,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.94,
+          "revenue_ttm": 41795000000.0,
+          "margen_neto_ttm": 1.44
+        },
+        {
+          "fecha": "2022-09-30",
+          "per_ltm": 208.8605,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.13,
+          "revenue_ttm": 46616000000.0,
+          "margen_neto_ttm": 0.18
+        },
+        {
+          "fecha": "2022-10-07",
+          "per_ltm": 218.7602,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.13,
+          "revenue_ttm": 46616000000.0,
+          "margen_neto_ttm": 0.18
+        },
+        {
+          "fecha": "2022-10-14",
+          "per_ltm": 231.3395,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.13,
+          "revenue_ttm": 46616000000.0,
+          "margen_neto_ttm": 0.18
+        },
+        {
+          "fecha": "2022-10-21",
+          "per_ltm": 242.5045,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.13,
+          "revenue_ttm": 46616000000.0,
+          "margen_neto_ttm": 0.18
+        },
+        {
+          "fecha": "2022-10-28",
+          "per_ltm": 258.0611,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.13,
+          "revenue_ttm": 46616000000.0,
+          "margen_neto_ttm": 0.18
+        },
+        {
+          "fecha": "2022-11-04",
+          "per_ltm": 243.8443,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.13,
+          "revenue_ttm": 46616000000.0,
+          "margen_neto_ttm": 0.18
+        },
+        {
+          "fecha": "2022-11-11",
+          "per_ltm": 263.7925,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.13,
+          "revenue_ttm": 46616000000.0,
+          "margen_neto_ttm": 0.18
+        },
+        {
+          "fecha": "2022-11-18",
+          "per_ltm": 256.5725,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.13,
+          "revenue_ttm": 46616000000.0,
+          "margen_neto_ttm": 0.18
+        },
+        {
+          "fecha": "2022-11-25",
+          "per_ltm": 261.2618,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.13,
+          "revenue_ttm": 46616000000.0,
+          "margen_neto_ttm": 0.18
+        },
+        {
+          "fecha": "2022-12-02",
+          "per_ltm": 265.8022,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.13,
+          "revenue_ttm": 46616000000.0,
+          "margen_neto_ttm": 0.18
+        },
+        {
+          "fecha": "2022-12-09",
+          "per_ltm": 251.5854,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.13,
+          "revenue_ttm": 46616000000.0,
+          "margen_neto_ttm": 0.18
+        },
+        {
+          "fecha": "2022-12-16",
+          "per_ltm": 246.4495,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.13,
+          "revenue_ttm": 46616000000.0,
+          "margen_neto_ttm": 0.18
+        },
+        {
+          "fecha": "2022-12-23",
+          "per_ltm": 246.8217,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.13,
+          "revenue_ttm": 46616000000.0,
+          "margen_neto_ttm": 0.18
+        },
+        {
+          "fecha": "2022-12-30",
+          "per_ltm": 244.5886,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 0.13,
+          "revenue_ttm": 46616000000.0,
+          "margen_neto_ttm": 0.18
+        },
+        {
+          "fecha": "2023-01-06",
+          "per_ltm": 16.8425,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.07,
+          "revenue_ttm": 50582000000.0,
+          "margen_neto_ttm": 2.61
+        },
+        {
+          "fecha": "2023-01-13",
+          "per_ltm": 17.8569,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.07,
+          "revenue_ttm": 50582000000.0,
+          "margen_neto_ttm": 2.61
+        },
+        {
+          "fecha": "2023-01-20",
+          "per_ltm": 18.2448,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.07,
+          "revenue_ttm": 50582000000.0,
+          "margen_neto_ttm": 2.61
+        },
+        {
+          "fecha": "2023-01-27",
+          "per_ltm": 18.1046,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.07,
+          "revenue_ttm": 50582000000.0,
+          "margen_neto_ttm": 2.61
+        },
+        {
+          "fecha": "2023-02-03",
+          "per_ltm": 18.502,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.07,
+          "revenue_ttm": 50582000000.0,
+          "margen_neto_ttm": 2.61
+        },
+        {
+          "fecha": "2023-02-10",
+          "per_ltm": 17.8428,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.07,
+          "revenue_ttm": 50582000000.0,
+          "margen_neto_ttm": 2.61
+        },
+        {
+          "fecha": "2023-02-17",
+          "per_ltm": 17.9316,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.07,
+          "revenue_ttm": 50582000000.0,
+          "margen_neto_ttm": 2.61
+        },
+        {
+          "fecha": "2023-02-24",
+          "per_ltm": 17.4642,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.07,
+          "revenue_ttm": 50582000000.0,
+          "margen_neto_ttm": 2.61
+        },
+        {
+          "fecha": "2023-03-03",
+          "per_ltm": 18.1607,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.07,
+          "revenue_ttm": 50582000000.0,
+          "margen_neto_ttm": 2.61
+        },
+        {
+          "fecha": "2023-03-10",
+          "per_ltm": 17.4128,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.07,
+          "revenue_ttm": 50582000000.0,
+          "margen_neto_ttm": 2.61
+        },
+        {
+          "fecha": "2023-03-17",
+          "per_ltm": 15.4074,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.07,
+          "revenue_ttm": 50582000000.0,
+          "margen_neto_ttm": 2.61
+        },
+        {
+          "fecha": "2023-03-24",
+          "per_ltm": 14.767,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.07,
+          "revenue_ttm": 50582000000.0,
+          "margen_neto_ttm": 2.61
+        },
+        {
+          "fecha": "2023-03-31",
+          "per_ltm": 11.3389,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.98,
+          "revenue_ttm": 53993000000.0,
+          "margen_neto_ttm": 3.51
+        },
+        {
+          "fecha": "2023-04-07",
+          "per_ltm": 10.9395,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.98,
+          "revenue_ttm": 53993000000.0,
+          "margen_neto_ttm": 3.51
+        },
+        {
+          "fecha": "2023-04-14",
+          "per_ltm": 10.9655,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.98,
+          "revenue_ttm": 53993000000.0,
+          "margen_neto_ttm": 3.51
+        },
+        {
+          "fecha": "2023-04-21",
+          "per_ltm": 11.1473,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.98,
+          "revenue_ttm": 53993000000.0,
+          "margen_neto_ttm": 3.51
+        },
+        {
+          "fecha": "2023-04-28",
+          "per_ltm": 11.1408,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.98,
+          "revenue_ttm": 53993000000.0,
+          "margen_neto_ttm": 3.51
+        },
+        {
+          "fecha": "2023-05-05",
+          "per_ltm": 11.0207,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.98,
+          "revenue_ttm": 53993000000.0,
+          "margen_neto_ttm": 3.51
+        },
+        {
+          "fecha": "2023-05-12",
+          "per_ltm": 10.7901,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.98,
+          "revenue_ttm": 53993000000.0,
+          "margen_neto_ttm": 3.51
+        },
+        {
+          "fecha": "2023-05-19",
+          "per_ltm": 11.5564,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.98,
+          "revenue_ttm": 53993000000.0,
+          "margen_neto_ttm": 3.51
+        },
+        {
+          "fecha": "2023-05-26",
+          "per_ltm": 11.6538,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.98,
+          "revenue_ttm": 53993000000.0,
+          "margen_neto_ttm": 3.51
+        },
+        {
+          "fecha": "2023-06-02",
+          "per_ltm": 12.0175,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.98,
+          "revenue_ttm": 53993000000.0,
+          "margen_neto_ttm": 3.51
+        },
+        {
+          "fecha": "2023-06-09",
+          "per_ltm": 12.7546,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.98,
+          "revenue_ttm": 53993000000.0,
+          "margen_neto_ttm": 3.51
+        },
+        {
+          "fecha": "2023-06-16",
+          "per_ltm": 13.8943,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.98,
+          "revenue_ttm": 53993000000.0,
+          "margen_neto_ttm": 3.51
+        },
+        {
+          "fecha": "2023-06-23",
+          "per_ltm": 13.9171,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 2.98,
+          "revenue_ttm": 53993000000.0,
+          "margen_neto_ttm": 3.51
+        },
+        {
+          "fecha": "2023-06-30",
+          "per_ltm": 9.8084,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 4.69,
+          "revenue_ttm": 55747000000.0,
+          "margen_neto_ttm": 5.36
+        },
+        {
+          "fecha": "2023-07-07",
+          "per_ltm": 9.8786,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 4.69,
+          "revenue_ttm": 55747000000.0,
+          "margen_neto_ttm": 5.36
+        },
+        {
+          "fecha": "2023-07-14",
+          "per_ltm": 9.6119,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 4.69,
+          "revenue_ttm": 55747000000.0,
+          "margen_neto_ttm": 5.36
+        },
+        {
+          "fecha": "2023-07-21",
+          "per_ltm": 10.0378,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 4.69,
+          "revenue_ttm": 55747000000.0,
+          "margen_neto_ttm": 5.36
+        },
+        {
+          "fecha": "2023-07-28",
+          "per_ltm": 9.4527,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 4.69,
+          "revenue_ttm": 55747000000.0,
+          "margen_neto_ttm": 5.36
+        },
+        {
+          "fecha": "2023-08-04",
+          "per_ltm": 9.2191,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 4.69,
+          "revenue_ttm": 55747000000.0,
+          "margen_neto_ttm": 5.36
+        },
+        {
+          "fecha": "2023-08-11",
+          "per_ltm": 9.1323,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 4.69,
+          "revenue_ttm": 55747000000.0,
+          "margen_neto_ttm": 5.36
+        },
+        {
+          "fecha": "2023-08-18",
+          "per_ltm": 8.5782,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 4.69,
+          "revenue_ttm": 55747000000.0,
+          "margen_neto_ttm": 5.36
+        },
+        {
+          "fecha": "2023-08-25",
+          "per_ltm": 8.6216,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 4.69,
+          "revenue_ttm": 55747000000.0,
+          "margen_neto_ttm": 5.36
+        },
+        {
+          "fecha": "2023-09-01",
+          "per_ltm": 8.8614,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 4.69,
+          "revenue_ttm": 55747000000.0,
+          "margen_neto_ttm": 5.36
+        },
+        {
+          "fecha": "2023-09-08",
+          "per_ltm": 8.4396,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 4.69,
+          "revenue_ttm": 55747000000.0,
+          "margen_neto_ttm": 5.36
+        },
+        {
+          "fecha": "2023-09-15",
+          "per_ltm": 8.2494,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 4.69,
+          "revenue_ttm": 55747000000.0,
+          "margen_neto_ttm": 5.36
+        },
+        {
+          "fecha": "2023-09-22",
+          "per_ltm": 7.7884,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 4.69,
+          "revenue_ttm": 55747000000.0,
+          "margen_neto_ttm": 5.36
+        },
+        {
+          "fecha": "2023-09-29",
+          "per_ltm": 7.6498,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 4.69,
+          "revenue_ttm": 55747000000.0,
+          "margen_neto_ttm": 5.36
+        },
+        {
+          "fecha": "2023-10-06",
+          "per_ltm": 6.7313,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.33,
+          "revenue_ttm": 57260000000.0,
+          "margen_neto_ttm": 5.94
+        },
+        {
+          "fecha": "2023-10-13",
+          "per_ltm": 6.2211,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.33,
+          "revenue_ttm": 57260000000.0,
+          "margen_neto_ttm": 5.94
+        },
+        {
+          "fecha": "2023-10-20",
+          "per_ltm": 5.8799,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.33,
+          "revenue_ttm": 57260000000.0,
+          "margen_neto_ttm": 5.94
+        },
+        {
+          "fecha": "2023-10-27",
+          "per_ltm": 5.5917,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.33,
+          "revenue_ttm": 57260000000.0,
+          "margen_neto_ttm": 5.94
+        },
+        {
+          "fecha": "2023-11-03",
+          "per_ltm": 6.0842,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.33,
+          "revenue_ttm": 57260000000.0,
+          "margen_neto_ttm": 5.94
+        },
+        {
+          "fecha": "2023-11-10",
+          "per_ltm": 6.2138,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.33,
+          "revenue_ttm": 57260000000.0,
+          "margen_neto_ttm": 5.94
+        },
+        {
+          "fecha": "2023-11-17",
+          "per_ltm": 6.5786,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.33,
+          "revenue_ttm": 57260000000.0,
+          "margen_neto_ttm": 5.94
+        },
+        {
+          "fecha": "2023-11-24",
+          "per_ltm": 6.5859,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.33,
+          "revenue_ttm": 57260000000.0,
+          "margen_neto_ttm": 5.94
+        },
+        {
+          "fecha": "2023-12-01",
+          "per_ltm": 6.9417,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.33,
+          "revenue_ttm": 57260000000.0,
+          "margen_neto_ttm": 5.94
+        },
+        {
+          "fecha": "2023-12-08",
+          "per_ltm": 7.3613,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.33,
+          "revenue_ttm": 57260000000.0,
+          "margen_neto_ttm": 5.94
+        },
+        {
+          "fecha": "2023-12-15",
+          "per_ltm": 7.7243,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.33,
+          "revenue_ttm": 57260000000.0,
+          "margen_neto_ttm": 5.94
+        },
+        {
+          "fecha": "2023-12-22",
+          "per_ltm": 7.5036,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.33,
+          "revenue_ttm": 57260000000.0,
+          "margen_neto_ttm": 5.94
+        },
+        {
+          "fecha": "2023-12-29",
+          "per_ltm": 7.3394,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.33,
+          "revenue_ttm": 57260000000.0,
+          "margen_neto_ttm": 5.94
+        },
+        {
+          "fecha": "2024-01-05",
+          "per_ltm": 5.4675,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.21,
+          "revenue_ttm": 58048000000.0,
+          "margen_neto_ttm": 7.94
+        },
+        {
+          "fecha": "2024-01-12",
+          "per_ltm": 5.1883,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.21,
+          "revenue_ttm": 58048000000.0,
+          "margen_neto_ttm": 7.94
+        },
+        {
+          "fecha": "2024-01-19",
+          "per_ltm": 5.0278,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.21,
+          "revenue_ttm": 58048000000.0,
+          "margen_neto_ttm": 7.94
+        },
+        {
+          "fecha": "2024-01-26",
+          "per_ltm": 5.3447,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.21,
+          "revenue_ttm": 58048000000.0,
+          "margen_neto_ttm": 7.94
+        },
+        {
+          "fecha": "2024-02-02",
+          "per_ltm": 5.3919,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.21,
+          "revenue_ttm": 58048000000.0,
+          "margen_neto_ttm": 7.94
+        },
+        {
+          "fecha": "2024-02-09",
+          "per_ltm": 5.4634,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.21,
+          "revenue_ttm": 58048000000.0,
+          "margen_neto_ttm": 7.94
+        },
+        {
+          "fecha": "2024-02-16",
+          "per_ltm": 5.4108,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.21,
+          "revenue_ttm": 58048000000.0,
+          "margen_neto_ttm": 7.94
+        },
+        {
+          "fecha": "2024-02-23",
+          "per_ltm": 5.64,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.21,
+          "revenue_ttm": 58048000000.0,
+          "margen_neto_ttm": 7.94
+        },
+        {
+          "fecha": "2024-03-01",
+          "per_ltm": 5.6995,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.21,
+          "revenue_ttm": 58048000000.0,
+          "margen_neto_ttm": 7.94
+        },
+        {
+          "fecha": "2024-03-08",
+          "per_ltm": 5.7103,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.21,
+          "revenue_ttm": 58048000000.0,
+          "margen_neto_ttm": 7.94
+        },
+        {
+          "fecha": "2024-03-15",
+          "per_ltm": 5.8293,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.21,
+          "revenue_ttm": 58048000000.0,
+          "margen_neto_ttm": 7.94
+        },
+        {
+          "fecha": "2024-03-22",
+          "per_ltm": 6.1632,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.21,
+          "revenue_ttm": 58048000000.0,
+          "margen_neto_ttm": 7.94
+        },
+        {
+          "fecha": "2024-03-29",
+          "per_ltm": 6.4714,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.21,
+          "revenue_ttm": 58048000000.0,
+          "margen_neto_ttm": 7.94
+        },
+        {
+          "fecha": "2024-04-05",
+          "per_ltm": 5.7263,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.84,
+          "revenue_ttm": 59037000000.0,
+          "margen_neto_ttm": 8.48
+        },
+        {
+          "fecha": "2024-04-12",
+          "per_ltm": 5.8258,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.84,
+          "revenue_ttm": 59037000000.0,
+          "margen_neto_ttm": 8.48
+        },
+        {
+          "fecha": "2024-04-19",
+          "per_ltm": 5.9141,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.84,
+          "revenue_ttm": 59037000000.0,
+          "margen_neto_ttm": 8.48
+        },
+        {
+          "fecha": "2024-04-26",
+          "per_ltm": 6.2062,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.84,
+          "revenue_ttm": 59037000000.0,
+          "margen_neto_ttm": 8.48
+        },
+        {
+          "fecha": "2024-05-03",
+          "per_ltm": 6.4089,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.84,
+          "revenue_ttm": 59037000000.0,
+          "margen_neto_ttm": 8.48
+        },
+        {
+          "fecha": "2024-05-10",
+          "per_ltm": 6.5394,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.84,
+          "revenue_ttm": 59037000000.0,
+          "margen_neto_ttm": 8.48
+        },
+        {
+          "fecha": "2024-05-17",
+          "per_ltm": 6.5643,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.84,
+          "revenue_ttm": 59037000000.0,
+          "margen_neto_ttm": 8.48
+        },
+        {
+          "fecha": "2024-05-24",
+          "per_ltm": 6.4572,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.84,
+          "revenue_ttm": 59037000000.0,
+          "margen_neto_ttm": 8.48
+        },
+        {
+          "fecha": "2024-05-31",
+          "per_ltm": 6.3551,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.84,
+          "revenue_ttm": 59037000000.0,
+          "margen_neto_ttm": 8.48
+        },
+        {
+          "fecha": "2024-06-07",
+          "per_ltm": 6.2828,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.84,
+          "revenue_ttm": 59037000000.0,
+          "margen_neto_ttm": 8.48
+        },
+        {
+          "fecha": "2024-06-14",
+          "per_ltm": 6.0686,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.84,
+          "revenue_ttm": 59037000000.0,
+          "margen_neto_ttm": 8.48
+        },
+        {
+          "fecha": "2024-06-21",
+          "per_ltm": 6.1508,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.84,
+          "revenue_ttm": 59037000000.0,
+          "margen_neto_ttm": 8.48
+        },
+        {
+          "fecha": "2024-06-28",
+          "per_ltm": 5.9091,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.84,
+          "revenue_ttm": 59037000000.0,
+          "margen_neto_ttm": 8.48
+        },
+        {
+          "fecha": "2024-07-05",
+          "per_ltm": 6.4018,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.02,
+          "revenue_ttm": 60117000000.0,
+          "margen_neto_ttm": 7.46
+        },
+        {
+          "fecha": "2024-07-12",
+          "per_ltm": 6.068,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.02,
+          "revenue_ttm": 60117000000.0,
+          "margen_neto_ttm": 7.46
+        },
+        {
+          "fecha": "2024-07-19",
+          "per_ltm": 6.3212,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.02,
+          "revenue_ttm": 60117000000.0,
+          "margen_neto_ttm": 7.46
+        },
+        {
+          "fecha": "2024-07-26",
+          "per_ltm": 6.1389,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.02,
+          "revenue_ttm": 60117000000.0,
+          "margen_neto_ttm": 7.46
+        },
+        {
+          "fecha": "2024-08-02",
+          "per_ltm": 5.5601,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.02,
+          "revenue_ttm": 60117000000.0,
+          "margen_neto_ttm": 7.46
+        },
+        {
+          "fecha": "2024-08-09",
+          "per_ltm": 5.4861,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.02,
+          "revenue_ttm": 60117000000.0,
+          "margen_neto_ttm": 7.46
+        },
+        {
+          "fecha": "2024-08-16",
+          "per_ltm": 5.6047,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.02,
+          "revenue_ttm": 60117000000.0,
+          "margen_neto_ttm": 7.46
+        },
+        {
+          "fecha": "2024-08-23",
+          "per_ltm": 5.7764,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.02,
+          "revenue_ttm": 60117000000.0,
+          "margen_neto_ttm": 7.46
+        },
+        {
+          "fecha": "2024-08-30",
+          "per_ltm": 5.9314,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.02,
+          "revenue_ttm": 60117000000.0,
+          "margen_neto_ttm": 7.46
+        },
+        {
+          "fecha": "2024-09-06",
+          "per_ltm": 5.8672,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.02,
+          "revenue_ttm": 60117000000.0,
+          "margen_neto_ttm": 7.46
+        },
+        {
+          "fecha": "2024-09-13",
+          "per_ltm": 6.3069,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.02,
+          "revenue_ttm": 60117000000.0,
+          "margen_neto_ttm": 7.46
+        },
+        {
+          "fecha": "2024-09-20",
+          "per_ltm": 6.5526,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.02,
+          "revenue_ttm": 60117000000.0,
+          "margen_neto_ttm": 7.46
+        },
+        {
+          "fecha": "2024-09-27",
+          "per_ltm": 7.1947,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.02,
+          "revenue_ttm": 60117000000.0,
+          "margen_neto_ttm": 7.46
+        },
+        {
+          "fecha": "2024-10-04",
+          "per_ltm": 6.6427,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.27,
+          "revenue_ttm": 60306000000.0,
+          "margen_neto_ttm": 7.71
+        },
+        {
+          "fecha": "2024-10-11",
+          "per_ltm": 6.9394,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.27,
+          "revenue_ttm": 60306000000.0,
+          "margen_neto_ttm": 7.71
+        },
+        {
+          "fecha": "2024-10-18",
+          "per_ltm": 7.5437,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.27,
+          "revenue_ttm": 60306000000.0,
+          "margen_neto_ttm": 7.71
+        },
+        {
+          "fecha": "2024-10-25",
+          "per_ltm": 7.3166,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.27,
+          "revenue_ttm": 60306000000.0,
+          "margen_neto_ttm": 7.71
+        },
+        {
+          "fecha": "2024-11-01",
+          "per_ltm": 7.8939,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.27,
+          "revenue_ttm": 60306000000.0,
+          "margen_neto_ttm": 7.71
+        },
+        {
+          "fecha": "2024-11-08",
+          "per_ltm": 8.2535,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.27,
+          "revenue_ttm": 60306000000.0,
+          "margen_neto_ttm": 7.71
+        },
+        {
+          "fecha": "2024-11-15",
+          "per_ltm": 8.6618,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.27,
+          "revenue_ttm": 60306000000.0,
+          "margen_neto_ttm": 7.71
+        },
+        {
+          "fecha": "2024-11-22",
+          "per_ltm": 8.5631,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.27,
+          "revenue_ttm": 60306000000.0,
+          "margen_neto_ttm": 7.71
+        },
+        {
+          "fecha": "2024-11-29",
+          "per_ltm": 8.628,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.27,
+          "revenue_ttm": 60306000000.0,
+          "margen_neto_ttm": 7.71
+        },
+        {
+          "fecha": "2024-12-06",
+          "per_ltm": 8.724,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.27,
+          "revenue_ttm": 60306000000.0,
+          "margen_neto_ttm": 7.71
+        },
+        {
+          "fecha": "2024-12-13",
+          "per_ltm": 8.317,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.27,
+          "revenue_ttm": 60306000000.0,
+          "margen_neto_ttm": 7.71
+        },
+        {
+          "fecha": "2024-12-20",
+          "per_ltm": 8.2373,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.27,
+          "revenue_ttm": 60306000000.0,
+          "margen_neto_ttm": 7.71
+        },
+        {
+          "fecha": "2024-12-27",
+          "per_ltm": 8.2819,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.27,
+          "revenue_ttm": 60306000000.0,
+          "margen_neto_ttm": 7.71
+        },
+        {
+          "fecha": "2025-01-03",
+          "per_ltm": 10.7585,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.39,
+          "revenue_ttm": 61643000000.0,
+          "margen_neto_ttm": 5.61
+        },
+        {
+          "fecha": "2025-01-10",
+          "per_ltm": 12.2081,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.39,
+          "revenue_ttm": 61643000000.0,
+          "margen_neto_ttm": 5.61
+        },
+        {
+          "fecha": "2025-01-17",
+          "per_ltm": 12.0021,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.39,
+          "revenue_ttm": 61643000000.0,
+          "margen_neto_ttm": 5.61
+        },
+        {
+          "fecha": "2025-01-24",
+          "per_ltm": 12.2501,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.39,
+          "revenue_ttm": 61643000000.0,
+          "margen_neto_ttm": 5.61
+        },
+        {
+          "fecha": "2025-01-31",
+          "per_ltm": 12.2665,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.39,
+          "revenue_ttm": 61643000000.0,
+          "margen_neto_ttm": 5.61
+        },
+        {
+          "fecha": "2025-02-07",
+          "per_ltm": 12.4251,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.39,
+          "revenue_ttm": 61643000000.0,
+          "margen_neto_ttm": 5.61
+        },
+        {
+          "fecha": "2025-02-14",
+          "per_ltm": 11.9237,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.39,
+          "revenue_ttm": 61643000000.0,
+          "margen_neto_ttm": 5.61
+        },
+        {
+          "fecha": "2025-02-21",
+          "per_ltm": 10.9408,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.39,
+          "revenue_ttm": 61643000000.0,
+          "margen_neto_ttm": 5.61
+        },
+        {
+          "fecha": "2025-02-28",
+          "per_ltm": 10.9894,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.39,
+          "revenue_ttm": 61643000000.0,
+          "margen_neto_ttm": 5.61
+        },
+        {
+          "fecha": "2025-03-07",
+          "per_ltm": 9.7391,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.39,
+          "revenue_ttm": 61643000000.0,
+          "margen_neto_ttm": 5.61
+        },
+        {
+          "fecha": "2025-03-14",
+          "per_ltm": 8.5455,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.39,
+          "revenue_ttm": 61643000000.0,
+          "margen_neto_ttm": 5.61
+        },
+        {
+          "fecha": "2025-03-21",
+          "per_ltm": 8.5491,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.39,
+          "revenue_ttm": 61643000000.0,
+          "margen_neto_ttm": 5.61
+        },
+        {
+          "fecha": "2025-03-28",
+          "per_ltm": 8.0136,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.39,
+          "revenue_ttm": 61643000000.0,
+          "margen_neto_ttm": 5.61
+        },
+        {
+          "fecha": "2025-04-04",
+          "per_ltm": 6.4387,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.7,
+          "revenue_ttm": 61935000000.0,
+          "margen_neto_ttm": 5.91
+        },
+        {
+          "fecha": "2025-04-11",
+          "per_ltm": 7.0661,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.7,
+          "revenue_ttm": 61935000000.0,
+          "margen_neto_ttm": 5.91
+        },
+        {
+          "fecha": "2025-04-18",
+          "per_ltm": 7.0609,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.7,
+          "revenue_ttm": 61935000000.0,
+          "margen_neto_ttm": 5.91
+        },
+        {
+          "fecha": "2025-04-25",
+          "per_ltm": 7.1871,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.7,
+          "revenue_ttm": 61935000000.0,
+          "margen_neto_ttm": 5.91
+        },
+        {
+          "fecha": "2025-05-02",
+          "per_ltm": 7.64,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.7,
+          "revenue_ttm": 61935000000.0,
+          "margen_neto_ttm": 5.91
+        },
+        {
+          "fecha": "2025-05-09",
+          "per_ltm": 8.3556,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.7,
+          "revenue_ttm": 61935000000.0,
+          "margen_neto_ttm": 5.91
+        },
+        {
+          "fecha": "2025-05-16",
+          "per_ltm": 8.8274,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.7,
+          "revenue_ttm": 61935000000.0,
+          "margen_neto_ttm": 5.91
+        },
+        {
+          "fecha": "2025-05-23",
+          "per_ltm": 8.3073,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.7,
+          "revenue_ttm": 61935000000.0,
+          "margen_neto_ttm": 5.91
+        },
+        {
+          "fecha": "2025-05-30",
+          "per_ltm": 8.3888,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.7,
+          "revenue_ttm": 61935000000.0,
+          "margen_neto_ttm": 5.91
+        },
+        {
+          "fecha": "2025-06-06",
+          "per_ltm": 8.8326,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.7,
+          "revenue_ttm": 61935000000.0,
+          "margen_neto_ttm": 5.91
+        },
+        {
+          "fecha": "2025-06-13",
+          "per_ltm": 8.1548,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.7,
+          "revenue_ttm": 61935000000.0,
+          "margen_neto_ttm": 5.91
+        },
+        {
+          "fecha": "2025-06-20",
+          "per_ltm": 8.1825,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.7,
+          "revenue_ttm": 61935000000.0,
+          "margen_neto_ttm": 5.91
+        },
+        {
+          "fecha": "2025-06-27",
+          "per_ltm": 8.5968,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 5.7,
+          "revenue_ttm": 61935000000.0,
+          "margen_neto_ttm": 5.91
+        },
+        {
+          "fecha": "2025-07-04",
+          "per_ltm": 7.2416,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.94,
+          "revenue_ttm": 61925000000.0,
+          "margen_neto_ttm": 7.24
+        },
+        {
+          "fecha": "2025-07-11",
+          "per_ltm": 8.066,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.94,
+          "revenue_ttm": 61925000000.0,
+          "margen_neto_ttm": 7.24
+        },
+        {
+          "fecha": "2025-07-18",
+          "per_ltm": 8.0148,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.94,
+          "revenue_ttm": 61925000000.0,
+          "margen_neto_ttm": 7.24
+        },
+        {
+          "fecha": "2025-07-25",
+          "per_ltm": 7.8112,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.94,
+          "revenue_ttm": 61925000000.0,
+          "margen_neto_ttm": 7.24
+        },
+        {
+          "fecha": "2025-08-01",
+          "per_ltm": 7.3086,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.94,
+          "revenue_ttm": 61925000000.0,
+          "margen_neto_ttm": 7.24
+        },
+        {
+          "fecha": "2025-08-08",
+          "per_ltm": 7.6643,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.94,
+          "revenue_ttm": 61925000000.0,
+          "margen_neto_ttm": 7.24
+        },
+        {
+          "fecha": "2025-08-15",
+          "per_ltm": 8.6074,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.94,
+          "revenue_ttm": 61925000000.0,
+          "margen_neto_ttm": 7.24
+        },
+        {
+          "fecha": "2025-08-22",
+          "per_ltm": 8.8146,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.94,
+          "revenue_ttm": 61925000000.0,
+          "margen_neto_ttm": 7.24
+        },
+        {
+          "fecha": "2025-08-29",
+          "per_ltm": 8.8274,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.94,
+          "revenue_ttm": 61925000000.0,
+          "margen_neto_ttm": 7.24
+        },
+        {
+          "fecha": "2025-09-05",
+          "per_ltm": 8.7417,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.94,
+          "revenue_ttm": 61925000000.0,
+          "margen_neto_ttm": 7.24
+        },
+        {
+          "fecha": "2025-09-12",
+          "per_ltm": 8.5545,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.94,
+          "revenue_ttm": 61925000000.0,
+          "margen_neto_ttm": 7.24
+        },
+        {
+          "fecha": "2025-09-19",
+          "per_ltm": 8.5388,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.94,
+          "revenue_ttm": 61925000000.0,
+          "margen_neto_ttm": 7.24
+        },
+        {
+          "fecha": "2025-09-26",
+          "per_ltm": 8.173,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.94,
+          "revenue_ttm": 61925000000.0,
+          "margen_neto_ttm": 7.24
+        },
+        {
+          "fecha": "2025-10-03",
+          "per_ltm": 7.9524,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.14,
+          "revenue_ttm": 62921000000.0,
+          "margen_neto_ttm": 7.36
+        },
+        {
+          "fecha": "2025-10-10",
+          "per_ltm": 7.983,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.14,
+          "revenue_ttm": 62921000000.0,
+          "margen_neto_ttm": 7.36
+        },
+        {
+          "fecha": "2025-10-17",
+          "per_ltm": 8.3083,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.14,
+          "revenue_ttm": 62921000000.0,
+          "margen_neto_ttm": 7.36
+        },
+        {
+          "fecha": "2025-10-24",
+          "per_ltm": 8.4908,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.14,
+          "revenue_ttm": 62921000000.0,
+          "margen_neto_ttm": 7.36
+        },
+        {
+          "fecha": "2025-10-31",
+          "per_ltm": 7.9934,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.14,
+          "revenue_ttm": 62921000000.0,
+          "margen_neto_ttm": 7.36
+        },
+        {
+          "fecha": "2025-11-07",
+          "per_ltm": 8.2024,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.14,
+          "revenue_ttm": 62921000000.0,
+          "margen_neto_ttm": 7.36
+        },
+        {
+          "fecha": "2025-11-14",
+          "per_ltm": 8.1369,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.14,
+          "revenue_ttm": 62921000000.0,
+          "margen_neto_ttm": 7.36
+        },
+        {
+          "fecha": "2025-11-21",
+          "per_ltm": 8.1592,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.14,
+          "revenue_ttm": 62921000000.0,
+          "margen_neto_ttm": 7.36
+        },
+        {
+          "fecha": "2025-11-28",
+          "per_ltm": 8.9296,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.14,
+          "revenue_ttm": 62921000000.0,
+          "margen_neto_ttm": 7.36
+        },
+        {
+          "fecha": "2025-12-05",
+          "per_ltm": 9.3475,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.14,
+          "revenue_ttm": 62921000000.0,
+          "margen_neto_ttm": 7.36
+        },
+        {
+          "fecha": "2025-12-12",
+          "per_ltm": 9.725,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.14,
+          "revenue_ttm": 62921000000.0,
+          "margen_neto_ttm": 7.36
+        },
+        {
+          "fecha": "2025-12-19",
+          "per_ltm": 9.8992,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.14,
+          "revenue_ttm": 62921000000.0,
+          "margen_neto_ttm": 7.36
+        },
+        {
+          "fecha": "2025-12-26",
+          "per_ltm": 9.8699,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.14,
+          "revenue_ttm": 62921000000.0,
+          "margen_neto_ttm": 7.36
+        },
+        {
+          "fecha": "2026-01-02",
+          "per_ltm": 8.8977,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.72,
+          "revenue_ttm": 63364000000.0,
+          "margen_neto_ttm": 7.9
+        },
+        {
+          "fecha": "2026-01-09",
+          "per_ltm": 9.3165,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.72,
+          "revenue_ttm": 63364000000.0,
+          "margen_neto_ttm": 7.9
+        },
+        {
+          "fecha": "2026-01-16",
+          "per_ltm": 9.0743,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.72,
+          "revenue_ttm": 63364000000.0,
+          "margen_neto_ttm": 7.9
+        },
+        {
+          "fecha": "2026-01-23",
+          "per_ltm": 8.756,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.72,
+          "revenue_ttm": 63364000000.0,
+          "margen_neto_ttm": 7.9
+        },
+        {
+          "fecha": "2026-01-30",
+          "per_ltm": 8.4893,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.72,
+          "revenue_ttm": 63364000000.0,
+          "margen_neto_ttm": 7.9
+        },
+        {
+          "fecha": "2026-02-06",
+          "per_ltm": 9.7082,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.72,
+          "revenue_ttm": 63364000000.0,
+          "margen_neto_ttm": 7.9
+        },
+        {
+          "fecha": "2026-02-13",
+          "per_ltm": 8.89,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.72,
+          "revenue_ttm": 63364000000.0,
+          "margen_neto_ttm": 7.9
+        },
+        {
+          "fecha": "2026-02-20",
+          "per_ltm": 8.9467,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.72,
+          "revenue_ttm": 63364000000.0,
+          "margen_neto_ttm": 7.9
+        },
+        {
+          "fecha": "2026-02-27",
+          "per_ltm": 8.4878,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.72,
+          "revenue_ttm": 63364000000.0,
+          "margen_neto_ttm": 7.9
+        },
+        {
+          "fecha": "2026-03-06",
+          "per_ltm": 7.6236,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.72,
+          "revenue_ttm": 63364000000.0,
+          "margen_neto_ttm": 7.9
+        },
+        {
+          "fecha": "2026-03-13",
+          "per_ltm": 7.5938,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.72,
+          "revenue_ttm": 63364000000.0,
+          "margen_neto_ttm": 7.9
+        },
+        {
+          "fecha": "2026-03-20",
+          "per_ltm": 8.1959,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.72,
+          "revenue_ttm": 63364000000.0,
+          "margen_neto_ttm": 7.9
+        },
+        {
+          "fecha": "2026-03-27",
+          "per_ltm": 8.3754,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 7.72,
+          "revenue_ttm": 63364000000.0,
+          "margen_neto_ttm": 7.9
+        },
+        {
+          "fecha": "2026-04-03",
+          "per_ltm": 9.6358,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
+        },
+        {
+          "fecha": "2026-04-10",
+          "per_ltm": 9.7888,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
+        },
+        {
+          "fecha": "2026-04-17",
+          "per_ltm": 10.3517,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
+        },
+        {
+          "fecha": "2026-04-24",
+          "per_ltm": 9.8797,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
+        },
+        {
+          "fecha": "2026-05-01",
+          "per_ltm": 9.9562,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
+        },
+        {
+          "fecha": "2026-05-08",
+          "per_ltm": 10.5841,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
+        },
+        {
+          "fecha": "2026-05-15",
+          "per_ltm": 10.1635,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
+        },
+        {
+          "fecha": "2026-05-22",
+          "per_ltm": 11.0188,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
+        },
+        {
+          "fecha": "2026-05-29",
+          "per_ltm": 11.9363,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
+        },
+        {
+          "fecha": "2026-06-05",
+          "per_ltm": 11.4935,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
+        },
+        {
+          "fecha": "2026-06-12",
+          "per_ltm": 12.0203,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
+        },
+        {
+          "fecha": "2026-06-19",
+          "per_ltm": 12.1823,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
+        },
+        {
+          "fecha": "2026-06-26",
+          "per_ltm": 13.3965,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
+        },
+        {
+          "fecha": "2026-07-03",
+          "per_ltm": 13.4226,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
+        }
+      ]
+    }
+  ]
 }

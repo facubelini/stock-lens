@@ -29,14 +29,12 @@ function Fila({ item }) {
       <td className="whitespace-nowrap px-2 py-1.5">
         <span className="mr-1.5">{item.tipo === 'crypto' ? '🪙' : '📈'}</span>
         {item.tipo === 'crypto' ? (
-          <a
-            href={item.link}
-            target="_blank"
-            rel="noreferrer"
+          <Link
+            to={`/cripto/${encodeURIComponent(item.ticker.replace('/USDT', 'USDT'))}`}
             className="font-semibold text-terminal-text hover:text-terminal-accent hover:underline"
           >
             {item.ticker}
-          </a>
+          </Link>
         ) : (
           <TickerLink ticker={item.ticker} className="font-semibold text-terminal-text" />
         )}

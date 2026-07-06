@@ -37,11 +37,17 @@ function prioridad(fila) {
   }, 0)
 }
 
+function tieneSenal(dato) {
+  const v = dato?.verdict
+  return v === 'COMPRA' || v === 'CERCA'
+}
+
 function tieneSenalEn(fila, tfKeys) {
-  return tfKeys.some((key) => {
-    const v = fila[key]?.verdict
-    return v === 'COMPRA' || v === 'CERCA'
-  })
+  return tfKeys.some((key) => tieneSenal(fila[key]))
+}
+
+function tieneSenalEnTodas(fila, tfKeys) {
+  return tfKeys.every((key) => tieneSenal(fila[key]))
 }
 
 function Celda({ dato }) {
@@ -78,6 +84,7 @@ export default function Screener() {
     [conWatchlist, overrides],
   )
   const [tfFiltro, setTfFiltro] = useState({ diario: true, semanal: true, mensual: true })
+  const [exigirTodas, setExigirTodas] = useState(false)
   const [refresh, setRefresh] = useState(null) // { tipo: 'cargando'|'ok'|'error', texto }
   const toggleTf = (key) => setTfFiltro((prev) => ({ ...prev, [key]: !prev[key] }))
   const t = useTabla(filas, { camposBusqueda: CAMPOS })
@@ -111,10 +118,12 @@ export default function Screener() {
   const filtradas = useMemo(() => {
     const base =
       tfKeysActivas.length > 0
-        ? t.filtradas.filter((f) => tieneSenalEn(f, tfKeysActivas))
+        ? t.filtradas.filter((f) =>
+            exigirTodas ? tieneSenalEnTodas(f, tfKeysActivas) : tieneSenalEn(f, tfKeysActivas),
+          )
         : t.filtradas
     return [...base].sort((a, b) => prioridad(b) - prioridad(a))
-  }, [t.filtradas, tfKeysActivas])
+  }, [t.filtradas, tfKeysActivas, exigirTodas])
 
   const colsCSV = [
     { key: 'ticker', label: 'Ticker' },
@@ -176,7 +185,11 @@ export default function Screener() {
         extra={
           <div
             className="flex flex-wrap items-center gap-2 rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-dim"
-            title="Muestra activos con señal (COMPRA/CERCA) en cualquiera de las temporalidades tildadas"
+            title={
+              exigirTodas
+                ? 'Muestra activos con señal (COMPRA/CERCA) en TODAS las temporalidades tildadas a la vez'
+                : 'Muestra activos con señal (COMPRA/CERCA) en cualquiera de las temporalidades tildadas'
+            }
           >
             <span className="text-xs">Señal en:</span>
             {TIMEFRAMES.map((tf) => (
@@ -193,6 +206,16 @@ export default function Screener() {
                 {tf.label}
               </label>
             ))}
+            <span className="mx-1 h-4 w-px bg-terminal-border" />
+            <label className="flex cursor-pointer select-none items-center gap-1 hover:text-terminal-text">
+              <input
+                type="checkbox"
+                checked={exigirTodas}
+                onChange={(e) => setExigirTodas(e.target.checked)}
+                className="accent-terminal-accent"
+              />
+              Exigir todas a la vez (AND)
+            </label>
           </div>
         }
         onExportCSV={() => exportarCSV('stock-lens-screener.csv', colsCSV, filtradas)}
@@ -210,9 +233,13 @@ export default function Screener() {
         <Vacio
           texto={
             tfKeysActivas.length > 0
-              ? `Ninguna acción tiene señal de COMPRA o CERCA en ${tfKeysActivas
+              ? `Ninguna acción tiene señal de COMPRA o CERCA ${
+                  exigirTodas ? 'a la vez en' : 'en'
+                } ${tfKeysActivas
                   .map((k) => TIMEFRAMES.find((tf) => tf.key === k).label)
-                  .join('/')} ahora mismo. Probá tildar otra temporalidad.`
+                  .join(exigirTodas ? ' + ' : '/')} ahora mismo. Probá ${
+                  exigirTodas ? 'destildar "Exigir todas a la vez" o' : ''
+                } cambiar la temporalidad.`
               : undefined
           }
         />

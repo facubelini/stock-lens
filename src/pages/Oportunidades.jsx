@@ -5,7 +5,7 @@ import { usePins } from '../lib/usePins'
 import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { exportarCSV } from '../lib/csv'
 import { TIMEFRAMES, ESTILO_VERDICT, tieneSenal, prioridadScreener } from '../lib/screenerEstilos'
-import { calcularDescuento } from '../lib/valuacion'
+import { calcularDescuento, evaluarCalidad, señalesTrampaValor } from '../lib/valuacion'
 import Controles from '../components/Controles'
 import Tabla from '../components/Tabla'
 import BotonPin from '../components/BotonPin'
@@ -19,8 +19,29 @@ export default function Oportunidades() {
   const { data: fundData, cargando: cargF, error: errF } = useJson('fundamentales.json')
   const { data: compData, cargando: cargC } = useJson('comparables.json')
   const { data: screenerData, cargando: cargS } = useJson('screener.json')
+  const { data: historialData } = useJson('oportunidades_historial.json')
   const { overrides } = useClasificacion()
   const { pins, isPinned, toggle } = usePins()
+
+  // "Hace cuántos días" que cada ticker viene apareciendo en Oportunidades:
+  // se cuenta hacia atrás desde hoy mientras el ticker siga presente sin
+  // cortes. Se arma un día a la vez desde que se activó esta función.
+  const diasEnListaPorTicker = useMemo(() => {
+    const hist = Array.isArray(historialData) ? historialData : []
+    if (!hist.length) return new Map()
+    const ordenado = [...hist].sort((a, b) => b.fecha.localeCompare(a.fecha))
+    const tickersHoy = ordenado[0]?.tickers ?? []
+    const mapa = new Map()
+    for (const ticker of tickersHoy) {
+      let dias = 0
+      for (const entrada of ordenado) {
+        if (entrada.tickers?.includes(ticker)) dias++
+        else break
+      }
+      mapa.set(ticker, dias)
+    }
+    return mapa
+  }, [historialData])
 
   const fundRaw = useMemo(() => (Array.isArray(fundData) ? fundData : (fundData?.acciones ?? [])), [fundData])
   const fundamentales = useMemo(() => aplicarClasificacion(fundRaw, overrides), [fundRaw, overrides])
@@ -50,10 +71,13 @@ export default function Oportunidades() {
           _screenerFila: screenerFila,
           _conSeñal: conSeñal,
           _prioridad: screenerFila ? prioridadScreener(screenerFila) : 0,
+          _calidad: evaluarCalidad(f, mediana),
+          _trampaValor: señalesTrampaValor(f),
+          _diasEnLista: diasEnListaPorTicker.get(f.ticker) ?? 1,
         }
       })
       .filter((f) => f._descuento != null && f._descuento > 0 && f._conSeñal)
-  }, [fundamentales, medianaPorIndustria, screenerPorTicker])
+  }, [fundamentales, medianaPorIndustria, screenerPorTicker, diasEnListaPorTicker])
 
   const t = useTabla(combinadas, {
     camposBusqueda: CAMPOS,
@@ -75,7 +99,16 @@ export default function Oportunidades() {
       label: 'Ticker',
       align: 'left',
       valor: (r) => r.ticker,
-      render: (r) => <TickerLink ticker={r.ticker} className="font-semibold text-terminal-text" />,
+      render: (r) => (
+        <span className="inline-flex items-center gap-1">
+          <TickerLink ticker={r.ticker} className="font-semibold text-terminal-text" />
+          {r._trampaValor.length > 0 && (
+            <span className="text-terminal-warn" title={`Posible trampa de valor: ${r._trampaValor.join(', ')}`}>
+              ⚠️
+            </span>
+          )}
+        </span>
+      ),
     },
     {
       key: 'nombre',
@@ -161,6 +194,36 @@ export default function Oportunidades() {
       ),
       ayuda: 'Score de convicción del Screener (el mismo que ordena Top Señales).',
     },
+    {
+      key: '_calidad',
+      label: 'Calidad',
+      align: 'left',
+      sortable: false,
+      csv: false,
+      render: (r) => {
+        const c = r._calidad
+        if (!c) return <span className="text-terminal-dim">N/D</span>
+        const ok = c.roeOk && c.margenOk
+        const parcial = c.roeOk || c.margenOk
+        return (
+          <span
+            className={ok ? 'text-terminal-up' : parcial ? 'text-terminal-warn' : 'text-terminal-dim'}
+            title={`ROE ${c.roeOk ? 'sobre' : 'bajo'} la mediana de industria · Margen ${c.margenOk ? 'sobre' : 'bajo'} la mediana`}
+          >
+            {ok ? '✓ ROE y margen sobre mediana' : parcial ? '~ parcial' : '✕ bajo mediana'}
+          </span>
+        )
+      },
+      ayuda: 'Si además de barata la empresa tiene ROE y margen por encima de su industria — barata Y rentable, no solo barata.',
+    },
+    {
+      key: '_diasEnLista',
+      label: 'Hace',
+      align: 'right',
+      valor: (r) => r._diasEnLista,
+      render: (r) => (r._diasEnLista <= 1 ? 'Nuevo hoy' : `${r._diasEnLista} días`),
+      ayuda: 'Días consecutivos que este ticker viene cumpliendo las condiciones — se arma con el tiempo desde que se activó esta función.',
+    },
   ]
 
   const cargando = cargF || cargC || cargS
@@ -172,9 +235,12 @@ export default function Oportunidades() {
         <p className="text-xs text-terminal-dim">
           Cruza <b>valor</b> (cotiza más barato que la mediana de su industria en PER/EV-Sales/P-S)
           con <b>momentum</b> (señal COMPRA o CERCA en alguna temporalidad del Screener) — las dos
-          condiciones a la vez, no cada una por separado. Solo cubre industrias con comparables
-          curados (ver pestaña Comparables); si tu industria no está ahí, no vas a ver esos tickers
-          acá aunque estén baratos o con señal. Orientativo, no es recomendación de inversión.
+          condiciones a la vez, no cada una por separado. <b>Calidad</b> marca si además tiene ROE y
+          margen por encima de su industria (barata y rentable, no solo barata) y{' '}
+          <b>⚠️ trampa de valor</b> avisa cuando la rentabilidad es negativa o los insiders solo
+          están vendiendo. Solo cubre industrias con comparables curados (ver pestaña Comparables);
+          si tu industria no está ahí, no vas a ver esos tickers acá aunque estén baratos o con
+          señal. Orientativo, no es recomendación de inversión.
         </p>
       </div>
 

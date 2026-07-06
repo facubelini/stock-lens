@@ -46,6 +46,10 @@ PERIODO_HISTORICO = "5y"
 SUFIJOS = ["", ".SA", ".BA"]
 RUTA_HISTORIAL = DIR_SALIDA / "screener_historial.json"
 DIAS_HISTORIAL = 90
+RUTA_HISTORIAL_OPORTUNIDADES = DIR_SALIDA / "oportunidades_historial.json"
+# Los mismos 3 ratios que src/lib/valuacion.js (calcularDescuento) — si se
+# toca uno, tocar el otro para que no se desincronicen.
+RATIOS_VALOR_OPORTUNIDADES = ["per_trailing", "ev_sales", "ps"]
 
 
 # ---------------------------------------------------------------------------
@@ -612,6 +616,71 @@ def actualizar_historial_screener(screener_actual, ahora):
     return historial
 
 
+def _descuento_valor(fila, mediana):
+    """Version Python de calcularDescuento (src/lib/valuacion.js): promedio
+    del descuento % en PER/EV-Sales/P-S contra la mediana de industria. Solo
+    se usa para armar el historial de Oportunidades del lado del pipeline —
+    la vista en vivo la calcula el frontend con los mismos 3 ratios."""
+    if not mediana:
+        return None
+    descuentos = []
+    for k in RATIOS_VALOR_OPORTUNIDADES:
+        v = fila.get(k)
+        m = mediana.get(k)
+        if v is None or m is None or v <= 0 or m <= 0:
+            continue
+        descuentos.append(((m - v) / m) * 100)
+    if not descuentos:
+        return None
+    return sum(descuentos) / len(descuentos)
+
+
+def calcular_oportunidades_hoy(fundamentales, comparables, screener):
+    """Tickers que hoy cumplen las dos condiciones de la pestaña
+    Oportunidades (barato vs. industria + señal tecnica), para poder armar
+    un historial de "hace cuantos dias que esta en la lista"."""
+    mediana_por_industria = {g["industria"]: g["mediana"] for g in comparables}
+    screener_por_ticker = {f["ticker"]: f for f in screener}
+    calificados = []
+    for f in fundamentales:
+        mediana = mediana_por_industria.get(f["industria"])
+        descuento = _descuento_valor(f, mediana)
+        if descuento is None or descuento <= 0:
+            continue
+        sf = screener_por_ticker.get(f["ticker"])
+        if not sf:
+            continue
+        tiene_señal = any(
+            (sf.get(tf) or {}).get("verdict") in ("COMPRA", "CERCA")
+            for tf in ("diario", "semanal", "mensual")
+        )
+        if tiene_señal:
+            calificados.append(f["ticker"])
+    return calificados
+
+
+def actualizar_historial_oportunidades(calificados_hoy, ahora):
+    """Mismo patron que actualizar_historial_screener: un snapshot por dia
+    (se pisa si ya corrio hoy), recortado a DIAS_HISTORIAL."""
+    historial = []
+    if RUTA_HISTORIAL_OPORTUNIDADES.exists():
+        try:
+            historial = json.loads(RUTA_HISTORIAL_OPORTUNIDADES.read_text(encoding="utf-8"))
+            if not isinstance(historial, list):
+                historial = []
+        except Exception:  # noqa: BLE001
+            historial = []
+
+    hoy = ahora.strftime("%Y-%m-%d")
+    historial = [h for h in historial if h.get("fecha") != hoy]
+    historial.append({"fecha": hoy, "tickers": calificados_hoy})
+
+    corte = (ahora - timedelta(days=DIAS_HISTORIAL)).strftime("%Y-%m-%d")
+    historial = [h for h in historial if h.get("fecha", "") >= corte]
+    historial.sort(key=lambda h: h["fecha"])
+    return historial
+
+
 def resolver_ticker(t):
     """Descarga el historico probando el ticker tal cual y, si no hay datos,
     con sufijos .SA (Brasil) y .BA (Argentina). Devuelve
@@ -815,6 +884,11 @@ def main():
     print("\nActualizando historial de señales...")
     historial = actualizar_historial_screener(screener, ahora)
 
+    print("Actualizando historial de Oportunidades...")
+    calificados_hoy = calcular_oportunidades_hoy(fundamentales, comparables, screener)
+    historial_oportunidades = actualizar_historial_oportunidades(calificados_hoy, ahora)
+    print(f"  {len(calificados_hoy)} ticker(s) cumplen hoy valor+señal.")
+
     print("\nEscribiendo JSON:")
     escribir("listado.json", {"acciones": listado, "promedios_por_industria": promedios})
     escribir("medias.json", medias)
@@ -822,6 +896,7 @@ def main():
     escribir("comparables.json", comparables)
     escribir("screener.json", screener)
     escribir("screener_historial.json", historial)
+    escribir("oportunidades_historial.json", historial_oportunidades)
     escribir("meta.json", meta)
 
     print(f"\nListo. {n_frescos} frescos, {n_arrastrados} arrastrados, {len(invalidos)} invalidos.")

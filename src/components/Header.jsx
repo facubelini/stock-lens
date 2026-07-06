@@ -10,6 +10,7 @@ const tabs = [
   { to: '/screener', label: 'Screener' },
   { to: '/historico', label: 'Histórico Fundamental' },
   { to: '/cripto', label: 'Crypto Screener' },
+  { to: '/top', label: '🔥 Top Señales' },
 ]
 
 export default function Header() {
@@ -25,6 +26,14 @@ export default function Header() {
             🔍 Stock Lens
           </span>
           <span className="hidden text-xs text-terminal-dim sm:inline">· análisis de acciones</span>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent('stocklens:abrir-buscador'))}
+            title="Buscar un ticker (Ctrl+K)"
+            className="ml-1 rounded border border-terminal-border px-2 py-1 text-xs text-terminal-dim hover:border-terminal-accent hover:text-terminal-text"
+          >
+            🔎 <span className="hidden sm:inline">Ctrl+K</span>
+          </button>
         </div>
 
         <nav className="flex flex-wrap gap-1">

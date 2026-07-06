@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from 'react'
 import { getSymbols, getKlines, sleep } from '../lib/crypto/binanceApi'
 import { analyzeKlines, calcTPSL, calcLeverage, getMMR } from '../lib/crypto/indicadores'
+import { useCryptoScan } from '../lib/cryptoScan'
 
 const INTERVALOS = [
   { valor: '15m', etiqueta: '15 minutos' },
@@ -318,6 +319,7 @@ export default function CryptoScreener() {
   const [sortAsc, setSortAsc] = useState(true)
   const [seleccionado, setSeleccionado] = useState(null)
   const cacheKlines = useRef(new Map())
+  const { setUltimoScan } = useCryptoScan()
 
   const escanear = async () => {
     if (corriendo) return
@@ -346,6 +348,7 @@ export default function CryptoScreener() {
       resultados.sort((a, b) => a.score - b.score)
       setDatos(resultados)
       setUltimaActualizacion(new Date().toLocaleTimeString('es-AR'))
+      setUltimoScan(resultados)
     } catch (e) {
       setErrorMsg(e.message)
     } finally {

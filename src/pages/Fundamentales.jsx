@@ -15,6 +15,7 @@ import FiltrosRango, { aplicarFiltrosRango } from '../components/FiltrosRango'
 import Leyenda from '../components/Leyenda'
 import Glosario from '../components/Glosario'
 import Pendientes from '../components/Pendientes'
+import TickerLink from '../components/TickerLink'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 import { fmtNum, fmtPct, fmtMarketCap, estiloPER, estiloPEG } from '../lib/formato'
 
@@ -55,8 +56,16 @@ const columnas = [
     align: 'left',
     valor: (r) => r.ticker,
     render: (r) => (
-      <span className="font-semibold text-terminal-text" title={r.nombre || r.ticker}>
-        {r.ticker}
+      <span className="inline-flex items-center gap-1 font-semibold text-terminal-text">
+        <TickerLink ticker={r.ticker} title={r.nombre || r.ticker} />
+        {r.stale && (
+          <span
+            className="text-terminal-warn"
+            title={`Dato arrastrado de la última corrida exitosa (${r.actualizado ?? '?'})`}
+          >
+            🕒
+          </span>
+        )}
       </span>
     ),
   },

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useJson } from '../lib/useJson'
 import { GLOSARIO_POR_CLAVE } from '../lib/glosario'
 import Glosario from '../components/Glosario'
+import TickerLink from '../components/TickerLink'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 import { fmtNum, fmtPct, fmtMarketCap, estiloPER, estiloPEG, claseAlineacion } from '../lib/formato'
 
@@ -126,7 +127,7 @@ export default function Comparables() {
                   >
                     <td className="whitespace-nowrap px-1.5 py-1.5 font-semibold text-terminal-text">
                       {p.en_portfolio && <span className="text-terminal-accent">★ </span>}
-                      {p.ticker}
+                      <TickerLink ticker={p.ticker} />
                     </td>
                     <td className="max-w-[180px] truncate px-1.5 py-1.5 text-terminal-dim" title={p.nombre}>
                       {p.nombre || '—'}

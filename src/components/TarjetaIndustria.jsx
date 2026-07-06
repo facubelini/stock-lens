@@ -4,6 +4,7 @@ import BotonPin from './BotonPin'
 import EditorClasificacion from './EditorClasificacion'
 import Semaforo from './Semaforo'
 import Sparkline from './Sparkline'
+import TickerLink from './TickerLink'
 
 // Recuadro de una industria: encabezado con promedios (Var%, RSI, score) +
 // lista de tickers con favorito, score, sparkline, Var% y RSI.
@@ -67,9 +68,15 @@ export default function TarjetaIndustria({
               <td className="py-1 pl-1 pr-1 align-middle">
                 <span className="flex items-center gap-1.5">
                   <Semaforo resultado={r._score} mostrarNumero={false} />
-                  <span className="font-semibold" title={r.nombre}>
-                    {r.ticker}
-                  </span>
+                  <TickerLink ticker={r.ticker} className="font-semibold" title={r.nombre} />
+                  {r.stale && (
+                    <span
+                      className="text-terminal-warn"
+                      title={`Dato arrastrado de la última corrida exitosa (${r.actualizado ?? '?'})`}
+                    >
+                      🕒
+                    </span>
+                  )}
                   <EditorClasificacion
                     ticker={r.ticker}
                     industria={r.industria}

@@ -12,7 +12,7 @@ import json
 import math
 import re
 import unicodedata
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -44,6 +44,8 @@ PERIODO_HISTORICO = "5y"
 # Si el ticker "pelado" no trae datos, se reintenta con estos sufijos:
 # .SA = B3 (Brasil), .BA = BYMA (Argentina).
 SUFIJOS = ["", ".SA", ".BA"]
+RUTA_HISTORIAL = DIR_SALIDA / "screener_historial.json"
+DIAS_HISTORIAL = 90
 
 
 # ---------------------------------------------------------------------------
@@ -486,6 +488,62 @@ def escribir(nombre, obj):
     print(f"  -> {ruta.relative_to(RAIZ)}")
 
 
+def _base_ticker(sym):
+    """Le saca el sufijo .SA/.BA a un simbolo resuelto, para poder matchear
+    contra el ticker "pelado" del Excel."""
+    return re.sub(r"\.(SA|BA)$", "", str(sym))
+
+
+def cargar_lista_previa(nombre, clave=None):
+    """Carga un JSON de la corrida anterior (si existe), indexado por ticker
+    pelado. Sirve para arrastrar el ultimo dato bueno de un ticker que falla
+    en la corrida actual (yfinance flaky / rate-limit puntual) en vez de que
+    desaparezca del todo hasta la proxima corrida exitosa."""
+    ruta = DIR_SALIDA / nombre
+    if not ruta.exists():
+        return {}
+    try:
+        data = json.loads(ruta.read_text(encoding="utf-8"))
+    except Exception:  # noqa: BLE001
+        return {}
+    lista = data.get(clave) if clave else data
+    if not isinstance(lista, list):
+        return {}
+    return {_base_ticker(f["ticker"]): f for f in lista if f.get("ticker")}
+
+
+def actualizar_historial_screener(screener_actual, ahora):
+    """Agrega (o pisa, si ya se corrio hoy) la entrada de hoy en el historial
+    de veredictos del screener, y recorta lo mas viejo que DIAS_HISTORIAL.
+    Solo guarda el verdict por temporalidad (no el detalle completo) para que
+    el JSON no crezca de mas."""
+    historial = []
+    if RUTA_HISTORIAL.exists():
+        try:
+            historial = json.loads(RUTA_HISTORIAL.read_text(encoding="utf-8"))
+            if not isinstance(historial, list):
+                historial = []
+        except Exception:  # noqa: BLE001
+            historial = []
+
+    hoy = ahora.strftime("%Y-%m-%d")
+    historial = [h for h in historial if h.get("fecha") != hoy]
+    tickers_hoy = {
+        f["ticker"]: {
+            tf: (f.get(tf) or {}).get("verdict")
+            for tf in ("diario", "semanal", "mensual")
+            if f.get(tf)
+        }
+        for f in screener_actual
+    }
+    historial.append({"fecha": hoy, "tickers": tickers_hoy})
+
+    corte = (ahora - timedelta(days=DIAS_HISTORIAL)).strftime("%Y-%m-%d")
+    historial = [h for h in historial if h.get("fecha", "") >= corte]
+    historial.sort(key=lambda h: h["fecha"])
+    return historial
+
+
 def resolver_ticker(t):
     """Descarga el historico probando el ticker tal cual y, si no hay datos,
     con sufijos .SA (Brasil) y .BA (Argentina). Devuelve
@@ -513,6 +571,17 @@ def main():
     tickers = leer_tickers()
     print(f"Procesando {len(tickers)} tickers (periodo {PERIODO_HISTORICO})...\n")
 
+    ahora = datetime.now(TZ)
+    ahora_iso = ahora.isoformat()
+
+    # Datos de la corrida anterior, para arrastrar el ultimo dato bueno de un
+    # ticker que falla hoy (yfinance flaky) en vez de que desaparezca del
+    # listado hasta la proxima corrida exitosa.
+    prev_listado = cargar_lista_previa("listado.json", clave="acciones")
+    prev_medias = cargar_lista_previa("medias.json")
+    prev_fundamentales = cargar_lista_previa("fundamentales.json")
+    prev_screener = cargar_lista_previa("screener.json")
+
     listado, medias, fundamentales, screener, invalidos = [], [], [], [], []
 
     for _, fila in tickers.iterrows():
@@ -520,8 +589,19 @@ def main():
 
         sym, tk, hist, closes = resolver_ticker(t)
         if sym is None:
-            print(f"  ! {t}: sin datos (probe .SA / .BA)")
             invalidos.append(t)
+            previo = prev_listado.get(t)
+            if previo:
+                print(f"  ~ {t}: sin datos ahora, se mantiene el ultimo dato ({previo.get('actualizado', '?')})")
+                listado.append({**previo, "stale": True})
+                if t in prev_medias:
+                    medias.append({**prev_medias[t], "stale": True})
+                if t in prev_fundamentales:
+                    fundamentales.append({**prev_fundamentales[t], "stale": True})
+                if t in prev_screener:
+                    screener.append({**prev_screener[t], "stale": True})
+            else:
+                print(f"  ! {t}: sin datos (probe .SA / .BA)")
             continue
 
         # info (fundamentales) — tolerante a fallos de red / campos faltantes.
@@ -547,7 +627,14 @@ def main():
         ema150 = closes.ewm(span=150, adjust=False).mean().iloc[-1]
         sma200 = closes.rolling(200).mean().iloc[-1] if len(closes) >= 200 else None
 
-        base = {"ticker": sym, "nombre": nombre, "industria": industria, "pais": pais}
+        base = {
+            "ticker": sym,
+            "nombre": nombre,
+            "industria": industria,
+            "pais": pais,
+            "actualizado": ahora_iso,
+            "stale": False,
+        }
 
         # Sparkline: ultimas ~30 ruedas de cierre para el mini-grafico del frontend.
         spark = [round(float(x), 2) for x in closes.tail(30).tolist()]
@@ -594,25 +681,33 @@ def main():
                 }
             )
 
-    # Salvaguarda: si esta corrida recupero MUCHOS menos validos que la ultima
-    # (tipico de un rate-limit de Yahoo en CI), no pisar los datos buenos.
-    anterior = 0
+    # Salvaguarda: si esta corrida consiguio datos FRESCOS (no arrastrados) de
+    # muchos menos tickers que la ultima (tipico de un rate-limit de Yahoo en
+    # CI), no pisar los datos buenos. Se mide sobre frescos, no sobre el total
+    # con arrastre, porque con arrastre el listado se ve "completo" aunque
+    # yfinance haya fallado para casi todos hoy.
+    anterior_frescos = 0
     meta_prev = DIR_SALIDA / "meta.json"
     if meta_prev.exists():
         try:
-            anterior = int(json.loads(meta_prev.read_text(encoding="utf-8")).get("n_tickers", 0))
+            meta_datos_prev = json.loads(meta_prev.read_text(encoding="utf-8"))
+            anterior_frescos = int(meta_datos_prev.get("n_frescos", meta_datos_prev.get("n_tickers", 0)) or 0)
         except Exception:  # noqa: BLE001
-            anterior = 0
-    if anterior and len(listado) < anterior * 0.5:
+            anterior_frescos = 0
+
+    n_frescos = sum(1 for f in listado if not f.get("stale"))
+    if anterior_frescos and n_frescos < anterior_frescos * 0.5:
         print(
-            f"\nABORTO la escritura: {len(listado)} validos vs {anterior} previos "
+            f"\nABORTO la escritura: {n_frescos} frescos vs {anterior_frescos} previos "
             "(posible rate-limit). Se conservan los datos anteriores."
         )
         return
 
+    n_arrastrados = sum(1 for f in listado if f.get("stale"))
     meta = {
-        "ultima_actualizacion": datetime.now(TZ).isoformat(),
+        "ultima_actualizacion": ahora_iso,
         "n_tickers": len(listado),
+        "n_frescos": n_frescos,
         "tickers_invalidos": invalidos,
     }
 
@@ -624,15 +719,19 @@ def main():
     )
     print(f"Screener: {n_compra} ticker(s) con señal de COMPRA en alguna temporalidad.")
 
+    print("\nActualizando historial de señales...")
+    historial = actualizar_historial_screener(screener, ahora)
+
     print("\nEscribiendo JSON:")
     escribir("listado.json", {"acciones": listado, "promedios_por_industria": promedios})
     escribir("medias.json", medias)
     escribir("fundamentales.json", fundamentales)
     escribir("comparables.json", comparables)
     escribir("screener.json", screener)
+    escribir("screener_historial.json", historial)
     escribir("meta.json", meta)
 
-    print(f"\nListo. {len(listado)} validos, {len(invalidos)} invalidos.")
+    print(f"\nListo. {n_frescos} frescos, {n_arrastrados} arrastrados, {len(invalidos)} invalidos.")
     if invalidos:
         print(f"Invalidos: {invalidos}")
 

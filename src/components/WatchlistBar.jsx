@@ -1,7 +1,9 @@
 import { useRef, useState } from 'react'
 import { useWatchlist } from '../lib/watchlist'
+import { useClasificacion } from '../lib/clasificacion'
 import { parsearExcelTickers, descargarTickersXlsx } from '../lib/excel'
 import { getPat, setPat, agregarTickerRemoto } from '../lib/githubApi'
+import { exportarConfig, parsearConfig } from '../lib/configBackup'
 
 const btn =
   'rounded border border-terminal-border bg-terminal-panel px-2.5 py-1 hover:border-terminal-accent hover:text-terminal-text'
@@ -107,11 +109,14 @@ function ModalConfigPat({ onClose }) {
 // Barra global: armar "Mi lista" cargando un Excel o agregando tickers a mano.
 export default function WatchlistBar() {
   const { watchlist, setWatchlist, limpiar, agregar } = useWatchlist()
+  const { overrides, setOverride } = useClasificacion()
   const inputRef = useRef(null)
+  const inputBackupRef = useRef(null)
   const [error, setError] = useState(null)
   const [nuevo, setNuevo] = useState('')
   const [mostrarConfig, setMostrarConfig] = useState(false)
   const [estadoAlta, setEstadoAlta] = useState(null) // { tipo: 'cargando'|'ok'|'error', ticker, texto }
+  const [estadoBackup, setEstadoBackup] = useState(null) // { tipo: 'ok'|'error', texto }
 
   const onFile = async (e) => {
     const file = e.target.files?.[0]
@@ -155,6 +160,27 @@ export default function WatchlistBar() {
     }
   }
 
+  const onImportarConfig = async (e) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    try {
+      const texto = await file.text()
+      const { watchlist: wl, clasificacion } = parsearConfig(texto)
+      if (wl) setWatchlist(wl)
+      for (const [tk, campos] of Object.entries(clasificacion)) setOverride(tk, campos)
+      setEstadoBackup({
+        tipo: 'ok',
+        texto: `Restaurado${wl ? `: ${wl.length} tickers en tu lista` : ''}${
+          Object.keys(clasificacion).length ? `, ${Object.keys(clasificacion).length} clasificaciones` : ''
+        }.`,
+      })
+    } catch (err) {
+      setEstadoBackup({ tipo: 'error', texto: 'No se pudo leer el archivo: ' + err.message })
+    } finally {
+      e.target.value = ''
+    }
+  }
+
   return (
     <div className="border-b border-terminal-border bg-terminal-panel/50">
       <div className="flex w-full flex-wrap items-center gap-2 px-4 py-2 text-xs text-terminal-dim">
@@ -176,6 +202,30 @@ export default function WatchlistBar() {
           title="Configurar alta automática de tickers"
         >
           {getPat() ? '🔑 Auto: ON' : '🔑 Configurar auto'}
+        </button>
+
+        <input
+          ref={inputBackupRef}
+          type="file"
+          accept="application/json,.json"
+          onChange={onImportarConfig}
+          className="hidden"
+        />
+        <button
+          type="button"
+          className={btn}
+          onClick={() => exportarConfig(watchlist, overrides)}
+          title="Descarga tu lista + clasificaciones manuales en un JSON (sin el token, no incluye credenciales)"
+        >
+          ⬇ Backup config
+        </button>
+        <button
+          type="button"
+          className={btn}
+          onClick={() => inputBackupRef.current?.click()}
+          title="Restaura tu lista + clasificaciones desde un JSON exportado con Backup config"
+        >
+          ⬆ Restaurar config
         </button>
 
         {/* Alta manual de un ticker */}
@@ -229,6 +279,12 @@ export default function WatchlistBar() {
             {estadoAlta.tipo === 'cargando'
               ? `Publicando ${estadoAlta.ticker}…`
               : `${estadoAlta.ticker}: ${estadoAlta.texto}`}
+          </span>
+        )}
+
+        {estadoBackup && (
+          <span className={estadoBackup.tipo === 'error' ? 'text-terminal-down' : 'text-terminal-accent'}>
+            {estadoBackup.texto}
           </span>
         )}
       </div>

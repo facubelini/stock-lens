@@ -8,10 +8,14 @@ import Comparables from './pages/Comparables'
 import Screener from './pages/Screener'
 import HistoricoFundamental from './pages/HistoricoFundamental'
 import CryptoScreener from './pages/CryptoScreener'
+import TopSenales from './pages/TopSenales'
+import TickerDetalle from './pages/TickerDetalle'
+import ComandoPaleta from './components/ComandoPaleta'
 
 export default function App() {
   return (
     <div className="flex min-h-full flex-col">
+      <ComandoPaleta />
       <Header />
       <WatchlistBar />
       <main className="w-full flex-1 px-4 py-5">
@@ -23,6 +27,8 @@ export default function App() {
           <Route path="/screener" element={<Screener />} />
           <Route path="/historico" element={<HistoricoFundamental />} />
           <Route path="/cripto" element={<CryptoScreener />} />
+          <Route path="/top" element={<TopSenales />} />
+          <Route path="/ticker/:ticker" element={<TickerDetalle />} />
           <Route path="*" element={<Listado />} />
         </Routes>
       </main>

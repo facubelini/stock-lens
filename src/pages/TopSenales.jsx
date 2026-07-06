@@ -1,7 +1,6 @@
 import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useJson } from '../lib/useJson'
-import { useWatchlist, aplicarWatchlist } from '../lib/watchlist'
 import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { useCryptoScan } from '../lib/cryptoScan'
 import { TIMEFRAMES, prioridadScreener } from '../lib/screenerEstilos'
@@ -56,13 +55,11 @@ function Fila({ item }) {
 
 export default function TopSenales() {
   const { data: screenerData, cargando, error } = useJson('screener.json')
-  const { watchlist } = useWatchlist()
   const { overrides } = useClasificacion()
   const { ultimoScan } = useCryptoScan()
 
   const screenerRaw = useMemo(() => (Array.isArray(screenerData) ? screenerData : []), [screenerData])
-  const { filas: conWatchlist } = useMemo(() => aplicarWatchlist(screenerRaw, watchlist), [screenerRaw, watchlist])
-  const screenerFilas = useMemo(() => aplicarClasificacion(conWatchlist, overrides), [conWatchlist, overrides])
+  const screenerFilas = useMemo(() => aplicarClasificacion(screenerRaw, overrides), [screenerRaw, overrides])
 
   const items = useMemo(() => {
     const stocks = screenerFilas

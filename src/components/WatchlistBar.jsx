@@ -259,8 +259,8 @@ export default function WatchlistBar() {
           </>
         ) : (
           <span>
-            Cargá un Excel o agregá tickers a mano para armar <b>tu lista</b> (filtra las 3
-            pestañas). Se guarda en tu navegador.
+            Cargá un Excel o agregá tickers a mano para armar <b>tu lista de seguimiento</b> — se
+            usa en <b>Mi Cartera</b>, no filtra el resto de las pestañas. Se guarda en tu navegador.
           </span>
         )}
 

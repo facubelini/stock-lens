@@ -2,7 +2,6 @@ import { useMemo } from 'react'
 import { useJson } from '../lib/useJson'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
-import { useWatchlist, aplicarWatchlist } from '../lib/watchlist'
 import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { exportarCSV } from '../lib/csv'
 import { TIMEFRAMES, ESTILO_VERDICT, tieneSenal, prioridadScreener } from '../lib/screenerEstilos'
@@ -20,13 +19,11 @@ export default function Oportunidades() {
   const { data: fundData, cargando: cargF, error: errF } = useJson('fundamentales.json')
   const { data: compData, cargando: cargC } = useJson('comparables.json')
   const { data: screenerData, cargando: cargS } = useJson('screener.json')
-  const { watchlist } = useWatchlist()
   const { overrides } = useClasificacion()
   const { pins, isPinned, toggle } = usePins()
 
   const fundRaw = useMemo(() => (Array.isArray(fundData) ? fundData : (fundData?.acciones ?? [])), [fundData])
-  const { filas: conWatchlist } = useMemo(() => aplicarWatchlist(fundRaw, watchlist), [fundRaw, watchlist])
-  const fundamentales = useMemo(() => aplicarClasificacion(conWatchlist, overrides), [conWatchlist, overrides])
+  const fundamentales = useMemo(() => aplicarClasificacion(fundRaw, overrides), [fundRaw, overrides])
 
   const medianaPorIndustria = useMemo(() => {
     const m = new Map()

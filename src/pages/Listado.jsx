@@ -2,14 +2,12 @@ import { useMemo, useState } from 'react'
 import { useDatosCombinados } from '../lib/useDatosCombinados'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
-import { useWatchlist, aplicarWatchlist } from '../lib/watchlist'
 import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { calcularScore } from '../lib/score'
 import { exportarCSV } from '../lib/csv'
 import Controles from '../components/Controles'
 import TarjetaIndustria from '../components/TarjetaIndustria'
 import Leyenda from '../components/Leyenda'
-import Pendientes from '../components/Pendientes'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 
 const CAMPOS = ['ticker', 'nombre']
@@ -36,17 +34,12 @@ const COLS_CSV = [
 export default function Listado() {
   const { filas: merged, cargando, error } = useDatosCombinados()
   const { pins, isPinned, toggle } = usePins()
-  const { watchlist } = useWatchlist()
   const { overrides } = useClasificacion()
   const [orden, setOrden] = useState('score|desc')
 
-  const { filas: conWatchlist, pendientes } = useMemo(
-    () => aplicarWatchlist(merged, watchlist),
-    [merged, watchlist],
-  )
   const base = useMemo(
-    () => aplicarClasificacion(conWatchlist, overrides),
-    [conWatchlist, overrides],
+    () => aplicarClasificacion(merged, overrides),
+    [merged, overrides],
   )
   const scored = useMemo(() => base.map((r) => ({ ...r, _score: calcularScore(r) })), [base])
   const t = useTabla(scored, { camposBusqueda: CAMPOS })
@@ -130,14 +123,13 @@ export default function Listado() {
       />
 
       <Leyenda />
-      <Pendientes pendientes={pendientes} watchlist={watchlist} />
 
       {cargando ? (
         <TablaSkeleton columnas={4} />
       ) : error ? (
         <MensajeError mensaje={error} />
       ) : t.filtradas.length === 0 ? (
-        <Vacio texto={watchlist ? 'Ningún ticker de tu lista tiene datos todavía.' : undefined} />
+        <Vacio />
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {favoritos.length > 0 && (

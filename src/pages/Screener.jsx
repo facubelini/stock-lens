@@ -1,13 +1,11 @@
 import { useMemo, useState } from 'react'
 import { useJson } from '../lib/useJson'
 import { useTabla } from '../lib/useTabla'
-import { useWatchlist, aplicarWatchlist } from '../lib/watchlist'
 import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { exportarCSV } from '../lib/csv'
 import { getPat, dispararActualizacionDatos } from '../lib/githubApi'
 import { TIMEFRAMES, ESTILO_VERDICT, tieneSenal, prioridadScreener } from '../lib/screenerEstilos'
 import Controles from '../components/Controles'
-import Pendientes from '../components/Pendientes'
 import TickerLink from '../components/TickerLink'
 import BacktestScreener from '../components/BacktestScreener'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
@@ -46,15 +44,10 @@ function Celda({ dato }) {
 export default function Screener() {
   const { data, cargando, error } = useJson('screener.json')
   const raw = useMemo(() => (Array.isArray(data) ? data : []), [data])
-  const { watchlist } = useWatchlist()
   const { overrides } = useClasificacion()
-  const { filas: conWatchlist, pendientes } = useMemo(
-    () => aplicarWatchlist(raw, watchlist),
-    [raw, watchlist],
-  )
   const filas = useMemo(
-    () => aplicarClasificacion(conWatchlist, overrides),
-    [conWatchlist, overrides],
+    () => aplicarClasificacion(raw, overrides),
+    [raw, overrides],
   )
   const [tfFiltro, setTfFiltro] = useState({ diario: true, semanal: true, mensual: true })
   const [exigirTodas, setExigirTodas] = useState(false)
@@ -195,8 +188,6 @@ export default function Screener() {
         total={filas.length}
         mostrados={filtradas.length}
       />
-
-      <Pendientes pendientes={pendientes} watchlist={watchlist} />
 
       {cargando ? (
         <TablaSkeleton columnas={6} />

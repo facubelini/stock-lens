@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react'
 import { useJson } from '../lib/useJson'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
-import { useWatchlist, aplicarWatchlist } from '../lib/watchlist'
 import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { exportarCSV } from '../lib/csv'
 import { medianaDe } from '../lib/benchmarks'
@@ -14,7 +13,6 @@ import EditorClasificacion from '../components/EditorClasificacion'
 import FiltrosRango, { aplicarFiltrosRango } from '../components/FiltrosRango'
 import Leyenda from '../components/Leyenda'
 import Glosario from '../components/Glosario'
-import Pendientes from '../components/Pendientes'
 import TickerLink from '../components/TickerLink'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 import { fmtNum, fmtPct, fmtMarketCap, estiloPER, estiloPEG, estiloValor } from '../lib/formato'
@@ -210,15 +208,10 @@ function resumenGrupo(industria, fs, cols) {
 export default function Fundamentales() {
   const { data, cargando, error } = useJson('fundamentales.json')
   const raw = useMemo(() => (Array.isArray(data) ? data : (data?.acciones ?? [])), [data])
-  const { watchlist } = useWatchlist()
   const { overrides } = useClasificacion()
-  const { filas: conWatchlist, pendientes } = useMemo(
-    () => aplicarWatchlist(raw, watchlist),
-    [raw, watchlist],
-  )
   const filas = useMemo(
-    () => aplicarClasificacion(conWatchlist, overrides),
-    [conWatchlist, overrides],
+    () => aplicarClasificacion(raw, overrides),
+    [raw, overrides],
   )
   const { pins, isPinned, toggle } = usePins()
   const [agrupar, setAgrupar] = useState(true)
@@ -301,20 +294,13 @@ export default function Fundamentales() {
       />
 
       <Leyenda />
-      <Pendientes pendientes={pendientes} watchlist={watchlist} />
 
       {cargando ? (
         <TablaSkeleton columnas={11} />
       ) : error ? (
         <MensajeError mensaje={error} />
       ) : filasFinal.length === 0 ? (
-        <Vacio
-          texto={
-            watchlist && !t.filtradas.length
-              ? 'Ningún ticker de tu lista tiene datos todavía.'
-              : 'Ninguna acción cumple los filtros de rango actuales.'
-          }
-        />
+        <Vacio texto="Ninguna acción cumple los filtros de rango actuales." />
       ) : (
         <Tabla
           columnas={columnasConPin}

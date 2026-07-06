@@ -636,10 +636,26 @@ def main():
             "stale": False,
         }
 
-        # Sparkline: ultimas ~30 ruedas de cierre para el mini-grafico del frontend.
-        spark = [round(float(x), 2) for x in closes.tail(30).tolist()]
+        # Sparkline: ultimas ~180 ruedas (~8-9 meses) de cierre. El sparkline
+        # chico de las tarjetas de Listado usa las mismas ~180 (se ve igual,
+        # mas denso) y la vista de detalle de ticker lo agranda para que
+        # sirva como grafico de precio real.
+        spark = [round(float(x), 2) for x in closes.tail(180).tolist()]
+        # Rango de 52 semanas (o lo que haya, para tickers con poco historial).
+        ventana_52w = closes.tail(min(len(closes), 252))
+        high_52w = float(ventana_52w.max())
+        low_52w = float(ventana_52w.min())
 
-        listado.append({**base, "var_pct": num(var_pct, 2), "rsi": num(rsi, 2), "spark": spark})
+        listado.append(
+            {
+                **base,
+                "var_pct": num(var_pct, 2),
+                "rsi": num(rsi, 2),
+                "spark": spark,
+                "high_52w": num(high_52w, 2),
+                "low_52w": num(low_52w, 2),
+            }
+        )
 
         medias.append(
             {

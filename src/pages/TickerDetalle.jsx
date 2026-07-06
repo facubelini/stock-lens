@@ -3,8 +3,10 @@ import { useParams, Link } from 'react-router-dom'
 import { useJson } from '../lib/useJson'
 import { useDatosCombinados } from '../lib/useDatosCombinados'
 import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
+import { useWatchlist } from '../lib/watchlist'
+import { usePins } from '../lib/usePins'
 import { GLOSARIO_POR_CLAVE } from '../lib/glosario'
-import { TIMEFRAMES, ESTILO_VERDICT } from '../lib/screenerEstilos'
+import { TIMEFRAMES, ESTILO_VERDICT, prioridadScreener } from '../lib/screenerEstilos'
 import {
   fmtPct,
   fmtNum,
@@ -17,6 +19,9 @@ import {
   estiloPEG,
 } from '../lib/formato'
 import Sparkline from '../components/Sparkline'
+import BotonPin from '../components/BotonPin'
+import EditorClasificacion from '../components/EditorClasificacion'
+import TickerLink from '../components/TickerLink'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 
 const RATIOS = [
@@ -43,10 +48,16 @@ const DIST_MEDIAS = [
   { key: 'dist_sma200', label: 'SMA200' },
 ]
 
+const N_PEERS = 2
+
 function renderRatio(r, valor) {
   if (r.esCap) return fmtMarketCap(valor)
   if (r.esPct) return fmtPct(valor)
   return fmtNum(valor, r.dec ?? 2)
+}
+
+function esETF(datos) {
+  return /etf/i.test(datos?.sector ?? '') || /etf/i.test(datos?.industria ?? '')
 }
 
 function CardVerdict({ tf, dato }) {
@@ -98,6 +109,29 @@ function FranjaHistorial({ tfKey, entradas }) {
   )
 }
 
+// Posición del precio dentro del rango de 52 semanas.
+function Rango52Semanas({ precio, min, max }) {
+  if (precio == null || min == null || max == null || max <= min) return null
+  const pos = Math.min(100, Math.max(0, ((precio - min) / (max - min)) * 100))
+  return (
+    <div className="rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2.5">
+      <div className="mb-1.5 flex items-center justify-between text-[11px] text-terminal-dim">
+        <span>52 semanas: {fmtPrecio(min)}</span>
+        <span>{fmtPrecio(max)}</span>
+      </div>
+      <div className="relative h-1.5 rounded-full bg-terminal-border">
+        <div
+          className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-terminal-accent"
+          style={{ left: `${pos}%` }}
+        />
+      </div>
+    </div>
+  )
+}
+
+const btnExterno =
+  'rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-xs text-terminal-dim hover:border-terminal-accent hover:text-terminal-text'
+
 export default function TickerDetalle() {
   const { ticker: tickerParam } = useParams()
   const ticker = decodeURIComponent(tickerParam || '').toUpperCase()
@@ -108,11 +142,22 @@ export default function TickerDetalle() {
   const { data: historialData } = useJson('screener_historial.json')
   const { data: historicoTickersData } = useJson('historico_tickers.json')
   const { overrides } = useClasificacion()
+  const { watchlist, agregar, quitar } = useWatchlist()
+  const { isPinned, toggle } = usePins()
 
   const conOverrides = useMemo(() => aplicarClasificacion(base, overrides), [base, overrides])
   const fila = useMemo(
     () => conOverrides.find((f) => f.ticker.toUpperCase() === ticker),
     [conOverrides, ticker],
+  )
+
+  const industrias = useMemo(
+    () => [...new Set(conOverrides.map((f) => f.industria).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es')),
+    [conOverrides],
+  )
+  const sectores = useMemo(
+    () => [...new Set(conOverrides.map((f) => f.sector).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es')),
+    [conOverrides],
   )
 
   const screenerFila = useMemo(() => {
@@ -131,6 +176,14 @@ export default function TickerDetalle() {
     () => grupoComparables?.pares?.find((p) => p.ticker.toUpperCase() === ticker),
     [grupoComparables, ticker],
   )
+
+  const peersTop = useMemo(() => {
+    if (!grupoComparables) return []
+    return [...grupoComparables.pares]
+      .filter((p) => p.ticker.toUpperCase() !== ticker)
+      .sort((a, b) => (b.market_cap ?? 0) - (a.market_cap ?? 0))
+      .slice(0, N_PEERS)
+  }, [grupoComparables, ticker])
 
   const historialTicker = useMemo(() => {
     const hist = Array.isArray(historialData) ? historialData : []
@@ -166,6 +219,8 @@ export default function TickerDetalle() {
   }
 
   const datos = fila ?? parPropio
+  const enWatchlist = Boolean(watchlist?.some((w) => w.ticker === ticker))
+  const esFondo = esETF(datos)
 
   return (
     <div>
@@ -175,8 +230,32 @@ export default function TickerDetalle() {
 
       <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="flex items-center gap-2 text-2xl font-bold text-terminal-text">
-            {ticker}
+          <div className="flex flex-wrap items-center gap-2">
+            <h1 className="text-2xl font-bold text-terminal-text">{ticker}</h1>
+            {fila && (
+              <>
+                <BotonPin ticker={ticker} isPinned={isPinned} toggle={toggle} />
+                <button
+                  type="button"
+                  onClick={() => (enWatchlist ? quitar(ticker) : agregar(ticker))}
+                  title={enWatchlist ? 'Quitar de "Mi lista"' : 'Agregar a "Mi lista"'}
+                  className={`rounded border px-2 py-0.5 text-xs ${
+                    enWatchlist
+                      ? 'border-terminal-accent text-terminal-accent'
+                      : 'border-terminal-border text-terminal-dim hover:border-terminal-accent hover:text-terminal-text'
+                  }`}
+                >
+                  {enWatchlist ? '✓ En mi lista' : '+ Mi lista'}
+                </button>
+                <EditorClasificacion
+                  ticker={ticker}
+                  industria={fila.industria}
+                  sector={fila.sector}
+                  industrias={industrias}
+                  sectores={sectores}
+                />
+              </>
+            )}
             {datos.stale && (
               <span
                 className="text-sm text-terminal-warn"
@@ -185,14 +264,31 @@ export default function TickerDetalle() {
                 🕒 desactualizado
               </span>
             )}
-          </h1>
+          </div>
           <p className="text-sm text-terminal-dim">{datos.nombre}</p>
           <p className="mt-1 text-xs text-terminal-dim">
-            {datos.industria || 'Sin industria'} · {datos.sector || fila?.pais || '—'}
-            {fila?.actualizado && (
-              <> · actualizado {fmtFecha(fila.actualizado)}</>
-            )}
+            {datos.industria || 'Sin industria'}
+            {datos.sector && datos.sector !== datos.industria && <> · {datos.sector}</>}
+            {fila?.actualizado && <> · actualizado {fmtFecha(fila.actualizado)}</>}
           </p>
+          <div className="mt-2 flex gap-2">
+            <a
+              href={`https://finance.yahoo.com/quote/${encodeURIComponent(ticker)}`}
+              target="_blank"
+              rel="noreferrer"
+              className={btnExterno}
+            >
+              Yahoo Finance ↗
+            </a>
+            <a
+              href={`https://www.tradingview.com/symbols/${encodeURIComponent(ticker.replace('.', '-'))}/`}
+              target="_blank"
+              rel="noreferrer"
+              className={btnExterno}
+            >
+              TradingView ↗
+            </a>
+          </div>
           {soloComparable && (
             <p className="mt-2 max-w-md text-xs text-terminal-warn">
               No está en tu universo de tickers — se muestra solo como comparable de la industria{' '}
@@ -219,9 +315,33 @@ export default function TickerDetalle() {
         )}
       </div>
 
+      {fila?.spark?.length > 1 && (
+        <div className="mb-5 grid grid-cols-1 gap-3 lg:grid-cols-3">
+          <div className="overflow-hidden rounded-lg border border-terminal-border bg-terminal-panel p-3 lg:col-span-2">
+            <div className="mb-1.5 flex items-center justify-between text-[11px] text-terminal-dim">
+              <span>Precio (últimas {fila.spark.length} ruedas)</span>
+              <span>
+                mín {fmtPrecio(Math.min(...fila.spark))} · máx {fmtPrecio(Math.max(...fila.spark))}
+              </span>
+            </div>
+            <Sparkline datos={fila.spark} ancho={860} alto={140} />
+          </div>
+          <Rango52Semanas precio={fila.precio} min={fila.low_52w} max={fila.high_52w} />
+        </div>
+      )}
+
       {screenerFila && (
         <div className="mb-5">
-          <h2 className="mb-2 text-sm font-semibold text-terminal-text">Screener</h2>
+          <h2 className="mb-2 flex items-center gap-2 text-sm font-semibold text-terminal-text">
+            Screener
+            <span
+              className="font-normal text-terminal-dim"
+              title="Score de convicción (el mismo que ordena Top Señales): favorece COMPRA/CERCA, penaliza VENTA"
+            >
+              · conv. {prioridadScreener(screenerFila) > 0 ? '+' : ''}
+              {prioridadScreener(screenerFila).toFixed(1)}
+            </span>
+          </h2>
           <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
             {TIMEFRAMES.map((tf) => (
               <CardVerdict key={tf.key} tf={tf} dato={screenerFila[tf.key]} />
@@ -275,48 +395,67 @@ export default function TickerDetalle() {
 
       <div className="mb-5">
         <h2 className="mb-2 text-sm font-semibold text-terminal-text">Fundamentales</h2>
-        <div className="overflow-x-auto rounded-lg border border-terminal-border">
-          <table className="min-w-full border-collapse text-sm">
-            <thead>
-              <tr className="bg-terminal-panel2 text-left text-xs uppercase tracking-wide text-terminal-dim">
-                <th className="px-2 py-2 font-semibold">Ratio</th>
-                <th className="px-2 py-2 text-right font-semibold">{ticker}</th>
-                {grupoComparables && (
-                  <th className="px-2 py-2 text-right font-semibold">
-                    Mediana · {grupoComparables.industria}
-                  </th>
-                )}
-              </tr>
-            </thead>
-            <tbody>
-              {RATIOS.map((r) => (
-                <tr key={r.key} className="border-t border-terminal-border">
-                  <td className="px-2 py-1.5 text-terminal-dim" title={GLOSARIO_POR_CLAVE[r.key]?.def}>
-                    {r.label}
-                  </td>
-                  <td
-                    className="px-2 py-1.5 text-right tabular font-semibold"
-                    style={r.estilo ? r.estilo(datos[r.key]) : undefined}
-                  >
-                    {renderRatio(r, datos[r.key])}
-                  </td>
-                  {grupoComparables && (
-                    <td className="px-2 py-1.5 text-right tabular text-terminal-info">
-                      {renderRatio(r, grupoComparables.mediana?.[r.key])}
-                    </td>
-                  )}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-        {grupoComparables && (
-          <Link
-            to="/comparables"
-            className="mt-1.5 inline-block text-xs text-terminal-dim hover:text-terminal-accent"
-          >
-            Ver todos los comparables de {grupoComparables.industria} →
-          </Link>
+        {esFondo ? (
+          <p className="rounded-lg border border-terminal-border bg-terminal-panel p-4 text-xs text-terminal-dim">
+            Los ratios fundamentales tradicionales (PER, PEG, márgenes, etc.) no aplican acá:{' '}
+            {ticker} es un fondo (ETF), no una empresa con ganancias propias.
+          </p>
+        ) : (
+          <>
+            <div className="overflow-x-auto rounded-lg border border-terminal-border">
+              <table className="min-w-full border-collapse text-sm">
+                <thead>
+                  <tr className="bg-terminal-panel2 text-left text-xs uppercase tracking-wide text-terminal-dim">
+                    <th className="px-2 py-2 font-semibold">Ratio</th>
+                    <th className="px-2 py-2 text-right font-semibold">{ticker}</th>
+                    {peersTop.map((p) => (
+                      <th key={p.ticker} className="px-2 py-2 text-right font-semibold">
+                        <TickerLink ticker={p.ticker} />
+                      </th>
+                    ))}
+                    {grupoComparables && (
+                      <th className="px-2 py-2 text-right font-semibold">
+                        Mediana · {grupoComparables.industria}
+                      </th>
+                    )}
+                  </tr>
+                </thead>
+                <tbody>
+                  {RATIOS.map((r) => (
+                    <tr key={r.key} className="border-t border-terminal-border">
+                      <td className="px-2 py-1.5 text-terminal-dim" title={GLOSARIO_POR_CLAVE[r.key]?.def}>
+                        {r.label}
+                      </td>
+                      <td
+                        className="px-2 py-1.5 text-right tabular font-semibold"
+                        style={r.estilo ? r.estilo(datos[r.key]) : undefined}
+                      >
+                        {renderRatio(r, datos[r.key])}
+                      </td>
+                      {peersTop.map((p) => (
+                        <td key={p.ticker} className="px-2 py-1.5 text-right tabular text-terminal-dim">
+                          {renderRatio(r, p[r.key])}
+                        </td>
+                      ))}
+                      {grupoComparables && (
+                        <td className="px-2 py-1.5 text-right tabular text-terminal-info">
+                          {renderRatio(r, grupoComparables.mediana?.[r.key])}
+                        </td>
+                      )}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            {grupoComparables && (
+              <Link
+                to="/comparables"
+                className="mt-1.5 inline-block text-xs text-terminal-dim hover:text-terminal-accent"
+              >
+                Ver todos los comparables de {grupoComparables.industria} →
+              </Link>
+            )}
+          </>
         )}
       </div>
 

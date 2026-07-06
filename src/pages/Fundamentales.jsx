@@ -17,7 +17,16 @@ import Glosario from '../components/Glosario'
 import Pendientes from '../components/Pendientes'
 import TickerLink from '../components/TickerLink'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
-import { fmtNum, fmtPct, fmtMarketCap, estiloPER, estiloPEG } from '../lib/formato'
+import { fmtNum, fmtPct, fmtMarketCap, estiloPER, estiloPEG, estiloValor } from '../lib/formato'
+
+const RECOMENDACION_LABEL = {
+  strong_buy: 'Compra fuerte',
+  buy: 'Compra',
+  hold: 'Mantener',
+  underperform: 'Bajo rendimiento',
+  sell: 'Venta',
+  strong_sell: 'Venta fuerte',
+}
 
 const CAMPOS = ['ticker', 'nombre']
 const ayudaDe = (key) => GLOSARIO_POR_CLAVE[key]?.def
@@ -136,12 +145,32 @@ const columnas = [
   numCol('beta', 'Beta'),
   numCol('debt_to_equity', 'Deuda/Eq.'),
   numCol('current_ratio', 'Liquidez'),
+  numCol('target_mean_price', 'Precio obj.'),
+  {
+    key: 'upside_pct',
+    label: 'Upside',
+    align: 'right',
+    valor: (r) => r.upside_pct,
+    estilo: (r) => estiloValor(r.upside_pct, 25),
+    render: (r) => valorAcotado(fmtPct(r.upside_pct, { signo: true })),
+    ayuda: ayudaDe('upside_pct'),
+  },
+  {
+    key: 'recommendation_key',
+    label: 'Recom.',
+    align: 'left',
+    valor: (r) => r.recommendation_key,
+    render: (r) => valorAcotado(RECOMENDACION_LABEL[r.recommendation_key] ?? '—'),
+    valorCSV: (r) => RECOMENDACION_LABEL[r.recommendation_key] ?? '',
+    ayuda: ayudaDe('recommendation_key'),
+  },
 ]
 
 // Claves numéricas para la fila de mediana por industria (benchmark).
 const CLAVES_BENCH = [
   'per_trailing', 'per_forward', 'peg', 'ev_sales', 'pb', 'ps', 'market_cap',
   'eps', 'profit_margin', 'roe', 'dividend_yield', 'beta', 'debt_to_equity', 'current_ratio',
+  'target_mean_price', 'upside_pct',
 ]
 
 // Fila de resumen: mediana de cada ratio dentro de la industria (parámetro real del grupo).

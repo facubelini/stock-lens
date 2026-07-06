@@ -7,10 +7,12 @@ const tabs = [
   { to: '/medias', label: 'Medias móviles' },
   { to: '/fundamentales', label: 'Fundamentales' },
   { to: '/comparables', label: 'Comparables' },
+  { to: '/oportunidades', label: '💡 Oportunidades' },
   { to: '/screener', label: 'Screener' },
   { to: '/historico', label: 'Histórico Fundamental' },
   { to: '/cripto', label: 'Crypto Screener' },
   { to: '/top', label: '🔥 Top Señales' },
+  { to: '/cartera', label: '📋 Mi Cartera' },
 ]
 
 export default function Header() {

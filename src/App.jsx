@@ -5,11 +5,13 @@ import Listado from './pages/Listado'
 import Medias from './pages/Medias'
 import Fundamentales from './pages/Fundamentales'
 import Comparables from './pages/Comparables'
+import Oportunidades from './pages/Oportunidades'
 import Screener from './pages/Screener'
 import HistoricoFundamental from './pages/HistoricoFundamental'
 import CryptoScreener from './pages/CryptoScreener'
 import CryptoDetalle from './pages/CryptoDetalle'
 import TopSenales from './pages/TopSenales'
+import Cartera from './pages/Cartera'
 import TickerDetalle from './pages/TickerDetalle'
 import ComandoPaleta from './components/ComandoPaleta'
 
@@ -25,6 +27,8 @@ export default function App() {
           <Route path="/medias" element={<Medias />} />
           <Route path="/fundamentales" element={<Fundamentales />} />
           <Route path="/comparables" element={<Comparables />} />
+          <Route path="/oportunidades" element={<Oportunidades />} />
+          <Route path="/cartera" element={<Cartera />} />
           <Route path="/screener" element={<Screener />} />
           <Route path="/historico" element={<HistoricoFundamental />} />
           <Route path="/cripto" element={<CryptoScreener />} />

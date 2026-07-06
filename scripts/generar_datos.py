@@ -395,7 +395,50 @@ def extraer_fundamentales(info):
         "beta": g("beta"),
         "debt_to_equity": g("debtToEquity"),
         "current_ratio": g("currentRatio"),
+        # Consenso de analistas (gratis via yfinance, sin key). recommendation_key
+        # es texto ("buy"/"hold"/etc.), se maneja aparte de los campos numericos.
+        "target_mean_price": g("targetMeanPrice"),
+        "n_analistas": g("numberOfAnalystOpinions"),
+        "recommendation_key": info.get("recommendationKey") or None,
     }
+
+
+TAGS_INSIDER_COMPRA = ("purchase", "buy")
+TAGS_INSIDER_VENTA = ("sale", "sell")
+DIAS_INSIDER = 180
+
+
+def resumen_insider(tk):
+    """Resumen de transacciones de insiders (directivos/directores comprando o
+    vendiendo sus propias acciones) de los ultimos ~6 meses. yfinance no
+    clasifica la columna "Transaction" de forma confiable: se interpreta el
+    texto libre de "Text" (ej. "Sale at price 295.14 per share.",
+    "Purchase at price..."). Compra insider fuerte suele ser señal alcista;
+    tolerante a fallos porque esta info es menos estable que precio/info."""
+    try:
+        df = tk.insider_transactions
+    except Exception:  # noqa: BLE001
+        return None
+    if df is None or df.empty or "Start Date" not in df.columns:
+        return None
+    try:
+        corte = pd.Timestamp.now(tz=None) - pd.Timedelta(days=DIAS_INSIDER)
+        fechas = pd.to_datetime(df["Start Date"], errors="coerce")
+        reciente = df[fechas >= corte].copy()
+        if reciente.empty:
+            return {"n_compras": 0, "n_ventas": 0, "valor_compras": 0.0, "valor_ventas": 0.0}
+        texto = reciente.get("Text", "").astype(str).str.lower()
+        es_compra = texto.str.contains("|".join(TAGS_INSIDER_COMPRA), na=False)
+        es_venta = texto.str.contains("|".join(TAGS_INSIDER_VENTA), na=False)
+        valores = pd.to_numeric(reciente.get("Value"), errors="coerce").fillna(0)
+        return {
+            "n_compras": int(es_compra.sum()),
+            "n_ventas": int(es_venta.sum()),
+            "valor_compras": float(valores[es_compra].sum()),
+            "valor_ventas": float(valores[es_venta].sum()),
+        }
+    except Exception:  # noqa: BLE001
+        return None
 
 
 def _normalizar_industria(s):
@@ -670,12 +713,19 @@ def main():
 
         fund = extraer_fundamentales(info)
         mc = fund.pop("market_cap")
+        recommendation_key = fund.pop("recommendation_key")  # texto, no pasa por num()
+        target_mean_price = fund.get("target_mean_price")
+        upside_pct = ((target_mean_price / precio - 1) * 100) if target_mean_price and precio else None
+        insider = resumen_insider(tk)
         fundamentales.append(
             {
                 **base,
                 **{k: num(v, 2) for k, v in fund.items()},
                 "market_cap": int(mc) if mc else None,
                 "sector": info.get("sector") or None,
+                "recommendation_key": recommendation_key,
+                "upside_pct": num(upside_pct, 2),
+                "insider": insider,
             }
         )
 

@@ -88,6 +88,24 @@ export const GLOSARIO = [
     def: 'Activo corriente sobre pasivo corriente: capacidad de cubrir deudas a menos de un año.',
     guia: '>1 sano · <1 puede indicar tensión de caja.',
   },
+  {
+    clave: 'target_mean_price',
+    label: 'Precio objetivo',
+    def: 'Promedio de los precios objetivo a 12 meses que estiman los analistas que siguen la acción.',
+    guia: 'Es consenso de Wall Street, no una garantía — a veces está muy desalineado del precio real.',
+  },
+  {
+    clave: 'upside_pct',
+    label: 'Upside',
+    def: 'Diferencia % entre el precio objetivo de los analistas y el precio actual.',
+    guia: 'Positivo = ven potencial de suba · negativo = ya la ven cara para su propio objetivo.',
+  },
+  {
+    clave: 'recommendation_key',
+    label: 'Recomendación',
+    def: 'Consenso de recomendación de los analistas que siguen la acción.',
+    guia: 'Es un resumen categórico del upside — usalo como referencia adicional, no como señal única.',
+  },
 ]
 
 // Mapa clave -> entrada, para tooltips por columna.

@@ -39,7 +39,18 @@ const RATIOS = [
   { key: 'beta', label: 'Beta', dec: 2 },
   { key: 'debt_to_equity', label: 'Deuda/Eq.', dec: 2 },
   { key: 'current_ratio', label: 'Liquidez', dec: 2 },
+  { key: 'target_mean_price', label: 'Precio objetivo', dec: 2 },
+  { key: 'upside_pct', label: 'Upside', esPct: true },
 ]
+
+const RECOMENDACION_LABEL = {
+  strong_buy: 'Compra fuerte',
+  buy: 'Compra',
+  hold: 'Mantener',
+  underperform: 'Bajo rendimiento',
+  sell: 'Venta',
+  strong_sell: 'Venta fuerte',
+}
 
 const DIST_MEDIAS = [
   { key: 'dist_ema21', label: 'EMA21' },
@@ -390,6 +401,35 @@ export default function TickerDetalle() {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {fila && !esFondo && (fila.recommendation_key || fila.insider) && (
+        <div className="mb-5 flex flex-col gap-2 sm:flex-row">
+          {fila.recommendation_key && (
+            <div className="flex-1 rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2.5">
+              <div className="text-[10px] uppercase text-terminal-dim">Consenso de analistas</div>
+              <div className="font-semibold text-terminal-text">
+                {RECOMENDACION_LABEL[fila.recommendation_key] ?? fila.recommendation_key}
+                {fila.n_analistas ? ` · ${fila.n_analistas} analistas` : ''}
+              </div>
+            </div>
+          )}
+          {fila.insider && (fila.insider.n_compras > 0 || fila.insider.n_ventas > 0) && (
+            <div className="flex-1 rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2.5">
+              <div className="text-[10px] uppercase text-terminal-dim">Insiders (últimos 6 meses)</div>
+              <div className="flex gap-3 text-sm">
+                <span className="font-semibold text-terminal-up">
+                  {fila.insider.n_compras} compra{fila.insider.n_compras === 1 ? '' : 's'}
+                  {fila.insider.valor_compras > 0 && ` · $${fmtMarketCap(fila.insider.valor_compras)}`}
+                </span>
+                <span className="font-semibold text-terminal-down">
+                  {fila.insider.n_ventas} venta{fila.insider.n_ventas === 1 ? '' : 's'}
+                  {fila.insider.valor_ventas > 0 && ` · $${fmtMarketCap(fila.insider.valor_ventas)}`}
+                </span>
+              </div>
+            </div>
+          )}
         </div>
       )}
 

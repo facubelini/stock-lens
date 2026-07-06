@@ -37,9 +37,9 @@ function prioridad(fila) {
   }, 0)
 }
 
-function tieneSenal(fila) {
-  return TIMEFRAMES.some((tf) => {
-    const v = fila[tf.key]?.verdict
+function tieneSenalEn(fila, tfKeys) {
+  return tfKeys.some((key) => {
+    const v = fila[key]?.verdict
     return v === 'COMPRA' || v === 'CERCA'
   })
 }
@@ -77,8 +77,9 @@ export default function Screener() {
     () => aplicarClasificacion(conWatchlist, overrides),
     [conWatchlist, overrides],
   )
-  const [soloConSenal, setSoloConSenal] = useState(true)
+  const [tfFiltro, setTfFiltro] = useState({ diario: true, semanal: true, mensual: true })
   const [refresh, setRefresh] = useState(null) // { tipo: 'cargando'|'ok'|'error', texto }
+  const toggleTf = (key) => setTfFiltro((prev) => ({ ...prev, [key]: !prev[key] }))
   const t = useTabla(filas, { camposBusqueda: CAMPOS })
 
   const onRefrescar = async () => {
@@ -102,10 +103,18 @@ export default function Screener() {
     }
   }
 
+  const tfKeysActivas = useMemo(
+    () => TIMEFRAMES.map((tf) => tf.key).filter((key) => tfFiltro[key]),
+    [tfFiltro],
+  )
+
   const filtradas = useMemo(() => {
-    const base = soloConSenal ? t.filtradas.filter(tieneSenal) : t.filtradas
+    const base =
+      tfKeysActivas.length > 0
+        ? t.filtradas.filter((f) => tieneSenalEn(f, tfKeysActivas))
+        : t.filtradas
     return [...base].sort((a, b) => prioridad(b) - prioridad(a))
-  }, [t.filtradas, soloConSenal])
+  }, [t.filtradas, tfKeysActivas])
 
   const colsCSV = [
     { key: 'ticker', label: 'Ticker' },
@@ -165,15 +174,26 @@ export default function Screener() {
         setIndustria={t.setIndustria}
         industrias={t.industrias}
         extra={
-          <label className="flex cursor-pointer select-none items-center gap-1.5 rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-dim hover:text-terminal-text">
-            <input
-              type="checkbox"
-              checked={soloConSenal}
-              onChange={(e) => setSoloConSenal(e.target.checked)}
-              className="accent-terminal-accent"
-            />
-            Sólo con señal (COMPRA/CERCA)
-          </label>
+          <div
+            className="flex flex-wrap items-center gap-2 rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-dim"
+            title="Muestra activos con señal (COMPRA/CERCA) en cualquiera de las temporalidades tildadas"
+          >
+            <span className="text-xs">Señal en:</span>
+            {TIMEFRAMES.map((tf) => (
+              <label
+                key={tf.key}
+                className="flex cursor-pointer select-none items-center gap-1 hover:text-terminal-text"
+              >
+                <input
+                  type="checkbox"
+                  checked={Boolean(tfFiltro[tf.key])}
+                  onChange={() => toggleTf(tf.key)}
+                  className="accent-terminal-accent"
+                />
+                {tf.label}
+              </label>
+            ))}
+          </div>
         }
         onExportCSV={() => exportarCSV('stock-lens-screener.csv', colsCSV, filtradas)}
         total={filas.length}
@@ -189,8 +209,10 @@ export default function Screener() {
       ) : filtradas.length === 0 ? (
         <Vacio
           texto={
-            soloConSenal
-              ? 'Ninguna acción tiene señal de COMPRA o CERCA ahora mismo. Probá destildar "Sólo con señal".'
+            tfKeysActivas.length > 0
+              ? `Ninguna acción tiene señal de COMPRA o CERCA en ${tfKeysActivas
+                  .map((k) => TIMEFRAMES.find((tf) => tf.key === k).label)
+                  .join('/')} ahora mismo. Probá tildar otra temporalidad.`
               : undefined
           }
         />

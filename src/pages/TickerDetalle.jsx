@@ -436,10 +436,34 @@ export default function TickerDetalle() {
       <div className="mb-5">
         <h2 className="mb-2 text-sm font-semibold text-terminal-text">Fundamentales</h2>
         {esFondo ? (
-          <p className="rounded-lg border border-terminal-border bg-terminal-panel p-4 text-xs text-terminal-dim">
-            Los ratios fundamentales tradicionales (PER, PEG, márgenes, etc.) no aplican acá:{' '}
-            {ticker} es un fondo (ETF), no una empresa con ganancias propias.
-          </p>
+          <>
+            <p className="mb-3 rounded-lg border border-terminal-border bg-terminal-panel p-4 text-xs text-terminal-dim">
+              Los ratios fundamentales tradicionales (PER, PEG, márgenes, etc.) no aplican acá:{' '}
+              {ticker} es un fondo (ETF), no una empresa con ganancias propias.
+            </p>
+            {datos.holdings?.length > 0 && (
+              <div className="overflow-hidden rounded-lg border border-terminal-border">
+                <div className="border-b border-terminal-border bg-terminal-panel2 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-terminal-dim">
+                  Top holdings (composición del fondo)
+                </div>
+                <table className="min-w-full border-collapse text-sm">
+                  <tbody>
+                    {datos.holdings.map((h) => (
+                      <tr key={h.ticker} className="border-t border-terminal-border">
+                        <td className="whitespace-nowrap px-3 py-1.5 font-semibold">
+                          <TickerLink ticker={h.ticker} />
+                        </td>
+                        <td className="w-full px-3 py-1.5 text-terminal-dim">{h.nombre}</td>
+                        <td className="whitespace-nowrap px-3 py-1.5 text-right tabular font-semibold text-terminal-text">
+                          {h.peso_pct != null ? `${h.peso_pct.toFixed(2)}%` : '—'}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </>
         ) : (
           <>
             <div className="overflow-x-auto rounded-lg border border-terminal-border">

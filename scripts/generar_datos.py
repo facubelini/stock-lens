@@ -403,6 +403,31 @@ def extraer_fundamentales(info):
     }
 
 
+def obtener_holdings_etf(tk, quote_type):
+    """Top holdings (composicion) de un ETF: que activos tiene adentro y con
+    que peso. Solo tiene sentido pedirlo para quoteType == "ETF" (una accion
+    comun tira error/vacio). Tolerante a fallos: yfinance a veces no tiene
+    este dato para ETFs chicos o de renta fija."""
+    if quote_type != "ETF":
+        return None
+    try:
+        top = tk.funds_data.top_holdings
+        if top is None or top.empty:
+            return None
+        out = []
+        for simbolo, fila in top.iterrows():
+            out.append(
+                {
+                    "ticker": str(simbolo),
+                    "nombre": str(fila.get("Name") or ""),
+                    "peso_pct": num(float(fila.get("Holding Percent", 0)) * 100, 2),
+                }
+            )
+        return out or None
+    except Exception:  # noqa: BLE001
+        return None
+
+
 TAGS_INSIDER_COMPRA = ("purchase", "buy")
 TAGS_INSIDER_VENTA = ("sale", "sell")
 DIAS_INSIDER = 180
@@ -717,6 +742,7 @@ def main():
         target_mean_price = fund.get("target_mean_price")
         upside_pct = ((target_mean_price / precio - 1) * 100) if target_mean_price and precio else None
         insider = resumen_insider(tk)
+        holdings = obtener_holdings_etf(tk, info.get("quoteType"))
         fundamentales.append(
             {
                 **base,
@@ -726,6 +752,7 @@ def main():
                 "recommendation_key": recommendation_key,
                 "upside_pct": num(upside_pct, 2),
                 "insider": insider,
+                "holdings": holdings,
             }
         )
 

@@ -154,6 +154,12 @@ export async function quitarTickerRemoto(ticker) {
   return resultado
 }
 
+// Dispara "Actualizar datos" a mano (ej. botón de refresh en Screener), sin
+// tocar tickers.xlsx — sirve para forzar una corrida fuera del cron.
+export async function dispararActualizacionDatos() {
+  await dispararWorkflow()
+}
+
 // --- Lista de hasta 10 tickers para "Histórico Fundamental" (data/historico_tickers.json) ---
 
 function _base64ToUtf8(base64) {

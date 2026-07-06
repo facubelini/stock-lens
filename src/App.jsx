@@ -7,6 +7,7 @@ import Fundamentales from './pages/Fundamentales'
 import Comparables from './pages/Comparables'
 import Screener from './pages/Screener'
 import HistoricoFundamental from './pages/HistoricoFundamental'
+import CryptoScreener from './pages/CryptoScreener'
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/comparables" element={<Comparables />} />
           <Route path="/screener" element={<Screener />} />
           <Route path="/historico" element={<HistoricoFundamental />} />
+          <Route path="/cripto" element={<CryptoScreener />} />
           <Route path="*" element={<Listado />} />
         </Routes>
       </main>

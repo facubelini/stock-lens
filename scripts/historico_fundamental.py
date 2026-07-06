@@ -19,7 +19,9 @@ Uso:
 """
 
 import json
+import threading
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, date
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -31,17 +33,43 @@ import yfinance as yf
 
 RAIZ = Path(__file__).resolve().parent.parent
 ARCHIVO_TICKERS = RAIZ / "data" / "historico_tickers.json"
+CACHE_CIK = RAIZ / "data" / "cik_cache.json"
 DIR_SALIDA = RAIZ / "public" / "data"
 TZ = ZoneInfo("America/Argentina/Buenos_Aires")
 
 LIMITE_TICKERS = 10
 PERIODO_PRECIO = "5y"
+WORKERS = 5  # tickers en paralelo (I/O-bound: la espera de red es el costo, no CPU)
 
 # La SEC exige identificarse (nombre + email) o devuelve 403. Ver
 # https://www.sec.gov/os/webmaster-faq#developers
 SEC_HEADERS = {"User-Agent": "Stock Lens (facundo.belini@raona.com)"}
 SEC_TICKERS_URL = "https://www.sec.gov/files/company_tickers.json"
-SEC_FACTS_URL = "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik:010d}.json"
+SEC_CONCEPT_URL = "https://data.sec.gov/api/xbrl/companyconcept/CIK{cik:010d}/us-gaap/{tag}.json"
+
+
+class LimitadorTasa:
+    """Limita la tasa de requests a data.sec.gov entre TODOS los threads (la
+    SEC permite ~10 req/s). Antes se pedia companyfacts (1 request pesado,
+    con TODO el historial de la empresa); ahora se pide companyconcept por
+    tag (varios requests livianos) en paralelo entre tickers, asi que hace
+    falta un limitador compartido en vez de un simple time.sleep() por ticker."""
+
+    def __init__(self, req_por_seg):
+        self.intervalo = 1.0 / req_por_seg
+        self.lock = threading.Lock()
+        self.ultimo = 0.0
+
+    def esperar(self):
+        with self.lock:
+            ahora = time.monotonic()
+            espera = self.ultimo + self.intervalo - ahora
+            if espera > 0:
+                time.sleep(espera)
+            self.ultimo = time.monotonic()
+
+
+LIMITADOR_SEC = LimitadorTasa(8)  # margen bajo el limite real de la SEC
 
 # Tags XBRL candidatos por concepto (se prueba el primero que exista). Varian
 # segun la empresa/taxonomia usada al presentar el reporte.
@@ -89,33 +117,72 @@ def _sin_sufijo(ticker):
     return ticker.split(".")[0]
 
 
-def _obtener_companyfacts(cik):
-    url = SEC_FACTS_URL.format(cik=cik)
-    r = requests.get(url, headers=SEC_HEADERS, timeout=25)
+def _cargar_cache_cik():
+    if CACHE_CIK.exists():
+        try:
+            return json.loads(CACHE_CIK.read_text(encoding="utf-8"))
+        except Exception:  # noqa: BLE001
+            return {}
+    return {}
+
+
+def _guardar_cache_cik(cache):
+    CACHE_CIK.write_text(json.dumps(cache, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+def resolver_ciks(tickers):
+    """company_tickers.json pesa ~800KB — cacheamos ticker->CIK localmente
+    (casi no cambia) para no volver a bajarlo en cada corrida semanal, solo
+    cuando aparece un ticker nuevo que todavia no esta en el cache."""
+    cache = _cargar_cache_cik()
+    simbolos = [_sin_sufijo(t) for t in tickers]
+    faltantes = [s for s in simbolos if s not in cache]
+    if faltantes:
+        print(f"CIK nuevos a resolver: {faltantes}")
+        mapa_completo = _mapa_ticker_a_cik()
+        for s in faltantes:
+            if s in mapa_completo:
+                cache[s] = mapa_completo[s]
+        _guardar_cache_cik(cache)
+    else:
+        print("Todos los tickers ya tenian CIK en cache (no hizo falta bajar company_tickers.json).")
+    return cache
+
+
+def _obtener_companyconcept(cik, tag):
+    """Un solo concepto XBRL (ej. solo EPS), no el companyfacts completo de
+    la empresa (que trae cientos de conceptos que no usamos — para AAPL son
+    varios MB). Mucho mas liviano por request, a costa de mas requests (uno
+    por tag candidato) — compensado con el limitador de tasa compartido."""
+    LIMITADOR_SEC.esperar()
+    url = SEC_CONCEPT_URL.format(cik=cik, tag=tag)
+    r = requests.get(url, headers=SEC_HEADERS, timeout=20)
     if r.status_code == 404:
         return None
     r.raise_for_status()
     return r.json()
 
 
-def _concepto_combinado(facts, tags):
+def _concepto_combinado(cik, tags):
     """Combina TODOS los tags candidatos que existan (no solo el primero):
     varias empresas cambian de tag XBRL en algun anio (ej. NVDA reporto
     ventas como "RevenueFromContractWithCustomerExcludingAssessedTax" hasta
     2022 y despues paso a "Revenues") — quedarse con uno solo corta el
     historico a la mitad. El dedup por fecha en _serie_instantanea/
-    _trimestres_reportados ya resuelve solapamientos entre tags."""
-    usgaap = (facts or {}).get("facts", {}).get("us-gaap", {})
+    _trimestres_reportados ya resuelve solapamientos entre tags. Devuelve
+    (concepto_combinado_o_None, nombre_de_la_entidad_o_None)."""
     unidades_combinadas = {}
+    nombre = None
     for tag in tags:
-        concepto = usgaap.get(tag)
+        concepto = _obtener_companyconcept(cik, tag)
         if not concepto:
             continue
+        nombre = nombre or concepto.get("entityName")
         for unidad, entradas in concepto.get("units", {}).items():
             unidades_combinadas.setdefault(unidad, []).extend(entradas)
     if not unidades_combinadas:
-        return None
-    return {"units": unidades_combinadas}
+        return None, nombre
+    return {"units": unidades_combinadas}, nombre
 
 
 def _serie_instantanea(concepto, unidad_preferida="USD"):
@@ -230,15 +297,17 @@ def _forward_fill_a_fechas(serie, fechas_objetivo):
     return s.reindex(s.index.union(fechas_objetivo)).ffill().reindex(fechas_objetivo)
 
 
-def calcular_historico_ticker(ticker, mapa_cik):
-    sym = _sin_sufijo(ticker)
-    cik = mapa_cik.get(sym)
+def calcular_historico_ticker(ticker, cik):
     if not cik:
         return {"ticker": ticker, "disponible": False, "motivo": "No reporta a la SEC (sin CIK)."}
 
-    facts = _obtener_companyfacts(cik)
-    if not facts:
-        return {"ticker": ticker, "disponible": False, "motivo": "SEC no tiene datos XBRL para este CIK."}
+    eps_concepto, nombre_a = _concepto_combinado(cik, TAGS_EPS)
+    rev_concepto, nombre_b = _concepto_combinado(cik, TAGS_REVENUE)
+    shares_concepto, nombre_c = _concepto_combinado(cik, TAGS_SHARES)
+    cash_concepto, _ = _concepto_combinado(cik, TAGS_CASH)
+    dlp_concepto, _ = _concepto_combinado(cik, TAGS_DEUDA_LARGO)
+    dcp_concepto, _ = _concepto_combinado(cik, TAGS_DEUDA_CORTO)
+    nombre = nombre_a or nombre_b or nombre_c or ticker
 
     hist = yf.Ticker(ticker).history(period=PERIODO_PRECIO, interval="1d", auto_adjust=True)
     if hist is None or hist.empty:
@@ -247,12 +316,12 @@ def calcular_historico_ticker(ticker, mapa_cik):
         hist = hist.copy()
         hist.index = hist.index.tz_localize(None)  # simplifica: fechas EDGAR ya son naive
 
-    eps_ttm = _serie_ttm(_concepto_combinado(facts, TAGS_EPS), "USD/shares")
-    rev_ttm = _serie_ttm(_concepto_combinado(facts, TAGS_REVENUE), "USD")
-    shares = _serie_instantanea(_concepto_combinado(facts, TAGS_SHARES), "shares")
-    cash = _serie_instantanea(_concepto_combinado(facts, TAGS_CASH), "USD")
-    deuda_lp = _serie_instantanea(_concepto_combinado(facts, TAGS_DEUDA_LARGO), "USD")
-    deuda_cp = _serie_instantanea(_concepto_combinado(facts, TAGS_DEUDA_CORTO), "USD")
+    eps_ttm = _serie_ttm(eps_concepto, "USD/shares")
+    rev_ttm = _serie_ttm(rev_concepto, "USD")
+    shares = _serie_instantanea(shares_concepto, "shares")
+    cash = _serie_instantanea(cash_concepto, "USD")
+    deuda_lp = _serie_instantanea(dlp_concepto, "USD")
+    deuda_cp = _serie_instantanea(dcp_concepto, "USD")
 
     if not eps_ttm and not rev_ttm:
         return {"ticker": ticker, "disponible": False, "motivo": "Sin EPS/ventas trimestrales en EDGAR."}
@@ -292,7 +361,7 @@ def calcular_historico_ticker(ticker, mapa_cik):
 
     return {
         "ticker": ticker,
-        "nombre": facts.get("entityName") or ticker,
+        "nombre": nombre,
         "disponible": True,
         "serie": serie,
     }
@@ -308,6 +377,13 @@ def _num(v, dec=4):
     return round(f, dec)
 
 
+def _calcular_seguro(ticker, cik):
+    try:
+        return calcular_historico_ticker(ticker, cik)
+    except Exception as e:  # noqa: BLE001
+        return {"ticker": ticker, "disponible": False, "motivo": f"Error: {e}"}
+
+
 def main():
     DIR_SALIDA.mkdir(parents=True, exist_ok=True)
     tickers = leer_tickers_historico()
@@ -315,15 +391,20 @@ def main():
 
     resultados = []
     if tickers:
-        print("Resolviendo ticker -> CIK contra SEC...")
-        mapa_cik = _mapa_ticker_a_cik()
-        for t in tickers:
-            print(f"  procesando {t}...")
-            try:
-                resultados.append(calcular_historico_ticker(t, mapa_cik))
-            except Exception as e:  # noqa: BLE001
-                resultados.append({"ticker": t, "disponible": False, "motivo": f"Error: {e}"})
-            time.sleep(0.3)  # cortesia con la API de la SEC (limite ~10 req/s)
+        cache_cik = resolver_ciks(tickers)
+        # Paralelo entre tickers: son requests de red (I/O), y el limitador
+        # de tasa compartido ya evita pasarse del limite de la SEC aunque
+        # varios tickers pidan conceptos al mismo tiempo.
+        por_ticker = {}
+        with ThreadPoolExecutor(max_workers=WORKERS) as pool:
+            futuros = {
+                pool.submit(_calcular_seguro, t, cache_cik.get(_sin_sufijo(t))): t for t in tickers
+            }
+            for fut in as_completed(futuros):
+                t = futuros[fut]
+                print(f"  listo: {t}")
+                por_ticker[t] = fut.result()
+        resultados = [por_ticker[t] for t in tickers]  # mantener el orden original
     else:
         print("Lista vacia: se escribe igual un JSON valido (sin tickers) para que el front no vea 404.")
 

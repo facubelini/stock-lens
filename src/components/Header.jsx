@@ -9,6 +9,7 @@ const tabs = [
   { to: '/comparables', label: 'Comparables' },
   { to: '/screener', label: 'Screener' },
   { to: '/historico', label: 'Histórico Fundamental' },
+  { to: '/cripto', label: 'Crypto Screener' },
 ]
 
 export default function Header() {

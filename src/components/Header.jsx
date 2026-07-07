@@ -13,6 +13,7 @@ const tabs = [
   { to: '/cripto', label: 'Crypto Screener' },
   { to: '/top', label: '🔥 Top Señales' },
   { to: '/cartera', label: '📋 Mi Cartera' },
+  { to: '/macro', label: '🌡️ Mercado' },
 ]
 
 export default function Header() {

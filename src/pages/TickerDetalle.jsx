@@ -59,17 +59,6 @@ const DIST_MEDIAS = [
   { key: 'dist_sma200', label: 'SMA200' },
 ]
 
-const BALANCE_ITEMS = [
-  { key: 'activos_totales', label: 'Activos totales' },
-  { key: 'pasivos_totales', label: 'Pasivos totales' },
-  { key: 'patrimonio', label: 'Patrimonio' },
-  { key: 'caja', label: 'Caja' },
-  { key: 'deuda_total', label: 'Deuda total' },
-  { key: 'activo_corriente', label: 'Activo corriente' },
-  { key: 'pasivo_corriente', label: 'Pasivo corriente' },
-  { key: 'capital_trabajo', label: 'Capital de trabajo', negativoMalo: true },
-]
-
 const N_PEERS = 2
 
 function renderRatio(r, valor) {
@@ -441,37 +430,6 @@ export default function TickerDetalle() {
               </div>
             </div>
           )}
-        </div>
-      )}
-
-      {fila?.balance && (
-        <div className="mb-5">
-          <h2 className="mb-2 flex items-baseline gap-2 text-sm font-semibold text-terminal-text">
-            Balance
-            <span className="text-xs font-normal text-terminal-dim">
-              último ejercicio ({fila.balance.fecha})
-            </span>
-          </h2>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            {BALANCE_ITEMS.map((it) => (
-              <div
-                key={it.key}
-                className="rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2 text-center"
-              >
-                <div className="text-[10px] uppercase text-terminal-dim">{it.label}</div>
-                <div
-                  className="tabular font-semibold"
-                  style={it.negativoMalo && fila.balance[it.key] < 0 ? { color: '#ff9d9d' } : undefined}
-                >
-                  {fila.balance[it.key] != null ? fmtMarketCap(fila.balance[it.key]) : 'N/D'}
-                </div>
-              </div>
-            ))}
-          </div>
-          <p className="mt-1.5 text-[11px] text-terminal-dim">
-            Datos anuales (yfinance) — no todas las empresas los reportan de la misma forma ni con
-            la misma frecuencia.
-          </p>
         </div>
       )}
 

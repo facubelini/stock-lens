@@ -14,6 +14,7 @@ const tabs = [
   { to: '/top', label: '🔥 Top Señales' },
   { to: '/cartera', label: '📋 Mi Cartera' },
   { to: '/macro', label: '🌡️ Mercado' },
+  { to: '/herramientas', label: '🧮 Herramientas' },
 ]
 
 export default function Header() {

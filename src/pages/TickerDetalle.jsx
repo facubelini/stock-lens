@@ -61,6 +61,54 @@ const DIST_MEDIAS = [
 
 const N_PEERS = 2
 
+const MESES_CORTO = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+
+function GraficoEstacionalidad({ datos }) {
+  const porMes = useMemo(() => new Map(datos.map((d) => [d.mes, d])), [datos])
+  const maxAbs = useMemo(() => Math.max(1, ...datos.map((d) => Math.abs(d.retorno_prom ?? 0))), [datos])
+  return (
+    <div>
+      <div className="flex h-24 items-stretch gap-1">
+        {Array.from({ length: 12 }, (_, i) => i + 1).map((mes) => {
+          const d = porMes.get(mes)
+          const positivo = (d?.retorno_prom ?? 0) >= 0
+          const alturaPct = d ? (Math.abs(d.retorno_prom) / maxAbs) * 45 : 0
+          return (
+            <div
+              key={mes}
+              className="relative flex-1"
+              title={
+                d
+                  ? `${MESES_CORTO[mes - 1]}: ${d.retorno_prom >= 0 ? '+' : ''}${d.retorno_prom}% promedio · ${d.positivos_pct}% de los años fue positivo (n=${d.n})`
+                  : `${MESES_CORTO[mes - 1]}: sin datos suficientes`
+              }
+            >
+              <div className="absolute inset-x-0 top-1/2 h-px bg-terminal-border" />
+              {d && (
+                <div
+                  className="absolute inset-x-0.5 rounded-sm"
+                  style={{
+                    backgroundColor: positivo ? '#22c55e' : '#ef4444',
+                    height: `${alturaPct}%`,
+                    ...(positivo ? { bottom: '50%' } : { top: '50%' }),
+                  }}
+                />
+              )}
+            </div>
+          )
+        })}
+      </div>
+      <div className="mt-1 flex gap-1 text-center text-[9px] text-terminal-dim">
+        {MESES_CORTO.map((m) => (
+          <span key={m} className="flex-1">
+            {m}
+          </span>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function renderRatio(r, valor) {
   if (r.esCap) return fmtMarketCap(valor)
   if (r.esPct) return fmtPct(valor)
@@ -361,6 +409,24 @@ export default function TickerDetalle() {
         </div>
       )}
 
+      {screenerFila?.divergencia_rsi && (
+        <div
+          className="mb-5 rounded-lg border px-3 py-2.5 text-sm"
+          style={
+            screenerFila.divergencia_rsi.tipo === 'alcista'
+              ? { borderColor: 'rgba(34,197,94,0.4)', backgroundColor: 'rgba(34,197,94,0.08)', color: '#22c55e' }
+              : { borderColor: 'rgba(239,68,68,0.4)', backgroundColor: 'rgba(239,68,68,0.08)', color: '#ef4444' }
+          }
+        >
+          <span className="font-semibold">
+            {screenerFila.divergencia_rsi.tipo === 'alcista' ? '📈 Divergencia alcista' : '📉 Divergencia bajista'}
+          </span>{' '}
+          en RSI diario (precio vs. RSI en los últimos pivots), detectada hace{' '}
+          {screenerFila.divergencia_rsi.hace_ruedas} rueda{screenerFila.divergencia_rsi.hace_ruedas === 1 ? '' : 's'} —
+          heurística basada en mínimos/máximos locales, no es una señal infalible.
+        </div>
+      )}
+
       {historialTicker.length > 0 && (
         <div className="mb-5 rounded-lg border border-terminal-border bg-terminal-panel p-3">
           <h2 className="mb-2 text-sm font-semibold text-terminal-text">
@@ -401,6 +467,54 @@ export default function TickerDetalle() {
               </div>
             ))}
           </div>
+        </div>
+      )}
+
+      {fila && (fila.beta_realizado != null || fila.sharpe_1y != null) && (
+        <div className="mb-5">
+          <h2 className="mb-2 text-sm font-semibold text-terminal-text">Riesgo y retorno (1 año)</h2>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <div className="rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2 text-center">
+              <div className="text-[10px] uppercase text-terminal-dim">Beta realizado</div>
+              <div className="tabular font-semibold text-terminal-text">{fmtNum(fila.beta_realizado, 2)}</div>
+            </div>
+            <div className="rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2 text-center">
+              <div className="text-[10px] uppercase text-terminal-dim">Correlación c/ SPY</div>
+              <div className="tabular font-semibold text-terminal-text">{fmtNum(fila.correlacion_mercado, 2)}</div>
+            </div>
+            <div className="rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2 text-center">
+              <div className="text-[10px] uppercase text-terminal-dim">Sharpe</div>
+              <div
+                className="tabular font-semibold"
+                style={{
+                  color: fila.sharpe_1y == null ? undefined : fila.sharpe_1y > 1 ? '#22c55e' : fila.sharpe_1y < 0 ? '#ef4444' : undefined,
+                }}
+              >
+                {fmtNum(fila.sharpe_1y, 2)}
+              </div>
+            </div>
+            <div className="rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2 text-center">
+              <div className="text-[10px] uppercase text-terminal-dim">Volatilidad anual.</div>
+              <div className="tabular font-semibold text-terminal-text">{fmtPct(fila.volatilidad_1y)}</div>
+            </div>
+          </div>
+          <p className="mt-1.5 text-[11px] text-terminal-dim">
+            Calculado con los últimos ~252 días de cotización (no es el beta estático de Yahoo, que
+            puede estar desactualizado) — beta y correlación son contra SPY.
+          </p>
+        </div>
+      )}
+
+      {fila?.estacionalidad?.length > 0 && (
+        <div className="mb-5">
+          <h2 className="mb-2 text-sm font-semibold text-terminal-text">Estacionalidad</h2>
+          <div className="rounded-lg border border-terminal-border bg-terminal-panel p-3">
+            <GraficoEstacionalidad datos={fila.estacionalidad} />
+          </div>
+          <p className="mt-1.5 text-[11px] text-terminal-dim">
+            Retorno promedio por mes calendario en los últimos ~5 años (o lo que haya de historial).
+            Es un patrón histórico, no una predicción — puede no repetirse.
+          </p>
         </div>
       )}
 

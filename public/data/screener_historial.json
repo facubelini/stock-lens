@@ -2080,7 +2080,7 @@
       "HAL": {
         "diario": "NEUTRAL",
         "semanal": "EXTENDIDO",
-        "mensual": "EXTENDIDO"
+        "mensual": "NEUTRAL"
       },
       "BIDU": {
         "diario": "NEUTRAL",
@@ -2224,7 +2224,7 @@
       },
       "SYY": {
         "diario": "NEUTRAL",
-        "semanal": "EXTENDIDO",
+        "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
       "VOD": {
@@ -2638,7 +2638,7 @@
         "mensual": "NEUTRAL"
       },
       "AVGO": {
-        "diario": "VENTA",
+        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
@@ -3002,7 +3002,7 @@
         "mensual": "NEUTRAL"
       },
       "SNA": {
-        "diario": "COMPRA",
+        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
@@ -3062,7 +3062,7 @@
         "mensual": "NEUTRAL"
       },
       "BB": {
-        "diario": "NEUTRAL",
+        "diario": "EXTENDIDO",
         "semanal": "EXTENDIDO",
         "mensual": "EXTENDIDO"
       },
@@ -3122,7 +3122,7 @@
         "mensual": "NEUTRAL"
       },
       "CL": {
-        "diario": "CERCA",
+        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
@@ -3330,7 +3330,7 @@
       },
       "PRIO3.SA": {
         "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
+        "semanal": "EXTENDIDO",
         "mensual": "EXTENDIDO"
       },
       "PYPL": {
@@ -3379,7 +3379,7 @@
       "TGNO4.BA": {
         "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
-        "mensual": "EXTENDIDO"
+        "mensual": "NEUTRAL"
       },
       "TGSU2.BA": {
         "diario": "NEUTRAL",
@@ -3447,7 +3447,7 @@
         "mensual": "NEUTRAL"
       },
       "DHR": {
-        "diario": "COMPRA",
+        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "VENTA"
       },
@@ -3786,8 +3786,7 @@
         "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
-      },
-      "SPCX": {}
+      }
     }
   }
 ]

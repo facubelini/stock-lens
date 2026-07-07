@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useClasificacion } from '../lib/clasificacion'
+import { useWatchlist } from '../lib/watchlist'
 import { getPat, quitarTickerRemoto } from '../lib/githubApi'
 
 const inputCls =
@@ -60,6 +61,7 @@ export default function EditorClasificacion({
   sectores = [],
 }) {
   const { overrides, setOverride } = useClasificacion()
+  const { watchlist, quitar: quitarDeMiLista } = useWatchlist()
   const [abierto, setAbierto] = useState(false)
   const o = overrides[ticker] ?? {}
   const [ind, setInd] = useState('')
@@ -89,10 +91,14 @@ export default function EditorClasificacion({
     setEstadoBaja({ tipo: 'cargando' })
     try {
       const r = await quitarTickerRemoto(ticker)
+      // Si tambien estaba en "Mi lista", lo sacamos de ahi: si no, queda
+      // huerfano (Mi Cartera lo muestra para siempre como "pendiente" ya
+      // que el pipeline nunca mas le va a traer datos).
+      if (watchlist?.some((w) => w.ticker === ticker)) quitarDeMiLista(ticker)
       setEstadoBaja({
         tipo: 'ok',
         texto: r.eliminado
-          ? 'sacado de tickers.xlsx, la actualización de datos ya arrancó.'
+          ? 'sacado de tickers.xlsx (y de "Mi lista" si estaba). Tarda ~10 min en desaparecer de las tablas (corrida del pipeline + caché de GitHub Pages).'
           : 'ya no estaba en tickers.xlsx.',
       })
     } catch (err) {

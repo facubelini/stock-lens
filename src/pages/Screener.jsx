@@ -230,6 +230,14 @@ export default function Screener() {
                 >
                   <td className="whitespace-nowrap px-2 py-1.5 font-semibold text-terminal-text">
                     <TickerLink ticker={f.ticker} />
+                    {f.divergencia_rsi && (
+                      <span
+                        className="ml-1"
+                        title={`Divergencia ${f.divergencia_rsi.tipo} en RSI diario, detectada hace ${f.divergencia_rsi.hace_ruedas} rueda(s) — heurística, no es una señal infalible`}
+                      >
+                        {f.divergencia_rsi.tipo === 'alcista' ? '📈' : '📉'}
+                      </span>
+                    )}
                     {f.stale && (
                       <span
                         className="ml-1 text-terminal-warn"

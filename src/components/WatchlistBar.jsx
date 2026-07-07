@@ -152,7 +152,7 @@ export default function WatchlistBar() {
         tipo: 'ok',
         ticker: tk,
         texto: r.agregado
-          ? 'agregado al repo, la actualización de datos ya arrancó (unos minutos).'
+          ? 'agregado al repo, la actualización de datos ya arrancó — tarda ~10 min en correr + hasta 10 min más de caché, no va a aparecer al toque en las tablas ni en el buscador (Ctrl+K).'
           : 'ya estaba en tickers.xlsx.',
       })
     } catch (err) {

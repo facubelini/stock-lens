@@ -353,6 +353,7 @@ def calcular_screener(hist):
         "diario": perfil_setup(ohlc, **PERFIL_DIARIO),
         "semanal": perfil_setup(semanales, **PERFIL_SEMANAL),
         "mensual": perfil_setup(mensuales, **PERFIL_MENSUAL),
+        "divergencia_rsi": detectar_divergencia_rsi(ohlc["Close"]),
     }
 
 
@@ -681,6 +682,154 @@ def actualizar_historial_oportunidades(calificados_hoy, ahora):
     return historial
 
 
+def _retornos_diarios(closes, ventana=252):
+    """Retornos diarios simples de las ultimas 'ventana' ruedas (~1 anio por
+    defecto). Se le saca el timezone al indice: tickers de distintas plazas
+    (NYSE vs B3/BYMA) traen tz distinto y eso rompe el join por fecha contra
+    el benchmark si no se normaliza."""
+    sub = closes.tail(ventana + 1)
+    ret = sub.pct_change().dropna()
+    if ret.index.tz is not None:
+        ret.index = ret.index.tz_localize(None)
+    return ret
+
+
+def calcular_beta_sharpe(closes, bench_closes, ventana=252):
+    """Beta realizado y correlacion contra el benchmark (SPY) + Sharpe y
+    volatilidad anualizada del propio ticker, todo sobre el ultimo anio de
+    ruedas. Reusa el historico de 5y ya descargado (closes), no pide nada
+    nuevo salvo el benchmark (una sola vez por corrida, no por ticker)."""
+    vacio = {"beta_realizado": None, "correlacion_mercado": None, "sharpe_1y": None, "volatilidad_1y": None}
+    ret = _retornos_diarios(closes, ventana)
+    if len(ret) < 30:
+        return vacio
+
+    desvio = ret.std()
+    sharpe = (ret.mean() / desvio) * math.sqrt(252) if desvio else None
+    volatilidad = desvio * math.sqrt(252) * 100
+
+    beta = corr = None
+    if bench_closes is not None and not bench_closes.empty:
+        ret_bench = _retornos_diarios(bench_closes, ventana)
+        conjunto = pd.concat([ret, ret_bench], axis=1, join="inner").dropna()
+        if len(conjunto) >= 30:
+            r_t, r_b = conjunto.iloc[:, 0], conjunto.iloc[:, 1]
+            var_b = r_b.var()
+            if var_b:
+                beta = r_t.cov(r_b) / var_b
+            corr = r_t.corr(r_b)
+
+    return {
+        "beta_realizado": num(beta, 2),
+        "correlacion_mercado": num(corr, 2),
+        "sharpe_1y": num(sharpe, 2),
+        "volatilidad_1y": num(volatilidad, 1),
+    }
+
+
+def calcular_estacionalidad_y_mensual(closes):
+    """Devuelve (precios_mensuales, estacionalidad):
+    - precios_mensuales: cierre de fin de mes de los ultimos 5y, liviano
+      (~60 puntos) para el simulador de DCA retrospectivo.
+    - estacionalidad: retorno promedio y % de meses positivos por mes
+      calendario (Ene..Dic), o None si hay menos de 2 anios de datos."""
+    precios_me = closes.resample("ME").last().dropna()
+    mensual_out = [
+        {"fecha": idx.strftime("%Y-%m-%d"), "cierre": num(float(v), 2)} for idx, v in precios_me.items()
+    ]
+
+    # El mes en curso queda etiquetado con el cierre de fin de mes aunque el
+    # mes no haya terminado — no sirve para "el retorno de ese mes" (compara
+    # un mes completo contra uno parcial). Se descarta solo para el calculo
+    # de estacionalidad, no para el historico de precios (ahi sí interesa
+    # el ultimo precio disponible).
+    precios_cerrados = precios_me
+    hoy = datetime.now()
+    if len(precios_me) and (precios_me.index[-1].year, precios_me.index[-1].month) == (hoy.year, hoy.month):
+        precios_cerrados = precios_me.iloc[:-1]
+
+    retornos_m = precios_cerrados.pct_change().dropna() * 100
+    estacionalidad = None
+    if len(retornos_m) >= 24:
+        df = pd.DataFrame({"retorno": retornos_m.values, "mes": retornos_m.index.month})
+        filas = []
+        for mes in range(1, 13):
+            sub = df.loc[df["mes"] == mes, "retorno"]
+            if len(sub) == 0:
+                continue
+            filas.append(
+                {
+                    "mes": mes,
+                    "retorno_prom": num(sub.mean(), 2),
+                    "positivos_pct": num((sub > 0).mean() * 100, 0),
+                    "n": int(len(sub)),
+                }
+            )
+        estacionalidad = filas or None
+
+    return mensual_out, estacionalidad
+
+
+def _rsi_serie(closes, periodo=14):
+    """RSI de Wilder vectorizado (serie completa). rsi_wilder() solo da el
+    ultimo valor; para detectar divergencias contra el precio hace falta la
+    serie entera."""
+    delta = closes.diff()
+    ganancia = delta.clip(lower=0)
+    perdida = -delta.clip(upper=0)
+    avg_gain = ganancia.ewm(alpha=1 / periodo, adjust=False).mean()
+    avg_loss = perdida.ewm(alpha=1 / periodo, adjust=False).mean()
+    rs = avg_gain / avg_loss
+    rsi = 100 - 100 / (1 + rs)
+    rsi[avg_loss == 0] = 100.0
+    return rsi
+
+
+def _pivots(serie, ventana=5):
+    """Posiciones donde 'serie' es minimo/maximo local dentro de +-ventana
+    ruedas. Devuelve (pivots_bajos, pivots_altos) como listas de posiciones."""
+    bajos, altos = [], []
+    n = len(serie)
+    for i in range(ventana, n - ventana):
+        local = serie.iloc[i - ventana : i + ventana + 1]
+        v = serie.iloc[i]
+        if v == local.min():
+            bajos.append(i)
+        if v == local.max():
+            altos.append(i)
+    return bajos, altos
+
+
+def detectar_divergencia_rsi(closes, lookback=90, ventana_pivot=5, vigencia_ruedas=20):
+    """Divergencia precio/RSI en los ultimos 'lookback' dias: alcista si el
+    precio hace un minimo mas bajo que el pivot bajo anterior pero el RSI
+    hace uno mas alto (o viceversa para bajista). Heuristica basada en
+    pivots locales, no una señal infalible — solo reporta si el pivot mas
+    reciente cayo dentro de 'vigencia_ruedas' para que no se marque algo
+    viejo como si fuera actual."""
+    if len(closes) < lookback + ventana_pivot * 2 + 20:
+        return None
+    rsi = _rsi_serie(closes)
+    tramo = lookback + ventana_pivot * 2
+    sub_closes = closes.tail(tramo).reset_index(drop=True)
+    sub_rsi = rsi.tail(tramo).reset_index(drop=True)
+
+    bajos, altos = _pivots(sub_closes, ventana_pivot)
+    n = len(sub_closes)
+
+    if len(bajos) >= 2:
+        i1, i2 = bajos[-2], bajos[-1]
+        hace = n - 1 - i2
+        if hace <= vigencia_ruedas and sub_closes.iloc[i2] < sub_closes.iloc[i1] and sub_rsi.iloc[i2] > sub_rsi.iloc[i1]:
+            return {"tipo": "alcista", "hace_ruedas": int(hace)}
+    if len(altos) >= 2:
+        i1, i2 = altos[-2], altos[-1]
+        hace = n - 1 - i2
+        if hace <= vigencia_ruedas and sub_closes.iloc[i2] > sub_closes.iloc[i1] and sub_rsi.iloc[i2] < sub_rsi.iloc[i1]:
+            return {"tipo": "bajista", "hace_ruedas": int(hace)}
+    return None
+
+
 def resolver_ticker(t):
     """Descarga el historico probando el ticker tal cual y, si no hay datos,
     con sufijos .SA (Brasil) y .BA (Argentina). Devuelve
@@ -719,7 +868,13 @@ def main():
     prev_fundamentales = cargar_lista_previa("fundamentales.json")
     prev_screener = cargar_lista_previa("screener.json")
 
+    print("Descargando benchmark (SPY) para beta/correlacion realizados...")
+    _, _, _, bench_closes = resolver_ticker("SPY")
+    if bench_closes is None or bench_closes.empty:
+        print("  ! No se pudo descargar SPY: beta/correlacion van a quedar en None.")
+
     listado, medias, fundamentales, screener, invalidos = [], [], [], [], []
+    historico_mensual = []
 
     for _, fila in tickers.iterrows():
         t = fila["Ticker"]
@@ -812,6 +967,9 @@ def main():
         upside_pct = ((target_mean_price / precio - 1) * 100) if target_mean_price and precio else None
         insider = resumen_insider(tk)
         holdings = obtener_holdings_etf(tk, info.get("quoteType"))
+        stats_mercado = calcular_beta_sharpe(closes, bench_closes)
+        precios_mensuales, estacionalidad = calcular_estacionalidad_y_mensual(closes)
+        historico_mensual.append({"ticker": sym, "precios": precios_mensuales})
         fundamentales.append(
             {
                 **base,
@@ -822,6 +980,8 @@ def main():
                 "upside_pct": num(upside_pct, 2),
                 "insider": insider,
                 "holdings": holdings,
+                **stats_mercado,
+                "estacionalidad": estacionalidad,
             }
         )
 
@@ -897,6 +1057,7 @@ def main():
     escribir("screener.json", screener)
     escribir("screener_historial.json", historial)
     escribir("oportunidades_historial.json", historial_oportunidades)
+    escribir("historico_mensual.json", historico_mensual)
     escribir("meta.json", meta)
 
     print(f"\nListo. {n_frescos} frescos, {n_arrastrados} arrastrados, {len(invalidos)} invalidos.")

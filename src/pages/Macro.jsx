@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { useJson } from '../lib/useJson'
 import { fmtFecha } from '../lib/formato'
 
@@ -21,7 +22,15 @@ function colorFearGreed(v) {
   return '#22c55e'
 }
 
-function GaugeFearGreed({ titulo, valor, clasificacion, historial, nota }) {
+function GaugeFearGreed({
+  titulo,
+  valor,
+  clasificacion,
+  historial,
+  nota,
+  etiquetaBaja = 'Miedo extremo',
+  etiquetaAlta = 'Codicia extrema',
+}) {
   const color = colorFearGreed(valor)
   return (
     <div className="rounded-lg border border-terminal-border bg-terminal-panel p-4">
@@ -39,8 +48,8 @@ function GaugeFearGreed({ titulo, valor, clasificacion, historial, nota }) {
             <div className="absolute top-0 h-full w-0.5 bg-white" style={{ left: `${valor}%` }} />
           </div>
           <div className="mt-1.5 flex justify-between text-[10px] text-terminal-dim">
-            <span>Miedo extremo</span>
-            <span>Codicia extrema</span>
+            <span>{etiquetaBaja}</span>
+            <span>{etiquetaAlta}</span>
           </div>
           <p className="mt-2 text-xs font-semibold" style={{ color }}>
             {clasificacion}
@@ -165,8 +174,56 @@ function TarjetaIndicador({ titulo, valor, unidad, actualizado, nota }) {
   )
 }
 
+// Proxy simple de "temporada de altcoins": % de futuros perpetuos (menos
+// BTC) que le ganaron a BTC en la ventana disponible del historial de
+// crypto_historial.json (no es la dominancia real por market cap — esa
+// necesitaria datos que Binance no da — pero mide lo mismo que le importa
+// a quien opera: ¿estan rotando de BTC a alts o no?). El historial recien
+// arranco, asi que al principio la ventana real va a ser mucho mas chica
+// que 'diasLookback' — se muestra igual, con los dias reales usados.
+function calcularAltseason(historial, diasLookback = 30) {
+  if (!Array.isArray(historial) || historial.length < 2) return null
+  const ahora = historial[historial.length - 1]
+  const corteMs = new Date(ahora.fecha_hora).getTime() - diasLookback * 24 * 60 * 60 * 1000
+  const inicio = historial.find((h) => new Date(h.fecha_hora).getTime() >= corteMs) ?? historial[0]
+  if (inicio === ahora) return null
+
+  const btcInicio = inicio.tickers?.['BTC/USDT']?.precio
+  const btcAhora = ahora.tickers?.['BTC/USDT']?.precio
+  if (!btcInicio || !btcAhora) return null
+  const retornoBtc = btcAhora / btcInicio - 1
+
+  let total = 0
+  let ganaron = 0
+  for (const [symbol, datoAhora] of Object.entries(ahora.tickers)) {
+    if (symbol === 'BTC/USDT') continue
+    const datoInicio = inicio.tickers?.[symbol]
+    if (!datoInicio?.precio || !datoAhora?.precio) continue
+    total++
+    if (datoAhora.precio / datoInicio.precio - 1 > retornoBtc) ganaron++
+  }
+  if (total < 10) return null
+
+  const dias = Math.round((new Date(ahora.fecha_hora) - new Date(inicio.fecha_hora)) / (24 * 60 * 60 * 1000))
+  return { pct: Math.round((ganaron / total) * 100), n: total, dias, retornoBtc: retornoBtc * 100 }
+}
+
 export default function Macro() {
   const { data, cargando, error } = useJson('mercado_macro.json')
+  const { data: cryptoHistorial } = useJson('crypto_historial.json')
+
+  const altseason = useMemo(
+    () => calcularAltseason(Array.isArray(cryptoHistorial) ? cryptoHistorial : []),
+    [cryptoHistorial],
+  )
+  const altseasonLabel =
+    altseason == null
+      ? null
+      : altseason.pct >= 75
+        ? 'Temporada de altcoins'
+        : altseason.pct <= 25
+          ? 'Temporada de Bitcoin'
+          : 'Mixto'
 
   return (
     <div>
@@ -221,6 +278,26 @@ export default function Macro() {
                 clasificacion={data?.fear_greed_cripto?.clasificacion}
               />
             </div>
+          </div>
+
+          <div>
+            <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-terminal-dim">
+              Rotación cripto
+            </h2>
+            <GaugeFearGreed
+              titulo="Altseason Index"
+              valor={altseason?.pct}
+              clasificacion={altseasonLabel}
+              etiquetaBaja="Temporada Bitcoin"
+              etiquetaAlta="Temporada altcoins"
+              nota={
+                altseason
+                  ? `% de ${altseason.n} futuros (sin contar BTC) que le ganaron a BTC en ${
+                      altseason.dias < 1 ? 'las últimas horas' : `los últimos ${altseason.dias} días`
+                    } — BTC ${altseason.retornoBtc >= 0 ? '+' : ''}${altseason.retornoBtc.toFixed(1)}% en esa ventana. El historial recién arranca, con el tiempo esta ventana va a acercarse a 30 días. No es la dominancia real (market cap), es un proxy con los precios que ya trae el Crypto Screener.`
+                  : 'Esperando que se acumule más historial del Crypto Screener (corre 2 veces al día) para poder calcularlo.'
+              }
+            />
           </div>
 
           <div>

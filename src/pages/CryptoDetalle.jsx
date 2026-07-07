@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getKlines, getFundingRate, getOpenInterest, getLongShortRatio } from '../lib/crypto/binanceApi'
-import { analyzeKlines } from '../lib/crypto/indicadores'
+import { analyzeKlines, calcularEstacionalidad } from '../lib/crypto/indicadores'
 import { fmtPrice } from '../lib/crypto/formato'
 import { INTERVALOS, MULTIPLOS_ATR } from '../lib/crypto/constantes'
 import Insignia from '../components/crypto/Insignia'
 import BarraRSI from '../components/crypto/BarraRSI'
 import CalculadoraApalancamiento from '../components/crypto/CalculadoraApalancamiento'
 import Sparkline from '../components/Sparkline'
+import GraficoEstacionalidad from '../components/GraficoEstacionalidad'
 import { Vacio } from '../components/Estados'
 
 function fmtHora(ts) {
@@ -37,6 +38,7 @@ export default function CryptoDetalle() {
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(null)
   const [futuros, setFuturos] = useState(null) // { funding, oi, ls } — independiente de klines/intervalo
+  const [estacionalidad, setEstacionalidad] = useState(null) // undefined = todavia no llego, null = sin datos suficientes
 
   useEffect(() => {
     let activo = true
@@ -69,6 +71,20 @@ export default function CryptoDetalle() {
         if (activo) setFuturos({ funding, oi, ls })
       },
     )
+    return () => {
+      activo = false
+    }
+  }, [symbol])
+
+  // Estacionalidad: velas mensuales, independiente de la temporalidad
+  // elegida arriba (esa es para el grafico/señal, esta es para el historial
+  // largo). Se pide una sola vez por simbolo.
+  useEffect(() => {
+    let activo = true
+    setEstacionalidad(null)
+    getKlines(symbol, '1M', 60).then((k) => {
+      if (activo) setEstacionalidad(calcularEstacionalidad(k))
+    })
     return () => {
       activo = false
     }
@@ -263,6 +279,20 @@ export default function CryptoDetalle() {
                 </div>
               )}
             </div>
+
+            {estacionalidad && (
+              <div className="rounded-lg border border-terminal-border bg-terminal-panel p-4">
+                <div className="mb-2 text-[10px] font-bold uppercase tracking-wide text-terminal-dim">
+                  Estacionalidad
+                </div>
+                <GraficoEstacionalidad datos={estacionalidad} />
+                <p className="mt-2 text-[11px] text-terminal-dim">
+                  Retorno promedio por mes calendario, con todo el historial de velas mensuales que
+                  tenga este futuro perpetuo en Binance (hasta 5 años). Patrón histórico, no una
+                  predicción.
+                </p>
+              </div>
+            )}
           </div>
 
           <div className="rounded-lg border border-terminal-border bg-terminal-panel">

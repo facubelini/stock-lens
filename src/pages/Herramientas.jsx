@@ -277,6 +277,79 @@ function HeatmapSectorial({ filas }) {
   )
 }
 
+const UMBRALES_VOLUMEN = [1.5, 2, 3, 5]
+
+function VolumenInusual({ filas }) {
+  const [umbral, setUmbral] = useState(2)
+  const destacados = useMemo(() => {
+    return filas
+      .filter((f) => f.vol_ratio != null && f.vol_ratio >= umbral)
+      .sort((a, b) => b.vol_ratio - a.vol_ratio)
+      .slice(0, 40)
+  }, [filas, umbral])
+
+  return (
+    <div>
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <label className="text-xs text-terminal-dim">Mostrar con volumen ≥</label>
+        <select value={umbral} onChange={(e) => setUmbral(Number(e.target.value))} className={inputCls}>
+          {UMBRALES_VOLUMEN.map((u) => (
+            <option key={u} value={u}>
+              {u}×
+            </option>
+          ))}
+        </select>
+        <span className="text-xs text-terminal-dim">el promedio de los últimos 20 días (máx. 40 resultados)</span>
+      </div>
+      {!destacados.length ? (
+        <Vacio texto="Ningún ticker de tu universo tiene hoy un volumen tan por encima de su promedio." />
+      ) : (
+        <div className="overflow-x-auto rounded-lg border border-terminal-border">
+          <table className="min-w-full border-collapse text-sm">
+            <thead>
+              <tr className="bg-terminal-panel2 text-left text-xs uppercase tracking-wide text-terminal-dim">
+                <th className="px-2 py-2 font-semibold">Ticker</th>
+                <th className="px-2 py-2 font-semibold">Empresa</th>
+                <th className="px-2 py-2 text-right font-semibold">Precio</th>
+                <th className="px-2 py-2 text-right font-semibold">Var. hoy</th>
+                <th className="px-2 py-2 text-right font-semibold">Volumen hoy</th>
+                <th className="px-2 py-2 text-right font-semibold">Prom. 20d</th>
+                <th className="px-2 py-2 text-right font-semibold">Ratio</th>
+              </tr>
+            </thead>
+            <tbody>
+              {destacados.map((f) => (
+                <tr key={f.ticker} className="border-t border-terminal-border">
+                  <td className="px-2 py-1.5 font-semibold">
+                    <TickerLink ticker={f.ticker} />
+                  </td>
+                  <td className="max-w-[160px] truncate px-2 py-1.5 text-terminal-dim" title={f.nombre}>
+                    {f.nombre}
+                  </td>
+                  <td className="px-2 py-1.5 text-right tabular">{fmtPrecio(f.precio)}</td>
+                  <td className="px-2 py-1.5 text-right tabular" style={estiloValor(f.var_pct, 6)}>
+                    {fmtPct(f.var_pct, { signo: true })}
+                  </td>
+                  <td className="px-2 py-1.5 text-right tabular text-terminal-dim">{fmtMarketCap(f.vol_hoy)}</td>
+                  <td className="px-2 py-1.5 text-right tabular text-terminal-dim">{fmtMarketCap(f.vol_prom20)}</td>
+                  <td className="px-2 py-1.5 text-right tabular font-bold text-terminal-accent">
+                    ×{fmtNum(f.vol_ratio, 1)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      <p className="mt-2 text-[11px] text-terminal-dim">
+        Volumen de hoy vs. el promedio de los últimos 20 días (sin contar hoy). Un pico de volumen
+        no dice si es compra o venta, solo que hay actividad fuera de lo normal — mirá la variación
+        % del día al lado para el contexto.
+      </p>
+    </div>
+  )
+}
+
 const DURACIONES = [1, 2, 3, 5]
 
 function SimuladorDCA({ filas }) {
@@ -445,6 +518,11 @@ export default function Herramientas() {
       <div>
         <h2 className="mb-2 text-sm font-semibold text-terminal-text">Heatmap sectorial</h2>
         <HeatmapSectorial filas={filas} />
+      </div>
+
+      <div>
+        <h2 className="mb-2 text-sm font-semibold text-terminal-text">Volumen inusual hoy</h2>
+        <VolumenInusual filas={filas} />
       </div>
 
       <div>

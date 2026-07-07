@@ -22,6 +22,7 @@ import Sparkline from '../components/Sparkline'
 import BotonPin from '../components/BotonPin'
 import EditorClasificacion from '../components/EditorClasificacion'
 import TickerLink from '../components/TickerLink'
+import GraficoEstacionalidad from '../components/GraficoEstacionalidad'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 
 const RATIOS = [
@@ -60,54 +61,6 @@ const DIST_MEDIAS = [
 ]
 
 const N_PEERS = 2
-
-const MESES_CORTO = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
-
-function GraficoEstacionalidad({ datos }) {
-  const porMes = useMemo(() => new Map(datos.map((d) => [d.mes, d])), [datos])
-  const maxAbs = useMemo(() => Math.max(1, ...datos.map((d) => Math.abs(d.retorno_prom ?? 0))), [datos])
-  return (
-    <div>
-      <div className="flex h-24 items-stretch gap-1">
-        {Array.from({ length: 12 }, (_, i) => i + 1).map((mes) => {
-          const d = porMes.get(mes)
-          const positivo = (d?.retorno_prom ?? 0) >= 0
-          const alturaPct = d ? (Math.abs(d.retorno_prom) / maxAbs) * 45 : 0
-          return (
-            <div
-              key={mes}
-              className="relative flex-1"
-              title={
-                d
-                  ? `${MESES_CORTO[mes - 1]}: ${d.retorno_prom >= 0 ? '+' : ''}${d.retorno_prom}% promedio · ${d.positivos_pct}% de los años fue positivo (n=${d.n})`
-                  : `${MESES_CORTO[mes - 1]}: sin datos suficientes`
-              }
-            >
-              <div className="absolute inset-x-0 top-1/2 h-px bg-terminal-border" />
-              {d && (
-                <div
-                  className="absolute inset-x-0.5 rounded-sm"
-                  style={{
-                    backgroundColor: positivo ? '#22c55e' : '#ef4444',
-                    height: `${alturaPct}%`,
-                    ...(positivo ? { bottom: '50%' } : { top: '50%' }),
-                  }}
-                />
-              )}
-            </div>
-          )
-        })}
-      </div>
-      <div className="mt-1 flex gap-1 text-center text-[9px] text-terminal-dim">
-        {MESES_CORTO.map((m) => (
-          <span key={m} className="flex-1">
-            {m}
-          </span>
-        ))}
-      </div>
-    </div>
-  )
-}
 
 function renderRatio(r, valor) {
   if (r.esCap) return fmtMarketCap(valor)
@@ -424,6 +377,23 @@ export default function TickerDetalle() {
           en RSI diario (precio vs. RSI en los últimos pivots), detectada hace{' '}
           {screenerFila.divergencia_rsi.hace_ruedas} rueda{screenerFila.divergencia_rsi.hace_ruedas === 1 ? '' : 's'} —
           heurística basada en mínimos/máximos locales, no es una señal infalible.
+        </div>
+      )}
+
+      {screenerFila?.cruce_medias && (
+        <div
+          className="mb-5 rounded-lg border px-3 py-2.5 text-sm"
+          style={
+            screenerFila.cruce_medias.tipo === 'golden'
+              ? { borderColor: 'rgba(34,197,94,0.4)', backgroundColor: 'rgba(34,197,94,0.08)', color: '#22c55e' }
+              : { borderColor: 'rgba(239,68,68,0.4)', backgroundColor: 'rgba(239,68,68,0.08)', color: '#ef4444' }
+          }
+        >
+          <span className="font-semibold">
+            {screenerFila.cruce_medias.tipo === 'golden' ? '🌟 Golden cross' : '💀 Death cross'}
+          </span>{' '}
+          (EMA50 cruzó {screenerFila.cruce_medias.tipo === 'golden' ? 'sobre' : 'bajo'} SMA200) hace{' '}
+          {screenerFila.cruce_medias.hace_ruedas} rueda{screenerFila.cruce_medias.hace_ruedas === 1 ? '' : 's'}.
         </div>
       )}
 

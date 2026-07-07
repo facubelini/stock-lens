@@ -203,6 +203,45 @@ export function calcLeverage(tpsl, margin, leverage, mType) {
   }
 }
 
+// Estacionalidad (retorno promedio por mes calendario), a partir de velas
+// mensuales (interval='1M' de Binance). Misma logica que el lado Python de
+// acciones (generar_datos.py calcular_estacionalidad_y_mensual) — si se
+// toca uno, tocar el otro. Requiere al menos 2 años de velas cerradas;
+// muchas altcoins nuevas no van a tener suficiente historial todavia.
+export function calcularEstacionalidad(klinesMensuales) {
+  if (!klinesMensuales || klinesMensuales.length < 25) return null
+  // La ultima vela mensual es el mes en curso (incompleto): compararla
+  // contra el cierre del mes anterior no es "el retorno de ese mes".
+  const cerradas = klinesMensuales.slice(0, -1)
+  if (cerradas.length < 24) return null
+
+  const porMes = new Map()
+  for (let i = 1; i < cerradas.length; i++) {
+    const anterior = +cerradas[i - 1][4]
+    const actual = +cerradas[i][4]
+    if (!anterior) continue
+    const retorno = ((actual / anterior) - 1) * 100
+    const mes = new Date(cerradas[i][0]).getUTCMonth() + 1
+    if (!porMes.has(mes)) porMes.set(mes, [])
+    porMes.get(mes).push(retorno)
+  }
+
+  const salida = []
+  for (let mes = 1; mes <= 12; mes++) {
+    const valores = porMes.get(mes)
+    if (!valores?.length) continue
+    const prom = valores.reduce((a, b) => a + b, 0) / valores.length
+    const positivos = valores.filter((v) => v > 0).length
+    salida.push({
+      mes,
+      retorno_prom: +prom.toFixed(2),
+      positivos_pct: +((positivos / valores.length) * 100).toFixed(0),
+      n: valores.length,
+    })
+  }
+  return salida.length ? salida : null
+}
+
 // Score de -10 a +10 (negativo = SHORT, positivo = LONG) a partir de RSI +
 // StochRSI + MACD + Bollinger + alineacion de EMAs + confirmacion de volumen.
 export function analyzeKlines(symbol, klines, atrMult) {

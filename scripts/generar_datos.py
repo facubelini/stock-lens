@@ -354,6 +354,7 @@ def calcular_screener(hist):
         "semanal": perfil_setup(semanales, **PERFIL_SEMANAL),
         "mensual": perfil_setup(mensuales, **PERFIL_MENSUAL),
         "divergencia_rsi": detectar_divergencia_rsi(ohlc["Close"]),
+        "cruce_medias": detectar_cruce_medias(ohlc["Close"]),
     }
 
 
@@ -830,6 +831,31 @@ def detectar_divergencia_rsi(closes, lookback=90, ventana_pivot=5, vigencia_rued
     return None
 
 
+def detectar_cruce_medias(closes, corto=50, largo=200, vigencia_ruedas=15):
+    """Golden cross / death cross: cruce entre EMA50 y SMA200 (mismas medias
+    ya usadas en 'Distancia a medias', no se agrega una tercera). Solo
+    reporta si el cruce mas reciente paso dentro de 'vigencia_ruedas' —
+    si no, es historia vieja, no una señal actual."""
+    if len(closes) < largo + vigencia_ruedas + 1:
+        return None
+    ema_corta = closes.ewm(span=corto, adjust=False).mean()
+    sma_larga = closes.rolling(largo).mean()
+    diff = (ema_corta - sma_larga).dropna()
+    if len(diff) < vigencia_ruedas + 2:
+        return None
+    signo = np.sign(diff)
+    diffs_signo = signo.diff().to_numpy()
+    cambios = np.where(diffs_signo[1:] != 0)[0] + 1  # [1:] descarta el NaN inicial de .diff()
+    if len(cambios) == 0:
+        return None
+    ultimo = cambios[-1]
+    hace = len(diff) - 1 - ultimo
+    if hace > vigencia_ruedas:
+        return None
+    tipo = "golden" if signo.iloc[ultimo] > 0 else "death"
+    return {"tipo": tipo, "hace_ruedas": int(hace)}
+
+
 def resolver_ticker(t):
     """Descarga el historico probando el ticker tal cual y, si no hay datos,
     con sufijos .SA (Brasil) y .BA (Argentina). Devuelve
@@ -938,6 +964,14 @@ def main():
         high_52w = float(ventana_52w.max())
         low_52w = float(ventana_52w.min())
 
+        # Volumen de hoy vs. promedio de los ultimos 20 dias (sin contar hoy):
+        # detecta picos de volumen inusual, no cuesta nada extra (mismo hist
+        # ya descargado). Igual logica que vol_ratio del Crypto Screener.
+        volumen = hist["Volume"].dropna() if "Volume" in hist.columns else pd.Series(dtype=float)
+        vol_hoy = float(volumen.iloc[-1]) if len(volumen) >= 1 else None
+        vol_prom20 = float(volumen.iloc[-21:-1].mean()) if len(volumen) >= 21 else None
+        vol_ratio = (vol_hoy / vol_prom20) if vol_hoy and vol_prom20 else None
+
         listado.append(
             {
                 **base,
@@ -946,6 +980,9 @@ def main():
                 "spark": spark,
                 "high_52w": num(high_52w, 2),
                 "low_52w": num(low_52w, 2),
+                "vol_hoy": int(vol_hoy) if vol_hoy else None,
+                "vol_prom20": int(vol_prom20) if vol_prom20 else None,
+                "vol_ratio": num(vol_ratio, 2),
             }
         )
 

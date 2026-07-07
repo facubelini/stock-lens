@@ -238,6 +238,14 @@ export default function Screener() {
                         {f.divergencia_rsi.tipo === 'alcista' ? '📈' : '📉'}
                       </span>
                     )}
+                    {f.cruce_medias && (
+                      <span
+                        className="ml-1"
+                        title={`${f.cruce_medias.tipo === 'golden' ? 'Golden cross' : 'Death cross'} (EMA50 x SMA200), hace ${f.cruce_medias.hace_ruedas} rueda(s)`}
+                      >
+                        {f.cruce_medias.tipo === 'golden' ? '🌟' : '💀'}
+                      </span>
+                    )}
                     {f.stale && (
                       <span
                         className="ml-1 text-terminal-warn"

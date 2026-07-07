@@ -69,6 +69,17 @@ function _norm(s) {
 
 const NOMBRES_TICKER = ['ticker', 'codigo', 'symbol', 'simbolo', 'code', 'tickers']
 
+// El pipeline (resolver_ticker en generar_datos.py) prueba el ticker "pelado"
+// del Excel y, si no resuelve, reintenta con sufijo .SA (Brasil) o .BA
+// (Argentina) — el ticker que ve el usuario en la app es ese resuelto (ej.
+// "BAYN.BA"), pero en tickers.xlsx casi siempre esta guardado sin sufijo
+// (ej. "BAYN"). Si no se saca el sufijo antes de comparar, alta/baja nunca
+// hacen match contra la fila real y la baja falla en silencio (se reporta
+// "ya no estaba" aunque siga ahi).
+function _sinSufijo(t) {
+  return String(t ?? '').trim().toUpperCase().replace(/\.(SA|BA)$/, '')
+}
+
 // Descarga y parsea tickers.xlsx del repo, detectando la columna de tickers
 // (una sola columna, o un encabezado tipo Ticker/Codigo/Symbol).
 async function leerExcelRepo() {
@@ -95,14 +106,17 @@ async function escribirExcelRepo({ XLSX, wb, nombreHoja, filas, sha }, mensaje) 
 
 async function agregarEnExcel(ticker) {
   const ctx = await leerExcelRepo()
+  const objetivo = _sinSufijo(ticker)
   const yaExiste = ctx.filas
     .slice(1)
-    .some((f) => String(f[ctx.colTicker] ?? '').trim().toUpperCase() === ticker)
+    .some((f) => _sinSufijo(f[ctx.colTicker]) === objetivo)
   if (yaExiste) return { agregado: false }
   const nuevaFila = new Array(ctx.filas[0].length).fill('')
-  nuevaFila[ctx.colTicker] = ticker
+  // Se guarda sin sufijo, consistente con el resto del archivo (el pipeline
+  // le agrega .SA/.BA solo si hace falta para resolverlo).
+  nuevaFila[ctx.colTicker] = objetivo
   ctx.filas.push(nuevaFila)
-  await escribirExcelRepo(ctx, `watchlist: agregar ${ticker} (alta manual desde la app)`)
+  await escribirExcelRepo(ctx, `watchlist: agregar ${objetivo} (alta manual desde la app)`)
   return { agregado: true }
 }
 
@@ -110,10 +124,11 @@ async function quitarDeExcel(ticker) {
   const ctx = await leerExcelRepo()
   const encabezado = ctx.filas[0]
   const cuerpo = ctx.filas.slice(1)
-  const restantes = cuerpo.filter((f) => String(f[ctx.colTicker] ?? '').trim().toUpperCase() !== ticker)
+  const objetivo = _sinSufijo(ticker)
+  const restantes = cuerpo.filter((f) => _sinSufijo(f[ctx.colTicker]) !== objetivo)
   if (restantes.length === cuerpo.length) return { eliminado: false } // no estaba en el excel
   ctx.filas = [encabezado, ...restantes]
-  await escribirExcelRepo(ctx, `watchlist: eliminar ${ticker} (baja manual desde la app)`)
+  await escribirExcelRepo(ctx, `watchlist: eliminar ${objetivo} (baja manual desde la app)`)
   return { eliminado: true }
 }
 

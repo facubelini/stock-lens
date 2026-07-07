@@ -1,14 +1,43 @@
 import { useMemo, useState } from 'react'
 import { useDatosCombinados } from '../lib/useDatosCombinados'
+import { useJson } from '../lib/useJson'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
 import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { calcularScore } from '../lib/score'
 import { exportarCSV } from '../lib/csv'
+import { estiloValor, estiloRSI, fmtPct, fmtNum } from '../lib/formato'
 import Controles from '../components/Controles'
 import TarjetaIndustria from '../components/TarjetaIndustria'
 import Leyenda from '../components/Leyenda'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
+
+function HeatmapIndustrias({ titulo, datos, valorKey, colorFn, formatFn, ayuda }) {
+  const ordenado = useMemo(
+    () => [...datos].filter((d) => d[valorKey] != null).sort((a, b) => b[valorKey] - a[valorKey]),
+    [datos, valorKey],
+  )
+  if (!ordenado.length) return null
+  return (
+    <div>
+      <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-terminal-dim">{titulo}</h2>
+      <div className="grid grid-cols-3 gap-1.5 sm:grid-cols-5 md:grid-cols-6 lg:grid-cols-8">
+        {ordenado.map((d) => (
+          <div
+            key={d.industria}
+            className="rounded border border-terminal-border px-1.5 py-1.5 text-center"
+            style={colorFn(d[valorKey])}
+            title={`${d.industria} · ${d.n} ticker(s)`}
+          >
+            <div className="truncate text-[9px] font-semibold leading-tight">{d.industria}</div>
+            <div className="mt-0.5 text-xs font-bold tabular">{formatFn(d[valorKey])}</div>
+          </div>
+        ))}
+      </div>
+      {ayuda && <p className="mt-1.5 text-[11px] text-terminal-dim">{ayuda}</p>}
+    </div>
+  )
+}
 
 const CAMPOS = ['ticker', 'nombre']
 
@@ -33,6 +62,11 @@ const COLS_CSV = [
 
 export default function Listado() {
   const { filas: merged, cargando, error } = useDatosCombinados()
+  const { data: listadoData } = useJson('listado.json')
+  const promediosPorIndustria = useMemo(
+    () => (Array.isArray(listadoData?.promedios_por_industria) ? listadoData.promedios_por_industria : []),
+    [listadoData],
+  )
   const { pins, isPinned, toggle } = usePins()
   const { overrides } = useClasificacion()
   const [orden, setOrden] = useState('score|desc')
@@ -103,6 +137,27 @@ export default function Listado() {
           valuación) por industria. El sparkline muestra las últimas ~30 ruedas.
         </p>
       </div>
+
+      {promediosPorIndustria.length > 0 && (
+        <div className="mb-5 grid grid-cols-1 gap-4 xl:grid-cols-2">
+          <HeatmapIndustrias
+            titulo="Industrias — variación de hoy"
+            datos={promediosPorIndustria}
+            valorKey="var_pct_promedio"
+            colorFn={(v) => estiloValor(v, 3)}
+            formatFn={(v) => fmtPct(v, { signo: true })}
+            ayuda="Promedio simple de la variación % de hoy, por industria (de tu universo de tickers)."
+          />
+          <HeatmapIndustrias
+            titulo="Industrias — RSI promedio"
+            datos={promediosPorIndustria}
+            valorKey="rsi_promedio"
+            colorFn={(v) => estiloRSI(v)}
+            formatFn={(v) => fmtNum(v, 1)}
+            ayuda="RSI(14) promedio por industria — >70 sobrecompra, <30 sobreventa."
+          />
+        </div>
+      )}
 
       <Controles
         busqueda={t.busqueda}

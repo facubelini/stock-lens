@@ -10,6 +10,11 @@ import { estiloValor, estiloRSI, fmtPct, fmtNum } from '../lib/formato'
 import Controles from '../components/Controles'
 import TarjetaIndustria from '../components/TarjetaIndustria'
 import Leyenda from '../components/Leyenda'
+import BotonPin from '../components/BotonPin'
+import EditorClasificacion from '../components/EditorClasificacion'
+import Semaforo from '../components/Semaforo'
+import Sparkline from '../components/Sparkline'
+import TickerLink from '../components/TickerLink'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 
 function HeatmapIndustrias({ titulo, datos, valorKey, colorFn, formatFn, ayuda }) {
@@ -35,6 +40,92 @@ function HeatmapIndustrias({ titulo, datos, valorKey, colorFn, formatFn, ayuda }
         ))}
       </div>
       {ayuda && <p className="mt-1.5 text-[11px] text-terminal-dim">{ayuda}</p>}
+    </div>
+  )
+}
+
+// Tabla plana (sin agrupar por industria), con headers clickeables para
+// ordenar de mayor a menor — complementa el select de orden, que en esta
+// vista ordena la lista entera en vez de solo dentro de cada grupo.
+function ListaGeneral({ filas, orden, setOrden, isPinned, toggle, industrias, sectores }) {
+  const [campoActual, dirActual] = orden.split('|')
+
+  const th = (campo, label, align = 'right') => {
+    const activo = campoActual === campo
+    return (
+      <th
+        onClick={() => setOrden(`${campo}|${activo && dirActual === 'desc' ? 'asc' : 'desc'}`)}
+        className={`cursor-pointer whitespace-nowrap px-2 py-2.5 font-semibold hover:text-terminal-text ${
+          align === 'right' ? 'text-right' : 'text-left'
+        } ${activo ? 'text-terminal-accent' : ''}`}
+      >
+        {label}
+        {activo ? (dirActual === 'desc' ? ' ▼' : ' ▲') : ''}
+      </th>
+    )
+  }
+
+  return (
+    <div className="overflow-x-auto rounded-lg border border-terminal-border">
+      <table className="min-w-full border-collapse text-sm">
+        <thead className="sticky top-0 z-10">
+          <tr className="bg-terminal-panel2 text-left text-xs uppercase tracking-wide text-terminal-dim">
+            <th className="w-6 px-1 py-2.5" />
+            {th('ticker', 'Ticker', 'left')}
+            <th className="whitespace-nowrap px-2 py-2.5 font-semibold">Industria</th>
+            <th className="whitespace-nowrap px-2 py-2.5 font-semibold">País</th>
+            <th className="px-2 py-2.5 font-semibold">Gráfico</th>
+            {th('var_pct', 'Var %')}
+            {th('rsi', 'RSI')}
+            {th('score', 'Score')}
+          </tr>
+        </thead>
+        <tbody>
+          {filas.map((r) => (
+            <tr key={r.ticker} className="border-t border-terminal-border transition-colors hover:bg-terminal-panel2/40">
+              <td className="w-6 py-1 pl-2 pr-0 text-center align-middle">
+                <BotonPin ticker={r.ticker} isPinned={isPinned} toggle={toggle} />
+              </td>
+              <td className="whitespace-nowrap py-1 px-2 align-middle">
+                <span className="flex items-center gap-1.5">
+                  <TickerLink ticker={r.ticker} className="font-semibold" title={r.nombre} />
+                  {r.stale && (
+                    <span
+                      className="text-terminal-warn"
+                      title={`Dato arrastrado de la última corrida exitosa (${r.actualizado ?? '?'})`}
+                    >
+                      🕒
+                    </span>
+                  )}
+                  <EditorClasificacion
+                    ticker={r.ticker}
+                    industria={r.industria}
+                    sector={r.sector}
+                    industrias={industrias}
+                    sectores={sectores}
+                  />
+                </span>
+              </td>
+              <td className="max-w-[160px] truncate px-2 py-1 text-terminal-dim" title={r.industria}>
+                {r.industria || '—'}
+              </td>
+              <td className="whitespace-nowrap px-2 py-1 text-terminal-dim">{r.pais || '—'}</td>
+              <td className="px-2 py-1">
+                <Sparkline datos={r.spark} />
+              </td>
+              <td className="px-2 py-1 text-right tabular" style={estiloValor(r.var_pct, 6)}>
+                {fmtPct(r.var_pct, { signo: true })}
+              </td>
+              <td className="px-2 py-1 text-right tabular" style={estiloRSI(r.rsi)}>
+                {fmtNum(r.rsi, 1)}
+              </td>
+              <td className="px-2 py-1 text-right">
+                <Semaforo resultado={r._score} />
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   )
 }
@@ -70,6 +161,7 @@ export default function Listado() {
   const { pins, isPinned, toggle } = usePins()
   const { overrides } = useClasificacion()
   const [orden, setOrden] = useState('score|desc')
+  const [vista, setVista] = useState('industria') // 'industria' | 'lista'
 
   const base = useMemo(
     () => aplicarClasificacion(merged, overrides),
@@ -113,12 +205,14 @@ export default function Listado() {
     [t.filtradas, pins, comparar],
   )
 
+  const listaGeneral = useMemo(() => [...t.filtradas].sort(comparar), [t.filtradas, comparar])
+
   const ordenSelect = (
     <select
       className="rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-text focus:border-terminal-accent focus:outline-none"
       value={orden}
       onChange={(e) => setOrden(e.target.value)}
-      title="Ordenar dentro de cada industria"
+      title={vista === 'lista' ? 'Ordenar la lista completa' : 'Ordenar dentro de cada industria'}
     >
       {OPCIONES_ORDEN.map((o) => (
         <option key={o.val} value={o.val}>
@@ -126,6 +220,28 @@ export default function Listado() {
         </option>
       ))}
     </select>
+  )
+
+  const vistaToggle = (
+    <div className="flex overflow-hidden rounded border border-terminal-border text-sm">
+      {[
+        { val: 'industria', label: 'Por industria' },
+        { val: 'lista', label: 'Lista general' },
+      ].map((o) => (
+        <button
+          key={o.val}
+          type="button"
+          onClick={() => setVista(o.val)}
+          className={`px-2.5 py-1.5 ${
+            vista === o.val
+              ? 'bg-terminal-accent font-semibold text-black'
+              : 'bg-terminal-panel text-terminal-dim hover:text-terminal-text'
+          }`}
+        >
+          {o.label}
+        </button>
+      ))}
+    </div>
   )
 
   return (
@@ -171,7 +287,12 @@ export default function Listado() {
         sector={t.sector}
         setSector={t.setSector}
         sectores={t.sectores}
-        extra={ordenSelect}
+        extra={
+          <>
+            {vistaToggle}
+            {ordenSelect}
+          </>
+        }
         onExportCSV={() => exportarCSV('stock-lens-listado.csv', COLS_CSV, t.filtradas)}
         total={base.length}
         mostrados={t.filtradas.length}
@@ -185,6 +306,16 @@ export default function Listado() {
         <MensajeError mensaje={error} />
       ) : t.filtradas.length === 0 ? (
         <Vacio />
+      ) : vista === 'lista' ? (
+        <ListaGeneral
+          filas={listaGeneral}
+          orden={orden}
+          setOrden={setOrden}
+          isPinned={isPinned}
+          toggle={toggle}
+          industrias={t.industrias}
+          sectores={t.sectores}
+        />
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {favoritos.length > 0 && (

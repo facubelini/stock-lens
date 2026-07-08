@@ -1,13 +1,13 @@
 {
-  "actualizado": "2026-07-08T13:04:30.027289-03:00",
+  "actualizado": "2026-07-08T16:41:05.940663-03:00",
   "vix": {
-    "valor": 18.32,
-    "cambio_pct": 13.58
+    "valor": 16.87,
+    "cambio_pct": 4.59
   },
   "yield_curve": {
-    "diez_anios": 4.59,
+    "diez_anios": 4.57,
     "tres_meses": 3.72,
-    "spread": 0.87,
+    "spread": 0.85,
     "invertida": false
   },
   "fear_greed_cripto": {
@@ -15,7 +15,7 @@
     "clasificacion": "Extreme Fear"
   },
   "fear_greed_acciones": {
-    "valor": 39.7,
+    "valor": 41.7,
     "clasificacion": "fear",
     "prev_cierre": 43.0,
     "prev_semana": 30.5,

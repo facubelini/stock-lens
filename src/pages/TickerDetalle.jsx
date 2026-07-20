@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { useJson } from '../lib/useJson'
 import { useDatosCombinados } from '../lib/useDatosCombinados'
@@ -6,6 +6,8 @@ import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { useWatchlist } from '../lib/watchlist'
 import { usePins } from '../lib/usePins'
 import { GLOSARIO_POR_CLAVE } from '../lib/glosario'
+import { obtenerNoticias } from '../lib/noticias'
+import { calcularScore, nivelScore } from '../lib/score'
 import { TIMEFRAMES, ESTILO_VERDICT, prioridadScreener } from '../lib/screenerEstilos'
 import {
   fmtPct,
@@ -70,6 +72,169 @@ function renderRatio(r, valor) {
 
 function esETF(datos) {
   return /etf/i.test(datos?.sector ?? '') || /etf/i.test(datos?.industria ?? '')
+}
+
+// El proximo_earnings del pipeline a veces queda un dia o dos atras (Yahoo
+// tarda en correr la fecha siguiente apenas paso el reporte) — solo tiene
+// sentido mostrarlo si todavia no paso.
+function esFuturo(fechaISO) {
+  if (!fechaISO) return false
+  const hoy = new Date().toISOString().slice(0, 10)
+  return fechaISO >= hoy
+}
+
+function fmtFechaCorta(fechaISO) {
+  if (!fechaISO) return '—'
+  const [anio, mes, dia] = fechaISO.split('-')
+  return `${dia}/${mes}/${anio}`
+}
+
+const EXPLICACION_PARTE = {
+  Tendencia: 'Precio vs. EMA50/SMA200 — más arriba de esas medias, más puntos.',
+  Momentum: 'RSI — mejor cerca de 55 (ni sobrecomprado ni sobrevendido), penaliza los extremos.',
+  Valuación: 'PER y PEG bajos suman — más barata, mejor.',
+}
+
+// Mismo calculo que ordena Listado (score.js) — ahi solo se ve un numero
+// (o el desglose escondido en el tooltip del semaforo); aca se muestra
+// entero, para responder "por que tiene este score" sin tener que ir a
+// buscarlo a otra pestaña.
+function DesgloseScore({ resultado }) {
+  if (!resultado) return null
+  const nivel = nivelScore(resultado.score)
+  return (
+    <div className="mb-5 rounded-lg border border-terminal-border bg-terminal-panel p-4">
+      <div className="mb-3 flex items-center gap-3">
+        <h2 className="text-sm font-semibold text-terminal-text">Score</h2>
+        <span className="text-2xl font-bold tabular" style={{ color: nivel.color }}>
+          {resultado.score}
+        </span>
+        <span className="text-xs font-semibold" style={{ color: nivel.color }}>
+          {nivel.txt}
+        </span>
+      </div>
+      <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+        {resultado.partes.map((p) => (
+          <div key={p.k} className="rounded border border-terminal-border px-3 py-2.5">
+            <div className="mb-1 flex items-center justify-between">
+              <span className="text-xs font-semibold text-terminal-text">{p.k}</span>
+              <span className="text-sm font-bold tabular text-terminal-text">{p.v}</span>
+            </div>
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-terminal-border">
+              <div className="h-full rounded-full bg-terminal-accent" style={{ width: `${p.v}%` }} />
+            </div>
+            <p className="mt-1.5 text-[10px] text-terminal-dim">
+              {EXPLICACION_PARTE[p.k]} (peso {Math.round(p.w * 100)}%)
+            </p>
+          </div>
+        ))}
+      </div>
+      <p className="mt-2 text-[11px] text-terminal-dim">
+        Score orientativo 0-100 — no es recomendación de inversión. Si falta algún dato (ej. PEG),
+        el peso de esa parte se reparte entre las que sí están disponibles.
+      </p>
+    </div>
+  )
+}
+
+function SeccionDividendos({ dividendos }) {
+  if (!dividendos?.pagos?.length) return null
+  const ultimos = [...dividendos.pagos].reverse().slice(0, 8)
+  return (
+    <div className="mb-5">
+      <h2 className="mb-2 text-sm font-semibold text-terminal-text">Dividendos</h2>
+      <div className="mb-2 grid grid-cols-2 gap-2 sm:grid-cols-3">
+        <div className="rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2 text-center">
+          <div className="text-[10px] uppercase text-terminal-dim">Últimos 12 meses</div>
+          <div className="tabular font-semibold text-terminal-text">
+            ${fmtNum(dividendos.total_ultimos_12m, 2)} / acción
+          </div>
+        </div>
+        <div className="rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2 text-center">
+          <div className="text-[10px] uppercase text-terminal-dim">Crecimiento interanual</div>
+          <div className="tabular font-semibold" style={estiloValor(dividendos.crecimiento_yoy, 15)}>
+            {dividendos.crecimiento_yoy != null ? fmtPct(dividendos.crecimiento_yoy, { signo: true }) : 'N/D'}
+          </div>
+        </div>
+      </div>
+      <div className="overflow-x-auto rounded-lg border border-terminal-border">
+        <table className="min-w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-terminal-panel2 text-left text-xs uppercase tracking-wide text-terminal-dim">
+              <th className="px-2 py-1.5 font-semibold">Fecha</th>
+              <th className="px-2 py-1.5 text-right font-semibold">Monto / acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ultimos.map((p) => (
+              <tr key={p.fecha} className="border-t border-terminal-border">
+                <td className="px-2 py-1 text-terminal-dim">{fmtFechaCorta(p.fecha)}</td>
+                <td className="px-2 py-1 text-right tabular font-semibold text-terminal-text">${p.monto}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="mt-1.5 text-[11px] text-terminal-dim">
+        Últimos ~5 años de pagos (yfinance). El crecimiento interanual compara la suma de los
+        pagos del último año contra el año anterior (según la frecuencia real de pago).
+      </p>
+    </div>
+  )
+}
+
+// Noticias via Google News RSS (rss2json como proxy CORS) — best effort: si
+// falla o tarda, no bloquea el resto de la pagina ni muestra un error feo,
+// simplemente no aparece la seccion.
+function NoticiasTicker({ ticker }) {
+  const [estado, setEstado] = useState('cargando')
+  const [items, setItems] = useState([])
+
+  useEffect(() => {
+    let activo = true
+    setEstado('cargando')
+    obtenerNoticias(`${ticker} stock`)
+      .then((its) => {
+        if (!activo) return
+        setItems(its)
+        setEstado('ok')
+      })
+      .catch(() => activo && setEstado('error'))
+    return () => {
+      activo = false
+    }
+  }, [ticker])
+
+  if (estado === 'error' || (estado === 'ok' && items.length === 0)) return null
+
+  return (
+    <div className="mb-5">
+      <h2 className="mb-2 text-sm font-semibold text-terminal-text">Noticias recientes</h2>
+      {estado === 'cargando' ? (
+        <div className="skeleton h-20 rounded-lg" />
+      ) : (
+        <div className="flex flex-col gap-2 rounded-lg border border-terminal-border bg-terminal-panel p-3">
+          {items.map((n, i) => (
+            <a
+              key={i}
+              href={n.link}
+              target="_blank"
+              rel="noreferrer"
+              className="text-sm text-terminal-text hover:text-terminal-accent hover:underline"
+            >
+              {n.title}
+              {n.pubDate && (
+                <span className="ml-1.5 text-[11px] font-normal text-terminal-dim">
+                  {new Date(n.pubDate).toLocaleDateString('es-AR')}
+                </span>
+              )}
+            </a>
+          ))}
+        </div>
+      )}
+      <p className="mt-1.5 text-[11px] text-terminal-dim">Vía Google News.</p>
+    </div>
+  )
 }
 
 function CardVerdict({ tf, dato }) {
@@ -162,6 +327,7 @@ export default function TickerDetalle() {
     () => conOverrides.find((f) => f.ticker.toUpperCase() === ticker),
     [conOverrides, ticker],
   )
+  const resultadoScore = useMemo(() => (fila ? calcularScore(fila) : null), [fila])
 
   const industrias = useMemo(
     () => [...new Set(conOverrides.map((f) => f.industria).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'es')),
@@ -342,6 +508,8 @@ export default function TickerDetalle() {
         </div>
       )}
 
+      <DesgloseScore resultado={resultadoScore} />
+
       {screenerFila && (
         <div className="mb-5">
           <h2 className="mb-2 flex items-center gap-2 text-sm font-semibold text-terminal-text">
@@ -488,7 +656,7 @@ export default function TickerDetalle() {
         </div>
       )}
 
-      {fila && !esFondo && (fila.recommendation_key || fila.insider) && (
+      {fila && !esFondo && (fila.recommendation_key || fila.insider || esFuturo(fila.proximo_earnings?.fecha)) && (
         <div className="mb-5 flex flex-col gap-2 sm:flex-row">
           {fila.recommendation_key && (
             <div className="flex-1 rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2.5">
@@ -496,6 +664,18 @@ export default function TickerDetalle() {
               <div className="font-semibold text-terminal-text">
                 {RECOMENDACION_LABEL[fila.recommendation_key] ?? fila.recommendation_key}
                 {fila.n_analistas ? ` · ${fila.n_analistas} analistas` : ''}
+              </div>
+            </div>
+          )}
+          {esFuturo(fila.proximo_earnings?.fecha) && (
+            <div className="flex-1 rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2.5">
+              <div className="text-[10px] uppercase text-terminal-dim">Próximo reporte de resultados</div>
+              <div className="font-semibold text-terminal-text">
+                {fmtFechaCorta(fila.proximo_earnings.fecha)}
+                {fila.proximo_earnings.fecha_fin && ` – ${fmtFechaCorta(fila.proximo_earnings.fecha_fin)}`}
+                {fila.proximo_earnings.estimado && (
+                  <span className="ml-1.5 text-xs font-normal text-terminal-dim">(estimado)</span>
+                )}
               </div>
             </div>
           )}
@@ -516,6 +696,8 @@ export default function TickerDetalle() {
           )}
         </div>
       )}
+
+      <SeccionDividendos dividendos={fila?.dividendos} />
 
       <div className="mb-5">
         <h2 className="mb-2 text-sm font-semibold text-terminal-text">Fundamentales</h2>
@@ -606,6 +788,8 @@ export default function TickerDetalle() {
           </>
         )}
       </div>
+
+      {fila && <NoticiasTicker ticker={ticker} />}
 
       {enHistoricoFundamental && (
         <Link

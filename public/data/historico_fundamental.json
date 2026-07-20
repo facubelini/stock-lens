@@ -1,11 +1,29 @@
 {
-  "actualizado": "2026-07-20T11:15:25.055646-03:00",
+  "actualizado": "2026-07-07T21:40:17.883377-03:00",
   "tickers": [
     {
       "ticker": "DAL",
-      "nombre": "DELTA AIR LINES, INC.",
+      "nombre": "Delta Air Lines, Inc.",
       "disponible": true,
       "serie": [
+        {
+          "fecha": "2021-07-09",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -10.47,
+          "revenue_ttm": 18311000000.0,
+          "margen_neto_ttm": -36.37
+        },
+        {
+          "fecha": "2021-07-16",
+          "per_ltm": null,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": -10.47,
+          "revenue_ttm": 18311000000.0,
+          "margen_neto_ttm": -36.37
+        },
         {
           "fecha": "2021-07-23",
           "per_ltm": null,
@@ -215,7 +233,7 @@
         },
         {
           "fecha": "2021-12-31",
-          "per_ltm": 85.732,
+          "per_ltm": 85.9437,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -224,7 +242,7 @@
         },
         {
           "fecha": "2022-01-07",
-          "per_ltm": 91.0628,
+          "per_ltm": 91.2877,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -233,7 +251,7 @@
         },
         {
           "fecha": "2022-01-14",
-          "per_ltm": 88.4303,
+          "per_ltm": 88.6487,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -242,7 +260,7 @@
         },
         {
           "fecha": "2022-01-21",
-          "per_ltm": 83.0556,
+          "per_ltm": 83.2607,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -251,7 +269,7 @@
         },
         {
           "fecha": "2022-01-28",
-          "per_ltm": 83.977,
+          "per_ltm": 84.1843,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -260,7 +278,7 @@
         },
         {
           "fecha": "2022-02-04",
-          "per_ltm": 87.4212,
+          "per_ltm": 87.637,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -269,7 +287,7 @@
         },
         {
           "fecha": "2022-02-11",
-          "per_ltm": 92.8617,
+          "per_ltm": 93.091,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -278,7 +296,7 @@
         },
         {
           "fecha": "2022-02-18",
-          "per_ltm": 93.9805,
+          "per_ltm": 94.2126,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -287,7 +305,7 @@
         },
         {
           "fecha": "2022-02-25",
-          "per_ltm": 91.1286,
+          "per_ltm": 91.3537,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -296,7 +314,7 @@
         },
         {
           "fecha": "2022-03-04",
-          "per_ltm": 75.7285,
+          "per_ltm": 75.9154,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -305,7 +323,7 @@
         },
         {
           "fecha": "2022-03-11",
-          "per_ltm": 70.3538,
+          "per_ltm": 70.5275,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -314,7 +332,7 @@
         },
         {
           "fecha": "2022-03-18",
-          "per_ltm": 82.6608,
+          "per_ltm": 82.8648,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -323,7 +341,7 @@
         },
         {
           "fecha": "2022-03-25",
-          "per_ltm": 83.1653,
+          "per_ltm": 83.3706,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -332,7 +350,7 @@
         },
         {
           "fecha": "2022-04-01",
-          "per_ltm": 46.8446,
+          "per_ltm": 46.9602,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -341,7 +359,7 @@
         },
         {
           "fecha": "2022-04-08",
-          "per_ltm": 43.782,
+          "per_ltm": 43.8901,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -350,7 +368,7 @@
         },
         {
           "fecha": "2022-04-15",
-          "per_ltm": 50.4791,
+          "per_ltm": 50.6038,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -359,7 +377,7 @@
         },
         {
           "fecha": "2022-04-22",
-          "per_ltm": 52.0641,
+          "per_ltm": 52.1926,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -368,7 +386,7 @@
         },
         {
           "fecha": "2022-04-29",
-          "per_ltm": 51.2776,
+          "per_ltm": 51.4042,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -377,7 +395,7 @@
         },
         {
           "fecha": "2022-05-06",
-          "per_ltm": 48.8585,
+          "per_ltm": 48.9791,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -386,7 +404,7 @@
         },
         {
           "fecha": "2022-05-13",
-          "per_ltm": 45.6767,
+          "per_ltm": 45.7895,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -395,7 +413,7 @@
         },
         {
           "fecha": "2022-05-20",
-          "per_ltm": 46.0461,
+          "per_ltm": 46.1598,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -404,7 +422,7 @@
         },
         {
           "fecha": "2022-05-27",
-          "per_ltm": 50.3242,
+          "per_ltm": 50.4485,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -413,7 +431,7 @@
         },
         {
           "fecha": "2022-06-03",
-          "per_ltm": 45.927,
+          "per_ltm": 46.0404,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -422,7 +440,7 @@
         },
         {
           "fecha": "2022-06-10",
-          "per_ltm": 41.8515,
+          "per_ltm": 41.9548,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -431,7 +449,7 @@
         },
         {
           "fecha": "2022-06-17",
-          "per_ltm": 36.0599,
+          "per_ltm": 36.149,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -440,7 +458,7 @@
         },
         {
           "fecha": "2022-06-24",
-          "per_ltm": 37.1801,
+          "per_ltm": 37.2719,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -449,7 +467,7 @@
         },
         {
           "fecha": "2022-07-01",
-          "per_ltm": 30.313,
+          "per_ltm": 30.3879,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -458,7 +476,7 @@
         },
         {
           "fecha": "2022-07-08",
-          "per_ltm": 30.5184,
+          "per_ltm": 30.5938,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -467,7 +485,7 @@
         },
         {
           "fecha": "2022-07-15",
-          "per_ltm": 30.8984,
+          "per_ltm": 30.9747,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -476,7 +494,7 @@
         },
         {
           "fecha": "2022-07-22",
-          "per_ltm": 32.1922,
+          "per_ltm": 32.2717,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -485,7 +503,7 @@
         },
         {
           "fecha": "2022-07-29",
-          "per_ltm": 32.6543,
+          "per_ltm": 32.7349,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -494,7 +512,7 @@
         },
         {
           "fecha": "2022-08-05",
-          "per_ltm": 33.8249,
+          "per_ltm": 33.9084,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -503,7 +521,7 @@
         },
         {
           "fecha": "2022-08-12",
-          "per_ltm": 35.4268,
+          "per_ltm": 35.5143,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -512,7 +530,7 @@
         },
         {
           "fecha": "2022-08-19",
-          "per_ltm": 34.1432,
+          "per_ltm": 34.2276,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -521,7 +539,7 @@
         },
         {
           "fecha": "2022-08-26",
-          "per_ltm": 33.5579,
+          "per_ltm": 33.6408,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -530,7 +548,7 @@
         },
         {
           "fecha": "2022-09-02",
-          "per_ltm": 31.7712,
+          "per_ltm": 31.8496,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -539,7 +557,7 @@
         },
         {
           "fecha": "2022-09-09",
-          "per_ltm": 33.5374,
+          "per_ltm": 33.6202,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -548,7 +566,7 @@
         },
         {
           "fecha": "2022-09-16",
-          "per_ltm": 32.9726,
+          "per_ltm": 33.054,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -557,7 +575,7 @@
         },
         {
           "fecha": "2022-09-23",
-          "per_ltm": 29.7996,
+          "per_ltm": 29.8732,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -566,7 +584,7 @@
         },
         {
           "fecha": "2022-09-30",
-          "per_ltm": 208.3461,
+          "per_ltm": 208.8605,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -575,7 +593,7 @@
         },
         {
           "fecha": "2022-10-07",
-          "per_ltm": 218.2214,
+          "per_ltm": 218.7602,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -584,7 +602,7 @@
         },
         {
           "fecha": "2022-10-14",
-          "per_ltm": 230.7696,
+          "per_ltm": 231.3395,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -593,7 +611,7 @@
         },
         {
           "fecha": "2022-10-21",
-          "per_ltm": 241.9072,
+          "per_ltm": 242.5045,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -602,7 +620,7 @@
         },
         {
           "fecha": "2022-10-28",
-          "per_ltm": 257.4255,
+          "per_ltm": 258.061,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -611,7 +629,7 @@
         },
         {
           "fecha": "2022-11-04",
-          "per_ltm": 243.2437,
+          "per_ltm": 243.8443,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -620,7 +638,7 @@
         },
         {
           "fecha": "2022-11-11",
-          "per_ltm": 263.1427,
+          "per_ltm": 263.7925,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -629,7 +647,7 @@
         },
         {
           "fecha": "2022-11-18",
-          "per_ltm": 255.9405,
+          "per_ltm": 256.5725,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -638,7 +656,7 @@
         },
         {
           "fecha": "2022-11-25",
-          "per_ltm": 260.6183,
+          "per_ltm": 261.2617,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -647,7 +665,7 @@
         },
         {
           "fecha": "2022-12-02",
-          "per_ltm": 265.1475,
+          "per_ltm": 265.8022,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -656,7 +674,7 @@
         },
         {
           "fecha": "2022-12-09",
-          "per_ltm": 250.9657,
+          "per_ltm": 251.5854,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -665,7 +683,7 @@
         },
         {
           "fecha": "2022-12-16",
-          "per_ltm": 245.8425,
+          "per_ltm": 246.4495,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -674,7 +692,7 @@
         },
         {
           "fecha": "2022-12-23",
-          "per_ltm": 246.2138,
+          "per_ltm": 246.8216,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -683,7 +701,7 @@
         },
         {
           "fecha": "2022-12-30",
-          "per_ltm": 243.9862,
+          "per_ltm": 244.5886,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -692,7 +710,7 @@
         },
         {
           "fecha": "2023-01-06",
-          "per_ltm": 16.801,
+          "per_ltm": 16.8425,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -701,7 +719,7 @@
         },
         {
           "fecha": "2023-01-13",
-          "per_ltm": 17.8129,
+          "per_ltm": 17.8569,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -710,7 +728,7 @@
         },
         {
           "fecha": "2023-01-20",
-          "per_ltm": 18.1999,
+          "per_ltm": 18.2449,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -719,7 +737,7 @@
         },
         {
           "fecha": "2023-01-27",
-          "per_ltm": 18.06,
+          "per_ltm": 18.1046,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -728,7 +746,7 @@
         },
         {
           "fecha": "2023-02-03",
-          "per_ltm": 18.4564,
+          "per_ltm": 18.502,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -737,7 +755,7 @@
         },
         {
           "fecha": "2023-02-10",
-          "per_ltm": 17.7989,
+          "per_ltm": 17.8428,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -746,7 +764,7 @@
         },
         {
           "fecha": "2023-02-17",
-          "per_ltm": 17.8875,
+          "per_ltm": 17.9317,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -755,7 +773,7 @@
         },
         {
           "fecha": "2023-02-24",
-          "per_ltm": 17.4212,
+          "per_ltm": 17.4642,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -764,7 +782,7 @@
         },
         {
           "fecha": "2023-03-03",
-          "per_ltm": 18.116,
+          "per_ltm": 18.1607,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -773,7 +791,7 @@
         },
         {
           "fecha": "2023-03-10",
-          "per_ltm": 17.3699,
+          "per_ltm": 17.4128,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -782,7 +800,7 @@
         },
         {
           "fecha": "2023-03-17",
-          "per_ltm": 15.3694,
+          "per_ltm": 15.4074,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -791,7 +809,7 @@
         },
         {
           "fecha": "2023-03-24",
-          "per_ltm": 14.7306,
+          "per_ltm": 14.767,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -800,7 +818,7 @@
         },
         {
           "fecha": "2023-03-31",
-          "per_ltm": 11.3109,
+          "per_ltm": 11.3389,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -809,7 +827,7 @@
         },
         {
           "fecha": "2023-04-07",
-          "per_ltm": 10.9125,
+          "per_ltm": 10.9395,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -818,7 +836,7 @@
         },
         {
           "fecha": "2023-04-14",
-          "per_ltm": 10.9384,
+          "per_ltm": 10.9655,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -827,7 +845,7 @@
         },
         {
           "fecha": "2023-04-21",
-          "per_ltm": 11.1198,
+          "per_ltm": 11.1473,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -836,7 +854,7 @@
         },
         {
           "fecha": "2023-04-28",
-          "per_ltm": 11.1134,
+          "per_ltm": 11.1408,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -845,7 +863,7 @@
         },
         {
           "fecha": "2023-05-05",
-          "per_ltm": 10.9935,
+          "per_ltm": 11.0207,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -854,7 +872,7 @@
         },
         {
           "fecha": "2023-05-12",
-          "per_ltm": 10.7635,
+          "per_ltm": 10.7901,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -863,7 +881,7 @@
         },
         {
           "fecha": "2023-05-19",
-          "per_ltm": 11.528,
+          "per_ltm": 11.5564,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -872,7 +890,7 @@
         },
         {
           "fecha": "2023-05-26",
-          "per_ltm": 11.6251,
+          "per_ltm": 11.6538,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -881,7 +899,7 @@
         },
         {
           "fecha": "2023-06-02",
-          "per_ltm": 11.9879,
+          "per_ltm": 12.0175,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -890,7 +908,7 @@
         },
         {
           "fecha": "2023-06-09",
-          "per_ltm": 12.7232,
+          "per_ltm": 12.7546,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -899,7 +917,7 @@
         },
         {
           "fecha": "2023-06-16",
-          "per_ltm": 13.8601,
+          "per_ltm": 13.8943,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -908,7 +926,7 @@
         },
         {
           "fecha": "2023-06-23",
-          "per_ltm": 13.8828,
+          "per_ltm": 13.9171,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -917,7 +935,7 @@
         },
         {
           "fecha": "2023-06-30",
-          "per_ltm": 9.7842,
+          "per_ltm": 9.8084,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -926,7 +944,7 @@
         },
         {
           "fecha": "2023-07-07",
-          "per_ltm": 9.8542,
+          "per_ltm": 9.8786,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -935,7 +953,7 @@
         },
         {
           "fecha": "2023-07-14",
-          "per_ltm": 9.5882,
+          "per_ltm": 9.6119,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -944,7 +962,7 @@
         },
         {
           "fecha": "2023-07-21",
-          "per_ltm": 10.0131,
+          "per_ltm": 10.0378,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -953,7 +971,7 @@
         },
         {
           "fecha": "2023-07-28",
-          "per_ltm": 9.4294,
+          "per_ltm": 9.4527,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -962,7 +980,7 @@
         },
         {
           "fecha": "2023-08-04",
-          "per_ltm": 9.1964,
+          "per_ltm": 9.2191,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -971,7 +989,7 @@
         },
         {
           "fecha": "2023-08-11",
-          "per_ltm": 9.1098,
+          "per_ltm": 9.1323,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -980,7 +998,7 @@
         },
         {
           "fecha": "2023-08-18",
-          "per_ltm": 8.557,
+          "per_ltm": 8.5782,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -989,7 +1007,7 @@
         },
         {
           "fecha": "2023-08-25",
-          "per_ltm": 8.6003,
+          "per_ltm": 8.6216,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -998,7 +1016,7 @@
         },
         {
           "fecha": "2023-09-01",
-          "per_ltm": 8.8396,
+          "per_ltm": 8.8614,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -1007,7 +1025,7 @@
         },
         {
           "fecha": "2023-09-08",
-          "per_ltm": 8.4188,
+          "per_ltm": 8.4396,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -1016,7 +1034,7 @@
         },
         {
           "fecha": "2023-09-15",
-          "per_ltm": 8.2291,
+          "per_ltm": 8.2494,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -1025,7 +1043,7 @@
         },
         {
           "fecha": "2023-09-22",
-          "per_ltm": 7.7692,
+          "per_ltm": 7.7884,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -1034,7 +1052,7 @@
         },
         {
           "fecha": "2023-09-29",
-          "per_ltm": 7.631,
+          "per_ltm": 7.6498,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -1043,7 +1061,7 @@
         },
         {
           "fecha": "2023-10-06",
-          "per_ltm": 6.7147,
+          "per_ltm": 6.7313,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1052,7 +1070,7 @@
         },
         {
           "fecha": "2023-10-13",
-          "per_ltm": 6.2057,
+          "per_ltm": 6.2211,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1061,7 +1079,7 @@
         },
         {
           "fecha": "2023-10-20",
-          "per_ltm": 5.8654,
+          "per_ltm": 5.8799,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1070,7 +1088,7 @@
         },
         {
           "fecha": "2023-10-27",
-          "per_ltm": 5.5779,
+          "per_ltm": 5.5917,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1079,7 +1097,7 @@
         },
         {
           "fecha": "2023-11-03",
-          "per_ltm": 6.0692,
+          "per_ltm": 6.0842,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1088,7 +1106,7 @@
         },
         {
           "fecha": "2023-11-10",
-          "per_ltm": 6.1985,
+          "per_ltm": 6.2138,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1097,7 +1115,7 @@
         },
         {
           "fecha": "2023-11-17",
-          "per_ltm": 6.5624,
+          "per_ltm": 6.5786,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1106,7 +1124,7 @@
         },
         {
           "fecha": "2023-11-24",
-          "per_ltm": 6.5697,
+          "per_ltm": 6.5859,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1115,7 +1133,7 @@
         },
         {
           "fecha": "2023-12-01",
-          "per_ltm": 6.9246,
+          "per_ltm": 6.9417,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1124,7 +1142,7 @@
         },
         {
           "fecha": "2023-12-08",
-          "per_ltm": 7.3431,
+          "per_ltm": 7.3613,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1133,7 +1151,7 @@
         },
         {
           "fecha": "2023-12-15",
-          "per_ltm": 7.7053,
+          "per_ltm": 7.7243,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1142,7 +1160,7 @@
         },
         {
           "fecha": "2023-12-22",
-          "per_ltm": 7.4851,
+          "per_ltm": 7.5036,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1151,7 +1169,7 @@
         },
         {
           "fecha": "2023-12-29",
-          "per_ltm": 7.3213,
+          "per_ltm": 7.3394,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1160,7 +1178,7 @@
         },
         {
           "fecha": "2024-01-05",
-          "per_ltm": 5.454,
+          "per_ltm": 5.4675,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1169,7 +1187,7 @@
         },
         {
           "fecha": "2024-01-12",
-          "per_ltm": 5.1755,
+          "per_ltm": 5.1883,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1178,7 +1196,7 @@
         },
         {
           "fecha": "2024-01-19",
-          "per_ltm": 5.0154,
+          "per_ltm": 5.0278,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1187,7 +1205,7 @@
         },
         {
           "fecha": "2024-01-26",
-          "per_ltm": 5.3316,
+          "per_ltm": 5.3447,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1196,7 +1214,7 @@
         },
         {
           "fecha": "2024-02-02",
-          "per_ltm": 5.3787,
+          "per_ltm": 5.3919,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1205,7 +1223,7 @@
         },
         {
           "fecha": "2024-02-09",
-          "per_ltm": 5.45,
+          "per_ltm": 5.4634,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1214,7 +1232,7 @@
         },
         {
           "fecha": "2024-02-16",
-          "per_ltm": 5.3975,
+          "per_ltm": 5.4108,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1223,7 +1241,7 @@
         },
         {
           "fecha": "2024-02-23",
-          "per_ltm": 5.6261,
+          "per_ltm": 5.64,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1232,7 +1250,7 @@
         },
         {
           "fecha": "2024-03-01",
-          "per_ltm": 5.6854,
+          "per_ltm": 5.6995,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1241,7 +1259,7 @@
         },
         {
           "fecha": "2024-03-08",
-          "per_ltm": 5.6962,
+          "per_ltm": 5.7103,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1250,7 +1268,7 @@
         },
         {
           "fecha": "2024-03-15",
-          "per_ltm": 5.8149,
+          "per_ltm": 5.8293,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1259,7 +1277,7 @@
         },
         {
           "fecha": "2024-03-22",
-          "per_ltm": 6.148,
+          "per_ltm": 6.1632,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1268,7 +1286,7 @@
         },
         {
           "fecha": "2024-03-29",
-          "per_ltm": 6.4554,
+          "per_ltm": 6.4714,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1277,7 +1295,7 @@
         },
         {
           "fecha": "2024-04-05",
-          "per_ltm": 5.7122,
+          "per_ltm": 5.7263,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1286,7 +1304,7 @@
         },
         {
           "fecha": "2024-04-12",
-          "per_ltm": 5.8115,
+          "per_ltm": 5.8258,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1295,7 +1313,7 @@
         },
         {
           "fecha": "2024-04-19",
-          "per_ltm": 5.8995,
+          "per_ltm": 5.9141,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1304,7 +1322,7 @@
         },
         {
           "fecha": "2024-04-26",
-          "per_ltm": 6.1909,
+          "per_ltm": 6.2062,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1313,7 +1331,7 @@
         },
         {
           "fecha": "2024-05-03",
-          "per_ltm": 6.3931,
+          "per_ltm": 6.4089,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1322,7 +1340,7 @@
         },
         {
           "fecha": "2024-05-10",
-          "per_ltm": 6.5233,
+          "per_ltm": 6.5394,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1331,7 +1349,7 @@
         },
         {
           "fecha": "2024-05-17",
-          "per_ltm": 6.5482,
+          "per_ltm": 6.5643,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1340,7 +1358,7 @@
         },
         {
           "fecha": "2024-05-24",
-          "per_ltm": 6.4413,
+          "per_ltm": 6.4572,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1349,7 +1367,7 @@
         },
         {
           "fecha": "2024-05-31",
-          "per_ltm": 6.3394,
+          "per_ltm": 6.3551,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1358,7 +1376,7 @@
         },
         {
           "fecha": "2024-06-07",
-          "per_ltm": 6.2673,
+          "per_ltm": 6.2828,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1367,7 +1385,7 @@
         },
         {
           "fecha": "2024-06-14",
-          "per_ltm": 6.0536,
+          "per_ltm": 6.0686,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1376,7 +1394,7 @@
         },
         {
           "fecha": "2024-06-21",
-          "per_ltm": 6.1356,
+          "per_ltm": 6.1508,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1385,7 +1403,7 @@
         },
         {
           "fecha": "2024-06-28",
-          "per_ltm": 5.8946,
+          "per_ltm": 5.9091,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1394,7 +1412,7 @@
         },
         {
           "fecha": "2024-07-05",
-          "per_ltm": 6.3861,
+          "per_ltm": 6.4018,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1403,7 +1421,7 @@
         },
         {
           "fecha": "2024-07-12",
-          "per_ltm": 6.053,
+          "per_ltm": 6.068,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1412,7 +1430,7 @@
         },
         {
           "fecha": "2024-07-19",
-          "per_ltm": 6.3056,
+          "per_ltm": 6.3212,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1421,7 +1439,7 @@
         },
         {
           "fecha": "2024-07-26",
-          "per_ltm": 6.1238,
+          "per_ltm": 6.1389,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1430,7 +1448,7 @@
         },
         {
           "fecha": "2024-08-02",
-          "per_ltm": 5.5464,
+          "per_ltm": 5.5601,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1439,7 +1457,7 @@
         },
         {
           "fecha": "2024-08-09",
-          "per_ltm": 5.4726,
+          "per_ltm": 5.4861,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1448,7 +1466,7 @@
         },
         {
           "fecha": "2024-08-16",
-          "per_ltm": 5.5909,
+          "per_ltm": 5.6047,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1457,7 +1475,7 @@
         },
         {
           "fecha": "2024-08-23",
-          "per_ltm": 5.7622,
+          "per_ltm": 5.7764,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1466,7 +1484,7 @@
         },
         {
           "fecha": "2024-08-30",
-          "per_ltm": 5.9168,
+          "per_ltm": 5.9314,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1475,7 +1493,7 @@
         },
         {
           "fecha": "2024-09-06",
-          "per_ltm": 5.8527,
+          "per_ltm": 5.8672,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1484,7 +1502,7 @@
         },
         {
           "fecha": "2024-09-13",
-          "per_ltm": 6.2914,
+          "per_ltm": 6.3069,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1493,7 +1511,7 @@
         },
         {
           "fecha": "2024-09-20",
-          "per_ltm": 6.5365,
+          "per_ltm": 6.5526,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1502,7 +1520,7 @@
         },
         {
           "fecha": "2024-09-27",
-          "per_ltm": 7.177,
+          "per_ltm": 7.1947,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1511,7 +1529,7 @@
         },
         {
           "fecha": "2024-10-04",
-          "per_ltm": 6.6263,
+          "per_ltm": 6.6427,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1520,7 +1538,7 @@
         },
         {
           "fecha": "2024-10-11",
-          "per_ltm": 6.9223,
+          "per_ltm": 6.9394,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1529,7 +1547,7 @@
         },
         {
           "fecha": "2024-10-18",
-          "per_ltm": 7.5252,
+          "per_ltm": 7.5437,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1538,7 +1556,7 @@
         },
         {
           "fecha": "2024-10-25",
-          "per_ltm": 7.2986,
+          "per_ltm": 7.3166,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1547,7 +1565,7 @@
         },
         {
           "fecha": "2024-11-01",
-          "per_ltm": 7.8744,
+          "per_ltm": 7.8939,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1556,7 +1574,7 @@
         },
         {
           "fecha": "2024-11-08",
-          "per_ltm": 8.2332,
+          "per_ltm": 8.2535,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1565,7 +1583,7 @@
         },
         {
           "fecha": "2024-11-15",
-          "per_ltm": 8.6404,
+          "per_ltm": 8.6618,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1574,7 +1592,7 @@
         },
         {
           "fecha": "2024-11-22",
-          "per_ltm": 8.542,
+          "per_ltm": 8.5631,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1583,7 +1601,7 @@
         },
         {
           "fecha": "2024-11-29",
-          "per_ltm": 8.6067,
+          "per_ltm": 8.628,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1592,7 +1610,7 @@
         },
         {
           "fecha": "2024-12-06",
-          "per_ltm": 8.7025,
+          "per_ltm": 8.724,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1601,7 +1619,7 @@
         },
         {
           "fecha": "2024-12-13",
-          "per_ltm": 8.2966,
+          "per_ltm": 8.317,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1610,7 +1628,7 @@
         },
         {
           "fecha": "2024-12-20",
-          "per_ltm": 8.217,
+          "per_ltm": 8.2373,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1619,7 +1637,7 @@
         },
         {
           "fecha": "2024-12-27",
-          "per_ltm": 8.2615,
+          "per_ltm": 8.2819,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1628,7 +1646,7 @@
         },
         {
           "fecha": "2025-01-03",
-          "per_ltm": 10.732,
+          "per_ltm": 10.7585,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1637,7 +1655,7 @@
         },
         {
           "fecha": "2025-01-10",
-          "per_ltm": 12.178,
+          "per_ltm": 12.2081,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1646,7 +1664,7 @@
         },
         {
           "fecha": "2025-01-17",
-          "per_ltm": 11.9725,
+          "per_ltm": 12.0021,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1655,7 +1673,7 @@
         },
         {
           "fecha": "2025-01-24",
-          "per_ltm": 12.2199,
+          "per_ltm": 12.2501,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1664,7 +1682,7 @@
         },
         {
           "fecha": "2025-01-31",
-          "per_ltm": 12.2363,
+          "per_ltm": 12.2665,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1673,7 +1691,7 @@
         },
         {
           "fecha": "2025-02-07",
-          "per_ltm": 12.3945,
+          "per_ltm": 12.4251,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1682,7 +1700,7 @@
         },
         {
           "fecha": "2025-02-14",
-          "per_ltm": 11.8943,
+          "per_ltm": 11.9237,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1691,7 +1709,7 @@
         },
         {
           "fecha": "2025-02-21",
-          "per_ltm": 10.9139,
+          "per_ltm": 10.9408,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1700,7 +1718,7 @@
         },
         {
           "fecha": "2025-02-28",
-          "per_ltm": 10.9623,
+          "per_ltm": 10.9894,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1709,7 +1727,7 @@
         },
         {
           "fecha": "2025-03-07",
-          "per_ltm": 9.7151,
+          "per_ltm": 9.7391,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1718,7 +1736,7 @@
         },
         {
           "fecha": "2025-03-14",
-          "per_ltm": 8.5244,
+          "per_ltm": 8.5455,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1727,7 +1745,7 @@
         },
         {
           "fecha": "2025-03-21",
-          "per_ltm": 8.5281,
+          "per_ltm": 8.5491,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1736,7 +1754,7 @@
         },
         {
           "fecha": "2025-03-28",
-          "per_ltm": 7.9938,
+          "per_ltm": 8.0136,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1745,7 +1763,7 @@
         },
         {
           "fecha": "2025-04-04",
-          "per_ltm": 6.4228,
+          "per_ltm": 6.4387,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1754,7 +1772,7 @@
         },
         {
           "fecha": "2025-04-11",
-          "per_ltm": 7.0487,
+          "per_ltm": 7.0661,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1763,7 +1781,7 @@
         },
         {
           "fecha": "2025-04-18",
-          "per_ltm": 7.0435,
+          "per_ltm": 7.0609,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1772,7 +1790,7 @@
         },
         {
           "fecha": "2025-04-25",
-          "per_ltm": 7.1694,
+          "per_ltm": 7.1871,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1781,7 +1799,7 @@
         },
         {
           "fecha": "2025-05-02",
-          "per_ltm": 7.6211,
+          "per_ltm": 7.64,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1790,7 +1808,7 @@
         },
         {
           "fecha": "2025-05-09",
-          "per_ltm": 8.335,
+          "per_ltm": 8.3556,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1799,7 +1817,7 @@
         },
         {
           "fecha": "2025-05-16",
-          "per_ltm": 8.8057,
+          "per_ltm": 8.8274,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1808,7 +1826,7 @@
         },
         {
           "fecha": "2025-05-23",
-          "per_ltm": 8.2869,
+          "per_ltm": 8.3073,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1817,7 +1835,7 @@
         },
         {
           "fecha": "2025-05-30",
-          "per_ltm": 8.3681,
+          "per_ltm": 8.3888,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1826,7 +1844,7 @@
         },
         {
           "fecha": "2025-06-06",
-          "per_ltm": 8.8109,
+          "per_ltm": 8.8326,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1835,7 +1853,7 @@
         },
         {
           "fecha": "2025-06-13",
-          "per_ltm": 8.1347,
+          "per_ltm": 8.1548,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1844,7 +1862,7 @@
         },
         {
           "fecha": "2025-06-20",
-          "per_ltm": 8.1624,
+          "per_ltm": 8.1825,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1853,7 +1871,7 @@
         },
         {
           "fecha": "2025-06-27",
-          "per_ltm": 8.5757,
+          "per_ltm": 8.5968,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1862,7 +1880,7 @@
         },
         {
           "fecha": "2025-07-04",
-          "per_ltm": 7.2238,
+          "per_ltm": 7.2416,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1871,7 +1889,7 @@
         },
         {
           "fecha": "2025-07-11",
-          "per_ltm": 8.0462,
+          "per_ltm": 8.066,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1880,7 +1898,7 @@
         },
         {
           "fecha": "2025-07-18",
-          "per_ltm": 7.995,
+          "per_ltm": 8.0148,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1889,7 +1907,7 @@
         },
         {
           "fecha": "2025-07-25",
-          "per_ltm": 7.7919,
+          "per_ltm": 7.8112,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1898,7 +1916,7 @@
         },
         {
           "fecha": "2025-08-01",
-          "per_ltm": 7.2906,
+          "per_ltm": 7.3086,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1907,7 +1925,7 @@
         },
         {
           "fecha": "2025-08-08",
-          "per_ltm": 7.6455,
+          "per_ltm": 7.6643,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1916,7 +1934,7 @@
         },
         {
           "fecha": "2025-08-15",
-          "per_ltm": 8.5862,
+          "per_ltm": 8.6074,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1925,7 +1943,7 @@
         },
         {
           "fecha": "2025-08-22",
-          "per_ltm": 8.7929,
+          "per_ltm": 8.8146,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1934,7 +1952,7 @@
         },
         {
           "fecha": "2025-08-29",
-          "per_ltm": 8.8057,
+          "per_ltm": 8.8274,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1943,7 +1961,7 @@
         },
         {
           "fecha": "2025-09-05",
-          "per_ltm": 8.7202,
+          "per_ltm": 8.7417,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1952,7 +1970,7 @@
         },
         {
           "fecha": "2025-09-12",
-          "per_ltm": 8.5334,
+          "per_ltm": 8.5545,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1961,7 +1979,7 @@
         },
         {
           "fecha": "2025-09-19",
-          "per_ltm": 8.5178,
+          "per_ltm": 8.5388,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1970,7 +1988,7 @@
         },
         {
           "fecha": "2025-09-26",
-          "per_ltm": 8.1529,
+          "per_ltm": 8.173,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1979,7 +1997,7 @@
         },
         {
           "fecha": "2025-10-03",
-          "per_ltm": 7.9328,
+          "per_ltm": 7.9524,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -1988,7 +2006,7 @@
         },
         {
           "fecha": "2025-10-10",
-          "per_ltm": 7.9633,
+          "per_ltm": 7.983,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -1997,7 +2015,7 @@
         },
         {
           "fecha": "2025-10-17",
-          "per_ltm": 8.2878,
+          "per_ltm": 8.3083,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2006,7 +2024,7 @@
         },
         {
           "fecha": "2025-10-24",
-          "per_ltm": 8.4698,
+          "per_ltm": 8.4908,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2015,7 +2033,7 @@
         },
         {
           "fecha": "2025-10-31",
-          "per_ltm": 7.9737,
+          "per_ltm": 7.9934,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2024,7 +2042,7 @@
         },
         {
           "fecha": "2025-11-07",
-          "per_ltm": 8.1822,
+          "per_ltm": 8.2024,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2033,7 +2051,7 @@
         },
         {
           "fecha": "2025-11-14",
-          "per_ltm": 8.1169,
+          "per_ltm": 8.1369,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2042,7 +2060,7 @@
         },
         {
           "fecha": "2025-11-21",
-          "per_ltm": 8.1391,
+          "per_ltm": 8.1592,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2051,7 +2069,7 @@
         },
         {
           "fecha": "2025-11-28",
-          "per_ltm": 8.9076,
+          "per_ltm": 8.9296,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2060,7 +2078,7 @@
         },
         {
           "fecha": "2025-12-05",
-          "per_ltm": 9.3245,
+          "per_ltm": 9.3475,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2069,7 +2087,7 @@
         },
         {
           "fecha": "2025-12-12",
-          "per_ltm": 9.7011,
+          "per_ltm": 9.725,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2078,7 +2096,7 @@
         },
         {
           "fecha": "2025-12-19",
-          "per_ltm": 9.8748,
+          "per_ltm": 9.8992,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2087,7 +2105,7 @@
         },
         {
           "fecha": "2025-12-26",
-          "per_ltm": 9.8456,
+          "per_ltm": 9.8699,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2096,7 +2114,7 @@
         },
         {
           "fecha": "2026-01-02",
-          "per_ltm": 8.8758,
+          "per_ltm": 8.8977,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2105,7 +2123,7 @@
         },
         {
           "fecha": "2026-01-09",
-          "per_ltm": 9.2935,
+          "per_ltm": 9.3165,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2114,7 +2132,7 @@
         },
         {
           "fecha": "2026-01-16",
-          "per_ltm": 9.0519,
+          "per_ltm": 9.0743,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2123,7 +2141,7 @@
         },
         {
           "fecha": "2026-01-23",
-          "per_ltm": 8.7345,
+          "per_ltm": 8.756,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2132,7 +2150,7 @@
         },
         {
           "fecha": "2026-01-30",
-          "per_ltm": 8.4684,
+          "per_ltm": 8.4893,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2141,7 +2159,7 @@
         },
         {
           "fecha": "2026-02-06",
-          "per_ltm": 9.6842,
+          "per_ltm": 9.7082,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2150,7 +2168,7 @@
         },
         {
           "fecha": "2026-02-13",
-          "per_ltm": 8.8681,
+          "per_ltm": 8.89,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2159,7 +2177,7 @@
         },
         {
           "fecha": "2026-02-20",
-          "per_ltm": 8.9247,
+          "per_ltm": 8.9467,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2168,7 +2186,7 @@
         },
         {
           "fecha": "2026-02-27",
-          "per_ltm": 8.4669,
+          "per_ltm": 8.4878,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2177,7 +2195,7 @@
         },
         {
           "fecha": "2026-03-06",
-          "per_ltm": 7.6048,
+          "per_ltm": 7.6236,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2186,7 +2204,7 @@
         },
         {
           "fecha": "2026-03-13",
-          "per_ltm": 7.5751,
+          "per_ltm": 7.5938,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2195,7 +2213,7 @@
         },
         {
           "fecha": "2026-03-20",
-          "per_ltm": 8.1757,
+          "per_ltm": 8.1959,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2204,7 +2222,7 @@
         },
         {
           "fecha": "2026-03-27",
-          "per_ltm": 8.3548,
+          "per_ltm": 8.3754,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2213,7 +2231,7 @@
         },
         {
           "fecha": "2026-04-03",
-          "per_ltm": 9.6121,
+          "per_ltm": 9.6358,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2222,7 +2240,7 @@
         },
         {
           "fecha": "2026-04-10",
-          "per_ltm": 9.7647,
+          "per_ltm": 9.7888,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2231,7 +2249,7 @@
         },
         {
           "fecha": "2026-04-17",
-          "per_ltm": 10.3262,
+          "per_ltm": 10.3517,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2240,7 +2258,7 @@
         },
         {
           "fecha": "2026-04-24",
-          "per_ltm": 9.8554,
+          "per_ltm": 9.8797,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2249,7 +2267,7 @@
         },
         {
           "fecha": "2026-05-01",
-          "per_ltm": 9.9317,
+          "per_ltm": 9.9562,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2258,7 +2276,7 @@
         },
         {
           "fecha": "2026-05-08",
-          "per_ltm": 10.558,
+          "per_ltm": 10.5841,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2267,7 +2285,7 @@
         },
         {
           "fecha": "2026-05-15",
-          "per_ltm": 10.1385,
+          "per_ltm": 10.1635,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2276,7 +2294,7 @@
         },
         {
           "fecha": "2026-05-22",
-          "per_ltm": 10.9917,
+          "per_ltm": 11.0188,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2285,7 +2303,7 @@
         },
         {
           "fecha": "2026-05-29",
-          "per_ltm": 11.9069,
+          "per_ltm": 11.9363,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2294,7 +2312,7 @@
         },
         {
           "fecha": "2026-06-05",
-          "per_ltm": 11.4652,
+          "per_ltm": 11.4935,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2303,7 +2321,7 @@
         },
         {
           "fecha": "2026-06-12",
-          "per_ltm": 11.9907,
+          "per_ltm": 12.0203,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2312,7 +2330,7 @@
         },
         {
           "fecha": "2026-06-19",
-          "per_ltm": 12.1523,
+          "per_ltm": 12.1823,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2321,7 +2339,7 @@
         },
         {
           "fecha": "2026-06-26",
-          "per_ltm": 13.3635,
+          "per_ltm": 13.3965,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2330,38 +2348,43 @@
         },
         {
           "fecha": "2026-07-03",
-          "per_ltm": 15.2174,
+          "per_ltm": 13.4226,
           "ev_sales_ltm": null,
           "ps_ltm": null,
-          "eps_ttm": 6.08,
-          "revenue_ttm": 68287000000.0,
-          "margen_neto_ttm": 5.78
-        },
-        {
-          "fecha": "2026-07-10",
-          "per_ltm": 14.3734,
-          "ev_sales_ltm": null,
-          "ps_ltm": null,
-          "eps_ttm": 6.08,
-          "revenue_ttm": 68287000000.0,
-          "margen_neto_ttm": 5.78
-        },
-        {
-          "fecha": "2026-07-17",
-          "per_ltm": 13.8437,
-          "ev_sales_ltm": null,
-          "ps_ltm": null,
-          "eps_ttm": 6.08,
-          "revenue_ttm": 68287000000.0,
-          "margen_neto_ttm": 5.78
+          "eps_ttm": 6.91,
+          "revenue_ttm": 65178000000.0,
+          "margen_neto_ttm": 6.87
         }
-      ]
+      ],
+      "percentiles": {
+        "per": 71,
+        "ev_sales": null,
+        "ps": null
+      }
     },
     {
       "ticker": "AAL",
       "nombre": "AMERICAN AIRLINES GROUP INC.",
       "disponible": true,
       "serie": [
+        {
+          "fecha": "2021-07-09",
+          "per_ltm": null,
+          "ev_sales_ltm": 2.8086,
+          "ps_ltm": 0.7238,
+          "eps_ttm": -10.22,
+          "revenue_ttm": 18686000000.0,
+          "margen_neto_ttm": -31.08
+        },
+        {
+          "fecha": "2021-07-16",
+          "per_ltm": null,
+          "ev_sales_ltm": 2.7705,
+          "ps_ltm": 0.6857,
+          "eps_ttm": -10.22,
+          "revenue_ttm": 18686000000.0,
+          "margen_neto_ttm": -31.08
+        },
         {
           "fecha": "2021-07-23",
           "per_ltm": null,
@@ -4692,26 +4715,13 @@
           "eps_ttm": 0.31,
           "revenue_ttm": 55994000000.0,
           "margen_neto_ttm": 0.36
-        },
-        {
-          "fecha": "2026-07-10",
-          "per_ltm": 54.6774,
-          "ev_sales_ltm": 0.6648,
-          "ps_ltm": 0.2002,
-          "eps_ttm": 0.31,
-          "revenue_ttm": 55994000000.0,
-          "margen_neto_ttm": 0.36
-        },
-        {
-          "fecha": "2026-07-17",
-          "per_ltm": 48.3226,
-          "ev_sales_ltm": 0.6415,
-          "ps_ltm": 0.1769,
-          "eps_ttm": 0.31,
-          "revenue_ttm": 55994000000.0,
-          "margen_neto_ttm": 0.36
         }
-      ]
+      ],
+      "percentiles": {
+        "per": 85,
+        "ev_sales": 21,
+        "ps": 70
+      }
     }
   ]
 }

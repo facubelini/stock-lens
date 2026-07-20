@@ -44,6 +44,23 @@ const RATIOS_YOY = [
 ]
 const TODOS_RATIOS = [...RATIOS_MULTIPLO, ...RATIOS_DENOMINADOR, ...RATIOS_MARGEN, ...RATIOS_YOY]
 
+const ETIQUETAS_PERCENTIL = { per: 'PER', ev_sales: 'EV/S', ps: 'P/S' }
+
+function BadgePercentil({ etiqueta, valor }) {
+  if (valor == null) return null
+  const color = valor <= 25 ? '#22c55e' : valor >= 75 ? '#ef4444' : '#f5a524'
+  const lectura = valor <= 25 ? 'barato vs. su propio pasado' : valor >= 75 ? 'caro vs. su propio pasado' : 'en rango medio'
+  return (
+    <span
+      className="rounded px-1.5 py-0.5 text-[11px] font-semibold"
+      style={{ backgroundColor: `${color}22`, color }}
+      title={`${etiqueta}: percentil ${valor} de su propia serie histórica (~5 años) — ${lectura}.`}
+    >
+      {etiqueta} p{valor}
+    </span>
+  )
+}
+
 const inputCls =
   'w-40 rounded border border-terminal-border bg-terminal-panel px-2 py-1.5 text-sm text-terminal-text ' +
   'focus:border-terminal-accent focus:outline-none'
@@ -147,7 +164,10 @@ export default function HistoricoFundamental() {
             histórico. Solo funciona para empresas que reportan a la SEC (listadas en EEUU o con
             ADR) — acciones que cotizan únicamente en Merval no van a tener datos acá. No incluye
             versiones "NTM" (forward) ni PEG: el crecimiento histórico del EPS puede ser muy
-            ruidoso o negativo, y dividir el PER por eso suele dar un número sin sentido.
+            ruidoso o negativo, y dividir el PER por eso suele dar un número sin sentido. Los
+            badges junto a cada ticker (ej. "PER p23") muestran el percentil del múltiplo actual
+            contra su propia serie histórica — bajo (≤25) es barato vs. su propio pasado, alto
+            (≥75) es caro, más allá de cómo esté vs. su industria.
           </p>
           {data?.actualizado && (
             <p className="mt-1 text-[11px] text-terminal-dim">
@@ -277,6 +297,13 @@ export default function HistoricoFundamental() {
                 <div className="flex items-center gap-2">
                   <span className="text-sm font-semibold text-terminal-text">{t.ticker}</span>
                   {t.nombre && <span className="text-xs text-terminal-dim">{t.nombre}</span>}
+                  {t.percentiles && (
+                    <span className="flex gap-1">
+                      {Object.entries(ETIQUETAS_PERCENTIL).map(([campo, etiqueta]) => (
+                        <BadgePercentil key={campo} etiqueta={etiqueta} valor={t.percentiles[campo]} />
+                      ))}
+                    </span>
+                  )}
                   {patConfigurado && (
                     <button
                       type="button"

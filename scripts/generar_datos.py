@@ -358,6 +358,65 @@ def calcular_screener(hist):
     }
 
 
+def extraer_proximo_earnings(info):
+    """Fecha del proximo reporte de resultados. Viene gratis dentro de
+    tk.info (earningsTimestamp*), no es un request nuevo. isEarningsDateEstimate
+    indica si Yahoo todavia no tiene la fecha confirmada por la empresa."""
+    ts_inicio = info.get("earningsTimestampStart") or info.get("earningsTimestamp")
+    if not ts_inicio:
+        return None
+    ts_fin = info.get("earningsTimestampEnd")
+    try:
+        fecha = datetime.fromtimestamp(ts_inicio, tz=TZ).strftime("%Y-%m-%d")
+        fecha_fin = (
+            datetime.fromtimestamp(ts_fin, tz=TZ).strftime("%Y-%m-%d")
+            if ts_fin and ts_fin != ts_inicio
+            else None
+        )
+    except (TypeError, ValueError, OSError):
+        return None
+    return {"fecha": fecha, "fecha_fin": fecha_fin, "estimado": bool(info.get("isEarningsDateEstimate", False))}
+
+
+def extraer_dividendos(hist):
+    """Historial de dividendos de los ultimos ~5 anios, de la columna
+    'Dividends' que ya viene en el hist descargado (no es un request nuevo
+    — tk.dividends por separado si lo seria, y trae todo el historico desde
+    el IPO, mucho mas de lo que hace falta para ver una tendencia)."""
+    if "Dividends" not in hist.columns:
+        return None
+    pagos = hist["Dividends"]
+    pagos = pagos[pagos > 0]
+    if pagos.empty:
+        return None
+
+    lista = [{"fecha": f.strftime("%Y-%m-%d"), "monto": num(float(v), 4)} for f, v in pagos.items()]
+
+    # Cuantos pagos entran en ~1 anio, inferido del espaciado tipico entre
+    # pagos (trimestral/semestral/anual) — mas robusto que una ventana fija
+    # de 365 dias: las fechas de pago se corren unos dias de un anio a otro,
+    # asi que una ventana de dias puede agarrar 5 pagos de un lado y 3 del
+    # otro e inventar un crecimiento que no existe (visto con AAPL: daba
+    # +75% cuando en realidad crecio ~4% ese anio).
+    valores = pagos.to_numpy()
+    ultimos_12m = crecimiento_yoy = None
+    if len(pagos) >= 3:
+        dias = np.diff(pagos.index.values).astype("timedelta64[D]").astype(int)
+        espaciado = float(np.median(dias)) if len(dias) else 365.0
+        por_anio = max(1, round(365 / espaciado)) if espaciado > 0 else 4
+        if len(valores) >= por_anio:
+            ultimos_12m = float(valores[-por_anio:].sum())
+            if len(valores) >= por_anio * 2:
+                anio_anterior = float(valores[-por_anio * 2 : -por_anio].sum())
+                crecimiento_yoy = ((ultimos_12m / anio_anterior) - 1) * 100 if anio_anterior > 0 else None
+
+    return {
+        "pagos": lista[-20:],
+        "total_ultimos_12m": num(ultimos_12m, 4),
+        "crecimiento_yoy": num(crecimiento_yoy, 2),
+    }
+
+
 def extraer_fundamentales(info):
     """Extrae los fundamentales de yf.Ticker(t).info, tolerando faltantes.
     Margenes/ROE/Dividend yield se devuelven ya en formato porcentual."""
@@ -972,6 +1031,12 @@ def main():
         vol_prom20 = float(volumen.iloc[-21:-1].mean()) if len(volumen) >= 21 else None
         vol_ratio = (vol_hoy / vol_prom20) if vol_hoy and vol_prom20 else None
 
+        # Gap de apertura: hueco entre el cierre de ayer y la apertura de
+        # hoy (mismo hist ya descargado, columna Open). Un gap grande suele
+        # anticipar mas volatilidad ese dia.
+        apertura_hoy = float(hist["Open"].iloc[-1]) if "Open" in hist.columns and len(hist) else None
+        gap_pct = ((apertura_hoy / anterior) - 1) * 100 if apertura_hoy and anterior else None
+
         listado.append(
             {
                 **base,
@@ -983,6 +1048,7 @@ def main():
                 "vol_hoy": int(vol_hoy) if vol_hoy else None,
                 "vol_prom20": int(vol_prom20) if vol_prom20 else None,
                 "vol_ratio": num(vol_ratio, 2),
+                "gap_pct": num(gap_pct, 2),
             }
         )
 
@@ -1007,6 +1073,8 @@ def main():
         stats_mercado = calcular_beta_sharpe(closes, bench_closes)
         precios_mensuales, estacionalidad = calcular_estacionalidad_y_mensual(closes)
         historico_mensual.append({"ticker": sym, "precios": precios_mensuales})
+        proximo_earnings = extraer_proximo_earnings(info)
+        dividendos = extraer_dividendos(hist)
         fundamentales.append(
             {
                 **base,
@@ -1019,6 +1087,8 @@ def main():
                 "holdings": holdings,
                 **stats_mercado,
                 "estacionalidad": estacionalidad,
+                "proximo_earnings": proximo_earnings,
+                "dividendos": dividendos,
             }
         )
 

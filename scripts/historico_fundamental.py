@@ -383,12 +383,34 @@ def calcular_historico_ticker(ticker, cik):
             }
         )
 
+    percentiles = {
+        "per": _percentil_actual([p["per_ltm"] for p in serie]),
+        "ev_sales": _percentil_actual([p["ev_sales_ltm"] for p in serie]),
+        "ps": _percentil_actual([p["ps_ltm"] for p in serie]),
+    }
+
     return {
         "ticker": ticker,
         "nombre": nombre,
         "disponible": True,
         "serie": serie,
+        "percentiles": percentiles,
     }
+
+
+def _percentil_actual(valores):
+    """Percentil (0-100) del valor MAS RECIENTE dentro de toda su propia
+    serie historica — "el PER de hoy es mas barato que el X% de los valores
+    que tuvo este mismo ticker en los ultimos ~5 anios". Complementa la
+    comparacion contra la industria (Comparables/Oportunidades) con una
+    comparacion contra el propio pasado (mean reversion). None si hay poco
+    historial (<12 puntos, ~3 meses semanales) o el ultimo dato es nulo."""
+    limpios = [v for v in valores if v is not None]
+    if len(limpios) < 12 or valores[-1] is None:
+        return None
+    actual = valores[-1]
+    menores = sum(1 for v in limpios if v < actual)
+    return round((menores / len(limpios)) * 100)
 
 
 def _num(v, dec=4):

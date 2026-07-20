@@ -1,20 +1,11 @@
 {
-  "actualizado": "2026-07-13T11:43:53.862439-03:00",
+  "actualizado": "2026-07-20T11:15:25.055646-03:00",
   "tickers": [
     {
       "ticker": "DAL",
       "nombre": "DELTA AIR LINES, INC.",
       "disponible": true,
       "serie": [
-        {
-          "fecha": "2021-07-16",
-          "per_ltm": null,
-          "ev_sales_ltm": null,
-          "ps_ltm": null,
-          "eps_ttm": -10.47,
-          "revenue_ttm": 18311000000.0,
-          "margen_neto_ttm": -36.37
-        },
         {
           "fecha": "2021-07-23",
           "per_ltm": null,
@@ -296,7 +287,7 @@
         },
         {
           "fecha": "2022-02-25",
-          "per_ltm": 91.1287,
+          "per_ltm": 91.1286,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -341,7 +332,7 @@
         },
         {
           "fecha": "2022-04-01",
-          "per_ltm": 46.8445,
+          "per_ltm": 46.8446,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -359,7 +350,7 @@
         },
         {
           "fecha": "2022-04-15",
-          "per_ltm": 50.4792,
+          "per_ltm": 50.4791,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -593,7 +584,7 @@
         },
         {
           "fecha": "2022-10-14",
-          "per_ltm": 230.7697,
+          "per_ltm": 230.7696,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -629,7 +620,7 @@
         },
         {
           "fecha": "2022-11-11",
-          "per_ltm": 263.1428,
+          "per_ltm": 263.1427,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -665,7 +656,7 @@
         },
         {
           "fecha": "2022-12-09",
-          "per_ltm": 250.9658,
+          "per_ltm": 250.9657,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -674,7 +665,7 @@
         },
         {
           "fecha": "2022-12-16",
-          "per_ltm": 245.8424,
+          "per_ltm": 245.8425,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -683,7 +674,7 @@
         },
         {
           "fecha": "2022-12-23",
-          "per_ltm": 246.2137,
+          "per_ltm": 246.2138,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -809,7 +800,7 @@
         },
         {
           "fecha": "2023-03-31",
-          "per_ltm": 11.311,
+          "per_ltm": 11.3109,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -827,7 +818,7 @@
         },
         {
           "fecha": "2023-04-14",
-          "per_ltm": 10.9385,
+          "per_ltm": 10.9384,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -1277,7 +1268,7 @@
         },
         {
           "fecha": "2024-03-29",
-          "per_ltm": 6.4555,
+          "per_ltm": 6.4554,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -2354,6 +2345,15 @@
           "eps_ttm": 6.08,
           "revenue_ttm": 68287000000.0,
           "margen_neto_ttm": 5.78
+        },
+        {
+          "fecha": "2026-07-17",
+          "per_ltm": 13.8437,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.08,
+          "revenue_ttm": 68287000000.0,
+          "margen_neto_ttm": 5.78
         }
       ]
     },
@@ -2362,15 +2362,6 @@
       "nombre": "AMERICAN AIRLINES GROUP INC.",
       "disponible": true,
       "serie": [
-        {
-          "fecha": "2021-07-16",
-          "per_ltm": null,
-          "ev_sales_ltm": 2.7705,
-          "ps_ltm": 0.6857,
-          "eps_ttm": -10.22,
-          "revenue_ttm": 18686000000.0,
-          "margen_neto_ttm": -31.08
-        },
         {
           "fecha": "2021-07-23",
           "per_ltm": null,
@@ -4707,6 +4698,15 @@
           "per_ltm": 54.6774,
           "ev_sales_ltm": 0.6648,
           "ps_ltm": 0.2002,
+          "eps_ttm": 0.31,
+          "revenue_ttm": 55994000000.0,
+          "margen_neto_ttm": 0.36
+        },
+        {
+          "fecha": "2026-07-17",
+          "per_ltm": 48.3226,
+          "ev_sales_ltm": 0.6415,
+          "ps_ltm": 0.1769,
           "eps_ttm": 0.31,
           "revenue_ttm": 55994000000.0,
           "margen_neto_ttm": 0.36

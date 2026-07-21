@@ -383,11 +383,16 @@ def calcular_historico_ticker(ticker, cik):
             }
         )
 
-    percentiles = {
-        "per": _percentil_actual([p["per_ltm"] for p in serie]),
-        "ev_sales": _percentil_actual([p["ev_sales_ltm"] for p in serie]),
-        "ps": _percentil_actual([p["ps_ltm"] for p in serie]),
+    series_por_campo = {
+        "per": [p["per_ltm"] for p in serie],
+        "ev_sales": [p["ev_sales_ltm"] for p in serie],
+        "ps": [p["ps_ltm"] for p in serie],
+        "eps": [p["eps_ttm"] for p in serie],
+        "revenue": [p["revenue_ttm"] for p in serie],
+        "margen_neto": [p["margen_neto_ttm"] for p in serie],
     }
+    percentiles = {k: _percentil_actual(v) for k, v in series_por_campo.items()}
+    promedios = {k: _promedio_historico(v) for k, v in series_por_campo.items()}
 
     return {
         "ticker": ticker,
@@ -395,6 +400,7 @@ def calcular_historico_ticker(ticker, cik):
         "disponible": True,
         "serie": serie,
         "percentiles": percentiles,
+        "promedios": promedios,
     }
 
 
@@ -411,6 +417,16 @@ def _percentil_actual(valores):
     actual = valores[-1]
     menores = sum(1 for v in limpios if v < actual)
     return round((menores / len(limpios)) * 100)
+
+
+def _promedio_historico(valores):
+    """Promedio simple de toda la serie historica disponible (no ponderado
+    por tiempo) — un ancla mas directa que el percentil: "el PER promedio de
+    esta empresa en los ultimos ~5 anios fue X"."""
+    limpios = [v for v in valores if v is not None]
+    if len(limpios) < 12:
+        return None
+    return round(sum(limpios) / len(limpios), 2)
 
 
 def _num(v, dec=4):

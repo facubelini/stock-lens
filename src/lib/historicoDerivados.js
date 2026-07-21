@@ -44,8 +44,9 @@ export function rangoYPercentil(puntos, campo) {
   const max = Math.max(...valores)
   const actual = valores[valores.length - 1]
   const percentil = Math.round((valores.filter((v) => v <= actual).length / valores.length) * 100)
+  const promedio = valores.reduce((a, b) => a + b, 0) / valores.length
   const primero = new Date(puntos.find((p) => p[campo] != null).fecha)
   const ultimo = new Date([...puntos].reverse().find((p) => p[campo] != null).fecha)
   const anios = (ultimo - primero) / (1000 * 60 * 60 * 24 * 365.25)
-  return { min, max, percentil, anios }
+  return { min, max, percentil, promedio, anios }
 }

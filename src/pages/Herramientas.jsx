@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useDatosCombinados } from '../lib/useDatosCombinados'
 import { useJson } from '../lib/useJson'
 import { useWatchlist } from '../lib/watchlist'
+import { useAlertas, seCumpleAlerta, CAMPOS_ALERTA } from '../lib/alertas'
 import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import TickerLink from '../components/TickerLink'
 import { Vacio } from '../components/Estados'
@@ -617,6 +618,149 @@ function ProximosResultados({ filas }) {
   )
 }
 
+function AlertasPrecio({ filas }) {
+  const { alertas, crear, eliminar, marcarDisparada } = useAlertas()
+  const [ticker, setTicker] = useState('')
+  const [campo, setCampo] = useState('precio')
+  const [operador, setOperador] = useState('mayor')
+  const [valor, setValor] = useState('')
+
+  const porTicker = useMemo(() => new Map(filas.map((f) => [f.ticker, f])), [filas])
+
+  const alertasConEstado = useMemo(
+    () =>
+      alertas.map((a) => {
+        const fila = porTicker.get(a.ticker)
+        return { ...a, _fila: fila, _cumple: seCumpleAlerta(a, fila) }
+      }),
+    [alertas, porTicker],
+  )
+
+  const onCrear = (e) => {
+    e.preventDefault()
+    if (!ticker || valor === '') return
+    crear({ ticker, campo, operador, valor })
+    setTicker('')
+    setValor('')
+  }
+
+  return (
+    <div>
+      <form onSubmit={onCrear} className="mb-3 flex flex-wrap items-end gap-2">
+        <div>
+          <label className="mb-1 block text-[11px] text-terminal-dim">Ticker</label>
+          <div className="flex items-center gap-2">
+            <BuscadorTicker filas={filas} onAdd={setTicker} placeholder="Buscar ticker…" />
+            {ticker && (
+              <span className="rounded-full border border-terminal-accent px-2.5 py-1 text-xs font-semibold text-terminal-accent">
+                {ticker}
+              </span>
+            )}
+          </div>
+        </div>
+        <div>
+          <label className="mb-1 block text-[11px] text-terminal-dim">Cuando</label>
+          <select value={campo} onChange={(e) => setCampo(e.target.value)} className={inputCls}>
+            {Object.entries(CAMPOS_ALERTA).map(([v, l]) => (
+              <option key={v} value={v}>
+                {l}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label className="mb-1 block text-[11px] text-terminal-dim">Sea</label>
+          <select value={operador} onChange={(e) => setOperador(e.target.value)} className={inputCls}>
+            <option value="mayor">≥ mayor o igual a</option>
+            <option value="menor">≤ menor o igual a</option>
+          </select>
+        </div>
+        <div>
+          <label className="mb-1 block text-[11px] text-terminal-dim">Valor</label>
+          <input
+            type="number"
+            step="any"
+            value={valor}
+            onChange={(e) => setValor(e.target.value)}
+            className={`${inputCls} w-24`}
+          />
+        </div>
+        <button
+          type="submit"
+          disabled={!ticker || valor === ''}
+          className="rounded bg-terminal-accent px-3 py-1.5 text-sm font-semibold text-black hover:opacity-90 disabled:opacity-40"
+        >
+          + Crear alerta
+        </button>
+      </form>
+
+      {!alertasConEstado.length ? (
+        <Vacio texto="No tenés alertas creadas todavía." />
+      ) : (
+        <div className="overflow-x-auto rounded-lg border border-terminal-border">
+          <table className="min-w-full border-collapse text-sm">
+            <thead>
+              <tr className="bg-terminal-panel2 text-left text-xs uppercase tracking-wide text-terminal-dim">
+                <th className="px-2 py-2 font-semibold">Ticker</th>
+                <th className="px-2 py-2 font-semibold">Condición</th>
+                <th className="px-2 py-2 text-right font-semibold">Valor actual</th>
+                <th className="px-2 py-2 font-semibold">Estado</th>
+                <th className="px-2 py-2 font-semibold" />
+              </tr>
+            </thead>
+            <tbody>
+              {alertasConEstado.map((a) => (
+                <tr key={a.id} className="border-t border-terminal-border">
+                  <td className="px-2 py-1.5 font-semibold">
+                    <TickerLink ticker={a.ticker} />
+                  </td>
+                  <td className="px-2 py-1.5 text-terminal-dim">
+                    {CAMPOS_ALERTA[a.campo]} {a.operador === 'mayor' ? '≥' : '≤'} {a.valor}
+                  </td>
+                  <td className="px-2 py-1.5 text-right tabular">
+                    {a._fila ? fmtNum(a._fila[a.campo], 2) : 'N/D'}
+                  </td>
+                  <td className="px-2 py-1.5">
+                    {a._cumple ? (
+                      <span className="font-semibold text-terminal-up">✅ Cumplida</span>
+                    ) : a.disparada ? (
+                      <span className="text-terminal-dim">— Ya vista</span>
+                    ) : (
+                      <span className="text-terminal-dim">⏳ Pendiente</span>
+                    )}
+                  </td>
+                  <td className="whitespace-nowrap px-2 py-1.5 text-right">
+                    {a._cumple && !a.disparada && (
+                      <button
+                        type="button"
+                        onClick={() => marcarDisparada(a.id)}
+                        className="mr-2 text-xs text-terminal-accent hover:underline"
+                      >
+                        Marcar vista
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => eliminar(a.id)}
+                      className="text-xs text-terminal-dim hover:text-terminal-down"
+                    >
+                      ✕ Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+      <p className="mt-2 text-[11px] text-terminal-dim">
+        Se guardan en tu navegador — no hay notificación push ni email, se marcan como "Cumplida"
+        con los datos más recientes cada vez que entrás a esta pestaña.
+      </p>
+    </div>
+  )
+}
+
 const DURACIONES = [1, 2, 3, 5]
 
 function SimuladorDCA({ filas }) {
@@ -810,6 +954,11 @@ export default function Herramientas() {
       <div>
         <h2 className="mb-2 text-sm font-semibold text-terminal-text">Próximos resultados</h2>
         <ProximosResultados filas={filas} />
+      </div>
+
+      <div>
+        <h2 className="mb-2 text-sm font-semibold text-terminal-text">Alertas de precio</h2>
+        <AlertasPrecio filas={filas} />
       </div>
 
       <div>

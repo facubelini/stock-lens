@@ -5,6 +5,7 @@ import App from './App.jsx'
 import { WatchlistProvider } from './lib/watchlist'
 import { ClasificacionProvider } from './lib/clasificacion'
 import { CryptoScanProvider } from './lib/cryptoScan'
+import { AlertasProvider } from './lib/alertas'
 import './index.css'
 
 // HashRouter: evita 404 al refrescar en GitHub Pages (las rutas viven tras el '#').
@@ -14,7 +15,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <WatchlistProvider>
         <ClasificacionProvider>
           <CryptoScanProvider>
-            <App />
+            <AlertasProvider>
+              <App />
+            </AlertasProvider>
           </CryptoScanProvider>
         </ClasificacionProvider>
       </WatchlistProvider>

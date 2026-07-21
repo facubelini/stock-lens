@@ -11,12 +11,17 @@ on:
   # Mercado USA ~9:30-16:00 ET => 14:30-21:00 UTC (EST) / 13:30-20:00 UTC (EDT).
   # OJO: con cientos de tickers cada corrida tarda varios minutos y hace muchas
   # llamadas a Yahoo; correr cada hora puede hacer que te limiten (rate-limit).
-  # Por eso corremos pocas veces: apertura, mediodia y cierre, dias habiles.
-  # Si tenés pocos tickers podés agregar más líneas de cron sin problema.
+  # Por eso corremos pocas veces: pre-market, apertura, mediodia, cierre y
+  # post-market, dias habiles. Las corridas de pre/post-market son ademas las
+  # unicas que capturan preMarketPrice/postMarketPrice (Yahoo solo los llena
+  # cuando el mercado esta realmente en esa sesion). Repo publico = minutos
+  # de Actions ilimitados, asi que sumar corridas no tiene costo real.
   schedule:
+    - cron: '30 12 * * 1-5'  # ~pre-market
     - cron: '0 14 * * 1-5'   # ~apertura
     - cron: '0 18 * * 1-5'   # ~mediodia
     - cron: '0 21 * * 1-5'   # ~cierre
+    - cron: '30 22 * * 1-5'  # ~post-market
 
 permissions:
   contents: write   # necesario para commitear los JSON generados

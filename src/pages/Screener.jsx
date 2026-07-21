@@ -246,6 +246,14 @@ export default function Screener() {
                         {f.cruce_medias.tipo === 'golden' ? '🌟' : '💀'}
                       </span>
                     )}
+                    {f.divergencia_ad && (
+                      <span
+                        className="ml-1"
+                        title={`Posible ${f.divergencia_ad.tipo} (divergencia precio vs. A/D Line, proxy de Wyckoff), hace ${f.divergencia_ad.hace_ruedas} rueda(s) — heurística, no es una señal infalible`}
+                      >
+                        {f.divergencia_ad.tipo === 'acumulacion' ? '🟢' : '🟣'}
+                      </span>
+                    )}
                     {f.stale && (
                       <span
                         className="ml-1 text-terminal-warn"

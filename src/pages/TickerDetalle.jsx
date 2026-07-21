@@ -484,6 +484,18 @@ export default function TickerDetalle() {
               <div className="tabular text-sm" style={estiloValor(fila.var_pct, 6)}>
                 {fmtPct(fila.var_pct, { signo: true })} hoy
               </div>
+              {fila.pre_post_market?.estado === 'PRE' && fila.pre_post_market.pre_precio != null && (
+                <div className="tabular text-xs text-terminal-info" title="Precio de pre-market, fuera del horario regular">
+                  Pre-market: {fmtPrecio(fila.pre_post_market.pre_precio)} (
+                  {fmtPct(fila.pre_post_market.pre_cambio_pct, { signo: true })})
+                </div>
+              )}
+              {fila.pre_post_market?.estado === 'POST' && fila.pre_post_market.post_precio != null && (
+                <div className="tabular text-xs text-terminal-info" title="Precio de post-market, fuera del horario regular">
+                  Post-market: {fmtPrecio(fila.pre_post_market.post_precio)} (
+                  {fmtPct(fila.pre_post_market.post_cambio_pct, { signo: true })})
+                </div>
+              )}
             </div>
             <Sparkline datos={fila.spark} ancho={90} alto={30} />
             <div className="rounded px-2 py-1 text-xs tabular" style={estiloRSI(fila.rsi)}>
@@ -562,6 +574,24 @@ export default function TickerDetalle() {
           </span>{' '}
           (EMA50 cruzó {screenerFila.cruce_medias.tipo === 'golden' ? 'sobre' : 'bajo'} SMA200) hace{' '}
           {screenerFila.cruce_medias.hace_ruedas} rueda{screenerFila.cruce_medias.hace_ruedas === 1 ? '' : 's'}.
+        </div>
+      )}
+
+      {screenerFila?.divergencia_ad && (
+        <div
+          className="mb-5 rounded-lg border px-3 py-2.5 text-sm"
+          style={
+            screenerFila.divergencia_ad.tipo === 'acumulacion'
+              ? { borderColor: 'rgba(34,197,94,0.4)', backgroundColor: 'rgba(34,197,94,0.08)', color: '#22c55e' }
+              : { borderColor: 'rgba(168,85,247,0.4)', backgroundColor: 'rgba(168,85,247,0.08)', color: '#a855f7' }
+          }
+        >
+          <span className="font-semibold">
+            {screenerFila.divergencia_ad.tipo === 'acumulacion' ? '🟢 Posible acumulación' : '🟣 Posible distribución'}
+          </span>{' '}
+          (divergencia precio vs. A/D Line — proxy de Wyckoff, no las fases completas) detectada hace{' '}
+          {screenerFila.divergencia_ad.hace_ruedas} rueda{screenerFila.divergencia_ad.hace_ruedas === 1 ? '' : 's'} —
+          heurística basada en mínimos/máximos locales, no es una señal infalible.
         </div>
       )}
 

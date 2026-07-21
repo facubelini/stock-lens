@@ -346,13 +346,18 @@ def calcular_screener(hist):
     """Arma el veredicto diario/semanal/mensual a partir del historico diario
     ya descargado (resamplea High/Low/Close a semanal/mensual, no pide datos
     nuevos)."""
-    ohlc = hist[["High", "Low", "Close"]].dropna()
-    semanales = ohlc.resample("W-FRI").agg({"High": "max", "Low": "min", "Close": "last"}).dropna()
-    mensuales = ohlc.resample("ME").agg({"High": "max", "Low": "min", "Close": "last"}).dropna()
+    ohlc = hist[["High", "Low", "Close", "Volume"]].dropna()
+    semanales = ohlc.resample("W-FRI").agg(
+        {"High": "max", "Low": "min", "Close": "last", "Volume": "sum"}
+    ).dropna()
+    mensuales = ohlc.resample("ME").agg(
+        {"High": "max", "Low": "min", "Close": "last", "Volume": "sum"}
+    ).dropna()
     return {
         "diario": perfil_setup(ohlc, **PERFIL_DIARIO),
         "semanal": perfil_setup(semanales, **PERFIL_SEMANAL),
         "mensual": perfil_setup(mensuales, **PERFIL_MENSUAL),
+        "divergencia_ad": detectar_divergencia_ad(ohlc),
         "divergencia_rsi": detectar_divergencia_rsi(ohlc["Close"]),
         "cruce_medias": detectar_cruce_medias(ohlc["Close"]),
     }
@@ -414,6 +419,22 @@ def extraer_dividendos(hist):
         "pagos": lista[-20:],
         "total_ultimos_12m": num(ultimos_12m, 4),
         "crecimiento_yoy": num(crecimiento_yoy, 2),
+    }
+
+
+def extraer_pre_post_market(info):
+    """Precio de pre/post-market, gratis dentro de tk.info (mismo request de
+    siempre, sin nada nuevo). Solo tiene sentido mostrarlo si el snapshot se
+    tomo realmente durante esa sesion (marketState PRE/POST) — el resto del
+    tiempo Yahoo puede dejar esos campos con datos viejos de la sesion
+    anterior, y mostrarlos ahi confundiria mas de lo que ayuda."""
+    estado = info.get("marketState")
+    return {
+        "estado": estado,
+        "pre_precio": num(info.get("preMarketPrice"), 2) if estado == "PRE" else None,
+        "pre_cambio_pct": num(info.get("preMarketChangePercent"), 2) if estado == "PRE" else None,
+        "post_precio": num(info.get("postMarketPrice"), 2) if estado == "POST" else None,
+        "post_cambio_pct": num(info.get("postMarketChangePercent"), 2) if estado == "POST" else None,
     }
 
 
@@ -890,6 +911,50 @@ def detectar_divergencia_rsi(closes, lookback=90, ventana_pivot=5, vigencia_rued
     return None
 
 
+def _calcular_ad_line(ohlc):
+    """Accumulation/Distribution Line (Chaikin): acumula "Money Flow Volume"
+    (Close Location Value x Volumen) — sube cuando el cierre queda mas cerca
+    del maximo del dia con volumen alto (presion compradora, "acumulacion"
+    en el sentido Wyckoff), baja cuando queda mas cerca del minimo
+    ("distribucion"). Es el proxy realmente automatizable a la idea de
+    Wyckoff: las fases completas (springs, upthrusts, el "hombre
+    compuesto") son lectura discrecional de un trader, no una formula."""
+    rango = (ohlc["High"] - ohlc["Low"]).replace(0, np.nan)
+    clv = ((ohlc["Close"] - ohlc["Low"]) - (ohlc["High"] - ohlc["Close"])) / rango
+    money_flow_volume = clv.fillna(0) * ohlc["Volume"]
+    return money_flow_volume.cumsum()
+
+
+def detectar_divergencia_ad(ohlc, lookback=90, ventana_pivot=5, vigencia_ruedas=20):
+    """Divergencia precio vs. A/D Line en los ultimos pivots — mismo criterio
+    que detectar_divergencia_rsi: "acumulacion" si el precio hace un minimo
+    mas bajo pero la A/D Line no (no la están vendiendo tanto como cae el
+    precio), "distribucion" si el precio hace un maximo mas alto pero la
+    A/D Line no (no la estan comprando tanto como sube el precio)."""
+    closes = ohlc["Close"]
+    if len(closes) < lookback + ventana_pivot * 2 + 20:
+        return None
+    ad = _calcular_ad_line(ohlc)
+    tramo = lookback + ventana_pivot * 2
+    sub_closes = closes.tail(tramo).reset_index(drop=True)
+    sub_ad = ad.tail(tramo).reset_index(drop=True)
+
+    bajos, altos = _pivots(sub_closes, ventana_pivot)
+    n = len(sub_closes)
+
+    if len(bajos) >= 2:
+        i1, i2 = bajos[-2], bajos[-1]
+        hace = n - 1 - i2
+        if hace <= vigencia_ruedas and sub_closes.iloc[i2] < sub_closes.iloc[i1] and sub_ad.iloc[i2] > sub_ad.iloc[i1]:
+            return {"tipo": "acumulacion", "hace_ruedas": int(hace)}
+    if len(altos) >= 2:
+        i1, i2 = altos[-2], altos[-1]
+        hace = n - 1 - i2
+        if hace <= vigencia_ruedas and sub_closes.iloc[i2] > sub_closes.iloc[i1] and sub_ad.iloc[i2] < sub_ad.iloc[i1]:
+            return {"tipo": "distribucion", "hace_ruedas": int(hace)}
+    return None
+
+
 def detectar_cruce_medias(closes, corto=50, largo=200, vigencia_ruedas=15):
     """Golden cross / death cross: cruce entre EMA50 y SMA200 (mismas medias
     ya usadas en 'Distancia a medias', no se agrega una tercera). Solo
@@ -1075,6 +1140,7 @@ def main():
         historico_mensual.append({"ticker": sym, "precios": precios_mensuales})
         proximo_earnings = extraer_proximo_earnings(info)
         dividendos = extraer_dividendos(hist)
+        pre_post_market = extraer_pre_post_market(info)
         fundamentales.append(
             {
                 **base,
@@ -1089,6 +1155,7 @@ def main():
                 "estacionalidad": estacionalidad,
                 "proximo_earnings": proximo_earnings,
                 "dividendos": dividendos,
+                "pre_post_market": pre_post_market,
             }
         )
 

@@ -26,8 +26,8 @@ export default function GraficoRatio({ ticker, nombre, etiqueta, color, serie, c
           className="text-[11px] text-terminal-dim"
           title="Percentil del valor actual dentro de todo el historico disponible (no de la ventana elegida)"
         >
-          rango {stats.anios.toFixed(1)}A: {formatoValor(stats.min)}–{formatoValor(stats.max)} · percentil{' '}
-          {stats.percentil}%
+          rango {stats.anios.toFixed(1)}A: {formatoValor(stats.min)}–{formatoValor(stats.max)} · promedio{' '}
+          {formatoValor(stats.promedio)} · percentil {stats.percentil}%
         </span>
       )}
       {puntosCompletos.length > 0 && (

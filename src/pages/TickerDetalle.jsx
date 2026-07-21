@@ -6,7 +6,7 @@ import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { useWatchlist } from '../lib/watchlist'
 import { usePins } from '../lib/usePins'
 import { GLOSARIO_POR_CLAVE } from '../lib/glosario'
-import { obtenerNoticias } from '../lib/noticias'
+import { obtenerNoticias, clasificarSentimiento } from '../lib/noticias'
 import { calcularScore, nivelScore } from '../lib/score'
 import { TIMEFRAMES, ESTILO_VERDICT, prioridadScreener } from '../lib/screenerEstilos'
 import {
@@ -186,6 +186,12 @@ function SeccionDividendos({ dividendos }) {
 // Noticias via Google News RSS (rss2json como proxy CORS) — best effort: si
 // falla o tarda, no bloquea el resto de la pagina ni muestra un error feo,
 // simplemente no aparece la seccion.
+const ETIQUETA_SENTIMIENTO = {
+  positivo: { icono: '🟢', texto: 'Positiva' },
+  negativo: { icono: '🔴', texto: 'Negativa' },
+  neutral: { icono: '⚪', texto: 'Neutra' },
+}
+
 function NoticiasTicker({ ticker }) {
   const [estado, setEstado] = useState('cargando')
   const [items, setItems] = useState([])
@@ -205,34 +211,61 @@ function NoticiasTicker({ ticker }) {
     }
   }, [ticker])
 
+  const itemsConSentimiento = useMemo(
+    () => items.map((n) => ({ ...n, _sentimiento: clasificarSentimiento(n.title) })),
+    [items],
+  )
+  const conteo = useMemo(() => {
+    const c = { positivo: 0, negativo: 0, neutral: 0 }
+    for (const n of itemsConSentimiento) c[n._sentimiento]++
+    return c
+  }, [itemsConSentimiento])
+
   if (estado === 'error' || (estado === 'ok' && items.length === 0)) return null
 
   return (
     <div className="mb-5">
-      <h2 className="mb-2 text-sm font-semibold text-terminal-text">Noticias recientes</h2>
+      <div className="mb-2 flex flex-wrap items-baseline gap-2">
+        <h2 className="text-sm font-semibold text-terminal-text">Noticias recientes</h2>
+        {estado === 'ok' && items.length > 0 && (
+          <span className="text-xs text-terminal-dim">
+            {ETIQUETA_SENTIMIENTO.positivo.icono} {conteo.positivo} · {ETIQUETA_SENTIMIENTO.negativo.icono}{' '}
+            {conteo.negativo} · {ETIQUETA_SENTIMIENTO.neutral.icono} {conteo.neutral}
+          </span>
+        )}
+      </div>
       {estado === 'cargando' ? (
         <div className="skeleton h-20 rounded-lg" />
       ) : (
         <div className="flex flex-col gap-2 rounded-lg border border-terminal-border bg-terminal-panel p-3">
-          {items.map((n, i) => (
-            <a
-              key={i}
-              href={n.link}
-              target="_blank"
-              rel="noreferrer"
-              className="text-sm text-terminal-text hover:text-terminal-accent hover:underline"
-            >
-              {n.title}
-              {n.pubDate && (
-                <span className="ml-1.5 text-[11px] font-normal text-terminal-dim">
-                  {new Date(n.pubDate).toLocaleDateString('es-AR')}
-                </span>
-              )}
-            </a>
-          ))}
+          {itemsConSentimiento.map((n, i) => {
+            const s = ETIQUETA_SENTIMIENTO[n._sentimiento]
+            return (
+              <a
+                key={i}
+                href={n.link}
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm text-terminal-text hover:text-terminal-accent hover:underline"
+                title={`Sentimiento: ${s.texto} (heurística de palabras clave, no reemplaza leer la noticia)`}
+              >
+                <span className="mr-1">{s.icono}</span>
+                {n.title}
+                {n.pubDate && (
+                  <span className="ml-1.5 text-[11px] font-normal text-terminal-dim">
+                    {new Date(n.pubDate).toLocaleDateString('es-AR')}
+                  </span>
+                )}
+              </a>
+            )
+          })}
         </div>
       )}
-      <p className="mt-1.5 text-[11px] text-terminal-dim">Vía Google News.</p>
+      <p className="mt-1.5 text-[11px] text-terminal-dim">
+        Vía Google News. El sentimiento (🟢/🔴/⚪) es una heurística simple de palabras clave en el
+        título en inglés, no análisis de lenguaje real — sirve como guía rápida, no reemplaza leer
+        la noticia.
+      </p>
     </div>
   )
 }

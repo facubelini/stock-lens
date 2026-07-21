@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { useJson } from '../lib/useJson'
 import { fmtFecha } from '../lib/formato'
+import { calendarioEconomico } from '../lib/calendarioEconomico'
 
 const MESES = [
   'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
@@ -208,6 +209,55 @@ function calcularAltseason(historial, diasLookback = 30) {
   return { pct: Math.round((ganaron / total) * 100), n: total, dias, retornoBtc: retornoBtc * 100 }
 }
 
+const ETIQUETA_EVENTO = {
+  FOMC: { icono: '🏛️', color: '#ef4444' },
+  NFP: { icono: '👷', color: '#38bdf8' },
+  CPI: { icono: '📈', color: '#f5a524' },
+}
+
+function fmtFechaCortaCal(fechaISO) {
+  const [anio, mes, dia] = fechaISO.split('-')
+  return `${dia}/${mes}/${anio}`
+}
+
+function TarjetaCalendario({ eventos }) {
+  const en7dias = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+  return (
+    <div className="rounded-lg border border-terminal-border bg-terminal-panel p-4">
+      <h3 className="mb-3 text-sm font-semibold text-terminal-text">Próximos eventos</h3>
+      <div className="flex flex-col gap-1.5">
+        {eventos.slice(0, 8).map((e, i) => {
+          const et = ETIQUETA_EVENTO[e.tipo]
+          const proximo = e.fecha <= en7dias
+          return (
+            <div
+              key={i}
+              className="flex items-center justify-between gap-2 rounded px-2 py-1.5 text-xs"
+              style={proximo ? { backgroundColor: `${et.color}18` } : undefined}
+            >
+              <span className="flex items-center gap-1.5">
+                <span>{et.icono}</span>
+                <span className={proximo ? 'font-semibold text-terminal-text' : 'text-terminal-dim'}>
+                  {e.label}
+                </span>
+                {!e.exacto && <span className="text-terminal-dim">(aprox.)</span>}
+              </span>
+              <span className="tabular font-semibold" style={{ color: proximo ? et.color : undefined }}>
+                {fmtFechaCortaCal(e.fecha)}
+              </span>
+            </div>
+          )
+        })}
+      </div>
+      <p className="mt-2 text-[11px] text-terminal-dim">
+        🏛️ FOMC: fechas oficiales de la Fed. 👷 NFP (empleo): siempre el primer viernes del mes,
+        regla estable del BLS. 📈 CPI: aproximado (el BLS no publica una fecha fija con
+        anticipación) — puede variar unos días.
+      </p>
+    </div>
+  )
+}
+
 export default function Macro() {
   const { data, cargando, error } = useJson('mercado_macro.json')
   const { data: cryptoHistorial } = useJson('crypto_historial.json')
@@ -224,6 +274,8 @@ export default function Macro() {
         : altseason.pct <= 25
           ? 'Temporada de Bitcoin'
           : 'Mixto'
+
+  const eventos = useMemo(() => calendarioEconomico(), [])
 
   return (
     <div>
@@ -341,6 +393,13 @@ export default function Macro() {
               Fuente: FRED (Reserva Federal de St. Louis) — datos oficiales, con la demora habitual
               de publicación de cada organismo (mensual).
             </p>
+          </div>
+
+          <div>
+            <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-terminal-dim">
+              Calendario económico
+            </h2>
+            <TarjetaCalendario eventos={eventos} />
           </div>
         </div>
       )}

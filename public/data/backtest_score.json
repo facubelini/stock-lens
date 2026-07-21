@@ -1,0 +1,80 @@
+{
+  "actualizado": "2026-07-21T18:47:53.033186-03:00",
+  "horizontes_dias": [
+    5,
+    10,
+    20
+  ],
+  "n_tickers_evaluados": 373,
+  "n_tickers_fallidos": 50,
+  "stats": {
+    "BASELINE": {
+      "5": {
+        "n": 382633,
+        "retorno_prom": 1.06,
+        "hit_rate": 52.4
+      },
+      "10": {
+        "n": 380768,
+        "retorno_prom": 2.15,
+        "hit_rate": 53.7
+      },
+      "20": {
+        "n": 377038,
+        "retorno_prom": 4.26,
+        "hit_rate": 54.7
+      }
+    },
+    "FAVORABLE": {
+      "5": {
+        "n": 210686,
+        "retorno_prom": 0.53,
+        "hit_rate": 52.8
+      },
+      "10": {
+        "n": 209635,
+        "retorno_prom": 1.08,
+        "hit_rate": 53.7
+      },
+      "20": {
+        "n": 207848,
+        "retorno_prom": 2.3,
+        "hit_rate": 55.2
+      }
+    },
+    "FLOJO": {
+      "5": {
+        "n": 37403,
+        "retorno_prom": 6.01,
+        "hit_rate": 49.6
+      },
+      "10": {
+        "n": 37235,
+        "retorno_prom": 11.93,
+        "hit_rate": 51.0
+      },
+      "20": {
+        "n": 36740,
+        "retorno_prom": 23.57,
+        "hit_rate": 53.5
+      }
+    },
+    "NEUTRAL": {
+      "5": {
+        "n": 134544,
+        "retorno_prom": 0.52,
+        "hit_rate": 52.7
+      },
+      "10": {
+        "n": 133898,
+        "retorno_prom": 1.1,
+        "hit_rate": 54.4
+      },
+      "20": {
+        "n": 132450,
+        "retorno_prom": 1.99,
+        "hit_rate": 54.4
+      }
+    }
+  }
+}

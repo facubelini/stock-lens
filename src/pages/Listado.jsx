@@ -13,6 +13,7 @@ import Leyenda from '../components/Leyenda'
 import BotonPin from '../components/BotonPin'
 import EditorClasificacion from '../components/EditorClasificacion'
 import Semaforo from '../components/Semaforo'
+import BacktestScore from '../components/BacktestScore'
 import Sparkline from '../components/Sparkline'
 import TickerLink from '../components/TickerLink'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
@@ -342,6 +343,8 @@ export default function Listado() {
           ))}
         </div>
       )}
+
+      <BacktestScore />
     </div>
   )
 }

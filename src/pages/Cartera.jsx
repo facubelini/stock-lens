@@ -20,12 +20,65 @@ import { fmtPct, fmtNum, estiloValor, estiloRSI } from '../lib/formato'
 const CAMPOS = ['ticker', 'nombre']
 const COLORES_SECTOR = ['#f5a524', '#38bdf8', '#7ee2a8', '#c084fc', '#f87171', '#facc15', '#4ade80', '#fb923c']
 
+// Concentración de `filas` agrupadas por lo que devuelva `obtenerClave`
+// (sector, país, etc.), ordenada de mayor a menor participación.
+function agruparConcentracion(filas, obtenerClave) {
+  if (!filas.length) return []
+  const conteo = new Map()
+  for (const f of filas) {
+    const clave = obtenerClave(f) || 'Sin datos'
+    conteo.set(clave, (conteo.get(clave) ?? 0) + 1)
+  }
+  const total = filas.length
+  return [...conteo.entries()]
+    .map(([clave, n]) => ({ clave, n, pct: (n / total) * 100 }))
+    .sort((a, b) => b.n - a.n)
+}
+
 // Normaliza una serie de precios a % de variación desde el primer punto,
 // para poder comparar activos de escalas muy distintas en un mismo eje.
 function normalizarSerie(spark) {
   if (!spark || spark.length < 2 || !spark[0]) return null
   const base = spark[0]
   return spark.map((v) => (v / base - 1) * 100)
+}
+
+// Barra de concentración compartida entre sector y país: mismo criterio
+// visual, distinta clave de agrupación.
+function BarraConcentracion({ titulo, datos }) {
+  if (!datos.length) return null
+  return (
+    <div className="rounded-lg border border-terminal-border bg-terminal-panel p-3">
+      <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-terminal-dim">{titulo}</div>
+      <div className="flex flex-col gap-1.5">
+        {datos.map((s, i) => (
+          <div key={s.clave} className="flex items-center gap-2 text-xs">
+            <span className="w-32 shrink-0 truncate text-terminal-dim" title={s.clave}>
+              {s.clave}
+            </span>
+            <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-terminal-border">
+              <div
+                className="h-full rounded-full"
+                style={{
+                  width: `${s.pct}%`,
+                  backgroundColor: s.pct >= 40 ? '#ef4444' : COLORES_SECTOR[i % COLORES_SECTOR.length],
+                }}
+              />
+            </div>
+            <span className="w-16 shrink-0 text-right tabular text-terminal-text">
+              {s.n} · {s.pct.toFixed(0)}%
+            </span>
+          </div>
+        ))}
+      </div>
+      {datos[0]?.pct >= 40 && (
+        <p className="mt-2 text-[11px] text-terminal-warn">
+          ⚠️ Casi la mitad (o más) de tu lista está en {datos[0].clave} — poca diversificación si eso
+          cae en conjunto.
+        </p>
+      )}
+    </div>
+  )
 }
 
 function GraficoVsBenchmark({ cartera, spy, dias }) {
@@ -113,19 +166,9 @@ export default function Cartera() {
     [base, screenerPorTicker, medianaPorIndustria],
   )
 
-  // Diversificación: concentración de tu lista por sector.
-  const concentracionSector = useMemo(() => {
-    if (!filas.length) return []
-    const conteo = new Map()
-    for (const f of filas) {
-      const clave = f.sector || 'Sin sector'
-      conteo.set(clave, (conteo.get(clave) ?? 0) + 1)
-    }
-    const total = filas.length
-    return [...conteo.entries()]
-      .map(([sector, n]) => ({ sector, n, pct: (n / total) * 100 }))
-      .sort((a, b) => b.n - a.n)
-  }, [filas])
+  // Diversificación: concentración de tu lista por sector y por país.
+  const concentracionSector = useMemo(() => agruparConcentracion(filas, (f) => f.sector), [filas])
+  const concentracionPais = useMemo(() => agruparConcentracion(filas, (f) => f.pais), [filas])
 
   // Mi Cartera vs. SPY: promedio simple del % de variación de tus tickers
   // (usando el sparkline de ~180 ruedas que ya trae listado.json) contra el
@@ -295,42 +338,10 @@ export default function Cartera() {
         </p>
       </div>
 
-      {(concentracionSector.length > 0 || comparativaBenchmark) && (
-        <div className="mb-5 grid grid-cols-1 gap-3 lg:grid-cols-2">
-          {concentracionSector.length > 0 && (
-            <div className="rounded-lg border border-terminal-border bg-terminal-panel p-3">
-              <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-terminal-dim">
-                Diversificación por sector
-              </div>
-              <div className="flex flex-col gap-1.5">
-                {concentracionSector.map((s, i) => (
-                  <div key={s.sector} className="flex items-center gap-2 text-xs">
-                    <span className="w-32 shrink-0 truncate text-terminal-dim" title={s.sector}>
-                      {s.sector}
-                    </span>
-                    <div className="h-2.5 flex-1 overflow-hidden rounded-full bg-terminal-border">
-                      <div
-                        className="h-full rounded-full"
-                        style={{
-                          width: `${s.pct}%`,
-                          backgroundColor: s.pct >= 40 ? '#ef4444' : COLORES_SECTOR[i % COLORES_SECTOR.length],
-                        }}
-                      />
-                    </div>
-                    <span className="w-16 shrink-0 text-right tabular text-terminal-text">
-                      {s.n} · {s.pct.toFixed(0)}%
-                    </span>
-                  </div>
-                ))}
-              </div>
-              {concentracionSector[0]?.pct >= 40 && (
-                <p className="mt-2 text-[11px] text-terminal-warn">
-                  ⚠️ Casi la mitad (o más) de tu lista está en {concentracionSector[0].sector} — poca
-                  diversificación si ese sector cae en conjunto.
-                </p>
-              )}
-            </div>
-          )}
+      {(concentracionSector.length > 0 || concentracionPais.length > 0 || comparativaBenchmark) && (
+        <div className="mb-5 grid grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-3">
+          <BarraConcentracion titulo="Diversificación por sector" datos={concentracionSector} />
+          <BarraConcentracion titulo="Diversificación por país" datos={concentracionPais} />
 
           {comparativaBenchmark && (
             <GraficoVsBenchmark

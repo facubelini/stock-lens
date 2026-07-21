@@ -1,31 +1,14 @@
 {
-  "actualizado": "2026-07-07T21:40:17.883377-03:00",
+  "actualizado": "2026-07-21T10:52:45.760920-03:00",
   "tickers": [
     {
       "ticker": "DAL",
-      "nombre": "Delta Air Lines, Inc.",
+      "nombre": "DELTA AIR LINES, INC.",
       "disponible": true,
       "serie": [
         {
-          "fecha": "2021-07-09",
-          "per_ltm": null,
-          "ev_sales_ltm": null,
-          "ps_ltm": null,
-          "eps_ttm": -10.47,
-          "revenue_ttm": 18311000000.0,
-          "margen_neto_ttm": -36.37
-        },
-        {
-          "fecha": "2021-07-16",
-          "per_ltm": null,
-          "ev_sales_ltm": null,
-          "ps_ltm": null,
-          "eps_ttm": -10.47,
-          "revenue_ttm": 18311000000.0,
-          "margen_neto_ttm": -36.37
-        },
-        {
           "fecha": "2021-07-23",
+          "precio": 39.01,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -35,6 +18,7 @@
         },
         {
           "fecha": "2021-07-30",
+          "precio": 38.51,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -44,6 +28,7 @@
         },
         {
           "fecha": "2021-08-06",
+          "precio": 38.92,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -53,6 +38,7 @@
         },
         {
           "fecha": "2021-08-13",
+          "precio": 38.51,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -62,6 +48,7 @@
         },
         {
           "fecha": "2021-08-20",
+          "precio": 36.8,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -71,6 +58,7 @@
         },
         {
           "fecha": "2021-08-27",
+          "precio": 40.08,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -80,6 +68,7 @@
         },
         {
           "fecha": "2021-09-03",
+          "precio": 38.85,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -89,6 +78,7 @@
         },
         {
           "fecha": "2021-09-10",
+          "precio": 37.99,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -98,6 +88,7 @@
         },
         {
           "fecha": "2021-09-17",
+          "precio": 38.72,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -107,6 +98,7 @@
         },
         {
           "fecha": "2021-09-24",
+          "precio": 42.02,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -116,6 +108,7 @@
         },
         {
           "fecha": "2021-10-01",
+          "precio": 43.8,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -125,6 +118,7 @@
         },
         {
           "fecha": "2021-10-08",
+          "precio": 41.87,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -134,6 +128,7 @@
         },
         {
           "fecha": "2021-10-15",
+          "precio": 39.57,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -143,6 +138,7 @@
         },
         {
           "fecha": "2021-10-22",
+          "precio": 38.36,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -152,6 +148,7 @@
         },
         {
           "fecha": "2021-10-29",
+          "precio": 37.77,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -161,6 +158,7 @@
         },
         {
           "fecha": "2021-11-05",
+          "precio": 42.75,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -170,6 +168,7 @@
         },
         {
           "fecha": "2021-11-12",
+          "precio": 40.75,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -179,6 +178,7 @@
         },
         {
           "fecha": "2021-11-19",
+          "precio": 38.31,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -188,6 +188,7 @@
         },
         {
           "fecha": "2021-11-26",
+          "precio": 35.12,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -197,6 +198,7 @@
         },
         {
           "fecha": "2021-12-03",
+          "precio": 34.73,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -206,6 +208,7 @@
         },
         {
           "fecha": "2021-12-10",
+          "precio": 36.85,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -215,6 +218,7 @@
         },
         {
           "fecha": "2021-12-17",
+          "precio": 35.29,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -224,6 +228,7 @@
         },
         {
           "fecha": "2021-12-24",
+          "precio": 37.93,
           "per_ltm": null,
           "ev_sales_ltm": null,
           "ps_ltm": null,
@@ -233,7 +238,8 @@
         },
         {
           "fecha": "2021-12-31",
-          "per_ltm": 85.9437,
+          "precio": 37.72,
+          "per_ltm": 85.732,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -242,7 +248,8 @@
         },
         {
           "fecha": "2022-01-07",
-          "per_ltm": 91.2877,
+          "precio": 40.07,
+          "per_ltm": 91.0628,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -251,7 +258,8 @@
         },
         {
           "fecha": "2022-01-14",
-          "per_ltm": 88.6487,
+          "precio": 38.91,
+          "per_ltm": 88.4303,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -260,7 +268,8 @@
         },
         {
           "fecha": "2022-01-21",
-          "per_ltm": 83.2607,
+          "precio": 36.54,
+          "per_ltm": 83.0556,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -269,7 +278,8 @@
         },
         {
           "fecha": "2022-01-28",
-          "per_ltm": 84.1843,
+          "precio": 36.95,
+          "per_ltm": 83.977,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -278,7 +288,8 @@
         },
         {
           "fecha": "2022-02-04",
-          "per_ltm": 87.637,
+          "precio": 38.47,
+          "per_ltm": 87.4212,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -287,7 +298,8 @@
         },
         {
           "fecha": "2022-02-11",
-          "per_ltm": 93.091,
+          "precio": 40.86,
+          "per_ltm": 92.8617,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -296,7 +308,8 @@
         },
         {
           "fecha": "2022-02-18",
-          "per_ltm": 94.2126,
+          "precio": 41.35,
+          "per_ltm": 93.9805,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -305,7 +318,8 @@
         },
         {
           "fecha": "2022-02-25",
-          "per_ltm": 91.3537,
+          "precio": 40.1,
+          "per_ltm": 91.1287,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -314,7 +328,8 @@
         },
         {
           "fecha": "2022-03-04",
-          "per_ltm": 75.9154,
+          "precio": 33.32,
+          "per_ltm": 75.7285,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -323,7 +338,8 @@
         },
         {
           "fecha": "2022-03-11",
-          "per_ltm": 70.5275,
+          "precio": 30.96,
+          "per_ltm": 70.3538,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -332,7 +348,8 @@
         },
         {
           "fecha": "2022-03-18",
-          "per_ltm": 82.8648,
+          "precio": 36.37,
+          "per_ltm": 82.6608,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -341,7 +358,8 @@
         },
         {
           "fecha": "2022-03-25",
-          "per_ltm": 83.3706,
+          "precio": 36.59,
+          "per_ltm": 83.1653,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -350,7 +368,8 @@
         },
         {
           "fecha": "2022-04-01",
-          "per_ltm": 46.9602,
+          "precio": 37.94,
+          "per_ltm": 46.8446,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -359,7 +378,8 @@
         },
         {
           "fecha": "2022-04-08",
-          "per_ltm": 43.8901,
+          "precio": 35.46,
+          "per_ltm": 43.782,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -368,7 +388,8 @@
         },
         {
           "fecha": "2022-04-15",
-          "per_ltm": 50.6038,
+          "precio": 40.89,
+          "per_ltm": 50.4791,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -377,7 +398,8 @@
         },
         {
           "fecha": "2022-04-22",
-          "per_ltm": 52.1926,
+          "precio": 42.17,
+          "per_ltm": 52.0641,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -386,7 +408,8 @@
         },
         {
           "fecha": "2022-04-29",
-          "per_ltm": 51.4042,
+          "precio": 41.53,
+          "per_ltm": 51.2776,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -395,7 +418,8 @@
         },
         {
           "fecha": "2022-05-06",
-          "per_ltm": 48.9791,
+          "precio": 39.58,
+          "per_ltm": 48.8585,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -404,7 +428,8 @@
         },
         {
           "fecha": "2022-05-13",
-          "per_ltm": 45.7895,
+          "precio": 37.0,
+          "per_ltm": 45.6767,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -413,7 +438,8 @@
         },
         {
           "fecha": "2022-05-20",
-          "per_ltm": 46.1598,
+          "precio": 37.3,
+          "per_ltm": 46.0461,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -422,7 +448,8 @@
         },
         {
           "fecha": "2022-05-27",
-          "per_ltm": 50.4485,
+          "precio": 40.76,
+          "per_ltm": 50.3242,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -431,7 +458,8 @@
         },
         {
           "fecha": "2022-06-03",
-          "per_ltm": 46.0404,
+          "precio": 37.2,
+          "per_ltm": 45.927,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -440,7 +468,8 @@
         },
         {
           "fecha": "2022-06-10",
-          "per_ltm": 41.9548,
+          "precio": 33.9,
+          "per_ltm": 41.8514,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -449,7 +478,8 @@
         },
         {
           "fecha": "2022-06-17",
-          "per_ltm": 36.149,
+          "precio": 29.21,
+          "per_ltm": 36.0599,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -458,7 +488,8 @@
         },
         {
           "fecha": "2022-06-24",
-          "per_ltm": 37.2719,
+          "precio": 30.12,
+          "per_ltm": 37.1801,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -467,7 +498,8 @@
         },
         {
           "fecha": "2022-07-01",
-          "per_ltm": 30.3879,
+          "precio": 28.49,
+          "per_ltm": 30.313,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -476,7 +508,8 @@
         },
         {
           "fecha": "2022-07-08",
-          "per_ltm": 30.5938,
+          "precio": 28.69,
+          "per_ltm": 30.5184,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -485,7 +518,8 @@
         },
         {
           "fecha": "2022-07-15",
-          "per_ltm": 30.9747,
+          "precio": 29.04,
+          "per_ltm": 30.8984,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -494,7 +528,8 @@
         },
         {
           "fecha": "2022-07-22",
-          "per_ltm": 32.2717,
+          "precio": 30.26,
+          "per_ltm": 32.1922,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -503,7 +538,8 @@
         },
         {
           "fecha": "2022-07-29",
-          "per_ltm": 32.7349,
+          "precio": 30.7,
+          "per_ltm": 32.6543,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -512,7 +548,8 @@
         },
         {
           "fecha": "2022-08-05",
-          "per_ltm": 33.9084,
+          "precio": 31.8,
+          "per_ltm": 33.8249,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -521,7 +558,8 @@
         },
         {
           "fecha": "2022-08-12",
-          "per_ltm": 35.5143,
+          "precio": 33.3,
+          "per_ltm": 35.4268,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -530,7 +568,8 @@
         },
         {
           "fecha": "2022-08-19",
-          "per_ltm": 34.2276,
+          "precio": 32.09,
+          "per_ltm": 34.1433,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -539,7 +578,8 @@
         },
         {
           "fecha": "2022-08-26",
-          "per_ltm": 33.6408,
+          "precio": 31.54,
+          "per_ltm": 33.5579,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -548,7 +588,8 @@
         },
         {
           "fecha": "2022-09-02",
-          "per_ltm": 31.8496,
+          "precio": 29.86,
+          "per_ltm": 31.7712,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -557,7 +598,8 @@
         },
         {
           "fecha": "2022-09-09",
-          "per_ltm": 33.6202,
+          "precio": 31.53,
+          "per_ltm": 33.5374,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -566,7 +608,8 @@
         },
         {
           "fecha": "2022-09-16",
-          "per_ltm": 33.054,
+          "precio": 30.99,
+          "per_ltm": 32.9726,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -575,7 +618,8 @@
         },
         {
           "fecha": "2022-09-23",
-          "per_ltm": 29.8732,
+          "precio": 28.01,
+          "per_ltm": 29.7996,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.94,
@@ -584,7 +628,8 @@
         },
         {
           "fecha": "2022-09-30",
-          "per_ltm": 208.8605,
+          "precio": 27.08,
+          "per_ltm": 208.3461,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -593,7 +638,8 @@
         },
         {
           "fecha": "2022-10-07",
-          "per_ltm": 218.7602,
+          "precio": 28.37,
+          "per_ltm": 218.2214,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -602,7 +648,8 @@
         },
         {
           "fecha": "2022-10-14",
-          "per_ltm": 231.3395,
+          "precio": 30.0,
+          "per_ltm": 230.7697,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -611,7 +658,8 @@
         },
         {
           "fecha": "2022-10-21",
-          "per_ltm": 242.5045,
+          "precio": 31.45,
+          "per_ltm": 241.9072,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -620,7 +668,8 @@
         },
         {
           "fecha": "2022-10-28",
-          "per_ltm": 258.061,
+          "precio": 33.47,
+          "per_ltm": 257.4255,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -629,7 +678,8 @@
         },
         {
           "fecha": "2022-11-04",
-          "per_ltm": 243.8443,
+          "precio": 31.62,
+          "per_ltm": 243.2437,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -638,7 +688,8 @@
         },
         {
           "fecha": "2022-11-11",
-          "per_ltm": 263.7925,
+          "precio": 34.21,
+          "per_ltm": 263.1428,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -647,7 +698,8 @@
         },
         {
           "fecha": "2022-11-18",
-          "per_ltm": 256.5725,
+          "precio": 33.27,
+          "per_ltm": 255.9405,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -656,7 +708,8 @@
         },
         {
           "fecha": "2022-11-25",
-          "per_ltm": 261.2617,
+          "precio": 33.88,
+          "per_ltm": 260.6183,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -665,7 +718,8 @@
         },
         {
           "fecha": "2022-12-02",
-          "per_ltm": 265.8022,
+          "precio": 34.47,
+          "per_ltm": 265.1475,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -674,7 +728,8 @@
         },
         {
           "fecha": "2022-12-09",
-          "per_ltm": 251.5854,
+          "precio": 32.63,
+          "per_ltm": 250.9657,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -683,7 +738,8 @@
         },
         {
           "fecha": "2022-12-16",
-          "per_ltm": 246.4495,
+          "precio": 31.96,
+          "per_ltm": 245.8425,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -692,7 +748,8 @@
         },
         {
           "fecha": "2022-12-23",
-          "per_ltm": 246.8216,
+          "precio": 32.01,
+          "per_ltm": 246.2137,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -701,7 +758,8 @@
         },
         {
           "fecha": "2022-12-30",
-          "per_ltm": 244.5886,
+          "precio": 31.72,
+          "per_ltm": 243.9862,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -710,7 +768,8 @@
         },
         {
           "fecha": "2023-01-06",
-          "per_ltm": 16.8425,
+          "precio": 34.78,
+          "per_ltm": 16.801,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -719,7 +778,8 @@
         },
         {
           "fecha": "2023-01-13",
-          "per_ltm": 17.8569,
+          "precio": 36.87,
+          "per_ltm": 17.8129,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -728,7 +788,8 @@
         },
         {
           "fecha": "2023-01-20",
-          "per_ltm": 18.2449,
+          "precio": 37.67,
+          "per_ltm": 18.1999,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -737,7 +798,8 @@
         },
         {
           "fecha": "2023-01-27",
-          "per_ltm": 18.1046,
+          "precio": 37.38,
+          "per_ltm": 18.06,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -746,7 +808,8 @@
         },
         {
           "fecha": "2023-02-03",
-          "per_ltm": 18.502,
+          "precio": 38.2,
+          "per_ltm": 18.4564,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -755,7 +818,8 @@
         },
         {
           "fecha": "2023-02-10",
-          "per_ltm": 17.8428,
+          "precio": 36.84,
+          "per_ltm": 17.7989,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -764,7 +828,8 @@
         },
         {
           "fecha": "2023-02-17",
-          "per_ltm": 17.9317,
+          "precio": 37.03,
+          "per_ltm": 17.8875,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -773,7 +838,8 @@
         },
         {
           "fecha": "2023-02-24",
-          "per_ltm": 17.4642,
+          "precio": 36.06,
+          "per_ltm": 17.4212,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -782,7 +848,8 @@
         },
         {
           "fecha": "2023-03-03",
-          "per_ltm": 18.1607,
+          "precio": 37.5,
+          "per_ltm": 18.116,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -791,7 +858,8 @@
         },
         {
           "fecha": "2023-03-10",
-          "per_ltm": 17.4128,
+          "precio": 35.96,
+          "per_ltm": 17.3699,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -800,7 +868,8 @@
         },
         {
           "fecha": "2023-03-17",
-          "per_ltm": 15.4074,
+          "precio": 31.81,
+          "per_ltm": 15.3694,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -809,7 +878,8 @@
         },
         {
           "fecha": "2023-03-24",
-          "per_ltm": 14.767,
+          "precio": 30.49,
+          "per_ltm": 14.7306,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.07,
@@ -818,7 +888,8 @@
         },
         {
           "fecha": "2023-03-31",
-          "per_ltm": 11.3389,
+          "precio": 33.71,
+          "per_ltm": 11.3109,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -827,7 +898,8 @@
         },
         {
           "fecha": "2023-04-07",
-          "per_ltm": 10.9395,
+          "precio": 32.52,
+          "per_ltm": 10.9125,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -836,7 +908,8 @@
         },
         {
           "fecha": "2023-04-14",
-          "per_ltm": 10.9655,
+          "precio": 32.6,
+          "per_ltm": 10.9384,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -845,7 +918,8 @@
         },
         {
           "fecha": "2023-04-21",
-          "per_ltm": 11.1473,
+          "precio": 33.14,
+          "per_ltm": 11.1198,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -854,7 +928,8 @@
         },
         {
           "fecha": "2023-04-28",
-          "per_ltm": 11.1408,
+          "precio": 33.12,
+          "per_ltm": 11.1134,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -863,7 +938,8 @@
         },
         {
           "fecha": "2023-05-05",
-          "per_ltm": 11.0207,
+          "precio": 32.76,
+          "per_ltm": 10.9935,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -872,7 +948,8 @@
         },
         {
           "fecha": "2023-05-12",
-          "per_ltm": 10.7901,
+          "precio": 32.08,
+          "per_ltm": 10.7635,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -881,7 +958,8 @@
         },
         {
           "fecha": "2023-05-19",
-          "per_ltm": 11.5564,
+          "precio": 34.35,
+          "per_ltm": 11.528,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -890,7 +968,8 @@
         },
         {
           "fecha": "2023-05-26",
-          "per_ltm": 11.6538,
+          "precio": 34.64,
+          "per_ltm": 11.6251,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -899,7 +978,8 @@
         },
         {
           "fecha": "2023-06-02",
-          "per_ltm": 12.0175,
+          "precio": 35.72,
+          "per_ltm": 11.9879,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -908,7 +988,8 @@
         },
         {
           "fecha": "2023-06-09",
-          "per_ltm": 12.7546,
+          "precio": 37.92,
+          "per_ltm": 12.7232,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -917,7 +998,8 @@
         },
         {
           "fecha": "2023-06-16",
-          "per_ltm": 13.8943,
+          "precio": 41.3,
+          "per_ltm": 13.8601,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -926,7 +1008,8 @@
         },
         {
           "fecha": "2023-06-23",
-          "per_ltm": 13.9171,
+          "precio": 41.37,
+          "per_ltm": 13.8828,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -935,7 +1018,8 @@
         },
         {
           "fecha": "2023-06-30",
-          "per_ltm": 9.8084,
+          "precio": 45.89,
+          "per_ltm": 9.7842,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -944,7 +1028,8 @@
         },
         {
           "fecha": "2023-07-07",
-          "per_ltm": 9.8786,
+          "precio": 46.22,
+          "per_ltm": 9.8542,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -953,7 +1038,8 @@
         },
         {
           "fecha": "2023-07-14",
-          "per_ltm": 9.6119,
+          "precio": 44.97,
+          "per_ltm": 9.5882,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -962,7 +1048,8 @@
         },
         {
           "fecha": "2023-07-21",
-          "per_ltm": 10.0378,
+          "precio": 46.96,
+          "per_ltm": 10.0131,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -971,7 +1058,8 @@
         },
         {
           "fecha": "2023-07-28",
-          "per_ltm": 9.4527,
+          "precio": 44.22,
+          "per_ltm": 9.4294,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -980,7 +1068,8 @@
         },
         {
           "fecha": "2023-08-04",
-          "per_ltm": 9.2191,
+          "precio": 43.13,
+          "per_ltm": 9.1964,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -989,7 +1078,8 @@
         },
         {
           "fecha": "2023-08-11",
-          "per_ltm": 9.1323,
+          "precio": 42.72,
+          "per_ltm": 9.1098,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -998,7 +1088,8 @@
         },
         {
           "fecha": "2023-08-18",
-          "per_ltm": 8.5782,
+          "precio": 40.13,
+          "per_ltm": 8.557,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -1007,7 +1098,8 @@
         },
         {
           "fecha": "2023-08-25",
-          "per_ltm": 8.6216,
+          "precio": 40.34,
+          "per_ltm": 8.6003,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -1016,7 +1108,8 @@
         },
         {
           "fecha": "2023-09-01",
-          "per_ltm": 8.8614,
+          "precio": 41.46,
+          "per_ltm": 8.8396,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -1025,7 +1118,8 @@
         },
         {
           "fecha": "2023-09-08",
-          "per_ltm": 8.4396,
+          "precio": 39.48,
+          "per_ltm": 8.4188,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -1034,7 +1128,8 @@
         },
         {
           "fecha": "2023-09-15",
-          "per_ltm": 8.2494,
+          "precio": 38.59,
+          "per_ltm": 8.2291,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -1043,7 +1138,8 @@
         },
         {
           "fecha": "2023-09-22",
-          "per_ltm": 7.7884,
+          "precio": 36.44,
+          "per_ltm": 7.7692,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -1052,7 +1148,8 @@
         },
         {
           "fecha": "2023-09-29",
-          "per_ltm": 7.6498,
+          "precio": 35.79,
+          "per_ltm": 7.631,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 4.69,
@@ -1061,7 +1158,8 @@
         },
         {
           "fecha": "2023-10-06",
-          "per_ltm": 6.7313,
+          "precio": 35.79,
+          "per_ltm": 6.7147,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1070,7 +1168,8 @@
         },
         {
           "fecha": "2023-10-13",
-          "per_ltm": 6.2211,
+          "precio": 33.08,
+          "per_ltm": 6.2057,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1079,7 +1178,8 @@
         },
         {
           "fecha": "2023-10-20",
-          "per_ltm": 5.8799,
+          "precio": 31.26,
+          "per_ltm": 5.8654,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1088,7 +1188,8 @@
         },
         {
           "fecha": "2023-10-27",
-          "per_ltm": 5.5917,
+          "precio": 29.73,
+          "per_ltm": 5.5779,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1097,7 +1198,8 @@
         },
         {
           "fecha": "2023-11-03",
-          "per_ltm": 6.0842,
+          "precio": 32.35,
+          "per_ltm": 6.0692,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1106,7 +1208,8 @@
         },
         {
           "fecha": "2023-11-10",
-          "per_ltm": 6.2138,
+          "precio": 33.04,
+          "per_ltm": 6.1985,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1115,7 +1218,8 @@
         },
         {
           "fecha": "2023-11-17",
-          "per_ltm": 6.5786,
+          "precio": 34.98,
+          "per_ltm": 6.5624,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1124,7 +1228,8 @@
         },
         {
           "fecha": "2023-11-24",
-          "per_ltm": 6.5859,
+          "precio": 35.02,
+          "per_ltm": 6.5697,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1133,7 +1238,8 @@
         },
         {
           "fecha": "2023-12-01",
-          "per_ltm": 6.9417,
+          "precio": 36.91,
+          "per_ltm": 6.9246,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1142,7 +1248,8 @@
         },
         {
           "fecha": "2023-12-08",
-          "per_ltm": 7.3613,
+          "precio": 39.14,
+          "per_ltm": 7.3431,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1151,7 +1258,8 @@
         },
         {
           "fecha": "2023-12-15",
-          "per_ltm": 7.7243,
+          "precio": 41.07,
+          "per_ltm": 7.7053,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1160,7 +1268,8 @@
         },
         {
           "fecha": "2023-12-22",
-          "per_ltm": 7.5036,
+          "precio": 39.9,
+          "per_ltm": 7.4851,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1169,7 +1278,8 @@
         },
         {
           "fecha": "2023-12-29",
-          "per_ltm": 7.3394,
+          "precio": 39.02,
+          "per_ltm": 7.3213,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.33,
@@ -1178,7 +1288,8 @@
         },
         {
           "fecha": "2024-01-05",
-          "per_ltm": 5.4675,
+          "precio": 39.32,
+          "per_ltm": 5.454,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1187,7 +1298,8 @@
         },
         {
           "fecha": "2024-01-12",
-          "per_ltm": 5.1883,
+          "precio": 37.32,
+          "per_ltm": 5.1755,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1196,7 +1308,8 @@
         },
         {
           "fecha": "2024-01-19",
-          "per_ltm": 5.0278,
+          "precio": 36.16,
+          "per_ltm": 5.0154,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1205,7 +1318,8 @@
         },
         {
           "fecha": "2024-01-26",
-          "per_ltm": 5.3447,
+          "precio": 38.44,
+          "per_ltm": 5.3316,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1214,7 +1328,8 @@
         },
         {
           "fecha": "2024-02-02",
-          "per_ltm": 5.3919,
+          "precio": 38.78,
+          "per_ltm": 5.3787,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1223,7 +1338,8 @@
         },
         {
           "fecha": "2024-02-09",
-          "per_ltm": 5.4634,
+          "precio": 39.29,
+          "per_ltm": 5.45,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1232,7 +1348,8 @@
         },
         {
           "fecha": "2024-02-16",
-          "per_ltm": 5.4108,
+          "precio": 38.92,
+          "per_ltm": 5.3975,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1241,7 +1358,8 @@
         },
         {
           "fecha": "2024-02-23",
-          "per_ltm": 5.64,
+          "precio": 40.56,
+          "per_ltm": 5.6261,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1250,7 +1368,8 @@
         },
         {
           "fecha": "2024-03-01",
-          "per_ltm": 5.6995,
+          "precio": 40.99,
+          "per_ltm": 5.6854,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1259,7 +1378,8 @@
         },
         {
           "fecha": "2024-03-08",
-          "per_ltm": 5.7103,
+          "precio": 41.07,
+          "per_ltm": 5.6962,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1268,7 +1388,8 @@
         },
         {
           "fecha": "2024-03-15",
-          "per_ltm": 5.8293,
+          "precio": 41.93,
+          "per_ltm": 5.8149,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1277,7 +1398,8 @@
         },
         {
           "fecha": "2024-03-22",
-          "per_ltm": 6.1632,
+          "precio": 44.33,
+          "per_ltm": 6.148,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1286,7 +1408,8 @@
         },
         {
           "fecha": "2024-03-29",
-          "per_ltm": 6.4714,
+          "precio": 46.54,
+          "per_ltm": 6.4555,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.21,
@@ -1295,7 +1418,8 @@
         },
         {
           "fecha": "2024-04-05",
-          "per_ltm": 5.7263,
+          "precio": 44.78,
+          "per_ltm": 5.7122,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1304,7 +1428,8 @@
         },
         {
           "fecha": "2024-04-12",
-          "per_ltm": 5.8258,
+          "precio": 45.56,
+          "per_ltm": 5.8115,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1313,7 +1438,8 @@
         },
         {
           "fecha": "2024-04-19",
-          "per_ltm": 5.9141,
+          "precio": 46.25,
+          "per_ltm": 5.8995,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1322,7 +1448,8 @@
         },
         {
           "fecha": "2024-04-26",
-          "per_ltm": 6.2062,
+          "precio": 48.54,
+          "per_ltm": 6.1909,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1331,7 +1458,8 @@
         },
         {
           "fecha": "2024-05-03",
-          "per_ltm": 6.4089,
+          "precio": 50.12,
+          "per_ltm": 6.3931,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1340,7 +1468,8 @@
         },
         {
           "fecha": "2024-05-10",
-          "per_ltm": 6.5394,
+          "precio": 51.14,
+          "per_ltm": 6.5233,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1349,7 +1478,8 @@
         },
         {
           "fecha": "2024-05-17",
-          "per_ltm": 6.5643,
+          "precio": 51.34,
+          "per_ltm": 6.5482,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1358,7 +1488,8 @@
         },
         {
           "fecha": "2024-05-24",
-          "per_ltm": 6.4572,
+          "precio": 50.5,
+          "per_ltm": 6.4413,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1367,7 +1498,8 @@
         },
         {
           "fecha": "2024-05-31",
-          "per_ltm": 6.3551,
+          "precio": 49.7,
+          "per_ltm": 6.3394,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1376,7 +1508,8 @@
         },
         {
           "fecha": "2024-06-07",
-          "per_ltm": 6.2828,
+          "precio": 49.14,
+          "per_ltm": 6.2673,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1385,7 +1518,8 @@
         },
         {
           "fecha": "2024-06-14",
-          "per_ltm": 6.0686,
+          "precio": 47.46,
+          "per_ltm": 6.0536,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1394,7 +1528,8 @@
         },
         {
           "fecha": "2024-06-21",
-          "per_ltm": 6.1508,
+          "precio": 48.1,
+          "per_ltm": 6.1356,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1403,7 +1538,8 @@
         },
         {
           "fecha": "2024-06-28",
-          "per_ltm": 5.9091,
+          "precio": 46.21,
+          "per_ltm": 5.8946,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.84,
@@ -1412,7 +1548,8 @@
         },
         {
           "fecha": "2024-07-05",
-          "per_ltm": 6.4018,
+          "precio": 44.83,
+          "per_ltm": 6.3861,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1421,7 +1558,8 @@
         },
         {
           "fecha": "2024-07-12",
-          "per_ltm": 6.068,
+          "precio": 42.49,
+          "per_ltm": 6.053,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1430,7 +1568,8 @@
         },
         {
           "fecha": "2024-07-19",
-          "per_ltm": 6.3212,
+          "precio": 44.27,
+          "per_ltm": 6.3056,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1439,7 +1578,8 @@
         },
         {
           "fecha": "2024-07-26",
-          "per_ltm": 6.1389,
+          "precio": 42.99,
+          "per_ltm": 6.1238,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1448,7 +1588,8 @@
         },
         {
           "fecha": "2024-08-02",
-          "per_ltm": 5.5601,
+          "precio": 38.94,
+          "per_ltm": 5.5464,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1457,7 +1598,8 @@
         },
         {
           "fecha": "2024-08-09",
-          "per_ltm": 5.4861,
+          "precio": 38.42,
+          "per_ltm": 5.4726,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1466,7 +1608,8 @@
         },
         {
           "fecha": "2024-08-16",
-          "per_ltm": 5.6047,
+          "precio": 39.25,
+          "per_ltm": 5.5909,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1475,7 +1618,8 @@
         },
         {
           "fecha": "2024-08-23",
-          "per_ltm": 5.7764,
+          "precio": 40.45,
+          "per_ltm": 5.7622,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1484,7 +1628,8 @@
         },
         {
           "fecha": "2024-08-30",
-          "per_ltm": 5.9314,
+          "precio": 41.54,
+          "per_ltm": 5.9168,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1493,7 +1638,8 @@
         },
         {
           "fecha": "2024-09-06",
-          "per_ltm": 5.8672,
+          "precio": 41.09,
+          "per_ltm": 5.8527,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1502,7 +1648,8 @@
         },
         {
           "fecha": "2024-09-13",
-          "per_ltm": 6.3069,
+          "precio": 44.17,
+          "per_ltm": 6.2914,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1511,7 +1658,8 @@
         },
         {
           "fecha": "2024-09-20",
-          "per_ltm": 6.5526,
+          "precio": 45.89,
+          "per_ltm": 6.5365,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1520,7 +1668,8 @@
         },
         {
           "fecha": "2024-09-27",
-          "per_ltm": 7.1947,
+          "precio": 50.38,
+          "per_ltm": 7.177,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.02,
@@ -1529,7 +1678,8 @@
         },
         {
           "fecha": "2024-10-04",
-          "per_ltm": 6.6427,
+          "precio": 48.17,
+          "per_ltm": 6.6263,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1538,7 +1688,8 @@
         },
         {
           "fecha": "2024-10-11",
-          "per_ltm": 6.9394,
+          "precio": 50.33,
+          "per_ltm": 6.9223,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1547,7 +1698,8 @@
         },
         {
           "fecha": "2024-10-18",
-          "per_ltm": 7.5437,
+          "precio": 54.71,
+          "per_ltm": 7.5252,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1556,7 +1708,8 @@
         },
         {
           "fecha": "2024-10-25",
-          "per_ltm": 7.3166,
+          "precio": 53.06,
+          "per_ltm": 7.2986,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1565,7 +1718,8 @@
         },
         {
           "fecha": "2024-11-01",
-          "per_ltm": 7.8939,
+          "precio": 57.25,
+          "per_ltm": 7.8744,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1574,7 +1728,8 @@
         },
         {
           "fecha": "2024-11-08",
-          "per_ltm": 8.2535,
+          "precio": 59.86,
+          "per_ltm": 8.2332,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1583,7 +1738,8 @@
         },
         {
           "fecha": "2024-11-15",
-          "per_ltm": 8.6618,
+          "precio": 62.82,
+          "per_ltm": 8.6404,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1592,7 +1748,8 @@
         },
         {
           "fecha": "2024-11-22",
-          "per_ltm": 8.5631,
+          "precio": 62.1,
+          "per_ltm": 8.542,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1601,7 +1758,8 @@
         },
         {
           "fecha": "2024-11-29",
-          "per_ltm": 8.628,
+          "precio": 62.57,
+          "per_ltm": 8.6067,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1610,7 +1768,8 @@
         },
         {
           "fecha": "2024-12-06",
-          "per_ltm": 8.724,
+          "precio": 63.27,
+          "per_ltm": 8.7025,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1619,7 +1778,8 @@
         },
         {
           "fecha": "2024-12-13",
-          "per_ltm": 8.317,
+          "precio": 60.32,
+          "per_ltm": 8.2966,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1628,7 +1788,8 @@
         },
         {
           "fecha": "2024-12-20",
-          "per_ltm": 8.2373,
+          "precio": 59.74,
+          "per_ltm": 8.217,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1637,7 +1798,8 @@
         },
         {
           "fecha": "2024-12-27",
-          "per_ltm": 8.2819,
+          "precio": 60.06,
+          "per_ltm": 8.2615,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.27,
@@ -1646,7 +1808,8 @@
         },
         {
           "fecha": "2025-01-03",
-          "per_ltm": 10.7585,
+          "precio": 57.85,
+          "per_ltm": 10.732,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1655,7 +1818,8 @@
         },
         {
           "fecha": "2025-01-10",
-          "per_ltm": 12.2081,
+          "precio": 65.64,
+          "per_ltm": 12.178,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1664,7 +1828,8 @@
         },
         {
           "fecha": "2025-01-17",
-          "per_ltm": 12.0021,
+          "precio": 64.53,
+          "per_ltm": 11.9725,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1673,7 +1838,8 @@
         },
         {
           "fecha": "2025-01-24",
-          "per_ltm": 12.2501,
+          "precio": 65.87,
+          "per_ltm": 12.2199,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1682,7 +1848,8 @@
         },
         {
           "fecha": "2025-01-31",
-          "per_ltm": 12.2665,
+          "precio": 65.95,
+          "per_ltm": 12.2363,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1691,7 +1858,8 @@
         },
         {
           "fecha": "2025-02-07",
-          "per_ltm": 12.4251,
+          "precio": 66.81,
+          "per_ltm": 12.3945,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1700,7 +1868,8 @@
         },
         {
           "fecha": "2025-02-14",
-          "per_ltm": 11.9237,
+          "precio": 64.11,
+          "per_ltm": 11.8943,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1709,7 +1878,8 @@
         },
         {
           "fecha": "2025-02-21",
-          "per_ltm": 10.9408,
+          "precio": 58.83,
+          "per_ltm": 10.9139,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1718,7 +1888,8 @@
         },
         {
           "fecha": "2025-02-28",
-          "per_ltm": 10.9894,
+          "precio": 59.09,
+          "per_ltm": 10.9623,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1727,7 +1898,8 @@
         },
         {
           "fecha": "2025-03-07",
-          "per_ltm": 9.7391,
+          "precio": 52.36,
+          "per_ltm": 9.7151,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1736,7 +1908,8 @@
         },
         {
           "fecha": "2025-03-14",
-          "per_ltm": 8.5455,
+          "precio": 45.95,
+          "per_ltm": 8.5244,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1745,7 +1918,8 @@
         },
         {
           "fecha": "2025-03-21",
-          "per_ltm": 8.5491,
+          "precio": 45.97,
+          "per_ltm": 8.5281,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1754,7 +1928,8 @@
         },
         {
           "fecha": "2025-03-28",
-          "per_ltm": 8.0136,
+          "precio": 43.09,
+          "per_ltm": 7.9938,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.39,
@@ -1763,7 +1938,8 @@
         },
         {
           "fecha": "2025-04-04",
-          "per_ltm": 6.4387,
+          "precio": 36.61,
+          "per_ltm": 6.4228,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1772,7 +1948,8 @@
         },
         {
           "fecha": "2025-04-11",
-          "per_ltm": 7.0661,
+          "precio": 40.18,
+          "per_ltm": 7.0487,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1781,7 +1958,8 @@
         },
         {
           "fecha": "2025-04-18",
-          "per_ltm": 7.0609,
+          "precio": 40.15,
+          "per_ltm": 7.0435,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1790,7 +1968,8 @@
         },
         {
           "fecha": "2025-04-25",
-          "per_ltm": 7.1871,
+          "precio": 40.87,
+          "per_ltm": 7.1694,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1799,7 +1978,8 @@
         },
         {
           "fecha": "2025-05-02",
-          "per_ltm": 7.64,
+          "precio": 43.44,
+          "per_ltm": 7.6211,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1808,7 +1988,8 @@
         },
         {
           "fecha": "2025-05-09",
-          "per_ltm": 8.3556,
+          "precio": 47.51,
+          "per_ltm": 8.335,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1817,7 +1998,8 @@
         },
         {
           "fecha": "2025-05-16",
-          "per_ltm": 8.8274,
+          "precio": 50.19,
+          "per_ltm": 8.8057,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1826,7 +2008,8 @@
         },
         {
           "fecha": "2025-05-23",
-          "per_ltm": 8.3073,
+          "precio": 47.24,
+          "per_ltm": 8.2869,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1835,7 +2018,8 @@
         },
         {
           "fecha": "2025-05-30",
-          "per_ltm": 8.3888,
+          "precio": 47.7,
+          "per_ltm": 8.3681,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1844,7 +2028,8 @@
         },
         {
           "fecha": "2025-06-06",
-          "per_ltm": 8.8326,
+          "precio": 50.22,
+          "per_ltm": 8.8109,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1853,7 +2038,8 @@
         },
         {
           "fecha": "2025-06-13",
-          "per_ltm": 8.1548,
+          "precio": 46.37,
+          "per_ltm": 8.1347,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1862,7 +2048,8 @@
         },
         {
           "fecha": "2025-06-20",
-          "per_ltm": 8.1825,
+          "precio": 46.53,
+          "per_ltm": 8.1624,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1871,7 +2058,8 @@
         },
         {
           "fecha": "2025-06-27",
-          "per_ltm": 8.5968,
+          "precio": 48.88,
+          "per_ltm": 8.5757,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 5.7,
@@ -1880,7 +2068,8 @@
         },
         {
           "fecha": "2025-07-04",
-          "per_ltm": 7.2416,
+          "precio": 50.13,
+          "per_ltm": 7.2238,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1889,7 +2078,8 @@
         },
         {
           "fecha": "2025-07-11",
-          "per_ltm": 8.066,
+          "precio": 55.84,
+          "per_ltm": 8.0462,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1898,7 +2088,8 @@
         },
         {
           "fecha": "2025-07-18",
-          "per_ltm": 8.0148,
+          "precio": 55.49,
+          "per_ltm": 7.995,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1907,7 +2098,8 @@
         },
         {
           "fecha": "2025-07-25",
-          "per_ltm": 7.8112,
+          "precio": 54.08,
+          "per_ltm": 7.7919,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1916,7 +2108,8 @@
         },
         {
           "fecha": "2025-08-01",
-          "per_ltm": 7.3086,
+          "precio": 50.6,
+          "per_ltm": 7.2906,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1925,7 +2118,8 @@
         },
         {
           "fecha": "2025-08-08",
-          "per_ltm": 7.6643,
+          "precio": 53.06,
+          "per_ltm": 7.6455,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1934,7 +2128,8 @@
         },
         {
           "fecha": "2025-08-15",
-          "per_ltm": 8.6074,
+          "precio": 59.59,
+          "per_ltm": 8.5862,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1943,7 +2138,8 @@
         },
         {
           "fecha": "2025-08-22",
-          "per_ltm": 8.8146,
+          "precio": 61.02,
+          "per_ltm": 8.7929,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1952,7 +2148,8 @@
         },
         {
           "fecha": "2025-08-29",
-          "per_ltm": 8.8274,
+          "precio": 61.11,
+          "per_ltm": 8.8057,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1961,7 +2158,8 @@
         },
         {
           "fecha": "2025-09-05",
-          "per_ltm": 8.7417,
+          "precio": 60.52,
+          "per_ltm": 8.7202,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1970,7 +2168,8 @@
         },
         {
           "fecha": "2025-09-12",
-          "per_ltm": 8.5545,
+          "precio": 59.22,
+          "per_ltm": 8.5334,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1979,7 +2178,8 @@
         },
         {
           "fecha": "2025-09-19",
-          "per_ltm": 8.5388,
+          "precio": 59.11,
+          "per_ltm": 8.5178,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1988,7 +2188,8 @@
         },
         {
           "fecha": "2025-09-26",
-          "per_ltm": 8.173,
+          "precio": 56.58,
+          "per_ltm": 8.1529,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.94,
@@ -1997,7 +2198,8 @@
         },
         {
           "fecha": "2025-10-03",
-          "per_ltm": 7.9524,
+          "precio": 56.64,
+          "per_ltm": 7.9328,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2006,7 +2208,8 @@
         },
         {
           "fecha": "2025-10-10",
-          "per_ltm": 7.983,
+          "precio": 56.86,
+          "per_ltm": 7.9633,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2015,7 +2218,8 @@
         },
         {
           "fecha": "2025-10-17",
-          "per_ltm": 8.3083,
+          "precio": 59.17,
+          "per_ltm": 8.2878,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2024,7 +2228,8 @@
         },
         {
           "fecha": "2025-10-24",
-          "per_ltm": 8.4908,
+          "precio": 60.47,
+          "per_ltm": 8.4698,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2033,7 +2238,8 @@
         },
         {
           "fecha": "2025-10-31",
-          "per_ltm": 7.9934,
+          "precio": 56.93,
+          "per_ltm": 7.9737,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2042,7 +2248,8 @@
         },
         {
           "fecha": "2025-11-07",
-          "per_ltm": 8.2024,
+          "precio": 58.42,
+          "per_ltm": 8.1822,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2051,7 +2258,8 @@
         },
         {
           "fecha": "2025-11-14",
-          "per_ltm": 8.1369,
+          "precio": 57.95,
+          "per_ltm": 8.1169,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2060,7 +2268,8 @@
         },
         {
           "fecha": "2025-11-21",
-          "per_ltm": 8.1592,
+          "precio": 58.11,
+          "per_ltm": 8.1391,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2069,7 +2278,8 @@
         },
         {
           "fecha": "2025-11-28",
-          "per_ltm": 8.9296,
+          "precio": 63.6,
+          "per_ltm": 8.9076,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2078,7 +2288,8 @@
         },
         {
           "fecha": "2025-12-05",
-          "per_ltm": 9.3475,
+          "precio": 66.58,
+          "per_ltm": 9.3245,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2087,7 +2298,8 @@
         },
         {
           "fecha": "2025-12-12",
-          "per_ltm": 9.725,
+          "precio": 69.27,
+          "per_ltm": 9.7011,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2096,7 +2308,8 @@
         },
         {
           "fecha": "2025-12-19",
-          "per_ltm": 9.8992,
+          "precio": 70.51,
+          "per_ltm": 9.8748,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2105,7 +2318,8 @@
         },
         {
           "fecha": "2025-12-26",
-          "per_ltm": 9.8699,
+          "precio": 70.3,
+          "per_ltm": 9.8456,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.14,
@@ -2114,7 +2328,8 @@
         },
         {
           "fecha": "2026-01-02",
-          "per_ltm": 8.8977,
+          "precio": 68.52,
+          "per_ltm": 8.8758,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2123,7 +2338,8 @@
         },
         {
           "fecha": "2026-01-09",
-          "per_ltm": 9.3165,
+          "precio": 71.75,
+          "per_ltm": 9.2935,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2132,7 +2348,8 @@
         },
         {
           "fecha": "2026-01-16",
-          "per_ltm": 9.0743,
+          "precio": 69.88,
+          "per_ltm": 9.0519,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2141,7 +2358,8 @@
         },
         {
           "fecha": "2026-01-23",
-          "per_ltm": 8.756,
+          "precio": 67.43,
+          "per_ltm": 8.7345,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2150,7 +2368,8 @@
         },
         {
           "fecha": "2026-01-30",
-          "per_ltm": 8.4893,
+          "precio": 65.38,
+          "per_ltm": 8.4684,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2159,7 +2378,8 @@
         },
         {
           "fecha": "2026-02-06",
-          "per_ltm": 9.7082,
+          "precio": 74.76,
+          "per_ltm": 9.6842,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2168,7 +2388,8 @@
         },
         {
           "fecha": "2026-02-13",
-          "per_ltm": 8.89,
+          "precio": 68.46,
+          "per_ltm": 8.8681,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2177,7 +2398,8 @@
         },
         {
           "fecha": "2026-02-20",
-          "per_ltm": 8.9467,
+          "precio": 68.9,
+          "per_ltm": 8.9247,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2186,7 +2408,8 @@
         },
         {
           "fecha": "2026-02-27",
-          "per_ltm": 8.4878,
+          "precio": 65.36,
+          "per_ltm": 8.4669,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2195,7 +2418,8 @@
         },
         {
           "fecha": "2026-03-06",
-          "per_ltm": 7.6236,
+          "precio": 58.71,
+          "per_ltm": 7.6048,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2204,7 +2428,8 @@
         },
         {
           "fecha": "2026-03-13",
-          "per_ltm": 7.5938,
+          "precio": 58.48,
+          "per_ltm": 7.5751,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2213,7 +2438,8 @@
         },
         {
           "fecha": "2026-03-20",
-          "per_ltm": 8.1959,
+          "precio": 63.12,
+          "per_ltm": 8.1757,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2222,7 +2448,8 @@
         },
         {
           "fecha": "2026-03-27",
-          "per_ltm": 8.3754,
+          "precio": 64.5,
+          "per_ltm": 8.3548,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 7.72,
@@ -2231,7 +2458,8 @@
         },
         {
           "fecha": "2026-04-03",
-          "per_ltm": 9.6358,
+          "precio": 66.42,
+          "per_ltm": 9.6121,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2240,7 +2468,8 @@
         },
         {
           "fecha": "2026-04-10",
-          "per_ltm": 9.7888,
+          "precio": 67.47,
+          "per_ltm": 9.7647,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2249,7 +2478,8 @@
         },
         {
           "fecha": "2026-04-17",
-          "per_ltm": 10.3517,
+          "precio": 71.35,
+          "per_ltm": 10.3262,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2258,7 +2488,8 @@
         },
         {
           "fecha": "2026-04-24",
-          "per_ltm": 9.8797,
+          "precio": 68.1,
+          "per_ltm": 9.8554,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2267,7 +2498,8 @@
         },
         {
           "fecha": "2026-05-01",
-          "per_ltm": 9.9562,
+          "precio": 68.63,
+          "per_ltm": 9.9317,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2276,7 +2508,8 @@
         },
         {
           "fecha": "2026-05-08",
-          "per_ltm": 10.5841,
+          "precio": 72.96,
+          "per_ltm": 10.558,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2285,7 +2518,8 @@
         },
         {
           "fecha": "2026-05-15",
-          "per_ltm": 10.1635,
+          "precio": 70.06,
+          "per_ltm": 10.1385,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2294,7 +2528,8 @@
         },
         {
           "fecha": "2026-05-22",
-          "per_ltm": 11.0188,
+          "precio": 75.95,
+          "per_ltm": 10.9917,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2303,7 +2538,8 @@
         },
         {
           "fecha": "2026-05-29",
-          "per_ltm": 11.9363,
+          "precio": 82.28,
+          "per_ltm": 11.9069,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2312,7 +2548,8 @@
         },
         {
           "fecha": "2026-06-05",
-          "per_ltm": 11.4935,
+          "precio": 79.22,
+          "per_ltm": 11.4652,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2321,7 +2558,8 @@
         },
         {
           "fecha": "2026-06-12",
-          "per_ltm": 12.0203,
+          "precio": 82.86,
+          "per_ltm": 11.9907,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2330,7 +2568,8 @@
         },
         {
           "fecha": "2026-06-19",
-          "per_ltm": 12.1823,
+          "precio": 83.97,
+          "per_ltm": 12.1523,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2339,7 +2578,8 @@
         },
         {
           "fecha": "2026-06-26",
-          "per_ltm": 13.3965,
+          "precio": 92.34,
+          "per_ltm": 13.3635,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 6.91,
@@ -2348,18 +2588,50 @@
         },
         {
           "fecha": "2026-07-03",
-          "per_ltm": 13.4226,
+          "precio": 92.52,
+          "per_ltm": 15.2174,
           "ev_sales_ltm": null,
           "ps_ltm": null,
-          "eps_ttm": 6.91,
-          "revenue_ttm": 65178000000.0,
-          "margen_neto_ttm": 6.87
+          "eps_ttm": 6.08,
+          "revenue_ttm": 68287000000.0,
+          "margen_neto_ttm": 5.78
+        },
+        {
+          "fecha": "2026-07-10",
+          "precio": 87.39,
+          "per_ltm": 14.3734,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.08,
+          "revenue_ttm": 68287000000.0,
+          "margen_neto_ttm": 5.78
+        },
+        {
+          "fecha": "2026-07-17",
+          "precio": 84.17,
+          "per_ltm": 13.8437,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.08,
+          "revenue_ttm": 68287000000.0,
+          "margen_neto_ttm": 5.78
         }
       ],
       "percentiles": {
         "per": 71,
         "ev_sales": null,
-        "ps": null
+        "ps": null,
+        "eps": 59,
+        "revenue": 99,
+        "margen_neto": 49
+      },
+      "promedios": {
+        "per": 30.36,
+        "ev_sales": null,
+        "ps": null,
+        "eps": 3.98,
+        "revenue": 51984712643.68,
+        "margen_neto": 3.35
       }
     },
     {
@@ -2368,25 +2640,8 @@
       "disponible": true,
       "serie": [
         {
-          "fecha": "2021-07-09",
-          "per_ltm": null,
-          "ev_sales_ltm": 2.8086,
-          "ps_ltm": 0.7238,
-          "eps_ttm": -10.22,
-          "revenue_ttm": 18686000000.0,
-          "margen_neto_ttm": -31.08
-        },
-        {
-          "fecha": "2021-07-16",
-          "per_ltm": null,
-          "ev_sales_ltm": 2.7705,
-          "ps_ltm": 0.6857,
-          "eps_ttm": -10.22,
-          "revenue_ttm": 18686000000.0,
-          "margen_neto_ttm": -31.08
-        },
-        {
           "fecha": "2021-07-23",
+          "precio": 21.2,
           "per_ltm": null,
           "ev_sales_ltm": 2.8193,
           "ps_ltm": 0.7346,
@@ -2396,6 +2651,7 @@
         },
         {
           "fecha": "2021-07-30",
+          "precio": 20.38,
           "per_ltm": null,
           "ev_sales_ltm": 2.7909,
           "ps_ltm": 0.7061,
@@ -2405,6 +2661,7 @@
         },
         {
           "fecha": "2021-08-06",
+          "precio": 21.02,
           "per_ltm": null,
           "ev_sales_ltm": 2.8131,
           "ps_ltm": 0.7283,
@@ -2414,6 +2671,7 @@
         },
         {
           "fecha": "2021-08-13",
+          "precio": 19.84,
           "per_ltm": null,
           "ev_sales_ltm": 2.7722,
           "ps_ltm": 0.6874,
@@ -2423,6 +2681,7 @@
         },
         {
           "fecha": "2021-08-20",
+          "precio": 18.5,
           "per_ltm": null,
           "ev_sales_ltm": 2.7258,
           "ps_ltm": 0.641,
@@ -2432,6 +2691,7 @@
         },
         {
           "fecha": "2021-08-27",
+          "precio": 20.22,
           "per_ltm": null,
           "ev_sales_ltm": 2.7854,
           "ps_ltm": 0.7006,
@@ -2441,6 +2701,7 @@
         },
         {
           "fecha": "2021-09-03",
+          "precio": 19.37,
           "per_ltm": null,
           "ev_sales_ltm": 2.7559,
           "ps_ltm": 0.6711,
@@ -2450,6 +2711,7 @@
         },
         {
           "fecha": "2021-09-10",
+          "precio": 18.95,
           "per_ltm": null,
           "ev_sales_ltm": 2.7414,
           "ps_ltm": 0.6566,
@@ -2459,6 +2721,7 @@
         },
         {
           "fecha": "2021-09-17",
+          "precio": 19.73,
           "per_ltm": null,
           "ev_sales_ltm": 2.7684,
           "ps_ltm": 0.6836,
@@ -2468,6 +2731,7 @@
         },
         {
           "fecha": "2021-09-24",
+          "precio": 21.39,
           "per_ltm": null,
           "ev_sales_ltm": 2.8259,
           "ps_ltm": 0.7411,
@@ -2477,6 +2741,7 @@
         },
         {
           "fecha": "2021-10-01",
+          "precio": 21.65,
           "per_ltm": null,
           "ev_sales_ltm": 2.102,
           "ps_ltm": 0.5726,
@@ -2486,6 +2751,7 @@
         },
         {
           "fecha": "2021-10-08",
+          "precio": 20.07,
           "per_ltm": null,
           "ev_sales_ltm": 2.0602,
           "ps_ltm": 0.5308,
@@ -2495,6 +2761,7 @@
         },
         {
           "fecha": "2021-10-15",
+          "precio": 19.98,
           "per_ltm": null,
           "ev_sales_ltm": 2.0579,
           "ps_ltm": 0.5284,
@@ -2504,6 +2771,7 @@
         },
         {
           "fecha": "2021-10-22",
+          "precio": 19.15,
           "per_ltm": null,
           "ev_sales_ltm": 2.0359,
           "ps_ltm": 0.5065,
@@ -2513,6 +2781,7 @@
         },
         {
           "fecha": "2021-10-29",
+          "precio": 19.2,
           "per_ltm": null,
           "ev_sales_ltm": 2.0372,
           "ps_ltm": 0.5078,
@@ -2522,6 +2791,7 @@
         },
         {
           "fecha": "2021-11-05",
+          "precio": 21.82,
           "per_ltm": null,
           "ev_sales_ltm": 2.1065,
           "ps_ltm": 0.5771,
@@ -2531,6 +2801,7 @@
         },
         {
           "fecha": "2021-11-12",
+          "precio": 20.29,
           "per_ltm": null,
           "ev_sales_ltm": 2.0661,
           "ps_ltm": 0.5366,
@@ -2540,6 +2811,7 @@
         },
         {
           "fecha": "2021-11-19",
+          "precio": 19.28,
           "per_ltm": null,
           "ev_sales_ltm": 2.0393,
           "ps_ltm": 0.5099,
@@ -2549,6 +2821,7 @@
         },
         {
           "fecha": "2021-11-26",
+          "precio": 17.75,
           "per_ltm": null,
           "ev_sales_ltm": 1.9989,
           "ps_ltm": 0.4694,
@@ -2558,6 +2831,7 @@
         },
         {
           "fecha": "2021-12-03",
+          "precio": 16.62,
           "per_ltm": null,
           "ev_sales_ltm": 1.969,
           "ps_ltm": 0.4396,
@@ -2567,6 +2841,7 @@
         },
         {
           "fecha": "2021-12-10",
+          "precio": 18.01,
           "per_ltm": null,
           "ev_sales_ltm": 2.0058,
           "ps_ltm": 0.4763,
@@ -2576,6 +2851,7 @@
         },
         {
           "fecha": "2021-12-17",
+          "precio": 16.95,
           "per_ltm": null,
           "ev_sales_ltm": 1.9777,
           "ps_ltm": 0.4483,
@@ -2585,6 +2861,7 @@
         },
         {
           "fecha": "2021-12-24",
+          "precio": 18.26,
           "per_ltm": null,
           "ev_sales_ltm": 2.0124,
           "ps_ltm": 0.4829,
@@ -2594,6 +2871,7 @@
         },
         {
           "fecha": "2021-12-31",
+          "precio": 17.96,
           "per_ltm": null,
           "ev_sales_ltm": 1.6247,
           "ps_ltm": 0.3893,
@@ -2603,6 +2881,7 @@
         },
         {
           "fecha": "2022-01-07",
+          "precio": 19.28,
           "per_ltm": null,
           "ev_sales_ltm": 1.6533,
           "ps_ltm": 0.4179,
@@ -2612,6 +2891,7 @@
         },
         {
           "fecha": "2022-01-14",
+          "precio": 18.49,
           "per_ltm": null,
           "ev_sales_ltm": 1.6362,
           "ps_ltm": 0.4008,
@@ -2621,6 +2901,7 @@
         },
         {
           "fecha": "2022-01-21",
+          "precio": 16.3,
           "per_ltm": null,
           "ev_sales_ltm": 1.5887,
           "ps_ltm": 0.3533,
@@ -2630,6 +2911,7 @@
         },
         {
           "fecha": "2022-01-28",
+          "precio": 15.64,
           "per_ltm": null,
           "ev_sales_ltm": 1.5744,
           "ps_ltm": 0.339,
@@ -2639,6 +2921,7 @@
         },
         {
           "fecha": "2022-02-04",
+          "precio": 16.45,
           "per_ltm": null,
           "ev_sales_ltm": 1.5919,
           "ps_ltm": 0.3566,
@@ -2648,6 +2931,7 @@
         },
         {
           "fecha": "2022-02-11",
+          "precio": 17.61,
           "per_ltm": null,
           "ev_sales_ltm": 1.6171,
           "ps_ltm": 0.3817,
@@ -2657,6 +2941,7 @@
         },
         {
           "fecha": "2022-02-18",
+          "precio": 17.87,
           "per_ltm": null,
           "ev_sales_ltm": 1.6227,
           "ps_ltm": 0.3874,
@@ -2666,6 +2951,7 @@
         },
         {
           "fecha": "2022-02-25",
+          "precio": 17.46,
           "per_ltm": null,
           "ev_sales_ltm": 1.6138,
           "ps_ltm": 0.3785,
@@ -2675,6 +2961,7 @@
         },
         {
           "fecha": "2022-03-04",
+          "precio": 14.59,
           "per_ltm": null,
           "ev_sales_ltm": 1.5516,
           "ps_ltm": 0.3163,
@@ -2684,6 +2971,7 @@
         },
         {
           "fecha": "2022-03-11",
+          "precio": 14.02,
           "per_ltm": null,
           "ev_sales_ltm": 1.5393,
           "ps_ltm": 0.3039,
@@ -2693,6 +2981,7 @@
         },
         {
           "fecha": "2022-03-18",
+          "precio": 16.75,
           "per_ltm": null,
           "ev_sales_ltm": 1.5984,
           "ps_ltm": 0.3631,
@@ -2702,6 +2991,7 @@
         },
         {
           "fecha": "2022-03-25",
+          "precio": 17.01,
           "per_ltm": null,
           "ev_sales_ltm": 1.6041,
           "ps_ltm": 0.3687,
@@ -2711,6 +3001,7 @@
         },
         {
           "fecha": "2022-04-01",
+          "precio": 18.24,
           "per_ltm": null,
           "ev_sales_ltm": 1.3927,
           "ps_ltm": 0.3407,
@@ -2720,6 +3011,7 @@
         },
         {
           "fecha": "2022-04-08",
+          "precio": 16.59,
           "per_ltm": null,
           "ev_sales_ltm": 1.3619,
           "ps_ltm": 0.3099,
@@ -2729,6 +3021,7 @@
         },
         {
           "fecha": "2022-04-15",
+          "precio": 19.0,
           "per_ltm": null,
           "ev_sales_ltm": 1.4069,
           "ps_ltm": 0.3549,
@@ -2738,6 +3031,7 @@
         },
         {
           "fecha": "2022-04-22",
+          "precio": 20.18,
           "per_ltm": null,
           "ev_sales_ltm": 1.4289,
           "ps_ltm": 0.3769,
@@ -2747,6 +3041,7 @@
         },
         {
           "fecha": "2022-04-29",
+          "precio": 18.77,
           "per_ltm": null,
           "ev_sales_ltm": 1.4026,
           "ps_ltm": 0.3506,
@@ -2756,6 +3051,7 @@
         },
         {
           "fecha": "2022-05-06",
+          "precio": 17.84,
           "per_ltm": null,
           "ev_sales_ltm": 1.3852,
           "ps_ltm": 0.3332,
@@ -2765,6 +3061,7 @@
         },
         {
           "fecha": "2022-05-13",
+          "precio": 16.58,
           "per_ltm": null,
           "ev_sales_ltm": 1.3617,
           "ps_ltm": 0.3097,
@@ -2774,6 +3071,7 @@
         },
         {
           "fecha": "2022-05-20",
+          "precio": 16.26,
           "per_ltm": null,
           "ev_sales_ltm": 1.3557,
           "ps_ltm": 0.3037,
@@ -2783,6 +3081,7 @@
         },
         {
           "fecha": "2022-05-27",
+          "precio": 18.13,
           "per_ltm": null,
           "ev_sales_ltm": 1.3906,
           "ps_ltm": 0.3386,
@@ -2792,6 +3091,7 @@
         },
         {
           "fecha": "2022-06-03",
+          "precio": 16.22,
           "per_ltm": null,
           "ev_sales_ltm": 1.355,
           "ps_ltm": 0.303,
@@ -2801,6 +3101,7 @@
         },
         {
           "fecha": "2022-06-10",
+          "precio": 14.71,
           "per_ltm": null,
           "ev_sales_ltm": 1.3268,
           "ps_ltm": 0.2748,
@@ -2810,6 +3111,7 @@
         },
         {
           "fecha": "2022-06-17",
+          "precio": 12.94,
           "per_ltm": null,
           "ev_sales_ltm": 1.2937,
           "ps_ltm": 0.2417,
@@ -2819,6 +3121,7 @@
         },
         {
           "fecha": "2022-06-24",
+          "precio": 13.9,
           "per_ltm": null,
           "ev_sales_ltm": 1.3116,
           "ps_ltm": 0.2596,
@@ -2828,6 +3131,7 @@
         },
         {
           "fecha": "2022-07-01",
+          "precio": 13.13,
           "per_ltm": null,
           "ev_sales_ltm": 1.0892,
           "ps_ltm": 0.2095,
@@ -2837,6 +3141,7 @@
         },
         {
           "fecha": "2022-07-08",
+          "precio": 13.97,
           "per_ltm": null,
           "ev_sales_ltm": 1.1026,
           "ps_ltm": 0.2229,
@@ -2846,6 +3151,7 @@
         },
         {
           "fecha": "2022-07-15",
+          "precio": 14.47,
           "per_ltm": null,
           "ev_sales_ltm": 1.1106,
           "ps_ltm": 0.2309,
@@ -2855,6 +3161,7 @@
         },
         {
           "fecha": "2022-07-22",
+          "precio": 13.68,
           "per_ltm": null,
           "ev_sales_ltm": 1.098,
           "ps_ltm": 0.2183,
@@ -2864,6 +3171,7 @@
         },
         {
           "fecha": "2022-07-29",
+          "precio": 13.71,
           "per_ltm": null,
           "ev_sales_ltm": 1.0984,
           "ps_ltm": 0.2188,
@@ -2873,6 +3181,7 @@
         },
         {
           "fecha": "2022-08-05",
+          "precio": 14.74,
           "per_ltm": null,
           "ev_sales_ltm": 1.1149,
           "ps_ltm": 0.2352,
@@ -2882,6 +3191,7 @@
         },
         {
           "fecha": "2022-08-12",
+          "precio": 15.25,
           "per_ltm": null,
           "ev_sales_ltm": 1.123,
           "ps_ltm": 0.2434,
@@ -2891,6 +3201,7 @@
         },
         {
           "fecha": "2022-08-19",
+          "precio": 14.17,
           "per_ltm": null,
           "ev_sales_ltm": 1.1058,
           "ps_ltm": 0.2261,
@@ -2900,6 +3211,7 @@
         },
         {
           "fecha": "2022-08-26",
+          "precio": 13.74,
           "per_ltm": null,
           "ev_sales_ltm": 1.0989,
           "ps_ltm": 0.2193,
@@ -2909,6 +3221,7 @@
         },
         {
           "fecha": "2022-09-02",
+          "precio": 12.99,
           "per_ltm": null,
           "ev_sales_ltm": 1.087,
           "ps_ltm": 0.2073,
@@ -2918,6 +3231,7 @@
         },
         {
           "fecha": "2022-09-09",
+          "precio": 14.19,
           "per_ltm": null,
           "ev_sales_ltm": 1.1061,
           "ps_ltm": 0.2265,
@@ -2927,6 +3241,7 @@
         },
         {
           "fecha": "2022-09-16",
+          "precio": 13.75,
           "per_ltm": null,
           "ev_sales_ltm": 1.0991,
           "ps_ltm": 0.2194,
@@ -2936,6 +3251,7 @@
         },
         {
           "fecha": "2022-09-23",
+          "precio": 12.21,
           "per_ltm": null,
           "ev_sales_ltm": 1.0745,
           "ps_ltm": 0.1949,
@@ -2945,6 +3261,7 @@
         },
         {
           "fecha": "2022-09-30",
+          "precio": 12.04,
           "per_ltm": null,
           "ev_sales_ltm": 0.9623,
           "ps_ltm": 0.1731,
@@ -2954,6 +3271,7 @@
         },
         {
           "fecha": "2022-10-07",
+          "precio": 12.18,
           "per_ltm": null,
           "ev_sales_ltm": 0.9643,
           "ps_ltm": 0.1751,
@@ -2963,6 +3281,7 @@
         },
         {
           "fecha": "2022-10-14",
+          "precio": 13.11,
           "per_ltm": null,
           "ev_sales_ltm": 0.9777,
           "ps_ltm": 0.1884,
@@ -2972,6 +3291,7 @@
         },
         {
           "fecha": "2022-10-21",
+          "precio": 13.71,
           "per_ltm": null,
           "ev_sales_ltm": 0.9863,
           "ps_ltm": 0.1971,
@@ -2981,6 +3301,7 @@
         },
         {
           "fecha": "2022-10-28",
+          "precio": 14.0,
           "per_ltm": null,
           "ev_sales_ltm": 0.9905,
           "ps_ltm": 0.2012,
@@ -2990,6 +3311,7 @@
         },
         {
           "fecha": "2022-11-04",
+          "precio": 14.11,
           "per_ltm": null,
           "ev_sales_ltm": 0.9921,
           "ps_ltm": 0.2028,
@@ -2999,6 +3321,7 @@
         },
         {
           "fecha": "2022-11-11",
+          "precio": 14.88,
           "per_ltm": null,
           "ev_sales_ltm": 1.0031,
           "ps_ltm": 0.2139,
@@ -3008,6 +3331,7 @@
         },
         {
           "fecha": "2022-11-18",
+          "precio": 14.05,
           "per_ltm": null,
           "ev_sales_ltm": 0.9912,
           "ps_ltm": 0.202,
@@ -3017,6 +3341,7 @@
         },
         {
           "fecha": "2022-11-25",
+          "precio": 14.5,
           "per_ltm": null,
           "ev_sales_ltm": 0.9977,
           "ps_ltm": 0.2084,
@@ -3026,6 +3351,7 @@
         },
         {
           "fecha": "2022-12-02",
+          "precio": 13.97,
           "per_ltm": null,
           "ev_sales_ltm": 0.9901,
           "ps_ltm": 0.2008,
@@ -3035,6 +3361,7 @@
         },
         {
           "fecha": "2022-12-09",
+          "precio": 13.53,
           "per_ltm": null,
           "ev_sales_ltm": 0.9837,
           "ps_ltm": 0.1945,
@@ -3044,6 +3371,7 @@
         },
         {
           "fecha": "2022-12-16",
+          "precio": 12.81,
           "per_ltm": null,
           "ev_sales_ltm": 0.9734,
           "ps_ltm": 0.1841,
@@ -3053,6 +3381,7 @@
         },
         {
           "fecha": "2022-12-23",
+          "precio": 12.71,
           "per_ltm": null,
           "ev_sales_ltm": 0.9719,
           "ps_ltm": 0.1827,
@@ -3062,6 +3391,7 @@
         },
         {
           "fecha": "2022-12-30",
+          "precio": 12.72,
           "per_ltm": null,
           "ev_sales_ltm": 0.9721,
           "ps_ltm": 0.1828,
@@ -3071,6 +3401,7 @@
         },
         {
           "fecha": "2023-01-06",
+          "precio": 14.18,
           "per_ltm": 70.9,
           "ev_sales_ltm": 0.8892,
           "ps_ltm": 0.1884,
@@ -3080,6 +3411,7 @@
         },
         {
           "fecha": "2023-01-13",
+          "precio": 17.02,
           "per_ltm": 85.1,
           "ev_sales_ltm": 0.9269,
           "ps_ltm": 0.2261,
@@ -3089,6 +3421,7 @@
         },
         {
           "fecha": "2023-01-20",
+          "precio": 16.34,
           "per_ltm": 81.7,
           "ev_sales_ltm": 0.9179,
           "ps_ltm": 0.2171,
@@ -3098,6 +3431,7 @@
         },
         {
           "fecha": "2023-01-27",
+          "precio": 16.43,
           "per_ltm": 82.15,
           "ev_sales_ltm": 0.9191,
           "ps_ltm": 0.2183,
@@ -3107,6 +3441,7 @@
         },
         {
           "fecha": "2023-02-03",
+          "precio": 17.02,
           "per_ltm": 85.1,
           "ev_sales_ltm": 0.9269,
           "ps_ltm": 0.2261,
@@ -3116,6 +3451,7 @@
         },
         {
           "fecha": "2023-02-10",
+          "precio": 16.28,
           "per_ltm": 81.4,
           "ev_sales_ltm": 0.9171,
           "ps_ltm": 0.2163,
@@ -3125,6 +3461,7 @@
         },
         {
           "fecha": "2023-02-17",
+          "precio": 16.36,
           "per_ltm": 81.8,
           "ev_sales_ltm": 0.9181,
           "ps_ltm": 0.2174,
@@ -3134,6 +3471,7 @@
         },
         {
           "fecha": "2023-02-24",
+          "precio": 15.56,
           "per_ltm": 77.8,
           "ev_sales_ltm": 0.9075,
           "ps_ltm": 0.2067,
@@ -3143,6 +3481,7 @@
         },
         {
           "fecha": "2023-03-03",
+          "precio": 16.36,
           "per_ltm": 81.8,
           "ev_sales_ltm": 0.9181,
           "ps_ltm": 0.2174,
@@ -3152,6 +3491,7 @@
         },
         {
           "fecha": "2023-03-10",
+          "precio": 15.46,
           "per_ltm": 77.3,
           "ev_sales_ltm": 0.9062,
           "ps_ltm": 0.2054,
@@ -3161,6 +3501,7 @@
         },
         {
           "fecha": "2023-03-17",
+          "precio": 13.98,
           "per_ltm": 69.9,
           "ev_sales_ltm": 0.8865,
           "ps_ltm": 0.1857,
@@ -3170,6 +3511,7 @@
         },
         {
           "fecha": "2023-03-24",
+          "precio": 13.72,
           "per_ltm": 68.6,
           "ev_sales_ltm": 0.883,
           "ps_ltm": 0.1823,
@@ -3179,6 +3521,7 @@
         },
         {
           "fecha": "2023-03-31",
+          "precio": 14.75,
           "per_ltm": 5.3832,
           "ev_sales_ltm": 0.8324,
           "ps_ltm": 0.1842,
@@ -3188,6 +3531,7 @@
         },
         {
           "fecha": "2023-04-07",
+          "precio": 14.01,
           "per_ltm": 5.1131,
           "ev_sales_ltm": 0.8232,
           "ps_ltm": 0.175,
@@ -3197,6 +3541,7 @@
         },
         {
           "fecha": "2023-04-14",
+          "precio": 12.79,
           "per_ltm": 4.6679,
           "ev_sales_ltm": 0.808,
           "ps_ltm": 0.1598,
@@ -3206,6 +3551,7 @@
         },
         {
           "fecha": "2023-04-21",
+          "precio": 13.4,
           "per_ltm": 4.8905,
           "ev_sales_ltm": 0.8156,
           "ps_ltm": 0.1674,
@@ -3215,6 +3561,7 @@
         },
         {
           "fecha": "2023-04-28",
+          "precio": 13.64,
           "per_ltm": 4.9781,
           "ev_sales_ltm": 0.8186,
           "ps_ltm": 0.1704,
@@ -3224,6 +3571,7 @@
         },
         {
           "fecha": "2023-05-05",
+          "precio": 13.87,
           "per_ltm": 5.062,
           "ev_sales_ltm": 0.8214,
           "ps_ltm": 0.1733,
@@ -3233,6 +3581,7 @@
         },
         {
           "fecha": "2023-05-12",
+          "precio": 14.02,
           "per_ltm": 5.1168,
           "ev_sales_ltm": 0.8233,
           "ps_ltm": 0.1751,
@@ -3242,6 +3591,7 @@
         },
         {
           "fecha": "2023-05-19",
+          "precio": 14.82,
           "per_ltm": 5.4088,
           "ev_sales_ltm": 0.8333,
           "ps_ltm": 0.1851,
@@ -3251,6 +3601,7 @@
         },
         {
           "fecha": "2023-05-26",
+          "precio": 14.35,
           "per_ltm": 5.2372,
           "ev_sales_ltm": 0.8274,
           "ps_ltm": 0.1793,
@@ -3260,6 +3611,7 @@
         },
         {
           "fecha": "2023-06-02",
+          "precio": 14.87,
           "per_ltm": 5.427,
           "ev_sales_ltm": 0.8339,
           "ps_ltm": 0.1857,
@@ -3269,6 +3621,7 @@
         },
         {
           "fecha": "2023-06-09",
+          "precio": 15.57,
           "per_ltm": 5.6825,
           "ev_sales_ltm": 0.8427,
           "ps_ltm": 0.1945,
@@ -3278,6 +3631,7 @@
         },
         {
           "fecha": "2023-06-16",
+          "precio": 16.48,
           "per_ltm": 6.0146,
           "ev_sales_ltm": 0.854,
           "ps_ltm": 0.2059,
@@ -3287,6 +3641,7 @@
         },
         {
           "fecha": "2023-06-23",
+          "precio": 16.26,
           "per_ltm": 5.9343,
           "ev_sales_ltm": 0.8513,
           "ps_ltm": 0.2031,
@@ -3296,6 +3651,7 @@
         },
         {
           "fecha": "2023-06-30",
+          "precio": 17.94,
           "per_ltm": 4.4187,
           "ev_sales_ltm": 0.8507,
           "ps_ltm": 0.2216,
@@ -3305,6 +3661,7 @@
         },
         {
           "fecha": "2023-07-07",
+          "precio": 18.35,
           "per_ltm": 4.5197,
           "ev_sales_ltm": 0.8558,
           "ps_ltm": 0.2266,
@@ -3314,6 +3671,7 @@
         },
         {
           "fecha": "2023-07-14",
+          "precio": 18.14,
           "per_ltm": 4.468,
           "ev_sales_ltm": 0.8532,
           "ps_ltm": 0.224,
@@ -3323,6 +3681,7 @@
         },
         {
           "fecha": "2023-07-21",
+          "precio": 17.42,
           "per_ltm": 4.2906,
           "ev_sales_ltm": 0.8443,
           "ps_ltm": 0.2152,
@@ -3332,6 +3691,7 @@
         },
         {
           "fecha": "2023-07-28",
+          "precio": 16.79,
           "per_ltm": 4.1355,
           "ev_sales_ltm": 0.8365,
           "ps_ltm": 0.2074,
@@ -3341,6 +3701,7 @@
         },
         {
           "fecha": "2023-08-04",
+          "precio": 15.84,
           "per_ltm": 3.9015,
           "ev_sales_ltm": 0.8248,
           "ps_ltm": 0.1956,
@@ -3350,6 +3711,7 @@
         },
         {
           "fecha": "2023-08-11",
+          "precio": 15.65,
           "per_ltm": 3.8547,
           "ev_sales_ltm": 0.8224,
           "ps_ltm": 0.1933,
@@ -3359,6 +3721,7 @@
         },
         {
           "fecha": "2023-08-18",
+          "precio": 15.04,
           "per_ltm": 3.7044,
           "ev_sales_ltm": 0.8149,
           "ps_ltm": 0.1858,
@@ -3368,6 +3731,7 @@
         },
         {
           "fecha": "2023-08-25",
+          "precio": 14.58,
           "per_ltm": 3.5911,
           "ev_sales_ltm": 0.8092,
           "ps_ltm": 0.1801,
@@ -3377,6 +3741,7 @@
         },
         {
           "fecha": "2023-09-01",
+          "precio": 14.68,
           "per_ltm": 3.6158,
           "ev_sales_ltm": 0.8105,
           "ps_ltm": 0.1813,
@@ -3386,6 +3751,7 @@
         },
         {
           "fecha": "2023-09-08",
+          "precio": 13.98,
           "per_ltm": 3.4433,
           "ev_sales_ltm": 0.8018,
           "ps_ltm": 0.1727,
@@ -3395,6 +3761,7 @@
         },
         {
           "fecha": "2023-09-15",
+          "precio": 13.31,
           "per_ltm": 3.2783,
           "ev_sales_ltm": 0.7935,
           "ps_ltm": 0.1644,
@@ -3404,6 +3771,7 @@
         },
         {
           "fecha": "2023-09-22",
+          "precio": 12.9,
           "per_ltm": 3.1773,
           "ev_sales_ltm": 0.7885,
           "ps_ltm": 0.1593,
@@ -3413,6 +3781,7 @@
         },
         {
           "fecha": "2023-09-29",
+          "precio": 12.81,
           "per_ltm": 3.1552,
           "ev_sales_ltm": 0.7874,
           "ps_ltm": 0.1582,
@@ -3422,6 +3791,7 @@
         },
         {
           "fecha": "2023-10-06",
+          "precio": 12.76,
           "per_ltm": 5.1245,
           "ev_sales_ltm": 0.7667,
           "ps_ltm": 0.1576,
@@ -3431,6 +3801,7 @@
         },
         {
           "fecha": "2023-10-13",
+          "precio": 11.72,
           "per_ltm": 4.7068,
           "ev_sales_ltm": 0.7538,
           "ps_ltm": 0.1447,
@@ -3440,6 +3811,7 @@
         },
         {
           "fecha": "2023-10-20",
+          "precio": 11.08,
           "per_ltm": 4.4498,
           "ev_sales_ltm": 0.7459,
           "ps_ltm": 0.1368,
@@ -3449,6 +3821,7 @@
         },
         {
           "fecha": "2023-10-27",
+          "precio": 10.92,
           "per_ltm": 4.3855,
           "ev_sales_ltm": 0.7439,
           "ps_ltm": 0.1349,
@@ -3458,6 +3831,7 @@
         },
         {
           "fecha": "2023-11-03",
+          "precio": 11.98,
           "per_ltm": 4.8112,
           "ev_sales_ltm": 0.757,
           "ps_ltm": 0.148,
@@ -3467,6 +3841,7 @@
         },
         {
           "fecha": "2023-11-10",
+          "precio": 11.8,
           "per_ltm": 4.739,
           "ev_sales_ltm": 0.7548,
           "ps_ltm": 0.1457,
@@ -3476,6 +3851,7 @@
         },
         {
           "fecha": "2023-11-17",
+          "precio": 12.29,
           "per_ltm": 4.9357,
           "ev_sales_ltm": 0.7608,
           "ps_ltm": 0.1518,
@@ -3485,6 +3861,7 @@
         },
         {
           "fecha": "2023-11-24",
+          "precio": 12.31,
           "per_ltm": 4.9438,
           "ev_sales_ltm": 0.7611,
           "ps_ltm": 0.152,
@@ -3494,6 +3871,7 @@
         },
         {
           "fecha": "2023-12-01",
+          "precio": 13.02,
           "per_ltm": 5.2289,
           "ev_sales_ltm": 0.7699,
           "ps_ltm": 0.1608,
@@ -3503,6 +3881,7 @@
         },
         {
           "fecha": "2023-12-08",
+          "precio": 13.76,
           "per_ltm": 5.5261,
           "ev_sales_ltm": 0.779,
           "ps_ltm": 0.1699,
@@ -3512,6 +3891,7 @@
         },
         {
           "fecha": "2023-12-15",
+          "precio": 14.49,
           "per_ltm": 5.8193,
           "ev_sales_ltm": 0.788,
           "ps_ltm": 0.179,
@@ -3521,6 +3901,7 @@
         },
         {
           "fecha": "2023-12-22",
+          "precio": 14.31,
           "per_ltm": 5.747,
           "ev_sales_ltm": 0.7858,
           "ps_ltm": 0.1767,
@@ -3530,6 +3911,7 @@
         },
         {
           "fecha": "2023-12-29",
+          "precio": 13.74,
           "per_ltm": 5.5181,
           "ev_sales_ltm": 0.7788,
           "ps_ltm": 0.1697,
@@ -3539,6 +3921,7 @@
         },
         {
           "fecha": "2024-01-05",
+          "precio": 13.6,
           "per_ltm": 10.7937,
           "ev_sales_ltm": 0.7694,
           "ps_ltm": 0.1686,
@@ -3548,6 +3931,7 @@
         },
         {
           "fecha": "2024-01-12",
+          "precio": 13.21,
           "per_ltm": 10.4841,
           "ev_sales_ltm": 0.7645,
           "ps_ltm": 0.1637,
@@ -3557,6 +3941,7 @@
         },
         {
           "fecha": "2024-01-19",
+          "precio": 13.66,
           "per_ltm": 10.8413,
           "ev_sales_ltm": 0.7701,
           "ps_ltm": 0.1693,
@@ -3566,6 +3951,7 @@
         },
         {
           "fecha": "2024-01-26",
+          "precio": 15.13,
           "per_ltm": 12.0079,
           "ev_sales_ltm": 0.7883,
           "ps_ltm": 0.1875,
@@ -3575,6 +3961,7 @@
         },
         {
           "fecha": "2024-02-02",
+          "precio": 14.56,
           "per_ltm": 11.5556,
           "ev_sales_ltm": 0.7813,
           "ps_ltm": 0.1805,
@@ -3584,6 +3971,7 @@
         },
         {
           "fecha": "2024-02-09",
+          "precio": 14.88,
           "per_ltm": 11.8095,
           "ev_sales_ltm": 0.7852,
           "ps_ltm": 0.1844,
@@ -3593,6 +3981,7 @@
         },
         {
           "fecha": "2024-02-16",
+          "precio": 14.64,
           "per_ltm": 11.619,
           "ev_sales_ltm": 0.7823,
           "ps_ltm": 0.1815,
@@ -3602,6 +3991,7 @@
         },
         {
           "fecha": "2024-02-23",
+          "precio": 15.13,
           "per_ltm": 12.0079,
           "ev_sales_ltm": 0.7883,
           "ps_ltm": 0.1875,
@@ -3611,6 +4001,7 @@
         },
         {
           "fecha": "2024-03-01",
+          "precio": 15.66,
           "per_ltm": 12.4286,
           "ev_sales_ltm": 0.7949,
           "ps_ltm": 0.1941,
@@ -3620,6 +4011,7 @@
         },
         {
           "fecha": "2024-03-08",
+          "precio": 14.68,
           "per_ltm": 11.6508,
           "ev_sales_ltm": 0.7827,
           "ps_ltm": 0.1819,
@@ -3629,6 +4021,7 @@
         },
         {
           "fecha": "2024-03-15",
+          "precio": 13.96,
           "per_ltm": 11.0794,
           "ev_sales_ltm": 0.7738,
           "ps_ltm": 0.173,
@@ -3638,6 +4031,7 @@
         },
         {
           "fecha": "2024-03-22",
+          "precio": 14.82,
           "per_ltm": 11.7619,
           "ev_sales_ltm": 0.7845,
           "ps_ltm": 0.1837,
@@ -3647,6 +4041,7 @@
         },
         {
           "fecha": "2024-03-29",
+          "precio": 15.35,
           "per_ltm": 12.1825,
           "ev_sales_ltm": 0.7911,
           "ps_ltm": 0.1903,
@@ -3656,6 +4051,7 @@
         },
         {
           "fecha": "2024-04-05",
+          "precio": 13.76,
           "per_ltm": 18.1053,
           "ev_sales_ltm": 0.7552,
           "ps_ltm": 0.1698,
@@ -3665,6 +4061,7 @@
         },
         {
           "fecha": "2024-04-12",
+          "precio": 13.15,
           "per_ltm": 17.3026,
           "ev_sales_ltm": 0.7476,
           "ps_ltm": 0.1623,
@@ -3674,6 +4071,7 @@
         },
         {
           "fecha": "2024-04-19",
+          "precio": 14.11,
           "per_ltm": 18.5658,
           "ev_sales_ltm": 0.7595,
           "ps_ltm": 0.1741,
@@ -3683,6 +4081,7 @@
         },
         {
           "fecha": "2024-04-26",
+          "precio": 13.88,
           "per_ltm": 18.2632,
           "ev_sales_ltm": 0.7566,
           "ps_ltm": 0.1713,
@@ -3692,6 +4091,7 @@
         },
         {
           "fecha": "2024-05-03",
+          "precio": 13.85,
           "per_ltm": 18.2237,
           "ev_sales_ltm": 0.7563,
           "ps_ltm": 0.1709,
@@ -3701,6 +4101,7 @@
         },
         {
           "fecha": "2024-05-10",
+          "precio": 14.4,
           "per_ltm": 18.9474,
           "ev_sales_ltm": 0.7631,
           "ps_ltm": 0.1777,
@@ -3710,6 +4111,7 @@
         },
         {
           "fecha": "2024-05-17",
+          "precio": 14.73,
           "per_ltm": 19.3816,
           "ev_sales_ltm": 0.7671,
           "ps_ltm": 0.1818,
@@ -3719,6 +4121,7 @@
         },
         {
           "fecha": "2024-05-24",
+          "precio": 13.84,
           "per_ltm": 18.2105,
           "ev_sales_ltm": 0.7561,
           "ps_ltm": 0.1708,
@@ -3728,6 +4131,7 @@
         },
         {
           "fecha": "2024-05-31",
+          "precio": 11.5,
           "per_ltm": 15.1316,
           "ev_sales_ltm": 0.7273,
           "ps_ltm": 0.1419,
@@ -3737,6 +4141,7 @@
         },
         {
           "fecha": "2024-06-07",
+          "precio": 11.5,
           "per_ltm": 15.1316,
           "ev_sales_ltm": 0.7273,
           "ps_ltm": 0.1419,
@@ -3746,6 +4151,7 @@
         },
         {
           "fecha": "2024-06-14",
+          "precio": 11.28,
           "per_ltm": 14.8421,
           "ev_sales_ltm": 0.7246,
           "ps_ltm": 0.1392,
@@ -3755,6 +4161,7 @@
         },
         {
           "fecha": "2024-06-21",
+          "precio": 11.2,
           "per_ltm": 14.7368,
           "ev_sales_ltm": 0.7236,
           "ps_ltm": 0.1382,
@@ -3764,6 +4171,7 @@
         },
         {
           "fecha": "2024-06-28",
+          "precio": 11.33,
           "per_ltm": 14.9079,
           "ev_sales_ltm": 0.7252,
           "ps_ltm": 0.1398,
@@ -3773,6 +4181,7 @@
         },
         {
           "fecha": "2024-07-05",
+          "precio": 11.04,
           "per_ltm": null,
           "ev_sales_ltm": 0.7054,
           "ps_ltm": 0.1356,
@@ -3782,6 +4191,7 @@
         },
         {
           "fecha": "2024-07-12",
+          "precio": 10.68,
           "per_ltm": null,
           "ev_sales_ltm": 0.7009,
           "ps_ltm": 0.1312,
@@ -3791,6 +4201,7 @@
         },
         {
           "fecha": "2024-07-19",
+          "precio": 10.58,
           "per_ltm": null,
           "ev_sales_ltm": 0.6997,
           "ps_ltm": 0.13,
@@ -3800,6 +4211,7 @@
         },
         {
           "fecha": "2024-07-26",
+          "precio": 10.62,
           "per_ltm": null,
           "ev_sales_ltm": 0.7002,
           "ps_ltm": 0.1305,
@@ -3809,6 +4221,7 @@
         },
         {
           "fecha": "2024-08-02",
+          "precio": 9.63,
           "per_ltm": null,
           "ev_sales_ltm": 0.688,
           "ps_ltm": 0.1183,
@@ -3818,6 +4231,7 @@
         },
         {
           "fecha": "2024-08-09",
+          "precio": 9.86,
           "per_ltm": null,
           "ev_sales_ltm": 0.6909,
           "ps_ltm": 0.1211,
@@ -3827,6 +4241,7 @@
         },
         {
           "fecha": "2024-08-16",
+          "precio": 10.05,
           "per_ltm": null,
           "ev_sales_ltm": 0.6932,
           "ps_ltm": 0.1235,
@@ -3836,6 +4251,7 @@
         },
         {
           "fecha": "2024-08-23",
+          "precio": 10.39,
           "per_ltm": null,
           "ev_sales_ltm": 0.6974,
           "ps_ltm": 0.1276,
@@ -3845,6 +4261,7 @@
         },
         {
           "fecha": "2024-08-30",
+          "precio": 10.62,
           "per_ltm": null,
           "ev_sales_ltm": 0.7002,
           "ps_ltm": 0.1305,
@@ -3854,6 +4271,7 @@
         },
         {
           "fecha": "2024-09-06",
+          "precio": 10.8,
           "per_ltm": null,
           "ev_sales_ltm": 0.7024,
           "ps_ltm": 0.1327,
@@ -3863,6 +4281,7 @@
         },
         {
           "fecha": "2024-09-13",
+          "precio": 10.69,
           "per_ltm": null,
           "ev_sales_ltm": 0.7011,
           "ps_ltm": 0.1313,
@@ -3872,6 +4291,7 @@
         },
         {
           "fecha": "2024-09-20",
+          "precio": 11.01,
           "per_ltm": null,
           "ev_sales_ltm": 0.705,
           "ps_ltm": 0.1353,
@@ -3881,6 +4301,7 @@
         },
         {
           "fecha": "2024-09-27",
+          "precio": 11.56,
           "per_ltm": null,
           "ev_sales_ltm": 0.7117,
           "ps_ltm": 0.142,
@@ -3890,6 +4311,7 @@
         },
         {
           "fecha": "2024-10-04",
+          "precio": 11.51,
           "per_ltm": 28.775,
           "ev_sales_ltm": 0.7039,
           "ps_ltm": 0.1411,
@@ -3899,6 +4321,7 @@
         },
         {
           "fecha": "2024-10-11",
+          "precio": 11.79,
           "per_ltm": 29.475,
           "ev_sales_ltm": 0.7074,
           "ps_ltm": 0.1445,
@@ -3908,6 +4331,7 @@
         },
         {
           "fecha": "2024-10-18",
+          "precio": 13.09,
           "per_ltm": 32.725,
           "ev_sales_ltm": 0.7233,
           "ps_ltm": 0.1604,
@@ -3917,6 +4341,7 @@
         },
         {
           "fecha": "2024-10-25",
+          "precio": 13.15,
           "per_ltm": 32.875,
           "ev_sales_ltm": 0.724,
           "ps_ltm": 0.1612,
@@ -3926,6 +4351,7 @@
         },
         {
           "fecha": "2024-11-01",
+          "precio": 13.54,
           "per_ltm": 33.85,
           "ev_sales_ltm": 0.7288,
           "ps_ltm": 0.166,
@@ -3935,6 +4361,7 @@
         },
         {
           "fecha": "2024-11-08",
+          "precio": 13.81,
           "per_ltm": 34.525,
           "ev_sales_ltm": 0.7321,
           "ps_ltm": 0.1693,
@@ -3944,6 +4371,7 @@
         },
         {
           "fecha": "2024-11-15",
+          "precio": 14.39,
           "per_ltm": 35.975,
           "ev_sales_ltm": 0.7392,
           "ps_ltm": 0.1764,
@@ -3953,6 +4381,7 @@
         },
         {
           "fecha": "2024-11-22",
+          "precio": 14.38,
           "per_ltm": 35.95,
           "ev_sales_ltm": 0.7391,
           "ps_ltm": 0.1762,
@@ -3962,6 +4391,7 @@
         },
         {
           "fecha": "2024-11-29",
+          "precio": 14.52,
           "per_ltm": 36.3,
           "ev_sales_ltm": 0.7408,
           "ps_ltm": 0.178,
@@ -3971,6 +4401,7 @@
         },
         {
           "fecha": "2024-12-06",
+          "precio": 17.4,
           "per_ltm": 43.5,
           "ev_sales_ltm": 0.7761,
           "ps_ltm": 0.2133,
@@ -3980,6 +4411,7 @@
         },
         {
           "fecha": "2024-12-13",
+          "precio": 16.92,
           "per_ltm": 42.3,
           "ev_sales_ltm": 0.7702,
           "ps_ltm": 0.2074,
@@ -3989,6 +4421,7 @@
         },
         {
           "fecha": "2024-12-20",
+          "precio": 16.88,
           "per_ltm": 42.2,
           "ev_sales_ltm": 0.7698,
           "ps_ltm": 0.2069,
@@ -3998,6 +4431,7 @@
         },
         {
           "fecha": "2024-12-27",
+          "precio": 17.35,
           "per_ltm": 43.375,
           "ev_sales_ltm": 0.7755,
           "ps_ltm": 0.2126,
@@ -4007,6 +4441,7 @@
         },
         {
           "fecha": "2025-01-03",
+          "precio": 16.97,
           "per_ltm": 13.155,
           "ev_sales_ltm": 0.7391,
           "ps_ltm": 0.2058,
@@ -4016,6 +4451,7 @@
         },
         {
           "fecha": "2025-01-10",
+          "precio": 18.38,
           "per_ltm": 14.2481,
           "ev_sales_ltm": 0.7562,
           "ps_ltm": 0.2229,
@@ -4025,6 +4461,7 @@
         },
         {
           "fecha": "2025-01-17",
+          "precio": 18.27,
           "per_ltm": 14.1628,
           "ev_sales_ltm": 0.7549,
           "ps_ltm": 0.2216,
@@ -4034,6 +4471,7 @@
         },
         {
           "fecha": "2025-01-24",
+          "precio": 16.96,
           "per_ltm": 13.1473,
           "ev_sales_ltm": 0.739,
           "ps_ltm": 0.2057,
@@ -4043,6 +4481,7 @@
         },
         {
           "fecha": "2025-01-31",
+          "precio": 16.92,
           "per_ltm": 13.1163,
           "ev_sales_ltm": 0.7385,
           "ps_ltm": 0.2052,
@@ -4052,6 +4491,7 @@
         },
         {
           "fecha": "2025-02-07",
+          "precio": 17.17,
           "per_ltm": 13.3101,
           "ev_sales_ltm": 0.7416,
           "ps_ltm": 0.2083,
@@ -4061,6 +4501,7 @@
         },
         {
           "fecha": "2025-02-14",
+          "precio": 15.97,
           "per_ltm": 12.3798,
           "ev_sales_ltm": 0.727,
           "ps_ltm": 0.1937,
@@ -4070,6 +4511,7 @@
         },
         {
           "fecha": "2025-02-21",
+          "precio": 15.23,
           "per_ltm": 11.8062,
           "ev_sales_ltm": 0.718,
           "ps_ltm": 0.1847,
@@ -4079,6 +4521,7 @@
         },
         {
           "fecha": "2025-02-28",
+          "precio": 14.35,
           "per_ltm": 11.124,
           "ev_sales_ltm": 0.7074,
           "ps_ltm": 0.1741,
@@ -4088,6 +4531,7 @@
         },
         {
           "fecha": "2025-03-07",
+          "precio": 13.03,
           "per_ltm": 10.1008,
           "ev_sales_ltm": 0.6914,
           "ps_ltm": 0.1581,
@@ -4097,6 +4541,7 @@
         },
         {
           "fecha": "2025-03-14",
+          "precio": 10.87,
           "per_ltm": 8.4264,
           "ev_sales_ltm": 0.6652,
           "ps_ltm": 0.1319,
@@ -4106,6 +4551,7 @@
         },
         {
           "fecha": "2025-03-21",
+          "precio": 11.39,
           "per_ltm": 8.8295,
           "ev_sales_ltm": 0.6715,
           "ps_ltm": 0.1382,
@@ -4115,6 +4561,7 @@
         },
         {
           "fecha": "2025-03-28",
+          "precio": 10.7,
           "per_ltm": 8.2946,
           "ev_sales_ltm": 0.6631,
           "ps_ltm": 0.1298,
@@ -4124,6 +4571,7 @@
         },
         {
           "fecha": "2025-04-04",
+          "precio": 9.46,
           "per_ltm": 9.0095,
           "ev_sales_ltm": 0.6304,
           "ps_ltm": 0.1151,
@@ -4133,6 +4581,7 @@
         },
         {
           "fecha": "2025-04-11",
+          "precio": 9.67,
           "per_ltm": 9.2095,
           "ev_sales_ltm": 0.633,
           "ps_ltm": 0.1177,
@@ -4142,6 +4591,7 @@
         },
         {
           "fecha": "2025-04-18",
+          "precio": 9.46,
           "per_ltm": 9.0095,
           "ev_sales_ltm": 0.6304,
           "ps_ltm": 0.1151,
@@ -4151,6 +4601,7 @@
         },
         {
           "fecha": "2025-04-25",
+          "precio": 9.75,
           "per_ltm": 9.2857,
           "ev_sales_ltm": 0.634,
           "ps_ltm": 0.1187,
@@ -4160,6 +4611,7 @@
         },
         {
           "fecha": "2025-05-02",
+          "precio": 10.52,
           "per_ltm": 10.019,
           "ev_sales_ltm": 0.6433,
           "ps_ltm": 0.128,
@@ -4169,6 +4621,7 @@
         },
         {
           "fecha": "2025-05-09",
+          "precio": 11.11,
           "per_ltm": 10.581,
           "ev_sales_ltm": 0.6505,
           "ps_ltm": 0.1352,
@@ -4178,6 +4631,7 @@
         },
         {
           "fecha": "2025-05-16",
+          "precio": 11.86,
           "per_ltm": 11.2952,
           "ev_sales_ltm": 0.6596,
           "ps_ltm": 0.1443,
@@ -4187,6 +4641,7 @@
         },
         {
           "fecha": "2025-05-23",
+          "precio": 11.19,
           "per_ltm": 10.6571,
           "ev_sales_ltm": 0.6515,
           "ps_ltm": 0.1362,
@@ -4196,6 +4651,7 @@
         },
         {
           "fecha": "2025-05-30",
+          "precio": 11.41,
           "per_ltm": 10.8667,
           "ev_sales_ltm": 0.6542,
           "ps_ltm": 0.1389,
@@ -4205,6 +4661,7 @@
         },
         {
           "fecha": "2025-06-06",
+          "precio": 11.78,
           "per_ltm": 11.219,
           "ev_sales_ltm": 0.6587,
           "ps_ltm": 0.1434,
@@ -4214,6 +4671,7 @@
         },
         {
           "fecha": "2025-06-13",
+          "precio": 10.37,
           "per_ltm": 9.8762,
           "ev_sales_ltm": 0.6415,
           "ps_ltm": 0.1262,
@@ -4223,6 +4681,7 @@
         },
         {
           "fecha": "2025-06-20",
+          "precio": 10.62,
           "per_ltm": 10.1143,
           "ev_sales_ltm": 0.6446,
           "ps_ltm": 0.1292,
@@ -4232,6 +4691,7 @@
         },
         {
           "fecha": "2025-06-27",
+          "precio": 11.28,
           "per_ltm": 10.7429,
           "ev_sales_ltm": 0.6526,
           "ps_ltm": 0.1373,
@@ -4241,6 +4701,7 @@
         },
         {
           "fecha": "2025-07-04",
+          "precio": 11.69,
           "per_ltm": 13.4368,
           "ev_sales_ltm": 0.6636,
           "ps_ltm": 0.1422,
@@ -4250,6 +4711,7 @@
         },
         {
           "fecha": "2025-07-11",
+          "precio": 12.22,
           "per_ltm": 14.046,
           "ev_sales_ltm": 0.6701,
           "ps_ltm": 0.1486,
@@ -4259,6 +4721,7 @@
         },
         {
           "fecha": "2025-07-18",
+          "precio": 12.51,
           "per_ltm": 14.3793,
           "ev_sales_ltm": 0.6736,
           "ps_ltm": 0.1521,
@@ -4268,6 +4731,7 @@
         },
         {
           "fecha": "2025-07-25",
+          "precio": 11.5,
           "per_ltm": 13.2184,
           "ev_sales_ltm": 0.6613,
           "ps_ltm": 0.1399,
@@ -4277,6 +4741,7 @@
         },
         {
           "fecha": "2025-08-01",
+          "precio": 11.03,
           "per_ltm": 12.6782,
           "ev_sales_ltm": 0.6556,
           "ps_ltm": 0.1341,
@@ -4286,6 +4751,7 @@
         },
         {
           "fecha": "2025-08-08",
+          "precio": 11.62,
           "per_ltm": 13.3563,
           "ev_sales_ltm": 0.6628,
           "ps_ltm": 0.1413,
@@ -4295,6 +4761,7 @@
         },
         {
           "fecha": "2025-08-15",
+          "precio": 13.17,
           "per_ltm": 15.1379,
           "ev_sales_ltm": 0.6816,
           "ps_ltm": 0.1602,
@@ -4304,6 +4771,7 @@
         },
         {
           "fecha": "2025-08-22",
+          "precio": 13.55,
           "per_ltm": 15.5747,
           "ev_sales_ltm": 0.6862,
           "ps_ltm": 0.1648,
@@ -4313,6 +4781,7 @@
         },
         {
           "fecha": "2025-08-29",
+          "precio": 13.37,
           "per_ltm": 15.3678,
           "ev_sales_ltm": 0.684,
           "ps_ltm": 0.1626,
@@ -4322,6 +4791,7 @@
         },
         {
           "fecha": "2025-09-05",
+          "precio": 13.08,
           "per_ltm": 15.0345,
           "ev_sales_ltm": 0.6805,
           "ps_ltm": 0.1591,
@@ -4331,6 +4801,7 @@
         },
         {
           "fecha": "2025-09-12",
+          "precio": 12.91,
           "per_ltm": 14.8391,
           "ev_sales_ltm": 0.6785,
           "ps_ltm": 0.157,
@@ -4340,6 +4811,7 @@
         },
         {
           "fecha": "2025-09-19",
+          "precio": 12.45,
           "per_ltm": 14.3103,
           "ev_sales_ltm": 0.6729,
           "ps_ltm": 0.1514,
@@ -4349,6 +4821,7 @@
         },
         {
           "fecha": "2025-09-26",
+          "precio": 11.31,
           "per_ltm": 13.0,
           "ev_sales_ltm": 0.659,
           "ps_ltm": 0.1376,
@@ -4358,6 +4831,7 @@
         },
         {
           "fecha": "2025-10-03",
+          "precio": 11.58,
           "per_ltm": 12.4516,
           "ev_sales_ltm": 0.6401,
           "ps_ltm": 0.1408,
@@ -4367,6 +4841,7 @@
         },
         {
           "fecha": "2025-10-10",
+          "precio": 11.52,
           "per_ltm": 12.3871,
           "ev_sales_ltm": 0.6393,
           "ps_ltm": 0.1401,
@@ -4376,6 +4851,7 @@
         },
         {
           "fecha": "2025-10-17",
+          "precio": 11.86,
           "per_ltm": 12.7527,
           "ev_sales_ltm": 0.6435,
           "ps_ltm": 0.1442,
@@ -4385,6 +4861,7 @@
         },
         {
           "fecha": "2025-10-24",
+          "precio": 13.78,
           "per_ltm": 14.8172,
           "ev_sales_ltm": 0.6668,
           "ps_ltm": 0.1675,
@@ -4394,6 +4871,7 @@
         },
         {
           "fecha": "2025-10-31",
+          "precio": 13.13,
           "per_ltm": 14.1183,
           "ev_sales_ltm": 0.6589,
           "ps_ltm": 0.1596,
@@ -4403,6 +4881,7 @@
         },
         {
           "fecha": "2025-11-07",
+          "precio": 13.65,
           "per_ltm": 14.6774,
           "ev_sales_ltm": 0.6652,
           "ps_ltm": 0.1659,
@@ -4412,6 +4891,7 @@
         },
         {
           "fecha": "2025-11-14",
+          "precio": 12.76,
           "per_ltm": 13.7204,
           "ev_sales_ltm": 0.6544,
           "ps_ltm": 0.1551,
@@ -4421,6 +4901,7 @@
         },
         {
           "fecha": "2025-11-21",
+          "precio": 12.87,
           "per_ltm": 13.8387,
           "ev_sales_ltm": 0.6557,
           "ps_ltm": 0.1565,
@@ -4430,6 +4911,7 @@
         },
         {
           "fecha": "2025-11-28",
+          "precio": 14.05,
           "per_ltm": 15.1075,
           "ev_sales_ltm": 0.6701,
           "ps_ltm": 0.1708,
@@ -4439,6 +4921,7 @@
         },
         {
           "fecha": "2025-12-05",
+          "precio": 14.81,
           "per_ltm": 15.9247,
           "ev_sales_ltm": 0.6793,
           "ps_ltm": 0.18,
@@ -4448,6 +4931,7 @@
         },
         {
           "fecha": "2025-12-12",
+          "precio": 14.96,
           "per_ltm": 16.086,
           "ev_sales_ltm": 0.6812,
           "ps_ltm": 0.1819,
@@ -4457,6 +4941,7 @@
         },
         {
           "fecha": "2025-12-19",
+          "precio": 15.78,
           "per_ltm": 16.9677,
           "ev_sales_ltm": 0.6911,
           "ps_ltm": 0.1918,
@@ -4466,6 +4951,7 @@
         },
         {
           "fecha": "2025-12-26",
+          "precio": 15.44,
           "per_ltm": 16.6022,
           "ev_sales_ltm": 0.687,
           "ps_ltm": 0.1877,
@@ -4475,6 +4961,7 @@
         },
         {
           "fecha": "2026-01-02",
+          "precio": 15.48,
           "per_ltm": 91.0588,
           "ev_sales_ltm": 0.6854,
           "ps_ltm": 0.1871,
@@ -4484,6 +4971,7 @@
         },
         {
           "fecha": "2026-01-09",
+          "precio": 15.99,
           "per_ltm": 94.0588,
           "ev_sales_ltm": 0.6916,
           "ps_ltm": 0.1933,
@@ -4493,6 +4981,7 @@
         },
         {
           "fecha": "2026-01-16",
+          "precio": 15.37,
           "per_ltm": 90.4118,
           "ev_sales_ltm": 0.6841,
           "ps_ltm": 0.1858,
@@ -4502,6 +4991,7 @@
         },
         {
           "fecha": "2026-01-23",
+          "precio": 14.67,
           "per_ltm": 86.2941,
           "ev_sales_ltm": 0.6756,
           "ps_ltm": 0.1773,
@@ -4511,6 +5001,7 @@
         },
         {
           "fecha": "2026-01-30",
+          "precio": 13.3,
           "per_ltm": 78.2353,
           "ev_sales_ltm": 0.6591,
           "ps_ltm": 0.1607,
@@ -4520,6 +5011,7 @@
         },
         {
           "fecha": "2026-02-06",
+          "precio": 15.24,
           "per_ltm": 89.6471,
           "ev_sales_ltm": 0.6825,
           "ps_ltm": 0.1842,
@@ -4529,6 +5021,7 @@
         },
         {
           "fecha": "2026-02-13",
+          "precio": 13.88,
           "per_ltm": 81.6471,
           "ev_sales_ltm": 0.6661,
           "ps_ltm": 0.1678,
@@ -4538,6 +5031,7 @@
         },
         {
           "fecha": "2026-02-20",
+          "precio": 13.59,
           "per_ltm": 79.9412,
           "ev_sales_ltm": 0.6626,
           "ps_ltm": 0.1643,
@@ -4547,6 +5041,7 @@
         },
         {
           "fecha": "2026-02-27",
+          "precio": 13.07,
           "per_ltm": 76.8824,
           "ev_sales_ltm": 0.6563,
           "ps_ltm": 0.158,
@@ -4556,6 +5051,7 @@
         },
         {
           "fecha": "2026-03-06",
+          "precio": 11.18,
           "per_ltm": 65.7647,
           "ev_sales_ltm": 0.6334,
           "ps_ltm": 0.1351,
@@ -4565,6 +5061,7 @@
         },
         {
           "fecha": "2026-03-13",
+          "precio": 10.3,
           "per_ltm": 60.5882,
           "ev_sales_ltm": 0.6228,
           "ps_ltm": 0.1245,
@@ -4574,6 +5071,7 @@
         },
         {
           "fecha": "2026-03-20",
+          "precio": 10.43,
           "per_ltm": 61.3529,
           "ev_sales_ltm": 0.6244,
           "ps_ltm": 0.1261,
@@ -4583,6 +5081,7 @@
         },
         {
           "fecha": "2026-03-27",
+          "precio": 10.3,
           "per_ltm": 60.5882,
           "ev_sales_ltm": 0.6228,
           "ps_ltm": 0.1245,
@@ -4592,6 +5091,7 @@
         },
         {
           "fecha": "2026-04-03",
+          "precio": 10.84,
           "per_ltm": 34.9677,
           "ev_sales_ltm": 0.5926,
           "ps_ltm": 0.128,
@@ -4601,6 +5101,7 @@
         },
         {
           "fecha": "2026-04-10",
+          "precio": 11.32,
           "per_ltm": 36.5161,
           "ev_sales_ltm": 0.5983,
           "ps_ltm": 0.1337,
@@ -4610,6 +5111,7 @@
         },
         {
           "fecha": "2026-04-17",
+          "precio": 12.78,
           "per_ltm": 41.2258,
           "ev_sales_ltm": 0.6156,
           "ps_ltm": 0.151,
@@ -4619,6 +5121,7 @@
         },
         {
           "fecha": "2026-04-24",
+          "precio": 12.1,
           "per_ltm": 39.0323,
           "ev_sales_ltm": 0.6075,
           "ps_ltm": 0.1429,
@@ -4628,6 +5131,7 @@
         },
         {
           "fecha": "2026-05-01",
+          "precio": 11.84,
           "per_ltm": 38.1935,
           "ev_sales_ltm": 0.6045,
           "ps_ltm": 0.1399,
@@ -4637,6 +5141,7 @@
         },
         {
           "fecha": "2026-05-08",
+          "precio": 13.35,
           "per_ltm": 43.0645,
           "ev_sales_ltm": 0.6223,
           "ps_ltm": 0.1577,
@@ -4646,6 +5151,7 @@
         },
         {
           "fecha": "2026-05-15",
+          "precio": 12.31,
           "per_ltm": 39.7097,
           "ev_sales_ltm": 0.61,
           "ps_ltm": 0.1454,
@@ -4655,6 +5161,7 @@
         },
         {
           "fecha": "2026-05-22",
+          "precio": 13.85,
           "per_ltm": 44.6774,
           "ev_sales_ltm": 0.6282,
           "ps_ltm": 0.1636,
@@ -4664,6 +5171,7 @@
         },
         {
           "fecha": "2026-05-29",
+          "precio": 14.64,
           "per_ltm": 47.2258,
           "ev_sales_ltm": 0.6375,
           "ps_ltm": 0.1729,
@@ -4673,6 +5181,7 @@
         },
         {
           "fecha": "2026-06-05",
+          "precio": 13.5,
           "per_ltm": 43.5484,
           "ev_sales_ltm": 0.6241,
           "ps_ltm": 0.1595,
@@ -4682,6 +5191,7 @@
         },
         {
           "fecha": "2026-06-12",
+          "precio": 14.98,
           "per_ltm": 48.3226,
           "ev_sales_ltm": 0.6415,
           "ps_ltm": 0.1769,
@@ -4691,6 +5201,7 @@
         },
         {
           "fecha": "2026-06-19",
+          "precio": 15.99,
           "per_ltm": 51.5806,
           "ev_sales_ltm": 0.6535,
           "ps_ltm": 0.1889,
@@ -4700,6 +5211,7 @@
         },
         {
           "fecha": "2026-06-26",
+          "precio": 17.87,
           "per_ltm": 57.6452,
           "ev_sales_ltm": 0.6757,
           "ps_ltm": 0.2111,
@@ -4709,18 +5221,50 @@
         },
         {
           "fecha": "2026-07-03",
+          "precio": 17.92,
           "per_ltm": 57.8065,
           "ev_sales_ltm": 0.6763,
           "ps_ltm": 0.2117,
           "eps_ttm": 0.31,
           "revenue_ttm": 55994000000.0,
           "margen_neto_ttm": 0.36
+        },
+        {
+          "fecha": "2026-07-10",
+          "precio": 16.95,
+          "per_ltm": 54.6774,
+          "ev_sales_ltm": 0.6648,
+          "ps_ltm": 0.2002,
+          "eps_ttm": 0.31,
+          "revenue_ttm": 55994000000.0,
+          "margen_neto_ttm": 0.36
+        },
+        {
+          "fecha": "2026-07-17",
+          "precio": 14.98,
+          "per_ltm": 48.3226,
+          "ev_sales_ltm": 0.6415,
+          "ps_ltm": 0.1769,
+          "eps_ttm": 0.31,
+          "revenue_ttm": 55994000000.0,
+          "margen_neto_ttm": 0.36
         }
       ],
       "percentiles": {
-        "per": 85,
-        "ev_sales": 21,
-        "ps": 70
+        "per": 82,
+        "ev_sales": 8,
+        "ps": 45,
+        "eps": 44,
+        "revenue": 94,
+        "margen_neto": 44
+      },
+      "promedios": {
+        "per": 25.45,
+        "ev_sales": 0.98,
+        "ps": 0.23,
+        "eps": -0.43,
+        "revenue": 47505835249.04,
+        "margen_neto": -1.93
       }
     }
   ]

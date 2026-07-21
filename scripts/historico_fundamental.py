@@ -366,6 +366,10 @@ def calcular_historico_ticker(ticker, cik):
         serie.append(
             {
                 "fecha": f.strftime("%Y-%m-%d"),
+                # Precio de cierre semanal — ya se descarga junto con todo lo
+                # demas, solo faltaba exponerlo. Sirve para graficar precio +
+                # crecimiento superpuestos (GraficoCrecimiento en el front).
+                "precio": _num(precio.get(f), 2),
                 "per_ltm": _num(per_ltm.get(f)),
                 "ev_sales_ltm": _num(ev_sales_ltm.get(f)),
                 "ps_ltm": _num(ps_ltm.get(f)),

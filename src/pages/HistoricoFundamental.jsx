@@ -6,6 +6,7 @@ import { fmtFecha, fmtMarketCap } from '../lib/formato'
 import { exportarCSV } from '../lib/csv'
 import GraficoRatio from '../components/GraficoRatio'
 import GraficoComparativo from '../components/GraficoComparativo'
+import GraficoCrecimiento from '../components/GraficoCrecimiento'
 import { TablaSkeleton, MensajeError } from '../components/Estados'
 
 const LIMITE = 20
@@ -322,6 +323,7 @@ export default function HistoricoFundamental() {
                   </div>
                 ) : (
                   <div className="flex flex-col gap-3">
+                    <GraficoCrecimiento ticker={t.ticker} nombre={t.nombre} serie={seriesPorTicker.get(t.ticker)} />
                     {TODOS_RATIOS.map((r) => (
                       <GraficoRatio
                         key={r.campo}

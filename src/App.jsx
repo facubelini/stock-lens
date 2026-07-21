@@ -14,6 +14,7 @@ import TopSenales from './pages/TopSenales'
 import Cartera from './pages/Cartera'
 import Macro from './pages/Macro'
 import Herramientas from './pages/Herramientas'
+import WarrenScore from './pages/WarrenScore'
 import TickerDetalle from './pages/TickerDetalle'
 import ComandoPaleta from './components/ComandoPaleta'
 
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/cartera" element={<Cartera />} />
           <Route path="/macro" element={<Macro />} />
           <Route path="/herramientas" element={<Herramientas />} />
+          <Route path="/warren-score" element={<WarrenScore />} />
           <Route path="/screener" element={<Screener />} />
           <Route path="/historico" element={<HistoricoFundamental />} />
           <Route path="/cripto" element={<CryptoScreener />} />

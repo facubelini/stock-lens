@@ -360,6 +360,12 @@ def calcular_screener(hist):
         "divergencia_ad": detectar_divergencia_ad(ohlc),
         "divergencia_rsi": detectar_divergencia_rsi(ohlc["Close"]),
         "cruce_medias": detectar_cruce_medias(ohlc["Close"]),
+        # Corto plazo: EMA9 x EMA21, misma logica pero mas sensible — se
+        # cruzan mucho mas seguido que EMA50/SMA200, asi que la vigencia es
+        # bastante mas corta para que no quede "siempre encendido".
+        "cruce_corto": detectar_cruce_medias(
+            ohlc["Close"], corto=9, largo=21, tipo_corto="ema", tipo_largo="ema", vigencia_ruedas=4
+        ),
     }
 
 
@@ -955,16 +961,21 @@ def detectar_divergencia_ad(ohlc, lookback=90, ventana_pivot=5, vigencia_ruedas=
     return None
 
 
-def detectar_cruce_medias(closes, corto=50, largo=200, vigencia_ruedas=15):
-    """Golden cross / death cross: cruce entre EMA50 y SMA200 (mismas medias
-    ya usadas en 'Distancia a medias', no se agrega una tercera). Solo
-    reporta si el cruce mas reciente paso dentro de 'vigencia_ruedas' —
-    si no, es historia vieja, no una señal actual."""
+def _media(closes, periodo, tipo):
+    return closes.ewm(span=periodo, adjust=False).mean() if tipo == "ema" else closes.rolling(periodo).mean()
+
+
+def detectar_cruce_medias(closes, corto=50, largo=200, tipo_corto="ema", tipo_largo="sma", vigencia_ruedas=15):
+    """Cruce entre dos medias: golden/death cross con EMA50 x SMA200 por
+    defecto (mismas medias ya usadas en 'Distancia a medias'), o EMA9 x
+    EMA21 para el cruce de corto plazo. Solo reporta si el cruce mas
+    reciente paso dentro de 'vigencia_ruedas' — si no, es historia vieja,
+    no una señal actual."""
     if len(closes) < largo + vigencia_ruedas + 1:
         return None
-    ema_corta = closes.ewm(span=corto, adjust=False).mean()
-    sma_larga = closes.rolling(largo).mean()
-    diff = (ema_corta - sma_larga).dropna()
+    media_corta = _media(closes, corto, tipo_corto)
+    media_larga = _media(closes, largo, tipo_largo)
+    diff = (media_corta - media_larga).dropna()
     if len(diff) < vigencia_ruedas + 2:
         return None
     signo = np.sign(diff)
@@ -1000,6 +1011,280 @@ def resolver_ticker(t):
 
 
 # ---------------------------------------------------------------------------
+# Warren Score: screener tecnico/cuantitativo (0-100), NO fundamental. Ver
+# spec completa en la conversacion — 4 pilares (Tendencia/25, Fuerza
+# relativa/30, Momentum/30, Volatilidad/15). Reusa el 'closes'/'bench_closes'
+# ya descargado para beta/sharpe, no pide nada nuevo a yfinance. La Fuerza
+# Relativa necesita el percentil dentro de TODO el universo, asi que se
+# calcula en dos pasadas (igual patron que promedios_por_industria): primera
+# pasada guarda el retorno relativo crudo de cada ticker, segunda pasada (ya
+# con el universo completo) lo convierte a percentil + puntos.
+# ---------------------------------------------------------------------------
+WS_LOOKBACK_PENDIENTE = 20  # ruedas atras para "pendiente positiva" de una media
+WS_VENTANA_RS = 126  # ~6 meses de ruedas para el retorno relativo vs SPY
+WS_VENTANA_BREAKOUT = 20  # ruedas para "hizo un nuevo maximo de 52 semanas recientemente"
+WS_VENTANA_VOL_HIST = 252  # ~1 anio de volatilidades moviles de 20 ruedas, para la mediana
+
+
+def _pendiente_positiva(serie, lookback=WS_LOOKBACK_PENDIENTE):
+    """Compara el valor actual de una media contra su valor 'lookback' ruedas
+    atras. None (no bool) si no hay historial suficiente — nunca se inventa
+    un True/False sin dato real detras."""
+    if len(serie) < lookback + 1:
+        return None
+    actual, anterior = serie.iloc[-1], serie.iloc[-1 - lookback]
+    if pd.isna(actual) or pd.isna(anterior):
+        return None
+    return bool(actual > anterior)
+
+
+def ws_calcular_trend(closes):
+    """Pilar A (25 pts): estructura de SMA50/EMA200. OJO: son las medias que
+    pide la spec del Warren Score, DISTINTAS de las que ya usa el resto de la
+    app para 'Distancia a medias'/golden-death cross (que usan EMA50/SMA200,
+    exactamente al reves) — no son intercambiables, se calculan aparte."""
+    minimo = 200 + WS_LOOKBACK_PENDIENTE
+    if len(closes) < minimo:
+        return None
+    sma50 = closes.rolling(50).mean()
+    ema200 = closes.ewm(span=200, adjust=False).mean()
+    precio, sma50_v, ema200_v = closes.iloc[-1], sma50.iloc[-1], ema200.iloc[-1]
+    if pd.isna(sma50_v) or pd.isna(ema200_v):
+        return None
+
+    price_above_ema200 = bool(precio > ema200_v)
+    price_above_sma50 = bool(precio > sma50_v)
+    sma50_above_ema200 = bool(sma50_v > ema200_v)
+    sma50_rising = _pendiente_positiva(sma50)
+    ema200_rising = _pendiente_positiva(ema200)
+
+    score = (
+        (7 if price_above_ema200 else 0)
+        + (5 if price_above_sma50 else 0)
+        + (5 if sma50_above_ema200 else 0)
+        + (4 if sma50_rising else 0)
+        + (4 if ema200_rising else 0)
+    )
+    return {
+        "score": num(score, 1),
+        "max_score": 25,
+        "price_above_ema200": price_above_ema200,
+        "price_above_sma50": price_above_sma50,
+        "sma50_above_ema200": sma50_above_ema200,
+        "sma50_rising": sma50_rising,
+        "ema200_rising": ema200_rising,
+        "sma50": num(sma50_v, 2),
+        "ema200": num(ema200_v, 2),
+    }
+
+
+def ws_calcular_relative_return(closes, bench_closes, ventana=WS_VENTANA_RS):
+    """Retorno relativo vs. SPY sobre ~6 meses (por posicion, "ruedas atras"
+    en cada serie — asi lo pide la spec, no por fecha). Valor crudo: el
+    percentil dentro del universo se calcula despues, en la segunda pasada."""
+    if len(closes) < ventana + 1 or bench_closes is None or len(bench_closes) < ventana + 1:
+        return None
+    precio_actual, precio_prev = closes.iloc[-1], closes.iloc[-1 - ventana]
+    spy_actual, spy_prev = bench_closes.iloc[-1], bench_closes.iloc[-1 - ventana]
+    if pd.isna(precio_actual) or pd.isna(precio_prev) or not precio_prev:
+        return None
+    if pd.isna(spy_actual) or pd.isna(spy_prev) or not spy_prev:
+        return None
+    stock_return = precio_actual / precio_prev - 1
+    spy_return = spy_actual / spy_prev - 1
+    denominador = 1 + spy_return
+    if denominador == 0:
+        return None
+    return ((1 + stock_return) / denominador) - 1
+
+
+def ws_rs_score_desde_percentil(rs_percentil):
+    """Puntos del pilar B a partir del percentil (0-100) de fuerza relativa,
+    segun la tabla de la spec. Por debajo de 50, proporcional (sin saltos)."""
+    if rs_percentil is None:
+        return None
+    if rs_percentil >= 95:
+        return 30.0
+    if rs_percentil >= 90:
+        return 27.0
+    if rs_percentil >= 80:
+        return 24.0
+    if rs_percentil >= 70:
+        return 18.0
+    if rs_percentil >= 60:
+        return 14.0
+    if rs_percentil >= 50:
+        return 10.0
+    return round((rs_percentil / 50) * 9, 1)
+
+
+def ws_calcular_momentum(closes, high_52w, low_52w, precio):
+    """Pilar C (30 pts): cercania al maximo de 52w (15) + distancia sobre el
+    minimo de 52w (10) + breakout reciente (5). Reusa high_52w/low_52w que
+    el pipeline ya calcula para listado.json."""
+    if high_52w is None or low_52w is None or high_52w <= 0 or len(closes) < 30:
+        return None
+    dist_high = (precio / high_52w - 1) * 100  # <= 0 (o ~0 si es el maximo)
+    pct_above_low = (precio / low_52w - 1) * 100 if low_52w > 0 else None
+
+    d = abs(dist_high)
+    if d <= 3:
+        p_high = 15
+    elif d <= 5:
+        p_high = 14
+    elif d <= 10:
+        p_high = 12
+    elif d <= 15:
+        p_high = 9
+    elif d <= 20:
+        p_high = 6
+    elif d <= 25:
+        p_high = 3
+    else:
+        p_high = 0
+
+    if pct_above_low is None:
+        p_low = 0
+    elif pct_above_low >= 50:
+        p_low = 10
+    elif pct_above_low >= 40:
+        p_low = 8
+    elif pct_above_low >= 30:
+        p_low = 7
+    elif pct_above_low >= 25:
+        p_low = 6
+    elif pct_above_low >= 15:
+        p_low = 3
+    else:
+        p_low = 0
+
+    # Nuevo maximo de 52 semanas en las ultimas 20 ruedas: el cierre de ese
+    # dia estuvo (con 0.1% de tolerancia) en su propio maximo movil de 252
+    # ruedas hasta esa fecha — sobre la serie completa, no un slice, para que
+    # el "maximo movil" sea el trailing real y no un maximo truncado.
+    rolling_max_252 = closes.rolling(252, min_periods=1).max()
+    recientes_close = closes.tail(WS_VENTANA_BREAKOUT)
+    recientes_max = rolling_max_252.tail(WS_VENTANA_BREAKOUT)
+    nuevo_maximo_reciente = bool((recientes_close >= recientes_max * 0.999).any())
+    p_breakout = 5 if nuevo_maximo_reciente else 0
+
+    return {
+        "score": num(p_high + p_low + p_breakout, 1),
+        "max_score": 30,
+        "distance_from_52w_high": num(dist_high, 2),
+        "percentage_above_52w_low": num(pct_above_low, 2),
+        "recent_52w_high": nuevo_maximo_reciente,
+    }
+
+
+def ws_calcular_volatility(closes):
+    """Pilar D (15 pts): volatilidad realizada actual (20 ruedas, anualizada)
+    vs. la mediana de esa misma metrica en el ultimo anio — no es "mucha o
+    poca" volatilidad en absoluto, es relativa a la propia historia reciente
+    del activo."""
+    ret = closes.pct_change().dropna()
+    if len(ret) < WS_VENTANA_VOL_HIST + 20:
+        return None
+    vol_movil_20 = ret.rolling(20).std() * math.sqrt(252) * 100
+    current_volatility = vol_movil_20.iloc[-1]
+    historical_volatility = vol_movil_20.tail(WS_VENTANA_VOL_HIST).median()
+    if pd.isna(current_volatility) or pd.isna(historical_volatility) or not historical_volatility:
+        return None
+    ratio = current_volatility / historical_volatility
+
+    if ratio <= 0.60:
+        score = 15
+    elif ratio <= 0.70:
+        score = 14
+    elif ratio <= 0.80:
+        score = 12
+    elif ratio <= 0.90:
+        score = 9
+    elif ratio <= 1.00:
+        score = 6
+    elif ratio <= 1.20:
+        score = 3
+    else:
+        score = 0
+
+    return {
+        "score": num(score, 1),
+        "max_score": 15,
+        "current_volatility": num(current_volatility, 1),
+        "historical_volatility": num(historical_volatility, 1),
+        "volatility_ratio": num(ratio, 2),
+    }
+
+
+def ws_calcular_gates(trend, rs, momentum, volatility):
+    """Criterios rapidos independientes del score — no suman puntos, son
+    filtros. 'count' y los 4 principales (rs80/ema200/sma50/above25_from_low)
+    quedan expuestos para los filtros de la UI."""
+    gates = {
+        "rs80": bool(rs is not None and rs >= 80),
+        "ema200": bool(trend and trend["price_above_ema200"]),
+        "sma50": bool(trend and trend["price_above_sma50"]),
+        "above25_from_low": bool(
+            momentum and momentum["percentage_above_52w_low"] is not None and momentum["percentage_above_52w_low"] >= 25
+        ),
+        "vol_below_08": bool(volatility and volatility["volatility_ratio"] is not None and volatility["volatility_ratio"] < 0.80),
+        "sma50_rising": bool(trend and trend["sma50_rising"]),
+        "ema200_rising": bool(trend and trend["ema200_rising"]),
+    }
+    gates["count"] = sum(1 for k, v in gates.items() if v)
+    principales = ("rs80", "ema200", "sma50", "above25_from_low")
+    gates["all_main_gates_passed"] = all(gates[g] for g in principales)
+    return gates
+
+
+def calcular_warren_score(warren_datos):
+    """Segunda pasada: convierte el retorno relativo crudo de cada ticker en
+    percentil (0-100) dentro del universo completo, arma el score total
+    (A+B+C+D, siempre exacto) y los gates. Si falta cualquier pilar, el total
+    queda en None (no se inventa un 0) y 'datos_suficientes' en False."""
+    validos_rr = [w["relative_return"] for w in warren_datos if w["relative_return"] is not None]
+    salida = []
+    for w in warren_datos:
+        rr = w["relative_return"]
+        rs = None
+        rs_score = None
+        if rr is not None and validos_rr:
+            rs = round((sum(1 for v in validos_rr if v <= rr) / len(validos_rr)) * 100, 1)
+            rs_score = ws_rs_score_desde_percentil(rs)
+
+        trend, momentum, volatility = w["trend"], w["momentum"], w["volatility"]
+        partes = [trend["score"] if trend else None, rs_score, momentum["score"] if momentum else None, volatility["score"] if volatility else None]
+        datos_suficientes = all(p is not None for p in partes)
+        total = num(min(100.0, max(0.0, sum(partes))), 1) if datos_suficientes else None
+
+        relative_strength = (
+            {
+                "score": rs_score,
+                "max_score": 30,
+                "rs": rs,
+                "relative_performance": num(rr * 100, 2),
+            }
+            if rr is not None
+            else None
+        )
+
+        salida.append(
+            {
+                "ticker": w["ticker"],
+                "nombre": w["nombre"],
+                "total_score": total,
+                "datos_suficientes": datos_suficientes,
+                "trend": trend,
+                "relative_strength": relative_strength,
+                "momentum": momentum,
+                "volatility": volatility,
+                "gates": ws_calcular_gates(trend, rs, momentum, volatility),
+            }
+        )
+    return salida
+
+
+# ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
 def main():
@@ -1025,6 +1310,7 @@ def main():
 
     listado, medias, fundamentales, screener, invalidos = [], [], [], [], []
     historico_mensual = []
+    warren_datos = []
 
     for _, fila in tickers.iterrows():
         t = fila["Ticker"]
@@ -1161,7 +1447,25 @@ def main():
 
         screener.append({**base, **calcular_screener(hist)})
 
+        # Warren Score: pilares A/C/D son por-ticker, se calculan aca; el
+        # pilar B (Fuerza Relativa) necesita el percentil de TODO el
+        # universo, asi que solo se guarda el retorno relativo crudo y se
+        # convierte a score despues del loop (calcular_warren_score).
+        warren_datos.append(
+            {
+                "ticker": sym,
+                "nombre": nombre,
+                "trend": ws_calcular_trend(closes),
+                "relative_return": ws_calcular_relative_return(closes, bench_closes),
+                "momentum": ws_calcular_momentum(closes, high_52w, low_52w, precio),
+                "volatility": ws_calcular_volatility(closes),
+            }
+        )
+
         print(f"  ok {sym} ({nombre})")
+
+    print("\nCalculando Warren Score (percentil de fuerza relativa sobre el universo)...")
+    warren_score = calcular_warren_score(warren_datos)
 
     # Promedios por industria para listado.json
     promedios = []
@@ -1232,6 +1536,7 @@ def main():
     escribir("screener_historial.json", historial)
     escribir("oportunidades_historial.json", historial_oportunidades)
     escribir("historico_mensual.json", historico_mensual)
+    escribir("warren_score.json", {"actualizado": ahora_iso, "tickers": warren_score})
     escribir("meta.json", meta)
 
     print(f"\nListo. {n_frescos} frescos, {n_arrastrados} arrastrados, {len(invalidos)} invalidos.")

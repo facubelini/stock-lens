@@ -254,6 +254,14 @@ export default function Screener() {
                         {f.divergencia_ad.tipo === 'acumulacion' ? '🟢' : '🟣'}
                       </span>
                     )}
+                    {f.cruce_corto && (
+                      <span
+                        className="ml-1"
+                        title={`Cruce de corto plazo ${f.cruce_corto.tipo === 'golden' ? 'alcista' : 'bajista'} (EMA9 x EMA21), hace ${f.cruce_corto.hace_ruedas} rueda(s)`}
+                      >
+                        {f.cruce_corto.tipo === 'golden' ? '🔼' : '🔽'}
+                      </span>
+                    )}
                     {f.stale && (
                       <span
                         className="ml-1 text-terminal-warn"

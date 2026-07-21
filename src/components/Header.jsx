@@ -15,6 +15,7 @@ const tabs = [
   { to: '/cartera', label: '📋 Mi Cartera' },
   { to: '/macro', label: '🌡️ Mercado' },
   { to: '/herramientas', label: '🧮 Herramientas' },
+  { to: '/warren-score', label: '🎯 Warren Score' },
 ]
 
 export default function Header() {

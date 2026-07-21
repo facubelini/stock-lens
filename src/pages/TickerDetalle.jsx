@@ -8,6 +8,7 @@ import { usePins } from '../lib/usePins'
 import { GLOSARIO_POR_CLAVE } from '../lib/glosario'
 import { obtenerNoticias, clasificarSentimiento } from '../lib/noticias'
 import { calcularScore, nivelScore } from '../lib/score'
+import { calcularDescuento, evaluarCalidad, señalesTrampaValor } from '../lib/valuacion'
 import { TIMEFRAMES, ESTILO_VERDICT, prioridadScreener } from '../lib/screenerEstilos'
 import {
   fmtPct,
@@ -432,6 +433,13 @@ export default function TickerDetalle() {
   const datos = fila ?? parPropio
   const enWatchlist = Boolean(watchlist?.some((w) => w.ticker === ticker))
   const esFondo = esETF(datos)
+  // Cara/barata segun fundamentos: mismo calculo que ya usa Oportunidades
+  // (descuento vs. mediana de industria en PER/EV-Sales/P-S), no se duplica
+  // logica — solo se reusa aca para el perfil individual del ticker.
+  const mediana = grupoComparables?.mediana
+  const descuentoValuacion = mediana ? calcularDescuento(datos, mediana) : null
+  const calidadValuacion = mediana ? evaluarCalidad(datos, mediana) : null
+  const trampaValorTicker = señalesTrampaValor(datos)
 
   return (
     <div>
@@ -628,6 +636,24 @@ export default function TickerDetalle() {
         </div>
       )}
 
+      {screenerFila?.cruce_corto && (
+        <div
+          className="mb-5 rounded-lg border px-3 py-2.5 text-sm"
+          style={
+            screenerFila.cruce_corto.tipo === 'golden'
+              ? { borderColor: 'rgba(34,197,94,0.4)', backgroundColor: 'rgba(34,197,94,0.08)', color: '#22c55e' }
+              : { borderColor: 'rgba(239,68,68,0.4)', backgroundColor: 'rgba(239,68,68,0.08)', color: '#ef4444' }
+          }
+        >
+          <span className="font-semibold">
+            {screenerFila.cruce_corto.tipo === 'golden' ? '🔼 Cruce alcista de corto plazo' : '🔽 Cruce bajista de corto plazo'}
+          </span>{' '}
+          (EMA9 cruzó {screenerFila.cruce_corto.tipo === 'golden' ? 'sobre' : 'bajo'} EMA21) hace{' '}
+          {screenerFila.cruce_corto.hace_ruedas} rueda{screenerFila.cruce_corto.hace_ruedas === 1 ? '' : 's'} — más
+          sensible que el golden/death cross, útil para timing de corto plazo.
+        </div>
+      )}
+
       {historialTicker.length > 0 && (
         <div className="mb-5 rounded-lg border border-terminal-border bg-terminal-panel p-3">
           <h2 className="mb-2 text-sm font-semibold text-terminal-text">
@@ -795,6 +821,46 @@ export default function TickerDetalle() {
           </>
         ) : (
           <>
+            {descuentoValuacion != null && (
+              <div
+                className="mb-3 rounded-lg border px-3 py-2.5 text-sm"
+                style={
+                  descuentoValuacion > 0
+                    ? { borderColor: 'rgba(34,197,94,0.4)', backgroundColor: 'rgba(34,197,94,0.08)' }
+                    : { borderColor: 'rgba(239,68,68,0.4)', backgroundColor: 'rgba(239,68,68,0.08)' }
+                }
+              >
+                <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                  <span className="font-semibold" style={{ color: descuentoValuacion > 0 ? '#22c55e' : '#ef4444' }}>
+                    {descuentoValuacion > 0 ? '🟢 Barata' : '🔴 Cara'} vs. industria
+                  </span>
+                  <span className="text-terminal-dim">
+                    {fmtPct(descuentoValuacion, { signo: true })} de {descuentoValuacion > 0 ? 'descuento' : 'prima'} vs.
+                    mediana de {grupoComparables.industria} (PER/EV-Sales/P-S)
+                  </span>
+                  {calidadValuacion && (
+                    <span className="text-terminal-dim">
+                      · Calidad:{' '}
+                      {calidadValuacion.roeOk && calidadValuacion.margenOk
+                        ? '✓ ROE y margen sobre mediana'
+                        : calidadValuacion.roeOk || calidadValuacion.margenOk
+                          ? '~ parcial'
+                          : '✕ bajo mediana'}
+                    </span>
+                  )}
+                  {trampaValorTicker.length > 0 && (
+                    <span className="font-semibold text-terminal-warn" title={`Posible trampa de valor: ${trampaValorTicker.join(', ')}`}>
+                      ⚠️ posible trampa de valor
+                    </span>
+                  )}
+                </div>
+                <p className="mt-1 text-[11px] text-terminal-dim">
+                  Mismo cálculo que la pestaña Oportunidades — promedio del descuento/prima en los 3
+                  ratios de valuación contra la mediana de industria curada, no contra el mercado
+                  entero.
+                </p>
+              </div>
+            )}
             <div className="overflow-x-auto rounded-lg border border-terminal-border">
               <table className="min-w-full border-collapse text-sm">
                 <thead>

@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-07-22T16:27:32.576031-03:00",
+  "actualizado": "2026-07-22T19:03:57.776338-03:00",
   "vix": {
-    "valor": 16.9,
-    "cambio_pct": -0.88
+    "valor": 16.64,
+    "cambio_pct": -2.4
   },
   "yield_curve": {
     "diez_anios": 4.66,
@@ -15,7 +15,7 @@
     "clasificacion": "Fear"
   },
   "fear_greed_acciones": {
-    "valor": 43.1,
+    "valor": 42.8,
     "clasificacion": "fear",
     "prev_cierre": 41.0,
     "prev_semana": 41.1,

@@ -472,6 +472,14 @@ def extraer_fundamentales(info):
     if peg is None:
         peg = g("pegRatio")
 
+    # Para valor intrinseco (Graham Number + calculadora DCF): bookValue y
+    # freeCashflow ya vienen gratis dentro de info, no hace falta un request
+    # nuevo. FCF por accion se calcula aca (no en el frontend) para no repetir
+    # la division en cada componente que lo use.
+    fcf = g("freeCashflow")
+    shares = g("sharesOutstanding")
+    fcf_por_accion = (fcf / shares) if fcf is not None and shares else None
+
     return {
         "per_trailing": g("trailingPE"),
         "per_forward": g("forwardPE"),
@@ -492,6 +500,8 @@ def extraer_fundamentales(info):
         "target_mean_price": g("targetMeanPrice"),
         "n_analistas": g("numberOfAnalystOpinions"),
         "recommendation_key": info.get("recommendationKey") or None,
+        "book_value": g("bookValue"),
+        "fcf_por_accion": fcf_por_accion,
     }
 
 

@@ -16,6 +16,7 @@ const tabs = [
   { to: '/macro', label: '🌡️ Mercado' },
   { to: '/herramientas', label: '🧮 Herramientas' },
   { to: '/warren-score', label: '🎯 Warren Score' },
+  { to: '/valuaciones', label: '💎 Valuaciones' },
 ]
 
 export default function Header() {

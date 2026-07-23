@@ -25,6 +25,7 @@ import Sparkline from '../components/Sparkline'
 import BotonPin from '../components/BotonPin'
 import EditorClasificacion from '../components/EditorClasificacion'
 import TickerLink from '../components/TickerLink'
+import BuscadorTicker from '../components/BuscadorTicker'
 import GraficoEstacionalidad from '../components/GraficoEstacionalidad'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 
@@ -355,6 +356,7 @@ export default function TickerDetalle() {
   const { overrides } = useClasificacion()
   const { watchlist, agregar, quitar } = useWatchlist()
   const { isPinned, toggle } = usePins()
+  const [manualPeers, setManualPeers] = useState([])
 
   const conOverrides = useMemo(() => aplicarClasificacion(base, overrides), [base, overrides])
   const fila = useMemo(
@@ -396,6 +398,32 @@ export default function TickerDetalle() {
       .sort((a, b) => (b.market_cap ?? 0) - (a.market_cap ?? 0))
       .slice(0, N_PEERS)
   }, [grupoComparables, ticker])
+
+  // Pool para agregar competidores a mano: tu propio universo (fundamentales.json,
+  // vía useDatosCombinados) + todos los peers curados de comparables.json (de
+  // cualquier industria, no solo la de este ticker) — es lo único con ratios ya
+  // calculados por el pipeline. No hay forma de traer un ticker cualquiera del
+  // mercado al vuelo (sitio estático, sin backend ni CORS de Yahoo).
+  const poolComparables = useMemo(() => {
+    const mapa = new Map()
+    for (const f of conOverrides) mapa.set(f.ticker.toUpperCase(), f)
+    for (const g of Array.isArray(comparablesData) ? comparablesData : []) {
+      for (const p of g.pares ?? []) {
+        const t = p.ticker.toUpperCase()
+        if (!mapa.has(t)) mapa.set(t, p)
+      }
+    }
+    mapa.delete(ticker)
+    return [...mapa.values()]
+  }, [conOverrides, comparablesData, ticker])
+
+  const manualPeersResueltos = useMemo(() => {
+    const mapa = new Map(poolComparables.map((f) => [f.ticker.toUpperCase(), f]))
+    return manualPeers.map((t) => mapa.get(t)).filter(Boolean)
+  }, [manualPeers, poolComparables])
+
+  const agregarPeerManual = (t) => setManualPeers((prev) => (prev.includes(t) ? prev : [...prev, t]))
+  const quitarPeerManual = (t) => setManualPeers((prev) => prev.filter((x) => x !== t))
 
   const historialTicker = useMemo(() => {
     const hist = Array.isArray(historialData) ? historialData : []
@@ -861,6 +889,35 @@ export default function TickerDetalle() {
                 </p>
               </div>
             )}
+            <div className="mb-2 flex flex-wrap items-center gap-2">
+              <BuscadorTicker
+                filas={poolComparables}
+                excluir={[ticker, ...peersTop.map((p) => p.ticker), ...manualPeers]}
+                onAdd={agregarPeerManual}
+                placeholder="Agregar competidor a mano…"
+              />
+              {manualPeersResueltos.map((p) => (
+                <span
+                  key={p.ticker}
+                  className="flex items-center gap-1.5 rounded-full border border-terminal-border bg-terminal-panel px-2.5 py-1 text-xs"
+                >
+                  <TickerLink ticker={p.ticker} />
+                  <button
+                    type="button"
+                    onClick={() => quitarPeerManual(p.ticker)}
+                    title="Quitar de la comparación"
+                    className="text-terminal-dim hover:text-terminal-down"
+                  >
+                    ✕
+                  </button>
+                </span>
+              ))}
+            </div>
+            <p className="mb-2 text-[11px] text-terminal-dim">
+              Solo se pueden agregar tickers que ya tengan datos en este sitio (tu lista o peers
+              curados de cualquier industria) — no hay forma de traer un ticker cualquiera del
+              mercado al vuelo.
+            </p>
             <div className="overflow-x-auto rounded-lg border border-terminal-border">
               <table className="min-w-full border-collapse text-sm">
                 <thead>
@@ -870,6 +927,21 @@ export default function TickerDetalle() {
                     {peersTop.map((p) => (
                       <th key={p.ticker} className="px-2 py-2 text-right font-semibold">
                         <TickerLink ticker={p.ticker} />
+                      </th>
+                    ))}
+                    {manualPeersResueltos.map((p) => (
+                      <th key={p.ticker} className="px-2 py-2 text-right font-semibold">
+                        <span className="inline-flex items-center gap-1">
+                          <TickerLink ticker={p.ticker} />
+                          <button
+                            type="button"
+                            onClick={() => quitarPeerManual(p.ticker)}
+                            title="Quitar de la comparación"
+                            className="font-normal text-terminal-dim hover:text-terminal-down"
+                          >
+                            ✕
+                          </button>
+                        </span>
                       </th>
                     ))}
                     {grupoComparables && (
@@ -892,6 +964,11 @@ export default function TickerDetalle() {
                         {renderRatio(r, datos[r.key])}
                       </td>
                       {peersTop.map((p) => (
+                        <td key={p.ticker} className="px-2 py-1.5 text-right tabular text-terminal-dim">
+                          {renderRatio(r, p[r.key])}
+                        </td>
+                      ))}
+                      {manualPeersResueltos.map((p) => (
                         <td key={p.ticker} className="px-2 py-1.5 text-right tabular text-terminal-dim">
                           {renderRatio(r, p[r.key])}
                         </td>

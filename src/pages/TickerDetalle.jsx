@@ -918,17 +918,6 @@ export default function TickerDetalle() {
         )}
       </div>
 
-      {fila && !esFondo && (
-        <div className="mb-5">
-          <Link
-            to="/valuaciones"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2 text-xs text-terminal-dim hover:border-terminal-accent hover:text-terminal-text"
-          >
-            💎 Ver Graham Number, reversión a múltiplo propio y calculadora de DCF para {ticker} →
-          </Link>
-        </div>
-      )}
-
       {fila && <NoticiasTicker ticker={ticker} />}
 
       {enHistoricoFundamental && (

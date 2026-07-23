@@ -4,6 +4,7 @@ import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
 import { exportarCSV } from '../lib/csv'
+import { getPat, dispararActualizacionDatos } from '../lib/githubApi'
 import {
   ESTILO_STATUS,
   ESTILO_GLOBAL,
@@ -73,6 +74,28 @@ export default function Scanner() {
   const [rsiTarget, setRsiTarget] = useState('corto') // corto | largo
   const [rsiMin, setRsiMin] = useState('Todos')
   const [rsiMax, setRsiMax] = useState('Todos')
+  const [refresh, setRefresh] = useState(null) // { tipo: 'cargando'|'ok'|'error', texto }
+
+  const onRefrescar = async () => {
+    if (!getPat()) {
+      setRefresh({
+        tipo: 'error',
+        texto: 'Configurá tu GitHub token (barra superior, "🔑 Configurar auto") para poder disparar la actualización.',
+      })
+      return
+    }
+    setRefresh({ tipo: 'cargando' })
+    try {
+      await dispararActualizacionDatos()
+      setRefresh({
+        tipo: 'ok',
+        texto:
+          'Actualización disparada. El pipeline tarda unos minutos en correr y GitHub Pages cachea los JSON hasta 10 min más.',
+      })
+    } catch (err) {
+      setRefresh({ tipo: 'error', texto: err.message })
+    }
+  }
 
   const t = useTabla(filas, { camposBusqueda: CAMPOS, ordenInicial: { key: '_prioridad', dir: 'desc' } })
 
@@ -163,18 +186,40 @@ export default function Scanner() {
 
   return (
     <div>
-      <div className="mb-4">
-        <h1 className="text-lg font-bold text-terminal-text">🔭 Scanner</h1>
-        <p className="text-xs text-terminal-dim">
-          Puerto del scanner de escritorio del usuario (CEDEARs + MERVAL): busca zona de pullback
-          (ASL de 21 ruedas Y SMA30, las dos a la vez) con confluencia de tendencia completa (precio
-          sobre EMA200, MACD y SMI alcistas, RSI &gt; 50). <b>SETUP</b> = las dos condiciones
-          confirmadas · <b>CERCA</b> = zona de precio acercándose con la tendencia ya confirmada.
-          Perfil <b>Corto</b> en velas diarias y <b>Largo</b> en semanales (resampleadas del mismo
-          histórico) — como esto es un sitio estático que se actualiza unas pocas veces al día vía
-          GitHub Actions, no cada 15 minutos como el script original, no se usan velas intradía
-          reales. Orientativo, no es recomendación de inversión.
-        </p>
+      <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="text-lg font-bold text-terminal-text">🔭 Scanner</h1>
+          <p className="text-xs text-terminal-dim">
+            Puerto del scanner de escritorio del usuario (CEDEARs + MERVAL): busca zona de pullback
+            (ASL de 21 ruedas Y SMA30, las dos a la vez) con confluencia de tendencia completa
+            (precio sobre EMA200, MACD y SMI alcistas, RSI &gt; 50). <b>SETUP</b> = las dos
+            condiciones confirmadas · <b>CERCA</b> = zona de precio acercándose con la tendencia ya
+            confirmada. Perfil <b>Corto</b> en velas diarias y <b>Largo</b> en semanales
+            (resampleadas del mismo histórico) — como esto es un sitio estático que se actualiza
+            unas pocas veces al día vía GitHub Actions, no cada 15 minutos como el script original,
+            no se usan velas intradía reales. Orientativo, no es recomendación de inversión.
+          </p>
+        </div>
+        <div className="flex flex-col items-end gap-1">
+          <button
+            type="button"
+            onClick={onRefrescar}
+            disabled={refresh?.tipo === 'cargando'}
+            className="whitespace-nowrap rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-xs text-terminal-dim hover:border-terminal-accent hover:text-terminal-text disabled:cursor-not-allowed disabled:opacity-50"
+            title="Dispara el pipeline (Actualizar datos) fuera del cron habitual"
+          >
+            {refresh?.tipo === 'cargando' ? '⏳ Actualizando…' : '🔄 Actualizar ahora'}
+          </button>
+          {refresh && refresh.tipo !== 'cargando' && (
+            <span
+              className={`max-w-xs text-right text-[11px] leading-snug ${
+                refresh.tipo === 'error' ? 'text-terminal-down' : 'text-terminal-accent'
+              }`}
+            >
+              {refresh.texto}
+            </span>
+          )}
+        </div>
       </div>
 
       <Controles

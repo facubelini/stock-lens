@@ -18,7 +18,6 @@ const tabs = [
   { to: '/screeners', label: '📡 Screeners' },
   { to: '/scanner', label: '🔭 Scanner' },
   { to: '/warren-score', label: '🎯 Warren Score' },
-  { to: '/valuaciones', label: '💎 Valuaciones' },
 ]
 
 export default function Header() {

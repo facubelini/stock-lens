@@ -17,7 +17,6 @@ import Herramientas from './pages/Herramientas'
 import Screeners from './pages/Screeners'
 import Scanner from './pages/Scanner'
 import WarrenScore from './pages/WarrenScore'
-import Valuaciones from './pages/Valuaciones'
 import TickerDetalle from './pages/TickerDetalle'
 import ComandoPaleta from './components/ComandoPaleta'
 
@@ -40,7 +39,6 @@ export default function App() {
           <Route path="/screeners" element={<Screeners />} />
           <Route path="/scanner" element={<Scanner />} />
           <Route path="/warren-score" element={<WarrenScore />} />
-          <Route path="/valuaciones" element={<Valuaciones />} />
           <Route path="/screener" element={<Screener />} />
           <Route path="/historico" element={<HistoricoFundamental />} />
           <Route path="/cripto" element={<CryptoScreener />} />

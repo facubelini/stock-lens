@@ -52,7 +52,22 @@ jobs:
           git add public/data
           if git diff --staged --quiet; then
             echo "Sin cambios en los datos."
-          else
-            git commit -m "datos: actualizacion automatica ($(date -u +'%Y-%m-%d %H:%M UTC'))"
-            git push
+            exit 0
           fi
+          git commit -m "datos: actualizacion automatica ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+          # Otros workflows (cripto/historico/mercado/backtest/este mismo) pushean
+          # a la misma rama en paralelo — un push rechazado no es un error real,
+          # es la carrera esperada. Reintenta con rebase (-X theirs: nuestros
+          # JSON recien generados ganan sobre los del otro run) en vez de fallar
+          # el job entero y perder esta corrida.
+          for intento in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rechazado (otra corrida pusheo antes) - intento $intento/5, reintentando..."
+            git fetch origin main
+            git rebase origin/main -X theirs
+            sleep $((5 + RANDOM % 10))
+          done
+          echo "No se pudo pushear despues de varios intentos."
+          exit 1

@@ -368,8 +368,8 @@ export default function Screeners() {
       <div>
         <h1 className="text-lg font-bold text-terminal-text">Screeners</h1>
         <p className="text-xs text-terminal-dim">
-          Las mismas 5 señales rápidas de Herramientas, ordenables y agrupables en una sola tabla por
-          vista en vez de scroll infinito de tablas fijas.
+          5 señales rápidas de tu universo (antes vivían en Herramientas), ordenables y agrupables
+          en una sola tabla por vista en vez de scroll infinito de tablas fijas.
         </p>
       </div>
 

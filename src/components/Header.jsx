@@ -16,6 +16,7 @@ const tabs = [
   { to: '/macro', label: '🌡️ Mercado' },
   { to: '/herramientas', label: '🧮 Herramientas' },
   { to: '/screeners', label: '📡 Screeners' },
+  { to: '/scanner', label: '🔭 Scanner' },
   { to: '/warren-score', label: '🎯 Warren Score' },
   { to: '/valuaciones', label: '💎 Valuaciones' },
 ]

@@ -17,10 +17,9 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 
 from comparables_universo import INDUSTRIA_COMPARABLES
-from generar_datos import calcular_screener
+from generar_datos import calcular_screener, calcular_setup_scanner, leer_tickers
 
 RAIZ = Path(__file__).resolve().parent.parent
-ARCHIVO_TICKERS = RAIZ / "data" / "tickers.xlsx"
 DIR_SALIDA = RAIZ / "public" / "data"
 TZ = ZoneInfo("America/Argentina/Buenos_Aires")
 
@@ -77,7 +76,10 @@ def _hist_sintetico(rng, precio_final, dias=1260):
     precios = [x * factor for x in precios]
     altos = [p * (1 + rng.uniform(0, 0.012)) for p in precios]
     bajos = [p * (1 - rng.uniform(0, 0.012)) for p in precios]
-    return pd.DataFrame({"High": altos, "Low": bajos, "Close": precios}, index=fechas)
+    volumenes = [rng.uniform(5e4, 5e6) for _ in precios]
+    return pd.DataFrame(
+        {"High": altos, "Low": bajos, "Close": precios, "Volume": volumenes}, index=fechas
+    )
 
 
 def _mediana_de(filas, clave):
@@ -135,17 +137,16 @@ def construir_comparables_mock(fundamentales):
 
 def main():
     DIR_SALIDA.mkdir(parents=True, exist_ok=True)
-    df = pd.read_excel(ARCHIVO_TICKERS, engine="openpyxl")
-    df.columns = [str(c).strip() for c in df.columns]
+    df = leer_tickers()
 
-    listado, medias, fundamentales, screener = [], [], [], []
+    listado, medias, fundamentales, screener, scanner_setups = [], [], [], [], []
 
     for _, fila in df.iterrows():
         t = str(fila["Ticker"]).strip()
         if not t or t.lower() in ("nan", "none"):
             continue
-        industria = str(fila["Industria"]).strip()
-        pais = str(fila["Pais"]).strip()
+        industria = str(fila["Industria"]).strip() or "Sin clasificar"
+        pais = str(fila["Pais"]).strip() or "Sin país"
         nombre = str(fila.get("Nombre", "")).strip() or t
 
         # Semilla deterministica por ticker (reproducible entre corridas).
@@ -200,7 +201,9 @@ def main():
             }
         )
 
-        screener.append({**base, **calcular_screener(_hist_sintetico(rng, precio))})
+        hist_sint = _hist_sintetico(rng, precio)
+        screener.append({**base, **calcular_screener(hist_sint)})
+        scanner_setups.append({**base, **calcular_setup_scanner(hist_sint)})
 
     promedios = []
     df_l = pd.DataFrame(listado)
@@ -232,6 +235,7 @@ def main():
     escribir("fundamentales.json", fundamentales)
     escribir("comparables.json", comparables)
     escribir("screener.json", screener)
+    escribir("scanner_setups.json", scanner_setups)
     escribir("meta.json", meta)
     print(f"Mock generado: {len(listado)} tickers en {DIR_SALIDA.relative_to(RAIZ)}")
 

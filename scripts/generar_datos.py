@@ -369,6 +369,142 @@ def calcular_screener(hist):
     }
 
 
+# ---------------------------------------------------------------------------
+# Scanner de setups CORTO/LARGO (puerto del "analizador v8" de escritorio del
+# usuario). Perfil CORTO evaluado en velas diarias y LARGO en semanales — en
+# el script de escritorio original eran 30m/1h y 1d/1wk, pero esto es un
+# sitio estatico que se actualiza unas pocas veces al dia (no cada 15 min
+# como el script corriendo en la maquina del usuario): pedir intradia real
+# no aportaria nada, la señal quedaria igual de "vieja" entre corridas.
+# Reusa las mismas formulas de ASL/MACD/SMI ya portadas arriba para el
+# Screener multi-temporalidad (_calcular_asl/_calcular_macd/_calcular_smi),
+# pero con la logica de veredicto propia del scanner: exige la zona de
+# pullback (ASL Y SMA30 a la vez, no OR) + confluencia de tendencia completa
+# (precio sobre EMA200, MACD y SMI alcistas, RSI>50) para SETUP_LONG.
+# ---------------------------------------------------------------------------
+SCANNER_SMA_LEN = 30
+SCANNER_EMA_SLOW_LEN = 200
+SCANNER_NEAR_FACTOR = 1.5
+
+SCANNER_PERFILES = {
+    "corto": {"tf": "Diario", "tol_asl": 1.5, "tol_sma": 2.5},
+    "largo": {"tf": "Semanal", "tol_asl": 3.0, "tol_sma": 5.0},
+}
+
+
+def _scanner_score_y_motivo(d_asl, d_sma, close_over_ema, macd_bull, smi_bull, rsi_bull):
+    checks = [
+        (d_asl is not None, "distancia al ASL"),
+        (d_sma is not None, "distancia a la SMA30"),
+        (close_over_ema, "precio bajo la EMA200"),
+        (macd_bull, "MACD bajista"),
+        (smi_bull, "SMI bajista"),
+        (rsi_bull, "RSI bajo 50"),
+    ]
+    score = sum(1 for ok, _ in checks if ok)
+    faltantes = [motivo for ok, motivo in checks if not ok]
+    motivo = "Falta: " + " · ".join(faltantes) if faltantes else "OK"
+    return score, motivo
+
+
+def _setup_perfil(df, tf_label, tol_asl, tol_sma):
+    """Evalua un perfil (CORTO=diario, LARGO=semanal) del scanner. SETUP_LONG
+    solo si la zona de pullback (ASL y SMA30 a la vez) y la confluencia de
+    tendencia (EMA200 + MACD + SMI + RSI) se cumplen juntas; NEAR_SETUP si la
+    zona de precio esta cerca (tolerancia x1.5) con la tendencia ya
+    confirmada. Score/Motivo solo se calculan para esos dos casos, igual que
+    en el scanner original."""
+    closes = df["Close"]
+    minimo = max(SCANNER_EMA_SLOW_LEN, SCANNER_SMA_LEN, ASL_LEN, MACD_SLOW, SMI_LEN) + 1
+    vacio = {"tf": tf_label, "status": "NO_DATA", "rsi": None, "score": None, "motivo": "", "close": None}
+    if len(closes) < minimo:
+        return vacio
+
+    close = float(closes.iloc[-1])
+    rsi = rsi_wilder(closes.values, 14)
+    if rsi is None:
+        return vacio
+
+    asl = _calcular_asl(closes).iloc[-1]
+    sma = closes.rolling(SCANNER_SMA_LEN).mean().iloc[-1]
+    ema_slow = closes.ewm(span=SCANNER_EMA_SLOW_LEN, adjust=False).mean().iloc[-1]
+    macd, macd_sig = _calcular_macd(closes)
+    smi, smi_sig = _calcular_smi(df["High"], df["Low"], closes)
+
+    macd_bull = bool(macd.iloc[-1] > macd_sig.iloc[-1])
+    smi_val, smi_sig_val = smi.iloc[-1], smi_sig.iloc[-1]
+    smi_bull = bool(not pd.isna(smi_val) and not pd.isna(smi_sig_val) and smi_val > smi_sig_val)
+    rsi_bull = rsi > 50
+
+    d_asl = dist_pct(close, asl) if not pd.isna(asl) else None
+    d_sma = dist_pct(close, sma) if not pd.isna(sma) else None
+    close_over_ema = bool(not pd.isna(ema_slow) and close >= ema_slow)
+
+    en_zona = d_asl is not None and abs(d_asl) <= tol_asl and d_sma is not None and abs(d_sma) <= tol_sma
+    cerca_zona = (
+        d_asl is not None
+        and abs(d_asl) <= tol_asl * SCANNER_NEAR_FACTOR
+        and d_sma is not None
+        and abs(d_sma) <= tol_sma * SCANNER_NEAR_FACTOR
+    )
+    tendencia_ok = close_over_ema and macd_bull and smi_bull and rsi_bull
+
+    if en_zona and tendencia_ok:
+        status = "SETUP_LONG"
+    elif cerca_zona and tendencia_ok:
+        status = "NEAR_SETUP"
+    else:
+        status = "OK"
+
+    score = None
+    motivo = ""
+    if status in ("SETUP_LONG", "NEAR_SETUP"):
+        score, motivo = _scanner_score_y_motivo(d_asl, d_sma, close_over_ema, macd_bull, smi_bull, rsi_bull)
+
+    return {
+        "tf": tf_label,
+        "status": status,
+        "rsi": num(rsi, 1),
+        "score": score,
+        "motivo": motivo,
+        "close": num(close, 2),
+    }
+
+
+def calcular_setup_scanner(hist):
+    """Perfil CORTO (diario) + LARGO (semanal, resampleado del mismo
+    historico diario ya descargado) + Status_GLOBAL combinando ambos."""
+    ohlc = hist[["High", "Low", "Close"]].dropna()
+    semanales = ohlc.resample("W-FRI").agg({"High": "max", "Low": "min", "Close": "last"}).dropna()
+
+    p_corto = SCANNER_PERFILES["corto"]
+    p_largo = SCANNER_PERFILES["largo"]
+    corto = _setup_perfil(ohlc, p_corto["tf"], p_corto["tol_asl"], p_corto["tol_sma"])
+    largo = _setup_perfil(semanales, p_largo["tf"], p_largo["tol_asl"], p_largo["tol_sma"])
+
+    buy_c = corto["status"] == "SETUP_LONG"
+    buy_l = largo["status"] == "SETUP_LONG"
+    near_c = corto["status"] == "NEAR_SETUP"
+    near_l = largo["status"] == "NEAR_SETUP"
+
+    if buy_c and buy_l:
+        status_global = "BUY_BOTH"
+    elif buy_c:
+        status_global = "BUY_CORTO"
+    elif buy_l:
+        status_global = "BUY_LARGO"
+    elif near_c and near_l:
+        status_global = "NEAR_BOTH"
+    elif near_c:
+        status_global = "NEAR_CORTO"
+    elif near_l:
+        status_global = "NEAR_LARGO"
+    else:
+        status_global = "OK"
+
+    return {"corto": corto, "largo": largo, "status_global": status_global}
+
+
 def extraer_proximo_earnings(info):
     """Fecha del proximo reporte de resultados. Viene gratis dentro de
     tk.info (earningsTimestamp*), no es un request nuevo. isEarningsDateEstimate
@@ -1305,6 +1441,7 @@ def main():
     prev_medias = cargar_lista_previa("medias.json")
     prev_fundamentales = cargar_lista_previa("fundamentales.json")
     prev_screener = cargar_lista_previa("screener.json")
+    prev_scanner_setups = cargar_lista_previa("scanner_setups.json")
 
     print("Descargando benchmark (SPY) para beta/correlacion realizados...")
     _, _, _, bench_closes = resolver_ticker("SPY")
@@ -1312,6 +1449,7 @@ def main():
         print("  ! No se pudo descargar SPY: beta/correlacion van a quedar en None.")
 
     listado, medias, fundamentales, screener, invalidos = [], [], [], [], []
+    scanner_setups = []
     historico_mensual = []
     warren_datos = []
 
@@ -1331,6 +1469,8 @@ def main():
                     fundamentales.append({**prev_fundamentales[t], "stale": True})
                 if t in prev_screener:
                     screener.append({**prev_screener[t], "stale": True})
+                if t in prev_scanner_setups:
+                    scanner_setups.append({**prev_scanner_setups[t], "stale": True})
             else:
                 print(f"  ! {t}: sin datos (probe .SA / .BA)")
             continue
@@ -1449,6 +1589,7 @@ def main():
         )
 
         screener.append({**base, **calcular_screener(hist)})
+        scanner_setups.append({**base, **calcular_setup_scanner(hist)})
 
         # Warren Score: pilares A/C/D son por-ticker, se calculan aca; el
         # pilar B (Fuerza Relativa) necesita el percentil de TODO el
@@ -1536,6 +1677,7 @@ def main():
     escribir("fundamentales.json", fundamentales)
     escribir("comparables.json", comparables)
     escribir("screener.json", screener)
+    escribir("scanner_setups.json", scanner_setups)
     escribir("screener_historial.json", historial)
     escribir("oportunidades_historial.json", historial_oportunidades)
     escribir("historico_mensual.json", historico_mensual)

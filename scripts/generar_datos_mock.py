@@ -169,6 +169,18 @@ def main():
             }
         )
 
+        # ~30% de los tickers simulan tener CEDEAR (no todos lo tienen en la
+        # realidad tampoco) — ratio realista + CCL implicito con algo de
+        # ruido respecto al CCL "de mercado" simulado. ratio N:1 = N
+        # certificados representan 1 accion, entonces precio por certificado
+        # = (precio USD * CCL) / N.
+        tiene_cedear = rng.random() < 0.3
+        cedear_ratio = rng.choice([1, 2, 3, 4, 5, 6, 10, 15, 20, 24, 30]) if tiene_cedear else None
+        ccl_mock = rng.uniform(950, 1250)
+        cedear_precio = (
+            r2(precio * ccl_mock / cedear_ratio * rng.uniform(0.97, 1.03)) if tiene_cedear else None
+        )
+
         medias.append(
             {
                 **base,
@@ -177,6 +189,10 @@ def main():
                 "dist_ema50": r2(rng.uniform(-20, 20)),
                 "dist_ema150": r2(rng.uniform(-30, 35)),
                 "dist_sma200": r2(rng.uniform(-40, 50)),
+                "cedear_ticker": f"{t}.BA" if tiene_cedear else None,
+                "cedear_precio": cedear_precio,
+                "cedear_ratio": cedear_ratio,
+                "cedear_ccl_implicito": r2(cedear_precio * cedear_ratio / precio) if tiene_cedear else None,
             }
         )
 

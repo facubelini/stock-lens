@@ -1149,6 +1149,53 @@ def resolver_ticker(t):
     return None, None, None, None
 
 
+# URL del listado oficial de ratios de conversion CEDEAR de Banco Comafi
+# (uno de los custodios que administra la mayoria de los programas; el ratio
+# en si lo define la CNV, no Comafi). Es un Excel publico, se lee directo con
+# pandas sin requests extra. Fila 7 en adelante son datos (filas 0-6 son
+# titulo/encabezado de la planilla), columna 2 = ticker ("Codigo Caja de
+# Valores", coincide con el simbolo yfinance sin sufijo), columna 7 = ratio
+# como texto "N:1" o "N : 1" (N certificados CEDEAR = 1 accion).
+URL_RATIOS_CEDEAR = "https://www.comafi.com.ar/custodiaglobal/Multimedios/otros/14779.xlsx"
+
+
+def descargar_ratios_cedear():
+    """dict {ticker: ratio_int}. Tolerante a fallos (red o cambio de formato
+    de la planilla) — si algo falla, devuelve {} y el enriquecimiento de
+    CEDEAR simplemente no se agrega esa corrida, no rompe el resto del
+    pipeline."""
+    try:
+        df = pd.read_excel(URL_RATIOS_CEDEAR, header=None, skiprows=7)
+        out = {}
+        for _, fila in df.iterrows():
+            ticker = str(fila.get(2, "")).strip().upper()
+            ratio_raw = str(fila.get(7, "")).strip()
+            if not ticker or ":" not in ratio_raw:
+                continue
+            try:
+                n = int(ratio_raw.split(":")[0].strip())
+            except ValueError:
+                continue
+            out[ticker] = n
+        return out
+    except Exception as e:  # noqa: BLE001
+        print(f"  ! No se pudo descargar ratios CEDEAR de Comafi: {e}")
+        return {}
+
+
+def obtener_precio_cedear(ticker_base):
+    """Ultimo cierre del simbolo '{ticker_base}.BA' (liviano: solo history
+    corta, no .info). None si no hay CEDEAR con ese codigo en BYMA."""
+    try:
+        hist = yf.Ticker(f"{ticker_base}.BA").history(period="5d", interval="1d", auto_adjust=True)
+    except Exception:  # noqa: BLE001
+        return None
+    if hist is None or hist.empty or "Close" not in hist.columns:
+        return None
+    closes = hist["Close"].dropna()
+    return float(closes.iloc[-1]) if len(closes) else None
+
+
 # ---------------------------------------------------------------------------
 # Warren Score: screener tecnico/cuantitativo (0-100), NO fundamental. Ver
 # spec completa en la conversacion — 4 pilares (Tendencia/25, Fuerza
@@ -1443,6 +1490,10 @@ def main():
     prev_screener = cargar_lista_previa("screener.json")
     prev_scanner_setups = cargar_lista_previa("scanner_setups.json")
 
+    print("Descargando ratios de CEDEAR (Comafi)...")
+    ratios_cedear = descargar_ratios_cedear()
+    print(f"  {len(ratios_cedear)} ratios de CEDEAR cargados.")
+
     print("Descargando benchmark (SPY) para beta/correlacion realizados...")
     _, _, _, bench_closes = resolver_ticker("SPY")
     if bench_closes is None or bench_closes.empty:
@@ -1546,6 +1597,18 @@ def main():
             }
         )
 
+        # CEDEAR: solo tiene sentido si el dato principal de este ticker es
+        # la especie extranjera (sym sin sufijo .BA) — si ya resolvio como
+        # .BA, "precio" ya ES el precio del CEDEAR, no hay nada que agregar.
+        # ratio N:1 = N certificados CEDEAR representan 1 accion; CCL
+        # implicito = precio_cedear_ars * ratio / precio_accion_usd.
+        cedear_precio = cedear_ratio = ccl_implicito = None
+        if not sym.endswith(".BA") and t in ratios_cedear:
+            cedear_ratio = ratios_cedear[t]
+            cedear_precio = obtener_precio_cedear(t)
+            if cedear_precio and precio:
+                ccl_implicito = (cedear_precio * cedear_ratio) / precio
+
         medias.append(
             {
                 **base,
@@ -1554,6 +1617,10 @@ def main():
                 "dist_ema50": num(dist_pct(precio, ema50), 2),
                 "dist_ema150": num(dist_pct(precio, ema150), 2),
                 "dist_sma200": num(dist_pct(precio, sma200), 2),
+                "cedear_ticker": f"{t}.BA" if cedear_precio is not None else None,
+                "cedear_precio": num(cedear_precio, 2),
+                "cedear_ratio": cedear_ratio,
+                "cedear_ccl_implicito": num(ccl_implicito, 2),
             }
         )
 

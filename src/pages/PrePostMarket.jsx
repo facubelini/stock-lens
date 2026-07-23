@@ -44,13 +44,12 @@ export default function PrePostMarket() {
           _sesion: esPre ? 'PRE' : 'POST',
           _precioSesion: precio,
           _cambioPct: cambioPct,
-          _cambioAbs: Math.abs(cambioPct ?? 0),
           _reporteReciente: reporteReciente(f.proximo_earnings),
         }
       })
   }, [conOverrides])
 
-  const t = useTabla(conDato, { camposBusqueda: CAMPOS, ordenInicial: { key: '_cambioAbs', dir: 'desc' } })
+  const t = useTabla(conDato, { camposBusqueda: CAMPOS, ordenInicial: { key: '_cambioPct', dir: 'desc' } })
 
   const columnas = [
     {
@@ -115,7 +114,7 @@ export default function PrePostMarket() {
       key: '_cambioPct',
       label: 'Var. %',
       align: 'right',
-      valor: (r) => r._cambioAbs,
+      valor: (r) => r._cambioPct,
       estilo: (r) => estiloValor(r._cambioPct, 3),
       render: (r) => <span className="font-bold">{fmtPct(r._cambioPct, { signo: true })}</span>,
     },

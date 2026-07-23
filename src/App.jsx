@@ -15,6 +15,7 @@ import Cartera from './pages/Cartera'
 import Macro from './pages/Macro'
 import Herramientas from './pages/Herramientas'
 import Screeners from './pages/Screeners'
+import PrePostMarket from './pages/PrePostMarket'
 import Scanner from './pages/Scanner'
 import WarrenScore from './pages/WarrenScore'
 import TickerDetalle from './pages/TickerDetalle'
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/macro" element={<Macro />} />
           <Route path="/herramientas" element={<Herramientas />} />
           <Route path="/screeners" element={<Screeners />} />
+          <Route path="/pre-post" element={<PrePostMarket />} />
           <Route path="/scanner" element={<Scanner />} />
           <Route path="/warren-score" element={<WarrenScore />} />
           <Route path="/screener" element={<Screener />} />

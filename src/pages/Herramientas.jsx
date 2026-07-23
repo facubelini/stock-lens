@@ -5,6 +5,7 @@ import { useWatchlist } from '../lib/watchlist'
 import { useAlertas, seCumpleAlerta, CAMPOS_ALERTA } from '../lib/alertas'
 import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import TickerLink from '../components/TickerLink'
+import BuscadorTicker from '../components/BuscadorTicker'
 import { Vacio } from '../components/Estados'
 import { fmtPct, fmtNum, fmtPrecio, fmtMarketCap, estiloValor, estiloPER, estiloPEG } from '../lib/formato'
 
@@ -28,48 +29,6 @@ const COMPARADOR_CAMPOS = [
   { key: 'volatilidad_1y', label: 'Volatilidad anual.', render: (v) => fmtPct(v) },
   { key: 'market_cap', label: 'Market Cap', render: (v) => fmtMarketCap(v) },
 ]
-
-function BuscadorTicker({ filas, excluir = [], onAdd, placeholder = 'Agregar ticker…' }) {
-  const [q, setQ] = useState('')
-  const sugeridos = useMemo(() => {
-    const qq = q.trim().toUpperCase()
-    if (!qq) return []
-    return filas
-      .filter((f) => !excluir.includes(f.ticker))
-      .filter((f) => f.ticker.includes(qq) || (f.nombre ?? '').toUpperCase().includes(qq))
-      .slice(0, 8)
-  }, [q, filas, excluir])
-
-  return (
-    <div className="relative">
-      <input
-        type="search"
-        value={q}
-        onChange={(e) => setQ(e.target.value)}
-        placeholder={placeholder}
-        className={`${inputCls} w-56`}
-      />
-      {sugeridos.length > 0 && (
-        <div className="absolute z-20 mt-1 w-56 overflow-hidden rounded border border-terminal-border bg-terminal-panel shadow-lg">
-          {sugeridos.map((f) => (
-            <button
-              key={f.ticker}
-              type="button"
-              onClick={() => {
-                onAdd(f.ticker)
-                setQ('')
-              }}
-              className="block w-full truncate px-2.5 py-1.5 text-left text-sm hover:bg-terminal-panel2"
-            >
-              <span className="font-semibold text-terminal-text">{f.ticker}</span>{' '}
-              <span className="text-terminal-dim">{f.nombre}</span>
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  )
-}
 
 function Chips({ tickers, onRemove }) {
   if (!tickers.length) return null

@@ -897,19 +897,16 @@ def _pivots(serie, ventana=5):
     return bajos, altos
 
 
-def detectar_divergencia_rsi(closes, lookback=90, ventana_pivot=5, vigencia_ruedas=20):
-    """Divergencia precio/RSI en los ultimos 'lookback' dias: alcista si el
-    precio hace un minimo mas bajo que el pivot bajo anterior pero el RSI
-    hace uno mas alto (o viceversa para bajista). Heuristica basada en
-    pivots locales, no una señal infalible — solo reporta si el pivot mas
-    reciente cayo dentro de 'vigencia_ruedas' para que no se marque algo
-    viejo como si fuera actual."""
-    if len(closes) < lookback + ventana_pivot * 2 + 20:
-        return None
-    rsi = _rsi_serie(closes)
-    tramo = lookback + ventana_pivot * 2
+def _detectar_divergencia(closes, indicador, etiqueta_alcista, etiqueta_bajista, ventana_pivot, vigencia_ruedas, tramo):
+    """Nucleo compartido entre detectar_divergencia_rsi y
+    detectar_divergencia_ad (antes duplicado casi textual entre las dos,
+    solo cambiaban las etiquetas): busca en los ultimos pivots de precio si
+    `indicador` (RSI o A/D Line) se movio en contra — alcista/acumulacion si
+    el precio hace un minimo mas bajo pero el indicador no, bajista/
+    distribucion si el precio hace un maximo mas alto pero el indicador no.
+    Heuristica basada en pivots locales, no una señal infalible."""
     sub_closes = closes.tail(tramo).reset_index(drop=True)
-    sub_rsi = rsi.tail(tramo).reset_index(drop=True)
+    sub_ind = indicador.tail(tramo).reset_index(drop=True)
 
     bajos, altos = _pivots(sub_closes, ventana_pivot)
     n = len(sub_closes)
@@ -917,14 +914,26 @@ def detectar_divergencia_rsi(closes, lookback=90, ventana_pivot=5, vigencia_rued
     if len(bajos) >= 2:
         i1, i2 = bajos[-2], bajos[-1]
         hace = n - 1 - i2
-        if hace <= vigencia_ruedas and sub_closes.iloc[i2] < sub_closes.iloc[i1] and sub_rsi.iloc[i2] > sub_rsi.iloc[i1]:
-            return {"tipo": "alcista", "hace_ruedas": int(hace)}
+        if hace <= vigencia_ruedas and sub_closes.iloc[i2] < sub_closes.iloc[i1] and sub_ind.iloc[i2] > sub_ind.iloc[i1]:
+            return {"tipo": etiqueta_alcista, "hace_ruedas": int(hace)}
     if len(altos) >= 2:
         i1, i2 = altos[-2], altos[-1]
         hace = n - 1 - i2
-        if hace <= vigencia_ruedas and sub_closes.iloc[i2] > sub_closes.iloc[i1] and sub_rsi.iloc[i2] < sub_rsi.iloc[i1]:
-            return {"tipo": "bajista", "hace_ruedas": int(hace)}
+        if hace <= vigencia_ruedas and sub_closes.iloc[i2] > sub_closes.iloc[i1] and sub_ind.iloc[i2] < sub_ind.iloc[i1]:
+            return {"tipo": etiqueta_bajista, "hace_ruedas": int(hace)}
     return None
+
+
+def detectar_divergencia_rsi(closes, lookback=90, ventana_pivot=5, vigencia_ruedas=20):
+    """Divergencia precio/RSI en los ultimos 'lookback' dias — ver
+    _detectar_divergencia. Solo reporta si el pivot mas reciente cayo dentro
+    de 'vigencia_ruedas' para que no se marque algo viejo como si fuera
+    actual."""
+    if len(closes) < lookback + ventana_pivot * 2 + 20:
+        return None
+    rsi = _rsi_serie(closes)
+    tramo = lookback + ventana_pivot * 2
+    return _detectar_divergencia(closes, rsi, "alcista", "bajista", ventana_pivot, vigencia_ruedas, tramo)
 
 
 def _calcular_ad_line(ohlc):
@@ -942,33 +951,17 @@ def _calcular_ad_line(ohlc):
 
 
 def detectar_divergencia_ad(ohlc, lookback=90, ventana_pivot=5, vigencia_ruedas=20):
-    """Divergencia precio vs. A/D Line en los ultimos pivots — mismo criterio
-    que detectar_divergencia_rsi: "acumulacion" si el precio hace un minimo
-    mas bajo pero la A/D Line no (no la están vendiendo tanto como cae el
-    precio), "distribucion" si el precio hace un maximo mas alto pero la
-    A/D Line no (no la estan comprando tanto como sube el precio)."""
+    """Divergencia precio vs. A/D Line — ver _detectar_divergencia.
+    "acumulacion" si el precio hace un minimo mas bajo pero la A/D Line no
+    (no la están vendiendo tanto como cae el precio), "distribucion" si el
+    precio hace un maximo mas alto pero la A/D Line no (no la estan
+    comprando tanto como sube el precio)."""
     closes = ohlc["Close"]
     if len(closes) < lookback + ventana_pivot * 2 + 20:
         return None
     ad = _calcular_ad_line(ohlc)
     tramo = lookback + ventana_pivot * 2
-    sub_closes = closes.tail(tramo).reset_index(drop=True)
-    sub_ad = ad.tail(tramo).reset_index(drop=True)
-
-    bajos, altos = _pivots(sub_closes, ventana_pivot)
-    n = len(sub_closes)
-
-    if len(bajos) >= 2:
-        i1, i2 = bajos[-2], bajos[-1]
-        hace = n - 1 - i2
-        if hace <= vigencia_ruedas and sub_closes.iloc[i2] < sub_closes.iloc[i1] and sub_ad.iloc[i2] > sub_ad.iloc[i1]:
-            return {"tipo": "acumulacion", "hace_ruedas": int(hace)}
-    if len(altos) >= 2:
-        i1, i2 = altos[-2], altos[-1]
-        hace = n - 1 - i2
-        if hace <= vigencia_ruedas and sub_closes.iloc[i2] > sub_closes.iloc[i1] and sub_ad.iloc[i2] < sub_ad.iloc[i1]:
-            return {"tipo": "distribucion", "hace_ruedas": int(hace)}
-    return None
+    return _detectar_divergencia(closes, ad, "acumulacion", "distribucion", ventana_pivot, vigencia_ruedas, tramo)
 
 
 def _media(closes, periodo, tipo):

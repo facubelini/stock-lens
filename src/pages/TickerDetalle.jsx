@@ -9,9 +9,6 @@ import { GLOSARIO_POR_CLAVE } from '../lib/glosario'
 import { obtenerNoticias, clasificarSentimiento } from '../lib/noticias'
 import { calcularScore, nivelScore } from '../lib/score'
 import { calcularDescuento, evaluarCalidad, señalesTrampaValor } from '../lib/valuacion'
-import { calcularGrahamNumber, calcularValorPorReversion } from '../lib/valuacionIntrinseca'
-import { rangoYPercentil } from '../lib/historicoDerivados'
-import CalculadoraDCF from '../components/CalculadoraDCF'
 import { TIMEFRAMES, ESTILO_VERDICT, prioridadScreener } from '../lib/screenerEstilos'
 import {
   fmtPct,
@@ -355,7 +352,6 @@ export default function TickerDetalle() {
   const { data: comparablesData, cargando: cargandoComparables } = useJson('comparables.json')
   const { data: historialData } = useJson('screener_historial.json')
   const { data: historicoTickersData } = useJson('historico_tickers.json')
-  const { data: historicoFundamentalData } = useJson('historico_fundamental.json')
   const { overrides } = useClasificacion()
   const { watchlist, agregar, quitar } = useWatchlist()
   const { isPinned, toggle } = usePins()
@@ -444,24 +440,6 @@ export default function TickerDetalle() {
   const descuentoValuacion = mediana ? calcularDescuento(datos, mediana) : null
   const calidadValuacion = mediana ? evaluarCalidad(datos, mediana) : null
   const trampaValorTicker = señalesTrampaValor(datos)
-
-  // Valor intrinseco: Graham Number (formula clasica, sin supuestos) +
-  // reversion a multiplo propio (solo si esta en el universo curado de
-  // Historico Fundamental, el unico con serie historica real de PER). El
-  // DCF es interactivo (CalculadoraDCF), no hay un numero fijo que calcular
-  // aca de antemano.
-  const grahamNumber = fila ? calcularGrahamNumber(fila) : null
-  const tickerHistorico = Array.isArray(historicoFundamentalData?.tickers)
-    ? historicoFundamentalData.tickers.find((t) => t.ticker === ticker && t.disponible)
-    : null
-  const statsPerPropio = tickerHistorico ? rangoYPercentil(tickerHistorico.serie, 'per_ltm') : null
-  const ultimoPuntoHistorico = tickerHistorico
-    ? [...tickerHistorico.serie].reverse().find((p) => p.per_ltm != null && p.precio != null)
-    : null
-  const valorPorReversion =
-    statsPerPropio && ultimoPuntoHistorico
-      ? calcularValorPorReversion(ultimoPuntoHistorico.precio, ultimoPuntoHistorico.per_ltm, statsPerPropio.promedio)
-      : null
 
   return (
     <div>
@@ -940,55 +918,13 @@ export default function TickerDetalle() {
         )}
       </div>
 
-      {fila && !esFondo && (grahamNumber != null || valorPorReversion != null || fila.fcf_por_accion != null) && (
+      {fila && !esFondo && (
         <div className="mb-5">
-          <h2 className="mb-2 text-sm font-semibold text-terminal-text">Valuación intrínseca</h2>
-          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            {grahamNumber != null && (
-              <div className="rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2.5">
-                <div className="text-[10px] uppercase text-terminal-dim">Graham Number</div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-lg font-bold tabular text-terminal-text">${fmtPrecio(grahamNumber)}</span>
-                  {fila.precio != null && (
-                    <span className="text-sm font-semibold tabular" style={estiloValor((grahamNumber / fila.precio - 1) * 100, 40)}>
-                      {fmtPct((grahamNumber / fila.precio - 1) * 100, { signo: true })}
-                    </span>
-                  )}
-                </div>
-                <p className="mt-1 text-[11px] text-terminal-dim">
-                  √(22,5 × EPS × valor libro por acción) — fórmula clásica de Benjamin Graham, sin
-                  supuestos. Solo tiene sentido para empresas rentables y estables.
-                </p>
-              </div>
-            )}
-            {valorPorReversion != null && (
-              <div className="rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2.5">
-                <div className="text-[10px] uppercase text-terminal-dim">Si el PER volviera a su promedio (~5a)</div>
-                <div className="flex items-baseline gap-2">
-                  <span className="text-lg font-bold tabular text-terminal-text">${fmtPrecio(valorPorReversion)}</span>
-                  <span
-                    className="text-sm font-semibold tabular"
-                    style={estiloValor((valorPorReversion / ultimoPuntoHistorico.precio - 1) * 100, 40)}
-                  >
-                    {fmtPct((valorPorReversion / ultimoPuntoHistorico.precio - 1) * 100, { signo: true })}
-                  </span>
-                </div>
-                <p className="mt-1 text-[11px] text-terminal-dim">
-                  PER actual {fmtNum(ultimoPuntoHistorico.per_ltm, 1)}x vs. promedio propio{' '}
-                  {fmtNum(statsPerPropio.promedio, 1)}x — mean-reversion, no "intrínseco" en sentido
-                  clásico.
-                </p>
-              </div>
-            )}
-          </div>
-          <div className="mt-3">
-            <CalculadoraDCF ticker={ticker} precio={fila.precio} fcfPorAccion={fila.fcf_por_accion} />
-          </div>
           <Link
             to="/valuaciones"
-            className="mt-1.5 inline-block text-xs text-terminal-dim hover:text-terminal-accent"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2 text-xs text-terminal-dim hover:border-terminal-accent hover:text-terminal-text"
           >
-            Ver Graham Number y reversión de todo tu universo en Valuaciones →
+            💎 Ver Graham Number, reversión a múltiplo propio y calculadora de DCF para {ticker} →
           </Link>
         </div>
       )}

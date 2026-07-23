@@ -15,6 +15,7 @@ const tabs = [
   { to: '/cartera', label: '📋 Mi Cartera' },
   { to: '/macro', label: '🌡️ Mercado' },
   { to: '/herramientas', label: '🧮 Herramientas' },
+  { to: '/screeners', label: '📡 Screeners' },
   { to: '/warren-score', label: '🎯 Warren Score' },
   { to: '/valuaciones', label: '💎 Valuaciones' },
 ]

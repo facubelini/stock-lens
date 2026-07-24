@@ -7,12 +7,12 @@
         "nombre": "Delta Air Lines, Inc.",
         "industria": "Airlines",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 14.11,
         "per_forward": 9.6,
         "peg": 0.21,
-        "ev_sales": 1.03,
+        "ev_sales": 1.05,
         "pb": 2.55,
         "ps": null,
         "eps": 6.03,
@@ -182,8 +182,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 84.67,
-          "post_cambio_pct": -0.46
+          "post_precio": 85.08,
+          "post_cambio_pct": 0.02
         },
         "en_portfolio": true
       },
@@ -192,10 +192,10 @@
         "nombre": "American Airlines Group, Inc.",
         "industria": "Airlines",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 46.69,
-        "per_forward": 5.67,
+        "per_forward": 5.64,
         "peg": 0.52,
         "ev_sales": 0.66,
         "pb": -2.35,
@@ -310,8 +310,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 14.43,
-          "post_cambio_pct": -0.31
+          "post_precio": 14.45,
+          "post_cambio_pct": -0.17
         },
         "en_portfolio": true
       },
@@ -320,10 +320,10 @@
         "nombre": "United Airlines Holdings, Inc.",
         "industria": "Airlines",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 11.07,
-        "per_forward": 7.63,
+        "per_forward": 7.65,
         "peg": 6.5,
         "ev_sales": 0.87,
         "pb": 2.3,
@@ -438,8 +438,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 118.0,
-          "post_cambio_pct": -0.23
+          "post_precio": 118.27,
+          "post_cambio_pct": 0.0
         },
         "en_portfolio": true
       },
@@ -472,7 +472,7 @@
     ],
     "mediana": {
       "per_trailing": 21.14,
-      "per_forward": 8.39,
+      "per_forward": 8.4,
       "peg": 0.43,
       "ev_sales": 0.85,
       "pb": 2.42,
@@ -495,7 +495,7 @@
         "nombre": "Blackstone Inc.",
         "industria": "Asset Management",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 29.08,
         "per_forward": 17.47,
@@ -698,8 +698,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 129.42,
-          "post_cambio_pct": -0.45
+          "post_precio": 129.7,
+          "post_cambio_pct": -0.23
         },
         "en_portfolio": true
       },
@@ -713,7 +713,7 @@
         "peg": 1.12,
         "ev_sales": 6.2,
         "pb": 2.89,
-        "ps": null,
+        "ps": 6.29,
         "eps": 41.69,
         "profit_margin": 24.09,
         "roe": null,
@@ -763,7 +763,7 @@
         "per_trailing": 77.11,
         "per_forward": 11.5,
         "peg": 0.54,
-        "ev_sales": 2.8,
+        "ev_sales": 2.87,
         "pb": 3.81,
         "ps": 2.26,
         "eps": 1.59,
@@ -788,7 +788,7 @@
       "peg": 0.83,
       "ev_sales": 6.05,
       "pb": 3.49,
-      "ps": 3.65,
+      "ps": 4.97,
       "market_cap": 127223177216.0,
       "eps": 3.71,
       "profit_margin": 16.45,
@@ -807,7 +807,7 @@
         "nombre": "Stellantis N.V.",
         "industria": "Auto Manufacturers",
         "pais": "Netherlands",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": 3.45,
@@ -951,7 +951,7 @@
         "nombre": "NIO Inc.",
         "industria": "Auto Manufacturers",
         "pais": "China",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": 25.9,
@@ -1074,7 +1074,7 @@
         "nombre": "Toyota Motor Corporation",
         "industria": "Auto Manufacturers",
         "pais": "Japan",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 9.81,
         "per_forward": 11.24,
@@ -1229,8 +1229,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 177.28,
-          "post_cambio_pct": -0.08
+          "post_precio": 177.16,
+          "post_cambio_pct": -0.15
         },
         "en_portfolio": true
       },
@@ -1239,25 +1239,25 @@
         "nombre": "Tesla, Inc.",
         "industria": "Auto Manufacturers",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 336.59,
         "per_forward": 139.75,
         "peg": 4.01,
-        "ev_sales": 9.66,
+        "ev_sales": 11.67,
         "pb": 13.97,
         "ps": 11.93,
         "eps": 0.93,
         "profit_margin": 3.67,
         "roe": 4.67,
         "dividend_yield": 0.0,
-        "beta": null,
-        "debt_to_equity": 10.67,
+        "beta": 1.8,
+        "debt_to_equity": 18.37,
         "current_ratio": 1.94,
         "target_mean_price": 402.76,
         "n_analistas": 40.0,
         "book_value": 22.4,
-        "fcf_por_accion": 1.19,
+        "fcf_por_accion": 1.22,
         "market_cap": 1236326809600,
         "sector": "Consumer Cyclical",
         "recommendation_key": "buy",
@@ -1357,8 +1357,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 312.43,
-          "post_cambio_pct": -0.19
+          "post_precio": 311.41,
+          "post_cambio_pct": -0.52
         },
         "en_portfolio": true
       },
@@ -1367,7 +1367,7 @@
         "nombre": "Honda Motor Company, Ltd.",
         "industria": "Auto Manufacturers",
         "pais": "Japan",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": 5.68,
@@ -1527,7 +1527,7 @@
         "nombre": "Ferrari N.V.",
         "industria": "Auto Manufacturers",
         "pais": "Italy",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 35.17,
         "per_forward": 29.23,
@@ -1665,8 +1665,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 355.66,
-          "post_cambio_pct": -1.24
+          "post_precio": 361.03,
+          "post_cambio_pct": 0.25
         },
         "en_portfolio": true
       },
@@ -1675,7 +1675,7 @@
         "nombre": "Ford Motor Company",
         "industria": "Auto Manufacturers",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": 7.88,
@@ -1874,8 +1874,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 14.36,
-          "post_cambio_pct": -0.08
+          "post_precio": 14.34,
+          "post_cambio_pct": -0.21
         },
         "en_portfolio": true
       },
@@ -1884,12 +1884,12 @@
         "nombre": "General Motors Company",
         "industria": "Auto Manufacturers",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 36.89,
         "per_forward": 5.68,
         "peg": 0.33,
-        "ev_sales": 0.95,
+        "ev_sales": 0.96,
         "pb": 1.22,
         "ps": 0.4,
         "eps": 2.24,
@@ -2071,8 +2071,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 82.51,
-          "post_cambio_pct": -0.16
+          "post_precio": 82.15,
+          "post_cambio_pct": -0.59
         },
         "en_portfolio": true
       }
@@ -2089,7 +2089,7 @@
       "profit_margin": -0.45,
       "roe": 0.16,
       "dividend_yield": 0.92,
-      "beta": 0.9,
+      "beta": 0.95,
       "debt_to_equity": 110.36,
       "current_ratio": 1.21
     }
@@ -2102,7 +2102,7 @@
         "nombre": "HSBC Holdings, plc.",
         "industria": "Banks - Diversified",
         "pais": "United Kingdom",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 17.09,
         "per_forward": 10.46,
@@ -2123,7 +2123,7 @@
         "fcf_por_accion": null,
         "market_cap": 354624995328,
         "sector": "Financial Services",
-        "recommendation_key": "buy",
+        "recommendation_key": "none",
         "upside_pct": 10.86,
         "insider": null,
         "holdings": null,
@@ -2288,8 +2288,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 103.31,
-          "post_cambio_pct": -0.09
+          "post_precio": 103.5,
+          "post_cambio_pct": 0.1
         },
         "en_portfolio": true
       },
@@ -2298,7 +2298,7 @@
         "nombre": "Citigroup, Inc.",
         "industria": "Banks - Diversified",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 14.24,
         "per_forward": 10.32,
@@ -2501,8 +2501,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 131.92,
-          "post_cambio_pct": -0.2
+          "post_precio": 132.2,
+          "post_cambio_pct": 0.01
         },
         "en_portfolio": true
       },
@@ -2511,7 +2511,7 @@
         "nombre": "Mitsubishi UFJ Financial Group,",
         "industria": "Banks - Diversified",
         "pais": "Japan",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 17.61,
         "per_forward": 22.22,
@@ -2641,8 +2641,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 23.0,
-          "post_cambio_pct": 0.48
+          "post_precio": 23.05,
+          "post_cambio_pct": 0.7
         },
         "en_portfolio": true
       },
@@ -2651,7 +2651,7 @@
         "nombre": "JP Morgan Chase & Co.",
         "industria": "Banks - Diversified",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 15.13,
         "per_forward": 14.28,
@@ -2854,8 +2854,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 353.42,
-          "post_cambio_pct": 0.06
+          "post_precio": 353.49,
+          "post_cambio_pct": 0.08
         },
         "en_portfolio": true
       },
@@ -2864,12 +2864,12 @@
         "nombre": "Bank of America Corporation",
         "industria": "Banks - Diversified",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 14.33,
         "per_forward": 11.8,
         "peg": 1.06,
-        "ev_sales": 1.53,
+        "ev_sales": 1.58,
         "pb": 1.58,
         "ps": null,
         "eps": 4.33,
@@ -3067,8 +3067,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 62.0,
-          "post_cambio_pct": -0.08
+          "post_precio": 62.04,
+          "post_cambio_pct": -0.02
         },
         "en_portfolio": true
       },
@@ -3077,7 +3077,7 @@
         "nombre": "Wells Fargo & Company",
         "industria": "Banks - Diversified",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 12.55,
         "per_forward": 10.96,
@@ -3280,8 +3280,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 86.43,
-          "post_cambio_pct": 0.14
+          "post_precio": 86.5,
+          "post_cambio_pct": 0.22
         },
         "en_portfolio": true
       },
@@ -3290,7 +3290,7 @@
         "nombre": "Barclays PLC",
         "industria": "Banks - Diversified",
         "pais": "United Kingdom",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 12.03,
         "per_forward": 8.22,
@@ -3453,8 +3453,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 28.0,
-          "post_cambio_pct": 0.33
+          "post_precio": 27.91,
+          "post_cambio_pct": 0.0
         },
         "en_portfolio": true
       },
@@ -3507,7 +3507,7 @@
         "nombre": "ING Group, N.V.",
         "industria": "Banks - Diversified",
         "pais": "Netherlands",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 13.13,
         "per_forward": 10.27,
@@ -3673,8 +3673,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 32.53,
-          "post_cambio_pct": -0.91
+          "post_precio": 32.84,
+          "post_cambio_pct": 0.03
         },
         "en_portfolio": true
       },
@@ -3683,7 +3683,7 @@
         "nombre": "Banco Santander, S.A. Sponsored",
         "industria": "Banks - Diversified",
         "pais": "Spain",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 13.41,
         "per_forward": 11.05,
@@ -3837,8 +3837,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 13.4,
-          "post_cambio_pct": -1.0
+          "post_precio": 13.32,
+          "post_cambio_pct": -1.62
         },
         "en_portfolio": true
       },
@@ -3847,7 +3847,7 @@
         "nombre": "BANCO DE VALORES S.A.",
         "industria": "Banks - Diversified",
         "pais": "Argentina",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 13.48,
         "per_forward": null,
@@ -4076,7 +4076,7 @@
         "nombre": "Banco Santander Brasil SA",
         "industria": "Banks - Regional",
         "pais": "Brazil",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 16.56,
         "per_forward": 5.56,
@@ -4285,7 +4285,7 @@
         "nombre": "Itau Unibanco Banco Holding SA",
         "industria": "Banks - Regional",
         "pais": "Brazil",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 10.22,
         "per_forward": 8.38,
@@ -4493,7 +4493,7 @@
         "nombre": "ICICI Bank Limited",
         "industria": "Banks - Regional",
         "pais": "India",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 18.33,
         "per_forward": 15.96,
@@ -4641,7 +4641,7 @@
         "nombre": "HDFC Bank Limited",
         "industria": "Banks - Regional",
         "pais": "India",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 16.71,
         "per_forward": 16.3,
@@ -4787,8 +4787,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 23.25,
-          "post_cambio_pct": 0.09
+          "post_precio": 23.28,
+          "post_cambio_pct": 0.22
         },
         "en_portfolio": true
       },
@@ -4797,7 +4797,7 @@
         "nombre": "Banco Bradesco Sa",
         "industria": "Banks - Regional",
         "pais": "Brazil",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 8.78,
         "per_forward": 6.38,
@@ -5010,7 +5010,7 @@
         "nombre": "Banco BBVA Argentina S.A.",
         "industria": "Banks - Regional",
         "pais": "Argentina",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 18.13,
         "per_forward": 15.88,
@@ -5208,8 +5208,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 19.61,
-          "post_cambio_pct": 3.99
+          "post_precio": 19.23,
+          "post_cambio_pct": 1.96
         },
         "en_portfolio": true
       },
@@ -5218,7 +5218,7 @@
         "nombre": "Nu Holdings Ltd.",
         "industria": "Banks - Regional",
         "pais": "Brazil",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 21.68,
         "per_forward": 12.19,
@@ -5336,8 +5336,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 14.07,
-          "post_cambio_pct": -0.14
+          "post_precio": 14.09,
+          "post_cambio_pct": -0.01
         },
         "en_portfolio": true
       },
@@ -5346,7 +5346,7 @@
         "nombre": "Grupo Supervielle S.A.",
         "industria": "Banks - Regional",
         "pais": "Argentina",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": 7.95,
@@ -5486,7 +5486,7 @@
         "nombre": "Mizuho Financial Group, Inc. Sp",
         "industria": "Banks - Regional",
         "pais": "Japan",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 17.15,
         "per_forward": 7.65,
@@ -5616,8 +5616,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 10.55,
-          "post_cambio_pct": -0.75
+          "post_precio": 10.74,
+          "post_cambio_pct": 1.02
         },
         "en_portfolio": true
       },
@@ -5626,7 +5626,7 @@
         "nombre": "Banco Macro S.A.",
         "industria": "Banks - Regional",
         "pais": "Argentina",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 22.73,
         "per_forward": 9.02,
@@ -5834,12 +5834,12 @@
         "nombre": "Lloyds Banking Group Plc",
         "industria": "Banks - Regional",
         "pais": "United Kingdom",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 14.68,
         "per_forward": 9.45,
         "peg": 1.17,
-        "ev_sales": -3.84,
+        "ev_sales": -3.82,
         "pb": 1.36,
         "ps": 4.57,
         "eps": 0.41,
@@ -5992,8 +5992,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 6.0,
-          "post_cambio_pct": -0.33
+          "post_precio": 6.06,
+          "post_cambio_pct": 0.66
         },
         "en_portfolio": true
       },
@@ -6002,7 +6002,7 @@
         "nombre": "Grupo Financiero Galicia S.A.",
         "industria": "Banks - Regional",
         "pais": "Argentina",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 136.94,
         "per_forward": 7.29,
@@ -6200,8 +6200,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 48.72,
-          "post_cambio_pct": -1.18
+          "post_precio": 49.3,
+          "post_cambio_pct": 0.0
         },
         "en_portfolio": true
       },
@@ -6210,7 +6210,7 @@
         "nombre": "U.S. Bancorp",
         "industria": "Banks - Regional",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 12.77,
         "per_forward": 11.06,
@@ -6413,8 +6413,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 64.15,
-          "post_cambio_pct": 0.28
+          "post_precio": 63.97,
+          "post_cambio_pct": 0.0
         },
         "en_portfolio": true
       },
@@ -6423,7 +6423,7 @@
         "nombre": "BRASIL      ON      NM",
         "industria": "Banks - Regional",
         "pais": "Brazil",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 9.17,
         "per_forward": 4.24,
@@ -6631,7 +6631,7 @@
         "nombre": "KB Financial Group Inc",
         "industria": "Banks - Regional",
         "pais": "South Korea",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 10.88,
         "per_forward": 8.5,
@@ -6815,7 +6815,7 @@
         "nombre": "BANCO HIPOTECAIRO SA",
         "industria": "Banks - Regional",
         "pais": "Argentina",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 16.37,
         "per_forward": 6.42,
@@ -7028,7 +7028,7 @@
         "per_trailing": 11.9,
         "per_forward": 10.34,
         "peg": 1.28,
-        "ev_sales": 4.67,
+        "ev_sales": 4.7,
         "pb": 1.09,
         "ps": 3.32,
         "eps": 4.35,
@@ -7150,12 +7150,12 @@
         "nombre": "Moderna, Inc.",
         "industria": "Biotechnology",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": -12.9,
         "peg": null,
-        "ev_sales": 8.41,
+        "ev_sales": 7.89,
         "pb": 2.9,
         "ps": 9.64,
         "eps": -8.14,
@@ -7268,8 +7268,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 54.04,
-          "post_cambio_pct": -0.06
+          "post_precio": 54.05,
+          "post_cambio_pct": -0.04
         },
         "en_portfolio": true
       },
@@ -7278,7 +7278,7 @@
         "nombre": "Vertex Pharmaceuticals Incorpor",
         "industria": "Biotechnology",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 28.35,
         "per_forward": 22.4,
@@ -7396,8 +7396,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 480.0,
-          "post_cambio_pct": 0.55
+          "post_precio": 477.99,
+          "post_cambio_pct": 0.13
         },
         "en_portfolio": true
       },
@@ -7409,7 +7409,7 @@
         "per_trailing": 16.02,
         "per_forward": 12.01,
         "peg": 1.14,
-        "ev_sales": 4.04,
+        "ev_sales": 4.07,
         "pb": 2.13,
         "ps": 4.61,
         "eps": 40.94,
@@ -7432,7 +7432,7 @@
       "per_trailing": 22.19,
       "per_forward": 12.01,
       "peg": 1.37,
-      "ev_sales": 8.41,
+      "ev_sales": 7.89,
       "pb": 2.9,
       "ps": 9.64,
       "market_cap": 68775452672.0,
@@ -7453,7 +7453,7 @@
         "nombre": "Sony Group Corporation",
         "industria": "Consumer Electronics",
         "pais": "Japan",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 19.98,
         "per_forward": 17.63,
@@ -7603,8 +7603,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 21.0,
-          "post_cambio_pct": 0.11
+          "post_precio": 21.07,
+          "post_cambio_pct": 0.43
         },
         "en_portfolio": true
       },
@@ -7613,12 +7613,12 @@
         "nombre": "Apple Inc.",
         "industria": "Consumer Electronics",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 40.27,
         "per_forward": 34.54,
         "peg": 2.59,
-        "ev_sales": 10.5,
+        "ev_sales": 10.87,
         "pb": 45.87,
         "ps": 10.83,
         "eps": 8.27,
@@ -7816,8 +7816,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 333.8,
-          "post_cambio_pct": 0.23
+          "post_precio": 333.64,
+          "post_cambio_pct": 0.19
         },
         "en_portfolio": true
       }
@@ -7826,7 +7826,7 @@
       "per_trailing": 30.12,
       "per_forward": 26.09,
       "peg": 2.25,
-      "ev_sales": 5.25,
+      "ev_sales": 5.43,
       "pb": 24.18,
       "ps": 5.42,
       "market_cap": 2507193569280.0,
@@ -7847,12 +7847,12 @@
         "nombre": "Visa Inc.",
         "industria": "Credit Services",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 31.04,
         "per_forward": 23.92,
         "peg": 1.55,
-        "ev_sales": 15.64,
+        "ev_sales": 15.83,
         "pb": 19.08,
         "ps": null,
         "eps": 11.46,
@@ -8050,8 +8050,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 355.04,
-          "post_cambio_pct": -0.2
+          "post_precio": 355.22,
+          "post_cambio_pct": -0.15
         },
         "en_portfolio": true
       },
@@ -8060,7 +8060,7 @@
         "nombre": "Upstart Holdings, Inc.",
         "industria": "Credit Services",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 65.68,
         "per_forward": 8.0,
@@ -8178,8 +8178,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 26.95,
-          "post_cambio_pct": 0.07
+          "post_precio": 26.91,
+          "post_cambio_pct": -0.07
         },
         "en_portfolio": true
       },
@@ -8188,7 +8188,7 @@
         "nombre": "Mastercard Incorporated",
         "industria": "Credit Services",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 31.21,
         "per_forward": 23.67,
@@ -8391,8 +8391,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 539.15,
-          "post_cambio_pct": -0.09
+          "post_precio": 537.27,
+          "post_cambio_pct": -0.44
         },
         "en_portfolio": true
       },
@@ -8401,7 +8401,7 @@
         "nombre": "American Express Company",
         "industria": "Credit Services",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 20.36,
         "per_forward": 16.17,
@@ -8412,7 +8412,7 @@
         "eps": 16.02,
         "profit_margin": 16.3,
         "roe": 34.42,
-        "dividend_yield": 1.0,
+        "dividend_yield": 0.0,
         "beta": 1.04,
         "debt_to_equity": 177.85,
         "current_ratio": 1.57,
@@ -8604,8 +8604,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 326.2,
-          "post_cambio_pct": 0.01
+          "post_precio": 325.99,
+          "post_cambio_pct": -0.06
         },
         "en_portfolio": true
       },
@@ -8614,7 +8614,7 @@
         "nombre": "PayPal Holdings, Inc.",
         "industria": "Credit Services",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 10.53,
         "per_forward": 9.77,
@@ -8749,8 +8749,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 56.08,
-          "post_cambio_pct": -0.12
+          "post_precio": 56.01,
+          "post_cambio_pct": -0.24
         },
         "en_portfolio": true
       },
@@ -8788,7 +8788,7 @@
         "per_trailing": 63.85,
         "per_forward": 18.89,
         "peg": 0.71,
-        "ev_sales": 7.85,
+        "ev_sales": 7.77,
         "pb": 6.22,
         "ps": 5.92,
         "eps": 1.1,
@@ -8896,7 +8896,7 @@
       "eps": 9.66,
       "profit_margin": 16.3,
       "roe": 20.79,
-      "dividend_yield": 0.74,
+      "dividend_yield": 0.61,
       "beta": 1.31,
       "debt_to_equity": 177.85,
       "current_ratio": 1.26
@@ -8910,7 +8910,7 @@
         "nombre": "AbbVie Inc.",
         "industria": "Drug Manufacturers - General",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 127.76,
         "per_forward": 15.93,
@@ -9113,8 +9113,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 259.38,
-          "post_cambio_pct": 0.01
+          "post_precio": 259.0,
+          "post_cambio_pct": -0.14
         },
         "en_portfolio": true
       },
@@ -9123,7 +9123,7 @@
         "nombre": "Merck & Company, Inc.",
         "industria": "Drug Manufacturers - General",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 36.92,
         "per_forward": 13.57,
@@ -9326,8 +9326,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 130.6,
-          "post_cambio_pct": -0.36
+          "post_precio": 130.58,
+          "post_cambio_pct": -0.37
         },
         "en_portfolio": true
       },
@@ -9336,7 +9336,7 @@
         "nombre": "Biogen Inc.",
         "industria": "Drug Manufacturers - General",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 21.72,
         "per_forward": 12.32,
@@ -9454,8 +9454,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 202.19,
-          "post_cambio_pct": 0.0
+          "post_precio": 202.0,
+          "post_cambio_pct": -0.09
         },
         "en_portfolio": true
       },
@@ -9464,7 +9464,7 @@
         "nombre": "AstraZeneca PLC",
         "industria": "Drug Manufacturers - General",
         "pais": "United Kingdom",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 25.45,
         "per_forward": 19.29,
@@ -9627,8 +9627,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 169.2,
-          "post_cambio_pct": -0.04
+          "post_precio": 168.11,
+          "post_cambio_pct": -0.68
         },
         "en_portfolio": true
       },
@@ -9637,12 +9637,12 @@
         "nombre": "Amgen Inc.",
         "industria": "Drug Manufacturers - General",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 26.15,
         "per_forward": 16.03,
         "peg": 2.04,
-        "ev_sales": 6.6,
+        "ev_sales": 6.67,
         "pb": 22.08,
         "ps": 5.45,
         "eps": 14.38,
@@ -9840,8 +9840,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 375.7,
-          "post_cambio_pct": -0.09
+          "post_precio": 376.48,
+          "post_cambio_pct": 0.12
         },
         "en_portfolio": true
       },
@@ -9850,7 +9850,7 @@
         "nombre": "Novartis AG",
         "industria": "Drug Manufacturers - General",
         "pais": "Switzerland",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 23.42,
         "per_forward": 15.84,
@@ -9988,8 +9988,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 155.96,
-          "post_cambio_pct": 0.61
+          "post_precio": 155.69,
+          "post_cambio_pct": 0.44
         },
         "en_portfolio": true
       },
@@ -9998,7 +9998,7 @@
         "nombre": "Johnson & Johnson",
         "industria": "Drug Manufacturers - General",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 30.59,
         "per_forward": 20.53,
@@ -10201,8 +10201,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 263.25,
-          "post_cambio_pct": -0.06
+          "post_precio": 263.35,
+          "post_cambio_pct": -0.02
         },
         "en_portfolio": true
       },
@@ -10211,12 +10211,12 @@
         "nombre": "Gilead Sciences, Inc.",
         "industria": "Drug Manufacturers - General",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 17.59,
         "per_forward": 13.43,
         "peg": 2.14,
-        "ev_sales": 5.88,
+        "ev_sales": 5.81,
         "pb": 6.83,
         "ps": 5.4,
         "eps": 7.35,
@@ -10414,8 +10414,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 130.99,
-          "post_cambio_pct": 1.3
+          "post_precio": 129.98,
+          "post_cambio_pct": 0.52
         },
         "en_portfolio": true
       },
@@ -10424,7 +10424,7 @@
         "nombre": "Bristol-Myers Squibb Company",
         "industria": "Drug Manufacturers - General",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 17.39,
         "per_forward": 10.02,
@@ -10637,7 +10637,7 @@
         "nombre": "GSK plc",
         "industria": "Drug Manufacturers - General",
         "pais": "United Kingdom",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 13.51,
         "per_forward": 9.95,
@@ -10840,8 +10840,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 51.5,
-          "post_cambio_pct": 0.29
+          "post_precio": 51.45,
+          "post_cambio_pct": 0.19
         },
         "en_portfolio": true
       },
@@ -10850,7 +10850,7 @@
         "nombre": "Eli Lilly and Company",
         "industria": "Drug Manufacturers - General",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 42.55,
         "per_forward": 26.66,
@@ -11053,8 +11053,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 1195.74,
-          "post_cambio_pct": -0.02
+          "post_precio": 1198.02,
+          "post_cambio_pct": 0.17
         },
         "en_portfolio": true
       },
@@ -11063,7 +11063,7 @@
         "nombre": "Pfizer, Inc.",
         "industria": "Drug Manufacturers - General",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 18.73,
         "per_forward": 8.66,
@@ -11266,8 +11266,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 24.55,
-          "post_cambio_pct": 0.04
+          "post_precio": 24.54,
+          "post_cambio_pct": -0.0
         },
         "en_portfolio": true
       },
@@ -11276,7 +11276,7 @@
         "nombre": "Novo Nordisk A/S",
         "industria": "Drug Manufacturers - General",
         "pais": "Denmark",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 11.67,
         "per_forward": 14.94,
@@ -11434,8 +11434,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 48.67,
-          "post_cambio_pct": -0.21
+          "post_precio": 48.83,
+          "post_cambio_pct": 0.12
         },
         "en_portfolio": true
       }
@@ -11465,7 +11465,7 @@
         "nombre": "Novagold Resources Inc.",
         "industria": "Gold",
         "pais": "Canada",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": -24.79,
@@ -11583,8 +11583,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 5.94,
-          "post_cambio_pct": 0.17
+          "post_precio": 5.92,
+          "post_cambio_pct": -0.17
         },
         "en_portfolio": true
       },
@@ -11593,12 +11593,12 @@
         "nombre": "Coeur Mining, Inc.",
         "industria": "Gold",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 12.2,
         "per_forward": 7.87,
         "peg": 3.75,
-        "ev_sales": 6.12,
+        "ev_sales": 6.07,
         "pb": 1.5,
         "ps": 6.08,
         "eps": 1.24,
@@ -11720,8 +11720,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 15.18,
-          "post_cambio_pct": 0.33
+          "post_precio": 15.15,
+          "post_cambio_pct": 0.13
         },
         "en_portfolio": true
       },
@@ -11730,7 +11730,7 @@
         "nombre": "Pan American Silver Corp.",
         "industria": "Gold",
         "pais": "Canada",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 13.89,
         "per_forward": 9.3,
@@ -11925,8 +11925,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 44.21,
-          "post_cambio_pct": 0.41
+          "post_precio": 44.19,
+          "post_cambio_pct": 0.36
         },
         "en_portfolio": true
       },
@@ -11935,12 +11935,12 @@
         "nombre": "Kinross Gold Corporation",
         "industria": "Gold",
         "pais": "Canada",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 10.15,
         "per_forward": 7.99,
         "peg": 1.12,
-        "ev_sales": 3.39,
+        "ev_sales": 3.41,
         "pb": 3.13,
         "ps": 3.58,
         "eps": 2.35,
@@ -12129,8 +12129,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 24.32,
-          "post_cambio_pct": 1.97
+          "post_precio": 24.08,
+          "post_cambio_pct": 0.96
         },
         "en_portfolio": true
       },
@@ -12139,7 +12139,7 @@
         "nombre": "Harmony Gold Mining Company Lim",
         "industria": "Gold",
         "pais": "South Africa",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 10.17,
         "per_forward": 4.75,
@@ -12289,8 +12289,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 15.8,
-          "post_cambio_pct": -0.44
+          "post_precio": 16.1,
+          "post_cambio_pct": 1.45
         },
         "en_portfolio": true
       },
@@ -12299,10 +12299,10 @@
         "nombre": "Newmont Corporation",
         "industria": "Gold",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 11.75,
-        "per_forward": 8.8,
+        "per_forward": 8.82,
         "peg": 2.78,
         "ev_sales": 3.79,
         "pb": 2.82,
@@ -12502,8 +12502,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 93.36,
-          "post_cambio_pct": 0.18
+          "post_precio": 93.25,
+          "post_cambio_pct": 0.06
         },
         "en_portfolio": true
       },
@@ -12512,7 +12512,7 @@
         "nombre": "Gold Fields Limited",
         "industria": "Gold",
         "pais": "South Africa",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 8.3,
         "per_forward": 6.09,
@@ -12666,8 +12666,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 32.88,
-          "post_cambio_pct": 0.55
+          "post_precio": 32.98,
+          "post_cambio_pct": 0.86
         },
         "en_portfolio": true
       },
@@ -12676,12 +12676,12 @@
         "nombre": "Agnico Eagle Mines Limited",
         "industria": "Gold",
         "pais": "Canada",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 13.67,
         "per_forward": 11.43,
         "peg": 28.15,
-        "ev_sales": 5.13,
+        "ev_sales": 5.15,
         "pb": 2.76,
         "ps": 5.36,
         "eps": 10.62,
@@ -12874,8 +12874,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 145.37,
-          "post_cambio_pct": 0.17
+          "post_precio": 145.65,
+          "post_cambio_pct": 0.36
         },
         "en_portfolio": true
       }
@@ -12905,12 +12905,12 @@
         "nombre": "Aegon Ltd. New York Registry Sh",
         "industria": "Insurance - Diversified",
         "pais": "Netherlands",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 13.43,
         "per_forward": 29.55,
         "peg": 14.09,
-        "ev_sales": 1.52,
+        "ev_sales": 1.53,
         "pb": 1.61,
         "ps": 1.11,
         "eps": 0.68,
@@ -13059,8 +13059,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 9.2,
-          "post_cambio_pct": 0.77
+          "post_precio": 9.21,
+          "post_cambio_pct": 0.91
         },
         "en_portfolio": true
       },
@@ -13069,7 +13069,7 @@
         "nombre": "American International Group, I",
         "industria": "Insurance - Diversified",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 13.92,
         "per_forward": 8.95,
@@ -13282,7 +13282,7 @@
         "nombre": "BERKSHIRE HATHAWAY INC CEDEAR E",
         "industria": "Insurance - Diversified",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 0.0,
         "per_forward": null,
@@ -13405,7 +13405,7 @@
         "nombre": "Berkshire Hathaway Inc. New",
         "industria": "Insurance - Diversified",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 14.74,
         "per_forward": 23.01,
@@ -13536,7 +13536,7 @@
         "per_trailing": 12.35,
         "per_forward": 8.24,
         "peg": 1.28,
-        "ev_sales": 0.96,
+        "ev_sales": 0.97,
         "pb": 1.3,
         "ps": null,
         "eps": 9.71,
@@ -13588,7 +13588,7 @@
         "per_trailing": 5.75,
         "per_forward": 9.81,
         "peg": 3.05,
-        "ev_sales": 1.02,
+        "ev_sales": 1.04,
         "pb": 2.27,
         "ps": 0.98,
         "eps": 45.2,
@@ -13632,7 +13632,7 @@
         "nombre": "Baidu, Inc.",
         "industria": "Internet Content & Information",
         "pais": "China",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": 12.27,
@@ -13750,8 +13750,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 105.42,
-          "post_cambio_pct": 0.08
+          "post_precio": 105.35,
+          "post_cambio_pct": 0.01
         },
         "en_portfolio": true
       },
@@ -13760,7 +13760,7 @@
         "nombre": "Snap Inc.",
         "industria": "Internet Content & Information",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": 5.91,
@@ -13878,8 +13878,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 4.34,
-          "post_cambio_pct": -0.23
+          "post_precio": 4.35,
+          "post_cambio_pct": -0.03
         },
         "en_portfolio": true
       },
@@ -13888,7 +13888,7 @@
         "nombre": "Pinterest, Inc.",
         "industria": "Internet Content & Information",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 46.1,
         "per_forward": 9.91,
@@ -14006,8 +14006,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 22.03,
-          "post_cambio_pct": -0.45
+          "post_precio": 22.0,
+          "post_cambio_pct": -0.59
         },
         "en_portfolio": true
       },
@@ -14016,12 +14016,12 @@
         "nombre": "Yelp Inc.",
         "industria": "Internet Content & Information",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 11.51,
         "per_forward": 6.1,
         "peg": 0.57,
-        "ev_sales": 0.95,
+        "ev_sales": 0.97,
         "pb": 2.22,
         "ps": 0.94,
         "eps": 2.18,
@@ -14144,12 +14144,12 @@
         "nombre": "Meta Platforms, Inc.",
         "industria": "Internet Content & Information",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 21.63,
         "per_forward": 16.08,
         "peg": 0.88,
-        "ev_sales": 7.18,
+        "ev_sales": 7.05,
         "pb": 6.2,
         "ps": 7.03,
         "eps": 27.52,
@@ -14307,8 +14307,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 595.2,
-          "post_cambio_pct": 0.0
+          "post_precio": 594.7,
+          "post_cambio_pct": -0.08
         },
         "en_portfolio": true
       },
@@ -14317,12 +14317,12 @@
         "nombre": "Spotify Technology S.A.",
         "industria": "Internet Content & Information",
         "pais": "Sweden",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 32.88,
         "per_forward": 26.78,
         "peg": 1.62,
-        "ev_sales": 5.17,
+        "ev_sales": 5.33,
         "pb": 10.88,
         "ps": 5.66,
         "eps": 14.68,
@@ -14435,8 +14435,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 486.9,
-          "post_cambio_pct": 0.88
+          "post_precio": 477.24,
+          "post_cambio_pct": -1.12
         },
         "en_portfolio": true
       },
@@ -14445,25 +14445,25 @@
         "nombre": "Alphabet Inc.",
         "industria": "Internet Content & Information",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 16.05,
         "per_forward": 21.63,
         "peg": 1.25,
-        "ev_sales": 8.46,
+        "ev_sales": 8.52,
         "pb": 6.28,
         "ps": 8.77,
         "eps": 19.92,
         "profit_margin": 54.77,
         "roe": 48.68,
         "dividend_yield": 0.27,
-        "beta": null,
+        "beta": 1.25,
         "debt_to_equity": 17.61,
         "current_ratio": 2.72,
         "target_mean_price": 428.12,
         "n_analistas": 54.0,
         "book_value": 50.9,
-        "fcf_por_accion": 4.35,
+        "fcf_por_accion": 4.89,
         "market_cap": 3910399426560,
         "sector": "Communication Services",
         "recommendation_key": "strong_buy",
@@ -14604,8 +14604,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 320.04,
-          "post_cambio_pct": 0.09
+          "post_precio": 319.5,
+          "post_cambio_pct": -0.08
         },
         "en_portfolio": true
       },
@@ -14614,7 +14614,7 @@
         "nombre": "WEIBO CORPORATION CEDEARS EACH ",
         "industria": "Internet Content & Information",
         "pais": "China",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 1.8,
         "per_forward": null,
@@ -14758,7 +14758,7 @@
         "nombre": "Nebius Group N.V.",
         "industria": "Internet Content & Information",
         "pais": "Netherlands",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 72.5,
         "per_forward": -116.38,
@@ -14803,8 +14803,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 189.5,
-          "post_cambio_pct": 0.92
+          "post_precio": 188.2,
+          "post_cambio_pct": 0.23
         },
         "en_portfolio": true
       }
@@ -14813,7 +14813,7 @@
       "per_trailing": 21.63,
       "per_forward": 11.09,
       "peg": 0.8,
-      "ev_sales": 5.17,
+      "ev_sales": 5.33,
       "pb": 4.45,
       "ps": 5.66,
       "market_cap": 47674466304.0,
@@ -14821,7 +14821,7 @@
       "profit_margin": 15.45,
       "roe": 14.14,
       "dividend_yield": 0.0,
-      "beta": 0.97,
+      "beta": 1.05,
       "debt_to_equity": 35.61,
       "current_ratio": 2.72
     }
@@ -14834,12 +14834,12 @@
         "nombre": "Etsy, Inc.",
         "industria": "Internet Retail",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 30.89,
         "per_forward": 12.37,
         "peg": 0.79,
-        "ev_sales": 3.21,
+        "ev_sales": 3.2,
         "pb": -6.73,
         "ps": 2.64,
         "eps": 2.61,
@@ -14952,8 +14952,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 80.52,
-          "post_cambio_pct": -0.12
+          "post_precio": 80.12,
+          "post_cambio_pct": -0.62
         },
         "en_portfolio": true
       },
@@ -14962,7 +14962,7 @@
         "nombre": "Jumia Technologies AG",
         "industria": "Internet Retail",
         "pais": "Germany",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": -17.24,
@@ -15080,8 +15080,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 5.93,
-          "post_cambio_pct": 1.19
+          "post_precio": 5.85,
+          "post_cambio_pct": -0.17
         },
         "en_portfolio": true
       },
@@ -15090,12 +15090,12 @@
         "nombre": "Alibaba Group Holding Limited",
         "industria": "Internet Retail",
         "pais": "China",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 17.25,
         "per_forward": 12.32,
         "peg": 0.48,
-        "ev_sales": 0.29,
+        "ev_sales": 0.28,
         "pb": 1.66,
         "ps": 0.26,
         "eps": 6.5,
@@ -15224,8 +15224,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 112.3,
-          "post_cambio_pct": 0.14
+          "post_precio": 112.26,
+          "post_cambio_pct": 0.11
         },
         "en_portfolio": true
       },
@@ -15234,7 +15234,7 @@
         "nombre": "JD.com, Inc.",
         "industria": "Internet Retail",
         "pais": "China",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 22.04,
         "per_forward": 7.11,
@@ -15372,8 +15372,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 30.12,
-          "post_cambio_pct": -0.23
+          "post_precio": 30.14,
+          "post_cambio_pct": -0.17
         },
         "en_portfolio": true
       },
@@ -15382,12 +15382,12 @@
         "nombre": "Amazon.com, Inc.",
         "industria": "Internet Retail",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 27.73,
         "per_forward": 23.43,
         "peg": 1.25,
-        "ev_sales": 3.51,
+        "ev_sales": 3.49,
         "pb": 5.65,
         "ps": 3.36,
         "eps": 8.37,
@@ -15500,8 +15500,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 231.55,
-          "post_cambio_pct": -0.24
+          "post_precio": 231.6,
+          "post_cambio_pct": -0.22
         },
         "en_portfolio": true
       },
@@ -15510,7 +15510,7 @@
         "nombre": "MercadoLibre, Inc.",
         "industria": "Internet Retail",
         "pais": "Uruguay",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 47.47,
         "per_forward": 30.87,
@@ -15628,8 +15628,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 1805.02,
-          "post_cambio_pct": 0.2
+          "post_precio": 1805.5,
+          "post_cambio_pct": 0.23
         },
         "en_portfolio": true
       },
@@ -15638,7 +15638,7 @@
         "nombre": "eBay Inc.",
         "industria": "Internet Retail",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 25.26,
         "per_forward": 16.23,
@@ -15841,8 +15841,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 109.28,
-          "post_cambio_pct": -0.1
+          "post_precio": 109.35,
+          "post_cambio_pct": -0.04
         },
         "en_portfolio": true
       },
@@ -15851,7 +15851,7 @@
         "nombre": "Sea Limited",
         "industria": "Internet Retail",
         "pais": "Singapore",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 39.37,
         "per_forward": 19.05,
@@ -15969,8 +15969,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 99.5,
-          "post_cambio_pct": -0.5
+          "post_precio": 99.6,
+          "post_cambio_pct": -0.4
         },
         "en_portfolio": true
       }
@@ -15979,7 +15979,7 @@
       "per_trailing": 27.73,
       "per_forward": 14.3,
       "peg": 1.11,
-      "ev_sales": 3.15,
+      "ev_sales": 3.14,
       "pb": 5.21,
       "ps": 3.12,
       "market_cap": 54908807168.0,
@@ -16000,7 +16000,7 @@
         "nombre": "Geopark Ltd",
         "industria": "Oil & Gas E&P",
         "pais": "Colombia",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 9.43,
         "per_forward": 3.83,
@@ -16205,12 +16205,12 @@
         "nombre": "Occidental Petroleum Corporatio",
         "industria": "Oil & Gas E&P",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 77.43,
         "per_forward": 14.47,
         "peg": 1.21,
-        "ev_sales": 3.74,
+        "ev_sales": 3.73,
         "pb": 1.85,
         "ps": 2.7,
         "eps": 0.74,
@@ -16408,8 +16408,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 57.19,
-          "post_cambio_pct": -0.19
+          "post_precio": 57.4,
+          "post_cambio_pct": 0.17
         },
         "en_portfolio": true
       },
@@ -16418,10 +16418,10 @@
         "nombre": "Vista Energy S.A.B. de C.V.",
         "industria": "Oil & Gas E&P",
         "pais": "Mexico",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 9.14,
-        "per_forward": 7.22,
+        "per_forward": 7.27,
         "peg": null,
         "ev_sales": 3.13,
         "pb": 2.81,
@@ -16541,7 +16541,7 @@
         "nombre": "PRIO        ON      NM",
         "industria": "Oil & Gas E&P",
         "pais": "Brazil",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 18.21,
         "per_forward": 6.49,
@@ -16678,7 +16678,7 @@
         "nombre": "ConocoPhillips",
         "industria": "Oil & Gas E&P",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 20.38,
         "per_forward": 13.41,
@@ -16881,8 +16881,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 120.26,
-          "post_cambio_pct": 0.0
+          "post_precio": 120.3,
+          "post_cambio_pct": 0.03
         },
         "en_portfolio": true
       },
@@ -16941,7 +16941,7 @@
     ],
     "mediana": {
       "per_trailing": 16.3,
-      "per_forward": 8.6,
+      "per_forward": 8.62,
       "peg": 1.16,
       "ev_sales": 3.3,
       "pb": 2.24,
@@ -16964,7 +16964,7 @@
         "nombre": "Starbucks Corporation",
         "industria": "Restaurants",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 78.82,
         "per_forward": 34.27,
@@ -17167,8 +17167,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 103.25,
-          "post_cambio_pct": 0.0
+          "post_precio": 103.26,
+          "post_cambio_pct": 0.01
         },
         "en_portfolio": true
       },
@@ -17177,7 +17177,7 @@
         "nombre": "Arcos Dorados Holdings Inc.",
         "industria": "Restaurants",
         "pais": "Uruguay",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 7.41,
         "per_forward": 9.64,
@@ -17372,8 +17372,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 8.36,
-          "post_cambio_pct": 1.7
+          "post_precio": 8.38,
+          "post_cambio_pct": 1.95
         },
         "en_portfolio": true
       },
@@ -17382,7 +17382,7 @@
         "nombre": "McDonald's Corporation",
         "industria": "Restaurants",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 21.81,
         "per_forward": 18.75,
@@ -17585,8 +17585,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 264.8,
-          "post_cambio_pct": 0.01
+          "post_precio": 264.75,
+          "post_cambio_pct": -0.0
         },
         "en_portfolio": true
       },
@@ -17668,7 +17668,7 @@
         "nombre": "Lam Research Corporation",
         "industria": "Semiconductor Equipment & Materials",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 57.8,
         "per_forward": 37.46,
@@ -17872,7 +17872,7 @@
           "pre_precio": null,
           "pre_cambio_pct": null,
           "post_precio": 305.59,
-          "post_cambio_pct": 0.13
+          "post_cambio_pct": 0.12
         },
         "en_portfolio": true
       },
@@ -17881,7 +17881,7 @@
         "nombre": "Applied Materials, Inc.",
         "industria": "Semiconductor Equipment & Materials",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 50.4,
         "per_forward": 31.72,
@@ -18084,8 +18084,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 539.05,
-          "post_cambio_pct": 0.52
+          "post_precio": 537.99,
+          "post_cambio_pct": 0.32
         },
         "en_portfolio": true
       },
@@ -18094,12 +18094,12 @@
         "nombre": "ASML Holding N.V. - New York Re",
         "industria": "Semiconductor Equipment & Materials",
         "pais": "Netherlands",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 60.53,
         "per_forward": 30.24,
         "peg": 2.26,
-        "ev_sales": 1088.91,
+        "ev_sales": 1061.18,
         "pb": 1581.72,
         "ps": 19.1,
         "eps": 29.03,
@@ -18284,7 +18284,7 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 1758.95,
+          "post_precio": 1758.99,
           "post_cambio_pct": 0.11
         },
         "en_portfolio": true
@@ -18297,7 +18297,7 @@
         "per_trailing": 59.81,
         "per_forward": 41.03,
         "peg": 2.25,
-        "ev_sales": 21.91,
+        "ev_sales": 21.09,
         "pb": 47.19,
         "ps": 21.0,
         "eps": 3.52,
@@ -18320,7 +18320,7 @@
       "per_trailing": 58.8,
       "per_forward": 34.59,
       "peg": 2.05,
-      "ev_sales": 20.16,
+      "ev_sales": 19.74,
       "pb": 41.62,
       "ps": 18.35,
       "market_cap": 403723763712.0,
@@ -18341,7 +18341,7 @@
         "nombre": "Advanced Micro Devices, Inc.",
         "industria": "Semiconductors",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 172.83,
         "per_forward": 38.62,
@@ -18459,8 +18459,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 522.2,
-          "post_cambio_pct": 0.05
+          "post_precio": 520.55,
+          "post_cambio_pct": -0.27
         },
         "en_portfolio": true
       },
@@ -18469,7 +18469,7 @@
         "nombre": "Texas Instruments Incorporated",
         "industria": "Semiconductors",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 47.87,
         "per_forward": 26.7,
@@ -18668,8 +18668,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 279.6,
-          "post_cambio_pct": 0.01
+          "post_precio": 279.9,
+          "post_cambio_pct": 0.11
         },
         "en_portfolio": true
       },
@@ -18678,7 +18678,7 @@
         "nombre": "Skyworks Solutions, Inc.",
         "industria": "Semiconductors",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 25.09,
         "per_forward": 11.73,
@@ -18881,8 +18881,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 60.21,
-          "post_cambio_pct": 0.0
+          "post_precio": 60.23,
+          "post_cambio_pct": 0.03
         },
         "en_portfolio": true
       },
@@ -18891,7 +18891,7 @@
         "nombre": "Intel Corporation",
         "industria": "Semiconductors",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": 52.79,
@@ -19066,8 +19066,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 92.08,
-          "post_cambio_pct": -0.26
+          "post_precio": 91.44,
+          "post_cambio_pct": -0.95
         },
         "en_portfolio": true
       },
@@ -19076,7 +19076,7 @@
         "nombre": "Analog Devices, Inc.",
         "industria": "Semiconductors",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 55.25,
         "per_forward": 24.69,
@@ -19279,8 +19279,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 372.8,
-          "post_cambio_pct": 0.25
+          "post_precio": 373.5,
+          "post_cambio_pct": 0.44
         },
         "en_portfolio": true
       },
@@ -19289,12 +19289,12 @@
         "nombre": "QUALCOMM Incorporated",
         "industria": "Semiconductors",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 17.93,
         "per_forward": 15.22,
         "peg": 0.54,
-        "ev_sales": 4.18,
+        "ev_sales": 4.08,
         "pb": 6.48,
         "ps": 3.96,
         "eps": 9.31,
@@ -19492,8 +19492,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 167.05,
-          "post_cambio_pct": 0.05
+          "post_precio": 166.86,
+          "post_cambio_pct": -0.07
         },
         "en_portfolio": true
       },
@@ -19502,7 +19502,7 @@
         "nombre": "Broadcom Inc.",
         "industria": "Semiconductors",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 63.65,
         "per_forward": 19.63,
@@ -19705,8 +19705,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 383.0,
-          "post_cambio_pct": 0.28
+          "post_precio": 381.54,
+          "post_cambio_pct": -0.1
         },
         "en_portfolio": true
       },
@@ -19715,7 +19715,7 @@
         "nombre": "NVIDIA Corporation",
         "industria": "Semiconductors",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 31.68,
         "per_forward": 16.07,
@@ -19918,8 +19918,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 206.9,
-          "post_cambio_pct": 0.03
+          "post_precio": 206.52,
+          "post_cambio_pct": -0.15
         },
         "en_portfolio": true
       },
@@ -19928,7 +19928,7 @@
         "nombre": "Marvell Technology, Inc.",
         "industria": "Semiconductors",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 66.75,
         "per_forward": 31.12,
@@ -20131,8 +20131,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 193.0,
-          "post_cambio_pct": -0.63
+          "post_precio": 192.48,
+          "post_cambio_pct": -0.9
         },
         "en_portfolio": true
       },
@@ -20141,7 +20141,7 @@
         "nombre": "Micron Technology, Inc.",
         "industria": "Semiconductors",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 20.81,
         "per_forward": 5.99,
@@ -20344,8 +20344,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 912.35,
-          "post_cambio_pct": -0.93
+          "post_precio": 906.46,
+          "post_cambio_pct": -1.57
         },
         "en_portfolio": true
       },
@@ -20354,7 +20354,7 @@
         "nombre": "Taiwan Semiconductor Manufactur",
         "industria": "Semiconductors",
         "pais": "Taiwan",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 35.42,
         "per_forward": 18.95,
@@ -20557,8 +20557,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 402.86,
-          "post_cambio_pct": -0.14
+          "post_precio": 402.01,
+          "post_cambio_pct": -0.35
         },
         "en_portfolio": true
       },
@@ -20567,7 +20567,7 @@
         "nombre": "Arm Holdings plc",
         "industria": "Semiconductors",
         "pais": "United Kingdom",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 305.89,
         "per_forward": 84.53,
@@ -20685,8 +20685,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 259.29,
-          "post_cambio_pct": -0.28
+          "post_precio": 259.37,
+          "post_cambio_pct": -0.25
         },
         "en_portfolio": true
       },
@@ -20695,7 +20695,7 @@
         "nombre": "Astera Labs, Inc.",
         "industria": "Semiconductors",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 198.35,
         "per_forward": 64.35,
@@ -20813,8 +20813,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 290.88,
-          "post_cambio_pct": -0.24
+          "post_precio": 290.0,
+          "post_cambio_pct": -0.54
         },
         "en_portfolio": true
       }
@@ -20844,12 +20844,12 @@
         "nombre": "Adobe Inc.",
         "industria": "Software - Application",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 12.88,
         "per_forward": 8.19,
         "peg": 0.58,
-        "ev_sales": 3.4,
+        "ev_sales": 3.61,
         "pb": 7.8,
         "ps": 3.55,
         "eps": 17.48,
@@ -20962,8 +20962,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 225.97,
-          "post_cambio_pct": 0.38
+          "post_precio": 224.9,
+          "post_cambio_pct": -0.09
         },
         "en_portfolio": true
       },
@@ -20972,7 +20972,7 @@
         "nombre": "Snowflake Inc.",
         "industria": "Software - Application",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": 99.58,
@@ -21090,8 +21090,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 267.78,
-          "post_cambio_pct": -0.1
+          "post_precio": 268.0,
+          "post_cambio_pct": -0.02
         },
         "en_portfolio": true
       },
@@ -21100,12 +21100,12 @@
         "nombre": "Uber Technologies, Inc.",
         "industria": "Software - Application",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 16.36,
         "per_forward": 14.82,
         "peg": 5.58,
-        "ev_sales": 2.75,
+        "ev_sales": 2.64,
         "pb": 5.43,
         "ps": 2.5,
         "eps": 4.03,
@@ -21218,8 +21218,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 66.34,
-          "post_cambio_pct": 0.61
+          "post_precio": 66.5,
+          "post_cambio_pct": 0.85
         },
         "en_portfolio": true
       },
@@ -21228,12 +21228,12 @@
         "nombre": "SAP  SE",
         "industria": "Software - Application",
         "pais": "Germany",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 22.5,
         "per_forward": 16.42,
         "peg": 1.27,
-        "ev_sales": 4.16,
+        "ev_sales": 4.57,
         "pb": 3.63,
         "ps": 4.94,
         "eps": 7.11,
@@ -21366,8 +21366,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 158.15,
-          "post_cambio_pct": -1.15
+          "post_precio": 159.8,
+          "post_cambio_pct": -0.12
         },
         "en_portfolio": true
       },
@@ -21376,12 +21376,12 @@
         "nombre": "Zoom Communications, Inc.",
         "industria": "Software - Application",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 12.96,
         "per_forward": 13.97,
         "peg": 4.21,
-        "ev_sales": 3.45,
+        "ev_sales": 3.68,
         "pb": 2.65,
         "ps": 5.23,
         "eps": 6.79,
@@ -21494,8 +21494,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 87.89,
-          "post_cambio_pct": -0.11
+          "post_precio": 87.86,
+          "post_cambio_pct": -0.15
         },
         "en_portfolio": true
       },
@@ -21504,7 +21504,7 @@
         "nombre": "Shopify Inc.",
         "industria": "Software - Application",
         "pais": "Canada",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 111.52,
         "per_forward": 48.78,
@@ -21622,8 +21622,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 113.4,
-          "post_cambio_pct": -0.31
+          "post_precio": 113.52,
+          "post_cambio_pct": -0.2
         },
         "en_portfolio": true
       },
@@ -21632,7 +21632,7 @@
         "nombre": "Strategy Inc",
         "industria": "Software - Application",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": 20.54,
@@ -21750,8 +21750,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 91.45,
-          "post_cambio_pct": -0.24
+          "post_precio": 91.33,
+          "post_cambio_pct": -0.37
         },
         "en_portfolio": true
       },
@@ -21760,7 +21760,7 @@
         "nombre": "Salesforce, Inc.",
         "industria": "Software - Application",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 18.96,
         "per_forward": 10.55,
@@ -21923,8 +21923,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 163.04,
-          "post_cambio_pct": -0.38
+          "post_precio": 162.22,
+          "post_cambio_pct": -0.88
         },
         "en_portfolio": true
       },
@@ -21933,12 +21933,12 @@
         "nombre": "Automatic Data Processing, Inc.",
         "industria": "Software - Application",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 23.35,
         "per_forward": 20.49,
         "peg": 2.27,
-        "ev_sales": 4.55,
+        "ev_sales": 4.68,
         "pb": 15.78,
         "ps": 4.63,
         "eps": 10.71,
@@ -22136,8 +22136,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 250.5,
-          "post_cambio_pct": 0.16
+          "post_precio": 249.84,
+          "post_cambio_pct": -0.1
         },
         "en_portfolio": true
       },
@@ -22146,7 +22146,7 @@
         "nombre": "DocuSign, Inc.",
         "industria": "Software - Application",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 32.75,
         "per_forward": 9.9,
@@ -22264,8 +22264,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 50.35,
-          "post_cambio_pct": -0.18
+          "post_precio": 50.22,
+          "post_cambio_pct": -0.44
         },
         "en_portfolio": true
       },
@@ -22274,12 +22274,12 @@
         "nombre": "Atlassian Corporation",
         "industria": "Software - Application",
         "pais": "Australia",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": 14.19,
         "peg": 0.61,
-        "ev_sales": 3.3,
+        "ev_sales": 3.58,
         "pb": 25.29,
         "ps": 3.56,
         "eps": -0.82,
@@ -22392,8 +22392,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 86.85,
-          "post_cambio_pct": -0.03
+          "post_precio": 86.11,
+          "post_cambio_pct": -0.88
         },
         "en_portfolio": true
       },
@@ -22402,7 +22402,7 @@
         "nombre": "ServiceNow, Inc.",
         "industria": "Software - Application",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 61.74,
         "per_forward": 19.71,
@@ -22520,8 +22520,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 98.0,
-          "post_cambio_pct": -0.79
+          "post_precio": 97.91,
+          "post_cambio_pct": -0.88
         },
         "en_portfolio": true
       },
@@ -22603,7 +22603,7 @@
         "nombre": "PagSeguro Digital Ltd.",
         "industria": "Software - Infrastructure",
         "pais": "Brazil",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 6.39,
         "per_forward": 4.85,
@@ -22738,8 +22738,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 9.19,
-          "post_cambio_pct": -0.11
+          "post_precio": 9.24,
+          "post_cambio_pct": 0.43
         },
         "en_portfolio": true
       },
@@ -22748,7 +22748,7 @@
         "nombre": "StoneCo Ltd.",
         "industria": "Software - Infrastructure",
         "pais": "Cayman Islands",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 3.96,
         "per_forward": 4.47,
@@ -22875,8 +22875,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 10.8,
-          "post_cambio_pct": 0.37
+          "post_precio": 10.66,
+          "post_cambio_pct": -0.93
         },
         "en_portfolio": true
       },
@@ -22885,7 +22885,7 @@
         "nombre": "Microsoft Corporation",
         "industria": "Software - Infrastructure",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 22.73,
         "per_forward": 19.7,
@@ -23088,8 +23088,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 381.87,
-          "post_cambio_pct": 0.04
+          "post_precio": 381.7,
+          "post_cambio_pct": 0.0
         },
         "en_portfolio": true
       },
@@ -23098,7 +23098,7 @@
         "nombre": "VeriSign, Inc.",
         "industria": "Software - Infrastructure",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 30.4,
         "per_forward": 25.5,
@@ -23241,8 +23241,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 266.25,
-          "post_cambio_pct": -4.91
+          "post_precio": 284.98,
+          "post_cambio_pct": 1.78
         },
         "en_portfolio": true
       },
@@ -23251,7 +23251,7 @@
         "nombre": "Palantir Technologies Inc.",
         "industria": "Software - Infrastructure",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 138.11,
         "per_forward": 58.69,
@@ -23369,8 +23369,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 123.02,
-          "post_cambio_pct": 0.08
+          "post_precio": 122.56,
+          "post_cambio_pct": -0.29
         },
         "en_portfolio": true
       },
@@ -23379,7 +23379,7 @@
         "nombre": "Palo Alto Networks, Inc.",
         "industria": "Software - Infrastructure",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 284.03,
         "per_forward": 78.49,
@@ -23497,8 +23497,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 323.43,
-          "post_cambio_pct": -0.11
+          "post_precio": 324.52,
+          "post_cambio_pct": 0.23
         },
         "en_portfolio": true
       },
@@ -23507,7 +23507,7 @@
         "nombre": "Oracle Corporation",
         "industria": "Software - Infrastructure",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 19.72,
         "per_forward": 10.56,
@@ -23710,8 +23710,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 114.85,
-          "post_cambio_pct": -0.12
+          "post_precio": 114.86,
+          "post_cambio_pct": -0.11
         },
         "en_portfolio": true
       },
@@ -23720,7 +23720,7 @@
         "nombre": "Twilio Inc.",
         "industria": "Software - Infrastructure",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 285.76,
         "per_forward": 28.81,
@@ -23838,8 +23838,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 190.07,
-          "post_cambio_pct": -0.73
+          "post_precio": 191.0,
+          "post_cambio_pct": -0.24
         },
         "en_portfolio": true
       },
@@ -23848,7 +23848,7 @@
         "nombre": "BlackBerry Limited",
         "industria": "Software - Infrastructure",
         "pais": "Canada",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 85.4,
         "per_forward": 37.36,
@@ -23966,8 +23966,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 8.57,
-          "post_cambio_pct": 0.35
+          "post_precio": 8.54,
+          "post_cambio_pct": -0.01
         },
         "en_portfolio": true
       },
@@ -23976,7 +23976,7 @@
         "nombre": "C3.ai, Inc.",
         "industria": "Software - Infrastructure",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": -18.09,
@@ -24094,8 +24094,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 8.17,
-          "post_cambio_pct": 0.25
+          "post_precio": 8.15,
+          "post_cambio_pct": 0.0
         },
         "en_portfolio": true
       },
@@ -24104,7 +24104,7 @@
         "nombre": "UiPath, Inc.",
         "industria": "Software - Infrastructure",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 18.07,
         "per_forward": 11.95,
@@ -24222,8 +24222,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 10.84,
-          "post_cambio_pct": 0.0
+          "post_precio": 10.85,
+          "post_cambio_pct": 0.09
         },
         "en_portfolio": true
       },
@@ -24232,7 +24232,7 @@
         "nombre": "CoreWeave, Inc.",
         "industria": "Software - Infrastructure",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": -45.24,
@@ -24277,8 +24277,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 72.36,
-          "post_cambio_pct": 0.67
+          "post_precio": 72.1,
+          "post_cambio_pct": 0.31
         },
         "en_portfolio": true
       },
@@ -24287,7 +24287,7 @@
         "nombre": "CrowdStrike Holdings, Inc.",
         "industria": "Software - Infrastructure",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": 117.3,
@@ -24405,8 +24405,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 183.75,
-          "post_cambio_pct": 0.25
+          "post_precio": 183.21,
+          "post_cambio_pct": -0.04
         },
         "en_portfolio": true
       }
@@ -24436,7 +24436,7 @@
         "nombre": "MAGAZ LUIZA ON  ATZ NM",
         "industria": "Specialty Retail",
         "pais": "Brazil",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 25.83,
         "per_forward": 5.74,
@@ -24575,7 +24575,7 @@
         "per_trailing": 17.55,
         "per_forward": 15.41,
         "peg": 1.32,
-        "ev_sales": 1.75,
+        "ev_sales": 1.79,
         "pb": -12.57,
         "ps": null,
         "eps": 11.83,
@@ -24598,7 +24598,7 @@
       "per_trailing": 21.69,
       "per_forward": 10.57,
       "peg": 0.79,
-      "ev_sales": 1.02,
+      "ev_sales": 1.04,
       "pb": -6.12,
       "ps": 0.09,
       "market_cap": 60016016000.0,
@@ -24619,7 +24619,7 @@
         "nombre": "Gerdau S.A.",
         "industria": "Steel",
         "pais": "Brazil",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 30.06,
         "per_forward": 8.12,
@@ -24827,7 +24827,7 @@
         "nombre": "Companhia Siderurgica Nacional ",
         "industria": "Steel",
         "pais": "Brazil",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": -7.45,
@@ -24981,8 +24981,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 1.06,
-          "post_cambio_pct": -1.84
+          "post_precio": 1.07,
+          "post_cambio_pct": -0.93
         },
         "en_portfolio": true
       },
@@ -24991,7 +24991,7 @@
         "nombre": "Nucor Corporation",
         "industria": "Steel",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 24.56,
         "per_forward": 14.24,
@@ -25194,8 +25194,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 248.8,
-          "post_cambio_pct": 0.5
+          "post_precio": 248.1,
+          "post_cambio_pct": 0.22
         },
         "en_portfolio": true
       },
@@ -25204,7 +25204,7 @@
         "nombre": "POSCO HOLDINGS INC CEDEAR EACH ",
         "industria": "Steel",
         "pais": "South Korea",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 0.1,
         "per_forward": null,
@@ -25275,7 +25275,7 @@
         "nombre": "TERNIUM SA CEDEAR EACH 4  REP 1",
         "industria": "Steel",
         "pais": "Luxembourg",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 8.48,
         "per_forward": null,
@@ -25446,7 +25446,7 @@
         "per_trailing": 22.42,
         "per_forward": 13.1,
         "peg": 11.95,
-        "ev_sales": 1.87,
+        "ev_sales": 1.92,
         "pb": 3.78,
         "ps": 1.74,
         "eps": 11.02,
@@ -25516,7 +25516,7 @@
         "nombre": "TIM S.A.",
         "industria": "Telecom Services",
         "pais": "Brazil",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 12.1,
         "per_forward": 9.83,
@@ -25714,8 +25714,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 21.3,
-          "post_cambio_pct": 0.0
+          "post_precio": 20.89,
+          "post_cambio_pct": -1.92
         },
         "en_portfolio": true
       },
@@ -25724,7 +25724,7 @@
         "nombre": "Telefonica Brasil S.A.",
         "industria": "Telecom Services",
         "pais": "Brazil",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 18.25,
         "per_forward": 13.38,
@@ -25932,7 +25932,7 @@
         "nombre": "Vodafone Group Plc",
         "industria": "Telecom Services",
         "pais": "United Kingdom",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
         "per_forward": 9.42,
@@ -26100,7 +26100,7 @@
         "nombre": "Verizon Communications Inc.",
         "industria": "Telecom Services",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 11.31,
         "per_forward": 8.81,
@@ -26111,7 +26111,7 @@
         "eps": 4.1,
         "profit_margin": 12.46,
         "roe": 17.2,
-        "dividend_yield": 6.31,
+        "dividend_yield": 0.0,
         "beta": 0.24,
         "debt_to_equity": 192.04,
         "current_ratio": 0.64,
@@ -26303,8 +26303,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 46.25,
-          "post_cambio_pct": -0.28
+          "post_precio": 46.17,
+          "post_cambio_pct": -0.45
         },
         "en_portfolio": true
       },
@@ -26313,7 +26313,7 @@
         "nombre": "AT&T Inc.",
         "industria": "Telecom Services",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 7.96,
         "per_forward": 9.4,
@@ -26526,7 +26526,7 @@
         "nombre": "America Movil, S.A.B. de C.V.",
         "industria": "Telecom Services",
         "pais": "Mexico",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 15.21,
         "per_forward": 12.36,
@@ -26690,12 +26690,12 @@
         "nombre": "T-Mobile US, Inc.",
         "industria": "Telecom Services",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 18.84,
         "per_forward": 12.6,
         "peg": 0.68,
-        "ev_sales": 3.25,
+        "ev_sales": 3.36,
         "pb": 3.5,
         "ps": 2.1,
         "eps": 9.56,
@@ -26857,8 +26857,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 180.96,
-          "post_cambio_pct": 0.48
+          "post_precio": 180.4,
+          "post_cambio_pct": 0.17
         },
         "en_portfolio": true
       },
@@ -26867,7 +26867,7 @@
         "nombre": "ORANGE CEDEAR EACH 1 REPR 1 ADR",
         "industria": "Telecom Services",
         "pais": "France",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 2.28,
         "per_forward": null,
@@ -27035,7 +27035,7 @@
         "nombre": "TELECOM ARGENTINA SA",
         "industria": "Telecom Services",
         "pais": "Argentina",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 27.08,
         "per_forward": -63.2,
@@ -27167,7 +27167,7 @@
         "nombre": "Telecom Italia S.p.A.",
         "industria": "Telecom Services",
         "pais": "Italy",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 42.77,
         "per_forward": 61.11,
@@ -27290,10 +27290,10 @@
         "nombre": "Grupo Televisa S.A.B.",
         "industria": "Telecom Services",
         "pais": "Mexico",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": null,
-        "per_forward": 9.38,
+        "per_forward": 9.44,
         "peg": 56.92,
         "ev_sales": 1.11,
         "pb": 0.27,
@@ -27428,15 +27428,15 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 2.7,
-          "post_cambio_pct": -1.82
+          "post_precio": 2.87,
+          "post_cambio_pct": 4.25
         },
         "en_portfolio": true
       }
     ],
     "mediana": {
       "per_trailing": 15.21,
-      "per_forward": 9.62,
+      "per_forward": 9.63,
       "peg": 1.11,
       "ev_sales": 2.22,
       "pb": 1.5,
@@ -27445,7 +27445,7 @@
       "eps": 1.76,
       "profit_margin": 9.37,
       "roe": 9.25,
-      "dividend_yield": 0.32,
+      "dividend_yield": 0.3,
       "beta": 0.29,
       "debt_to_equity": 108.63,
       "current_ratio": 0.97
@@ -27459,12 +27459,12 @@
         "nombre": "National Grid Transco, PLC Nati",
         "industria": "Utilities - Regulated Electric",
         "pais": "United Kingdom",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 18.79,
         "per_forward": 12.47,
         "peg": 1.03,
-        "ev_sales": 30.36,
+        "ev_sales": 30.33,
         "pb": 9.5,
         "ps": 4.68,
         "eps": 4.38,
@@ -27636,7 +27636,7 @@
         "nombre": "Central Puerto S.A.",
         "industria": "Utilities - Regulated Electric",
         "pais": "Argentina",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 7.28,
         "per_forward": 8.86,
@@ -27788,7 +27788,7 @@
         "nombre": "Empresa Distribuidora Y Comerci",
         "industria": "Utilities - Regulated Electric",
         "pais": "Argentina",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 5.37,
         "per_forward": 9.05,
@@ -27911,7 +27911,7 @@
         "nombre": "Korea Electric Power Corporatio",
         "industria": "Utilities - Regulated Electric",
         "pais": "South Korea",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 2.63,
         "per_forward": 3.14,
@@ -28033,8 +28033,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 12.0,
-          "post_cambio_pct": -0.5
+          "post_precio": 12.09,
+          "post_cambio_pct": 0.25
         },
         "en_portfolio": true
       },
@@ -28043,7 +28043,7 @@
         "nombre": "CENTRAL COSTANERA SA",
         "industria": "Utilities - Regulated Electric",
         "pais": "Argentina",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 23.2,
         "per_forward": null,
@@ -28175,7 +28175,7 @@
         "nombre": "NextEra Energy, Inc.",
         "industria": "Utilities - Regulated Electric",
         "pais": "United States",
-        "actualizado": "2026-07-24T19:02:54.918053-03:00",
+        "actualizado": "2026-07-24T20:31:47.153866-03:00",
         "stale": false,
         "per_trailing": 22.79,
         "per_forward": 20.39,
@@ -28378,8 +28378,8 @@
           "estado": "POST",
           "pre_precio": null,
           "pre_cambio_pct": null,
-          "post_precio": 89.7,
-          "post_cambio_pct": -0.09
+          "post_precio": 89.64,
+          "post_cambio_pct": -0.16
         },
         "en_portfolio": true
       },
@@ -28417,7 +28417,7 @@
         "per_trailing": 24.87,
         "per_forward": 19.78,
         "peg": 2.61,
-        "ev_sales": 6.19,
+        "ev_sales": 6.21,
         "pb": 2.95,
         "ps": null,
         "eps": 3.91,

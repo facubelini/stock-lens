@@ -11,6 +11,7 @@ Uso:
 import json
 import math
 import re
+import time
 import unicodedata
 from datetime import datetime, timedelta
 from pathlib import Path
@@ -1169,11 +1170,15 @@ def descargar_ratios_cedear():
         out = {}
         for _, fila in df.iterrows():
             ticker = str(fila.get(2, "")).strip().upper()
+            # Casi siempre "N:1" o "N : 1", pero alguna fila de la planilla
+            # trae "N.1" (typo de carga, visto en ORCL) — se acepta cualquiera
+            # de los dos separadores para no perder esos casos.
             ratio_raw = str(fila.get(7, "")).strip()
-            if not ticker or ":" not in ratio_raw:
+            sep = ":" if ":" in ratio_raw else ("." if "." in ratio_raw else None)
+            if not ticker or sep is None:
                 continue
             try:
-                n = int(ratio_raw.split(":")[0].strip())
+                n = int(ratio_raw.split(sep)[0].strip())
             except ValueError:
                 continue
             out[ticker] = n
@@ -1185,15 +1190,22 @@ def descargar_ratios_cedear():
 
 def obtener_precio_cedear(ticker_base):
     """Ultimo cierre del simbolo '{ticker_base}.BA' (liviano: solo history
-    corta, no .info). None si no hay CEDEAR con ese codigo en BYMA."""
-    try:
-        hist = yf.Ticker(f"{ticker_base}.BA").history(period="5d", interval="1d", auto_adjust=True)
-    except Exception:  # noqa: BLE001
-        return None
-    if hist is None or hist.empty or "Close" not in hist.columns:
-        return None
-    closes = hist["Close"].dropna()
-    return float(closes.iloc[-1]) if len(closes) else None
+    corta, no .info). None si no hay CEDEAR con ese codigo en BYMA. Un
+    reintento: yfinance falla seguido de forma transitoria en corridas largas
+    (cientos de tickers seguidos), y varios casos reales (VRTX, USO, ANET)
+    andan bien de forma aislada pero fallaban en la corrida completa."""
+    for intento in range(2):
+        try:
+            hist = yf.Ticker(f"{ticker_base}.BA").history(period="5d", interval="1d", auto_adjust=True)
+        except Exception:  # noqa: BLE001
+            hist = None
+        if hist is not None and not hist.empty and "Close" in hist.columns:
+            closes = hist["Close"].dropna()
+            if len(closes):
+                return float(closes.iloc[-1])
+        if intento == 0:
+            time.sleep(1)
+    return None
 
 
 # ---------------------------------------------------------------------------

@@ -14993,7 +14993,7 @@
       "ONDS": {
         "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
-        "mensual": "NEUTRAL"
+        "mensual": "EXTENDIDO"
       },
       "COP": {
         "diario": "NEUTRAL",
@@ -15026,6 +15026,16 @@
         "mensual": "EXTENDIDO"
       },
       "NVO": {
+        "diario": "NEUTRAL",
+        "semanal": "NEUTRAL",
+        "mensual": "NEUTRAL"
+      },
+      "AGRO.BA": {
+        "diario": "VENTA",
+        "semanal": "VENTA",
+        "mensual": "NEUTRAL"
+      },
+      "SEMI.BA": {
         "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"

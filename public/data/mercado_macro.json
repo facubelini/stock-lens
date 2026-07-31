@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-07-31T16:41:28.221187-03:00",
+  "actualizado": "2026-07-31T19:06:24.409611-03:00",
   "vix": {
-    "valor": 16.17,
-    "cambio_pct": -5.38
+    "valor": 15.99,
+    "cambio_pct": -6.44
   },
   "yield_curve": {
     "diez_anios": 4.74,
@@ -15,7 +15,7 @@
     "clasificacion": "Extreme Fear"
   },
   "fear_greed_acciones": {
-    "valor": 44.0,
+    "valor": 42.5,
     "clasificacion": "fear",
     "prev_cierre": 38.9,
     "prev_semana": 41.3,
@@ -23,10 +23,10 @@
     "prev_anio": 63.7
   },
   "indicadores_usa": {
-    "cpi_yoy": null,
-    "cpi_actualizado": null,
-    "desempleo": null,
-    "desempleo_actualizado": null,
+    "cpi_yoy": 3.73,
+    "cpi_actualizado": "2026-06-01",
+    "desempleo": 4.2,
+    "desempleo_actualizado": "2026-06-01",
     "fed_funds": 3.63,
     "fed_funds_actualizado": "2026-06-01"
   }

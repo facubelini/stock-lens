@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-07-21T18:47:53.033186-03:00",
+  "actualizado": "2026-08-01T10:49:59.432246-03:00",
   "horizontes_dias": [
     5,
     10,
@@ -10,69 +10,69 @@
   "stats": {
     "BASELINE": {
       "5": {
-        "n": 382633,
+        "n": 383043,
         "retorno_prom": 1.06,
         "hit_rate": 52.4
       },
       "10": {
-        "n": 380768,
-        "retorno_prom": 2.15,
-        "hit_rate": 53.7
+        "n": 381178,
+        "retorno_prom": 2.13,
+        "hit_rate": 53.6
       },
       "20": {
-        "n": 377038,
-        "retorno_prom": 4.26,
+        "n": 377448,
+        "retorno_prom": 4.25,
         "hit_rate": 54.7
       }
     },
     "FAVORABLE": {
       "5": {
-        "n": 210686,
-        "retorno_prom": 0.53,
+        "n": 211828,
+        "retorno_prom": 0.52,
         "hit_rate": 52.8
       },
       "10": {
-        "n": 209635,
-        "retorno_prom": 1.08,
+        "n": 210792,
+        "retorno_prom": 1.06,
         "hit_rate": 53.7
       },
       "20": {
-        "n": 207848,
-        "retorno_prom": 2.3,
-        "hit_rate": 55.2
+        "n": 208731,
+        "retorno_prom": 2.27,
+        "hit_rate": 55.1
       }
     },
     "FLOJO": {
       "5": {
-        "n": 37403,
-        "retorno_prom": 6.01,
-        "hit_rate": 49.6
+        "n": 36769,
+        "retorno_prom": 6.09,
+        "hit_rate": 49.4
       },
       "10": {
-        "n": 37235,
-        "retorno_prom": 11.93,
-        "hit_rate": 51.0
+        "n": 36556,
+        "retorno_prom": 12.07,
+        "hit_rate": 50.6
       },
       "20": {
-        "n": 36740,
-        "retorno_prom": 23.57,
-        "hit_rate": 53.5
+        "n": 36183,
+        "retorno_prom": 23.86,
+        "hit_rate": 53.2
       }
     },
     "NEUTRAL": {
       "5": {
-        "n": 134544,
+        "n": 134446,
         "retorno_prom": 0.52,
         "hit_rate": 52.7
       },
       "10": {
-        "n": 133898,
+        "n": 133830,
         "retorno_prom": 1.1,
-        "hit_rate": 54.4
+        "hit_rate": 54.3
       },
       "20": {
-        "n": 132450,
-        "retorno_prom": 1.99,
+        "n": 132534,
+        "retorno_prom": 2.01,
         "hit_rate": 54.4
       }
     }

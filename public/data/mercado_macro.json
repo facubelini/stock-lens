@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-08-03T16:44:11.577671-03:00",
+  "actualizado": "2026-08-03T19:09:35.375446-03:00",
   "vix": {
-    "valor": 15.83,
-    "cambio_pct": -1.0
+    "valor": 15.86,
+    "cambio_pct": -0.81
   },
   "yield_curve": {
     "diez_anios": 4.69,
@@ -15,7 +15,7 @@
     "clasificacion": "Fear"
   },
   "fear_greed_acciones": {
-    "valor": 45.9,
+    "valor": 45.8,
     "clasificacion": "neutral",
     "prev_cierre": 42.5,
     "prev_semana": 37.6,
@@ -28,6 +28,6 @@
     "desempleo": 4.2,
     "desempleo_actualizado": "2026-06-01",
     "fed_funds": 3.63,
-    "fed_funds_actualizado": "2026-06-01"
+    "fed_funds_actualizado": "2026-07-01"
   }
 }

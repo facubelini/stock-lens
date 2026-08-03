@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-08-03T19:07:02.123861-03:00",
+  "actualizado": "2026-08-03T20:35:25.894328-03:00",
   "tickers": [
     {
       "ticker": "MRNA",
@@ -20,7 +20,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 85.4,
+        "rs": 86.1,
         "relative_performance": 13.67
       },
       "momentum": {
@@ -68,7 +68,7 @@
       "relative_strength": {
         "score": 0.1,
         "max_score": 30,
-        "rs": 0.5,
+        "rs": 0.6,
         "relative_performance": -59.96
       },
       "momentum": {
@@ -100,7 +100,7 @@
     {
       "ticker": "HSY",
       "nombre": "The Hershey Company",
-      "total_score": 11.8,
+      "total_score": 11.7,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -114,9 +114,9 @@
         "ema200": 186.32
       },
       "relative_strength": {
-        "score": 5.8,
+        "score": 5.7,
         "max_score": 30,
-        "rs": 32.2,
+        "rs": 31.9,
         "relative_performance": -15.94
       },
       "momentum": {
@@ -164,7 +164,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 84.6,
+        "rs": 85.2,
         "relative_performance": 12.74
       },
       "momentum": {
@@ -260,7 +260,7 @@
       "relative_strength": {
         "score": 0.4,
         "max_score": 30,
-        "rs": 2.1,
+        "rs": 2.3,
         "relative_performance": -49.34
       },
       "momentum": {
@@ -308,7 +308,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 50.8,
+        "rs": 51.0,
         "relative_performance": -6.25
       },
       "momentum": {
@@ -356,7 +356,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 51.6,
+        "rs": 51.9,
         "relative_performance": -5.74
       },
       "momentum": {
@@ -404,7 +404,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 67.6,
+        "rs": 67.8,
         "relative_performance": 1.39
       },
       "momentum": {
@@ -452,7 +452,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 87.0,
+        "rs": 87.5,
         "relative_performance": 14.86
       },
       "momentum": {
@@ -484,7 +484,7 @@
     {
       "ticker": "BSBR",
       "nombre": "Banco Santander Brasil SA",
-      "total_score": 28.1,
+      "total_score": 27.9,
       "datos_suficientes": true,
       "trend": {
         "score": 12.0,
@@ -498,9 +498,9 @@
         "ema200": 5.48
       },
       "relative_strength": {
-        "score": 4.1,
+        "score": 3.9,
         "max_score": 30,
-        "rs": 22.6,
+        "rs": 21.4,
         "relative_performance": -21.71
       },
       "momentum": {
@@ -532,7 +532,7 @@
     {
       "ticker": "SONY",
       "nombre": "Sony Group Corporation",
-      "total_score": 30.9,
+      "total_score": 30.8,
       "datos_suficientes": true,
       "trend": {
         "score": 16.0,
@@ -546,9 +546,9 @@
         "ema200": 22.58
       },
       "relative_strength": {
-        "score": 8.9,
+        "score": 8.8,
         "max_score": 30,
-        "rs": 49.2,
+        "rs": 49.0,
         "relative_performance": -6.98
       },
       "momentum": {
@@ -580,7 +580,7 @@
     {
       "ticker": "UGP",
       "nombre": "Ultrapar Participacoes S.A. (Ne",
-      "total_score": 88.0,
+      "total_score": 91.0,
       "datos_suficientes": true,
       "trend": {
         "score": 25.0,
@@ -594,9 +594,9 @@
         "ema200": 5.04
       },
       "relative_strength": {
-        "score": 24.0,
+        "score": 27.0,
         "max_score": 30,
-        "rs": 89.9,
+        "rs": 90.1,
         "relative_performance": 23.35
       },
       "momentum": {
@@ -644,7 +644,7 @@
       "relative_strength": {
         "score": 0.5,
         "max_score": 30,
-        "rs": 2.7,
+        "rs": 2.9,
         "relative_performance": -48.0
       },
       "momentum": {
@@ -692,7 +692,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 81.6,
+        "rs": 82.3,
         "relative_performance": 10.59
       },
       "momentum": {
@@ -740,7 +740,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 79.3,
+        "rs": 79.7,
         "relative_performance": 9.06
       },
       "momentum": {
@@ -788,7 +788,7 @@
       "relative_strength": {
         "score": 8.5,
         "max_score": 30,
-        "rs": 47.3,
+        "rs": 47.0,
         "relative_performance": -8.38
       },
       "momentum": {
@@ -836,7 +836,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 76.3,
+        "rs": 76.5,
         "relative_performance": 6.81
       },
       "momentum": {
@@ -884,7 +884,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 96.0,
+        "rs": 96.8,
         "relative_performance": 46.42
       },
       "momentum": {
@@ -932,7 +932,7 @@
       "relative_strength": {
         "score": 8.8,
         "max_score": 30,
-        "rs": 48.9,
+        "rs": 48.7,
         "relative_performance": -7.03
       },
       "momentum": {
@@ -964,7 +964,7 @@
     {
       "ticker": "TIMB",
       "nombre": "TIM S.A.",
-      "total_score": 6.2,
+      "total_score": 6.1,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -978,9 +978,9 @@
         "ema200": 22.18
       },
       "relative_strength": {
-        "score": 3.2,
+        "score": 3.1,
         "max_score": 30,
-        "rs": 17.8,
+        "rs": 17.1,
         "relative_performance": -25.23
       },
       "momentum": {
@@ -1012,7 +1012,7 @@
     {
       "ticker": "PAGS",
       "nombre": "PagSeguro Digital Ltd.",
-      "total_score": 42.4,
+      "total_score": 42.2,
       "datos_suficientes": true,
       "trend": {
         "score": 12.0,
@@ -1026,9 +1026,9 @@
         "ema200": 9.47
       },
       "relative_strength": {
-        "score": 4.4,
+        "score": 4.2,
         "max_score": 30,
-        "rs": 24.5,
+        "rs": 23.2,
         "relative_performance": -20.62
       },
       "momentum": {
@@ -1060,7 +1060,7 @@
     {
       "ticker": "TM",
       "nombre": "Toyota Motor Corporation",
-      "total_score": 14.1,
+      "total_score": 14.0,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -1074,9 +1074,9 @@
         "ema200": 194.78
       },
       "relative_strength": {
-        "score": 3.1,
+        "score": 3.0,
         "max_score": 30,
-        "rs": 17.0,
+        "rs": 16.5,
         "relative_performance": -25.45
       },
       "momentum": {
@@ -1124,7 +1124,7 @@
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 93.6,
+        "rs": 94.5,
         "relative_performance": 35.88
       },
       "momentum": {
@@ -1156,7 +1156,7 @@
     {
       "ticker": "ADBE",
       "nombre": "Adobe Inc.",
-      "total_score": 14.7,
+      "total_score": 14.6,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -1170,9 +1170,9 @@
         "ema200": 273.06
       },
       "relative_strength": {
-        "score": 3.7,
+        "score": 3.6,
         "max_score": 30,
-        "rs": 20.7,
+        "rs": 20.0,
         "relative_performance": -22.14
       },
       "momentum": {
@@ -1220,7 +1220,7 @@
       "relative_strength": {
         "score": 1.0,
         "max_score": 30,
-        "rs": 5.3,
+        "rs": 5.5,
         "relative_performance": -38.19
       },
       "momentum": {
@@ -1268,7 +1268,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 52.9,
+        "rs": 53.3,
         "relative_performance": -4.27
       },
       "momentum": {
@@ -1364,7 +1364,7 @@
       "relative_strength": {
         "score": 7.7,
         "max_score": 30,
-        "rs": 42.6,
+        "rs": 42.9,
         "relative_performance": -9.82
       },
       "momentum": {
@@ -1396,7 +1396,7 @@
     {
       "ticker": "TSLA",
       "nombre": "Tesla, Inc.",
-      "total_score": 2.1,
+      "total_score": 1.9,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -1410,9 +1410,9 @@
         "ema200": 389.81
       },
       "relative_strength": {
-        "score": 2.1,
+        "score": 1.9,
         "max_score": 30,
-        "rs": 11.4,
+        "rs": 10.7,
         "relative_performance": -32.02
       },
       "momentum": {
@@ -1444,7 +1444,7 @@
     {
       "ticker": "GRMN",
       "nombre": "Garmin Ltd.",
-      "total_score": 82.0,
+      "total_score": 85.0,
       "datos_suficientes": true,
       "trend": {
         "score": 25.0,
@@ -1458,9 +1458,9 @@
         "ema200": 233.39
       },
       "relative_strength": {
-        "score": 27.0,
+        "score": 30.0,
         "max_score": 30,
-        "rs": 94.4,
+        "rs": 95.1,
         "relative_performance": 38.44
       },
       "momentum": {
@@ -1508,7 +1508,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 86.2,
+        "rs": 87.0,
         "relative_performance": 14.41
       },
       "momentum": {
@@ -1556,7 +1556,7 @@
       "relative_strength": {
         "score": 0.2,
         "max_score": 30,
-        "rs": 1.1,
+        "rs": 1.2,
         "relative_performance": -55.77
       },
       "momentum": {
@@ -1604,7 +1604,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 56.4,
+        "rs": 56.5,
         "relative_performance": -2.45
       },
       "momentum": {
@@ -1652,7 +1652,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 69.1,
+        "rs": 69.6,
         "relative_performance": 2.37
       },
       "momentum": {
@@ -1700,7 +1700,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 83.0,
+        "rs": 83.5,
         "relative_performance": 12.06
       },
       "momentum": {
@@ -1748,7 +1748,7 @@
       "relative_strength": {
         "score": 6.7,
         "max_score": 30,
-        "rs": 37.2,
+        "rs": 37.4,
         "relative_performance": -12.78
       },
       "momentum": {
@@ -1796,7 +1796,7 @@
       "relative_strength": {
         "score": 1.5,
         "max_score": 30,
-        "rs": 8.5,
+        "rs": 8.4,
         "relative_performance": -32.95
       },
       "momentum": {
@@ -1844,7 +1844,7 @@
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 92.8,
+        "rs": 93.6,
         "relative_performance": 33.29
       },
       "momentum": {
@@ -1876,7 +1876,7 @@
     {
       "ticker": "NFLX",
       "nombre": "Netflix, Inc.",
-      "total_score": 7.6,
+      "total_score": 7.4,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -1890,9 +1890,9 @@
         "ema200": 88.99
       },
       "relative_strength": {
-        "score": 4.6,
+        "score": 4.4,
         "max_score": 30,
-        "rs": 25.5,
+        "rs": 24.6,
         "relative_performance": -20.21
       },
       "momentum": {
@@ -1940,7 +1940,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 51.1,
+        "rs": 51.3,
         "relative_performance": -6.15
       },
       "momentum": {
@@ -1988,7 +1988,7 @@
       "relative_strength": {
         "score": 7.1,
         "max_score": 30,
-        "rs": 39.6,
+        "rs": 39.7,
         "relative_performance": -11.34
       },
       "momentum": {
@@ -2036,7 +2036,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 58.2,
+        "rs": 58.6,
         "relative_performance": -1.62
       },
       "momentum": {
@@ -2084,7 +2084,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 95.2,
+        "rs": 95.9,
         "relative_performance": 42.67
       },
       "momentum": {
@@ -2132,7 +2132,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 63.3,
+        "rs": 64.1,
         "relative_performance": -0.05
       },
       "momentum": {
@@ -2212,7 +2212,7 @@
     {
       "ticker": "JMIA",
       "nombre": "Jumia Technologies AG",
-      "total_score": 21.1,
+      "total_score": 21.2,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -2226,9 +2226,9 @@
         "ema200": 7.76
       },
       "relative_strength": {
-        "score": 0.1,
+        "score": 0.2,
         "max_score": 30,
-        "rs": 0.8,
+        "rs": 0.9,
         "relative_performance": -58.62
       },
       "momentum": {
@@ -2276,7 +2276,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 80.1,
+        "rs": 80.6,
         "relative_performance": 9.4
       },
       "momentum": {
@@ -2324,7 +2324,7 @@
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 90.2,
+        "rs": 90.4,
         "relative_performance": 23.79
       },
       "momentum": {
@@ -2372,7 +2372,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 75.5,
+        "rs": 75.7,
         "relative_performance": 6.31
       },
       "momentum": {
@@ -2420,7 +2420,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 68.1,
+        "rs": 68.4,
         "relative_performance": 1.92
       },
       "momentum": {
@@ -2452,7 +2452,7 @@
     {
       "ticker": "STNE",
       "nombre": "StoneCo Ltd.",
-      "total_score": 27.4,
+      "total_score": 27.3,
       "datos_suficientes": true,
       "trend": {
         "score": 9.0,
@@ -2466,9 +2466,9 @@
         "ema200": 11.74
       },
       "relative_strength": {
-        "score": 3.4,
+        "score": 3.3,
         "max_score": 30,
-        "rs": 18.9,
+        "rs": 18.6,
         "relative_performance": -22.67
       },
       "momentum": {
@@ -2516,7 +2516,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 76.6,
+        "rs": 76.8,
         "relative_performance": 6.89
       },
       "momentum": {
@@ -2564,7 +2564,7 @@
       "relative_strength": {
         "score": 1.7,
         "max_score": 30,
-        "rs": 9.6,
+        "rs": 9.3,
         "relative_performance": -32.38
       },
       "momentum": {
@@ -2660,7 +2660,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 85.6,
+        "rs": 86.4,
         "relative_performance": 13.71
       },
       "momentum": {
@@ -2708,7 +2708,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 71.3,
+        "rs": 71.9,
         "relative_performance": 3.41
       },
       "momentum": {
@@ -2756,7 +2756,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 98.4,
+        "rs": 98.8,
         "relative_performance": 85.98
       },
       "momentum": {
@@ -2788,7 +2788,7 @@
     {
       "ticker": "AZN",
       "nombre": "AstraZeneca PLC",
-      "total_score": 6.9,
+      "total_score": 6.8,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -2802,9 +2802,9 @@
         "ema200": 178.69
       },
       "relative_strength": {
-        "score": 3.9,
+        "score": 3.8,
         "max_score": 30,
-        "rs": 21.8,
+        "rs": 20.9,
         "relative_performance": -21.85
       },
       "momentum": {
@@ -2852,7 +2852,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 84.0,
+        "rs": 84.6,
         "relative_performance": 12.54
       },
       "momentum": {
@@ -2900,7 +2900,7 @@
       "relative_strength": {
         "score": 5.3,
         "max_score": 30,
-        "rs": 29.5,
+        "rs": 29.6,
         "relative_performance": -17.29
       },
       "momentum": {
@@ -2932,7 +2932,7 @@
     {
       "ticker": "SATL",
       "nombre": "Satellogic Inc.",
-      "total_score": 30.9,
+      "total_score": 30.7,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -2946,9 +2946,9 @@
         "ema200": 4.87
       },
       "relative_strength": {
-        "score": 3.9,
+        "score": 3.7,
         "max_score": 30,
-        "rs": 21.5,
+        "rs": 20.6,
         "relative_performance": -21.89
       },
       "momentum": {
@@ -2996,7 +2996,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 86.4,
+        "rs": 87.2,
         "relative_performance": 14.55
       },
       "momentum": {
@@ -3092,7 +3092,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 68.6,
+        "rs": 69.0,
         "relative_performance": 2.14
       },
       "momentum": {
@@ -3124,7 +3124,7 @@
     {
       "ticker": "SYY",
       "nombre": "Sysco Corporation",
-      "total_score": 51.9,
+      "total_score": 52.0,
       "datos_suficientes": true,
       "trend": {
         "score": 25.0,
@@ -3138,9 +3138,9 @@
         "ema200": 78.06
       },
       "relative_strength": {
-        "score": 8.9,
+        "score": 9.0,
         "max_score": 30,
-        "rs": 49.7,
+        "rs": 49.9,
         "relative_performance": -6.62
       },
       "momentum": {
@@ -3172,7 +3172,7 @@
     {
       "ticker": "VOD",
       "nombre": "Vodafone Group Plc",
-      "total_score": 58.0,
+      "total_score": 62.0,
       "datos_suficientes": true,
       "trend": {
         "score": 21.0,
@@ -3186,9 +3186,9 @@
         "ema200": 13.85
       },
       "relative_strength": {
-        "score": 10.0,
+        "score": 14.0,
         "max_score": 30,
-        "rs": 59.8,
+        "rs": 60.3,
         "relative_performance": -1.39
       },
       "momentum": {
@@ -3220,7 +3220,7 @@
     {
       "ticker": "SBS",
       "nombre": "Companhia de saneamento Basico ",
-      "total_score": 30.7,
+      "total_score": 30.6,
       "datos_suficientes": true,
       "trend": {
         "score": 9.0,
@@ -3234,9 +3234,9 @@
         "ema200": 5.47
       },
       "relative_strength": {
-        "score": 8.7,
+        "score": 8.6,
         "max_score": 30,
-        "rs": 48.1,
+        "rs": 47.8,
         "relative_performance": -7.67
       },
       "momentum": {
@@ -3268,7 +3268,7 @@
     {
       "ticker": "MOS",
       "nombre": "Mosaic Company (The)",
-      "total_score": 11.9,
+      "total_score": 11.8,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -3282,9 +3282,9 @@
         "ema200": 24.76
       },
       "relative_strength": {
-        "score": 2.9,
+        "score": 2.8,
         "max_score": 30,
-        "rs": 16.0,
+        "rs": 15.4,
         "relative_performance": -26.6
       },
       "momentum": {
@@ -3332,7 +3332,7 @@
       "relative_strength": {
         "score": 8.7,
         "max_score": 30,
-        "rs": 48.4,
+        "rs": 48.1,
         "relative_performance": -7.54
       },
       "momentum": {
@@ -3380,7 +3380,7 @@
       "relative_strength": {
         "score": 6.8,
         "max_score": 30,
-        "rs": 37.5,
+        "rs": 37.7,
         "relative_performance": -12.68
       },
       "momentum": {
@@ -3428,7 +3428,7 @@
       "relative_strength": {
         "score": 7.8,
         "max_score": 30,
-        "rs": 43.4,
+        "rs": 43.5,
         "relative_performance": -9.69
       },
       "momentum": {
@@ -3476,7 +3476,7 @@
       "relative_strength": {
         "score": 5.9,
         "max_score": 30,
-        "rs": 32.7,
+        "rs": 32.5,
         "relative_performance": -15.38
       },
       "momentum": {
@@ -3524,7 +3524,7 @@
       "relative_strength": {
         "score": 1.3,
         "max_score": 30,
-        "rs": 7.4,
+        "rs": 7.5,
         "relative_performance": -35.33
       },
       "momentum": {
@@ -3572,7 +3572,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 66.2,
+        "rs": 66.4,
         "relative_performance": 0.74
       },
       "momentum": {
@@ -3604,7 +3604,7 @@
     {
       "ticker": "BABA",
       "nombre": "Alibaba Group Holding Limited",
-      "total_score": 14.2,
+      "total_score": 14.1,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -3618,9 +3618,9 @@
         "ema200": 128.98
       },
       "relative_strength": {
-        "score": 2.2,
+        "score": 2.1,
         "max_score": 30,
-        "rs": 12.2,
+        "rs": 11.6,
         "relative_performance": -31.17
       },
       "momentum": {
@@ -3652,7 +3652,7 @@
     {
       "ticker": "CDE",
       "nombre": "Coeur Mining, Inc.",
-      "total_score": 18.3,
+      "total_score": 18.2,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -3666,9 +3666,9 @@
         "ema200": 17.09
       },
       "relative_strength": {
-        "score": 2.3,
+        "score": 2.2,
         "max_score": 30,
-        "rs": 13.0,
+        "rs": 12.5,
         "relative_performance": -30.77
       },
       "momentum": {
@@ -3716,7 +3716,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 68.4,
+        "rs": 68.7,
         "relative_performance": 1.93
       },
       "momentum": {
@@ -3748,7 +3748,7 @@
     {
       "ticker": "ASR",
       "nombre": "Grupo Aeroportuario del Sureste",
-      "total_score": 6.2,
+      "total_score": 6.0,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -3762,9 +3762,9 @@
         "ema200": 304.63
       },
       "relative_strength": {
-        "score": 3.2,
+        "score": 3.0,
         "max_score": 30,
-        "rs": 17.6,
+        "rs": 16.8,
         "relative_performance": -25.28
       },
       "momentum": {
@@ -3812,7 +3812,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 97.3,
+        "rs": 97.7,
         "relative_performance": 77.9
       },
       "momentum": {
@@ -3860,7 +3860,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 75.8,
+        "rs": 75.9,
         "relative_performance": 6.37
       },
       "momentum": {
@@ -3892,7 +3892,7 @@
     {
       "ticker": "LOMA",
       "nombre": "Loma Negra Compania Industrial ",
-      "total_score": 49.6,
+      "total_score": 49.7,
       "datos_suficientes": true,
       "trend": {
         "score": 20.0,
@@ -3906,9 +3906,9 @@
         "ema200": 11.17
       },
       "relative_strength": {
-        "score": 7.6,
+        "score": 7.7,
         "max_score": 30,
-        "rs": 42.3,
+        "rs": 42.6,
         "relative_performance": -10.1
       },
       "momentum": {
@@ -3956,7 +3956,7 @@
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 92.6,
+        "rs": 93.3,
         "relative_performance": 32.51
       },
       "momentum": {
@@ -4004,7 +4004,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 87.2,
+        "rs": 87.8,
         "relative_performance": 15.1
       },
       "momentum": {
@@ -4036,7 +4036,7 @@
     {
       "ticker": "XP",
       "nombre": "XP Inc.",
-      "total_score": 15.9,
+      "total_score": 15.8,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -4050,9 +4050,9 @@
         "ema200": 17.49
       },
       "relative_strength": {
-        "score": 4.9,
+        "score": 4.8,
         "max_score": 30,
-        "rs": 27.1,
+        "rs": 26.7,
         "relative_performance": -19.67
       },
       "momentum": {
@@ -4100,7 +4100,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 53.7,
+        "rs": 54.2,
         "relative_performance": -3.57
       },
       "momentum": {
@@ -4196,7 +4196,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 62.0,
+        "rs": 62.6,
         "relative_performance": -0.62
       },
       "momentum": {
@@ -4244,7 +4244,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 69.4,
+        "rs": 69.9,
         "relative_performance": 2.46
       },
       "momentum": {
@@ -4292,7 +4292,7 @@
       "relative_strength": {
         "score": 1.2,
         "max_score": 30,
-        "rs": 6.6,
+        "rs": 6.7,
         "relative_performance": -36.35
       },
       "momentum": {
@@ -4340,7 +4340,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 71.0,
+        "rs": 71.6,
         "relative_performance": 3.39
       },
       "momentum": {
@@ -4388,7 +4388,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 75.0,
+        "rs": 75.1,
         "relative_performance": 6.06
       },
       "momentum": {
@@ -4484,7 +4484,7 @@
       "relative_strength": {
         "score": 6.2,
         "max_score": 30,
-        "rs": 34.3,
+        "rs": 34.2,
         "relative_performance": -14.68
       },
       "momentum": {
@@ -4532,7 +4532,7 @@
       "relative_strength": {
         "score": 1.4,
         "max_score": 30,
-        "rs": 8.0,
+        "rs": 7.8,
         "relative_performance": -33.93
       },
       "momentum": {
@@ -4580,7 +4580,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 62.8,
+        "rs": 63.5,
         "relative_performance": -0.38
       },
       "momentum": {
@@ -4628,7 +4628,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 63.0,
+        "rs": 63.8,
         "relative_performance": -0.23
       },
       "momentum": {
@@ -4660,7 +4660,7 @@
     {
       "ticker": "JD",
       "nombre": "JD.com, Inc.",
-      "total_score": 65.0,
+      "total_score": 71.0,
       "datos_suficientes": true,
       "trend": {
         "score": 16.0,
@@ -4674,9 +4674,9 @@
         "ema200": 29.41
       },
       "relative_strength": {
-        "score": 18.0,
+        "score": 24.0,
         "max_score": 30,
-        "rs": 79.5,
+        "rs": 80.0,
         "relative_performance": 9.08
       },
       "momentum": {
@@ -4694,15 +4694,15 @@
         "volatility_ratio": 0.78
       },
       "gates": {
-        "rs80": false,
+        "rs80": true,
         "ema200": true,
         "sma50": true,
         "above25_from_low": true,
         "vol_below_08": true,
         "sma50_rising": false,
         "ema200_rising": true,
-        "count": 5,
-        "all_main_gates_passed": false
+        "count": 6,
+        "all_main_gates_passed": true
       }
     },
     {
@@ -4724,7 +4724,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 66.8,
+        "rs": 67.0,
         "relative_performance": 0.97
       },
       "momentum": {
@@ -4756,7 +4756,7 @@
     {
       "ticker": "QCOM",
       "nombre": "QUALCOMM Incorporated",
-      "total_score": 19.6,
+      "total_score": 19.5,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -4770,9 +4770,9 @@
         "ema200": 171.06
       },
       "relative_strength": {
-        "score": 8.6,
+        "score": 8.5,
         "max_score": 30,
-        "rs": 47.6,
+        "rs": 47.2,
         "relative_performance": -8.25
       },
       "momentum": {
@@ -4868,7 +4868,7 @@
       "relative_strength": {
         "score": 5.0,
         "max_score": 30,
-        "rs": 27.9,
+        "rs": 27.8,
         "relative_performance": -17.79
       },
       "momentum": {
@@ -4916,7 +4916,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 64.1,
+        "rs": 64.6,
         "relative_performance": 0.06
       },
       "momentum": {
@@ -4948,7 +4948,7 @@
     {
       "ticker": "SCCO",
       "nombre": "Southern Copper Corporation",
-      "total_score": 55.3,
+      "total_score": 55.4,
       "datos_suficientes": true,
       "trend": {
         "score": 25.0,
@@ -4962,9 +4962,9 @@
         "ema200": 164.51
       },
       "relative_strength": {
-        "score": 8.3,
+        "score": 8.4,
         "max_score": 30,
-        "rs": 46.3,
+        "rs": 46.4,
         "relative_performance": -8.74
       },
       "momentum": {
@@ -4996,7 +4996,7 @@
     {
       "ticker": "NU",
       "nombre": "Nu Holdings Ltd.",
-      "total_score": 31.0,
+      "total_score": 30.9,
       "datos_suficientes": true,
       "trend": {
         "score": 16.0,
@@ -5010,9 +5010,9 @@
         "ema200": 14.26
       },
       "relative_strength": {
-        "score": 3.0,
+        "score": 2.9,
         "max_score": 30,
-        "rs": 16.5,
+        "rs": 15.9,
         "relative_performance": -26.09
       },
       "momentum": {
@@ -5060,7 +5060,7 @@
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 92.0,
+        "rs": 92.8,
         "relative_performance": 31.18
       },
       "momentum": {
@@ -5108,7 +5108,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 82.7,
+        "rs": 83.2,
         "relative_performance": 11.89
       },
       "momentum": {
@@ -5156,7 +5156,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 77.7,
+        "rs": 78.0,
         "relative_performance": 7.82
       },
       "momentum": {
@@ -5204,7 +5204,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 89.4,
+        "rs": 89.6,
         "relative_performance": 22.29
       },
       "momentum": {
@@ -5252,7 +5252,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 88.3,
+        "rs": 89.0,
         "relative_performance": 17.8
       },
       "momentum": {
@@ -5300,7 +5300,7 @@
       "relative_strength": {
         "score": 4.8,
         "max_score": 30,
-        "rs": 26.9,
+        "rs": 26.4,
         "relative_performance": -19.69
       },
       "momentum": {
@@ -5348,7 +5348,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 96.5,
+        "rs": 97.4,
         "relative_performance": 59.72
       },
       "momentum": {
@@ -5396,7 +5396,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 60.9,
+        "rs": 61.4,
         "relative_performance": -0.82
       },
       "momentum": {
@@ -5428,7 +5428,7 @@
     {
       "ticker": "ARKK",
       "nombre": "ARK Innovation ETF",
-      "total_score": 25.4,
+      "total_score": 25.5,
       "datos_suficientes": true,
       "trend": {
         "score": 9.0,
@@ -5442,9 +5442,9 @@
         "ema200": 75.26
       },
       "relative_strength": {
-        "score": 7.4,
+        "score": 7.5,
         "max_score": 30,
-        "rs": 41.2,
+        "rs": 41.4,
         "relative_performance": -10.77
       },
       "momentum": {
@@ -5476,7 +5476,7 @@
     {
       "ticker": "GOLD",
       "nombre": "Gold.com, Inc.",
-      "total_score": 37.0,
+      "total_score": 36.9,
       "datos_suficientes": true,
       "trend": {
         "score": 21.0,
@@ -5490,9 +5490,9 @@
         "ema200": 39.71
       },
       "relative_strength": {
-        "score": 3.0,
+        "score": 2.9,
         "max_score": 30,
-        "rs": 16.8,
+        "rs": 16.2,
         "relative_performance": -25.56
       },
       "momentum": {
@@ -5540,7 +5540,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 77.1,
+        "rs": 77.4,
         "relative_performance": 7.34
       },
       "momentum": {
@@ -5572,7 +5572,7 @@
     {
       "ticker": "SUPV",
       "nombre": "Grupo Supervielle S.A.",
-      "total_score": 27.4,
+      "total_score": 27.3,
       "datos_suficientes": true,
       "trend": {
         "score": 9.0,
@@ -5586,9 +5586,9 @@
         "ema200": 9.75
       },
       "relative_strength": {
-        "score": 2.4,
+        "score": 2.3,
         "max_score": 30,
-        "rs": 13.3,
+        "rs": 12.8,
         "relative_performance": -30.43
       },
       "momentum": {
@@ -5620,7 +5620,7 @@
     {
       "ticker": "SPGI",
       "nombre": "S&P Global Inc.",
-      "total_score": 22.3,
+      "total_score": 22.2,
       "datos_suficientes": true,
       "trend": {
         "score": 13.0,
@@ -5634,9 +5634,9 @@
         "ema200": 429.27
       },
       "relative_strength": {
-        "score": 3.3,
+        "score": 3.2,
         "max_score": 30,
-        "rs": 18.6,
+        "rs": 18.0,
         "relative_performance": -23.92
       },
       "momentum": {
@@ -5684,7 +5684,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 50.3,
+        "rs": 50.4,
         "relative_performance": -6.36
       },
       "momentum": {
@@ -5732,7 +5732,7 @@
       "relative_strength": {
         "score": 0.7,
         "max_score": 30,
-        "rs": 3.7,
+        "rs": 4.1,
         "relative_performance": -41.76
       },
       "momentum": {
@@ -5780,7 +5780,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 95.7,
+        "rs": 96.5,
         "relative_performance": 44.98
       },
       "momentum": {
@@ -5876,7 +5876,7 @@
       "relative_strength": {
         "score": 5.0,
         "max_score": 30,
-        "rs": 27.7,
+        "rs": 27.5,
         "relative_performance": -18.73
       },
       "momentum": {
@@ -5924,7 +5924,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 74.7,
+        "rs": 74.8,
         "relative_performance": 6.04
       },
       "momentum": {
@@ -5956,7 +5956,7 @@
     {
       "ticker": "T",
       "nombre": "AT&T Inc.",
-      "total_score": 19.7,
+      "total_score": 19.6,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -5970,9 +5970,9 @@
         "ema200": 24.34
       },
       "relative_strength": {
-        "score": 5.7,
+        "score": 5.6,
         "max_score": 30,
-        "rs": 31.6,
+        "rs": 31.3,
         "relative_performance": -16.27
       },
       "momentum": {
@@ -6020,7 +6020,7 @@
       "relative_strength": {
         "score": 5.8,
         "max_score": 30,
-        "rs": 32.4,
+        "rs": 32.2,
         "relative_performance": -15.82
       },
       "momentum": {
@@ -6068,7 +6068,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 75.3,
+        "rs": 75.4,
         "relative_performance": 6.14
       },
       "momentum": {
@@ -6116,7 +6116,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 78.5,
+        "rs": 78.8,
         "relative_performance": 8.0
       },
       "momentum": {
@@ -6164,7 +6164,7 @@
       "relative_strength": {
         "score": 6.7,
         "max_score": 30,
-        "rs": 37.0,
+        "rs": 37.1,
         "relative_performance": -12.81
       },
       "momentum": {
@@ -6212,7 +6212,7 @@
       "relative_strength": {
         "score": 6.2,
         "max_score": 30,
-        "rs": 34.6,
+        "rs": 34.5,
         "relative_performance": -14.38
       },
       "momentum": {
@@ -6260,7 +6260,7 @@
       "relative_strength": {
         "score": 7.3,
         "max_score": 30,
-        "rs": 40.4,
+        "rs": 40.6,
         "relative_performance": -11.05
       },
       "momentum": {
@@ -6292,7 +6292,7 @@
     {
       "ticker": "TCOM",
       "nombre": "Trip.com Group Limited",
-      "total_score": 16.5,
+      "total_score": 16.4,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -6306,9 +6306,9 @@
         "ema200": 53.71
       },
       "relative_strength": {
-        "score": 2.5,
+        "score": 2.4,
         "max_score": 30,
-        "rs": 13.8,
+        "rs": 13.3,
         "relative_performance": -29.98
       },
       "momentum": {
@@ -6340,7 +6340,7 @@
     {
       "ticker": "EDN",
       "nombre": "Empresa Distribuidora Y Comerci",
-      "total_score": 32.0,
+      "total_score": 31.8,
       "datos_suficientes": true,
       "trend": {
         "score": 9.0,
@@ -6354,9 +6354,9 @@
         "ema200": 26.81
       },
       "relative_strength": {
-        "score": 4.0,
+        "score": 3.8,
         "max_score": 30,
-        "rs": 22.3,
+        "rs": 21.2,
         "relative_performance": -21.76
       },
       "momentum": {
@@ -6388,7 +6388,7 @@
     {
       "ticker": "MDT",
       "nombre": "Medtronic plc.",
-      "total_score": 28.7,
+      "total_score": 28.5,
       "datos_suficientes": true,
       "trend": {
         "score": 16.0,
@@ -6402,9 +6402,9 @@
         "ema200": 85.52
       },
       "relative_strength": {
-        "score": 3.7,
+        "score": 3.5,
         "max_score": 30,
-        "rs": 20.5,
+        "rs": 19.7,
         "relative_performance": -22.2
       },
       "momentum": {
@@ -6436,7 +6436,7 @@
     {
       "ticker": "META",
       "nombre": "Meta Platforms, Inc.",
-      "total_score": 3.3,
+      "total_score": 3.1,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -6450,9 +6450,9 @@
         "ema200": 628.01
       },
       "relative_strength": {
-        "score": 3.3,
+        "score": 3.1,
         "max_score": 30,
-        "rs": 18.1,
+        "rs": 17.4,
         "relative_performance": -25.03
       },
       "momentum": {
@@ -6500,7 +6500,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 55.1,
+        "rs": 55.4,
         "relative_performance": -3.25
       },
       "momentum": {
@@ -6548,7 +6548,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 98.1,
+        "rs": 98.6,
         "relative_performance": 82.38
       },
       "momentum": {
@@ -6596,7 +6596,7 @@
       "relative_strength": {
         "score": 5.9,
         "max_score": 30,
-        "rs": 33.0,
+        "rs": 32.8,
         "relative_performance": -15.25
       },
       "momentum": {
@@ -6644,7 +6644,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 67.0,
+        "rs": 67.2,
         "relative_performance": 1.09
       },
       "momentum": {
@@ -6676,7 +6676,7 @@
     {
       "ticker": "QQQ",
       "nombre": "Invesco QQQ Trust, Series 1",
-      "total_score": 52.0,
+      "total_score": 56.0,
       "datos_suficientes": true,
       "trend": {
         "score": 20.0,
@@ -6690,9 +6690,9 @@
         "ema200": 649.0
       },
       "relative_strength": {
-        "score": 14.0,
+        "score": 18.0,
         "max_score": 30,
-        "rs": 69.7,
+        "rs": 70.1,
         "relative_performance": 2.51
       },
       "momentum": {
@@ -6740,7 +6740,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 81.9,
+        "rs": 82.6,
         "relative_performance": 10.68
       },
       "momentum": {
@@ -6788,7 +6788,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 76.1,
+        "rs": 76.2,
         "relative_performance": 6.43
       },
       "momentum": {
@@ -6836,7 +6836,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 55.6,
+        "rs": 55.9,
         "relative_performance": -3.09
       },
       "momentum": {
@@ -6884,7 +6884,7 @@
       "relative_strength": {
         "score": 6.8,
         "max_score": 30,
-        "rs": 37.8,
+        "rs": 38.0,
         "relative_performance": -12.48
       },
       "momentum": {
@@ -6916,7 +6916,7 @@
     {
       "ticker": "CAAP",
       "nombre": "Corporacion America Airports SA",
-      "total_score": 50.1,
+      "total_score": 49.9,
       "datos_suficientes": true,
       "trend": {
         "score": 20.0,
@@ -6930,9 +6930,9 @@
         "ema200": 24.8
       },
       "relative_strength": {
-        "score": 4.1,
+        "score": 3.9,
         "max_score": 30,
-        "rs": 22.9,
+        "rs": 21.7,
         "relative_performance": -21.54
       },
       "momentum": {
@@ -6980,7 +6980,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 85.1,
+        "rs": 85.8,
         "relative_performance": 13.56
       },
       "momentum": {
@@ -7028,7 +7028,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 60.6,
+        "rs": 61.2,
         "relative_performance": -0.88
       },
       "momentum": {
@@ -7124,7 +7124,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 78.2,
+        "rs": 78.6,
         "relative_performance": 7.95
       },
       "momentum": {
@@ -7172,7 +7172,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 54.5,
+        "rs": 55.1,
         "relative_performance": -3.33
       },
       "momentum": {
@@ -7204,7 +7204,7 @@
     {
       "ticker": "PAAS",
       "nombre": "Pan American Silver Corp.",
-      "total_score": 26.8,
+      "total_score": 26.7,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -7218,9 +7218,9 @@
         "ema200": 47.63
       },
       "relative_strength": {
-        "score": 2.8,
+        "score": 2.7,
         "max_score": 30,
-        "rs": 15.4,
+        "rs": 14.8,
         "relative_performance": -26.81
       },
       "momentum": {
@@ -7268,7 +7268,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 87.5,
+        "rs": 88.1,
         "relative_performance": 15.14
       },
       "momentum": {
@@ -7300,7 +7300,7 @@
     {
       "ticker": "JNJ",
       "nombre": "Johnson & Johnson",
-      "total_score": 68.0,
+      "total_score": 72.0,
       "datos_suficientes": true,
       "trend": {
         "score": 25.0,
@@ -7314,9 +7314,9 @@
         "ema200": 224.79
       },
       "relative_strength": {
-        "score": 14.0,
+        "score": 18.0,
         "max_score": 30,
-        "rs": 69.9,
+        "rs": 70.4,
         "relative_performance": 2.83
       },
       "momentum": {
@@ -7364,7 +7364,7 @@
       "relative_strength": {
         "score": 4.9,
         "max_score": 30,
-        "rs": 27.4,
+        "rs": 27.2,
         "relative_performance": -19.0
       },
       "momentum": {
@@ -7412,7 +7412,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 83.2,
+        "rs": 83.8,
         "relative_performance": 12.17
       },
       "momentum": {
@@ -7460,7 +7460,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 84.8,
+        "rs": 85.5,
         "relative_performance": 13.19
       },
       "momentum": {
@@ -7508,7 +7508,7 @@
       "relative_strength": {
         "score": 5.1,
         "max_score": 30,
-        "rs": 28.5,
+        "rs": 28.4,
         "relative_performance": -17.64
       },
       "momentum": {
@@ -7556,7 +7556,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 82.2,
+        "rs": 82.9,
         "relative_performance": 10.85
       },
       "momentum": {
@@ -7588,7 +7588,7 @@
     {
       "ticker": "ROKU",
       "nombre": "Roku, Inc.",
-      "total_score": 97.0,
+      "total_score": 100.0,
       "datos_suficientes": true,
       "trend": {
         "score": 25.0,
@@ -7602,9 +7602,9 @@
         "ema200": 114.98
       },
       "relative_strength": {
-        "score": 27.0,
+        "score": 30.0,
         "max_score": 30,
-        "rs": 94.7,
+        "rs": 95.4,
         "relative_performance": 39.17
       },
       "momentum": {
@@ -7636,7 +7636,7 @@
     {
       "ticker": "MSTR",
       "nombre": "Strategy Inc",
-      "total_score": 9.6,
+      "total_score": 9.7,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -7650,9 +7650,9 @@
         "ema200": 164.68
       },
       "relative_strength": {
-        "score": 0.6,
+        "score": 0.7,
         "max_score": 30,
-        "rs": 3.5,
+        "rs": 3.8,
         "relative_performance": -42.44
       },
       "momentum": {
@@ -7700,7 +7700,7 @@
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 91.2,
+        "rs": 91.9,
         "relative_performance": 29.46
       },
       "momentum": {
@@ -7748,7 +7748,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 56.6,
+        "rs": 56.8,
         "relative_performance": -2.41
       },
       "momentum": {
@@ -7796,7 +7796,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 52.1,
+        "rs": 52.5,
         "relative_performance": -4.74
       },
       "momentum": {
@@ -7828,7 +7828,7 @@
     {
       "ticker": "ABT",
       "nombre": "Abbott Laboratories",
-      "total_score": 36.7,
+      "total_score": 36.8,
       "datos_suficientes": true,
       "trend": {
         "score": 16.0,
@@ -7842,9 +7842,9 @@
         "ema200": 103.92
       },
       "relative_strength": {
-        "score": 7.7,
+        "score": 7.8,
         "max_score": 30,
-        "rs": 42.8,
+        "rs": 43.2,
         "relative_performance": -9.77
       },
       "momentum": {
@@ -7876,7 +7876,7 @@
     {
       "ticker": "COIN",
       "nombre": "Coinbase Global, Inc.",
-      "total_score": 5.2,
+      "total_score": 5.0,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -7890,9 +7890,9 @@
         "ema200": 202.88
       },
       "relative_strength": {
-        "score": 2.2,
+        "score": 2.0,
         "max_score": 30,
-        "rs": 12.0,
+        "rs": 11.3,
         "relative_performance": -31.66
       },
       "momentum": {
@@ -7940,7 +7940,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 64.4,
+        "rs": 64.9,
         "relative_performance": 0.29
       },
       "momentum": {
@@ -7988,7 +7988,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 58.0,
+        "rs": 58.3,
         "relative_performance": -1.66
       },
       "momentum": {
@@ -8036,7 +8036,7 @@
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 91.5,
+        "rs": 92.2,
         "relative_performance": 30.36
       },
       "momentum": {
@@ -8084,7 +8084,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 99.7,
+        "rs": 100.0,
         "relative_performance": 123.22
       },
       "momentum": {
@@ -8132,7 +8132,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 72.1,
+        "rs": 72.5,
         "relative_performance": 4.07
       },
       "momentum": {
@@ -8180,7 +8180,7 @@
       "relative_strength": {
         "score": 0.6,
         "max_score": 30,
-        "rs": 3.2,
+        "rs": 3.5,
         "relative_performance": -44.41
       },
       "momentum": {
@@ -8228,7 +8228,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 60.1,
+        "rs": 60.6,
         "relative_performance": -1.31
       },
       "momentum": {
@@ -8276,7 +8276,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 80.3,
+        "rs": 80.9,
         "relative_performance": 9.54
       },
       "momentum": {
@@ -8372,7 +8372,7 @@
       "relative_strength": {
         "score": 6.0,
         "max_score": 30,
-        "rs": 33.5,
+        "rs": 33.6,
         "relative_performance": -15.02
       },
       "momentum": {
@@ -8420,7 +8420,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 97.9,
+        "rs": 98.3,
         "relative_performance": 81.74
       },
       "momentum": {
@@ -8468,7 +8468,7 @@
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 93.1,
+        "rs": 93.9,
         "relative_performance": 34.34
       },
       "momentum": {
@@ -8500,7 +8500,7 @@
     {
       "ticker": "KGC",
       "nombre": "Kinross Gold Corporation",
-      "total_score": 21.8,
+      "total_score": 21.7,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -8514,9 +8514,9 @@
         "ema200": 26.58
       },
       "relative_strength": {
-        "score": 1.8,
+        "score": 1.7,
         "max_score": 30,
-        "rs": 9.8,
+        "rs": 9.6,
         "relative_performance": -32.38
       },
       "momentum": {
@@ -8548,7 +8548,7 @@
     {
       "ticker": "PLTR",
       "nombre": "Palantir Technologies Inc.",
-      "total_score": 12.8,
+      "total_score": 12.7,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -8562,9 +8562,9 @@
         "ema200": 140.81
       },
       "relative_strength": {
-        "score": 3.8,
+        "score": 3.7,
         "max_score": 30,
-        "rs": 21.0,
+        "rs": 20.3,
         "relative_performance": -22.13
       },
       "momentum": {
@@ -8612,8 +8612,8 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 63.6,
-        "relative_performance": 0.0
+        "rs": 64.3,
+        "relative_performance": -0.0
       },
       "momentum": {
         "score": 23.0,
@@ -8644,7 +8644,7 @@
     {
       "ticker": "HMY",
       "nombre": "Harmony Gold Mining Company Lim",
-      "total_score": 26.6,
+      "total_score": 26.5,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -8658,9 +8658,9 @@
         "ema200": 16.6
       },
       "relative_strength": {
-        "score": 2.6,
+        "score": 2.5,
         "max_score": 30,
-        "rs": 14.4,
+        "rs": 13.9,
         "relative_performance": -28.54
       },
       "momentum": {
@@ -8708,7 +8708,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 97.6,
+        "rs": 98.0,
         "relative_performance": 78.2
       },
       "momentum": {
@@ -8740,7 +8740,7 @@
     {
       "ticker": "CRM",
       "nombre": "Salesforce, Inc.",
-      "total_score": 12.7,
+      "total_score": 12.5,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -8754,9 +8754,9 @@
         "ema200": 198.45
       },
       "relative_strength": {
-        "score": 4.7,
+        "score": 4.5,
         "max_score": 30,
-        "rs": 26.1,
+        "rs": 25.2,
         "relative_performance": -20.02
       },
       "momentum": {
@@ -8804,7 +8804,7 @@
       "relative_strength": {
         "score": 7.6,
         "max_score": 30,
-        "rs": 42.0,
+        "rs": 42.3,
         "relative_performance": -10.11
       },
       "momentum": {
@@ -8836,7 +8836,7 @@
     {
       "ticker": "GLOB",
       "nombre": "Globant S.A.",
-      "total_score": 12.3,
+      "total_score": 12.4,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -8850,9 +8850,9 @@
         "ema200": 52.44
       },
       "relative_strength": {
-        "score": 0.3,
+        "score": 0.4,
         "max_score": 30,
-        "rs": 1.9,
+        "rs": 2.0,
         "relative_performance": -49.55
       },
       "momentum": {
@@ -8900,7 +8900,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 71.8,
+        "rs": 72.2,
         "relative_performance": 3.65
       },
       "momentum": {
@@ -8932,7 +8932,7 @@
     {
       "ticker": "ORCL",
       "nombre": "Oracle Corporation",
-      "total_score": 7.2,
+      "total_score": 7.0,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -8946,9 +8946,9 @@
         "ema200": 174.7
       },
       "relative_strength": {
-        "score": 4.2,
+        "score": 4.0,
         "max_score": 30,
-        "rs": 23.4,
+        "rs": 22.0,
         "relative_performance": -21.15
       },
       "momentum": {
@@ -9044,7 +9044,7 @@
       "relative_strength": {
         "score": 6.6,
         "max_score": 30,
-        "rs": 36.7,
+        "rs": 36.8,
         "relative_performance": -13.32
       },
       "momentum": {
@@ -9092,7 +9092,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 62.2,
+        "rs": 62.9,
         "relative_performance": -0.59
       },
       "momentum": {
@@ -9140,7 +9140,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 55.3,
+        "rs": 55.7,
         "relative_performance": -3.21
       },
       "momentum": {
@@ -9172,7 +9172,7 @@
     {
       "ticker": "NEM",
       "nombre": "Newmont Corporation",
-      "total_score": 27.5,
+      "total_score": 27.4,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -9186,9 +9186,9 @@
         "ema200": 98.25
       },
       "relative_strength": {
-        "score": 3.5,
+        "score": 3.4,
         "max_score": 30,
-        "rs": 19.7,
+        "rs": 19.1,
         "relative_performance": -22.55
       },
       "momentum": {
@@ -9236,7 +9236,7 @@
       "relative_strength": {
         "score": 6.4,
         "max_score": 30,
-        "rs": 35.6,
+        "rs": 35.7,
         "relative_performance": -13.96
       },
       "momentum": {
@@ -9380,7 +9380,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 66.0,
+        "rs": 66.1,
         "relative_performance": 0.71
       },
       "momentum": {
@@ -9428,7 +9428,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 77.9,
+        "rs": 78.3,
         "relative_performance": 7.85
       },
       "momentum": {
@@ -9476,7 +9476,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 96.3,
+        "rs": 97.1,
         "relative_performance": 48.26
       },
       "momentum": {
@@ -9524,7 +9524,7 @@
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 90.7,
+        "rs": 91.0,
         "relative_performance": 25.79
       },
       "momentum": {
@@ -9572,7 +9572,7 @@
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 91.0,
+        "rs": 91.6,
         "relative_performance": 27.27
       },
       "momentum": {
@@ -9620,7 +9620,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 66.5,
+        "rs": 66.7,
         "relative_performance": 0.88
       },
       "momentum": {
@@ -9700,7 +9700,7 @@
     {
       "ticker": "UPST",
       "nombre": "Upstart Holdings, Inc.",
-      "total_score": 17.1,
+      "total_score": 17.0,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -9714,9 +9714,9 @@
         "ema200": 36.54
       },
       "relative_strength": {
-        "score": 2.1,
+        "score": 2.0,
         "max_score": 30,
-        "rs": 11.7,
+        "rs": 11.0,
         "relative_performance": -31.88
       },
       "momentum": {
@@ -9764,7 +9764,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 54.3,
+        "rs": 54.8,
         "relative_performance": -3.4
       },
       "momentum": {
@@ -9796,7 +9796,7 @@
     {
       "ticker": "IBM",
       "nombre": "International Business Machines",
-      "total_score": 11.0,
+      "total_score": 10.9,
       "datos_suficientes": true,
       "trend": {
         "score": 9.0,
@@ -9810,9 +9810,9 @@
         "ema200": 256.67
       },
       "relative_strength": {
-        "score": 2.0,
+        "score": 1.9,
         "max_score": 30,
-        "rs": 11.2,
+        "rs": 10.4,
         "relative_performance": -32.09
       },
       "momentum": {
@@ -9860,7 +9860,7 @@
       "relative_strength": {
         "score": 6.0,
         "max_score": 30,
-        "rs": 33.2,
+        "rs": 33.3,
         "relative_performance": -15.03
       },
       "momentum": {
@@ -9908,7 +9908,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 80.6,
+        "rs": 81.2,
         "relative_performance": 9.56
       },
       "momentum": {
@@ -9956,7 +9956,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 58.5,
+        "rs": 58.8,
         "relative_performance": -1.61
       },
       "momentum": {
@@ -10100,7 +10100,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 83.5,
+        "rs": 84.1,
         "relative_performance": 12.19
       },
       "momentum": {
@@ -10148,7 +10148,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 73.7,
+        "rs": 73.6,
         "relative_performance": 5.49
       },
       "momentum": {
@@ -10196,7 +10196,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 51.9,
+        "rs": 52.2,
         "relative_performance": -5.06
       },
       "momentum": {
@@ -10244,7 +10244,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 57.2,
+        "rs": 57.4,
         "relative_performance": -1.83
       },
       "momentum": {
@@ -10292,7 +10292,7 @@
       "relative_strength": {
         "score": 7.4,
         "max_score": 30,
-        "rs": 41.0,
+        "rs": 41.2,
         "relative_performance": -10.82
       },
       "momentum": {
@@ -10340,7 +10340,7 @@
       "relative_strength": {
         "score": 8.9,
         "max_score": 30,
-        "rs": 49.5,
+        "rs": 49.6,
         "relative_performance": -6.8
       },
       "momentum": {
@@ -10388,7 +10388,7 @@
       "relative_strength": {
         "score": 3.4,
         "max_score": 30,
-        "rs": 19.1,
+        "rs": 18.8,
         "relative_performance": -22.56
       },
       "momentum": {
@@ -10436,7 +10436,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 52.4,
+        "rs": 52.8,
         "relative_performance": -4.68
       },
       "momentum": {
@@ -10532,7 +10532,7 @@
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 93.4,
+        "rs": 94.2,
         "relative_performance": 35.62
       },
       "momentum": {
@@ -10580,7 +10580,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 61.2,
+        "rs": 61.7,
         "relative_performance": -0.78
       },
       "momentum": {
@@ -10628,7 +10628,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 70.2,
+        "rs": 70.7,
         "relative_performance": 2.94
       },
       "momentum": {
@@ -10676,7 +10676,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 85.9,
+        "rs": 86.7,
         "relative_performance": 13.99
       },
       "momentum": {
@@ -10708,7 +10708,7 @@
     {
       "ticker": "ACN",
       "nombre": "Accenture plc",
-      "total_score": 12.7,
+      "total_score": 12.8,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -10722,9 +10722,9 @@
         "ema200": 198.03
       },
       "relative_strength": {
-        "score": 0.7,
+        "score": 0.8,
         "max_score": 30,
-        "rs": 4.0,
+        "rs": 4.3,
         "relative_performance": -41.7
       },
       "momentum": {
@@ -10772,7 +10772,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 68.9,
+        "rs": 69.3,
         "relative_performance": 2.3
       },
       "momentum": {
@@ -10804,7 +10804,7 @@
     {
       "ticker": "AEM",
       "nombre": "Agnico Eagle Mines Limited",
-      "total_score": 11.5,
+      "total_score": 11.4,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -10818,9 +10818,9 @@
         "ema200": 169.96
       },
       "relative_strength": {
-        "score": 2.5,
+        "score": 2.4,
         "max_score": 30,
-        "rs": 14.1,
+        "rs": 13.6,
         "relative_performance": -29.4
       },
       "momentum": {
@@ -10868,7 +10868,7 @@
       "relative_strength": {
         "score": 5.7,
         "max_score": 30,
-        "rs": 31.9,
+        "rs": 31.6,
         "relative_performance": -15.98
       },
       "momentum": {
@@ -10916,7 +10916,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 67.3,
+        "rs": 67.5,
         "relative_performance": 1.26
       },
       "momentum": {
@@ -10959,7 +10959,7 @@
         "sma50_rising": false,
         "ema200_rising": true,
         "sma50": 2400.0,
-        "ema200": 2399.88
+        "ema200": 2399.89
       },
       "relative_strength": {
         "score": 8.1,
@@ -11006,7 +11006,7 @@
       "relative_strength": {
         "score": 7.5,
         "max_score": 30,
-        "rs": 41.5,
+        "rs": 41.7,
         "relative_performance": -10.55
       },
       "momentum": {
@@ -11102,7 +11102,7 @@
       "relative_strength": {
         "score": 0.8,
         "max_score": 30,
-        "rs": 4.3,
+        "rs": 4.6,
         "relative_performance": -40.63
       },
       "momentum": {
@@ -11150,7 +11150,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 99.5,
+        "rs": 99.7,
         "relative_performance": 116.81
       },
       "momentum": {
@@ -11182,7 +11182,7 @@
     {
       "ticker": "BBAS3.SA",
       "nombre": "BRASIL      ON      NM",
-      "total_score": 20.5,
+      "total_score": 20.3,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -11192,14 +11192,14 @@
         "sma50_above_ema200": false,
         "sma50_rising": false,
         "ema200_rising": false,
-        "sma50": 20.12,
+        "sma50": 20.14,
         "ema200": 21.71
       },
       "relative_strength": {
-        "score": 3.5,
+        "score": 3.3,
         "max_score": 30,
-        "rs": 19.4,
-        "relative_performance": -22.55
+        "rs": 18.3,
+        "relative_performance": -22.85
       },
       "momentum": {
         "score": 6.0,
@@ -11211,9 +11211,9 @@
       "volatility": {
         "score": 6.0,
         "max_score": 15,
-        "current_volatility": 26.8,
+        "current_volatility": 26.5,
         "historical_volatility": 29.1,
-        "volatility_ratio": 0.92
+        "volatility_ratio": 0.91
       },
       "gates": {
         "rs80": false,
@@ -11230,7 +11230,7 @@
     {
       "ticker": "BBV.BA",
       "nombre": "BANCO BILBAO VIZCAYA ARGENTAR C",
-      "total_score": 82.0,
+      "total_score": 88.0,
       "datos_suficientes": true,
       "trend": {
         "score": 25.0,
@@ -11244,9 +11244,9 @@
         "ema200": 33051.94
       },
       "relative_strength": {
-        "score": 18.0,
+        "score": 24.0,
         "max_score": 30,
-        "rs": 79.8,
+        "rs": 80.3,
         "relative_performance": 9.32
       },
       "momentum": {
@@ -11264,15 +11264,15 @@
         "volatility_ratio": 0.87
       },
       "gates": {
-        "rs80": false,
+        "rs80": true,
         "ema200": true,
         "sma50": true,
         "above25_from_low": true,
         "vol_below_08": false,
         "sma50_rising": true,
         "ema200_rising": true,
-        "count": 5,
-        "all_main_gates_passed": false
+        "count": 6,
+        "all_main_gates_passed": true
       }
     },
     {
@@ -11294,7 +11294,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 52.7,
+        "rs": 53.0,
         "relative_performance": -4.35
       },
       "momentum": {
@@ -11342,7 +11342,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 81.1,
+        "rs": 81.7,
         "relative_performance": 10.39
       },
       "momentum": {
@@ -11374,7 +11374,7 @@
     {
       "ticker": "BNG.BA",
       "nombre": "BUNGE GLOBAL SA CEDEAR EACH REP",
-      "total_score": 39.3,
+      "total_score": 39.4,
       "datos_suficientes": true,
       "trend": {
         "score": 16.0,
@@ -11385,26 +11385,26 @@
         "sma50_rising": false,
         "ema200_rising": true,
         "sma50": 36132.79,
-        "ema200": 32872.72
+        "ema200": 32897.07
       },
       "relative_strength": {
-        "score": 7.3,
+        "score": 7.4,
         "max_score": 30,
-        "rs": 40.7,
+        "rs": 40.9,
         "relative_performance": -11.02
       },
       "momentum": {
         "score": 16.0,
         "max_score": 30,
         "distance_from_52w_high": -16.37,
-        "percentage_above_52w_low": 74.6,
+        "percentage_above_52w_low": 73.08,
         "recent_52w_high": false
       },
       "volatility": {
         "score": 0.0,
         "max_score": 15,
         "current_volatility": 46.8,
-        "historical_volatility": 37.2,
+        "historical_volatility": 37.3,
         "volatility_ratio": 1.26
       },
       "gates": {
@@ -11438,7 +11438,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 78.7,
+        "rs": 79.1,
         "relative_performance": 8.75
       },
       "momentum": {
@@ -11486,7 +11486,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 67.8,
+        "rs": 68.1,
         "relative_performance": 1.86
       },
       "momentum": {
@@ -11518,7 +11518,7 @@
     {
       "ticker": "BYMA.BA",
       "nombre": "BOLSAS Y MERCADOS ARGENTINOS SA",
-      "total_score": 54.4,
+      "total_score": 54.1,
       "datos_suficientes": true,
       "trend": {
         "score": 20.0,
@@ -11532,9 +11532,9 @@
         "ema200": 287.19
       },
       "relative_strength": {
-        "score": 4.4,
+        "score": 4.1,
         "max_score": 30,
-        "rs": 24.2,
+        "rs": 22.9,
         "relative_performance": -20.85
       },
       "momentum": {
@@ -11582,7 +11582,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 80.9,
+        "rs": 81.4,
         "relative_performance": 9.72
       },
       "momentum": {
@@ -11614,7 +11614,7 @@
     {
       "ticker": "CL",
       "nombre": "Colgate-Palmolive Company",
-      "total_score": 46.5,
+      "total_score": 46.4,
       "datos_suficientes": true,
       "trend": {
         "score": 20.0,
@@ -11628,9 +11628,9 @@
         "ema200": 87.12
       },
       "relative_strength": {
-        "score": 8.5,
+        "score": 8.4,
         "max_score": 30,
-        "rs": 47.1,
+        "rs": 46.7,
         "relative_performance": -8.48
       },
       "momentum": {
@@ -11710,7 +11710,7 @@
     {
       "ticker": "CRES.BA",
       "nombre": "CRESUD S.A.C.I.F.Y.A.",
-      "total_score": 51.0,
+      "total_score": 51.1,
       "datos_suficientes": true,
       "trend": {
         "score": 25.0,
@@ -11720,14 +11720,14 @@
         "sma50_above_ema200": true,
         "sma50_rising": true,
         "ema200_rising": true,
-        "sma50": 1748.56,
-        "ema200": 1677.19
+        "sma50": 1750.96,
+        "ema200": 1678.07
       },
       "relative_strength": {
-        "score": 4.0,
+        "score": 4.1,
         "max_score": 30,
-        "rs": 22.1,
-        "relative_performance": -21.79
+        "rs": 22.6,
+        "relative_performance": -20.95
       },
       "momentum": {
         "score": 16.0,
@@ -11774,7 +11774,7 @@
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 91.8,
+        "rs": 92.5,
         "relative_performance": 30.38
       },
       "momentum": {
@@ -11822,7 +11822,7 @@
       "relative_strength": {
         "score": 6.6,
         "max_score": 30,
-        "rs": 36.4,
+        "rs": 36.5,
         "relative_performance": -13.42
       },
       "momentum": {
@@ -11870,7 +11870,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 57.4,
+        "rs": 57.7,
         "relative_performance": -1.81
       },
       "momentum": {
@@ -11918,7 +11918,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 72.6,
+        "rs": 73.0,
         "relative_performance": 4.68
       },
       "momentum": {
@@ -11950,7 +11950,7 @@
     {
       "ticker": "DIS",
       "nombre": "Walt Disney Company (The)",
-      "total_score": 13.5,
+      "total_score": 13.3,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -11964,9 +11964,9 @@
         "ema200": 102.54
       },
       "relative_strength": {
-        "score": 4.5,
+        "score": 4.3,
         "max_score": 30,
-        "rs": 25.0,
+        "rs": 24.1,
         "relative_performance": -20.36
       },
       "momentum": {
@@ -12014,7 +12014,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 50.5,
+        "rs": 50.7,
         "relative_performance": -6.31
       },
       "momentum": {
@@ -12046,7 +12046,7 @@
     {
       "ticker": "EFX",
       "nombre": "Equifax, Inc.",
-      "total_score": 13.3,
+      "total_score": 13.0,
       "datos_suficientes": true,
       "trend": {
         "score": 9.0,
@@ -12060,9 +12060,9 @@
         "ema200": 190.21
       },
       "relative_strength": {
-        "score": 4.3,
+        "score": 4.0,
         "max_score": 30,
-        "rs": 23.9,
+        "rs": 22.3,
         "relative_performance": -20.98
       },
       "momentum": {
@@ -12110,7 +12110,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 79.0,
+        "rs": 79.4,
         "relative_performance": 9.03
       },
       "momentum": {
@@ -12158,7 +12158,7 @@
       "relative_strength": {
         "score": 1.5,
         "max_score": 30,
-        "rs": 8.2,
+        "rs": 8.1,
         "relative_performance": -33.82
       },
       "momentum": {
@@ -12190,7 +12190,7 @@
     {
       "ticker": "FNMA",
       "nombre": "Fannie Mae",
-      "total_score": 18.2,
+      "total_score": 18.3,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -12204,9 +12204,9 @@
         "ema200": 7.56
       },
       "relative_strength": {
-        "score": 1.2,
+        "score": 1.3,
         "max_score": 30,
-        "rs": 6.9,
+        "rs": 7.0,
         "relative_performance": -35.89
       },
       "momentum": {
@@ -12254,7 +12254,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 65.2,
+        "rs": 65.5,
         "relative_performance": 0.52
       },
       "momentum": {
@@ -12286,7 +12286,7 @@
     {
       "ticker": "GSK",
       "nombre": "GSK plc",
-      "total_score": 51.6,
+      "total_score": 51.5,
       "datos_suficientes": true,
       "trend": {
         "score": 20.0,
@@ -12300,9 +12300,9 @@
         "ema200": 49.98
       },
       "relative_strength": {
-        "score": 8.6,
+        "score": 8.5,
         "max_score": 30,
-        "rs": 47.9,
+        "rs": 47.5,
         "relative_performance": -7.75
       },
       "momentum": {
@@ -12334,7 +12334,7 @@
     {
       "ticker": "HAPV3.SA",
       "nombre": "HAPVIDA     ON      NM",
-      "total_score": 17.2,
+      "total_score": 20.9,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -12344,14 +12344,14 @@
         "sma50_above_ema200": false,
         "sma50_rising": false,
         "ema200_rising": false,
-        "sma50": 11.0,
-        "ema200": 16.11
+        "sma50": 10.98,
+        "ema200": 16.06
       },
       "relative_strength": {
-        "score": 4.2,
+        "score": 4.9,
         "max_score": 30,
-        "rs": 23.1,
-        "relative_performance": -21.31
+        "rs": 27.0,
+        "relative_performance": -19.44
       },
       "momentum": {
         "score": 8.0,
@@ -12361,11 +12361,11 @@
         "recent_52w_high": false
       },
       "volatility": {
-        "score": 0.0,
+        "score": 3.0,
         "max_score": 15,
-        "current_volatility": 64.9,
-        "historical_volatility": 50.5,
-        "volatility_ratio": 1.29
+        "current_volatility": 60.8,
+        "historical_volatility": 50.8,
+        "volatility_ratio": 1.2
       },
       "gates": {
         "rs80": false,
@@ -12398,7 +12398,7 @@
       "relative_strength": {
         "score": 5.6,
         "max_score": 30,
-        "rs": 31.1,
+        "rs": 31.0,
         "relative_performance": -16.36
       },
       "momentum": {
@@ -12441,7 +12441,7 @@
         "sma50_rising": false,
         "ema200_rising": true,
         "sma50": 6279.0,
-        "ema200": 6278.86
+        "ema200": 6278.87
       },
       "relative_strength": {
         "score": 8.1,
@@ -12488,7 +12488,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 88.6,
+        "rs": 89.3,
         "relative_performance": 18.26
       },
       "momentum": {
@@ -12536,7 +12536,7 @@
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 90.4,
+        "rs": 90.7,
         "relative_performance": 25.14
       },
       "momentum": {
@@ -12584,7 +12584,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 84.3,
+        "rs": 84.9,
         "relative_performance": 12.66
       },
       "momentum": {
@@ -12632,7 +12632,7 @@
       "relative_strength": {
         "score": 5.5,
         "max_score": 30,
-        "rs": 30.3,
+        "rs": 30.4,
         "relative_performance": -16.74
       },
       "momentum": {
@@ -12680,7 +12680,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 87.8,
+        "rs": 88.4,
         "relative_performance": 16.12
       },
       "momentum": {
@@ -12712,7 +12712,7 @@
     {
       "ticker": "KEP",
       "nombre": "Korea Electric Power Corporatio",
-      "total_score": 6.5,
+      "total_score": 6.6,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -12726,9 +12726,9 @@
         "ema200": 14.22
       },
       "relative_strength": {
-        "score": 0.5,
+        "score": 0.6,
         "max_score": 30,
-        "rs": 2.9,
+        "rs": 3.2,
         "relative_performance": -45.56
       },
       "momentum": {
@@ -12771,12 +12771,12 @@
         "sma50_rising": true,
         "ema200_rising": true,
         "sma50": 81462.17,
-        "ema200": 73831.41
+        "ema200": 73891.73
       },
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 59.0,
+        "rs": 59.4,
         "relative_performance": -1.54
       },
       "momentum": {
@@ -12790,7 +12790,7 @@
         "score": 3.0,
         "max_score": 15,
         "current_volatility": 33.4,
-        "historical_volatility": 31.7,
+        "historical_volatility": 31.8,
         "volatility_ratio": 1.05
       },
       "gates": {
@@ -12824,7 +12824,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 59.3,
+        "rs": 59.7,
         "relative_performance": -1.44
       },
       "momentum": {
@@ -12856,7 +12856,7 @@
     {
       "ticker": "LREN3.SA",
       "nombre": "LOJAS RENNERON      NM",
-      "total_score": 14.5,
+      "total_score": 17.9,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -12866,14 +12866,14 @@
         "sma50_above_ema200": false,
         "sma50_rising": false,
         "ema200_rising": false,
-        "sma50": 14.32,
-        "ema200": 14.32
+        "sma50": 14.29,
+        "ema200": 14.31
       },
       "relative_strength": {
-        "score": 5.5,
+        "score": 5.9,
         "max_score": 30,
-        "rs": 30.6,
-        "relative_performance": -16.6
+        "rs": 33.0,
+        "relative_performance": -15.24
       },
       "momentum": {
         "score": 6.0,
@@ -12883,11 +12883,11 @@
         "recent_52w_high": false
       },
       "volatility": {
-        "score": 3.0,
+        "score": 6.0,
         "max_score": 15,
-        "current_volatility": 40.2,
+        "current_volatility": 36.1,
         "historical_volatility": 37.4,
-        "volatility_ratio": 1.07
+        "volatility_ratio": 0.96
       },
       "gates": {
         "rs80": false,
@@ -12920,7 +12920,7 @@
       "relative_strength": {
         "score": 6.1,
         "max_score": 30,
-        "rs": 33.8,
+        "rs": 33.9,
         "relative_performance": -14.98
       },
       "momentum": {
@@ -12952,7 +12952,7 @@
     {
       "ticker": "MGLU3.SA",
       "nombre": "MAGAZ LUIZA ON      NM",
-      "total_score": 14.2,
+      "total_score": 14.3,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -12962,14 +12962,14 @@
         "sma50_above_ema200": false,
         "sma50_rising": false,
         "ema200_rising": false,
-        "sma50": 5.07,
-        "ema200": 7.26
+        "sma50": 5.04,
+        "ema200": 7.24
       },
       "relative_strength": {
-        "score": 0.2,
+        "score": 0.3,
         "max_score": 30,
-        "rs": 1.3,
-        "relative_performance": -53.06
+        "rs": 1.7,
+        "relative_performance": -51.32
       },
       "momentum": {
         "score": 3.0,
@@ -12981,9 +12981,9 @@
       "volatility": {
         "score": 6.0,
         "max_score": 15,
-        "current_volatility": 52.4,
+        "current_volatility": 51.2,
         "historical_volatility": 55.9,
-        "volatility_ratio": 0.94
+        "volatility_ratio": 0.92
       },
       "gates": {
         "rs80": false,
@@ -13016,7 +13016,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 70.5,
+        "rs": 71.3,
         "relative_performance": 3.23
       },
       "momentum": {
@@ -13048,7 +13048,7 @@
     {
       "ticker": "MORI.BA",
       "nombre": "MORIXE HERMANOS",
-      "total_score": 15.8,
+      "total_score": 15.9,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -13062,9 +13062,9 @@
         "ema200": 30.55
       },
       "relative_strength": {
-        "score": 0.8,
+        "score": 0.9,
         "max_score": 30,
-        "rs": 4.5,
+        "rs": 4.9,
         "relative_performance": -40.09
       },
       "momentum": {
@@ -13112,7 +13112,7 @@
       "relative_strength": {
         "score": 1.6,
         "max_score": 30,
-        "rs": 8.8,
+        "rs": 8.7,
         "relative_performance": -32.93
       },
       "momentum": {
@@ -13160,7 +13160,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 57.7,
+        "rs": 58.0,
         "relative_performance": -1.78
       },
       "momentum": {
@@ -13203,12 +13203,12 @@
         "sma50_rising": false,
         "ema200_rising": true,
         "sma50": 19518.3,
-        "ema200": 14357.21
+        "ema200": 14364.55
       },
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 92.3,
+        "rs": 93.0,
         "relative_performance": 31.25
       },
       "momentum": {
@@ -13256,7 +13256,7 @@
       "relative_strength": {
         "score": 8.3,
         "max_score": 30,
-        "rs": 46.0,
+        "rs": 46.1,
         "relative_performance": -8.85
       },
       "momentum": {
@@ -13292,8 +13292,8 @@
         "sma50_above_ema200": true,
         "sma50_rising": true,
         "ema200_rising": true,
-        "sma50": 13199.86,
-        "ema200": 13146.3
+        "sma50": 13199.88,
+        "ema200": 13146.84
       },
       "relative_strength": {
         "score": 8.1,
@@ -13330,7 +13330,7 @@
     {
       "ticker": "PAC",
       "nombre": "Grupo Aeroportuario Del Pacific",
-      "total_score": 8.7,
+      "total_score": 8.6,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -13344,9 +13344,9 @@
         "ema200": 239.33
       },
       "relative_strength": {
-        "score": 2.7,
+        "score": 2.6,
         "max_score": 30,
-        "rs": 14.9,
+        "rs": 14.5,
         "relative_performance": -27.91
       },
       "momentum": {
@@ -13394,7 +13394,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 53.2,
+        "rs": 53.6,
         "relative_performance": -4.19
       },
       "momentum": {
@@ -13426,7 +13426,7 @@
     {
       "ticker": "PFE",
       "nombre": "Pfizer, Inc.",
-      "total_score": 43.2,
+      "total_score": 43.3,
       "datos_suficientes": true,
       "trend": {
         "score": 12.0,
@@ -13440,9 +13440,9 @@
         "ema200": 24.78
       },
       "relative_strength": {
-        "score": 7.2,
+        "score": 7.3,
         "max_score": 30,
-        "rs": 40.2,
+        "rs": 40.3,
         "relative_performance": -11.05
       },
       "momentum": {
@@ -13477,21 +13477,21 @@
       "total_score": null,
       "datos_suficientes": false,
       "trend": {
-        "score": 5.0,
+        "score": 0.0,
         "max_score": 25,
         "price_above_ema200": false,
         "price_above_sma50": false,
-        "sma50_above_ema200": true,
+        "sma50_above_ema200": false,
         "sma50_rising": false,
         "ema200_rising": false,
-        "sma50": 29714.39,
-        "ema200": 29572.48
+        "sma50": 29541.19,
+        "ema200": 29554.66
       },
       "relative_strength": {
-        "score": 5.7,
+        "score": 4.3,
         "max_score": 30,
-        "rs": 31.4,
-        "relative_performance": -16.35
+        "rs": 23.8,
+        "relative_performance": -20.4
       },
       "momentum": {
         "score": 3.0,
@@ -13532,7 +13532,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 54.0,
+        "rs": 54.5,
         "relative_performance": -3.48
       },
       "momentum": {
@@ -13574,14 +13574,14 @@
         "sma50_above_ema200": true,
         "sma50_rising": false,
         "ema200_rising": true,
-        "sma50": 58.31,
-        "ema200": 54.41
+        "sma50": 58.16,
+        "ema200": 54.47
       },
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 72.9,
-        "relative_performance": 5.24
+        "rs": 71.0,
+        "relative_performance": 3.17
       },
       "momentum": {
         "score": 16.0,
@@ -13593,9 +13593,9 @@
       "volatility": {
         "score": 0.0,
         "max_score": 15,
-        "current_volatility": 38.0,
-        "historical_volatility": 29.8,
-        "volatility_ratio": 1.28
+        "current_volatility": 39.9,
+        "historical_volatility": 30.2,
+        "volatility_ratio": 1.32
       },
       "gates": {
         "rs80": false,
@@ -13628,7 +13628,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 64.9,
+        "rs": 65.2,
         "relative_performance": 0.41
       },
       "momentum": {
@@ -13702,7 +13702,7 @@
     {
       "ticker": "RENT3.SA",
       "nombre": "LOCALIZA    ON      NM",
-      "total_score": 8.7,
+      "total_score": 8.8,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -13712,14 +13712,14 @@
         "sma50_above_ema200": false,
         "sma50_rising": false,
         "ema200_rising": false,
-        "sma50": 40.09,
-        "ema200": 41.88
+        "sma50": 39.98,
+        "ema200": 41.84
       },
       "relative_strength": {
-        "score": 2.7,
+        "score": 2.8,
         "max_score": 30,
-        "rs": 15.2,
-        "relative_performance": -27.61
+        "rs": 15.7,
+        "relative_performance": -26.33
       },
       "momentum": {
         "score": 3.0,
@@ -13731,9 +13731,9 @@
       "volatility": {
         "score": 3.0,
         "max_score": 15,
-        "current_volatility": 34.2,
-        "historical_volatility": 32.0,
-        "volatility_ratio": 1.07
+        "current_volatility": 33.9,
+        "historical_volatility": 32.1,
+        "volatility_ratio": 1.06
       },
       "gates": {
         "rs80": false,
@@ -13766,7 +13766,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 72.3,
+        "rs": 72.8,
         "relative_performance": 4.23
       },
       "momentum": {
@@ -13814,7 +13814,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 95.5,
+        "rs": 96.2,
         "relative_performance": 43.58
       },
       "momentum": {
@@ -13856,7 +13856,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 60.4,
+        "rs": 60.9,
         "relative_performance": -0.95
       },
       "momentum": {
@@ -13904,7 +13904,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 50.0,
+        "rs": 50.1,
         "relative_performance": -6.37
       },
       "momentum": {
@@ -13952,7 +13952,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 58.8,
+        "rs": 59.1,
         "relative_performance": -1.58
       },
       "momentum": {
@@ -13984,7 +13984,7 @@
     {
       "ticker": "TGNO4.BA",
       "nombre": "TRANSPORTADORA DE GAS DEL NORTE",
-      "total_score": 51.8,
+      "total_score": 52.6,
       "datos_suficientes": true,
       "trend": {
         "score": 20.0,
@@ -13994,14 +13994,14 @@
         "sma50_above_ema200": true,
         "sma50_rising": true,
         "ema200_rising": true,
-        "sma50": 4052.55,
-        "ema200": 3971.67
+        "sma50": 4053.35,
+        "ema200": 3971.85
       },
       "relative_strength": {
-        "score": 3.8,
+        "score": 4.6,
         "max_score": 30,
-        "rs": 21.3,
-        "relative_performance": -22.08
+        "rs": 25.8,
+        "relative_performance": -19.75
       },
       "momentum": {
         "score": 13.0,
@@ -14013,9 +14013,9 @@
       "volatility": {
         "score": 15.0,
         "max_score": 15,
-        "current_volatility": 23.1,
-        "historical_volatility": 47.9,
-        "volatility_ratio": 0.48
+        "current_volatility": 23.3,
+        "historical_volatility": 47.8,
+        "volatility_ratio": 0.49
       },
       "gates": {
         "rs80": false,
@@ -14032,7 +14032,7 @@
     {
       "ticker": "TGSU2.BA",
       "nombre": "TRANSPORTADORA DE GAS DEL SUR S",
-      "total_score": 69.4,
+      "total_score": 69.9,
       "datos_suficientes": true,
       "trend": {
         "score": 25.0,
@@ -14042,14 +14042,14 @@
         "sma50_above_ema200": true,
         "sma50_rising": true,
         "ema200_rising": true,
-        "sma50": 9409.1,
-        "ema200": 8868.31
+        "sma50": 9436.4,
+        "ema200": 8880.05
       },
       "relative_strength": {
-        "score": 8.4,
+        "score": 8.9,
         "max_score": 30,
-        "rs": 46.5,
-        "relative_performance": -8.6
+        "rs": 49.3,
+        "relative_performance": -6.94
       },
       "momentum": {
         "score": 24.0,
@@ -14061,9 +14061,9 @@
       "volatility": {
         "score": 12.0,
         "max_score": 15,
-        "current_volatility": 28.4,
-        "historical_volatility": 40.0,
-        "volatility_ratio": 0.71
+        "current_volatility": 29.7,
+        "historical_volatility": 39.9,
+        "volatility_ratio": 0.74
       },
       "gates": {
         "rs80": false,
@@ -14096,7 +14096,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 88.0,
+        "rs": 88.7,
         "relative_performance": 16.4
       },
       "momentum": {
@@ -14128,7 +14128,7 @@
     {
       "ticker": "TV",
       "nombre": "Grupo Televisa S.A.B.",
-      "total_score": 39.6,
+      "total_score": 39.5,
       "datos_suficientes": true,
       "trend": {
         "score": 12.0,
@@ -14142,9 +14142,9 @@
         "ema200": 2.79
       },
       "relative_strength": {
-        "score": 3.6,
+        "score": 3.5,
         "max_score": 30,
-        "rs": 20.2,
+        "rs": 19.4,
         "relative_performance": -22.21
       },
       "momentum": {
@@ -14192,7 +14192,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 83.8,
+        "rs": 84.3,
         "relative_performance": 12.23
       },
       "momentum": {
@@ -14224,7 +14224,7 @@
     {
       "ticker": "VALO.BA",
       "nombre": "BANCO DE VALORES S.A.",
-      "total_score": 58.8,
+      "total_score": 58.7,
       "datos_suficientes": true,
       "trend": {
         "score": 16.0,
@@ -14238,9 +14238,9 @@
         "ema200": 568.87
       },
       "relative_strength": {
-        "score": 8.8,
+        "score": 8.7,
         "max_score": 30,
-        "rs": 48.7,
+        "rs": 48.4,
         "relative_performance": -7.29
       },
       "momentum": {
@@ -14283,12 +14283,12 @@
         "sma50_rising": true,
         "ema200_rising": true,
         "sma50": 1819.48,
-        "ema200": 1815.2
+        "ema200": 1815.21
       },
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 76.9,
+        "rs": 77.1,
         "relative_performance": 7.09
       },
       "momentum": {
@@ -14324,28 +14324,28 @@
         "sma50_above_ema200": false,
         "sma50_rising": true,
         "ema200_rising": false,
-        "sma50": 4650.99,
-        "ema200": 5008.61
+        "sma50": 4674.99,
+        "ema200": 5006.03
       },
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 93.9,
-        "relative_performance": 38.02
+        "rs": 91.3,
+        "relative_performance": 26.0
       },
       "momentum": {
         "score": 10.0,
         "max_score": 30,
-        "distance_from_52w_high": -36.53,
+        "distance_from_52w_high": -36.45,
         "percentage_above_52w_low": 167.91,
         "recent_52w_high": false
       },
       "volatility": {
         "score": 0.0,
         "max_score": 15,
-        "current_volatility": 101.9,
+        "current_volatility": 107.1,
         "historical_volatility": 83.0,
-        "volatility_ratio": 1.23
+        "volatility_ratio": 1.29
       },
       "gates": {
         "rs80": true,
@@ -14378,7 +14378,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 89.6,
+        "rs": 89.9,
         "relative_performance": 23.33
       },
       "momentum": {
@@ -14426,7 +14426,7 @@
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
-        "rs": 94.1,
+        "rs": 94.8,
         "relative_performance": 38.24
       },
       "momentum": {
@@ -14474,7 +14474,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 99.2,
+        "rs": 99.4,
         "relative_performance": 106.13
       },
       "momentum": {
@@ -14522,7 +14522,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 61.7,
+        "rs": 62.3,
         "relative_performance": -0.72
       },
       "momentum": {
@@ -14570,7 +14570,7 @@
       "relative_strength": {
         "score": 5.1,
         "max_score": 30,
-        "rs": 28.2,
+        "rs": 28.1,
         "relative_performance": -17.69
       },
       "momentum": {
@@ -14602,7 +14602,7 @@
     {
       "ticker": "GT",
       "nombre": "The Goodyear Tire & Rubber Comp",
-      "total_score": 19.9,
+      "total_score": 19.8,
       "datos_suficientes": true,
       "trend": {
         "score": 9.0,
@@ -14616,9 +14616,9 @@
         "ema200": 7.45
       },
       "relative_strength": {
-        "score": 1.9,
+        "score": 1.8,
         "max_score": 30,
-        "rs": 10.6,
+        "rs": 10.1,
         "relative_performance": -32.13
       },
       "momentum": {
@@ -14666,7 +14666,7 @@
       "relative_strength": {
         "score": 1.8,
         "max_score": 30,
-        "rs": 10.1,
+        "rs": 9.9,
         "relative_performance": -32.36
       },
       "momentum": {
@@ -14698,7 +14698,7 @@
     {
       "ticker": "NXE",
       "nombre": "Nexgen Energy Ltd.",
-      "total_score": 13.2,
+      "total_score": 13.1,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -14712,9 +14712,9 @@
         "ema200": 10.16
       },
       "relative_strength": {
-        "score": 2.2,
+        "score": 2.1,
         "max_score": 30,
-        "rs": 12.5,
+        "rs": 11.9,
         "relative_performance": -30.84
       },
       "momentum": {
@@ -14762,7 +14762,7 @@
       "relative_strength": {
         "score": 5.4,
         "max_score": 30,
-        "rs": 29.8,
+        "rs": 29.9,
         "relative_performance": -17.14
       },
       "momentum": {
@@ -14810,7 +14810,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 53.5,
+        "rs": 53.9,
         "relative_performance": -3.91
       },
       "momentum": {
@@ -14858,7 +14858,7 @@
       "relative_strength": {
         "score": 2.6,
         "max_score": 30,
-        "rs": 14.6,
+        "rs": 14.2,
         "relative_performance": -28.01
       },
       "momentum": {
@@ -14906,7 +14906,7 @@
       "relative_strength": {
         "score": 0.9,
         "max_score": 30,
-        "rs": 5.1,
+        "rs": 5.2,
         "relative_performance": -39.53
       },
       "momentum": {
@@ -14954,7 +14954,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 77.4,
+        "rs": 77.7,
         "relative_performance": 7.81
       },
       "momentum": {
@@ -15002,7 +15002,7 @@
       "relative_strength": {
         "score": 1.0,
         "max_score": 30,
-        "rs": 5.6,
+        "rs": 5.8,
         "relative_performance": -37.3
       },
       "momentum": {
@@ -15050,7 +15050,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 56.9,
+        "rs": 57.1,
         "relative_performance": -1.94
       },
       "momentum": {
@@ -15082,7 +15082,7 @@
     {
       "ticker": "IRS",
       "nombre": "IRSA Inversiones Y Representaci",
-      "total_score": 51.4,
+      "total_score": 51.2,
       "datos_suficientes": true,
       "trend": {
         "score": 20.0,
@@ -15096,9 +15096,9 @@
         "ema200": 15.11
       },
       "relative_strength": {
-        "score": 4.4,
+        "score": 4.2,
         "max_score": 30,
-        "rs": 24.7,
+        "rs": 23.5,
         "relative_performance": -20.48
       },
       "momentum": {
@@ -15146,7 +15146,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 62.5,
+        "rs": 63.2,
         "relative_performance": -0.44
       },
       "momentum": {
@@ -15226,7 +15226,7 @@
     {
       "ticker": "IBIT",
       "nombre": "iShares Bitcoin Trust ETF",
-      "total_score": 14.3,
+      "total_score": 14.2,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -15240,9 +15240,9 @@
         "ema200": 43.65
       },
       "relative_strength": {
-        "score": 2.3,
+        "score": 2.2,
         "max_score": 30,
-        "rs": 12.8,
+        "rs": 12.2,
         "relative_performance": -30.83
       },
       "momentum": {
@@ -15290,7 +15290,7 @@
       "relative_strength": {
         "score": 18.0,
         "max_score": 30,
-        "rs": 73.1,
+        "rs": 73.3,
         "relative_performance": 5.36
       },
       "momentum": {
@@ -15322,7 +15322,7 @@
     {
       "ticker": "TEAM",
       "nombre": "Atlassian Corporation",
-      "total_score": 23.6,
+      "total_score": 23.4,
       "datos_suficientes": true,
       "trend": {
         "score": 9.0,
@@ -15336,9 +15336,9 @@
         "ema200": 109.58
       },
       "relative_strength": {
-        "score": 4.6,
+        "score": 4.4,
         "max_score": 30,
-        "rs": 25.3,
+        "rs": 24.3,
         "relative_performance": -20.28
       },
       "momentum": {
@@ -15370,7 +15370,7 @@
     {
       "ticker": "AI",
       "nombre": "C3.ai, Inc.",
-      "total_score": 24.8,
+      "total_score": 24.7,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -15384,9 +15384,9 @@
         "ema200": 11.94
       },
       "relative_strength": {
-        "score": 4.8,
+        "score": 4.7,
         "max_score": 30,
-        "rs": 26.6,
+        "rs": 26.1,
         "relative_performance": -19.72
       },
       "momentum": {
@@ -15434,7 +15434,7 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 81.4,
+        "rs": 82.0,
         "relative_performance": 10.54
       },
       "momentum": {
@@ -15482,7 +15482,7 @@
       "relative_strength": {
         "score": 7.2,
         "max_score": 30,
-        "rs": 39.9,
+        "rs": 40.0,
         "relative_performance": -11.15
       },
       "momentum": {
@@ -15514,7 +15514,7 @@
     {
       "ticker": "DECK",
       "nombre": "Deckers Outdoor Corporation",
-      "total_score": 22.3,
+      "total_score": 22.2,
       "datos_suficientes": true,
       "trend": {
         "score": 4.0,
@@ -15528,9 +15528,9 @@
         "ema200": 106.24
       },
       "relative_strength": {
-        "score": 3.3,
+        "score": 3.2,
         "max_score": 30,
-        "rs": 18.4,
+        "rs": 17.7,
         "relative_performance": -24.26
       },
       "momentum": {
@@ -15562,7 +15562,7 @@
     {
       "ticker": "RGTI",
       "nombre": "Rigetti Computing, Inc.",
-      "total_score": 15.7,
+      "total_score": 15.6,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -15576,9 +15576,9 @@
         "ema200": 19.0
       },
       "relative_strength": {
-        "score": 4.7,
+        "score": 4.6,
         "max_score": 30,
-        "rs": 26.3,
+        "rs": 25.5,
         "relative_performance": -19.9
       },
       "momentum": {
@@ -15658,7 +15658,7 @@
     {
       "ticker": "TEM",
       "nombre": "Tempus AI, Inc.",
-      "total_score": 9.4,
+      "total_score": 9.3,
       "datos_suficientes": true,
       "trend": {
         "score": 4.0,
@@ -15672,9 +15672,9 @@
         "ema200": 55.87
       },
       "relative_strength": {
-        "score": 2.4,
+        "score": 2.3,
         "max_score": 30,
-        "rs": 13.6,
+        "rs": 13.0,
         "relative_performance": -30.07
       },
       "momentum": {
@@ -15722,7 +15722,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 51.3,
+        "rs": 51.6,
         "relative_performance": -5.83
       },
       "momentum": {
@@ -15770,7 +15770,7 @@
       "relative_strength": {
         "score": 8.2,
         "max_score": 30,
-        "rs": 45.7,
+        "rs": 45.8,
         "relative_performance": -9.0
       },
       "momentum": {
@@ -15802,7 +15802,7 @@
     {
       "ticker": "VST",
       "nombre": "Vistra Corp.",
-      "total_score": 20.5,
+      "total_score": 20.6,
       "datos_suficientes": true,
       "trend": {
         "score": 4.0,
@@ -15816,9 +15816,9 @@
         "ema200": 160.3
       },
       "relative_strength": {
-        "score": 7.5,
+        "score": 7.6,
         "max_score": 30,
-        "rs": 41.8,
+        "rs": 42.0,
         "relative_performance": -10.29
       },
       "momentum": {
@@ -15850,7 +15850,7 @@
     {
       "ticker": "USO",
       "nombre": "United States Oil Fund",
-      "total_score": 56.0,
+      "total_score": 59.0,
       "datos_suficientes": true,
       "trend": {
         "score": 16.0,
@@ -15864,9 +15864,9 @@
         "ema200": 107.27
       },
       "relative_strength": {
-        "score": 27.0,
+        "score": 30.0,
         "max_score": 30,
-        "rs": 94.9,
+        "rs": 95.7,
         "relative_performance": 39.51
       },
       "momentum": {
@@ -15914,7 +15914,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 56.1,
+        "rs": 56.2,
         "relative_performance": -2.88
       },
       "momentum": {
@@ -15946,7 +15946,7 @@
     {
       "ticker": "IEMG",
       "nombre": "iShares Core MSCI Emerging Mark",
-      "total_score": 45.0,
+      "total_score": 49.0,
       "datos_suficientes": true,
       "trend": {
         "score": 16.0,
@@ -15960,9 +15960,9 @@
         "ema200": 73.53
       },
       "relative_strength": {
-        "score": 10.0,
+        "score": 14.0,
         "max_score": 30,
-        "rs": 59.6,
+        "rs": 60.0,
         "relative_performance": -1.42
       },
       "momentum": {
@@ -16010,7 +16010,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 61.4,
+        "rs": 62.0,
         "relative_performance": -0.75
       },
       "momentum": {
@@ -16042,7 +16042,7 @@
     {
       "ticker": "GDX",
       "nombre": "VanEck Gold Miners ETF",
-      "total_score": 16.8,
+      "total_score": 16.7,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -16056,9 +16056,9 @@
         "ema200": 81.56
       },
       "relative_strength": {
-        "score": 2.8,
+        "score": 2.7,
         "max_score": 30,
-        "rs": 15.7,
+        "rs": 15.1,
         "relative_performance": -26.66
       },
       "momentum": {
@@ -16138,7 +16138,7 @@
     {
       "ticker": "CRWV",
       "nombre": "CoreWeave, Inc.",
-      "total_score": 13.6,
+      "total_score": 13.5,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -16152,9 +16152,9 @@
         "ema200": 94.34
       },
       "relative_strength": {
-        "score": 5.6,
+        "score": 5.5,
         "max_score": 30,
-        "rs": 30.9,
+        "rs": 30.7,
         "relative_performance": -16.4
       },
       "momentum": {
@@ -16202,7 +16202,7 @@
       "relative_strength": {
         "score": 0.3,
         "max_score": 30,
-        "rs": 1.6,
+        "rs": 1.4,
         "relative_performance": -52.97
       },
       "momentum": {
@@ -16234,7 +16234,7 @@
     {
       "ticker": "RKLB",
       "nombre": "Rocket Lab Corporation",
-      "total_score": 22.6,
+      "total_score": 22.5,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -16248,9 +16248,9 @@
         "ema200": 77.35
       },
       "relative_strength": {
-        "score": 4.6,
+        "score": 4.5,
         "max_score": 30,
-        "rs": 25.8,
+        "rs": 24.9,
         "relative_performance": -20.09
       },
       "momentum": {
@@ -16298,7 +16298,7 @@
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
-        "rs": 98.7,
+        "rs": 99.1,
         "relative_performance": 93.64
       },
       "momentum": {
@@ -16330,7 +16330,7 @@
     {
       "ticker": "ASTS",
       "nombre": "AST SpaceMobile, Inc.",
-      "total_score": 21.4,
+      "total_score": 21.5,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -16344,9 +16344,9 @@
         "ema200": 75.91
       },
       "relative_strength": {
-        "score": 0.4,
+        "score": 0.5,
         "max_score": 30,
-        "rs": 2.4,
+        "rs": 2.6,
         "relative_performance": -48.11
       },
       "momentum": {
@@ -16426,7 +16426,7 @@
     {
       "ticker": "ECL",
       "nombre": "Ecolab Inc.",
-      "total_score": 44.8,
+      "total_score": 44.9,
       "datos_suficientes": true,
       "trend": {
         "score": 25.0,
@@ -16440,9 +16440,9 @@
         "ema200": 268.08
       },
       "relative_strength": {
-        "score": 7.8,
+        "score": 7.9,
         "max_score": 30,
-        "rs": 43.6,
+        "rs": 43.8,
         "relative_performance": -9.49
       },
       "momentum": {
@@ -16490,7 +16490,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 65.4,
+        "rs": 65.8,
         "relative_performance": 0.55
       },
       "momentum": {
@@ -16516,1521 +16516,6 @@
         "sma50_rising": true,
         "ema200_rising": true,
         "count": 3,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "URA",
-      "nombre": "Global X Uranium ETF",
-      "total_score": 10.7,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 0.0,
-        "max_score": 25,
-        "price_above_ema200": false,
-        "price_above_sma50": false,
-        "sma50_above_ema200": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "sma50": 44.27,
-        "ema200": 45.95
-      },
-      "relative_strength": {
-        "score": 1.7,
-        "max_score": 30,
-        "rs": 9.3,
-        "relative_performance": -32.58
-      },
-      "momentum": {
-        "score": 3.0,
-        "max_score": 30,
-        "distance_from_52w_high": -33.98,
-        "percentage_above_52w_low": 17.31,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 6.0,
-        "max_score": 15,
-        "current_volatility": 50.6,
-        "historical_volatility": 50.7,
-        "volatility_ratio": 1.0
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": false,
-        "sma50": false,
-        "above25_from_low": false,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "count": 0,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "COPX",
-      "nombre": "Global X Copper Miners ETF",
-      "total_score": 41.1,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 16.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": false,
-        "sma50_above_ema200": true,
-        "sma50_rising": false,
-        "ema200_rising": true,
-        "sma50": 80.49,
-        "ema200": 74.53
-      },
-      "relative_strength": {
-        "score": 6.1,
-        "max_score": 30,
-        "rs": 34.0,
-        "relative_performance": -14.7
-      },
-      "momentum": {
-        "score": 16.0,
-        "max_score": 30,
-        "distance_from_52w_high": -16.79,
-        "percentage_above_52w_low": 90.64,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 3.0,
-        "max_score": 15,
-        "current_volatility": 47.6,
-        "historical_volatility": 45.2,
-        "volatility_ratio": 1.05
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": true,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": true,
-        "count": 3,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "ILF",
-      "nombre": "iShares Latin America 40 ETF",
-      "total_score": 52.4,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 21.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": true,
-        "sma50_above_ema200": true,
-        "sma50_rising": false,
-        "ema200_rising": true,
-        "sma50": 34.16,
-        "ema200": 32.73
-      },
-      "relative_strength": {
-        "score": 8.4,
-        "max_score": 30,
-        "rs": 46.8,
-        "relative_performance": -8.52
-      },
-      "momentum": {
-        "score": 20.0,
-        "max_score": 30,
-        "distance_from_52w_high": -6.54,
-        "percentage_above_52w_low": 47.23,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 3.0,
-        "max_score": 15,
-        "current_volatility": 21.7,
-        "historical_volatility": 19.7,
-        "volatility_ratio": 1.11
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": true,
-        "sma50": true,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": true,
-        "count": 4,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "ESGU",
-      "nombre": "iShares ESG Aware MSCI USA ETF",
-      "total_score": 65.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 25.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": true,
-        "sma50_above_ema200": true,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "sma50": 163.11,
-        "ema200": 152.72
-      },
-      "relative_strength": {
-        "score": 14.0,
-        "max_score": 30,
-        "rs": 65.7,
-        "relative_performance": 0.56
-      },
-      "momentum": {
-        "score": 23.0,
-        "max_score": 30,
-        "distance_from_52w_high": 0.0,
-        "percentage_above_52w_low": 23.51,
-        "recent_52w_high": true
-      },
-      "volatility": {
-        "score": 3.0,
-        "max_score": 15,
-        "current_volatility": 13.5,
-        "historical_volatility": 12.3,
-        "volatility_ratio": 1.1
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": true,
-        "sma50": true,
-        "above25_from_low": false,
-        "vol_below_08": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "count": 4,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "IVV",
-      "nombre": "iShares Core S&P 500 ETF",
-      "total_score": 65.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 25.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": true,
-        "sma50_above_ema200": true,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "sma50": 747.93,
-        "ema200": 701.84
-      },
-      "relative_strength": {
-        "score": 14.0,
-        "max_score": 30,
-        "rs": 63.8,
-        "relative_performance": 0.04
-      },
-      "momentum": {
-        "score": 23.0,
-        "max_score": 30,
-        "distance_from_52w_high": 0.0,
-        "percentage_above_52w_low": 23.34,
-        "recent_52w_high": true
-      },
-      "volatility": {
-        "score": 3.0,
-        "max_score": 15,
-        "current_volatility": 13.2,
-        "historical_volatility": 12.1,
-        "volatility_ratio": 1.09
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": true,
-        "sma50": true,
-        "above25_from_low": false,
-        "vol_below_08": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "count": 4,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "BMNR",
-      "nombre": "BitMine Immersion Technologies,",
-      "total_score": 19.1,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 5.0,
-        "max_score": 25,
-        "price_above_ema200": false,
-        "price_above_sma50": true,
-        "sma50_above_ema200": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "sma50": 16.36,
-        "ema200": 22.4
-      },
-      "relative_strength": {
-        "score": 1.1,
-        "max_score": 30,
-        "rs": 5.9,
-        "relative_performance": -36.95
-      },
-      "momentum": {
-        "score": 7.0,
-        "max_score": 30,
-        "distance_from_52w_high": -72.44,
-        "percentage_above_52w_low": 30.88,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 6.0,
-        "max_score": 15,
-        "current_volatility": 90.3,
-        "historical_volatility": 94.5,
-        "volatility_ratio": 0.96
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": false,
-        "sma50": true,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "count": 2,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "BX",
-      "nombre": "Blackstone Inc.",
-      "total_score": 32.8,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 16.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": true,
-        "sma50_above_ema200": false,
-        "sma50_rising": true,
-        "ema200_rising": false,
-        "sma50": 121.8,
-        "ema200": 129.24
-      },
-      "relative_strength": {
-        "score": 6.8,
-        "max_score": 30,
-        "rs": 38.0,
-        "relative_performance": -12.29
-      },
-      "momentum": {
-        "score": 7.0,
-        "max_score": 30,
-        "distance_from_52w_high": -26.47,
-        "percentage_above_52w_low": 33.11,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 3.0,
-        "max_score": 15,
-        "current_volatility": 37.0,
-        "historical_volatility": 33.5,
-        "volatility_ratio": 1.1
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": true,
-        "sma50": true,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": true,
-        "ema200_rising": false,
-        "count": 4,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "RSP",
-      "nombre": "Invesco S&P 500 Equal Weight ET",
-      "total_score": 71.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 25.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": true,
-        "sma50_above_ema200": true,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "sma50": 211.33,
-        "ema200": 199.78
-      },
-      "relative_strength": {
-        "score": 14.0,
-        "max_score": 30,
-        "rs": 64.6,
-        "relative_performance": 0.39
-      },
-      "momentum": {
-        "score": 23.0,
-        "max_score": 30,
-        "distance_from_52w_high": -0.27,
-        "percentage_above_52w_low": 21.56,
-        "recent_52w_high": true
-      },
-      "volatility": {
-        "score": 9.0,
-        "max_score": 15,
-        "current_volatility": 10.5,
-        "historical_volatility": 11.8,
-        "volatility_ratio": 0.89
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": true,
-        "sma50": true,
-        "above25_from_low": false,
-        "vol_below_08": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "count": 4,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "EWI",
-      "nombre": "iShares MSCI Italy ETF",
-      "total_score": 76.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 25.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": true,
-        "sma50_above_ema200": true,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "sma50": 59.56,
-        "ema200": 55.06
-      },
-      "relative_strength": {
-        "score": 18.0,
-        "max_score": 30,
-        "rs": 71.5,
-        "relative_performance": 3.43
-      },
-      "momentum": {
-        "score": 27.0,
-        "max_score": 30,
-        "distance_from_52w_high": 0.0,
-        "percentage_above_52w_low": 34.76,
-        "recent_52w_high": true
-      },
-      "volatility": {
-        "score": 6.0,
-        "max_score": 15,
-        "current_volatility": 16.1,
-        "historical_volatility": 16.8,
-        "volatility_ratio": 0.96
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": true,
-        "sma50": true,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "count": 5,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "XME",
-      "nombre": "State Street SPDR S&P Metals & ",
-      "total_score": 23.3,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 5.0,
-        "max_score": 25,
-        "price_above_ema200": false,
-        "price_above_sma50": false,
-        "sma50_above_ema200": true,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "sma50": 110.77,
-        "ema200": 106.03
-      },
-      "relative_strength": {
-        "score": 4.3,
-        "max_score": 30,
-        "rs": 23.7,
-        "relative_performance": -21.0
-      },
-      "momentum": {
-        "score": 11.0,
-        "max_score": 30,
-        "distance_from_52w_high": -22.32,
-        "percentage_above_52w_low": 42.92,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 3.0,
-        "max_score": 15,
-        "current_volatility": 37.6,
-        "historical_volatility": 34.3,
-        "volatility_ratio": 1.1
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": false,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "count": 1,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "ICLN",
-      "nombre": "iShares Global Clean Energy ETF",
-      "total_score": 22.8,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 5.0,
-        "max_score": 25,
-        "price_above_ema200": false,
-        "price_above_sma50": false,
-        "sma50_above_ema200": true,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "sma50": 20.15,
-        "ema200": 18.42
-      },
-      "relative_strength": {
-        "score": 7.8,
-        "max_score": 30,
-        "rs": 43.1,
-        "relative_performance": -9.71
-      },
-      "momentum": {
-        "score": 10.0,
-        "max_score": 30,
-        "distance_from_52w_high": -24.05,
-        "percentage_above_52w_low": 34.36,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 0.0,
-        "max_score": 15,
-        "current_volatility": 37.6,
-        "historical_volatility": 28.2,
-        "volatility_ratio": 1.33
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": false,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "count": 1,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "CRWD",
-      "nombre": "CrowdStrike Holdings, Inc.",
-      "total_score": 84.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 25.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": true,
-        "sma50_above_ema200": true,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "sma50": 182.2,
-        "ema200": 140.87
-      },
-      "relative_strength": {
-        "score": 30.0,
-        "max_score": 30,
-        "rs": 97.1,
-        "relative_performance": 66.74
-      },
-      "momentum": {
-        "score": 29.0,
-        "max_score": 30,
-        "distance_from_52w_high": -3.89,
-        "percentage_above_52w_low": 131.31,
-        "recent_52w_high": true
-      },
-      "volatility": {
-        "score": 0.0,
-        "max_score": 15,
-        "current_volatility": 63.0,
-        "historical_volatility": 43.1,
-        "volatility_ratio": 1.46
-      },
-      "gates": {
-        "rs80": true,
-        "ema200": true,
-        "sma50": true,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "count": 6,
-        "all_main_gates_passed": true
-      }
-    },
-    {
-      "ticker": "ANET",
-      "nombre": "Arista Networks, Inc.",
-      "total_score": 82.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 25.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": true,
-        "sma50_above_ema200": true,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "sma50": 167.47,
-        "ema200": 148.15
-      },
-      "relative_strength": {
-        "score": 24.0,
-        "max_score": 30,
-        "rs": 88.8,
-        "relative_performance": 18.5
-      },
-      "momentum": {
-        "score": 30.0,
-        "max_score": 30,
-        "distance_from_52w_high": -1.11,
-        "percentage_above_52w_low": 59.21,
-        "recent_52w_high": true
-      },
-      "volatility": {
-        "score": 3.0,
-        "max_score": 15,
-        "current_volatility": 64.3,
-        "historical_volatility": 54.9,
-        "volatility_ratio": 1.17
-      },
-      "gates": {
-        "rs80": true,
-        "ema200": true,
-        "sma50": true,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "count": 6,
-        "all_main_gates_passed": true
-      }
-    },
-    {
-      "ticker": "O",
-      "nombre": "Realty Income Corporation",
-      "total_score": 55.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 25.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": true,
-        "sma50_above_ema200": true,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "sma50": 62.35,
-        "ema200": 60.36
-      },
-      "relative_strength": {
-        "score": 10.0,
-        "max_score": 30,
-        "rs": 54.8,
-        "relative_performance": -3.25
-      },
-      "momentum": {
-        "score": 17.0,
-        "max_score": 30,
-        "distance_from_52w_high": -3.98,
-        "percentage_above_52w_low": 18.37,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 3.0,
-        "max_score": 15,
-        "current_volatility": 19.3,
-        "historical_volatility": 16.1,
-        "volatility_ratio": 1.2
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": true,
-        "sma50": true,
-        "above25_from_low": false,
-        "vol_below_08": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "count": 4,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "GLNG",
-      "nombre": "Golar LNG Limited",
-      "total_score": 63.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 16.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": false,
-        "sma50_above_ema200": true,
-        "sma50_rising": false,
-        "ema200_rising": true,
-        "sma50": 50.19,
-        "ema200": 46.99
-      },
-      "relative_strength": {
-        "score": 24.0,
-        "max_score": 30,
-        "rs": 82.4,
-        "relative_performance": 11.17
-      },
-      "momentum": {
-        "score": 17.0,
-        "max_score": 30,
-        "distance_from_52w_high": -13.86,
-        "percentage_above_52w_low": 40.59,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 6.0,
-        "max_score": 15,
-        "current_volatility": 23.7,
-        "historical_volatility": 26.0,
-        "volatility_ratio": 0.91
-      },
-      "gates": {
-        "rs80": true,
-        "ema200": true,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": true,
-        "count": 4,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "SNDK",
-      "nombre": "Sandisk Corporation",
-      "total_score": 60.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 20.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": false,
-        "sma50_above_ema200": true,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "sma50": 1707.12,
-        "ema200": 1007.17
-      },
-      "relative_strength": {
-        "score": 30.0,
-        "max_score": 30,
-        "rs": 98.9,
-        "relative_performance": 103.06
-      },
-      "momentum": {
-        "score": 10.0,
-        "max_score": 30,
-        "distance_from_52w_high": -44.84,
-        "percentage_above_52w_low": 3065.47,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 0.0,
-        "max_score": 15,
-        "current_volatility": 163.5,
-        "historical_volatility": 103.2,
-        "volatility_ratio": 1.58
-      },
-      "gates": {
-        "rs80": true,
-        "ema200": true,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "count": 5,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "NBIS",
-      "nombre": "Nebius Group N.V.",
-      "total_score": 60.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 20.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": false,
-        "sma50_above_ema200": true,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "sma50": 224.11,
-        "ema200": 153.53
-      },
-      "relative_strength": {
-        "score": 30.0,
-        "max_score": 30,
-        "rs": 100.0,
-        "relative_performance": 126.69
-      },
-      "momentum": {
-        "score": 10.0,
-        "max_score": 30,
-        "distance_from_52w_high": -25.85,
-        "percentage_above_52w_low": 308.81,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 0.0,
-        "max_score": 15,
-        "current_volatility": 170.5,
-        "historical_volatility": 96.7,
-        "volatility_ratio": 1.76
-      },
-      "gates": {
-        "rs80": true,
-        "ema200": true,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "count": 5,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "HIMS",
-      "nombre": "Hims & Hers Health, Inc.",
-      "total_score": 36.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 8.0,
-        "max_score": 25,
-        "price_above_ema200": false,
-        "price_above_sma50": false,
-        "sma50_above_ema200": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "sma50": 30.88,
-        "ema200": 31.12
-      },
-      "relative_strength": {
-        "score": 18.0,
-        "max_score": 30,
-        "rs": 70.7,
-        "relative_performance": 3.35
-      },
-      "momentum": {
-        "score": 10.0,
-        "max_score": 30,
-        "distance_from_52w_high": -51.35,
-        "percentage_above_52w_low": 112.26,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 0.0,
-        "max_score": 15,
-        "current_volatility": 107.0,
-        "historical_volatility": 82.9,
-        "volatility_ratio": 1.29
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": false,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "count": 3,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "ONDS",
-      "nombre": "Ondas Inc",
-      "total_score": 26.9,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 5.0,
-        "max_score": 25,
-        "price_above_ema200": false,
-        "price_above_sma50": false,
-        "sma50_above_ema200": true,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "sma50": 8.81,
-        "ema200": 8.46
-      },
-      "relative_strength": {
-        "score": 2.9,
-        "max_score": 30,
-        "rs": 16.2,
-        "relative_performance": -26.6
-      },
-      "momentum": {
-        "score": 10.0,
-        "max_score": 30,
-        "distance_from_52w_high": -40.26,
-        "percentage_above_52w_low": 280.45,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 9.0,
-        "max_score": 15,
-        "current_volatility": 104.1,
-        "historical_volatility": 122.1,
-        "volatility_ratio": 0.85
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": false,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "count": 1,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "COP",
-      "nombre": "ConocoPhillips",
-      "total_score": 59.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 21.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": true,
-        "sma50_above_ema200": true,
-        "sma50_rising": false,
-        "ema200_rising": true,
-        "sma50": 113.55,
-        "ema200": 109.33
-      },
-      "relative_strength": {
-        "score": 18.0,
-        "max_score": 30,
-        "rs": 73.4,
-        "relative_performance": 5.44
-      },
-      "momentum": {
-        "score": 17.0,
-        "max_score": 30,
-        "distance_from_52w_high": -10.28,
-        "percentage_above_52w_low": 42.54,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 3.0,
-        "max_score": 15,
-        "current_volatility": 32.2,
-        "historical_volatility": 28.8,
-        "volatility_ratio": 1.12
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": true,
-        "sma50": true,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": true,
-        "count": 4,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "NEE",
-      "nombre": "NextEra Energy, Inc.",
-      "total_score": 52.9,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 16.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": false,
-        "sma50_above_ema200": true,
-        "sma50_rising": false,
-        "ema200_rising": true,
-        "sma50": 87.21,
-        "ema200": 85.74
-      },
-      "relative_strength": {
-        "score": 7.9,
-        "max_score": 30,
-        "rs": 43.9,
-        "relative_performance": -9.28
-      },
-      "momentum": {
-        "score": 15.0,
-        "max_score": 30,
-        "distance_from_52w_high": -10.93,
-        "percentage_above_52w_low": 26.66,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 14.0,
-        "max_score": 15,
-        "current_volatility": 13.8,
-        "historical_volatility": 21.2,
-        "volatility_ratio": 0.65
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": true,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": true,
-        "sma50_rising": false,
-        "ema200_rising": true,
-        "count": 4,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "MP",
-      "nombre": "MP Materials Corp.",
-      "total_score": 7.9,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 0.0,
-        "max_score": 25,
-        "price_above_ema200": false,
-        "price_above_sma50": false,
-        "sma50_above_ema200": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "sma50": 54.38,
-        "ema200": 55.48
-      },
-      "relative_strength": {
-        "score": 1.9,
-        "max_score": 30,
-        "rs": 10.4,
-        "relative_performance": -32.23
-      },
-      "momentum": {
-        "score": 3.0,
-        "max_score": 30,
-        "distance_from_52w_high": -55.56,
-        "percentage_above_52w_low": 15.07,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 3.0,
-        "max_score": 15,
-        "current_volatility": 75.8,
-        "historical_volatility": 73.6,
-        "volatility_ratio": 1.03
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": false,
-        "sma50": false,
-        "above25_from_low": false,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "count": 0,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "CCJ",
-      "nombre": "Cameco Corporation",
-      "total_score": 16.4,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 0.0,
-        "max_score": 25,
-        "price_above_ema200": false,
-        "price_above_sma50": false,
-        "sma50_above_ema200": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "sma50": 99.29,
-        "ema200": 99.4
-      },
-      "relative_strength": {
-        "score": 1.4,
-        "max_score": 30,
-        "rs": 7.7,
-        "relative_performance": -33.94
-      },
-      "momentum": {
-        "score": 6.0,
-        "max_score": 30,
-        "distance_from_52w_high": -33.09,
-        "percentage_above_52w_low": 27.56,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 9.0,
-        "max_score": 15,
-        "current_volatility": 44.6,
-        "historical_volatility": 52.9,
-        "volatility_ratio": 0.84
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": false,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "count": 1,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "FISV",
-      "nombre": "Fiserv, Inc.",
-      "total_score": 14.6,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 5.0,
-        "max_score": 25,
-        "price_above_ema200": false,
-        "price_above_sma50": true,
-        "sma50_above_ema200": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "sma50": 52.17,
-        "ema200": 72.15
-      },
-      "relative_strength": {
-        "score": 3.6,
-        "max_score": 30,
-        "rs": 19.9,
-        "relative_performance": -22.53
-      },
-      "momentum": {
-        "score": 3.0,
-        "max_score": 30,
-        "distance_from_52w_high": -61.18,
-        "percentage_above_52w_low": 15.2,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 3.0,
-        "max_score": 15,
-        "current_volatility": 37.0,
-        "historical_volatility": 36.4,
-        "volatility_ratio": 1.02
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": false,
-        "sma50": true,
-        "above25_from_low": false,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "count": 1,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "KEEL",
-      "nombre": "Keel Infrastructure Corp.",
-      "total_score": 60.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 20.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": false,
-        "sma50_above_ema200": true,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "sma50": 5.11,
-        "ema200": 3.55
-      },
-      "relative_strength": {
-        "score": 30.0,
-        "max_score": 30,
-        "rs": 96.8,
-        "relative_performance": 63.06
-      },
-      "momentum": {
-        "score": 10.0,
-        "max_score": 30,
-        "distance_from_52w_high": -36.94,
-        "percentage_above_52w_low": 262.07,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 0.0,
-        "max_score": 15,
-        "current_volatility": 148.1,
-        "historical_volatility": 102.4,
-        "volatility_ratio": 1.45
-      },
-      "gates": {
-        "rs80": true,
-        "ema200": true,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "count": 5,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "NVO",
-      "nombre": "Novo Nordisk A/S",
-      "total_score": 29.1,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 13.0,
-        "max_score": 25,
-        "price_above_ema200": false,
-        "price_above_sma50": true,
-        "sma50_above_ema200": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "sma50": 46.88,
-        "ema200": 48.56
-      },
-      "relative_strength": {
-        "score": 3.1,
-        "max_score": 30,
-        "rs": 17.3,
-        "relative_performance": -25.38
-      },
-      "momentum": {
-        "score": 10.0,
-        "max_score": 30,
-        "distance_from_52w_high": -23.7,
-        "percentage_above_52w_low": 35.45,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 3.0,
-        "max_score": 15,
-        "current_volatility": 39.9,
-        "historical_volatility": 39.0,
-        "volatility_ratio": 1.02
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": false,
-        "sma50": true,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "count": 4,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "AGRO.BA",
-      "nombre": "AGROMETAL SA",
-      "total_score": 21.9,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 0.0,
-        "max_score": 25,
-        "price_above_ema200": false,
-        "price_above_sma50": false,
-        "sma50_above_ema200": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "sma50": 41.47,
-        "ema200": 45.51
-      },
-      "relative_strength": {
-        "score": 0.9,
-        "max_score": 30,
-        "rs": 4.8,
-        "relative_performance": -39.54
-      },
-      "momentum": {
-        "score": 6.0,
-        "max_score": 30,
-        "distance_from_52w_high": -44.74,
-        "percentage_above_52w_low": 26.42,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 15.0,
-        "max_score": 15,
-        "current_volatility": 14.3,
-        "historical_volatility": 52.0,
-        "volatility_ratio": 0.28
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": false,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": true,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "count": 2,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "SEMI.BA",
-      "nombre": "MOLINOS JUAN SEMINO S.A",
-      "total_score": 25.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 0.0,
-        "max_score": 25,
-        "price_above_ema200": false,
-        "price_above_sma50": false,
-        "sma50_above_ema200": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "sma50": 16.88,
-        "ema200": 18.39
-      },
-      "relative_strength": {
-        "score": 2.0,
-        "max_score": 30,
-        "rs": 10.9,
-        "relative_performance": -32.12
-      },
-      "momentum": {
-        "score": 8.0,
-        "max_score": 30,
-        "distance_from_52w_high": -47.27,
-        "percentage_above_52w_low": 42.05,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 15.0,
-        "max_score": 15,
-        "current_volatility": 18.7,
-        "historical_volatility": 35.7,
-        "volatility_ratio": 0.53
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": false,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": true,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "count": 2,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "EWY",
-      "nombre": "iShares MSCI South Korea ETF",
-      "total_score": 50.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 16.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": false,
-        "sma50_above_ema200": true,
-        "sma50_rising": false,
-        "ema200_rising": true,
-        "sma50": 186.16,
-        "ema200": 143.66
-      },
-      "relative_strength": {
-        "score": 24.0,
-        "max_score": 30,
-        "rs": 89.1,
-        "relative_performance": 18.92
-      },
-      "momentum": {
-        "score": 10.0,
-        "max_score": 30,
-        "distance_from_52w_high": -26.9,
-        "percentage_above_52w_low": 131.9,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 0.0,
-        "max_score": 15,
-        "current_volatility": 76.2,
-        "historical_volatility": 37.5,
-        "volatility_ratio": 2.03
-      },
-      "gates": {
-        "rs80": true,
-        "ema200": true,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": true,
-        "count": 4,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "SPCX",
-      "nombre": "Space Exploration Technologies ",
-      "total_score": null,
-      "datos_suficientes": false,
-      "trend": null,
-      "relative_strength": null,
-      "momentum": {
-        "score": 0.0,
-        "max_score": 30,
-        "distance_from_52w_high": -45.82,
-        "percentage_above_52w_low": 5.68,
-        "recent_52w_high": false
-      },
-      "volatility": null,
-      "gates": {
-        "rs80": false,
-        "ema200": false,
-        "sma50": false,
-        "above25_from_low": false,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": false,
-        "count": 0,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "BRK-B",
-      "nombre": "Berkshire Hathaway Inc. New",
-      "total_score": 53.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 25.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": true,
-        "sma50_above_ema200": true,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "sma50": 492.02,
-        "ema200": 489.0
-      },
-      "relative_strength": {
-        "score": 10.0,
-        "max_score": 30,
-        "rs": 55.9,
-        "relative_performance": -2.99
-      },
-      "momentum": {
-        "score": 15.0,
-        "max_score": 30,
-        "distance_from_52w_high": -0.13,
-        "percentage_above_52w_low": 11.77,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 3.0,
-        "max_score": 15,
-        "current_volatility": 15.4,
-        "historical_volatility": 13.8,
-        "volatility_ratio": 1.12
-      },
-      "gates": {
-        "rs80": false,
-        "ema200": true,
-        "sma50": true,
-        "above25_from_low": false,
-        "vol_below_08": false,
-        "sma50_rising": true,
-        "ema200_rising": true,
-        "count": 4,
-        "all_main_gates_passed": false
-      }
-    },
-    {
-      "ticker": "TQQQ",
-      "nombre": "ProShares UltraPro QQQ",
-      "total_score": 53.0,
-      "datos_suficientes": true,
-      "trend": {
-        "score": 16.0,
-        "max_score": 25,
-        "price_above_ema200": true,
-        "price_above_sma50": false,
-        "sma50_above_ema200": true,
-        "sma50_rising": false,
-        "ema200_rising": true,
-        "sma50": 74.76,
-        "ema200": 60.67
-      },
-      "relative_strength": {
-        "score": 24.0,
-        "max_score": 30,
-        "rs": 86.7,
-        "relative_performance": 14.78
-      },
-      "momentum": {
-        "score": 13.0,
-        "max_score": 30,
-        "distance_from_52w_high": -21.9,
-        "percentage_above_52w_low": 79.77,
-        "recent_52w_high": false
-      },
-      "volatility": {
-        "score": 0.0,
-        "max_score": 15,
-        "current_volatility": 71.8,
-        "historical_volatility": 51.6,
-        "volatility_ratio": 1.39
-      },
-      "gates": {
-        "rs80": true,
-        "ema200": true,
-        "sma50": false,
-        "above25_from_low": true,
-        "vol_below_08": false,
-        "sma50_rising": false,
-        "ema200_rising": true,
-        "count": 4,
         "all_main_gates_passed": false
       }
     }

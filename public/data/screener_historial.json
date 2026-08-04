@@ -24391,7 +24391,7 @@
         "mensual": "NEUTRAL"
       },
       "FISV": {
-        "diario": "COMPRA",
+        "diario": "CERCA",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
@@ -24405,6 +24405,16 @@
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
+      "AGRO.BA": {
+        "diario": "VENTA",
+        "semanal": "VENTA",
+        "mensual": "VENTA"
+      },
+      "SEMI.BA": {
+        "diario": "VENTA",
+        "semanal": "NEUTRAL",
+        "mensual": "NEUTRAL"
+      },
       "EWY": {
         "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
@@ -24413,7 +24423,7 @@
       "SPCX": {},
       "BRK-B": {
         "diario": "COMPRA",
-        "semanal": "COMPRA",
+        "semanal": "CERCA",
         "mensual": "NEUTRAL"
       },
       "TQQQ": {

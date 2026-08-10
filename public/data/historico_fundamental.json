@@ -1,21 +1,11 @@
 {
-  "actualizado": "2026-08-03T11:48:38.057261-03:00",
+  "actualizado": "2026-08-10T10:17:31.010564-03:00",
   "tickers": [
     {
       "ticker": "DAL",
       "nombre": "DELTA AIR LINES, INC.",
       "disponible": true,
       "serie": [
-        {
-          "fecha": "2021-08-06",
-          "precio": 38.92,
-          "per_ltm": null,
-          "ev_sales_ltm": null,
-          "ps_ltm": null,
-          "eps_ttm": -10.47,
-          "revenue_ttm": 18311000000.0,
-          "margen_neto_ttm": -36.37
-        },
         {
           "fecha": "2021-08-13",
           "precio": 38.51,
@@ -299,7 +289,7 @@
         {
           "fecha": "2022-02-25",
           "precio": 40.1,
-          "per_ltm": 91.1286,
+          "per_ltm": 91.1287,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.44,
@@ -369,7 +359,7 @@
         {
           "fecha": "2022-04-15",
           "precio": 40.89,
-          "per_ltm": 50.4792,
+          "per_ltm": 50.4791,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.81,
@@ -619,7 +609,7 @@
         {
           "fecha": "2022-10-07",
           "precio": 28.37,
-          "per_ltm": 218.2213,
+          "per_ltm": 218.2214,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -689,7 +679,7 @@
         {
           "fecha": "2022-11-25",
           "precio": 33.88,
-          "per_ltm": 260.6182,
+          "per_ltm": 260.6183,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -719,7 +709,7 @@
         {
           "fecha": "2022-12-16",
           "precio": 31.96,
-          "per_ltm": 245.8424,
+          "per_ltm": 245.8425,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 0.13,
@@ -889,7 +879,7 @@
         {
           "fecha": "2023-04-14",
           "precio": 32.6,
-          "per_ltm": 10.9384,
+          "per_ltm": 10.9385,
           "ev_sales_ltm": null,
           "ps_ltm": null,
           "eps_ttm": 2.98,
@@ -2615,10 +2605,20 @@
           "eps_ttm": 6.08,
           "revenue_ttm": 68287000000.0,
           "margen_neto_ttm": 5.78
+        },
+        {
+          "fecha": "2026-08-07",
+          "precio": 91.34,
+          "per_ltm": 15.023,
+          "ev_sales_ltm": null,
+          "ps_ltm": null,
+          "eps_ttm": 6.08,
+          "revenue_ttm": 68287000000.0,
+          "margen_neto_ttm": 5.78
         }
       ],
       "percentiles": {
-        "per": 72,
+        "per": 73,
         "ev_sales": null,
         "ps": null,
         "eps": 58,
@@ -2626,12 +2626,12 @@
         "margen_neto": 48
       },
       "promedios": {
-        "per": 30.23,
+        "per": 30.17,
         "ev_sales": null,
         "ps": null,
-        "eps": 4.11,
-        "revenue": 52367670498.08,
-        "margen_neto": 3.67
+        "eps": 4.17,
+        "revenue": 52559149425.29,
+        "margen_neto": 3.83
       }
     },
     {
@@ -2639,16 +2639,6 @@
       "nombre": "American Airlines Group Inc.",
       "disponible": true,
       "serie": [
-        {
-          "fecha": "2021-08-06",
-          "precio": 21.02,
-          "per_ltm": null,
-          "ev_sales_ltm": 2.8131,
-          "ps_ltm": 0.7283,
-          "eps_ttm": -10.22,
-          "revenue_ttm": 18686000000.0,
-          "margen_neto_ttm": -31.08
-        },
         {
           "fecha": "2021-08-13",
           "precio": 19.84,
@@ -5248,23 +5238,33 @@
           "eps_ttm": -0.49,
           "revenue_ttm": 58337000000.0,
           "margen_neto_ttm": -0.56
+        },
+        {
+          "fecha": "2026-08-07",
+          "precio": 15.94,
+          "per_ltm": null,
+          "ev_sales_ltm": 0.6452,
+          "ps_ltm": 0.1809,
+          "eps_ttm": -0.49,
+          "revenue_ttm": 58337000000.0,
+          "margen_neto_ttm": -0.56
         }
       ],
       "percentiles": {
         "per": null,
-        "ev_sales": 8,
-        "ps": 43,
+        "ev_sales": 11,
+        "ps": 50,
         "eps": 28,
         "revenue": 98,
         "margen_neto": 28
       },
       "promedios": {
         "per": 24.95,
-        "ev_sales": 0.97,
+        "ev_sales": 0.96,
         "ps": 0.22,
-        "eps": -0.37,
-        "revenue": 47836605363.98,
-        "margen_neto": -1.71
+        "eps": -0.33,
+        "revenue": 47988524904.21,
+        "margen_neto": -1.59
       }
     }
   ]

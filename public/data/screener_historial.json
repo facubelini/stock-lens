@@ -37670,7 +37670,7 @@
         "mensual": "NEUTRAL"
       },
       "TIMB": {
-        "diario": "NEUTRAL",
+        "diario": "VENTA",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
@@ -37775,9 +37775,9 @@
         "mensual": "NEUTRAL"
       },
       "HMC": {
-        "diario": "NEUTRAL",
+        "diario": "CERCA",
         "semanal": "NEUTRAL",
-        "mensual": "NEUTRAL"
+        "mensual": "CERCA"
       },
       "RIO": {
         "diario": "NEUTRAL",
@@ -38754,11 +38754,7 @@
         "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
-      "BNG.BA": {
-        "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
-        "mensual": "EXTENDIDO"
-      },
+      "BNG.BA": {},
       "BP": {
         "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
@@ -38825,7 +38821,7 @@
         "mensual": "EXTENDIDO"
       },
       "EFX": {
-        "diario": "NEUTRAL",
+        "diario": "COMPRA",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },

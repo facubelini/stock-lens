@@ -41338,7 +41338,7 @@
         "mensual": "NEUTRAL"
       },
       "HSY": {
-        "diario": "COMPRA",
+        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
@@ -41760,7 +41760,7 @@
       "BBAR": {
         "diario": "VENTA",
         "semanal": "NEUTRAL",
-        "mensual": "NEUTRAL"
+        "mensual": "EXTENDIDO"
       },
       "EEM": {
         "diario": "NEUTRAL",
@@ -42496,11 +42496,7 @@
         "semanal": "NEUTRAL",
         "mensual": "VENTA"
       },
-      "BBV.BA": {
-        "diario": "NEUTRAL",
-        "semanal": "EXTENDIDO",
-        "mensual": "EXTENDIDO"
-      },
+      "BBV.BA": {},
       "BCS": {
         "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
@@ -42641,7 +42637,7 @@
       },
       "KB": {
         "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
+        "semanal": "CERCA",
         "mensual": "EXTENDIDO"
       },
       "KEP": {
@@ -42867,7 +42863,7 @@
         "mensual": "NEUTRAL"
       },
       "SAMI.BA": {
-        "diario": "NEUTRAL",
+        "diario": "VENTA",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },

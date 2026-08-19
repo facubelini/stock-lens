@@ -4,7 +4,7 @@
     "nombre": "Moderna, Inc.",
     "industria": "Biotechnology",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -49,7 +49,7 @@
     "nombre": "Bioceres Crop Solutions Corp.",
     "industria": "Agricultural Inputs",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -88,7 +88,7 @@
     "nombre": "The Hershey Company",
     "industria": "Confectioners",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "COMPRA",
@@ -130,42 +130,42 @@
     "nombre": "Fomento Economico Mexicano S.A.",
     "industria": "Beverages - Brewers",
     "pais": "Mexico",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 41.6,
-      "dist_clave": -3.27,
-      "dist_asl": -2.09,
+      "rsi": 42.1,
+      "dist_clave": -3.0,
+      "dist_asl": -2.03,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-3.3%) · RSI 42 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-3.0%) · RSI 42 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 51.4,
-      "dist_clave": 10.89,
-      "dist_asl": -2.24,
+      "rsi": 51.6,
+      "dist_clave": 10.91,
+      "dist_asl": -2.17,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+10.9%) · RSI 51 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+10.9%) · RSI 52 · MACD bajista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 61.2,
-      "dist_clave": 16.72,
-      "dist_asl": 11.28,
+      "rsi": 61.6,
+      "dist_clave": 16.76,
+      "dist_asl": 11.38,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+16.7%) · RSI 61 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+16.8%) · RSI 62 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": {
       "tipo": "distribucion",
-      "hace_ruedas": 17
+      "hace_ruedas": 16
     },
     "divergencia_rsi": {
       "tipo": "bajista",
-      "hace_ruedas": 17
+      "hace_ruedas": 16
     },
     "cruce_medias": null,
     "cruce_corto": null
@@ -175,7 +175,7 @@
     "nombre": "Brasilagro Brazilian Agric Real",
     "industria": "Farm Products",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -214,7 +214,7 @@
     "nombre": "Roblox Corporation",
     "industria": "Electronic Gaming & Multimedia",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -256,16 +256,16 @@
     "nombre": "First Solar, Inc.",
     "industria": "Solar",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 47.4,
-      "dist_clave": -2.84,
-      "dist_asl": -1.69,
+      "rsi": 47.2,
+      "dist_clave": -3.03,
+      "dist_asl": -1.75,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia neutral · precio bajo EMA50 (-2.8%) · RSI 47 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia neutral · precio bajo EMA50 (-3.0%) · RSI 47 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
@@ -298,43 +298,40 @@
     "nombre": "NetEase, Inc.",
     "industria": "Electronic Gaming & Multimedia",
     "pais": "China",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 50.1,
-      "dist_clave": 0.96,
-      "dist_asl": -0.08,
+      "rsi": 50.5,
+      "dist_clave": 1.19,
+      "dist_asl": 0.09,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.0%) · RSI 50 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.2%) · RSI 50 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 52.7,
-      "dist_clave": -0.65,
-      "dist_asl": 2.22,
+      "rsi": 52.8,
+      "dist_clave": -0.63,
+      "dist_asl": 2.3,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia bajista · precio bajo SMA52 (-0.7%) · RSI 53 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia bajista · precio bajo SMA52 (-0.6%) · RSI 53 · MACD alcista · SMI bajista"
     },
     "mensual": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 56.3,
-      "dist_clave": 17.96,
-      "dist_asl": 4.17,
+      "rsi": 56.6,
+      "dist_clave": 18.0,
+      "dist_asl": 4.27,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+18.0%) · RSI 56 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+18.0%) · RSI 57 · MACD bajista · SMI bajista"
     },
     "divergencia_ad": null,
-    "divergencia_rsi": {
-      "tipo": "bajista",
-      "hace_ruedas": 7
-    },
+    "divergencia_rsi": null,
     "cruce_medias": {
       "tipo": "golden",
-      "hace_ruedas": 9
+      "hace_ruedas": 7
     },
     "cruce_corto": {
       "tipo": "death",
@@ -346,7 +343,7 @@
     "nombre": "AbbVie Inc.",
     "industria": "Drug Manufacturers - General",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -394,7 +391,7 @@
     "nombre": "Lam Research Corporation",
     "industria": "Semiconductor Equipment & Materials",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -436,34 +433,34 @@
     "nombre": "Banco Santander Brasil SA",
     "industria": "Banks - Regional",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 52.6,
-      "dist_clave": 2.13,
-      "dist_asl": -0.49,
+      "rsi": 51.9,
+      "dist_clave": 1.94,
+      "dist_asl": -0.79,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+2.1%) · RSI 53 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.9%) · RSI 52 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 51.6,
-      "dist_clave": -1.11,
-      "dist_asl": 2.81,
+      "rsi": 51.0,
+      "dist_clave": -1.32,
+      "dist_asl": 1.95,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia neutral · precio bajo SMA52 (-1.1%) · RSI 52 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia neutral · precio bajo SMA52 (-1.3%) · RSI 51 · MACD alcista · SMI alcista"
     },
     "mensual": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 53.1,
-      "dist_clave": 10.8,
-      "dist_asl": 2.99,
+      "rsi": 52.7,
+      "dist_clave": 10.43,
+      "dist_asl": 2.0,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+10.8%) · RSI 53 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+10.4%) · RSI 53 · MACD bajista · SMI bajista"
     },
     "divergencia_ad": {
       "tipo": "distribucion",
@@ -478,7 +475,7 @@
     "nombre": "Sony Group Corporation",
     "industria": "Consumer Electronics",
     "pais": "Japan",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -520,7 +517,7 @@
     "nombre": "Ultrapar Participacoes S.A. (Ne",
     "industria": "Oil & Gas Refining & Marketing",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -559,7 +556,7 @@
     "nombre": "Stellantis N.V.",
     "industria": "Auto Manufacturers",
     "pais": "Netherlands",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -598,7 +595,7 @@
     "nombre": "TotalEnergies SE",
     "industria": "Oil & Gas Integrated",
     "pais": "France",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "CERCA",
@@ -637,16 +634,16 @@
     "nombre": "Gerdau S.A.",
     "industria": "Steel",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 38.4,
-      "dist_clave": -4.16,
-      "dist_asl": -7.0,
+      "rsi": 37.6,
+      "dist_clave": -4.45,
+      "dist_asl": -7.14,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia neutral · precio bajo EMA50 (-4.2%) · RSI 38 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia neutral · precio bajo EMA50 (-4.4%) · RSI 38 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
@@ -679,7 +676,7 @@
     "nombre": "Itau Unibanco Banco Holding SA",
     "industria": "Banks - Regional",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -724,7 +721,7 @@
     "nombre": "Merck & Company, Inc.",
     "industria": "Drug Manufacturers - General",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -769,7 +766,7 @@
     "nombre": "Applied Materials, Inc.",
     "industria": "Semiconductor Equipment & Materials",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -811,7 +808,7 @@
     "nombre": "NIO Inc.",
     "industria": "Auto Manufacturers",
     "pais": "China",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -850,23 +847,23 @@
     "nombre": "TIM S.A.",
     "industria": "Telecom Services",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 33.7,
-      "dist_clave": -12.43,
-      "dist_asl": -4.13,
+      "rsi": 33.5,
+      "dist_clave": -12.12,
+      "dist_asl": -3.87,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-12.4%) · RSI 34 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-12.1%) · RSI 33 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
       "rsi": 33.6,
       "dist_clave": -20.6,
-      "dist_asl": -15.5,
+      "dist_asl": -15.51,
       "ma_clave": "SMA52",
       "motivo": "Tendencia neutral · precio bajo SMA52 (-20.6%) · RSI 34 · MACD bajista · SMI bajista"
     },
@@ -875,7 +872,7 @@
       "estado": "Bull",
       "rsi": 47.1,
       "dist_clave": 2.34,
-      "dist_asl": -13.62,
+      "dist_asl": -13.63,
       "ma_clave": "SMA36",
       "motivo": "Tendencia alcista · precio sobre SMA36 (+2.3%) · RSI 47 · MACD bajista · SMI bajista"
     },
@@ -889,7 +886,7 @@
     "nombre": "PagSeguro Digital Ltd.",
     "industria": "Software - Infrastructure",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -931,7 +928,7 @@
     "nombre": "Toyota Motor Corporation",
     "industria": "Auto Manufacturers",
     "pais": "Japan",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -973,16 +970,16 @@
     "nombre": "Tsakos Energy Navigation Ltd",
     "industria": "Oil & Gas Midstream",
     "pais": "Greece",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 67.9,
-      "dist_clave": 9.44,
-      "dist_asl": 6.41,
+      "rsi": 67.5,
+      "dist_clave": 9.36,
+      "dist_asl": 6.38,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+9.4%) · RSI 68 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+9.4%) · RSI 67 · MACD alcista · SMI alcista"
     },
     "semanal": {
       "verdict": "EXTENDIDO",
@@ -1006,7 +1003,10 @@
       "tipo": "distribucion",
       "hace_ruedas": 13
     },
-    "divergencia_rsi": null,
+    "divergencia_rsi": {
+      "tipo": "bajista",
+      "hace_ruedas": 13
+    },
     "cruce_medias": null,
     "cruce_corto": null
   },
@@ -1015,7 +1015,7 @@
     "nombre": "Adobe Inc.",
     "industria": "Software - Application",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -1057,7 +1057,7 @@
     "nombre": "Novagold Resources Inc.",
     "industria": "Gold",
     "pais": "Canada",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -1096,7 +1096,7 @@
     "nombre": "International Paper Company",
     "industria": "Packaging & Containers",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -1121,7 +1121,7 @@
       "estado": "Bull",
       "rsi": 51.4,
       "dist_clave": 1.54,
-      "dist_asl": 3.89,
+      "dist_asl": 3.88,
       "ma_clave": "SMA36",
       "motivo": "Tendencia alcista · precio sobre SMA36 (+1.5%) · RSI 51 · MACD bajista · SMI alcista"
     },
@@ -1141,7 +1141,7 @@
     "nombre": "SunCar Technology Group Inc.",
     "industria": "Auto & Truck Dealerships",
     "pais": "China",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -1180,7 +1180,7 @@
     "nombre": "iShares MSCI Brazil ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -1225,7 +1225,7 @@
     "nombre": "Tesla, Inc.",
     "industria": "Auto Manufacturers",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -1264,7 +1264,7 @@
     "nombre": "Garmin Ltd.",
     "industria": "Scientific & Technical Instruments",
     "pais": "Switzerland",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -1303,7 +1303,7 @@
     "nombre": "Petroleo Brasileiro S.A. Petrob",
     "industria": "Oil & Gas Integrated",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -1345,39 +1345,36 @@
     "nombre": "Companhia Siderurgica Nacional ",
     "industria": "Steel",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 37.5,
-      "dist_clave": -13.66,
-      "dist_asl": -5.77,
+      "rsi": 37.6,
+      "dist_clave": -14.05,
+      "dist_asl": -5.98,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-13.7%) · RSI 37 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-14.0%) · RSI 38 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 35.0,
-      "dist_clave": -37.35,
-      "dist_asl": -18.93,
+      "rsi": 34.9,
+      "dist_clave": -37.37,
+      "dist_asl": -19.04,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia bajista · precio bajo SMA52 (-37.3%) · RSI 35 · MACD bajista · SMI bajista · confluencia bajista confirmada"
+      "motivo": "Tendencia bajista · precio bajo SMA52 (-37.4%) · RSI 35 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
     "mensual": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 34.9,
-      "dist_clave": -52.76,
-      "dist_asl": -38.18,
+      "rsi": 35.1,
+      "dist_clave": -52.77,
+      "dist_asl": -38.25,
       "ma_clave": "SMA36",
       "motivo": "Tendencia bajista · precio bajo SMA36 (-52.8%) · RSI 35 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
-    "divergencia_ad": {
-      "tipo": "distribucion",
-      "hace_ruedas": 17
-    },
+    "divergencia_ad": null,
     "divergencia_rsi": null,
     "cruce_medias": null,
     "cruce_corto": null
@@ -1387,7 +1384,7 @@
     "nombre": "Mondelez International, Inc.",
     "industria": "Confectioners",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "COMPRA",
@@ -1429,7 +1426,7 @@
     "nombre": "Geopark Ltd",
     "industria": "Oil & Gas E&P",
     "pais": "Colombia",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -1468,7 +1465,7 @@
     "nombre": "Occidental Petroleum Corporatio",
     "industria": "Oil & Gas E&P",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "CERCA",
@@ -1510,7 +1507,7 @@
     "nombre": "Halliburton Company",
     "industria": "Oil & Gas Equipment & Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -1555,7 +1552,7 @@
     "nombre": "Baidu, Inc.",
     "industria": "Internet Content & Information",
     "pais": "China",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -1594,7 +1591,7 @@
     "nombre": "UnitedHealth Group Incorporated",
     "industria": "Healthcare Plans",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -1633,7 +1630,7 @@
     "nombre": "Netflix, Inc.",
     "industria": "Entertainment",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "COMPRA",
@@ -1672,7 +1669,7 @@
     "nombre": "ICICI Bank Limited",
     "industria": "Banks - Regional",
     "pais": "India",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -1720,46 +1717,43 @@
     "nombre": "Honda Motor Company, Ltd.",
     "industria": "Auto Manufacturers",
     "pais": "Japan",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "CERCA",
       "estado": "Bull",
-      "rsi": 67.8,
-      "dist_clave": 9.76,
-      "dist_asl": 3.4,
+      "rsi": 67.7,
+      "dist_clave": 9.33,
+      "dist_asl": 3.24,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+9.8%) · RSI 68 · MACD alcista · SMI alcista · acercándose a la zona de pullback"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+9.3%) · RSI 68 · MACD alcista · SMI alcista · acercándose a la zona de pullback"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 69.1,
-      "dist_clave": 9.83,
-      "dist_asl": 11.92,
+      "rsi": 69.3,
+      "dist_clave": 9.87,
+      "dist_asl": 12.1,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia neutral · precio sobre SMA52 (+9.8%) · RSI 69 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia neutral · precio sobre SMA52 (+9.9%) · RSI 69 · MACD alcista · SMI alcista"
     },
     "mensual": {
       "verdict": "CERCA",
       "estado": "Bull",
-      "rsi": 57.1,
-      "dist_clave": 7.04,
-      "dist_asl": 9.81,
+      "rsi": 57.2,
+      "dist_clave": 7.1,
+      "dist_asl": 10.0,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+7.0%) · RSI 57 · MACD alcista · SMI alcista · acercándose a la zona de pullback"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+7.1%) · RSI 57 · MACD alcista · SMI alcista · acercándose a la zona de pullback"
     },
     "divergencia_ad": {
       "tipo": "distribucion",
       "hace_ruedas": 8
     },
-    "divergencia_rsi": {
-      "tipo": "bajista",
-      "hace_ruedas": 8
-    },
+    "divergencia_rsi": null,
     "cruce_medias": {
       "tipo": "golden",
-      "hace_ruedas": 7
+      "hace_ruedas": 8
     },
     "cruce_corto": null
   },
@@ -1768,7 +1762,7 @@
     "nombre": "Rio Tinto Plc",
     "industria": "Other Industrial Metals & Mining",
     "pais": "United Kingdom",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -1807,7 +1801,7 @@
     "nombre": "Etsy, Inc.",
     "industria": "Internet Retail",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -1852,32 +1846,32 @@
     "nombre": "Ambev S.A.",
     "industria": "Beverages - Brewers",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 31.0,
-      "dist_clave": -6.75,
-      "dist_asl": -3.91,
+      "rsi": 32.0,
+      "dist_clave": -6.73,
+      "dist_asl": -3.9,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-6.7%) · RSI 31 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-6.7%) · RSI 32 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 44.3,
+      "rsi": 44.4,
       "dist_clave": 2.05,
-      "dist_asl": -6.91,
+      "dist_asl": -6.94,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+2.1%) · RSI 44 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+2.0%) · RSI 44 · MACD bajista · SMI bajista"
     },
     "mensual": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 55.2,
-      "dist_clave": 18.14,
-      "dist_asl": 4.18,
+      "dist_clave": 18.13,
+      "dist_asl": 4.15,
       "ma_clave": "SMA36",
       "motivo": "Tendencia alcista · precio sobre SMA36 (+18.1%) · RSI 55 · MACD alcista · SMI bajista"
     },
@@ -1891,7 +1885,7 @@
     "nombre": "Unilever PLC",
     "industria": "Household & Personal Products",
     "pais": "United Kingdom",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -1933,7 +1927,7 @@
     "nombre": "Jumia Technologies AG",
     "industria": "Internet Retail",
     "pais": "Germany",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -1978,7 +1972,7 @@
     "nombre": "Shell PLC",
     "industria": "Oil & Gas Integrated",
     "pais": "United Kingdom",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "CERCA",
@@ -2017,16 +2011,16 @@
     "nombre": "ENI S.p.A.",
     "industria": "Oil & Gas Integrated",
     "pais": "Italy",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "CERCA",
       "estado": "Bull",
-      "rsi": 63.1,
-      "dist_clave": 6.6,
-      "dist_asl": 3.01,
+      "rsi": 63.0,
+      "dist_clave": 6.87,
+      "dist_asl": 3.31,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+6.6%) · RSI 63 · MACD alcista · SMI alcista · acercándose a la zona de pullback"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+6.9%) · RSI 63 · MACD alcista · SMI alcista · acercándose a la zona de pullback"
     },
     "semanal": {
       "verdict": "EXTENDIDO",
@@ -2056,7 +2050,7 @@
     "nombre": "Advance Auto Parts Inc.",
     "industria": "Auto Parts",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -2095,7 +2089,7 @@
     "nombre": "Biogen Inc.",
     "industria": "Drug Manufacturers - General",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -2140,7 +2134,7 @@
     "nombre": "StoneCo Ltd.",
     "industria": "Software - Infrastructure",
     "pais": "Cayman Islands",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -2179,7 +2173,7 @@
     "nombre": "Coca-Cola Company (The)",
     "industria": "Beverages - Non-Alcoholic",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "CERCA",
@@ -2221,7 +2215,7 @@
     "nombre": "HDFC Bank Limited",
     "industria": "Banks - Regional",
     "pais": "India",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -2260,7 +2254,7 @@
     "nombre": "VALE S.A.",
     "industria": "Other Industrial Metals & Mining",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -2302,7 +2296,7 @@
     "nombre": "Union Pacific Corporation",
     "industria": "Railroads",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -2341,7 +2335,7 @@
     "nombre": "Microsoft Corporation",
     "industria": "Software - Infrastructure",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -2386,7 +2380,7 @@
     "nombre": "Advanced Micro Devices, Inc.",
     "industria": "Semiconductors",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -2425,7 +2419,7 @@
     "nombre": "AstraZeneca PLC",
     "industria": "Drug Manufacturers - General",
     "pais": "United Kingdom",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -2464,7 +2458,7 @@
     "nombre": "BHP Group Limited",
     "industria": "Other Industrial Metals & Mining",
     "pais": "Australia",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -2503,23 +2497,23 @@
     "nombre": "Suzano S.A.",
     "industria": "Paper & Paper Products",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 55.2,
-      "dist_clave": 1.1,
-      "dist_asl": 2.27,
+      "rsi": 55.6,
+      "dist_clave": 1.17,
+      "dist_asl": 2.41,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia neutral · precio sobre EMA50 (+1.1%) · RSI 55 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia neutral · precio sobre EMA50 (+1.2%) · RSI 56 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 45.3,
-      "dist_clave": -8.63,
-      "dist_asl": -0.75,
+      "rsi": 45.2,
+      "dist_clave": -8.62,
+      "dist_asl": -0.68,
       "ma_clave": "SMA52",
       "motivo": "Tendencia bajista · precio bajo SMA52 (-8.6%) · RSI 45 · MACD alcista · SMI alcista"
     },
@@ -2527,19 +2521,13 @@
       "verdict": "VENTA",
       "estado": "Bear",
       "rsi": 44.2,
-      "dist_clave": -13.62,
-      "dist_asl": -8.51,
+      "dist_clave": -13.6,
+      "dist_asl": -8.44,
       "ma_clave": "SMA36",
       "motivo": "Tendencia bajista · precio bajo SMA36 (-13.6%) · RSI 44 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
-    "divergencia_ad": {
-      "tipo": "distribucion",
-      "hace_ruedas": 12
-    },
-    "divergencia_rsi": {
-      "tipo": "bajista",
-      "hace_ruedas": 12
-    },
+    "divergencia_ad": null,
+    "divergencia_rsi": null,
     "cruce_medias": null,
     "cruce_corto": null
   },
@@ -2548,7 +2536,7 @@
     "nombre": "Satellogic Inc.",
     "industria": "Aerospace & Defense",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -2593,7 +2581,7 @@
     "nombre": "Texas Instruments Incorporated",
     "industria": "Semiconductors",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -2632,7 +2620,7 @@
     "nombre": "Telefonica Brasil S.A.",
     "industria": "Telecom Services",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -2677,14 +2665,14 @@
     "nombre": "Amgen Inc.",
     "industria": "Drug Manufacturers - General",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 79.6,
-      "dist_clave": 15.73,
-      "dist_asl": 8.62,
+      "rsi": 79.8,
+      "dist_clave": 15.66,
+      "dist_asl": 8.61,
       "ma_clave": "EMA50",
       "motivo": "Tendencia alcista · precio sobre EMA50 (+15.7%) · RSI 80 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
@@ -2719,16 +2707,16 @@
     "nombre": "Sysco Corporation",
     "industria": "Food Distribution",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 47.2,
-      "dist_clave": 0.73,
-      "dist_asl": -1.1,
+      "rsi": 47.4,
+      "dist_clave": 0.83,
+      "dist_asl": -1.09,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+0.7%) · RSI 47 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+0.8%) · RSI 47 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
@@ -2761,38 +2749,38 @@
     "nombre": "Vodafone Group Plc",
     "industria": "Telecom Services",
     "pais": "United Kingdom",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 57.6,
-      "dist_clave": 5.27,
-      "dist_asl": 1.59,
+      "rsi": 58.0,
+      "dist_clave": 5.62,
+      "dist_asl": 1.72,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+5.3%) · RSI 58 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+5.6%) · RSI 58 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 60.1,
-      "dist_clave": 18.07,
-      "dist_asl": 6.67,
+      "rsi": 60.0,
+      "dist_clave": 18.01,
+      "dist_asl": 6.49,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+18.1%) · RSI 60 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+18.0%) · RSI 60 · MACD alcista · SMI alcista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 70.4,
-      "dist_clave": 56.36,
-      "dist_asl": 23.83,
+      "rsi": 70.3,
+      "dist_clave": 56.21,
+      "dist_asl": 23.54,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+56.4%) · RSI 70 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+56.2%) · RSI 70 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": {
       "tipo": "distribucion",
-      "hace_ruedas": 16
+      "hace_ruedas": 15
     },
     "divergencia_rsi": null,
     "cruce_medias": null,
@@ -2803,7 +2791,7 @@
     "nombre": "Companhia de saneamento Basico ",
     "industria": "Utilities - Regulated Water",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -2845,7 +2833,7 @@
     "nombre": "Mosaic Company (The)",
     "industria": "Agricultural Inputs",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -2887,7 +2875,7 @@
     "nombre": "Costco Wholesale Corporation",
     "industria": "Discount Stores",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -2929,7 +2917,7 @@
     "nombre": "National Grid Transco, PLC Nati",
     "industria": "Utilities - Regulated Electric",
     "pais": "United Kingdom",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -2971,7 +2959,7 @@
     "nombre": "Thermo Fisher Scientific Inc",
     "industria": "Diagnostics & Research",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3013,7 +3001,7 @@
     "nombre": "Banco Bradesco Sa",
     "industria": "Banks - Regional",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -3055,7 +3043,7 @@
     "nombre": "Infosys Limited",
     "industria": "Information Technology Services",
     "pais": "India",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3094,7 +3082,7 @@
     "nombre": "Dow Inc.",
     "industria": "Chemicals",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3136,7 +3124,7 @@
     "nombre": "Alibaba Group Holding Limited",
     "industria": "Internet Retail",
     "pais": "China",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3175,7 +3163,7 @@
     "nombre": "Coeur Mining, Inc.",
     "industria": "Gold",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -3214,7 +3202,7 @@
     "nombre": "Skyworks Solutions, Inc.",
     "industria": "Semiconductors",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3253,23 +3241,23 @@
     "nombre": "Grupo Aeroportuario del Sureste",
     "industria": "Airports & Air Services",
     "pais": "Mexico",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 31.6,
-      "dist_clave": -8.17,
-      "dist_asl": -4.2,
+      "rsi": 31.5,
+      "dist_clave": -7.79,
+      "dist_asl": -4.12,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-8.2%) · RSI 32 · MACD bajista · SMI bajista · confluencia bajista confirmada"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-7.8%) · RSI 32 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
     "semanal": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 34.8,
+      "rsi": 34.9,
       "dist_clave": -16.56,
-      "dist_asl": -10.04,
+      "dist_asl": -10.02,
       "ma_clave": "SMA52",
       "motivo": "Tendencia bajista · precio bajo SMA52 (-16.6%) · RSI 35 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
@@ -3277,8 +3265,8 @@
       "verdict": "NEUTRAL",
       "estado": "Neutral",
       "rsi": 43.8,
-      "dist_clave": -6.43,
-      "dist_asl": -12.72,
+      "dist_clave": -6.42,
+      "dist_asl": -12.7,
       "ma_clave": "SMA36",
       "motivo": "Tendencia neutral · precio bajo SMA36 (-6.4%) · RSI 44 · MACD bajista · SMI bajista"
     },
@@ -3292,7 +3280,7 @@
     "nombre": "Intel Corporation",
     "industria": "Semiconductors",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3334,7 +3322,7 @@
     "nombre": "Analog Devices, Inc.",
     "industria": "Semiconductors",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3376,16 +3364,16 @@
     "nombre": "Loma Negra Compania Industrial ",
     "industria": "Building Materials",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 31.1,
-      "dist_clave": -13.58,
-      "dist_asl": -8.46,
+      "rsi": 31.3,
+      "dist_clave": -13.46,
+      "dist_asl": -8.4,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-13.6%) · RSI 31 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-13.5%) · RSI 31 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "VENTA",
@@ -3407,12 +3395,12 @@
     },
     "divergencia_ad": {
       "tipo": "distribucion",
-      "hace_ruedas": 20
+      "hace_ruedas": 19
     },
     "divergencia_rsi": null,
     "cruce_medias": {
       "tipo": "death",
-      "hace_ruedas": 7
+      "hace_ruedas": 6
     },
     "cruce_corto": null
   },
@@ -3421,7 +3409,7 @@
     "nombre": "Phillips 66",
     "industria": "Oil & Gas Refining & Marketing",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -3460,7 +3448,7 @@
     "nombre": "HSBC Holdings, plc.",
     "industria": "Banks - Diversified",
     "pais": "United Kingdom",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3499,7 +3487,7 @@
     "nombre": "XP Inc.",
     "industria": "Capital Markets",
     "pais": "Cayman Islands",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3541,7 +3529,7 @@
     "nombre": "Freeport-McMoRan, Inc.",
     "industria": "Copper",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3580,7 +3568,7 @@
     "nombre": "Banco BBVA Argentina S.A.",
     "industria": "Banks - Regional",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -3619,16 +3607,16 @@
     "nombre": "iShares MSCI Emerging Index Fun",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 52.6,
-      "dist_clave": 1.05,
-      "dist_asl": 0.87,
+      "rsi": 52.5,
+      "dist_clave": 1.03,
+      "dist_asl": 0.86,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.0%) · RSI 53 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.0%) · RSI 52 · MACD alcista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
@@ -3658,39 +3646,36 @@
     "nombre": "Vista Energy S.A.B. de C.V.",
     "industria": "Oil & Gas E&P",
     "pais": "Mexico",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
-      "verdict": "COMPRA",
+      "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 52.5,
-      "dist_clave": 1.57,
-      "dist_asl": 1.25,
+      "rsi": 52.7,
+      "dist_clave": 1.63,
+      "dist_asl": 1.43,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.6%) · RSI 52 · MACD alcista · SMI alcista · en zona de pullback (media/ASL), listo para entrar"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.6%) · RSI 53 · MACD alcista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 53.9,
-      "dist_clave": 19.86,
-      "dist_asl": 1.5,
+      "rsi": 54.2,
+      "dist_clave": 19.93,
+      "dist_asl": 1.71,
       "ma_clave": "SMA52",
       "motivo": "Tendencia alcista · precio sobre SMA52 (+19.9%) · RSI 54 · MACD bajista · SMI alcista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 62.1,
-      "dist_clave": 39.35,
-      "dist_asl": 17.5,
+      "rsi": 62.9,
+      "dist_clave": 39.5,
+      "dist_asl": 17.83,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+39.3%) · RSI 62 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+39.5%) · RSI 63 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     },
-    "divergencia_ad": {
-      "tipo": "distribucion",
-      "hace_ruedas": 13
-    },
+    "divergencia_ad": null,
     "divergencia_rsi": null,
     "cruce_medias": null,
     "cruce_corto": null
@@ -3700,7 +3685,7 @@
     "nombre": "Nike, Inc.",
     "industria": "Footwear & Accessories",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3739,7 +3724,7 @@
     "nombre": "Starbucks Corporation",
     "industria": "Restaurants",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3778,7 +3763,7 @@
     "nombre": "State Street Energy Select Sect",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3820,7 +3805,7 @@
     "nombre": "Procter & Gamble Company (The)",
     "industria": "Household & Personal Products",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3862,32 +3847,32 @@
     "nombre": "Avery Dennison Corporation",
     "industria": "Packaging & Containers",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 67.0,
-      "dist_clave": 8.65,
-      "dist_asl": 4.55,
+      "rsi": 67.4,
+      "dist_clave": 8.66,
+      "dist_asl": 4.64,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+8.7%) · RSI 67 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+8.7%) · RSI 67 · MACD alcista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 63.9,
-      "dist_clave": 7.33,
-      "dist_asl": 9.16,
+      "rsi": 63.7,
+      "dist_clave": 7.27,
+      "dist_asl": 8.92,
       "ma_clave": "SMA52",
       "motivo": "Tendencia neutral · precio sobre SMA52 (+7.3%) · RSI 64 · MACD alcista · SMI alcista"
     },
     "mensual": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 52.7,
-      "dist_clave": -0.36,
-      "dist_asl": 5.53,
+      "rsi": 52.6,
+      "dist_clave": -0.44,
+      "dist_asl": 5.27,
       "ma_clave": "SMA36",
       "motivo": "Tendencia neutral · precio bajo SMA36 (-0.4%) · RSI 53 · MACD alcista · SMI alcista"
     },
@@ -3901,7 +3886,7 @@
     "nombre": "Snap Inc.",
     "industria": "Internet Content & Information",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -3940,34 +3925,34 @@
     "nombre": "Urban Outfitters, Inc.",
     "industria": "Apparel Retail",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 47.5,
-      "dist_clave": 0.46,
-      "dist_asl": -2.27,
+      "rsi": 47.2,
+      "dist_clave": 0.29,
+      "dist_asl": -2.35,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+0.5%) · RSI 48 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+0.3%) · RSI 47 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 52.9,
-      "dist_clave": 4.95,
-      "dist_asl": 1.75,
+      "rsi": 53.1,
+      "dist_clave": 4.99,
+      "dist_asl": 1.91,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia neutral · precio sobre SMA52 (+4.9%) · RSI 53 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia neutral · precio sobre SMA52 (+5.0%) · RSI 53 · MACD alcista · SMI alcista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 61.1,
-      "dist_clave": 34.09,
-      "dist_asl": 9.98,
+      "rsi": 61.7,
+      "dist_clave": 34.19,
+      "dist_asl": 10.2,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+34.1%) · RSI 61 · MACD bajista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+34.2%) · RSI 62 · MACD bajista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": null,
     "divergencia_rsi": null,
@@ -3979,7 +3964,7 @@
     "nombre": "Verizon Communications Inc.",
     "industria": "Telecom Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "CERCA",
@@ -4021,7 +4006,7 @@
     "nombre": "JD.com, Inc.",
     "industria": "Internet Retail",
     "pais": "China",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -4066,7 +4051,7 @@
     "nombre": "ExxonMobil Holdings Corporation",
     "industria": "Oil & Gas Integrated",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -4105,7 +4090,7 @@
     "nombre": "QUALCOMM Incorporated",
     "industria": "Semiconductors",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -4144,7 +4129,7 @@
     "nombre": "Koninklijke Philips N.V. NY Reg",
     "industria": "Medical Devices",
     "pais": "Netherlands",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -4183,7 +4168,7 @@
     "nombre": "Central Puerto S.A.",
     "industria": "Utilities - Regulated Electric",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -4225,34 +4210,34 @@
     "nombre": "Cardinal Health, Inc.",
     "industria": "Medical Distribution",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 53.5,
-      "dist_clave": 3.02,
-      "dist_asl": 0.32,
+      "dist_clave": 2.9,
+      "dist_asl": 0.33,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+3.0%) · RSI 54 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+2.9%) · RSI 53 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 61.9,
-      "dist_clave": 15.96,
-      "dist_asl": 5.38,
+      "rsi": 62.1,
+      "dist_clave": 15.93,
+      "dist_asl": 5.28,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+16.0%) · RSI 62 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+15.9%) · RSI 62 · MACD alcista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 69.9,
-      "dist_clave": 60.01,
-      "dist_asl": 22.48,
+      "rsi": 70.5,
+      "dist_clave": 59.93,
+      "dist_asl": 22.32,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+60.0%) · RSI 70 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+59.9%) · RSI 71 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": {
       "tipo": "distribucion",
@@ -4270,23 +4255,23 @@
     "nombre": "Southern Copper Corporation",
     "industria": "Copper",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
-      "verdict": "NEUTRAL",
+      "verdict": "CERCA",
       "estado": "Bull",
-      "rsi": 57.3,
-      "dist_clave": 6.16,
-      "dist_asl": 3.63,
+      "rsi": 56.3,
+      "dist_clave": 5.81,
+      "dist_asl": 3.3,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+6.2%) · RSI 57 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+5.8%) · RSI 56 · MACD alcista · SMI alcista · acercándose a la zona de pullback"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 57.1,
-      "dist_clave": 21.37,
-      "dist_asl": 7.12,
+      "dist_clave": 21.4,
+      "dist_asl": 7.22,
       "ma_clave": "SMA52",
       "motivo": "Tendencia alcista · precio sobre SMA52 (+21.4%) · RSI 57 · MACD bajista · SMI alcista"
     },
@@ -4294,16 +4279,19 @@
       "verdict": "EXTENDIDO",
       "estado": "Bull",
       "rsi": 67.1,
-      "dist_clave": 71.41,
-      "dist_asl": 29.3,
+      "dist_clave": 71.5,
+      "dist_asl": 29.47,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+71.4%) · RSI 67 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+71.5%) · RSI 67 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": {
       "tipo": "distribucion",
       "hace_ruedas": 6
     },
-    "divergencia_rsi": null,
+    "divergencia_rsi": {
+      "tipo": "bajista",
+      "hace_ruedas": 6
+    },
     "cruce_medias": null,
     "cruce_corto": null
   },
@@ -4312,7 +4300,7 @@
     "nombre": "Nu Holdings Ltd.",
     "industria": "Banks - Regional",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "COMPRA",
@@ -4360,7 +4348,7 @@
     "nombre": "Target Corporation",
     "industria": "Discount Stores",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -4399,7 +4387,7 @@
     "nombre": "VeriSign, Inc.",
     "industria": "Software - Infrastructure",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -4441,7 +4429,7 @@
     "nombre": "Amazon.com, Inc.",
     "industria": "Internet Retail",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -4483,16 +4471,16 @@
     "nombre": "Ross Stores, Inc.",
     "industria": "Apparel Retail",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 40.9,
-      "dist_clave": -0.78,
-      "dist_asl": -4.02,
+      "rsi": 41.5,
+      "dist_clave": -0.58,
+      "dist_asl": -3.95,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia neutral · precio bajo EMA50 (-0.8%) · RSI 41 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia neutral · precio bajo EMA50 (-0.6%) · RSI 41 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
@@ -4528,7 +4516,7 @@
     "nombre": "Pearson, Plc",
     "industria": "Publishing",
     "pais": "United Kingdom",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -4573,7 +4561,7 @@
     "nombre": "MercadoLibre, Inc.",
     "industria": "Internet Retail",
     "pais": "Uruguay",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -4618,7 +4606,7 @@
     "nombre": "Pitney Bowes Inc.",
     "industria": "Integrated Freight & Logistics",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -4657,7 +4645,7 @@
     "nombre": "Pinterest, Inc.",
     "industria": "Internet Content & Information",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -4699,14 +4687,14 @@
     "nombre": "ARK Innovation ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 61.3,
-      "dist_clave": 7.11,
-      "dist_asl": 5.8,
+      "rsi": 61.0,
+      "dist_clave": 7.06,
+      "dist_asl": 5.77,
       "ma_clave": "EMA50",
       "motivo": "Tendencia alcista · precio sobre EMA50 (+7.1%) · RSI 61 · MACD alcista · SMI bajista"
     },
@@ -4728,7 +4716,10 @@
       "ma_clave": "SMA36",
       "motivo": "Tendencia alcista · precio sobre SMA36 (+37.4%) · RSI 59 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     },
-    "divergencia_ad": null,
+    "divergencia_ad": {
+      "tipo": "acumulacion",
+      "hace_ruedas": 15
+    },
     "divergencia_rsi": null,
     "cruce_medias": {
       "tipo": "golden",
@@ -4741,7 +4732,7 @@
     "nombre": "Gold.com, Inc.",
     "industria": "Capital Markets",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -4780,7 +4771,7 @@
     "nombre": "eBay Inc.",
     "industria": "Internet Retail",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -4825,34 +4816,34 @@
     "nombre": "Grupo Supervielle S.A.",
     "industria": "Banks - Regional",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 30.4,
-      "dist_clave": -16.11,
-      "dist_asl": -11.12,
+      "rsi": 30.5,
+      "dist_clave": -16.03,
+      "dist_asl": -11.15,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-16.1%) · RSI 30 · MACD bajista · SMI bajista · confluencia bajista confirmada"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-16.0%) · RSI 30 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
     "semanal": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 39.5,
-      "dist_clave": -17.76,
-      "dist_asl": -16.66,
+      "rsi": 40.3,
+      "dist_clave": -17.86,
+      "dist_asl": -17.05,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia bajista · precio bajo SMA52 (-17.8%) · RSI 40 · MACD bajista · SMI bajista · confluencia bajista confirmada"
+      "motivo": "Tendencia bajista · precio bajo SMA52 (-17.9%) · RSI 40 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
     "mensual": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
       "rsi": 45.8,
-      "dist_clave": -12.86,
-      "dist_asl": -21.31,
+      "dist_clave": -13.02,
+      "dist_asl": -21.71,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia neutral · precio bajo SMA36 (-12.9%) · RSI 46 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia neutral · precio bajo SMA36 (-13.0%) · RSI 46 · MACD bajista · SMI alcista"
     },
     "divergencia_ad": null,
     "divergencia_rsi": null,
@@ -4864,16 +4855,16 @@
     "nombre": "S&P Global Inc.",
     "industria": "Financial Data & Stock Exchanges",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 55.3,
-      "dist_clave": 2.7,
+      "rsi": 55.4,
+      "dist_clave": 2.57,
       "dist_asl": 2.39,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia neutral · precio sobre EMA50 (+2.7%) · RSI 55 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia neutral · precio sobre EMA50 (+2.6%) · RSI 55 · MACD alcista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
@@ -4893,10 +4884,7 @@
       "ma_clave": "SMA36",
       "motivo": "Tendencia neutral · precio bajo SMA36 (-3.1%) · RSI 48 · MACD bajista · SMI bajista"
     },
-    "divergencia_ad": {
-      "tipo": "acumulacion",
-      "hace_ruedas": 9
-    },
+    "divergencia_ad": null,
     "divergencia_rsi": null,
     "cruce_medias": null,
     "cruce_corto": null
@@ -4906,7 +4894,7 @@
     "nombre": "Arcos Dorados Holdings Inc.",
     "industria": "Restaurants",
     "pais": "Uruguay",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -4948,7 +4936,7 @@
     "nombre": "Hecla Mining Company",
     "industria": "Other Precious Metals & Mining",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -4993,7 +4981,7 @@
     "nombre": "Snowflake Inc.",
     "industria": "Software - Application",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -5032,7 +5020,7 @@
     "nombre": "Citigroup, Inc.",
     "industria": "Banks - Diversified",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -5071,7 +5059,7 @@
     "nombre": "Uber Technologies, Inc.",
     "industria": "Software - Application",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "CERCA",
@@ -5110,7 +5098,7 @@
     "nombre": "International Flavors & Fragran",
     "industria": "Specialty Chemicals",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -5152,7 +5140,7 @@
     "nombre": "AT&T Inc.",
     "industria": "Telecom Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "CERCA",
@@ -5194,7 +5182,7 @@
     "nombre": "Pepsico, Inc.",
     "industria": "Beverages - Non-Alcoholic",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -5236,7 +5224,7 @@
     "nombre": "3M Company",
     "industria": "Conglomerates",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -5281,7 +5269,7 @@
     "nombre": "Mizuho Financial Group, Inc. Sp",
     "industria": "Banks - Regional",
     "pais": "Japan",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -5320,7 +5308,7 @@
     "nombre": "SAP  SE",
     "industria": "Software - Application",
     "pais": "Germany",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -5362,7 +5350,7 @@
     "nombre": "Banco Macro S.A.",
     "industria": "Banks - Regional",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -5401,7 +5389,7 @@
     "nombre": "Yelp Inc.",
     "industria": "Internet Content & Information",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -5446,7 +5434,7 @@
     "nombre": "Trip.com Group Limited",
     "industria": "Travel Services",
     "pais": "Singapore",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -5485,32 +5473,32 @@
     "nombre": "Empresa Distribuidora Y Comerci",
     "industria": "Utilities - Regulated Electric",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 36.0,
-      "dist_clave": -10.94,
-      "dist_asl": -7.7,
+      "rsi": 37.0,
+      "dist_clave": -10.7,
+      "dist_asl": -7.47,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-10.9%) · RSI 36 · MACD bajista · SMI bajista · confluencia bajista confirmada"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-10.7%) · RSI 37 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
     "semanal": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 41.2,
-      "dist_clave": -14.23,
-      "dist_asl": -11.5,
+      "rsi": 41.5,
+      "dist_clave": -14.25,
+      "dist_asl": -11.61,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia bajista · precio bajo SMA52 (-14.2%) · RSI 41 · MACD bajista · SMI bajista · confluencia bajista confirmada"
+      "motivo": "Tendencia bajista · precio bajo SMA52 (-14.3%) · RSI 41 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
     "mensual": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 46.6,
-      "dist_clave": -11.3,
-      "dist_asl": -17.2,
+      "rsi": 46.7,
+      "dist_clave": -11.34,
+      "dist_asl": -17.31,
       "ma_clave": "SMA36",
       "motivo": "Tendencia neutral · precio bajo SMA36 (-11.3%) · RSI 47 · MACD bajista · SMI bajista"
     },
@@ -5524,16 +5512,16 @@
     "nombre": "Medtronic plc.",
     "industria": "Medical Devices",
     "pais": "Ireland",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 75.0,
-      "dist_clave": 10.52,
-      "dist_asl": 6.09,
+      "rsi": 74.6,
+      "dist_clave": 10.55,
+      "dist_asl": 6.1,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+10.5%) · RSI 75 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+10.6%) · RSI 75 · MACD alcista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
@@ -5566,7 +5554,7 @@
     "nombre": "Meta Platforms, Inc.",
     "industria": "Internet Content & Information",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -5608,34 +5596,34 @@
     "nombre": "Novartis AG",
     "industria": "Drug Manufacturers - General",
     "pais": "Switzerland",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "COMPRA",
       "estado": "Bull",
-      "rsi": 61.8,
-      "dist_clave": 4.33,
-      "dist_asl": 3.64,
+      "rsi": 61.3,
+      "dist_clave": 4.42,
+      "dist_asl": 3.66,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+4.3%) · RSI 62 · MACD alcista · SMI alcista · en zona de pullback (media/ASL), listo para entrar"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+4.4%) · RSI 61 · MACD alcista · SMI alcista · en zona de pullback (media/ASL), listo para entrar"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 60.3,
-      "dist_clave": 12.73,
-      "dist_asl": 4.83,
+      "rsi": 59.5,
+      "dist_clave": 12.7,
+      "dist_asl": 4.71,
       "ma_clave": "SMA52",
       "motivo": "Tendencia alcista · precio sobre SMA52 (+12.7%) · RSI 60 · MACD bajista · SMI alcista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 71.1,
-      "dist_clave": 39.0,
-      "dist_asl": 16.69,
+      "rsi": 71.3,
+      "dist_clave": 38.92,
+      "dist_asl": 16.53,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+39.0%) · RSI 71 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+38.9%) · RSI 71 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": null,
     "divergencia_rsi": null,
@@ -5650,7 +5638,7 @@
     "nombre": "Hut 8 Corp.",
     "industria": "Capital Markets",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -5692,7 +5680,7 @@
     "nombre": "Walmart Inc.",
     "industria": "Discount Stores",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -5731,7 +5719,7 @@
     "nombre": "Chevron Corporation",
     "industria": "Oil & Gas Integrated",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -5773,7 +5761,7 @@
     "nombre": "Invesco QQQ Trust, Series 1",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -5812,7 +5800,7 @@
     "nombre": "Ferrari N.V.",
     "industria": "Auto Manufacturers",
     "pais": "Italy",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -5854,7 +5842,7 @@
     "nombre": "Apple Inc.",
     "industria": "Consumer Electronics",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -5899,7 +5887,7 @@
     "nombre": "Zoom Communications, Inc.",
     "industria": "Software - Application",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -5938,7 +5926,7 @@
     "nombre": "Diageo plc",
     "industria": "Beverages - Wineries & Distilleries",
     "pais": "United Kingdom",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -5980,7 +5968,7 @@
     "nombre": "Corporacion America Airports SA",
     "industria": "Airports & Air Services",
     "pais": "Luxembourg",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6025,7 +6013,7 @@
     "nombre": "Aegon Ltd. New York Registry Sh",
     "industria": "Insurance - Diversified",
     "pais": "Netherlands",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6067,7 +6055,7 @@
     "nombre": "TripAdvisor, Inc.",
     "industria": "Travel Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -6115,7 +6103,7 @@
     "nombre": "Spotify Technology S.A.",
     "industria": "Internet Content & Information",
     "pais": "Sweden",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6154,7 +6142,7 @@
     "nombre": "Broadcom Inc.",
     "industria": "Semiconductors",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6196,7 +6184,7 @@
     "nombre": "Ford Motor Company",
     "industria": "Auto Manufacturers",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "COMPRA",
@@ -6241,7 +6229,7 @@
     "nombre": "Pan American Silver Corp.",
     "industria": "Gold",
     "pais": "Canada",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6280,7 +6268,7 @@
     "nombre": "Caterpillar, Inc.",
     "industria": "Farm & Heavy Construction Machinery",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6319,7 +6307,7 @@
     "nombre": "Johnson & Johnson",
     "industria": "Drug Manufacturers - General",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6358,7 +6346,7 @@
     "nombre": "Shopify Inc.",
     "industria": "Software - Application",
     "pais": "Canada",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6400,7 +6388,7 @@
     "nombre": "Johnson Controls International ",
     "industria": "Building Products & Equipment",
     "pais": "Ireland",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6442,42 +6430,42 @@
     "nombre": "Mitsubishi UFJ Financial Group,",
     "industria": "Banks - Diversified",
     "pais": "Japan",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 43.2,
-      "dist_clave": 0.07,
-      "dist_asl": -3.85,
+      "rsi": 43.9,
+      "dist_clave": 0.4,
+      "dist_asl": -3.78,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+0.1%) · RSI 43 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+0.4%) · RSI 44 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 58.8,
-      "dist_clave": 20.38,
-      "dist_asl": 4.0,
+      "rsi": 58.9,
+      "dist_clave": 20.37,
+      "dist_asl": 3.98,
       "ma_clave": "SMA52",
       "motivo": "Tendencia alcista · precio sobre SMA52 (+20.4%) · RSI 59 · MACD alcista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 74.9,
-      "dist_clave": 61.26,
-      "dist_asl": 26.45,
+      "rsi": 74.7,
+      "dist_clave": 61.24,
+      "dist_asl": 26.42,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+61.3%) · RSI 75 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+61.2%) · RSI 75 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": {
       "tipo": "distribucion",
-      "hace_ruedas": 17
+      "hace_ruedas": 16
     },
     "divergencia_rsi": {
       "tipo": "bajista",
-      "hace_ruedas": 17
+      "hace_ruedas": 16
     },
     "cruce_medias": null,
     "cruce_corto": null
@@ -6487,7 +6475,7 @@
     "nombre": "Las Vegas Sands Corp.",
     "industria": "Resorts & Casinos",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6526,23 +6514,23 @@
     "nombre": "America Movil, S.A.B. de C.V.",
     "industria": "Telecom Services",
     "pais": "Mexico",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 33.3,
-      "dist_clave": -5.59,
-      "dist_asl": -2.45,
+      "rsi": 34.2,
+      "dist_clave": -5.58,
+      "dist_asl": -2.49,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-5.6%) · RSI 33 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-5.6%) · RSI 34 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 44.5,
-      "dist_clave": 1.13,
-      "dist_asl": -6.05,
+      "dist_clave": 1.14,
+      "dist_asl": -6.04,
       "ma_clave": "SMA52",
       "motivo": "Tendencia alcista · precio sobre SMA52 (+1.1%) · RSI 44 · MACD bajista · SMI bajista"
     },
@@ -6550,8 +6538,8 @@
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 59.0,
-      "dist_clave": 25.72,
-      "dist_asl": 6.4,
+      "dist_clave": 25.73,
+      "dist_asl": 6.41,
       "ma_clave": "SMA36",
       "motivo": "Tendencia alcista · precio sobre SMA36 (+25.7%) · RSI 59 · MACD alcista · SMI bajista"
     },
@@ -6565,7 +6553,7 @@
     "nombre": "Roku, Inc.",
     "industria": "Entertainment",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6604,7 +6592,7 @@
     "nombre": "Strategy Inc",
     "industria": "Software - Application",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6646,7 +6634,7 @@
     "nombre": "Corning Incorporated",
     "industria": "Electronic Components",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6691,36 +6679,39 @@
     "nombre": "Lloyds Banking Group Plc",
     "industria": "Banks - Regional",
     "pais": "United Kingdom",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 46.0,
-      "dist_clave": 1.0,
-      "dist_asl": -2.36,
+      "rsi": 46.5,
+      "dist_clave": 1.29,
+      "dist_asl": -2.24,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.0%) · RSI 46 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.3%) · RSI 47 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 59.5,
-      "dist_clave": 15.53,
-      "dist_asl": 3.89,
+      "rsi": 59.4,
+      "dist_clave": 15.5,
+      "dist_asl": 3.79,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+15.5%) · RSI 60 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+15.5%) · RSI 59 · MACD alcista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 73.3,
-      "dist_clave": 64.45,
-      "dist_asl": 21.62,
+      "rsi": 72.3,
+      "dist_clave": 64.35,
+      "dist_asl": 21.45,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+64.4%) · RSI 73 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+64.3%) · RSI 72 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
-    "divergencia_ad": null,
+    "divergencia_ad": {
+      "tipo": "acumulacion",
+      "hace_ruedas": 14
+    },
     "divergencia_rsi": null,
     "cruce_medias": null,
     "cruce_corto": null
@@ -6730,7 +6721,7 @@
     "nombre": "General Motors Company",
     "industria": "Auto Manufacturers",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6769,7 +6760,7 @@
     "nombre": "Abbott Laboratories",
     "industria": "Medical Devices",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6811,7 +6802,7 @@
     "nombre": "Coinbase Global, Inc.",
     "industria": "Financial Data & Stock Exchanges",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6853,7 +6844,7 @@
     "nombre": "Kimberly-Clark Corporation",
     "industria": "Household & Personal Products",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6895,7 +6886,7 @@
     "nombre": "NVIDIA Corporation",
     "industria": "Semiconductors",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6934,7 +6925,7 @@
     "nombre": "HP Inc.",
     "industria": "Computer Hardware",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -6973,7 +6964,7 @@
     "nombre": "Marvell Technology, Inc.",
     "industria": "Semiconductors",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -7015,7 +7006,7 @@
     "nombre": "iShares Russell 2000 Index Fund",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -7054,7 +7045,7 @@
     "nombre": "Lithium Americas Corp.",
     "industria": "Other Industrial Metals & Mining",
     "pais": "Canada",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -7088,7 +7079,7 @@
     "nombre": "RTX Corporation",
     "industria": "Aerospace & Defense",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -7130,7 +7121,7 @@
     "nombre": "GE Aerospace",
     "industria": "Aerospace & Defense",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -7169,7 +7160,7 @@
     "nombre": "Airbnb, Inc.",
     "industria": "Travel Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -7211,7 +7202,7 @@
     "nombre": "Lockheed Martin Corporation",
     "industria": "Aerospace & Defense",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -7253,7 +7244,7 @@
     "nombre": "Micron Technology, Inc.",
     "industria": "Semiconductors",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -7295,13 +7286,13 @@
     "nombre": "Nucor Corporation",
     "industria": "Steel",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 42.1,
-      "dist_clave": -0.41,
+      "rsi": 42.3,
+      "dist_clave": -0.38,
       "dist_asl": -5.65,
       "ma_clave": "EMA50",
       "motivo": "Tendencia neutral · precio bajo EMA50 (-0.4%) · RSI 42 · MACD bajista · SMI bajista"
@@ -7324,8 +7315,14 @@
       "ma_clave": "SMA36",
       "motivo": "Tendencia alcista · precio sobre SMA36 (+52.8%) · RSI 67 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     },
-    "divergencia_ad": null,
-    "divergencia_rsi": null,
+    "divergencia_ad": {
+      "tipo": "distribucion",
+      "hace_ruedas": 10
+    },
+    "divergencia_rsi": {
+      "tipo": "bajista",
+      "hace_ruedas": 10
+    },
     "cruce_medias": null,
     "cruce_corto": null
   },
@@ -7334,7 +7331,7 @@
     "nombre": "Kinross Gold Corporation",
     "industria": "Gold",
     "pais": "Canada",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -7373,7 +7370,7 @@
     "nombre": "Palantir Technologies Inc.",
     "industria": "Software - Infrastructure",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -7415,7 +7412,7 @@
     "nombre": "State Street SPDR S&P 500 ETF T",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -7454,34 +7451,34 @@
     "nombre": "Harmony Gold Mining Company Lim",
     "industria": "Gold",
     "pais": "South Africa",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 71.3,
-      "dist_clave": 22.58,
-      "dist_asl": 14.0,
+      "rsi": 70.6,
+      "dist_clave": 22.6,
+      "dist_asl": 13.92,
       "ma_clave": "EMA50",
       "motivo": "Tendencia alcista · precio sobre EMA50 (+22.6%) · RSI 71 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
     "semanal": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 61.0,
-      "dist_clave": 19.63,
-      "dist_asl": 22.33,
+      "rsi": 60.9,
+      "dist_clave": 19.68,
+      "dist_asl": 22.54,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+19.6%) · RSI 61 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+19.7%) · RSI 61 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
       "rsi": 62.5,
-      "dist_clave": 71.09,
-      "dist_asl": 28.66,
+      "dist_clave": 71.24,
+      "dist_asl": 28.92,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+71.1%) · RSI 62 · MACD bajista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+71.2%) · RSI 63 · MACD bajista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": null,
     "divergencia_rsi": null,
@@ -7493,7 +7490,7 @@
     "nombre": "Palo Alto Networks, Inc.",
     "industria": "Software - Infrastructure",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -7532,7 +7529,7 @@
     "nombre": "Salesforce, Inc.",
     "industria": "Software - Application",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -7571,7 +7568,7 @@
     "nombre": "Virgin Galactic Holdings, Inc.",
     "industria": "Aerospace & Defense",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -7610,23 +7607,23 @@
     "nombre": "Globant S.A.",
     "industria": "Information Technology Services",
     "pais": "Luxembourg",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 59.6,
-      "dist_clave": 9.09,
-      "dist_asl": 6.01,
+      "rsi": 59.4,
+      "dist_clave": 9.04,
+      "dist_asl": 6.3,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+9.1%) · RSI 60 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+9.0%) · RSI 59 · MACD alcista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
       "rsi": 46.3,
-      "dist_clave": -22.32,
-      "dist_asl": 5.0,
+      "dist_clave": -22.31,
+      "dist_asl": 5.05,
       "ma_clave": "SMA52",
       "motivo": "Tendencia bajista · precio bajo SMA52 (-22.3%) · RSI 46 · MACD alcista · SMI alcista"
     },
@@ -7635,7 +7632,7 @@
       "estado": "Bear",
       "rsi": 28.7,
       "dist_clave": -70.3,
-      "dist_asl": -43.07,
+      "dist_asl": -43.06,
       "ma_clave": "SMA36",
       "motivo": "Tendencia bajista · precio bajo SMA36 (-70.3%) · RSI 29 · MACD alcista · SMI alcista"
     },
@@ -7649,7 +7646,7 @@
     "nombre": "Visa Inc.",
     "industria": "Credit Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -7691,7 +7688,7 @@
     "nombre": "Oracle Corporation",
     "industria": "Software - Infrastructure",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -7733,7 +7730,7 @@
     "nombre": "Grupo Financiero Galicia S.A.",
     "industria": "Banks - Regional",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -7775,16 +7772,16 @@
     "nombre": "Sea Limited",
     "industria": "Internet Retail",
     "pais": "Singapore",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 57.6,
-      "dist_clave": 11.18,
-      "dist_asl": 2.83,
+      "dist_clave": 11.35,
+      "dist_asl": 2.86,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+11.2%) · RSI 58 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+11.3%) · RSI 58 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
@@ -7814,7 +7811,7 @@
     "nombre": "State Street SPDR Dow Jones Ind",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -7856,16 +7853,16 @@
     "nombre": "American International Group, I",
     "industria": "Insurance - Diversified",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 39.7,
-      "dist_clave": -2.33,
-      "dist_asl": -2.38,
+      "rsi": 40.2,
+      "dist_clave": -2.23,
+      "dist_asl": -2.37,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-2.3%) · RSI 40 · MACD bajista · SMI bajista · confluencia bajista confirmada"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-2.2%) · RSI 40 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
     "semanal": {
       "verdict": "NEUTRAL",
@@ -7886,10 +7883,7 @@
       "motivo": "Tendencia alcista · precio sobre SMA36 (+2.4%) · RSI 51 · MACD bajista · SMI bajista"
     },
     "divergencia_ad": null,
-    "divergencia_rsi": {
-      "tipo": "bajista",
-      "hace_ruedas": 16
-    },
+    "divergencia_rsi": null,
     "cruce_medias": null,
     "cruce_corto": null
   },
@@ -7898,7 +7892,7 @@
     "nombre": "Newmont Corporation",
     "industria": "Gold",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -7937,7 +7931,7 @@
     "nombre": "Ericsson",
     "industria": "Communication Equipment",
     "pais": "Sweden",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -7979,7 +7973,7 @@
     "nombre": "Gold Fields Limited",
     "industria": "Gold",
     "pais": "South Africa",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -8018,7 +8012,7 @@
     "nombre": "JP Morgan Chase & Co.",
     "industria": "Banks - Diversified",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -8057,7 +8051,7 @@
     "nombre": "Goldman Sachs Group, Inc. (The)",
     "industria": "Capital Markets",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -8099,7 +8093,7 @@
     "nombre": "Bank of America Corporation",
     "industria": "Banks - Diversified",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -8141,7 +8135,7 @@
     "nombre": "Twilio Inc.",
     "industria": "Software - Infrastructure",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -8180,7 +8174,7 @@
     "nombre": "Riot Platforms, Inc.",
     "industria": "Capital Markets",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -8225,7 +8219,7 @@
     "nombre": "Delta Air Lines, Inc.",
     "industria": "Airlines",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -8267,16 +8261,16 @@
     "nombre": "Automatic Data Processing, Inc.",
     "industria": "Software - Application",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 63.3,
-      "dist_clave": 10.1,
-      "dist_asl": 3.44,
+      "rsi": 63.0,
+      "dist_clave": 10.32,
+      "dist_asl": 3.45,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+10.1%) · RSI 63 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+10.3%) · RSI 63 · MACD bajista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
@@ -8298,7 +8292,10 @@
     },
     "divergencia_ad": null,
     "divergencia_rsi": null,
-    "cruce_medias": null,
+    "cruce_medias": {
+      "tipo": "golden",
+      "hace_ruedas": 15
+    },
     "cruce_corto": null
   },
   {
@@ -8306,7 +8303,7 @@
     "nombre": "Pampa Energia S.A.",
     "industria": "Conglomerates",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -8351,7 +8348,7 @@
     "nombre": "Upstart Holdings, Inc.",
     "industria": "Credit Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -8393,7 +8390,7 @@
     "nombre": "Mastercard Incorporated",
     "industria": "Credit Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -8435,7 +8432,7 @@
     "nombre": "International Business Machines",
     "industria": "Information Technology Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -8474,7 +8471,7 @@
     "nombre": "Gilead Sciences, Inc.",
     "industria": "Drug Manufacturers - General",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -8513,7 +8510,7 @@
     "nombre": "American Airlines Group, Inc.",
     "industria": "Airlines",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -8552,7 +8549,7 @@
     "nombre": "State Street Financial Select S",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -8594,16 +8591,16 @@
     "nombre": "Booking Holdings Inc. Common St",
     "industria": "Travel Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 65.2,
-      "dist_clave": 11.74,
-      "dist_asl": 4.33,
+      "rsi": 65.1,
+      "dist_clave": 11.79,
+      "dist_asl": 4.34,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+11.7%) · RSI 65 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+11.8%) · RSI 65 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
@@ -8639,7 +8636,7 @@
     "nombre": "Carnival Corporation Ltd.",
     "industria": "Travel Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -8681,7 +8678,7 @@
     "nombre": "Taiwan Semiconductor Manufactur",
     "industria": "Semiconductors",
     "pais": "Taiwan",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -8720,7 +8717,7 @@
     "nombre": "U.S. Bancorp",
     "industria": "Banks - Regional",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -8765,7 +8762,7 @@
     "nombre": "Honeywell International Inc.",
     "industria": "Conglomerates",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -8810,7 +8807,7 @@
     "nombre": "PACCAR Inc.",
     "industria": "Farm & Heavy Construction Machinery",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -8849,7 +8846,7 @@
     "nombre": "Wells Fargo & Company",
     "industria": "Banks - Diversified",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -8897,16 +8894,16 @@
     "nombre": "Charles Schwab Corporation (The",
     "industria": "Capital Markets",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 71.1,
-      "dist_clave": 8.66,
-      "dist_asl": 3.06,
+      "rsi": 70.8,
+      "dist_clave": 8.76,
+      "dist_asl": 3.07,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+8.7%) · RSI 71 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+8.8%) · RSI 71 · MACD alcista · SMI bajista"
     },
     "semanal": {
       "verdict": "EXTENDIDO",
@@ -8936,7 +8933,7 @@
     "nombre": "McDonald's Corporation",
     "industria": "Restaurants",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -8978,7 +8975,7 @@
     "nombre": "DocuSign, Inc.",
     "industria": "Software - Application",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -9020,7 +9017,7 @@
     "nombre": "T-Mobile US, Inc.",
     "industria": "Telecom Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -9062,7 +9059,7 @@
     "nombre": "Cisco Systems, Inc.",
     "industria": "Communication Equipment",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -9104,23 +9101,23 @@
     "nombre": "Motorola Solutions, Inc.",
     "industria": "Communication Equipment",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 68.6,
-      "dist_clave": 10.44,
-      "dist_asl": 5.69,
+      "rsi": 68.2,
+      "dist_clave": 10.47,
+      "dist_asl": 5.77,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+10.4%) · RSI 69 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+10.5%) · RSI 68 · MACD alcista · SMI alcista"
     },
     "semanal": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 67.2,
-      "dist_clave": 13.68,
-      "dist_asl": 11.73,
+      "rsi": 67.3,
+      "dist_clave": 13.71,
+      "dist_asl": 11.82,
       "ma_clave": "SMA52",
       "motivo": "Tendencia alcista · precio sobre SMA52 (+13.7%) · RSI 67 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
@@ -9128,17 +9125,20 @@
       "verdict": "EXTENDIDO",
       "estado": "Bull",
       "rsi": 60.5,
-      "dist_clave": 20.01,
-      "dist_asl": 13.28,
+      "dist_clave": 20.05,
+      "dist_asl": 13.39,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+20.0%) · RSI 60 · MACD bajista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+20.0%) · RSI 61 · MACD bajista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": {
       "tipo": "distribucion",
       "hace_ruedas": 9
     },
     "divergencia_rsi": null,
-    "cruce_medias": null,
+    "cruce_medias": {
+      "tipo": "golden",
+      "hace_ruedas": 15
+    },
     "cruce_corto": null
   },
   {
@@ -9146,37 +9146,43 @@
     "nombre": "Snap-On Incorporated",
     "industria": "Tools & Accessories",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 38.4,
-      "dist_clave": -1.65,
-      "dist_asl": -3.07,
+      "rsi": 39.3,
+      "dist_clave": -1.44,
+      "dist_asl": -3.04,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia neutral · precio bajo EMA50 (-1.7%) · RSI 38 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia neutral · precio bajo EMA50 (-1.4%) · RSI 39 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 54.4,
       "dist_clave": 8.49,
-      "dist_asl": 0.26,
+      "dist_asl": 0.29,
       "ma_clave": "SMA52",
       "motivo": "Tendencia alcista · precio sobre SMA52 (+8.5%) · RSI 54 · MACD bajista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 64.1,
-      "dist_clave": 25.01,
-      "dist_asl": 10.79,
+      "rsi": 64.3,
+      "dist_clave": 25.03,
+      "dist_asl": 10.83,
       "ma_clave": "SMA36",
       "motivo": "Tendencia alcista · precio sobre SMA36 (+25.0%) · RSI 64 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     },
-    "divergencia_ad": null,
-    "divergencia_rsi": null,
+    "divergencia_ad": {
+      "tipo": "distribucion",
+      "hace_ruedas": 15
+    },
+    "divergencia_rsi": {
+      "tipo": "bajista",
+      "hace_ruedas": 15
+    },
     "cruce_medias": null,
     "cruce_corto": {
       "tipo": "death",
@@ -9188,7 +9194,7 @@
     "nombre": "United Airlines Holdings, Inc.",
     "industria": "Airlines",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -9230,7 +9236,7 @@
     "nombre": "Accenture plc",
     "industria": "Information Technology Services",
     "pais": "Ireland",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -9269,7 +9275,7 @@
     "nombre": "ADECOAGRO S A CEDEAR EACH 1 REP",
     "industria": "Farm Products",
     "pais": "Luxembourg",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -9308,7 +9314,7 @@
     "nombre": "Agnico Eagle Mines Limited",
     "industria": "Gold",
     "pais": "Canada",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -9347,7 +9353,7 @@
     "nombre": "ALUAR ALUMINIO ARGENTINA SA",
     "industria": "Aluminum",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -9392,7 +9398,7 @@
     "nombre": "Abercrombie & Fitch Company",
     "industria": "Apparel Retail",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -9434,7 +9440,7 @@
     "nombre": "AOCA.BA,0P0000D5TP,0",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -9473,7 +9479,7 @@
     "nombre": "American Express Company",
     "industria": "Credit Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -9521,7 +9527,7 @@
     "nombre": "Boeing Company (The)",
     "industria": "Aerospace & Defense",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -9563,7 +9569,7 @@
     "nombre": "Braskem SA",
     "industria": "Chemicals",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -9608,7 +9614,7 @@
     "nombre": "BlackBerry Limited",
     "industria": "Software - Infrastructure",
     "pais": "Canada",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -9650,7 +9656,7 @@
     "nombre": "BRASIL      ON      NM",
     "industria": "Banks - Regional",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -9695,7 +9701,7 @@
     "nombre": "BANCO BILBAO VIZCAYA ARGENTAR C",
     "industria": "Sin clasificar",
     "pais": "Spain",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": null,
     "semanal": null,
@@ -9710,38 +9716,38 @@
     "nombre": "Barclays PLC",
     "industria": "Banks - Diversified",
     "pais": "United Kingdom",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 44.4,
-      "dist_clave": 0.26,
-      "dist_asl": -2.64,
+      "rsi": 45.0,
+      "dist_clave": 0.63,
+      "dist_asl": -2.58,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+0.3%) · RSI 44 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+0.6%) · RSI 45 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 58.9,
-      "dist_clave": 14.54,
-      "dist_asl": 3.28,
+      "rsi": 59.2,
+      "dist_clave": 14.52,
+      "dist_asl": 3.22,
       "ma_clave": "SMA52",
       "motivo": "Tendencia alcista · precio sobre SMA52 (+14.5%) · RSI 59 · MACD alcista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 73.1,
-      "dist_clave": 68.74,
-      "dist_asl": 22.07,
+      "rsi": 72.5,
+      "dist_clave": 68.68,
+      "dist_asl": 21.98,
       "ma_clave": "SMA36",
       "motivo": "Tendencia alcista · precio sobre SMA36 (+68.7%) · RSI 73 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": {
       "tipo": "acumulacion",
-      "hace_ruedas": 15
+      "hace_ruedas": 14
     },
     "divergencia_rsi": null,
     "cruce_medias": null,
@@ -9767,16 +9773,16 @@
     "nombre": "Bristol-Myers Squibb Company",
     "industria": "Drug Manufacturers - General",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 69.0,
-      "dist_clave": 10.27,
-      "dist_asl": 5.21,
+      "dist_clave": 10.39,
+      "dist_asl": 5.24,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+10.3%) · RSI 69 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+10.4%) · RSI 69 · MACD alcista · SMI alcista"
     },
     "semanal": {
       "verdict": "EXTENDIDO",
@@ -9796,7 +9802,10 @@
       "ma_clave": "SMA36",
       "motivo": "Tendencia alcista · precio sobre SMA36 (+36.3%) · RSI 67 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
-    "divergencia_ad": null,
+    "divergencia_ad": {
+      "tipo": "distribucion",
+      "hace_ruedas": 11
+    },
     "divergencia_rsi": null,
     "cruce_medias": null,
     "cruce_corto": null
@@ -9806,7 +9815,7 @@
     "nombre": "BUNGE GLOBAL SA CEDEAR EACH REP",
     "industria": "Sin clasificar",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": null,
     "semanal": null,
@@ -9821,7 +9830,7 @@
     "nombre": "BP p.l.c.",
     "industria": "Oil & Gas Integrated",
     "pais": "United Kingdom",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "COMPRA",
@@ -9863,7 +9872,7 @@
     "nombre": "BERKSHIRE HATHAWAY INC CEDEAR E",
     "industria": "Insurance - Diversified",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -9905,7 +9914,7 @@
     "nombre": "BOLSAS Y MERCADOS ARGENTINOS SA",
     "industria": "Capital Markets",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -9947,7 +9956,7 @@
     "nombre": "Avis Budget Group, Inc.",
     "industria": "Rental & Leasing Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -9986,7 +9995,7 @@
     "nombre": "Colgate-Palmolive Company",
     "industria": "Household & Personal Products",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -10031,7 +10040,7 @@
     "nombre": "SOCIEDAD COMERCIAL DEL PLATA",
     "industria": "Conglomerates",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -10070,7 +10079,7 @@
     "nombre": "CRESUD S.A.C.I.F.Y.A.",
     "industria": "Conglomerates",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -10112,7 +10121,7 @@
     "nombre": "CVS Health Corporation",
     "industria": "Healthcare Plans",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -10154,7 +10163,7 @@
     "nombre": "Cemex, S.A.B. de C.V. Sponsored",
     "industria": "Building Materials",
     "pais": "Mexico",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -10193,13 +10202,13 @@
     "nombre": "DuPont de Nemours, Inc.",
     "industria": "Specialty Chemicals",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 47.2,
-      "dist_clave": -0.66,
+      "rsi": 47.1,
+      "dist_clave": -0.69,
       "dist_asl": -1.51,
       "ma_clave": "EMA50",
       "motivo": "Tendencia neutral · precio bajo EMA50 (-0.7%) · RSI 47 · MACD bajista · SMI bajista"
@@ -10208,24 +10217,21 @@
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 52.5,
-      "dist_clave": 9.3,
-      "dist_asl": -0.08,
+      "dist_clave": 9.27,
+      "dist_asl": -0.17,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+9.3%) · RSI 53 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+9.3%) · RSI 52 · MACD bajista · SMI alcista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 64.9,
-      "dist_clave": 33.9,
-      "dist_asl": 15.13,
+      "rsi": 64.8,
+      "dist_clave": 33.83,
+      "dist_asl": 14.98,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+33.9%) · RSI 65 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+33.8%) · RSI 65 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     },
-    "divergencia_ad": {
-      "tipo": "distribucion",
-      "hace_ruedas": 10
-    },
+    "divergencia_ad": null,
     "divergencia_rsi": null,
     "cruce_medias": null,
     "cruce_corto": null
@@ -10235,7 +10241,7 @@
     "nombre": "Deere & Company",
     "industria": "Farm & Heavy Construction Machinery",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -10277,7 +10283,7 @@
     "nombre": "Walt Disney Company (The)",
     "industria": "Entertainment",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -10316,7 +10322,7 @@
     "nombre": "Electronic Arts Inc.",
     "industria": "Electronic Gaming & Multimedia",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": null,
     "semanal": null,
@@ -10331,23 +10337,23 @@
     "nombre": "Equifax, Inc.",
     "industria": "Consulting Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 62.3,
-      "dist_clave": 9.74,
-      "dist_asl": 6.64,
+      "rsi": 62.8,
+      "dist_clave": 9.66,
+      "dist_asl": 6.7,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+9.7%) · RSI 62 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+9.7%) · RSI 63 · MACD alcista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 55.5,
-      "dist_clave": -3.1,
-      "dist_asl": 9.24,
+      "rsi": 55.6,
+      "dist_clave": -3.07,
+      "dist_asl": 9.4,
       "ma_clave": "SMA52",
       "motivo": "Tendencia bajista · precio bajo SMA52 (-3.1%) · RSI 56 · MACD alcista · SMI alcista"
     },
@@ -10355,8 +10361,8 @@
       "verdict": "NEUTRAL",
       "estado": "Bear",
       "rsi": 44.3,
-      "dist_clave": -16.11,
-      "dist_asl": -6.23,
+      "dist_clave": -16.08,
+      "dist_asl": -6.1,
       "ma_clave": "SMA36",
       "motivo": "Tendencia bajista · precio bajo SMA36 (-16.1%) · RSI 44 · MACD bajista · SMI alcista"
     },
@@ -10370,7 +10376,7 @@
     "nombre": "FedEx Corporation",
     "industria": "Integrated Freight & Logistics",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -10409,23 +10415,23 @@
     "nombre": "Freddie Mac",
     "industria": "Mortgage Finance",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 57.5,
-      "dist_clave": 1.61,
-      "dist_asl": 5.23,
+      "rsi": 57.0,
+      "dist_clave": 1.27,
+      "dist_asl": 5.16,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia neutral · precio sobre EMA50 (+1.6%) · RSI 58 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia neutral · precio sobre EMA50 (+1.3%) · RSI 57 · MACD alcista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 44.2,
-      "dist_clave": -26.88,
-      "dist_asl": -3.6,
+      "rsi": 44.3,
+      "dist_clave": -26.89,
+      "dist_asl": -3.65,
       "ma_clave": "SMA52",
       "motivo": "Tendencia bajista · precio bajo SMA52 (-26.9%) · RSI 44 · MACD alcista · SMI alcista"
     },
@@ -10433,8 +10439,8 @@
       "verdict": "EXTENDIDO",
       "estado": "Bull",
       "rsi": 49.9,
-      "dist_clave": 25.12,
-      "dist_asl": -13.93,
+      "dist_clave": 25.08,
+      "dist_asl": -13.98,
       "ma_clave": "SMA36",
       "motivo": "Tendencia alcista · precio sobre SMA36 (+25.1%) · RSI 50 · MACD bajista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     },
@@ -10454,7 +10460,7 @@
     "nombre": "Fannie Mae",
     "industria": "Mortgage Finance",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -10499,7 +10505,7 @@
     "nombre": "Alphabet Inc.",
     "industria": "Internet Content & Information",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -10544,34 +10550,34 @@
     "nombre": "GSK plc",
     "industria": "Drug Manufacturers - General",
     "pais": "United Kingdom",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
-      "rsi": 58.3,
-      "dist_clave": 2.96,
-      "dist_asl": 3.4,
+      "rsi": 59.1,
+      "dist_clave": 3.06,
+      "dist_asl": 3.44,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia neutral · precio sobre EMA50 (+3.0%) · RSI 58 · MACD alcista · SMI alcista"
+      "motivo": "Tendencia neutral · precio sobre EMA50 (+3.1%) · RSI 59 · MACD alcista · SMI alcista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 54.0,
-      "dist_clave": 7.39,
-      "dist_asl": 2.53,
+      "rsi": 54.1,
+      "dist_clave": 7.41,
+      "dist_asl": 2.58,
       "ma_clave": "SMA52",
       "motivo": "Tendencia alcista · precio sobre SMA52 (+7.4%) · RSI 54 · MACD bajista · SMI alcista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 64.6,
-      "dist_clave": 30.29,
-      "dist_asl": 12.32,
+      "rsi": 64.3,
+      "dist_clave": 30.32,
+      "dist_asl": 12.4,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+30.3%) · RSI 65 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+30.3%) · RSI 64 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": null,
     "divergencia_rsi": null,
@@ -10583,7 +10589,7 @@
     "nombre": "HAPVIDA     ON      NM",
     "industria": "Insurance - Life",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -10628,7 +10634,7 @@
     "nombre": "Home Depot, Inc. (The)",
     "industria": "Home Improvement Retail",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -10670,7 +10676,7 @@
     "nombre": "HNPIY.BA,0P0000D5OX,0",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -10709,7 +10715,7 @@
     "nombre": "Harley-Davidson, Inc.",
     "industria": "Recreational Vehicles",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "CERCA",
@@ -10751,16 +10757,16 @@
     "nombre": "Howmet Aerospace Inc.",
     "industria": "Aerospace & Defense",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 51.3,
-      "dist_clave": 2.49,
-      "dist_asl": -0.38,
+      "rsi": 51.2,
+      "dist_clave": 2.4,
+      "dist_asl": -0.4,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+2.5%) · RSI 51 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+2.4%) · RSI 51 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
@@ -10793,7 +10799,7 @@
     "nombre": "ING Group, N.V.",
     "industria": "Banks - Diversified",
     "pais": "Netherlands",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -10832,7 +10838,7 @@
     "nombre": "IRSA INVERSIONES Y REPRESENTACI",
     "industria": "Real Estate Services",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -10871,34 +10877,34 @@
     "nombre": "KB Financial Group Inc",
     "industria": "Banks - Regional",
     "pais": "South Korea",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 47.5,
-      "dist_clave": 1.22,
-      "dist_asl": -2.13,
+      "rsi": 46.9,
+      "dist_clave": 0.79,
+      "dist_asl": -2.23,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.2%) · RSI 47 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+0.8%) · RSI 47 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 56.1,
-      "dist_clave": 17.76,
-      "dist_asl": 3.08,
+      "rsi": 56.2,
+      "dist_clave": 17.83,
+      "dist_asl": 3.3,
       "ma_clave": "SMA52",
       "motivo": "Tendencia alcista · precio sobre SMA52 (+17.8%) · RSI 56 · MACD alcista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 68.8,
-      "dist_clave": 63.82,
-      "dist_asl": 24.85,
+      "rsi": 70.3,
+      "dist_clave": 64.03,
+      "dist_asl": 25.22,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+63.8%) · RSI 69 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+64.0%) · RSI 70 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": {
       "tipo": "distribucion",
@@ -10916,16 +10922,16 @@
     "nombre": "Korea Electric Power Corporatio",
     "industria": "Utilities - Regulated Electric",
     "pais": "South Korea",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 37.6,
-      "dist_clave": -9.15,
-      "dist_asl": -5.93,
+      "rsi": 37.7,
+      "dist_clave": -9.29,
+      "dist_asl": -5.94,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-9.2%) · RSI 38 · MACD bajista · SMI bajista · confluencia bajista confirmada"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-9.3%) · RSI 38 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
     "semanal": {
       "verdict": "VENTA",
@@ -10961,7 +10967,7 @@
     "nombre": "COCA-COLA FEMSA S.A.B. DE C.V. ",
     "industria": "Sin clasificar",
     "pais": "Mexico",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": null,
     "semanal": null,
@@ -10976,7 +10982,7 @@
     "nombre": "Eli Lilly and Company",
     "industria": "Drug Manufacturers - General",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -11021,23 +11027,23 @@
     "nombre": "LOJAS RENNERON      NM",
     "industria": "Department Stores",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 21.9,
-      "dist_clave": -18.9,
-      "dist_asl": -12.44,
+      "rsi": 22.8,
+      "dist_clave": -19.08,
+      "dist_asl": -12.48,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-18.9%) · RSI 22 · MACD bajista · SMI bajista · confluencia bajista confirmada"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-19.1%) · RSI 23 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
     "semanal": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 31.3,
+      "rsi": 31.0,
       "dist_clave": -24.09,
-      "dist_asl": -20.6,
+      "dist_asl": -20.57,
       "ma_clave": "SMA52",
       "motivo": "Tendencia bajista · precio bajo SMA52 (-24.1%) · RSI 31 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
@@ -11045,8 +11051,8 @@
       "verdict": "VENTA",
       "estado": "Bear",
       "rsi": 40.3,
-      "dist_clave": -19.48,
-      "dist_asl": -23.37,
+      "dist_clave": -19.47,
+      "dist_asl": -23.33,
       "ma_clave": "SMA36",
       "motivo": "Tendencia bajista · precio bajo SMA36 (-19.5%) · RSI 40 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
@@ -11096,7 +11102,7 @@
     "nombre": "METROGAS SA",
     "industria": "Utilities - Regulated Gas",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -11138,7 +11144,7 @@
     "nombre": "MAGAZ LUIZA ON      NM",
     "industria": "Specialty Retail",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -11177,7 +11183,7 @@
     "nombre": "Altria Group, Inc.",
     "industria": "Tobacco",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -11222,7 +11228,7 @@
     "nombre": "MORIXE HERMANOS",
     "industria": "Farm Products",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -11261,7 +11267,7 @@
     "nombre": "McEwen Inc.",
     "industria": "Other Precious Metals & Mining",
     "pais": "Canada",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "CERCA",
@@ -11306,34 +11312,34 @@
     "nombre": "Nomura Holdings Inc",
     "industria": "Capital Markets",
     "pais": "Japan",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 46.1,
-      "dist_clave": 1.63,
-      "dist_asl": -2.28,
+      "rsi": 45.1,
+      "dist_clave": 1.12,
+      "dist_asl": -2.4,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.6%) · RSI 46 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.1%) · RSI 45 · MACD bajista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 59.1,
-      "dist_clave": 14.95,
-      "dist_asl": 4.82,
+      "rsi": 59.5,
+      "dist_clave": 14.92,
+      "dist_asl": 4.72,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+15.0%) · RSI 59 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+14.9%) · RSI 59 · MACD alcista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 71.8,
-      "dist_clave": 47.73,
-      "dist_asl": 21.01,
+      "rsi": 70.8,
+      "dist_clave": 47.66,
+      "dist_asl": 20.86,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+47.7%) · RSI 72 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+47.7%) · RSI 71 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": null,
     "divergencia_rsi": null,
@@ -11345,7 +11351,7 @@
     "nombre": "NOKIA OYJ CEDEAR EACH REP 1/5 A",
     "industria": "Sin clasificar",
     "pais": "Finland",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": null,
     "semanal": null,
@@ -11391,7 +11397,7 @@
     "nombre": "ORANGE CEDEAR EACH 1 REPR 1 ADR",
     "industria": "Telecom Services",
     "pais": "France",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -11430,7 +11436,7 @@
     "nombre": "Grupo Aeroportuario Del Pacific",
     "industria": "Airports & Air Services",
     "pais": "Mexico",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -11469,7 +11475,7 @@
     "nombre": "PAMPA ENERGIA S.A.",
     "industria": "Conglomerates",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -11508,7 +11514,7 @@
     "nombre": "Pfizer, Inc.",
     "industria": "Drug Manufacturers - General",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -11550,7 +11556,7 @@
     "nombre": "POSCO HOLDINGS INC CEDEAR EACH ",
     "industria": "Steel",
     "pais": "South Korea",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -11573,7 +11579,7 @@
     "nombre": "Philip Morris International Inc",
     "industria": "Tobacco",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -11618,40 +11624,37 @@
     "nombre": "PRIO        ON      NM",
     "industria": "Oil & Gas E&P",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "COMPRA",
       "estado": "Bull",
-      "rsi": 58.9,
-      "dist_clave": 4.3,
-      "dist_asl": 3.45,
+      "rsi": 59.4,
+      "dist_clave": 4.37,
+      "dist_asl": 3.6,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+4.3%) · RSI 59 · MACD alcista · SMI alcista · en zona de pullback (media/ASL), listo para entrar"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+4.4%) · RSI 59 · MACD alcista · SMI alcista · en zona de pullback (media/ASL), listo para entrar"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 55.9,
-      "dist_clave": 19.95,
-      "dist_asl": 4.12,
+      "rsi": 56.3,
+      "dist_clave": 19.99,
+      "dist_asl": 4.23,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+19.9%) · RSI 56 · MACD bajista · SMI alcista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+20.0%) · RSI 56 · MACD bajista · SMI alcista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 62.5,
-      "dist_clave": 33.64,
-      "dist_asl": 20.92,
+      "rsi": 62.6,
+      "dist_clave": 33.71,
+      "dist_asl": 21.1,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+33.6%) · RSI 63 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+33.7%) · RSI 63 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": null,
-    "divergencia_rsi": {
-      "tipo": "bajista",
-      "hace_ruedas": 13
-    },
+    "divergencia_rsi": null,
     "cruce_medias": null,
     "cruce_corto": null
   },
@@ -11660,7 +11663,7 @@
     "nombre": "PayPal Holdings, Inc.",
     "industria": "Credit Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -11741,7 +11744,7 @@
     "nombre": "LOCALIZA    ON      NM",
     "industria": "Rental & Leasing Services",
     "pais": "Brazil",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -11780,7 +11783,7 @@
     "nombre": "Banco Santander, S.A. Sponsored",
     "industria": "Banks - Diversified",
     "pais": "Spain",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -11825,7 +11828,7 @@
     "nombre": "Shoulder Innovations, Inc.",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -11851,7 +11854,7 @@
     "nombre": "Siemens AG",
     "industria": "Specialty Industrial Machinery",
     "pais": "Germany",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -11890,7 +11893,7 @@
     "nombre": "SLB Limited",
     "industria": "Oil & Gas Equipment & Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "CERCA",
@@ -11964,7 +11967,7 @@
     "nombre": "TELECOM ARGENTINA SA",
     "industria": "Telecom Services",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12012,7 +12015,7 @@
     "nombre": "TRANSPORTADORA DE GAS DEL NORTE",
     "industria": "Oil & Gas Midstream",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -12051,7 +12054,7 @@
     "nombre": "TRANSPORTADORA DE GAS DEL SUR S",
     "industria": "Oil & Gas Integrated",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -12090,7 +12093,7 @@
     "nombre": "Telecom Italia S.p.A.",
     "industria": "Telecom Services",
     "pais": "Italy",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12132,7 +12135,7 @@
     "nombre": "Grupo Televisa S.A.B.",
     "industria": "Telecom Services",
     "pais": "Mexico",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12174,7 +12177,7 @@
     "nombre": "TERNIUM SA CEDEAR EACH 4  REP 1",
     "industria": "Steel",
     "pais": "Luxembourg",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12213,7 +12216,7 @@
     "nombre": "BANCO DE VALORES S.A.",
     "industria": "Banks - Diversified",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12252,7 +12255,7 @@
     "nombre": "WEIBO CORPORATION CEDEARS EACH ",
     "industria": "Internet Content & Information",
     "pais": "China",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12291,7 +12294,7 @@
     "nombre": "XEROX HOLDINGS CORPORATION CEDE",
     "industria": "Business Equipment & Supplies",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12333,7 +12336,7 @@
     "nombre": "YPF SOCIEDAD ANONIMA",
     "industria": "Oil & Gas Integrated",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12394,7 +12397,7 @@
     "nombre": "Equinor ASA",
     "industria": "Oil & Gas Integrated",
     "pais": "Norway",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12439,7 +12442,7 @@
     "nombre": "Arm Holdings plc",
     "industria": "Semiconductors",
     "pais": "United Kingdom",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12470,7 +12473,7 @@
     "nombre": "Baker Hughes Company",
     "industria": "Oil & Gas Equipment & Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12509,7 +12512,7 @@
     "nombre": "Danaher Corporation",
     "industria": "Diagnostics & Research",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12548,7 +12551,7 @@
     "nombre": "The Goodyear Tire & Rubber Comp",
     "industria": "Auto Parts",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -12590,7 +12593,7 @@
     "nombre": "Intuitive Surgical, Inc.",
     "industria": "Medical Instruments & Supplies",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12629,16 +12632,16 @@
     "nombre": "Nexgen Energy Ltd.",
     "industria": "Uranium",
     "pais": "Canada",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 58.8,
-      "dist_clave": 4.8,
-      "dist_asl": 4.35,
+      "rsi": 58.6,
+      "dist_clave": 4.61,
+      "dist_asl": 4.33,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+4.8%) · RSI 59 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+4.6%) · RSI 59 · MACD alcista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
@@ -12668,7 +12671,7 @@
     "nombre": "O'Reilly Automotive, Inc.",
     "industria": "Auto Parts",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12710,7 +12713,7 @@
     "nombre": "TJX Companies, Inc. (The)",
     "industria": "Apparel Retail",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -12755,7 +12758,7 @@
     "nombre": "SAN MIGUEL SA",
     "industria": "Farm Products",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -12794,7 +12797,7 @@
     "nombre": "BANCO HIPOTECAIRO SA",
     "industria": "Banks - Regional",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -12833,34 +12836,34 @@
     "nombre": "Columbia Select Technology ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Neutral",
       "rsi": 47.6,
-      "dist_clave": -0.09,
-      "dist_asl": -1.16,
+      "dist_clave": -0.11,
+      "dist_asl": -1.18,
       "ma_clave": "EMA50",
       "motivo": "Tendencia neutral · precio bajo EMA50 (-0.1%) · RSI 48 · MACD alcista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 57.0,
-      "dist_clave": 15.07,
-      "dist_asl": 1.71,
+      "rsi": 57.1,
+      "dist_clave": 15.04,
+      "dist_asl": 1.62,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+15.1%) · RSI 57 · MACD bajista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+15.0%) · RSI 57 · MACD bajista · SMI bajista"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 67.1,
-      "dist_clave": 41.76,
-      "dist_asl": 19.08,
+      "rsi": 67.6,
+      "dist_clave": 41.7,
+      "dist_asl": 18.94,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+41.8%) · RSI 67 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+41.7%) · RSI 68 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": null,
     "divergencia_rsi": null,
@@ -12872,7 +12875,7 @@
     "nombre": "FERRUM SA DE CERAMICA Y METALUR",
     "industria": "Building Products & Equipment",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -12911,7 +12914,7 @@
     "nombre": "Adecoagro S.A.",
     "industria": "Farm Products",
     "pais": "Luxembourg",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -12950,14 +12953,14 @@
     "nombre": "IRSA Inversiones Y Representaci",
     "industria": "Real Estate Services",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bear",
-      "rsi": 45.2,
-      "dist_clave": -2.46,
-      "dist_asl": -0.87,
+      "rsi": 45.3,
+      "dist_clave": -2.49,
+      "dist_asl": -0.88,
       "ma_clave": "EMA50",
       "motivo": "Tendencia bajista · precio bajo EMA50 (-2.5%) · RSI 45 · MACD bajista · SMI alcista"
     },
@@ -12979,11 +12982,14 @@
       "ma_clave": "SMA36",
       "motivo": "Tendencia alcista · precio sobre SMA36 (+19.3%) · RSI 54 · MACD bajista · SMI bajista"
     },
-    "divergencia_ad": null,
+    "divergencia_ad": {
+      "tipo": "acumulacion",
+      "hace_ruedas": 18
+    },
     "divergencia_rsi": null,
     "cruce_medias": {
       "tipo": "death",
-      "hace_ruedas": 10
+      "hace_ruedas": 11
     },
     "cruce_corto": null
   },
@@ -12992,7 +12998,7 @@
     "nombre": "CENTRAL COSTANERA SA",
     "industria": "Utilities - Regulated Electric",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13031,7 +13037,7 @@
     "nombre": "iShares Ethereum Trust ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -13062,7 +13068,7 @@
     "nombre": "iShares Bitcoin Trust ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13096,7 +13102,7 @@
     "nombre": "ASML Holding N.V. - New York Re",
     "industria": "Semiconductor Equipment & Materials",
     "pais": "Netherlands",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13135,7 +13141,7 @@
     "nombre": "Atlassian Corporation",
     "industria": "Software - Application",
     "pais": "Australia",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -13177,7 +13183,7 @@
     "nombre": "C3.ai, Inc.",
     "industria": "Software - Infrastructure",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13216,7 +13222,7 @@
     "nombre": "Celestica, Inc.",
     "industria": "Electronic Components",
     "pais": "Canada",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -13255,7 +13261,7 @@
     "nombre": "Constellation Energy Corporatio",
     "industria": "Utilities - Independent Power Producers",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13294,7 +13300,7 @@
     "nombre": "Deckers Outdoor Corporation",
     "industria": "Footwear & Accessories",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -13336,7 +13342,7 @@
     "nombre": "Rigetti Computing, Inc.",
     "industria": "Computer Hardware",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13378,7 +13384,7 @@
     "nombre": "ServiceNow, Inc.",
     "industria": "Software - Application",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13417,7 +13423,7 @@
     "nombre": "Tempus AI, Inc.",
     "industria": "Health Information Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -13451,7 +13457,7 @@
     "nombre": "UiPath, Inc.",
     "industria": "Software - Infrastructure",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -13493,7 +13499,7 @@
     "nombre": "Vertex Pharmaceuticals Incorpor",
     "industria": "Biotechnology",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -13535,7 +13541,7 @@
     "nombre": "Vistra Corp.",
     "industria": "Utilities - Independent Power Producers",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13577,7 +13583,7 @@
     "nombre": "United States Oil Fund",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "CERCA",
@@ -13616,7 +13622,7 @@
     "nombre": "iShares MSCI EAFE ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13655,16 +13661,16 @@
     "nombre": "iShares Core MSCI Emerging Mark",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 53.1,
-      "dist_clave": 1.22,
-      "dist_asl": 0.96,
+      "rsi": 53.2,
+      "dist_clave": 1.25,
+      "dist_asl": 0.97,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.2%) · RSI 53 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+1.3%) · RSI 53 · MACD alcista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
@@ -13694,7 +13700,7 @@
     "nombre": "iShares MSCI ACWI ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13733,7 +13739,7 @@
     "nombre": "VanEck Gold Miners ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -13772,7 +13778,7 @@
     "nombre": "Robinhood Markets, Inc.",
     "industria": "Capital Markets",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13811,7 +13817,7 @@
     "nombre": "CoreWeave, Inc.",
     "industria": "Software - Infrastructure",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13845,7 +13851,7 @@
     "nombre": "Oklo Inc.",
     "industria": "Utilities - Independent Power Producers",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13887,7 +13893,7 @@
     "nombre": "Rocket Lab Corporation",
     "industria": "Aerospace & Defense",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13926,7 +13932,7 @@
     "nombre": "Astera Labs, Inc.",
     "industria": "Semiconductors",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -13957,7 +13963,7 @@
     "nombre": "AST SpaceMobile, Inc.",
     "industria": "Communication Equipment",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -13999,7 +14005,7 @@
     "nombre": "IREN LIMITED",
     "industria": "Capital Markets",
     "pais": "Australia",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14041,7 +14047,7 @@
     "nombre": "Ecolab Inc.",
     "industria": "Specialty Chemicals",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14080,7 +14086,7 @@
     "nombre": "Invesco S&P 500 Quality ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14119,7 +14125,7 @@
     "nombre": "Global X Uranium ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14164,7 +14170,7 @@
     "nombre": "Global X Copper Miners ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14203,7 +14209,7 @@
     "nombre": "iShares Latin America 40 ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -14245,38 +14251,38 @@
     "nombre": "iShares ESG Aware MSCI USA ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 57.3,
-      "dist_clave": 2.35,
-      "dist_asl": 0.5,
+      "dist_clave": 2.27,
+      "dist_asl": 0.47,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+2.4%) · RSI 57 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+2.3%) · RSI 57 · MACD alcista · SMI bajista"
     },
     "semanal": {
       "verdict": "CERCA",
       "estado": "Bull",
-      "rsi": 65.5,
-      "dist_clave": 10.87,
-      "dist_asl": 3.73,
+      "rsi": 65.4,
+      "dist_clave": 10.85,
+      "dist_asl": 3.67,
       "ma_clave": "SMA52",
-      "motivo": "Tendencia alcista · precio sobre SMA52 (+10.9%) · RSI 66 · MACD alcista · SMI alcista · acercándose a la zona de pullback"
+      "motivo": "Tendencia alcista · precio sobre SMA52 (+10.8%) · RSI 65 · MACD alcista · SMI alcista · acercándose a la zona de pullback"
     },
     "mensual": {
       "verdict": "EXTENDIDO",
       "estado": "Bull",
-      "rsi": 74.9,
-      "dist_clave": 29.98,
-      "dist_asl": 13.92,
+      "rsi": 75.7,
+      "dist_clave": 29.94,
+      "dist_asl": 13.84,
       "ma_clave": "SMA36",
-      "motivo": "Tendencia alcista · precio sobre SMA36 (+30.0%) · RSI 75 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
+      "motivo": "Tendencia alcista · precio sobre SMA36 (+29.9%) · RSI 76 · MACD alcista · SMI bajista · muy extendido de ambas referencias, esperar retroceso"
     },
     "divergencia_ad": {
       "tipo": "acumulacion",
-      "hace_ruedas": 14
+      "hace_ruedas": 15
     },
     "divergencia_rsi": null,
     "cruce_medias": null,
@@ -14287,7 +14293,7 @@
     "nombre": "iShares Core S&P 500 ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14326,7 +14332,7 @@
     "nombre": "BitMine Immersion Technologies,",
     "industria": "Capital Markets",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "EXTENDIDO",
@@ -14357,7 +14363,7 @@
     "nombre": "Blackstone Inc.",
     "industria": "Asset Management",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14399,23 +14405,23 @@
     "nombre": "Invesco S&P 500 Equal Weight ET",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
-      "rsi": 63.4,
-      "dist_clave": 3.48,
-      "dist_asl": 1.28,
+      "rsi": 63.6,
+      "dist_clave": 3.4,
+      "dist_asl": 1.26,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia alcista · precio sobre EMA50 (+3.5%) · RSI 63 · MACD alcista · SMI bajista"
+      "motivo": "Tendencia alcista · precio sobre EMA50 (+3.4%) · RSI 64 · MACD alcista · SMI bajista"
     },
     "semanal": {
       "verdict": "NEUTRAL",
       "estado": "Bull",
       "rsi": 74.3,
       "dist_clave": 12.06,
-      "dist_asl": 4.89,
+      "dist_asl": 4.91,
       "ma_clave": "SMA52",
       "motivo": "Tendencia alcista · precio sobre SMA52 (+12.1%) · RSI 74 · MACD alcista · SMI alcista"
     },
@@ -14424,7 +14430,7 @@
       "estado": "Bull",
       "rsi": 73.6,
       "dist_clave": 25.96,
-      "dist_asl": 13.79,
+      "dist_asl": 13.81,
       "ma_clave": "SMA36",
       "motivo": "Tendencia alcista · precio sobre SMA36 (+26.0%) · RSI 74 · MACD alcista · SMI alcista · muy extendido de ambas referencias, esperar retroceso"
     },
@@ -14438,7 +14444,7 @@
     "nombre": "iShares MSCI Italy ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14477,7 +14483,7 @@
     "nombre": "State Street SPDR S&P Metals & ",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14519,7 +14525,7 @@
     "nombre": "iShares Global Clean Energy ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14558,7 +14564,7 @@
     "nombre": "CrowdStrike Holdings, Inc.",
     "industria": "Software - Infrastructure",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14597,7 +14603,7 @@
     "nombre": "Arista Networks, Inc.",
     "industria": "Computer Hardware",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14639,7 +14645,7 @@
     "nombre": "Realty Income Corporation",
     "industria": "REIT - Retail",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14678,7 +14684,7 @@
     "nombre": "Golar LNG Limited",
     "industria": "Oil & Gas Midstream",
     "pais": "Bermuda",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14717,7 +14723,7 @@
     "nombre": "Sandisk Corporation",
     "industria": "Computer Hardware",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14751,7 +14757,7 @@
     "nombre": "Nebius Group N.V.",
     "industria": "Internet Content & Information",
     "pais": "Netherlands",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14785,7 +14791,7 @@
     "nombre": "Hims & Hers Health, Inc.",
     "industria": "Drug Manufacturers - Specialty & Generic",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14824,7 +14830,7 @@
     "nombre": "Ondas Inc",
     "industria": "Communication Equipment",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14863,7 +14869,7 @@
     "nombre": "ConocoPhillips",
     "industria": "Oil & Gas E&P",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14902,7 +14908,7 @@
     "nombre": "NextEra Energy, Inc.",
     "industria": "Utilities - Regulated Electric",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14944,7 +14950,7 @@
     "nombre": "MP Materials Corp.",
     "industria": "Other Industrial Metals & Mining",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -14983,7 +14989,7 @@
     "nombre": "Cameco Corporation",
     "industria": "Uranium",
     "pais": "Canada",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -15028,7 +15034,7 @@
     "nombre": "Fiserv, Inc.",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -15067,7 +15073,7 @@
     "nombre": "Keel Infrastructure Corp.",
     "industria": "Information Technology Services",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
@@ -15106,7 +15112,7 @@
     "nombre": "Novo Nordisk A/S",
     "industria": "Drug Manufacturers - General",
     "pais": "Denmark",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -15145,16 +15151,16 @@
     "nombre": "AGROMETAL SA",
     "industria": "Farm & Heavy Construction Machinery",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "VENTA",
       "estado": "Bear",
-      "rsi": 28.2,
-      "dist_clave": -10.97,
-      "dist_asl": -5.77,
+      "rsi": 28.5,
+      "dist_clave": -10.88,
+      "dist_asl": -5.75,
       "ma_clave": "EMA50",
-      "motivo": "Tendencia bajista · precio bajo EMA50 (-11.0%) · RSI 28 · MACD bajista · SMI bajista · confluencia bajista confirmada"
+      "motivo": "Tendencia bajista · precio bajo EMA50 (-10.9%) · RSI 28 · MACD bajista · SMI bajista · confluencia bajista confirmada"
     },
     "semanal": {
       "verdict": "VENTA",
@@ -15184,7 +15190,7 @@
     "nombre": "MOLINOS JUAN SEMINO S.A",
     "industria": "Farm Products",
     "pais": "Argentina",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -15223,7 +15229,7 @@
     "nombre": "iShares MSCI South Korea ETF",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -15265,7 +15271,7 @@
     "nombre": "Space Exploration Technologies ",
     "industria": "Aerospace & Defense",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": null,
     "semanal": null,
@@ -15280,7 +15286,7 @@
     "nombre": "Berkshire Hathaway Inc. New",
     "industria": "Insurance - Diversified",
     "pais": "United States",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",
@@ -15322,7 +15328,7 @@
     "nombre": "ProShares UltraPro QQQ",
     "industria": "Sin clasificar",
     "pais": "Sin país",
-    "actualizado": "2026-08-19T18:22:33.142322-03:00",
+    "actualizado": "2026-08-19T19:50:41.487481-03:00",
     "stale": false,
     "diario": {
       "verdict": "NEUTRAL",

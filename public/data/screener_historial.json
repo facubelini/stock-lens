@@ -46336,7 +46336,7 @@
       },
       "HAPV3.SA": {
         "diario": "VENTA",
-        "semanal": "NEUTRAL",
+        "semanal": "VENTA",
         "mensual": "NEUTRAL"
       },
       "HD": {
@@ -46467,7 +46467,7 @@
         "mensual": "EXTENDIDO"
       },
       "PRIO3.SA": {
-        "diario": "COMPRA",
+        "diario": "CERCA",
         "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
@@ -46692,7 +46692,7 @@
         "semanal": "NEUTRAL"
       },
       "PATH": {
-        "diario": "EXTENDIDO",
+        "diario": "NEUTRAL",
         "semanal": "EXTENDIDO",
         "mensual": "NEUTRAL"
       },
@@ -46702,13 +46702,13 @@
         "mensual": "EXTENDIDO"
       },
       "VST": {
-        "diario": "NEUTRAL",
+        "diario": "VENTA",
         "semanal": "VENTA",
         "mensual": "EXTENDIDO"
       },
       "USO": {
-        "diario": "CERCA",
-        "semanal": "NEUTRAL",
+        "diario": "NEUTRAL",
+        "semanal": "EXTENDIDO",
         "mensual": "EXTENDIDO"
       },
       "EFA": {
@@ -46766,7 +46766,7 @@
       },
       "ECL": {
         "diario": "NEUTRAL",
-        "semanal": "CERCA",
+        "semanal": "COMPRA",
         "mensual": "NEUTRAL"
       },
       "SPHQ": {
@@ -46781,7 +46781,7 @@
       },
       "COPX": {
         "diario": "NEUTRAL",
-        "semanal": "EXTENDIDO",
+        "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
       "ILF": {
@@ -46791,7 +46791,7 @@
       },
       "ESGU": {
         "diario": "NEUTRAL",
-        "semanal": "CERCA",
+        "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
       "IVV": {
@@ -46810,7 +46810,7 @@
       },
       "RSP": {
         "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
+        "semanal": "CERCA",
         "mensual": "EXTENDIDO"
       },
       "EWI": {
@@ -46854,7 +46854,7 @@
       },
       "NBIS": {
         "diario": "NEUTRAL",
-        "semanal": "EXTENDIDO"
+        "semanal": "NEUTRAL"
       },
       "HIMS": {
         "diario": "NEUTRAL",
@@ -46899,6 +46899,16 @@
       "NVO": {
         "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
+        "mensual": "NEUTRAL"
+      },
+      "AGRO.BA": {
+        "diario": "VENTA",
+        "semanal": "VENTA",
+        "mensual": "VENTA"
+      },
+      "SEMI.BA": {
+        "diario": "NEUTRAL",
+        "semanal": "VENTA",
         "mensual": "NEUTRAL"
       },
       "EWY": {

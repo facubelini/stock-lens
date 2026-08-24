@@ -1,8 +1,8 @@
 {
-  "actualizado": "2026-08-24T15:47:44.073601-03:00",
+  "actualizado": "2026-08-24T18:29:13.662905-03:00",
   "vix": {
-    "valor": 15.69,
-    "cambio_pct": 3.7
+    "valor": 15.85,
+    "cambio_pct": 4.76
   },
   "yield_curve": {
     "diez_anios": 4.7,
@@ -15,7 +15,7 @@
     "clasificacion": "Greed"
   },
   "fear_greed_acciones": {
-    "valor": 55.9,
+    "valor": 55.0,
     "clasificacion": "greed",
     "prev_cierre": 55.2,
     "prev_semana": 58.4,

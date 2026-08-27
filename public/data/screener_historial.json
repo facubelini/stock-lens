@@ -56309,6 +56309,11 @@
       "GEV": {
         "diario": "VENTA",
         "semanal": "NEUTRAL"
+      },
+      "DELL": {
+        "diario": "NEUTRAL",
+        "semanal": "EXTENDIDO",
+        "mensual": "EXTENDIDO"
       }
     }
   }

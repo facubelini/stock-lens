@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-08-27T17:47:04.326852-03:00",
+  "actualizado": "2026-08-27T19:27:06.446003-03:00",
   "tickers": [
     {
       "ticker": "MRNA",
@@ -14167,8 +14167,8 @@
     {
       "ticker": "WBO.BA",
       "nombre": "WEIBO CORPORATION CEDEARS EACH ",
-      "total_score": 53.2,
-      "datos_suficientes": true,
+      "total_score": null,
+      "datos_suficientes": false,
       "trend": {
         "score": 25.0,
         "max_score": 25,
@@ -14193,13 +14193,7 @@
         "percentage_above_52w_low": 3.48,
         "recent_52w_high": true
       },
-      "volatility": {
-        "score": 0.0,
-        "max_score": 15,
-        "current_volatility": 12.3,
-        "historical_volatility": 0.0,
-        "volatility_ratio": 3425835.82
-      },
+      "volatility": null,
       "gates": {
         "rs80": false,
         "ema200": true,

@@ -26,6 +26,7 @@ from comparables_universo import INDUSTRIA_COMPARABLES
 # --- Rutas y constantes ---
 RAIZ = Path(__file__).resolve().parent.parent
 ARCHIVO_TICKERS = RAIZ / "data" / "tickers.xlsx"
+ARCHIVO_RATIOS_MANUAL = RAIZ / "data" / "ratios_cedear_manual.json"
 DIR_SALIDA = RAIZ / "public" / "data"
 TZ = ZoneInfo("America/Argentina/Buenos_Aires")
 
@@ -1188,6 +1189,46 @@ def descargar_ratios_cedear():
         return {}
 
 
+def cargar_ratios_cedear_manuales():
+    """dict {ticker: ratio_int} de data/ratios_cedear_manual.json. Complementa
+    el listado de Comafi, que cubre solo los programas de ese custodio (~357
+    especies): CEDEARs de otros custodios y varios ETFs no figuran ahi. Las
+    claves que empiezan con _ son comentarios del archivo y se ignoran.
+    Tolerante a fallos, igual que la descarga de Comafi."""
+    if not ARCHIVO_RATIOS_MANUAL.exists():
+        return {}
+    try:
+        crudo = json.loads(ARCHIVO_RATIOS_MANUAL.read_text(encoding="utf-8"))
+    except Exception as e:  # noqa: BLE001
+        print(f"  ! No se pudo leer {ARCHIVO_RATIOS_MANUAL.name}: {e}")
+        return {}
+    out = {}
+    for k, v in crudo.items():
+        if k.startswith("_"):
+            continue
+        try:
+            n = int(v)
+        except (TypeError, ValueError):
+            print(f"  ! Ratio manual invalido para {k}: {v!r} (se ignora)")
+            continue
+        if n > 0:
+            out[str(k).strip().upper()] = n
+    return out
+
+
+def combinar_ratios_cedear(automaticos, manuales):
+    """Une ambas fuentes. Comafi gana: es la oficial y se re-descarga en cada
+    corrida, asi que refleja cambios de ratio (splits) sin que haya que tocar
+    el JSON. El manual solo rellena huecos; los conflictos se avisan por
+    consola para poder limpiar la entrada manual que quedo vieja."""
+    combinado = dict(manuales)
+    for t, r in automaticos.items():
+        if t in manuales and manuales[t] != r:
+            print(f"  ! Ratio de {t}: manual {manuales[t]}:1 vs Comafi {r}:1 -> uso Comafi")
+        combinado[t] = r
+    return combinado
+
+
 def obtener_precio_cedear(ticker_base):
     """Ultimo cierre del simbolo '{ticker_base}.BA' (liviano: solo history
     corta, no .info). None si no hay CEDEAR con ese codigo en BYMA. Un
@@ -1503,8 +1544,13 @@ def main():
     prev_scanner_setups = cargar_lista_previa("scanner_setups.json")
 
     print("Descargando ratios de CEDEAR (Comafi)...")
-    ratios_cedear = descargar_ratios_cedear()
-    print(f"  {len(ratios_cedear)} ratios de CEDEAR cargados.")
+    ratios_comafi = descargar_ratios_cedear()
+    ratios_manuales = cargar_ratios_cedear_manuales()
+    ratios_cedear = combinar_ratios_cedear(ratios_comafi, ratios_manuales)
+    print(
+        f"  {len(ratios_cedear)} ratios de CEDEAR cargados "
+        f"({len(ratios_comafi)} de Comafi + {len(ratios_cedear) - len(ratios_comafi)} manuales)."
+    )
 
     print("Descargando benchmark (SPY) para beta/correlacion realizados...")
     _, _, _, bench_closes = resolver_ticker("SPY")

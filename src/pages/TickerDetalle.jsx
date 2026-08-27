@@ -565,14 +565,24 @@ export default function TickerDetalle() {
                   {fmtPct(fila.pre_post_market.post_cambio_pct, { signo: true })})
                 </div>
               )}
-              {fila.cedear_precio != null && (
+              {fila.cedear_ratio != null && (
                 <div
                   className="tabular text-xs text-terminal-dim"
-                  title={`Ratio ${fila.cedear_ratio}:1 (${fila.cedear_ratio} certificados CEDEAR = 1 acción) — ratios oficiales de Banco Comafi`}
+                  title={`Ratio ${fila.cedear_ratio}:1 (${fila.cedear_ratio} certificados CEDEAR = 1 acción) — ratios de Banco Comafi + carga manual en data/ratios_cedear_manual.json`}
                 >
-                  CEDEAR ({fila.cedear_ticker}): ${fmtPrecio(fila.cedear_precio)} ARS · ratio {fila.cedear_ratio}:1
-                  {fila.cedear_ccl_implicito != null && (
-                    <> · CCL implícito ${fmtNum(fila.cedear_ccl_implicito, 0)}</>
+                  {fila.cedear_precio != null ? (
+                    <>
+                      CEDEAR ({fila.cedear_ticker}): ${fmtPrecio(fila.cedear_precio)} ARS · ratio{' '}
+                      {fila.cedear_ratio}:1
+                      {fila.cedear_ccl_implicito != null && (
+                        <> · CCL implícito ${fmtNum(fila.cedear_ccl_implicito, 0)}</>
+                      )}
+                    </>
+                  ) : (
+                    <>
+                      CEDEAR: ratio {fila.cedear_ratio}:1{' '}
+                      <span className="text-terminal-dim/70">(sin cotización en BYMA vía Yahoo)</span>
+                    </>
                   )}
                 </div>
               )}

@@ -15,3 +15,11 @@ export function colorRSI(v) {
   if (v <= 45) return '#84cc16'
   return '#6b7280'
 }
+
+// Precio "de accion": los subyacentes tokenizados se mueven en escalas
+// normales de bolsa (AAPL ~316, XAU ~4600), asi que no hace falta la escala
+// de 8 decimales que necesitan las memecoins en fmtPrice.
+export function fmtPrecioAccion(p) {
+  if (p == null) return '—'
+  return '$' + p.toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+}

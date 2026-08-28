@@ -22,3 +22,17 @@ export const COLOR_SENAL = {
   lf: { bg: 'rgba(34,197,94,0.26)', text: '#86efac' },
   le: { bg: 'rgba(34,197,94,0.32)', text: '#86efac' },
 }
+
+// Categorias del universo TradFi (campo underlyingType de exchangeInfo).
+// 'orden' define el orden de los chips de filtro en la pestania.
+export const CATEGORIAS_TRADFI = {
+  EQUITY: { etiqueta: 'Acciones y ETF US', corta: 'US', orden: 1 },
+  HK_EQUITY: { etiqueta: 'Hong Kong', corta: 'HK', orden: 2 },
+  KR_EQUITY: { etiqueta: 'Corea', corta: 'KR', orden: 3 },
+  CN_EQUITY: { etiqueta: 'China', corta: 'CN', orden: 4 },
+  COMMODITY: { etiqueta: 'Commodities', corta: 'COMM', orden: 5 },
+  INDEX: { etiqueta: 'Índices', corta: 'IDX', orden: 6 },
+  PREMARKET: { etiqueta: 'Pre-IPO', corta: 'PRE', orden: 7 },
+}
+
+export const CATEGORIA_DEFAULT = { etiqueta: 'Otros', corta: '—', orden: 99 }

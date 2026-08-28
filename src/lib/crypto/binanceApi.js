@@ -66,3 +66,23 @@ export async function getLongShortRatio(symbol) {
 }
 
 export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+// Universo "TradFi": perpetuos de acciones tokenizadas, ETFs, commodities e
+// indices. OJO: Binance los marca con contractType 'TRADIFI_PERPETUAL', NO
+// 'PERPETUAL' — por eso getSymbols() (que filtra los perpetuos cripto) no
+// devuelve ninguno de estos, y hace falta esta funcion aparte.
+// Devuelve objetos {symbol, base, tipo} porque la pestania agrupa por
+// underlyingType (EQUITY / HK_EQUITY / COMMODITY / PREMARKET / ...).
+export async function getSymbolsTradfi() {
+  const r = await fetch(`${BINANCE}/fapi/v1/exchangeInfo`)
+  const d = await r.json()
+  return d.symbols
+    .filter(
+      (s) =>
+        s.contractType === 'TRADIFI_PERPETUAL' &&
+        s.quoteAsset === 'USDT' &&
+        s.status === 'TRADING',
+    )
+    .map((s) => ({ symbol: s.symbol, base: s.baseAsset, tipo: s.underlyingType }))
+    .sort((a, b) => a.symbol.localeCompare(b.symbol))
+}

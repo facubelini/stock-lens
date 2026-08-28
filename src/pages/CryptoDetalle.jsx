@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, useLocation, Link } from 'react-router-dom'
 import { getKlines, getFundingRate, getOpenInterest, getLongShortRatio } from '../lib/crypto/binanceApi'
 import { analyzeKlines, calcularEstacionalidad } from '../lib/crypto/indicadores'
 import { fmtPrice } from '../lib/crypto/formato'
@@ -28,9 +28,16 @@ const selectCls =
   'rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-text ' +
   'focus:border-terminal-accent focus:outline-none'
 
+// La misma ficha sirve para los perpetuos cripto (/cripto/:symbol) y para los
+// de acciones tokenizadas (/tokenizadas/:symbol) — los endpoints de Binance
+// son los mismos. Solo cambia a donde vuelve el link de arriba.
 export default function CryptoDetalle() {
   const { symbol: symbolParam } = useParams()
+  const { pathname } = useLocation()
   const symbol = decodeURIComponent(symbolParam || '').toUpperCase()
+  const origen = pathname.startsWith('/tokenizadas')
+    ? { to: '/tokenizadas', label: 'Acciones Tokenizadas' }
+    : { to: '/cripto', label: 'Crypto Screener' }
 
   const [intervalo, setIntervalo] = useState('1h')
   const [multiploATR, setMultiploATR] = useState(2.0)
@@ -95,8 +102,8 @@ export default function CryptoDetalle() {
 
   return (
     <div>
-      <Link to="/cripto" className="mb-3 inline-block text-sm text-terminal-dim hover:text-terminal-text">
-        ← Volver a Crypto Screener
+      <Link to={origen.to} className="mb-3 inline-block text-sm text-terminal-dim hover:text-terminal-text">
+        ← Volver a {origen.label}
       </Link>
 
       <div className="mb-4 flex flex-wrap items-start justify-between gap-3">

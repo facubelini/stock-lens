@@ -10,6 +10,7 @@ import Screener from './pages/Screener'
 import HistoricoFundamental from './pages/HistoricoFundamental'
 import CryptoScreener from './pages/CryptoScreener'
 import CryptoDetalle from './pages/CryptoDetalle'
+import AccionesTokenizadas from './pages/AccionesTokenizadas'
 import TopSenales from './pages/TopSenales'
 import Cartera from './pages/Cartera'
 import Macro from './pages/Macro'
@@ -45,6 +46,8 @@ export default function App() {
           <Route path="/historico" element={<HistoricoFundamental />} />
           <Route path="/cripto" element={<CryptoScreener />} />
           <Route path="/cripto/:symbol" element={<CryptoDetalle />} />
+          <Route path="/tokenizadas" element={<AccionesTokenizadas />} />
+          <Route path="/tokenizadas/:symbol" element={<CryptoDetalle />} />
           <Route path="/top" element={<TopSenales />} />
           <Route path="/ticker/:ticker" element={<TickerDetalle />} />
           <Route path="*" element={<Listado />} />

@@ -59488,7 +59488,7 @@
         "mensual": "EXTENDIDO"
       },
       "ALUA.BA": {
-        "diario": "NEUTRAL",
+        "diario": "VENTA",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
@@ -59579,7 +59579,7 @@
         "mensual": "NEUTRAL"
       },
       "CRES.BA": {
-        "diario": "NEUTRAL",
+        "diario": "COMPRA",
         "semanal": "CERCA",
         "mensual": "EXTENDIDO"
       },
@@ -60204,16 +60204,6 @@
       "NVO": {
         "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
-        "mensual": "NEUTRAL"
-      },
-      "AGRO.BA": {
-        "diario": "NEUTRAL",
-        "semanal": "VENTA",
-        "mensual": "VENTA"
-      },
-      "SEMI.BA": {
-        "diario": "VENTA",
-        "semanal": "VENTA",
         "mensual": "NEUTRAL"
       },
       "EWY": {

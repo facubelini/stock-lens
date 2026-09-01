@@ -1,0 +1,67 @@
+name: Screener BingX
+
+# Genera public/data/bingx_screener.json (pestania "Cripto v3").
+#
+# Por que hay un pipeline y no un escaneo en vivo como en las otras pestanias
+# de cripto: BingX no manda el header 'Access-Control-Allow-Origin', asi que
+# el navegador bloquea el fetch por CORS. Desde Node no hay CORS, asi que
+# corre aca. Verificado: desde el sitio publicado Binance responde bien y
+# BingX tira "Failed to fetch".
+#
+# Corre en Node y reusa el motor del v2 (src/lib/crypto/v2/*) tal cual, con un
+# adaptador que normaliza las klines de BingX al formato de Binance — cero
+# logica de señal duplicada.
+
+on:
+  workflow_dispatch:
+
+  # Cripto opera 24/7, asi que el cron no distingue dias habiles. 4 veces al
+  # dia: son ~520 llamadas por corrida (260 simbolos x 2 temporalidades) y no
+  # tiene sentido apretar mas a una API publica de la que dependemos gratis.
+  schedule:
+    - cron: '10 1 * * *'
+    - cron: '10 7 * * *'
+    - cron: '10 13 * * *'
+    - cron: '10 19 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  escanear:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Correr el screener de BingX
+        run: node scripts/bingx_screener.js
+
+      - name: Commitear datos si cambiaron
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/bingx_screener.json
+          if git diff --staged --quiet; then
+            echo "Sin cambios en los datos."
+            exit 0
+          fi
+          git commit -m "bingx: snapshot automatico ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+          # Otros workflows pushean a la misma rama en paralelo — reintenta con
+          # rebase en vez de fallar el job y perder esta corrida.
+          for intento in 1 2 3 4 5; do
+            if git push; then
+              exit 0
+            fi
+            echo "Push rechazado (otra corrida pusheo antes) - intento $intento/5, reintentando..."
+            git fetch origin main
+            git rebase origin/main -X theirs
+            sleep $((5 + RANDOM % 10))
+          done
+          echo "No se pudo pushear despues de varios intentos."
+          exit 1

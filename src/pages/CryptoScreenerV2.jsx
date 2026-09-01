@@ -221,6 +221,7 @@ export default function CryptoScreenerV2() {
               intervaloEntrada: parElegido.entrada,
               atrMult: multiploATR,
               feePct,
+              rMultiploTP,
             })
           }),
         )

@@ -24,7 +24,7 @@ import {
   SRSI_PISO_SHORT,
   FUNDING_ALERTA_PCT,
   FEE_TAKER_PCT,
-} from './config'
+} from './config.js'
 
 export const MINUTOS_INTERVALO = { '15m': 15, '1h': 60, '4h': 240, '1d': 1440, '1w': 10080 }
 
@@ -206,7 +206,16 @@ export const VEREDICTOS_OPERABLES = ['COMPRA', 'VENTA']
 // ── Fila de la tabla ──────────────────────────────────────────────────────
 // Incluye los campos que espera CalculadoraApalancamiento (price, chg24h,
 // cls, signal, score, details, link) para poder reusarla tal cual.
-export function armarFila({ symbol, seriesEntrada, seriesTendencia, meta, intervaloEntrada, atrMult, feePct }) {
+export function armarFila({
+  symbol,
+  seriesEntrada,
+  seriesTendencia,
+  meta,
+  intervaloEntrada,
+  atrMult,
+  feePct,
+  rMultiploTP = 2,
+}) {
   const sE = seriesEntrada
   const i = sE.n - 1
   if (i < 1) return null
@@ -230,14 +239,15 @@ export function armarFila({ symbol, seriesEntrada, seriesTendencia, meta, interv
 
   // SL/TP en ATR, y su version neta de costos.
   const slPct = isNaN(atr) ? null : +((atr * atrMult * 100) / precio).toFixed(2)
-  const tp2Pct = slPct == null ? null : +(slPct * 2).toFixed(2)
+  const tp2Pct = slPct == null ? null : +(slPct * rMultiploTP).toFixed(2)
   const slNetoPct = slPct == null ? null : +(slPct + costos.total).toFixed(2)
   const tpNetoPct = tp2Pct == null ? null : +(tp2Pct - costos.total).toFixed(2)
   const rrNeto = slNetoPct && tpNetoPct ? +(tpNetoPct / slNetoPct).toFixed(2) : null
 
-  const base = symbol.replace('USDT', '')
+  // Sirve para Binance ('BTCUSDT') y para BingX ('BTC-USDT').
+  const base = symbol.replace(/-?USDT$/, '')
   return {
-    symbol: symbol.replace('USDT', '/USDT'),
+    symbol: `${base}/USDT`,
     symbolRaw: symbol,
     base,
     link: `https://www.binance.com/es/futures/${base}USDT`,

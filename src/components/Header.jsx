@@ -12,6 +12,7 @@ const tabs = [
   { to: '/historico', label: 'Histórico Fundamental' },
   { to: '/cripto', label: 'Crypto Screener' },
   { to: '/cripto-v2', label: '🧪 Screener Cripto v2' },
+  { to: '/cripto-v3', label: '🌐 Cripto v3 · BingX' },
   { to: '/tokenizadas', label: '🪙 Acciones Tokenizadas' },
   { to: '/top', label: '🔥 Top Señales' },
   { to: '/cartera', label: '📋 Mi Cartera' },

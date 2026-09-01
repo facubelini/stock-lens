@@ -20,8 +20,8 @@
 // klines y pedirlo serian ~1000 filas extra por simbolo). Sirve para ordenar
 // y comparar reglas, no como P&L exacto.
 
-import { evaluarSetup, tendenciaEn, MINUTOS_INTERVALO } from './senal'
-import { BT_MAX_VELAS_EN_TRADE, FEE_TAKER_PCT, FRACCION_TRAIN } from './config'
+import { evaluarSetup, tendenciaEn, MINUTOS_INTERVALO } from './senal.js'
+import { BT_MAX_VELAS_EN_TRADE, FEE_TAKER_PCT, FRACCION_TRAIN } from './config.js'
 
 // Para cada vela i de entrada, el indice de la ultima vela superior cerrada a
 // esa altura. Recorrido lineal con puntero (las dos series estan ordenadas).

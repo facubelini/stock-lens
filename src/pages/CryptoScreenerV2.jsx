@@ -198,20 +198,27 @@ export default function CryptoScreenerV2() {
         const lote = lista.slice(i, Math.min(i + TAMANO_LOTE, lista.length))
         const parciales = await Promise.all(
           lote.map(async (meta) => {
-            const [kE, kT] = await Promise.all([
-              getKlinesV2(meta.symbol, parElegido.entrada, VELAS),
-              getKlinesV2(meta.symbol, parElegido.tendencia, VELAS),
-            ])
+            // Si el par usa auto-tendencia (misma temporalidad de entrada y
+            // de tendencia) se pide una sola vez y se reusa: son la mismas
+            // velas, no tiene sentido gastar la llamada.
+            const auto = parElegido.entrada === parElegido.tendencia
+            const [kE, kT] = auto
+              ? await Promise.all([getKlinesV2(meta.symbol, parElegido.entrada, VELAS)]).then(
+                  ([k]) => [k, k],
+                )
+              : await Promise.all([
+                  getKlinesV2(meta.symbol, parElegido.entrada, VELAS),
+                  getKlinesV2(meta.symbol, parElegido.tendencia, VELAS),
+                ])
             const cE = velasCerradas(kE)
-            const cT = velasCerradas(kT)
+            const cT = auto ? cE : velasCerradas(kT)
             // Solo la temporalidad de ENTRADA es obligatoria (sus indicadores
             // no se pueden calcular sin ~220 velas). Si la superior no llega a
             // EMA200 el simbolo igual aparece, con tendencia 'N/D' y veredicto
-            // SIN DATOS — mejor que desaparecer en silencio. Pasa sobre todo
-            // con el par diario/semanal: 200 velas semanales son ~4 anios.
+            // SIN DATOS — mejor que desaparecer en silencio.
             if (cE.length < 220 || cT.length < 2) return null
             const sE = calcularSeries(cE)
-            const sT = calcularSeries(cT)
+            const sT = auto ? sE : calcularSeries(cT)
             cache.current.set(meta.symbol, { sE, sT, meta })
             return armarFila({
               symbol: meta.symbol,
@@ -467,9 +474,10 @@ export default function CryptoScreenerV2() {
 
       {!datos.length && !corriendo ? (
         <div className="rounded-lg border border-terminal-border bg-terminal-panel p-10 text-center text-sm text-terminal-dim">
-          Presioná <b>Escanear</b>. Con el piso de liquidez en $5M son ~186 símbolos y dos temporalidades por símbolo,
-          así que tarda más que la v1 — a cambio no analiza los ~340 símbolos más finos, donde la señal es sobre todo
-          ruido.
+          Presioná <b>Escanear</b>. Con el piso de liquidez en $5M son ~170 símbolos, {VELAS} velas cada uno y dos
+          temporalidades por símbolo (una sola si elegís un par de auto-tendencia), así que tarda bastante más que la
+          v1 — a cambio no analiza los ~350 símbolos más finos, donde la señal es sobre todo ruido, y el backtest tiene
+          una ventana de verdad en vez de tres semanas.
         </div>
       ) : (
         <>

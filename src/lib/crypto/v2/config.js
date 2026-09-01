@@ -2,11 +2,18 @@
 // hardcodeado y sin calibrar vive aca, para poder moverlo y medir el efecto
 // con el backtest de la misma pestania.
 
-// Se piden 500 velas (la v1 pedia 200). Motivo: con exactamente 200 velas,
-// una EMA200 degenera en el promedio simple de la ventana — el seed de la EMA
-// es la media de las primeras 200 y despues no queda ni una iteracion
-// exponencial. Con 500 la EMA200 es una EMA de verdad.
-export const VELAS = 500
+// Se piden 1500 velas, el maximo de Binance en una llamada (la v1 pedia 200).
+// Dos motivos:
+//  1. Con exactamente 200 velas una EMA200 degenera en el promedio simple de
+//     la ventana — el seed de la EMA es la media de las primeras 200 y
+//     despues no queda ni una iteracion exponencial.
+//  2. Con 500 velas de 1h la ventana total es de apenas 21 dias, o sea UN
+//     regimen de mercado: alcanza para que el backtest de un numero, no para
+//     que ese numero signifique algo. Con 1500 son ~62 dias, y en diario
+//     pasan de 1,4 a 4,1 anios.
+// Costo: las klines con limit>1000 pesan 5 de rate limit en vez de 2, pero el
+// escaneo se reparte en lotes con pausas y queda lejos del limite por minuto.
+export const VELAS = 1500
 
 // Temporalidad de entrada -> temporalidad de tendencia (confluencia
 // multi-temporal). La v1 miraba una sola temporalidad.
@@ -14,7 +21,15 @@ export const PARES_TEMPORALIDAD = [
   { entrada: '15m', tendencia: '1h', etiqueta: '15m (tendencia 1h)' },
   { entrada: '1h', tendencia: '4h', etiqueta: '1h (tendencia 4h)' },
   { entrada: '4h', tendencia: '1d', etiqueta: '4h (tendencia diaria)' },
-  { entrada: '1d', tendencia: '1w', etiqueta: 'Diario (tendencia semanal)' },
+  // Antes esta opcion era diario/SEMANAL y era una trampa: la EMA200 semanal
+  // pide 200 velas = ~4 anios, y Binance tope en ~209 velas semanales incluso
+  // en los perpetuos mas viejos (LINK/CRV/DASH), asi que la MITAD del universo
+  // quedaba con tendencia 'N/D' sin explicar por que. Medido: 13 simbolos con
+  // tendencia contra 15 sin, y 6 trades en test / 0 en train — no era medible.
+  // La auto-tendencia cubre 28 de 30. Ojo igual: en diario un trade sin
+  // solapamiento se come semanas, asi que el backtest de este par va a tener
+  // pocos trades (el panel lo marca con ⚠).
+  { entrada: '1d', tendencia: '1d', etiqueta: 'Diario (tendencia diaria)' },
 ]
 
 // Piso de volumen negociado en 24h (USDT). La v1 rankeaba los ~525 simbolos

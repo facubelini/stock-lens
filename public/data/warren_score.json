@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-08-31T21:22:33.873033-03:00",
+  "actualizado": "2026-08-31T22:21:01.218436-03:00",
   "tickers": [
     {
       "ticker": "MRNA",
@@ -8613,7 +8613,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 62.2,
-        "relative_performance": 0.0
+        "relative_performance": -0.0
       },
       "momentum": {
         "score": 23.0,
@@ -10948,8 +10948,8 @@
     {
       "ticker": "AOCA.BA",
       "nombre": "AOCA.BA,0P0000D5TP,0",
-      "total_score": 49.1,
-      "datos_suficientes": true,
+      "total_score": null,
+      "datos_suficientes": false,
       "trend": {
         "score": 16.0,
         "max_score": 25,
@@ -10974,13 +10974,7 @@
         "percentage_above_52w_low": 0.0,
         "recent_52w_high": true
       },
-      "volatility": {
-        "score": 6.0,
-        "max_score": 15,
-        "current_volatility": 0.0,
-        "historical_volatility": 0.0,
-        "volatility_ratio": 1.0
-      },
+      "volatility": null,
       "gates": {
         "rs80": false,
         "ema200": true,

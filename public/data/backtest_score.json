@@ -1,79 +1,79 @@
 {
-  "actualizado": "2026-08-01T10:49:59.432246-03:00",
+  "actualizado": "2026-09-01T13:32:51.792125-03:00",
   "horizontes_dias": [
     5,
     10,
     20
   ],
-  "n_tickers_evaluados": 373,
-  "n_tickers_fallidos": 50,
+  "n_tickers_evaluados": 390,
+  "n_tickers_fallidos": 51,
   "stats": {
     "BASELINE": {
       "5": {
-        "n": 383043,
-        "retorno_prom": 1.06,
-        "hit_rate": 52.4
+        "n": 398905,
+        "retorno_prom": 1.09,
+        "hit_rate": 52.7
       },
       "10": {
-        "n": 381178,
-        "retorno_prom": 2.13,
-        "hit_rate": 53.6
+        "n": 396955,
+        "retorno_prom": 2.2,
+        "hit_rate": 54.1
       },
       "20": {
-        "n": 377448,
-        "retorno_prom": 4.25,
-        "hit_rate": 54.7
+        "n": 393055,
+        "retorno_prom": 4.38,
+        "hit_rate": 55.6
       }
     },
     "FAVORABLE": {
       "5": {
-        "n": 211828,
-        "retorno_prom": 0.52,
-        "hit_rate": 52.8
+        "n": 224194,
+        "retorno_prom": 0.57,
+        "hit_rate": 53.1
       },
       "10": {
-        "n": 210792,
-        "retorno_prom": 1.06,
-        "hit_rate": 53.7
+        "n": 223020,
+        "retorno_prom": 1.15,
+        "hit_rate": 54.2
       },
       "20": {
-        "n": 208731,
-        "retorno_prom": 2.27,
-        "hit_rate": 55.1
+        "n": 220592,
+        "retorno_prom": 2.39,
+        "hit_rate": 55.8
       }
     },
     "FLOJO": {
       "5": {
-        "n": 36769,
-        "retorno_prom": 6.09,
-        "hit_rate": 49.4
+        "n": 36406,
+        "retorno_prom": 6.22,
+        "hit_rate": 49.5
       },
       "10": {
-        "n": 36556,
-        "retorno_prom": 12.07,
-        "hit_rate": 50.6
+        "n": 36193,
+        "retorno_prom": 12.34,
+        "hit_rate": 50.8
       },
       "20": {
-        "n": 36183,
-        "retorno_prom": 23.86,
-        "hit_rate": 53.2
+        "n": 35880,
+        "retorno_prom": 24.59,
+        "hit_rate": 54.8
       }
     },
     "NEUTRAL": {
       "5": {
-        "n": 134446,
-        "retorno_prom": 0.52,
-        "hit_rate": 52.7
+        "n": 138305,
+        "retorno_prom": 0.6,
+        "hit_rate": 53.1
       },
       "10": {
-        "n": 133830,
-        "retorno_prom": 1.1,
-        "hit_rate": 54.3
+        "n": 137742,
+        "retorno_prom": 1.23,
+        "hit_rate": 54.9
       },
       "20": {
-        "n": 132534,
-        "retorno_prom": 2.01,
-        "hit_rate": 54.4
+        "n": 136583,
+        "retorno_prom": 2.28,
+        "hit_rate": 55.7
       }
     }
   }

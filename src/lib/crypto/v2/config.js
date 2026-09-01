@@ -2,18 +2,28 @@
 // hardcodeado y sin calibrar vive aca, para poder moverlo y medir el efecto
 // con el backtest de la misma pestania.
 
-// Se piden 1500 velas, el maximo de Binance en una llamada (la v1 pedia 200).
-// Dos motivos:
-//  1. Con exactamente 200 velas una EMA200 degenera en el promedio simple de
-//     la ventana — el seed de la EMA es la media de las primeras 200 y
-//     despues no queda ni una iteracion exponencial.
-//  2. Con 500 velas de 1h la ventana total es de apenas 21 dias, o sea UN
-//     regimen de mercado: alcanza para que el backtest de un numero, no para
-//     que ese numero signifique algo. Con 1500 son ~62 dias, y en diario
-//     pasan de 1,4 a 4,1 anios.
-// Costo: las klines con limit>1000 pesan 5 de rate limit en vez de 2, pero el
-// escaneo se reparte en lotes con pausas y queda lejos del limite por minuto.
-export const VELAS = 1500
+// Cuantas velas se piden por simbolo. Es la variable mas peligrosa del
+// archivo, porque Binance cobra "peso" de rate limit segun el limit pedido y
+// el presupuesto es de 2400 por minuto y por IP.
+//
+// Historia: estaba en 200 (v1), se subio a 500 y despues a 1500 para que la
+// ventana del backtest dejara de ser de 21 dias. **1500 fue un error**: un
+// escaneo son ~170 simbolos x 2 temporalidades = ~340 llamadas, y con el limit
+// mas alto eso alcanza para pasarse del presupuesto del minuto. Resultado
+// real: Binance devolvio 418 y bloqueo la IP ~17 minutos, lo que ademas rompe
+// binance.com en el navegador (es la misma IP).
+//
+// Vuelve a 500, que es el valor con el que la pestania funciono sin problemas.
+// Da EMA200 real (con 200 exactas degenera en promedio simple) a costa de una
+// ventana corta — el panel de backtest ya avisa que una ventana corta no
+// alcanza para concluir nada. Para ventanas largas conviene el laboratorio
+// offline, que puede paginar despacio, no el escaneo del browser.
+//
+// Desde el navegador NO se puede medir el peso consumido: Binance no manda
+// Access-Control-Expose-Headers, asi que 'x-mbx-used-weight-1m' y
+// 'retry-after' son invisibles para fetch(). O sea que no hay forma de
+// autorregularse leyendo el header; el unico control es pedir menos.
+export const VELAS = 500
 
 // Temporalidad de entrada -> temporalidad de tendencia (confluencia
 // multi-temporal). La v1 miraba una sola temporalidad.

@@ -2,8 +2,16 @@
 // proxy) — igual que "Crypto Screener v3" cuando corre como sitio estatico.
 const BINANCE = 'https://fapi.binance.com'
 
+// Guardia de rate limit compartida. Se agrego despues de que un escaneo se
+// comiera un bloqueo de IP de Binance: los fetch de abajo hacian
+// `if (!r.ok) return null`, o sea que un 429 se tragaba en silencio y el
+// escaneo seguia disparando los cientos de pedidos restantes, escalando el
+// limite blando a un baneo largo. NO cambia ninguna logica de señal.
+import { ErrorRateLimit, pedirBinance } from './rateLimit.js'
+export { ErrorRateLimit, segundosBloqueado } from './rateLimit.js'
+
 export async function getSymbols() {
-  const r = await fetch(`${BINANCE}/fapi/v1/exchangeInfo`)
+  const r = await pedirBinance(`${BINANCE}/fapi/v1/exchangeInfo`)
   const d = await r.json()
   return d.symbols
     .filter((s) => s.contractType === 'PERPETUAL' && s.quoteAsset === 'USDT' && s.status === 'TRADING')
@@ -13,10 +21,11 @@ export async function getSymbols() {
 
 export async function getKlines(symbol, interval, limit = 200) {
   try {
-    const r = await fetch(`${BINANCE}/fapi/v1/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`)
+    const r = await pedirBinance(`${BINANCE}/fapi/v1/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`)
     if (!r.ok) return null
     return await r.json()
-  } catch {
+  } catch (e) {
+    if (e instanceof ErrorRateLimit) throw e
     return null
   }
 }
@@ -26,29 +35,31 @@ export async function getKlines(symbol, interval, limit = 200) {
 // simbolos seria demasiada carga extra sobre Binance).
 export async function getFundingRate(symbol) {
   try {
-    const r = await fetch(`${BINANCE}/fapi/v1/premiumIndex?symbol=${symbol}`)
+    const r = await pedirBinance(`${BINANCE}/fapi/v1/premiumIndex?symbol=${symbol}`)
     if (!r.ok) return null
     const d = await r.json()
     return { tasa: parseFloat(d.lastFundingRate) * 100, proximoFunding: d.nextFundingTime }
-  } catch {
+  } catch (e) {
+    if (e instanceof ErrorRateLimit) throw e
     return null
   }
 }
 
 export async function getOpenInterest(symbol) {
   try {
-    const r = await fetch(`${BINANCE}/fapi/v1/openInterest?symbol=${symbol}`)
+    const r = await pedirBinance(`${BINANCE}/fapi/v1/openInterest?symbol=${symbol}`)
     if (!r.ok) return null
     const d = await r.json()
     return parseFloat(d.openInterest)
-  } catch {
+  } catch (e) {
+    if (e instanceof ErrorRateLimit) throw e
     return null
   }
 }
 
 export async function getLongShortRatio(symbol) {
   try {
-    const r = await fetch(
+    const r = await pedirBinance(
       `${BINANCE}/futures/data/globalLongShortAccountRatio?symbol=${symbol}&period=5m&limit=1`,
     )
     if (!r.ok) return null
@@ -60,7 +71,8 @@ export async function getLongShortRatio(symbol) {
       largos: parseFloat(ultimo.longAccount) * 100,
       cortos: parseFloat(ultimo.shortAccount) * 100,
     }
-  } catch {
+  } catch (e) {
+    if (e instanceof ErrorRateLimit) throw e
     return null
   }
 }

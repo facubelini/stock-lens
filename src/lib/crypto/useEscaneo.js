@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
-import { getKlines, sleep } from './binanceApi'
-import { analyzeKlines } from './indicadores'
+import { getKlines, sleep } from './binanceApi.js'
+import { ErrorRateLimit, segundosBloqueado } from './rateLimit.js'
+import { analyzeKlines } from './indicadores.js'
 
 // Se pide en lotes para no dispararle ~500 requests de golpe a Binance.
 const TAMANO_LOTE = 15
@@ -28,6 +29,14 @@ export function useEscaneoBinance({ cargarSimbolos, intervalo, multiploATR, alTe
 
   const escanear = useCallback(async () => {
     if (corriendoRef.current) return
+    // Si Binance ya bloqueo la IP, no se arranca: cada pedido durante el
+    // bloqueo lo extiende (medido: retry-after paso de 555s a 1024s con un
+    // solo request de mas).
+    const bloqueo = segundosBloqueado()
+    if (bloqueo > 0) {
+      setErrorMsg(new ErrorRateLimit(bloqueo).message)
+      return
+    }
     corriendoRef.current = true
     setCorriendo(true)
     setErrorMsg(null)

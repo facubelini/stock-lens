@@ -1,6 +1,6 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getUniversoV2, getKlinesV2, sleep } from '../lib/crypto/v2/datos'
+import { getUniversoV2, getKlinesV2, sleep, ErrorRateLimit, segundosBloqueado } from '../lib/crypto/v2/datos'
 import { velasCerradas, calcularSeries } from '../lib/crypto/v2/indicadores'
 import { armarFila } from '../lib/crypto/v2/senal'
 import { backtestSimbolo, estadisticas } from '../lib/crypto/v2/backtest'
@@ -163,6 +163,7 @@ export default function CryptoScreenerV2() {
   const [ultima, setUltima] = useState(null)
   const [error, setError] = useState(null)
   const [omitidos, setOmitidos] = useState(0)
+  const [bloqueo, setBloqueo] = useState(0) // segundos de bloqueo por rate limit
 
   const [filtro, setFiltro] = useState('OPERABLES')
   const [tendenciaFiltro, setTendenciaFiltro] = useState('all')
@@ -177,6 +178,14 @@ export default function CryptoScreenerV2() {
   // { symbol: {entrada: klines, tendencia: klines, meta} } — lo reusa el backtest
   const cache = useRef(new Map())
   const corriendoRef = useRef(false)
+
+  // Cuenta regresiva del bloqueo, para que el boton no se pueda apretar y
+  // empeorarlo.
+  useEffect(() => {
+    if (bloqueo <= 0) return
+    const t = setInterval(() => setBloqueo(segundosBloqueado()), 1000)
+    return () => clearInterval(t)
+  }, [bloqueo])
 
   const parElegido = PARES_TEMPORALIDAD.find((p) => p.entrada === par) ?? PARES_TEMPORALIDAD[1]
 
@@ -243,6 +252,9 @@ export default function CryptoScreenerV2() {
       setUltima(new Date().toLocaleTimeString('es-AR'))
     } catch (e) {
       setError(e.message)
+      // Si Binance bloqueo la IP, se recuerda hasta cuando para no dejar que
+      // el usuario reintente y estire el bloqueo.
+      if (e instanceof ErrorRateLimit) setBloqueo(segundosBloqueado())
     } finally {
       corriendoRef.current = false
       setCorriendo(false)
@@ -425,10 +437,17 @@ export default function CryptoScreenerV2() {
         <button
           type="button"
           onClick={escanear}
-          disabled={corriendo}
+          disabled={corriendo || bloqueo > 0}
+          title={bloqueo > 0 ? 'Binance bloqueó tu IP: esperá a que baje el contador' : undefined}
           className="rounded bg-terminal-accent px-3 py-1.5 text-sm font-semibold text-black hover:opacity-90 disabled:opacity-50"
         >
-          {corriendo ? '⏳ Escaneando…' : datos.length ? '▶ Re-escanear' : '▶ Escanear'}
+          {bloqueo > 0
+            ? `⛔ bloqueado ${Math.floor(bloqueo / 60)}:${String(bloqueo % 60).padStart(2, '0')}`
+            : corriendo
+              ? '⏳ Escaneando…'
+              : datos.length
+                ? '▶ Re-escanear'
+                : '▶ Escanear'}
         </button>
         {datos.length > 0 && (
           <button

@@ -7,8 +7,13 @@
 
 const BINANCE = 'https://fapi.binance.com'
 
+// La guardia de rate limit vive en un modulo compartido para que el bloqueo
+// detectado en una pestania lo conozcan todas (ver crypto/rateLimit.js).
+export { ErrorRateLimit, segundosBloqueado } from '../rateLimit.js'
+import { ErrorRateLimit as _ErrRL, pedirBinance } from '../rateLimit.js'
+
 async function json(url) {
-  const r = await fetch(url)
+  const r = await pedirBinance(url)
   if (!r.ok) throw new Error(`Binance respondio HTTP ${r.status} en ${url.split('/fapi')[1]}`)
   return r.json()
 }
@@ -58,14 +63,17 @@ export async function getUniversoV2({ minTurnover = 0 } = {}) {
   }
 }
 
+// Devuelve null si ese simbolo puntual falla (transitorio, se lo saltea),
+// pero PROPAGA ErrorRateLimit para que el escaneo se corte de una.
 export async function getKlinesV2(symbol, interval, limit) {
   try {
-    const r = await fetch(
-      `${BINANCE}/fapi/v1/klines?symbol=${symbol}&interval=${interval}&limit=${limit}`,
+    const r = await pedirBinance(
+      `${BINANCE}/fapi/v1/klines?symbol=${encodeURIComponent(symbol)}&interval=${interval}&limit=${limit}`,
     )
     if (!r.ok) return null
     return await r.json()
-  } catch {
+  } catch (e) {
+    if (e instanceof _ErrRL) throw e
     return null
   }
 }

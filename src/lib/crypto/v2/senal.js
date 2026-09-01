@@ -244,7 +244,7 @@ export function armarFila({
   const tpNetoPct = tp2Pct == null ? null : +(tp2Pct - costos.total).toFixed(2)
   const rrNeto = slNetoPct && tpNetoPct ? +(tpNetoPct / slNetoPct).toFixed(2) : null
 
-  // Sirve para Binance ('BTCUSDT') y para BingX ('BTC-USDT').
+  // Tolera 'BTCUSDT' y 'BTC-USDT' (formato con guion de otros exchanges).
   const base = symbol.replace(/-?USDT$/, '')
   return {
     symbol: `${base}/USDT`,

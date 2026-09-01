@@ -12,7 +12,6 @@ import CryptoScreener from './pages/CryptoScreener'
 import CryptoDetalle from './pages/CryptoDetalle'
 import AccionesTokenizadas from './pages/AccionesTokenizadas'
 import CryptoScreenerV2 from './pages/CryptoScreenerV2'
-import CryptoScreenerV3 from './pages/CryptoScreenerV3'
 import TopSenales from './pages/TopSenales'
 import Cartera from './pages/Cartera'
 import Macro from './pages/Macro'
@@ -49,7 +48,6 @@ export default function App() {
           <Route path="/cripto" element={<CryptoScreener />} />
           <Route path="/cripto/:symbol" element={<CryptoDetalle />} />
           <Route path="/cripto-v2" element={<CryptoScreenerV2 />} />
-          <Route path="/cripto-v3" element={<CryptoScreenerV3 />} />
           <Route path="/tokenizadas" element={<AccionesTokenizadas />} />
           <Route path="/tokenizadas/:symbol" element={<CryptoDetalle />} />
           <Route path="/top" element={<TopSenales />} />

@@ -53,4 +53,23 @@ export const FUNDING_ALERTA_PCT = 0.05
 
 // Backtest
 export const BT_MAX_VELAS_EN_TRADE = 100 // timeout de la posicion
-export const BT_MIN_TRADES = 5 // menos que esto no se reporta como medible
+export const BT_MIN_TRADES = 30 // menos que esto no se reporta como medible
+
+// Fraccion de la ventana que se usa como TRAIN. El resto es TEST (fuera de
+// muestra). Existe porque la primera version de esta pestania reportaba UN
+// solo numero sobre UNA sola ventana, y eso alcanzo para creer que la
+// confluencia era rentable cuando en realidad era el regimen del momento.
+export const FRACCION_TRAIN = 0.65
+
+// ── Defaults calibrados (2026-08-28) ──────────────────────────────────────
+// Salen de una busqueda sobre 1 anio de velas 1h en 57 perpetuos con
+// turnover > $20M, eligiendo en TRAIN y validando una sola vez en TEST.
+// SL 3xATR + TP 3R fue la unica combinacion que quedo en breakeven fuera de
+// muestra (media -0.002 R/trade contra -0.036 del SL2/TP2 original), y
+// ademas con el menor drawdown. NO es un sistema rentable: es el menos malo
+// de los medidos. Descartado a proposito el sesgo direccional, que en train
+// favorecia SHORT (+0.060) y en test LONG (+0.051) — puro regimen.
+export const SL_ATR_DEFAULT = 3.0
+export const TP_R_DEFAULT = 3.0
+export const MULTIPLOS_ATR_V2 = [1.5, 2.0, 2.5, 3.0, 4.0]
+export const MULTIPLOS_TP_R = [1.5, 2, 3, 5]

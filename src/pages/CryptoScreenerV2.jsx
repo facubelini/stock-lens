@@ -4,8 +4,19 @@ import { getUniversoV2, getKlinesV2, sleep } from '../lib/crypto/v2/datos'
 import { velasCerradas, calcularSeries } from '../lib/crypto/v2/indicadores'
 import { armarFila } from '../lib/crypto/v2/senal'
 import { backtestSimbolo, estadisticas } from '../lib/crypto/v2/backtest'
-import { VELAS, PARES_TEMPORALIDAD, PISOS_LIQUIDEZ, FEE_TAKER_PCT } from '../lib/crypto/v2/config'
-import { MULTIPLOS_ATR, COLOR_SENAL } from '../lib/crypto/constantes'
+import {
+  VELAS,
+  PARES_TEMPORALIDAD,
+  PISOS_LIQUIDEZ,
+  FEE_TAKER_PCT,
+  SL_ATR_DEFAULT,
+  TP_R_DEFAULT,
+  MULTIPLOS_ATR_V2,
+  MULTIPLOS_TP_R,
+  FRACCION_TRAIN,
+  BT_MIN_TRADES,
+} from '../lib/crypto/v2/config'
+import { COLOR_SENAL } from '../lib/crypto/constantes'
 import Insignia from '../components/crypto/Insignia'
 import BarraRSI from '../components/crypto/BarraRSI'
 import PanelApalancamiento from '../components/crypto/PanelApalancamiento'
@@ -37,42 +48,45 @@ function fmtPrecio(p) {
 const colorTendencia = { ALCISTA: '#4ade80', BAJISTA: '#f87171', RANGO: '#9ca3af', 'N/D': '#6b7280' }
 
 // ── Panel de resultados del backtest ───────────────────────────────────────
-function Metrica({ etiqueta, valor, sufijo = '', mejor = null, ayuda }) {
+function Celda({ st, resaltar }) {
+  if (!st || st.trades === 0) return <td className="px-2 py-1.5 text-terminal-dim">sin trades</td>
+  const pocos = st.trades < BT_MIN_TRADES
+  const color = st.expectativa > 0 ? '#4ade80' : st.expectativa < 0 ? '#f87171' : undefined
   return (
-    <div title={ayuda}>
-      <span className="block text-[10px] uppercase tracking-wide text-terminal-dim">{etiqueta}</span>
-      <span
-        className="font-semibold tabular"
-        style={{ color: mejor === true ? '#4ade80' : mejor === false ? '#f87171' : undefined }}
-      >
-        {valor == null ? '—' : valor}
-        {valor == null ? '' : sufijo}
+    <td className={`whitespace-nowrap px-2 py-1.5 tabular ${resaltar ? 'bg-terminal-accent/10' : ''}`}>
+      <span className="font-bold" style={{ color }} title="R por trade (expectativa)">
+        {st.expectativa > 0 ? '+' : ''}
+        {st.expectativa}
       </span>
-    </div>
+      <span className="ml-1 text-[11px] text-terminal-dim">
+        R · {st.tasaAcierto}% · n={st.trades}
+        {pocos ? ' ⚠' : ''}
+      </span>
+    </td>
   )
 }
 
 function PanelBacktest({ resultado, onCerrar }) {
-  const { v1, v2, simbolos, config } = resultado
-  const filas = [
-    { clave: 'v2', titulo: 'v2 · confluencia + tendencia superior', st: v2 },
-    { clave: 'v1', titulo: 'v1 · score aditivo', st: v1 },
+  const { reglas, simbolos, config } = resultado
+  const orden = [
+    { k: 'v2', t: 'v2 · confluencia + tendencia superior', destacar: true },
+    { k: 'piso', t: 'piso · sólo tendencia, sin filtros' },
+    { k: 'v1', t: 'v1 · score aditivo' },
   ]
-  const mejorAcierto = v2.tasaAcierto != null && v1.tasaAcierto != null ? (v2.tasaAcierto > v1.tasaAcierto ? 'v2' : 'v1') : null
-  const mejorExp = v2.expectativa != null && v1.expectativa != null ? (v2.expectativa > v1.expectativa ? 'v2' : 'v1') : null
 
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/70 p-4" onClick={onCerrar}>
       <div
-        className="w-full max-w-4xl rounded-lg border border-terminal-border bg-terminal-panel p-5"
+        className="w-full max-w-3xl rounded-lg border border-terminal-border bg-terminal-panel p-5"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="mb-3 flex items-start justify-between gap-3">
           <div>
-            <h2 className="text-base font-bold text-terminal-text">Backtest · regla aditiva vs confluencia</h2>
+            <h2 className="text-base font-bold text-terminal-text">Backtest con validación fuera de muestra</h2>
             <p className="mt-0.5 text-xs text-terminal-dim">
-              {simbolos} símbolo(s) · entrada {config.entrada} · tendencia {config.tendencia} · SL {config.atrMult}×ATR ·
-              TP {config.rMultiploTP}R · fee {config.feePct}% por lado
+              {simbolos} símbolos · entrada {config.entrada} · tendencia {config.tendencia} · SL {config.atrMult}×ATR ·
+              TP {config.rMultiploTP}R · fee {config.feePct}% por lado · corte train/test en{' '}
+              {Math.round(FRACCION_TRAIN * 100)}%
             </p>
           </div>
           <button
@@ -84,57 +98,50 @@ function PanelBacktest({ resultado, onCerrar }) {
           </button>
         </div>
 
-        <div className="flex flex-col gap-3">
-          {filas.map((f) => (
-            <div
-              key={f.clave}
-              className={`rounded border p-3 ${
-                f.clave === 'v2' ? 'border-terminal-accent/50 bg-terminal-accent/5' : 'border-terminal-border'
-              }`}
-            >
-              <div className="mb-2 text-sm font-semibold text-terminal-text">{f.titulo}</div>
-              <div className="grid grid-cols-2 gap-3 text-sm sm:grid-cols-4 lg:grid-cols-7">
-                <Metrica etiqueta="Trades" valor={f.st.trades} ayuda="Operaciones simuladas sin solapamiento." />
-                <Metrica
-                  etiqueta="Acierto"
-                  valor={f.st.tasaAcierto}
-                  sufijo="%"
-                  mejor={mejorAcierto ? mejorAcierto === f.clave : null}
-                  ayuda="% de trades con resultado neto positivo, ya descontados fees y funding."
-                />
-                <Metrica
-                  etiqueta="R por trade"
-                  valor={f.st.expectativa}
-                  mejor={mejorExp ? mejorExp === f.clave : null}
-                  ayuda="Expectativa: R promedio por operación. Es lo que decide si el sistema gana, no la tasa de acierto."
-                />
-                <Metrica etiqueta="Profit factor" valor={f.st.profitFactor} ayuda="Ganancias brutas / pérdidas brutas." />
-                <Metrica etiqueta="R total" valor={f.st.rTotal} ayuda="Suma de R de todos los trades." />
-                <Metrica etiqueta="Max DD" valor={f.st.maxDD} sufijo=" R" ayuda="Peor racha desde un pico de la curva acumulada." />
-                <Metrica
-                  etiqueta="Salidas"
-                  valor={`${f.st.porSalida.TP ?? 0} TP / ${f.st.porSalida.SL ?? 0} SL / ${f.st.porSalida.timeout ?? 0} to`}
-                  ayuda="Cómo cerró cada trade: take profit, stop loss o timeout por máximo de velas."
-                />
-              </div>
-            </div>
-          ))}
+        <div className="overflow-x-auto rounded border border-terminal-border">
+          <table className="min-w-full border-collapse text-sm">
+            <thead>
+              <tr className="bg-terminal-panel2 text-left text-xs uppercase tracking-wide text-terminal-dim">
+                <th className="px-2 py-2">Regla</th>
+                <th className="px-2 py-2" title="Parte vieja de la ventana: es donde se eligen los parámetros.">
+                  Train
+                </th>
+                <th className="px-2 py-2" title="Parte reciente que la elección de parámetros no vio. Es el único número que vale.">
+                  Test (fuera de muestra)
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {orden.map((o) => (
+                <tr key={o.k} className="border-t border-terminal-border">
+                  <td className={`px-2 py-1.5 text-xs ${o.destacar ? 'font-semibold text-terminal-text' : 'text-terminal-dim'}`}>
+                    {o.t}
+                  </td>
+                  <Celda st={reglas[o.k]?.train} />
+                  <Celda st={reglas[o.k]?.test} resaltar={o.destacar} />
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
 
-        <div className="mt-3 rounded border border-terminal-border bg-terminal-bg/50 p-3 text-[11px] leading-relaxed text-terminal-dim">
-          <b className="text-terminal-text">Cómo leerlo.</b> La comparación aísla la <b>regla de decisión</b>: las dos
-          reglas corren sobre exactamente las mismas velas, ya sin la vela en curso y con EMA200 real. La v1 en
-          producción arranca aún más atrás, porque además incluye la vela sin cerrar y su “EMA200” es el promedio simple
-          de la ventana. Fijate en <b>R por trade</b> antes que en el acierto: acercando el TP se sube el acierto y se
-          puede destruir la expectativa.
-          <br />
+        <div className="mt-3 rounded border border-terminal-warn/40 bg-terminal-warn/10 p-3 text-[11px] leading-relaxed text-terminal-text">
+          <b>Leé la columna de test, no la de train.</b> Cada celda es la expectativa en R por trade, la tasa de acierto
+          y la cantidad de trades. Elegir parámetros mirando train y después mirar test es la única forma de saber si
+          algo funciona: en la calibración de esta pestaña, <b>todo lo que mejoraba en train se caía en test</b>. Si el
+          v2 no le gana al <b>piso</b> (operar la tendencia sin ningún filtro), entonces los filtros de RSI, MACD y
+          StochRSI no están aportando información.
+        </div>
+
+        <div className="mt-2 rounded border border-terminal-border bg-terminal-bg/50 p-3 text-[11px] leading-relaxed text-terminal-dim">
           <b className="text-terminal-text">Contra el lookahead:</b> series causales, vela en curso descartada, entrada
           a la apertura de la vela siguiente a la señal, tendencia superior sólo con velas ya cerradas, y si en una vela
           se tocan SL y TP se asume SL.
           <br />
-          <b className="text-terminal-text">Aproximación:</b> el funding histórico no viene en las klines, así que se
-          usa el funding actual de cada símbolo como constante. Sirve para comparar reglas, no como P&amp;L exacto.
-          Tampoco modela slippage ni comisiones maker.
+          <b className="text-terminal-text">Límites:</b> el funding histórico no viene en las klines, así que se usa el
+          actual como constante; no se modela slippage ni comisiones maker; y con {VELAS} velas la ventana total es
+          corta, así que un resultado positivo acá tampoco alcanza para concluir que hay edge. ⚠ marca menos de{' '}
+          {BT_MIN_TRADES} trades, donde el número no es interpretable.
         </div>
       </div>
     </div>
@@ -145,8 +152,8 @@ function PanelBacktest({ resultado, onCerrar }) {
 export default function CryptoScreenerV2() {
   const [par, setPar] = useState('1h')
   const [pisoLiquidez, setPisoLiquidez] = useState(5_000_000)
-  const [multiploATR, setMultiploATR] = useState(2.0)
-  const [rMultiploTP, setRMultiploTP] = useState(2)
+  const [multiploATR, setMultiploATR] = useState(SL_ATR_DEFAULT)
+  const [rMultiploTP, setRMultiploTP] = useState(TP_R_DEFAULT)
   const [feePct, setFeePct] = useState(FEE_TAKER_PCT)
 
   const [datos, setDatos] = useState([])
@@ -240,10 +247,11 @@ export default function CryptoScreenerV2() {
     // Cede el hilo para que se pinte el estado "calculando" antes del bloqueo.
     await new Promise((r) => setTimeout(r, 30))
     try {
-      const todosV1 = []
-      const todosV2 = []
+      // Se acumulan los trades de las 3 reglas x (train, test) sobre todos
+      // los simbolos, y recien al final se calculan las estadisticas.
+      const acum = { v2: { train: [], test: [] }, v1: { train: [], test: [] }, piso: { train: [], test: [] } }
       for (const { sE, sT, meta } of cache.current.values()) {
-        const { v1, v2 } = backtestSimbolo({
+        const r = backtestSimbolo({
           sE,
           sT,
           intervaloEntrada: parElegido.entrada,
@@ -252,12 +260,17 @@ export default function CryptoScreenerV2() {
           fundingPct: meta.fundingPct ?? 0,
           rMultiploTP,
         })
-        todosV1.push(...v1)
-        todosV2.push(...v2)
+        for (const k of Object.keys(acum)) {
+          acum[k].train.push(...r[k].train)
+          acum[k].test.push(...r[k].test)
+        }
+      }
+      const reglas = {}
+      for (const k of Object.keys(acum)) {
+        reglas[k] = { train: estadisticas(acum[k].train), test: estadisticas(acum[k].test) }
       }
       setBtResultado({
-        v1: estadisticas(todosV1),
-        v2: estadisticas(todosV2),
+        reglas,
         simbolos: cache.current.size,
         config: {
           entrada: parElegido.entrada,
@@ -340,9 +353,15 @@ export default function CryptoScreenerV2() {
           Rehace el Crypto Screener con las correcciones que le faltaban, sin tocar el original.{' '}
           <b>Una sola estrategia</b> (pullback dentro de tendencia) resuelta por <b>confluencia</b> en vez de por suma
           de puntos: la dirección la manda la tendencia de la temporalidad superior y las cuatro condiciones de
-          momentum tienen que dar todas a la vez. Trabaja sólo con <b>velas cerradas</b>, con <b>EMA200 real</b> (500
-          velas), <b>filtro de liquidez</b>, <b>funding</b> dentro de la decisión y <b>R:R neto</b> de comisiones. Y
-          trae <b>backtest</b> para medir, que era lo que faltaba para no cambiar cosas a ciegas. Orientativo, no es
+          momentum tienen que dar todas a la vez. Trabaja sólo con <b>velas cerradas</b>, con <b>EMA200 real</b> (
+          {VELAS} velas), <b>filtro de liquidez</b>, <b>funding</b> dentro de la decisión y <b>R:R neto</b> de
+          comisiones.
+          <br />
+          <b className="text-terminal-warn">Honestidad sobre la rentabilidad:</b> los parámetros por defecto (SL{' '}
+          {SL_ATR_DEFAULT}×ATR, TP {TP_R_DEFAULT}R) salen de una calibración sobre 1 año de velas de 1h en 57
+          perpetuos, eligiendo en train y validando en test. Fueron la mejor combinación de las probadas, pero{' '}
+          <b>quedaron en breakeven fuera de muestra, no en ganancia</b>. Ninguna variante mostró expectativa positiva
+          en test. Usá el botón de backtest para verlo vos mismo antes de operar nada. Orientativo, no es
           recomendación de inversión.
         </p>
       </div>
@@ -370,7 +389,7 @@ export default function CryptoScreenerV2() {
         </select>
         <label className="text-xs text-terminal-dim">SL (ATR ×)</label>
         <select value={multiploATR} onChange={(e) => setMultiploATR(Number(e.target.value))} className={selectCls}>
-          {MULTIPLOS_ATR.map((m) => (
+          {MULTIPLOS_ATR_V2.map((m) => (
             <option key={m} value={m}>
               {m}
             </option>
@@ -378,7 +397,7 @@ export default function CryptoScreenerV2() {
         </select>
         <label className="text-xs text-terminal-dim">TP</label>
         <select value={rMultiploTP} onChange={(e) => setRMultiploTP(Number(e.target.value))} className={selectCls}>
-          {[1, 1.5, 2, 3].map((m) => (
+          {MULTIPLOS_TP_R.map((m) => (
             <option key={m} value={m}>
               {m}R
             </option>

@@ -21,7 +21,7 @@
 // y comparar reglas, no como P&L exacto.
 
 import { evaluarSetup, tendenciaEn, MINUTOS_INTERVALO } from './senal'
-import { BT_MAX_VELAS_EN_TRADE, FEE_TAKER_PCT } from './config'
+import { BT_MAX_VELAS_EN_TRADE, FEE_TAKER_PCT, FRACCION_TRAIN } from './config'
 
 // Para cada vela i de entrada, el indice de la ultima vela superior cerrada a
 // esa altura. Recorrido lineal con puntero (las dos series estan ordenadas).
@@ -42,6 +42,16 @@ export function reglaV2(sE, i, tendencia, opciones) {
   if (!ev) return null
   if (ev.veredicto === 'COMPRA') return { dir: 'LONG' }
   if (ev.veredicto === 'VENTA') return { dir: 'SHORT' }
+  return null
+}
+
+// ── Benchmark: solo tendencia, sin ningun filtro de momentum ──────────────
+// Es el PISO que cualquier filtro tiene que superar. Si la confluencia no le
+// gana a "estar en la direccion de la tendencia y nada mas", entonces los
+// filtros de RSI/MACD/StochRSI no aportan informacion.
+export function reglaSoloTendencia(sE, i, tendencia) {
+  if (tendencia === 'ALCISTA') return { dir: 'LONG' }
+  if (tendencia === 'BAJISTA') return { dir: 'SHORT' }
   return null
 }
 
@@ -120,17 +130,24 @@ export function simular({
   rMultiploTP = 2,
   maxVelas = BT_MAX_VELAS_EN_TRADE,
   opcionesSetup = {},
+  desde = 0,
+  hasta = null,
 }) {
   const trades = []
   const minutosVela = MINUTOS_INTERVALO[intervaloEntrada] ?? 60
   // Warmup: hace falta EMA200 + margen para StochRSI/MACD.
-  const inicio = 210
-  let i = inicio
+  const tope = Math.min(hasta ?? sE.n - 2, sE.n - 2)
+  let i = Math.max(desde, 210)
 
-  while (i < sE.n - 2) {
+  while (i < tope) {
     const j = mapa[i]
     const tendencia = j >= 0 ? tendenciaEn(sT, j) : 'N/D'
-    const señal = regla === reglaV1 ? reglaV1(sE, i) : regla(sE, i, tendencia, { fundingPct, ...opcionesSetup })
+    const señal =
+      regla === reglaV1
+        ? reglaV1(sE, i)
+        : regla === reglaSoloTendencia
+          ? reglaSoloTendencia(sE, i, tendencia)
+          : regla(sE, i, tendencia, { fundingPct, ...opcionesSetup })
 
     if (!señal) {
       i++
@@ -247,12 +264,20 @@ export function estadisticas(trades) {
   }
 }
 
-// Corre las dos reglas sobre el mismo simbolo y devuelve sus trades.
+// Corre las 3 reglas sobre el mismo simbolo, separando TRAIN y TEST.
+// El corte es por INDICE de vela, o sea temporal: train = la parte vieja de
+// la ventana, test = la parte reciente que la eleccion de parametros no vio.
 export function backtestSimbolo({ sE, sT, intervaloEntrada, atrMult, feePct, fundingPct, rMultiploTP }) {
   const mapa = mapaTendencia(sE, sT)
+  const corte = Math.floor(sE.n * FRACCION_TRAIN)
   const comun = { sE, sT, mapa, intervaloEntrada, atrMult, feePct, fundingPct, rMultiploTP }
-  return {
-    v2: simular({ ...comun, regla: reglaV2 }),
-    v1: simular({ ...comun, regla: reglaV1 }),
+  const reglas = { v2: reglaV2, v1: reglaV1, piso: reglaSoloTendencia }
+  const out = {}
+  for (const [nombre, regla] of Object.entries(reglas)) {
+    out[nombre] = {
+      train: simular({ ...comun, regla, desde: 0, hasta: corte }),
+      test: simular({ ...comun, regla, desde: corte, hasta: null }),
+    }
   }
+  return out
 }

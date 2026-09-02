@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-09-02T17:22:36.016131-03:00",
+  "actualizado": "2026-09-02T19:58:27.804145-03:00",
   "tickers": [
     {
       "ticker": "MRNA",
@@ -21,7 +21,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 99.5,
-        "relative_performance": 132.38
+        "relative_performance": 132.39
       },
       "momentum": {
         "score": 24.0,
@@ -69,7 +69,7 @@
         "score": 1.7,
         "max_score": 30,
         "rs": 9.7,
-        "relative_performance": -26.28
+        "relative_performance": -26.27
       },
       "momentum": {
         "score": 7.0,
@@ -117,7 +117,7 @@
         "score": 1.1,
         "max_score": 30,
         "rs": 6.1,
-        "relative_performance": -30.84
+        "relative_performance": -30.83
       },
       "momentum": {
         "score": 3.0,
@@ -165,7 +165,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 57.7,
-        "relative_performance": -0.19
+        "relative_performance": -0.18
       },
       "momentum": {
         "score": 20.0,
@@ -213,7 +213,7 @@
         "score": 4.1,
         "max_score": 30,
         "rs": 23.0,
-        "relative_performance": -18.2
+        "relative_performance": -18.19
       },
       "momentum": {
         "score": 9.0,
@@ -357,7 +357,7 @@
         "score": 7.8,
         "max_score": 30,
         "rs": 43.6,
-        "relative_performance": -7.68
+        "relative_performance": -7.67
       },
       "momentum": {
         "score": 3.0,
@@ -501,7 +501,7 @@
         "score": 5.6,
         "max_score": 30,
         "rs": 30.9,
-        "relative_performance": -14.04
+        "relative_performance": -14.03
       },
       "momentum": {
         "score": 9.0,
@@ -645,7 +645,7 @@
         "score": 0.6,
         "max_score": 30,
         "rs": 3.3,
-        "relative_performance": -37.17
+        "relative_performance": -37.16
       },
       "momentum": {
         "score": 0.0,
@@ -741,7 +741,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 87.0,
-        "relative_performance": 20.83
+        "relative_performance": 20.84
       },
       "momentum": {
         "score": 25.0,
@@ -789,7 +789,7 @@
         "score": 5.3,
         "max_score": 30,
         "rs": 29.6,
-        "relative_performance": -14.75
+        "relative_performance": -14.74
       },
       "momentum": {
         "score": 16.0,
@@ -1029,7 +1029,7 @@
         "score": 5.1,
         "max_score": 30,
         "rs": 28.3,
-        "relative_performance": -15.1
+        "relative_performance": -15.09
       },
       "momentum": {
         "score": 9.0,
@@ -1125,7 +1125,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 79.3,
-        "relative_performance": 9.87
+        "relative_performance": 9.88
       },
       "momentum": {
         "score": 25.0,
@@ -1221,19 +1221,19 @@
         "score": 0.4,
         "max_score": 30,
         "rs": 2.0,
-        "relative_performance": -42.59
+        "relative_performance": -42.66
       },
       "momentum": {
         "score": 10.0,
         "max_score": 30,
-        "distance_from_52w_high": -42.39,
-        "percentage_above_52w_low": 57.92,
+        "distance_from_52w_high": -42.46,
+        "percentage_above_52w_low": 57.72,
         "recent_52w_high": false
       },
       "volatility": {
         "score": 3.0,
         "max_score": 15,
-        "current_volatility": 80.8,
+        "current_volatility": 80.7,
         "historical_volatility": 74.0,
         "volatility_ratio": 1.09
       },
@@ -1605,7 +1605,7 @@
         "score": 8.9,
         "max_score": 30,
         "rs": 49.7,
-        "relative_performance": -3.61
+        "relative_performance": -3.6
       },
       "momentum": {
         "score": 17.0,
@@ -1653,7 +1653,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 89.5,
-        "relative_performance": 24.68
+        "relative_performance": 24.69
       },
       "momentum": {
         "score": 25.0,
@@ -1701,7 +1701,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 66.1,
-        "relative_performance": 2.14
+        "relative_performance": 2.15
       },
       "momentum": {
         "score": 22.0,
@@ -1749,7 +1749,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 54.1,
-        "relative_performance": -2.25
+        "relative_performance": -2.24
       },
       "momentum": {
         "score": 19.0,
@@ -1893,7 +1893,7 @@
         "score": 2.1,
         "max_score": 30,
         "rs": 11.5,
-        "relative_performance": -25.32
+        "relative_performance": -25.31
       },
       "momentum": {
         "score": 3.0,
@@ -1988,8 +1988,8 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 64.0,
-        "relative_performance": 1.34
+        "rs": 64.3,
+        "relative_performance": 1.35
       },
       "momentum": {
         "score": 19.0,
@@ -2036,8 +2036,8 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 58.4,
-        "relative_performance": -0.12
+        "rs": 58.2,
+        "relative_performance": -0.11
       },
       "momentum": {
         "score": 22.0,
@@ -2229,7 +2229,7 @@
         "score": 3.6,
         "max_score": 30,
         "rs": 20.2,
-        "relative_performance": -19.68
+        "relative_performance": -19.67
       },
       "momentum": {
         "score": 6.0,
@@ -2276,8 +2276,8 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 64.5,
-        "relative_performance": 1.73
+        "rs": 64.8,
+        "relative_performance": 1.74
       },
       "momentum": {
         "score": 27.0,
@@ -2421,7 +2421,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 70.4,
-        "relative_performance": 4.41
+        "relative_performance": 4.42
       },
       "momentum": {
         "score": 30.0,
@@ -2517,7 +2517,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 65.8,
-        "relative_performance": 1.97
+        "relative_performance": 1.98
       },
       "momentum": {
         "score": 26.0,
@@ -2613,7 +2613,7 @@
         "score": 6.9,
         "max_score": 30,
         "rs": 38.5,
-        "relative_performance": -10.28
+        "relative_performance": -10.27
       },
       "momentum": {
         "score": 22.0,
@@ -2709,7 +2709,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 79.1,
-        "relative_performance": 9.64
+        "relative_performance": 9.65
       },
       "momentum": {
         "score": 20.0,
@@ -2757,7 +2757,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 98.2,
-        "relative_performance": 101.45
+        "relative_performance": 101.46
       },
       "momentum": {
         "score": 13.0,
@@ -2853,7 +2853,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 76.0,
-        "relative_performance": 8.6
+        "relative_performance": 8.61
       },
       "momentum": {
         "score": 27.0,
@@ -2901,7 +2901,7 @@
         "score": 2.4,
         "max_score": 30,
         "rs": 13.3,
-        "relative_performance": -24.27
+        "relative_performance": -24.26
       },
       "momentum": {
         "score": 6.0,
@@ -2997,7 +2997,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 81.6,
-        "relative_performance": 13.27
+        "relative_performance": 13.28
       },
       "momentum": {
         "score": 13.0,
@@ -3189,7 +3189,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 51.0,
-        "relative_performance": -3.0
+        "relative_performance": -2.99
       },
       "momentum": {
         "score": 28.0,
@@ -3285,7 +3285,7 @@
         "score": 7.0,
         "max_score": 30,
         "rs": 38.8,
-        "relative_performance": -10.08
+        "relative_performance": -10.07
       },
       "momentum": {
         "score": 7.0,
@@ -3381,7 +3381,7 @@
         "score": 3.2,
         "max_score": 30,
         "rs": 17.6,
-        "relative_performance": -21.11
+        "relative_performance": -21.1
       },
       "momentum": {
         "score": 12.0,
@@ -3429,7 +3429,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 73.2,
-        "relative_performance": 5.92
+        "relative_performance": 5.93
       },
       "momentum": {
         "score": 21.0,
@@ -3477,7 +3477,7 @@
         "score": 4.2,
         "max_score": 30,
         "rs": 23.2,
-        "relative_performance": -18.18
+        "relative_performance": -18.17
       },
       "momentum": {
         "score": 9.0,
@@ -3525,7 +3525,7 @@
         "score": 2.5,
         "max_score": 30,
         "rs": 13.8,
-        "relative_performance": -24.0
+        "relative_performance": -23.99
       },
       "momentum": {
         "score": 0.0,
@@ -3669,7 +3669,7 @@
         "score": 3.7,
         "max_score": 30,
         "rs": 20.7,
-        "relative_performance": -19.62
+        "relative_performance": -19.61
       },
       "momentum": {
         "score": 13.0,
@@ -3717,7 +3717,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 82.9,
-        "relative_performance": 14.4
+        "relative_performance": 14.41
       },
       "momentum": {
         "score": 16.0,
@@ -3765,7 +3765,7 @@
         "score": 0.9,
         "max_score": 30,
         "rs": 4.8,
-        "relative_performance": -32.7
+        "relative_performance": -32.69
       },
       "momentum": {
         "score": 0.0,
@@ -3813,7 +3813,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 96.9,
-        "relative_performance": 75.96
+        "relative_performance": 75.97
       },
       "momentum": {
         "score": 10.0,
@@ -3861,7 +3861,7 @@
         "score": 8.1,
         "max_score": 30,
         "rs": 45.2,
-        "relative_performance": -6.7
+        "relative_performance": -6.69
       },
       "momentum": {
         "score": 16.0,
@@ -3957,7 +3957,7 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 93.4,
-        "relative_performance": 40.21
+        "relative_performance": 40.22
       },
       "momentum": {
         "score": 30.0,
@@ -4101,7 +4101,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 59.9,
-        "relative_performance": 0.33
+        "relative_performance": 0.34
       },
       "momentum": {
         "score": 27.0,
@@ -4149,7 +4149,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 51.8,
-        "relative_performance": -2.83
+        "relative_performance": -2.82
       },
       "momentum": {
         "score": 10.0,
@@ -4196,7 +4196,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 64.8,
+        "rs": 65.1,
         "relative_performance": 1.81
       },
       "momentum": {
@@ -4341,7 +4341,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 56.1,
-        "relative_performance": -1.03
+        "relative_performance": -1.02
       },
       "momentum": {
         "score": 27.0,
@@ -4389,13 +4389,13 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 70.9,
-        "relative_performance": 4.57
+        "relative_performance": 4.61
       },
       "momentum": {
         "score": 30.0,
         "max_score": 30,
         "distance_from_52w_high": 0.0,
-        "percentage_above_52w_low": 56.16,
+        "percentage_above_52w_low": 56.21,
         "recent_52w_high": true
       },
       "volatility": {
@@ -4485,7 +4485,7 @@
         "score": 4.6,
         "max_score": 30,
         "rs": 25.8,
-        "relative_performance": -16.49
+        "relative_performance": -16.48
       },
       "momentum": {
         "score": 9.0,
@@ -4533,7 +4533,7 @@
         "score": 7.9,
         "max_score": 30,
         "rs": 43.9,
-        "relative_performance": -7.29
+        "relative_performance": -7.28
       },
       "momentum": {
         "score": 8.0,
@@ -4629,7 +4629,7 @@
         "score": 7.1,
         "max_score": 30,
         "rs": 39.3,
-        "relative_performance": -9.82
+        "relative_performance": -9.81
       },
       "momentum": {
         "score": 27.0,
@@ -4676,8 +4676,8 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 63.3,
-        "relative_performance": 1.06
+        "rs": 63.5,
+        "relative_performance": 1.07
       },
       "momentum": {
         "score": 3.0,
@@ -4725,7 +4725,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 55.6,
-        "relative_performance": -1.12
+        "relative_performance": -1.11
       },
       "momentum": {
         "score": 25.0,
@@ -4773,7 +4773,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 78.8,
-        "relative_performance": 9.6
+        "relative_performance": 9.61
       },
       "momentum": {
         "score": 7.0,
@@ -4821,7 +4821,7 @@
         "score": 3.2,
         "max_score": 30,
         "rs": 17.9,
-        "relative_performance": -21.11
+        "relative_performance": -21.1
       },
       "momentum": {
         "score": 6.0,
@@ -4869,7 +4869,7 @@
         "score": 5.2,
         "max_score": 30,
         "rs": 28.8,
-        "relative_performance": -14.92
+        "relative_performance": -14.91
       },
       "momentum": {
         "score": 13.0,
@@ -5300,8 +5300,8 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 62.8,
-        "relative_performance": 1.02
+        "rs": 63.0,
+        "relative_performance": 1.03
       },
       "momentum": {
         "score": 9.0,
@@ -5349,7 +5349,7 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 94.4,
-        "relative_performance": 44.7
+        "relative_performance": 44.71
       },
       "momentum": {
         "score": 22.0,
@@ -5396,7 +5396,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 52.6,
+        "rs": 52.8,
         "relative_performance": -2.48
       },
       "momentum": {
@@ -5493,7 +5493,7 @@
         "score": 1.2,
         "max_score": 30,
         "rs": 6.9,
-        "relative_performance": -29.97
+        "relative_performance": -29.96
       },
       "momentum": {
         "score": 10.0,
@@ -5541,7 +5541,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 72.2,
-        "relative_performance": 5.35
+        "relative_performance": 5.36
       },
       "momentum": {
         "score": 19.0,
@@ -5637,7 +5637,7 @@
         "score": 7.6,
         "max_score": 30,
         "rs": 42.3,
-        "relative_performance": -8.36
+        "relative_performance": -8.35
       },
       "momentum": {
         "score": 9.0,
@@ -5733,7 +5733,7 @@
         "score": 5.1,
         "max_score": 30,
         "rs": 28.6,
-        "relative_performance": -14.94
+        "relative_performance": -14.93
       },
       "momentum": {
         "score": 10.0,
@@ -5877,7 +5877,7 @@
         "score": 6.3,
         "max_score": 30,
         "rs": 35.2,
-        "relative_performance": -11.17
+        "relative_performance": -11.16
       },
       "momentum": {
         "score": 6.0,
@@ -5925,7 +5925,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 59.4,
-        "relative_performance": 0.14
+        "relative_performance": 0.15
       },
       "momentum": {
         "score": 23.0,
@@ -5973,7 +5973,7 @@
         "score": 4.0,
         "max_score": 30,
         "rs": 22.4,
-        "relative_performance": -18.34
+        "relative_performance": -18.33
       },
       "momentum": {
         "score": 18.0,
@@ -6021,7 +6021,7 @@
         "score": 2.7,
         "max_score": 30,
         "rs": 15.1,
-        "relative_performance": -22.16
+        "relative_performance": -22.15
       },
       "momentum": {
         "score": 6.0,
@@ -6213,7 +6213,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 53.8,
-        "relative_performance": -2.26
+        "relative_performance": -2.25
       },
       "momentum": {
         "score": 13.0,
@@ -6261,7 +6261,7 @@
         "score": 4.8,
         "max_score": 30,
         "rs": 26.5,
-        "relative_performance": -15.89
+        "relative_performance": -15.88
       },
       "momentum": {
         "score": 0.0,
@@ -6309,7 +6309,7 @@
         "score": 2.6,
         "max_score": 30,
         "rs": 14.3,
-        "relative_performance": -23.6
+        "relative_performance": -23.59
       },
       "momentum": {
         "score": 0.0,
@@ -6452,7 +6452,7 @@
       "relative_strength": {
         "score": 3.3,
         "max_score": 30,
-        "rs": 18.6,
+        "rs": 18.4,
         "relative_performance": -20.78
       },
       "momentum": {
@@ -6549,7 +6549,7 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 92.1,
-        "relative_performance": 32.55
+        "relative_performance": 32.56
       },
       "momentum": {
         "score": 10.0,
@@ -6645,7 +6645,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 67.3,
-        "relative_performance": 3.21
+        "relative_performance": 3.22
       },
       "momentum": {
         "score": 28.0,
@@ -6741,7 +6741,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 65.6,
-        "relative_performance": 1.97
+        "relative_performance": 1.98
       },
       "momentum": {
         "score": 13.0,
@@ -6789,7 +6789,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 80.1,
-        "relative_performance": 10.44
+        "relative_performance": 10.45
       },
       "momentum": {
         "score": 22.0,
@@ -6885,7 +6885,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 57.4,
-        "relative_performance": -0.33
+        "relative_performance": -0.32
       },
       "momentum": {
         "score": 15.0,
@@ -6933,7 +6933,7 @@
         "score": 4.7,
         "max_score": 30,
         "rs": 26.0,
-        "relative_performance": -16.47
+        "relative_performance": -16.46
       },
       "momentum": {
         "score": 14.0,
@@ -7269,7 +7269,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 50.8,
-        "relative_performance": -3.24
+        "relative_performance": -3.23
       },
       "momentum": {
         "score": 10.0,
@@ -7316,8 +7316,8 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 62.5,
-        "relative_performance": 0.99
+        "rs": 62.8,
+        "relative_performance": 1.0
       },
       "momentum": {
         "score": 30.0,
@@ -7364,7 +7364,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 52.3,
+        "rs": 52.6,
         "relative_performance": -2.54
       },
       "momentum": {
@@ -7413,7 +7413,7 @@
         "score": 6.6,
         "max_score": 30,
         "rs": 36.7,
-        "relative_performance": -10.9
+        "relative_performance": -10.89
       },
       "momentum": {
         "score": 21.0,
@@ -7460,8 +7460,8 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 85.5,
-        "relative_performance": 18.51
+        "rs": 85.7,
+        "relative_performance": 18.52
       },
       "momentum": {
         "score": 30.0,
@@ -7509,7 +7509,7 @@
         "score": 1.6,
         "max_score": 30,
         "rs": 8.7,
-        "relative_performance": -28.39
+        "relative_performance": -28.38
       },
       "momentum": {
         "score": 0.0,
@@ -7557,7 +7557,7 @@
         "score": 4.3,
         "max_score": 30,
         "rs": 24.0,
-        "relative_performance": -17.88
+        "relative_performance": -17.87
       },
       "momentum": {
         "score": 9.0,
@@ -7605,7 +7605,7 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 94.1,
-        "relative_performance": 44.04
+        "relative_performance": 44.05
       },
       "momentum": {
         "score": 30.0,
@@ -7653,7 +7653,7 @@
         "score": 2.2,
         "max_score": 30,
         "rs": 12.2,
-        "relative_performance": -25.08
+        "relative_performance": -25.07
       },
       "momentum": {
         "score": 8.0,
@@ -7797,7 +7797,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 50.0,
-        "relative_performance": -3.4
+        "relative_performance": -3.39
       },
       "momentum": {
         "score": 22.0,
@@ -7845,7 +7845,7 @@
         "score": 6.1,
         "max_score": 30,
         "rs": 33.7,
-        "relative_performance": -11.84
+        "relative_performance": -11.83
       },
       "momentum": {
         "score": 13.0,
@@ -7892,8 +7892,8 @@
       "relative_strength": {
         "score": 2.0,
         "max_score": 30,
-        "rs": 11.2,
-        "relative_performance": -25.42
+        "rs": 11.0,
+        "relative_performance": -25.41
       },
       "momentum": {
         "score": 3.0,
@@ -7941,7 +7941,7 @@
         "score": 8.7,
         "max_score": 30,
         "rs": 48.5,
-        "relative_performance": -4.62
+        "relative_performance": -4.61
       },
       "momentum": {
         "score": 12.0,
@@ -8037,7 +8037,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 95.2,
-        "relative_performance": 52.79
+        "relative_performance": 52.8
       },
       "momentum": {
         "score": 30.0,
@@ -8085,7 +8085,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 99.7,
-        "relative_performance": 135.67
+        "relative_performance": 135.68
       },
       "momentum": {
         "score": 10.0,
@@ -8139,7 +8139,7 @@
         "score": 25.0,
         "max_score": 30,
         "distance_from_52w_high": -3.63,
-        "percentage_above_52w_low": 29.3,
+        "percentage_above_52w_low": 29.29,
         "recent_52w_high": true
       },
       "volatility": {
@@ -8181,7 +8181,7 @@
         "score": 0.3,
         "max_score": 30,
         "rs": 1.8,
-        "relative_performance": -44.27
+        "relative_performance": -44.26
       },
       "momentum": {
         "score": 0.0,
@@ -8277,7 +8277,7 @@
         "score": 5.7,
         "max_score": 30,
         "rs": 31.4,
-        "relative_performance": -13.41
+        "relative_performance": -13.4
       },
       "momentum": {
         "score": 12.0,
@@ -8325,7 +8325,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 86.7,
-        "relative_performance": 20.42
+        "relative_performance": 20.43
       },
       "momentum": {
         "score": 29.0,
@@ -8421,7 +8421,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 98.5,
-        "relative_performance": 112.59
+        "relative_performance": 112.6
       },
       "momentum": {
         "score": 13.0,
@@ -8469,7 +8469,7 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 92.6,
-        "relative_performance": 34.31
+        "relative_performance": 34.32
       },
       "momentum": {
         "score": 29.0,
@@ -8565,7 +8565,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 54.8,
-        "relative_performance": -1.48
+        "relative_performance": -1.47
       },
       "momentum": {
         "score": 16.0,
@@ -8613,12 +8613,12 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 58.7,
-        "relative_performance": -0.0
+        "relative_performance": 0.0
       },
       "momentum": {
         "score": 23.0,
         "max_score": 30,
-        "distance_from_52w_high": -1.63,
+        "distance_from_52w_high": -1.64,
         "percentage_above_52w_low": 21.39,
         "recent_52w_high": true
       },
@@ -8661,7 +8661,7 @@
         "score": 5.8,
         "max_score": 30,
         "rs": 32.1,
-        "relative_performance": -12.9
+        "relative_performance": -12.89
       },
       "momentum": {
         "score": 11.0,
@@ -8709,7 +8709,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 97.4,
-        "relative_performance": 84.51
+        "relative_performance": 84.52
       },
       "momentum": {
         "score": 21.0,
@@ -8804,8 +8804,8 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 62.0,
-        "relative_performance": 0.66
+        "rs": 62.2,
+        "relative_performance": 0.67
       },
       "momentum": {
         "score": 7.0,
@@ -8853,7 +8853,7 @@
         "score": 0.7,
         "max_score": 30,
         "rs": 4.1,
-        "relative_performance": -33.41
+        "relative_performance": -33.4
       },
       "momentum": {
         "score": 8.0,
@@ -9093,7 +9093,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 53.1,
-        "relative_performance": -2.43
+        "relative_performance": -2.42
       },
       "momentum": {
         "score": 18.0,
@@ -9141,7 +9141,7 @@
         "score": 6.0,
         "max_score": 30,
         "rs": 33.2,
-        "relative_performance": -12.32
+        "relative_performance": -12.31
       },
       "momentum": {
         "score": 9.0,
@@ -9189,7 +9189,7 @@
         "score": 8.2,
         "max_score": 30,
         "rs": 45.7,
-        "relative_performance": -6.4
+        "relative_performance": -6.39
       },
       "momentum": {
         "score": 27.0,
@@ -9237,7 +9237,7 @@
         "score": 3.4,
         "max_score": 30,
         "rs": 19.1,
-        "relative_performance": -20.48
+        "relative_performance": -20.47
       },
       "momentum": {
         "score": 7.0,
@@ -9285,7 +9285,7 @@
         "score": 3.9,
         "max_score": 30,
         "rs": 21.4,
-        "relative_performance": -19.4
+        "relative_performance": -19.39
       },
       "momentum": {
         "score": 11.0,
@@ -9333,7 +9333,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 74.5,
-        "relative_performance": 6.99
+        "relative_performance": 7.0
       },
       "momentum": {
         "score": 26.0,
@@ -9381,7 +9381,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 69.9,
-        "relative_performance": 4.11
+        "relative_performance": 4.12
       },
       "momentum": {
         "score": 17.0,
@@ -9477,7 +9477,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 96.2,
-        "relative_performance": 64.2
+        "relative_performance": 64.21
       },
       "momentum": {
         "score": 24.0,
@@ -9525,7 +9525,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 60.2,
-        "relative_performance": 0.4
+        "relative_performance": 0.41
       },
       "momentum": {
         "score": 10.0,
@@ -9669,7 +9669,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 57.1,
-        "relative_performance": -0.55
+        "relative_performance": -0.54
       },
       "momentum": {
         "score": 22.0,
@@ -9765,7 +9765,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 61.0,
-        "relative_performance": 0.51
+        "relative_performance": 0.52
       },
       "momentum": {
         "score": 23.0,
@@ -9861,7 +9861,7 @@
         "score": 7.3,
         "max_score": 30,
         "rs": 40.6,
-        "relative_performance": -9.0
+        "relative_performance": -8.99
       },
       "momentum": {
         "score": 22.0,
@@ -10005,7 +10005,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 71.9,
-        "relative_performance": 4.98
+        "relative_performance": 4.99
       },
       "momentum": {
         "score": 18.0,
@@ -10101,7 +10101,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 69.4,
-        "relative_performance": 4.06
+        "relative_performance": 4.07
       },
       "momentum": {
         "score": 19.0,
@@ -10149,7 +10149,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 71.4,
-        "relative_performance": 4.83
+        "relative_performance": 4.84
       },
       "momentum": {
         "score": 27.0,
@@ -10197,7 +10197,7 @@
         "score": 1.6,
         "max_score": 30,
         "rs": 8.9,
-        "relative_performance": -28.25
+        "relative_performance": -28.24
       },
       "momentum": {
         "score": 3.0,
@@ -10340,8 +10340,8 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 63.0,
-        "relative_performance": 1.03
+        "rs": 63.3,
+        "relative_performance": 1.04
       },
       "momentum": {
         "score": 25.0,
@@ -10389,7 +10389,7 @@
         "score": 1.4,
         "max_score": 30,
         "rs": 7.7,
-        "relative_performance": -28.97
+        "relative_performance": -28.96
       },
       "momentum": {
         "score": 3.0,
@@ -10437,7 +10437,7 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 90.3,
-        "relative_performance": 26.0
+        "relative_performance": 26.01
       },
       "momentum": {
         "score": 13.0,
@@ -10533,7 +10533,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 87.5,
-        "relative_performance": 21.65
+        "relative_performance": 21.66
       },
       "momentum": {
         "score": 16.0,
@@ -10629,7 +10629,7 @@
         "score": 6.8,
         "max_score": 30,
         "rs": 37.5,
-        "relative_performance": -10.46
+        "relative_performance": -10.45
       },
       "momentum": {
         "score": 15.0,
@@ -10766,28 +10766,28 @@
         "sma50_above_ema200": true,
         "sma50_rising": false,
         "ema200_rising": true,
-        "sma50": 16007.6,
-        "ema200": 15871.46
+        "sma50": 16007.0,
+        "ema200": 15871.17
       },
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 86.0,
-        "relative_performance": 18.6
+        "rs": 85.5,
+        "relative_performance": 18.42
       },
       "momentum": {
         "score": 16.0,
         "max_score": 30,
-        "distance_from_52w_high": -17.51,
-        "percentage_above_52w_low": 74.42,
+        "distance_from_52w_high": -17.64,
+        "percentage_above_52w_low": 74.14,
         "recent_52w_high": false
       },
       "volatility": {
         "score": 0.0,
         "max_score": 15,
-        "current_volatility": 56.4,
+        "current_volatility": 56.6,
         "historical_volatility": 44.7,
-        "volatility_ratio": 1.26
+        "volatility_ratio": 1.27
       },
       "gates": {
         "rs80": true,
@@ -10821,7 +10821,7 @@
         "score": 2.3,
         "max_score": 30,
         "rs": 13.0,
-        "relative_performance": -24.39
+        "relative_performance": -24.38
       },
       "momentum": {
         "score": 11.0,
@@ -10917,7 +10917,7 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 90.6,
-        "relative_performance": 27.19
+        "relative_performance": 27.2
       },
       "momentum": {
         "score": 27.0,
@@ -10965,7 +10965,7 @@
         "score": 6.5,
         "max_score": 30,
         "rs": 36.2,
-        "relative_performance": -10.94
+        "relative_performance": -10.93
       },
       "momentum": {
         "score": 20.0,
@@ -11007,7 +11007,7 @@
         "score": 8.5,
         "max_score": 30,
         "rs": 47.4,
-        "relative_performance": -5.01
+        "relative_performance": -5.0
       },
       "momentum": {
         "score": 9.0,
@@ -11151,7 +11151,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 98.0,
-        "relative_performance": 94.76
+        "relative_performance": 94.77
       },
       "momentum": {
         "score": 10.0,
@@ -11247,7 +11247,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 87.2,
-        "relative_performance": 21.33
+        "relative_performance": 21.34
       },
       "momentum": {
         "score": 30.0,
@@ -11294,7 +11294,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 63.5,
+        "rs": 63.8,
         "relative_performance": 1.1
       },
       "momentum": {
@@ -11384,26 +11384,26 @@
         "sma50_above_ema200": true,
         "sma50_rising": false,
         "ema200_rising": true,
-        "sma50": 35700.8,
-        "ema200": 33461.5
+        "sma50": 35701.6,
+        "ema200": 33461.9
       },
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 58.2,
-        "relative_performance": -0.14
+        "rs": 58.4,
+        "relative_performance": -0.03
       },
       "momentum": {
         "score": 25.0,
         "max_score": 30,
-        "distance_from_52w_high": -1.66,
-        "percentage_above_52w_low": 81.07,
+        "distance_from_52w_high": -1.56,
+        "percentage_above_52w_low": 81.26,
         "recent_52w_high": false
       },
       "volatility": {
         "score": 9.0,
         "max_score": 15,
-        "current_volatility": 30.4,
+        "current_volatility": 30.5,
         "historical_volatility": 37.6,
         "volatility_ratio": 0.81
       },
@@ -11480,28 +11480,28 @@
         "sma50_above_ema200": true,
         "sma50_rising": true,
         "ema200_rising": true,
-        "sma50": 36107.6,
-        "ema200": 33799.24
+        "sma50": 36106.4,
+        "ema200": 33798.64
       },
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 52.8,
-        "relative_performance": -2.48
+        "rs": 52.3,
+        "relative_performance": -2.63
       },
       "momentum": {
         "score": 22.0,
         "max_score": 30,
-        "distance_from_52w_high": -3.37,
-        "percentage_above_52w_low": 17.59,
+        "distance_from_52w_high": -3.53,
+        "percentage_above_52w_low": 17.4,
         "recent_52w_high": true
       },
       "volatility": {
         "score": 9.0,
         "max_score": 15,
-        "current_volatility": 15.2,
+        "current_volatility": 15.1,
         "historical_volatility": 18.3,
-        "volatility_ratio": 0.83
+        "volatility_ratio": 0.82
       },
       "gates": {
         "rs80": false,
@@ -11534,20 +11534,20 @@
       "relative_strength": {
         "score": 3.3,
         "max_score": 30,
-        "rs": 18.4,
-        "relative_performance": -20.85
+        "rs": 18.6,
+        "relative_performance": -20.78
       },
       "momentum": {
         "score": 13.0,
         "max_score": 30,
-        "distance_from_52w_high": -23.45,
-        "percentage_above_52w_low": 86.22,
+        "distance_from_52w_high": -23.37,
+        "percentage_above_52w_low": 86.4,
         "recent_52w_high": false
       },
       "volatility": {
         "score": 9.0,
         "max_score": 15,
-        "current_volatility": 29.6,
+        "current_volatility": 29.7,
         "historical_volatility": 35.0,
         "volatility_ratio": 0.85
       },
@@ -11583,7 +11583,7 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 91.1,
-        "relative_performance": 28.21
+        "relative_performance": 28.22
       },
       "momentum": {
         "score": 10.0,
@@ -11727,7 +11727,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 73.7,
-        "relative_performance": 6.4
+        "relative_performance": 6.41
       },
       "momentum": {
         "score": 22.0,
@@ -11775,7 +11775,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 77.6,
-        "relative_performance": 9.09
+        "relative_performance": 9.1
       },
       "momentum": {
         "score": 17.0,
@@ -11919,7 +11919,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 65.3,
-        "relative_performance": 1.85
+        "relative_performance": 1.86
       },
       "momentum": {
         "score": 30.0,
@@ -12036,7 +12036,7 @@
         "score": 3.9,
         "max_score": 30,
         "rs": 21.7,
-        "relative_performance": -19.31
+        "relative_performance": -19.3
       },
       "momentum": {
         "score": 3.0,
@@ -12084,7 +12084,7 @@
         "score": 7.7,
         "max_score": 30,
         "rs": 42.9,
-        "relative_performance": -8.2
+        "relative_performance": -8.19
       },
       "momentum": {
         "score": 27.0,
@@ -12132,7 +12132,7 @@
         "score": 2.9,
         "max_score": 30,
         "rs": 16.3,
-        "relative_performance": -21.8
+        "relative_performance": -21.79
       },
       "momentum": {
         "score": 7.0,
@@ -12276,7 +12276,7 @@
         "score": 3.8,
         "max_score": 30,
         "rs": 21.2,
-        "relative_performance": -19.51
+        "relative_performance": -19.5
       },
       "momentum": {
         "score": 13.0,
@@ -12324,7 +12324,7 @@
         "score": 0.5,
         "max_score": 30,
         "rs": 2.8,
-        "relative_performance": -38.88
+        "relative_performance": -38.87
       },
       "momentum": {
         "score": 0.0,
@@ -12420,7 +12420,7 @@
         "score": 6.5,
         "max_score": 30,
         "rs": 36.2,
-        "relative_performance": -10.94
+        "relative_performance": -10.93
       },
       "momentum": {
         "score": 20.0,
@@ -12462,7 +12462,7 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 91.3,
-        "relative_performance": 28.26
+        "relative_performance": 28.27
       },
       "momentum": {
         "score": 22.0,
@@ -12510,7 +12510,7 @@
         "score": 5.7,
         "max_score": 30,
         "rs": 31.6,
-        "relative_performance": -13.3
+        "relative_performance": -13.29
       },
       "momentum": {
         "score": 22.0,
@@ -12558,7 +12558,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 89.0,
-        "relative_performance": 24.15
+        "relative_performance": 24.16
       },
       "momentum": {
         "score": 30.0,
@@ -12750,7 +12750,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 58.9,
-        "relative_performance": 0.0
+        "relative_performance": 0.01
       },
       "momentum": {
         "score": 29.0,
@@ -12846,7 +12846,7 @@
         "score": 1.2,
         "max_score": 30,
         "rs": 6.6,
-        "relative_performance": -30.42
+        "relative_performance": -30.41
       },
       "momentum": {
         "score": 0.0,
@@ -12894,7 +12894,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 89.8,
-        "relative_performance": 24.79
+        "relative_performance": 24.8
       },
       "momentum": {
         "score": 22.0,
@@ -12990,7 +12990,7 @@
         "score": 8.3,
         "max_score": 30,
         "rs": 46.2,
-        "relative_performance": -6.15
+        "relative_performance": -6.14
       },
       "momentum": {
         "score": 19.0,
@@ -13021,7 +13021,7 @@
     {
       "ticker": "MORI.BA",
       "nombre": "MORIXE HERMANOS",
-      "total_score": 15.9,
+      "total_score": 16.0,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -13035,24 +13035,24 @@
         "ema200": 29.09
       },
       "relative_strength": {
-        "score": 1.9,
+        "score": 2.0,
         "max_score": 30,
-        "rs": 10.7,
-        "relative_performance": -25.56
+        "rs": 11.2,
+        "relative_performance": -25.39
       },
       "momentum": {
         "score": 0.0,
         "max_score": 30,
-        "distance_from_52w_high": -56.27,
-        "percentage_above_52w_low": 4.86,
+        "distance_from_52w_high": -56.18,
+        "percentage_above_52w_low": 5.09,
         "recent_52w_high": false
       },
       "volatility": {
         "score": 14.0,
         "max_score": 15,
-        "current_volatility": 27.7,
+        "current_volatility": 28.3,
         "historical_volatility": 45.0,
-        "volatility_ratio": 0.62
+        "volatility_ratio": 0.63
       },
       "gates": {
         "rs80": false,
@@ -13086,7 +13086,7 @@
         "score": 1.2,
         "max_score": 30,
         "rs": 6.4,
-        "relative_performance": -30.63
+        "relative_performance": -30.62
       },
       "momentum": {
         "score": 10.0,
@@ -13182,7 +13182,7 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 90.8,
-        "relative_performance": 27.98
+        "relative_performance": 27.99
       },
       "momentum": {
         "score": 10.0,
@@ -13230,7 +13230,7 @@
         "score": 6.7,
         "max_score": 30,
         "rs": 37.0,
-        "relative_performance": -10.64
+        "relative_performance": -10.63
       },
       "momentum": {
         "score": 20.0,
@@ -13255,8 +13255,8 @@
     {
       "ticker": "ORAN.BA",
       "nombre": "ORANGE CEDEAR EACH 1 REPR 1 ADR",
-      "total_score": null,
-      "datos_suficientes": false,
+      "total_score": 52.6,
+      "datos_suficientes": true,
       "trend": {
         "score": 20.0,
         "max_score": 25,
@@ -13281,7 +13281,13 @@
         "percentage_above_52w_low": 0.01,
         "recent_52w_high": true
       },
-      "volatility": null,
+      "volatility": {
+        "score": 6.0,
+        "max_score": 15,
+        "current_volatility": 0.0,
+        "historical_volatility": 0.0,
+        "volatility_ratio": 1.0
+      },
       "gates": {
         "rs80": false,
         "ema200": true,
@@ -13362,7 +13368,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 77.0,
-        "relative_performance": 8.8
+        "relative_performance": 8.81
       },
       "momentum": {
         "score": 25.0,
@@ -13410,7 +13416,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 60.5,
-        "relative_performance": 0.42
+        "relative_performance": 0.43
       },
       "momentum": {
         "score": 27.0,
@@ -13554,7 +13560,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 69.6,
-        "relative_performance": 4.07
+        "relative_performance": 4.08
       },
       "momentum": {
         "score": 19.0,
@@ -13602,7 +13608,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 70.7,
-        "relative_performance": 4.49
+        "relative_performance": 4.5
       },
       "momentum": {
         "score": 8.0,
@@ -13650,7 +13656,7 @@
         "score": 6.5,
         "max_score": 30,
         "rs": 36.2,
-        "relative_performance": -10.94
+        "relative_performance": -10.93
       },
       "momentum": {
         "score": 20.0,
@@ -13740,7 +13746,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 83.4,
-        "relative_performance": 14.94
+        "relative_performance": 14.95
       },
       "momentum": {
         "score": 30.0,
@@ -13788,7 +13794,7 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 93.6,
-        "relative_performance": 40.22
+        "relative_performance": 40.23
       },
       "momentum": {
         "score": 19.0,
@@ -13884,7 +13890,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 76.3,
-        "relative_performance": 8.67
+        "relative_performance": 8.68
       },
       "momentum": {
         "score": 29.0,
@@ -14165,20 +14171,20 @@
         "sma50_above_ema200": true,
         "sma50_rising": true,
         "ema200_rising": true,
-        "sma50": 19228.0,
-        "ema200": 16787.13
+        "sma50": 19228.4,
+        "ema200": 16787.33
       },
       "relative_strength": {
         "score": 27.0,
         "max_score": 30,
         "rs": 91.6,
-        "relative_performance": 30.62
+        "relative_performance": 30.74
       },
       "momentum": {
         "score": 30.0,
         "max_score": 30,
         "distance_from_52w_high": 0.0,
-        "percentage_above_52w_low": 103.15,
+        "percentage_above_52w_low": 103.33,
         "recent_52w_high": true
       },
       "volatility": {
@@ -14203,7 +14209,7 @@
     {
       "ticker": "VALO.BA",
       "nombre": "BANCO DE VALORES S.A.",
-      "total_score": 48.0,
+      "total_score": 50.0,
       "datos_suficientes": true,
       "trend": {
         "score": 9.0,
@@ -14213,28 +14219,28 @@
         "sma50_above_ema200": true,
         "sma50_rising": false,
         "ema200_rising": true,
-        "sma50": 613.28,
-        "ema200": 570.75
+        "sma50": 613.15,
+        "ema200": 570.69
       },
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 65.1,
-        "relative_performance": 1.82
+        "rs": 62.0,
+        "relative_performance": 0.65
       },
       "momentum": {
         "score": 13.0,
         "max_score": 30,
-        "distance_from_52w_high": -22.61,
-        "percentage_above_52w_low": 136.6,
+        "distance_from_52w_high": -23.5,
+        "percentage_above_52w_low": 133.87,
         "recent_52w_high": false
       },
       "volatility": {
-        "score": 12.0,
+        "score": 14.0,
         "max_score": 15,
-        "current_volatility": 24.0,
+        "current_volatility": 22.3,
         "historical_volatility": 33.1,
-        "volatility_ratio": 0.73
+        "volatility_ratio": 0.67
       },
       "gates": {
         "rs80": false,
@@ -14251,8 +14257,8 @@
     {
       "ticker": "WBO.BA",
       "nombre": "WEIBO CORPORATION CEDEARS EACH ",
-      "total_score": null,
-      "datos_suficientes": false,
+      "total_score": 35.2,
+      "datos_suficientes": true,
       "trend": {
         "score": 9.0,
         "max_score": 25,
@@ -14277,7 +14283,13 @@
         "percentage_above_52w_low": 0.0,
         "recent_52w_high": true
       },
-      "volatility": null,
+      "volatility": {
+        "score": 0.0,
+        "max_score": 15,
+        "current_volatility": 2.2,
+        "historical_volatility": 0.0,
+        "volatility_ratio": 682976.02
+      },
       "gates": {
         "rs80": false,
         "ema200": false,
@@ -14303,26 +14315,26 @@
         "sma50_above_ema200": false,
         "sma50_rising": false,
         "ema200_rising": false,
-        "sma50": 4680.15,
-        "ema200": 4984.85
+        "sma50": 4680.35,
+        "ema200": 4984.95
       },
       "relative_strength": {
         "score": 30.0,
         "max_score": 30,
         "rs": 96.7,
-        "relative_performance": 74.66
+        "relative_performance": 75.02
       },
       "momentum": {
         "score": 16.0,
         "max_score": 30,
-        "distance_from_52w_high": -19.49,
-        "percentage_above_52w_low": 173.47,
+        "distance_from_52w_high": -19.33,
+        "percentage_above_52w_low": 174.01,
         "recent_52w_high": false
       },
       "volatility": {
         "score": 15.0,
         "max_score": 15,
-        "current_volatility": 47.0,
+        "current_volatility": 46.9,
         "historical_volatility": 82.3,
         "volatility_ratio": 0.57
       },
@@ -14358,7 +14370,7 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 94.9,
-        "relative_performance": 46.84
+        "relative_performance": 46.85
       },
       "momentum": {
         "score": 30.0,
@@ -14406,7 +14418,7 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 90.1,
-        "relative_performance": 25.37
+        "relative_performance": 25.38
       },
       "momentum": {
         "score": 30.0,
@@ -14454,7 +14466,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 96.4,
-        "relative_performance": 68.54
+        "relative_performance": 68.55
       },
       "momentum": {
         "score": 10.0,
@@ -14502,7 +14514,7 @@
         "score": 8.6,
         "max_score": 30,
         "rs": 48.0,
-        "relative_performance": -4.79
+        "relative_performance": -4.78
       },
       "momentum": {
         "score": 20.0,
@@ -14550,7 +14562,7 @@
         "score": 7.7,
         "max_score": 30,
         "rs": 42.6,
-        "relative_performance": -8.3
+        "relative_performance": -8.29
       },
       "momentum": {
         "score": 15.0,
@@ -14598,7 +14610,7 @@
         "score": 1.1,
         "max_score": 30,
         "rs": 5.9,
-        "relative_performance": -30.87
+        "relative_performance": -30.86
       },
       "momentum": {
         "score": 0.0,
@@ -14934,19 +14946,19 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 79.6,
-        "relative_performance": 10.05
+        "relative_performance": 10.01
       },
       "momentum": {
         "score": 19.0,
         "max_score": 30,
-        "distance_from_52w_high": -7.36,
-        "percentage_above_52w_low": 36.88,
+        "distance_from_52w_high": -7.4,
+        "percentage_above_52w_low": 36.82,
         "recent_52w_high": false
       },
       "volatility": {
         "score": 9.0,
         "max_score": 15,
-        "current_volatility": 19.7,
+        "current_volatility": 19.6,
         "historical_volatility": 24.4,
         "volatility_ratio": 0.81
       },
@@ -15030,7 +15042,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 79.8,
-        "relative_performance": 10.36
+        "relative_performance": 10.37
       },
       "momentum": {
         "score": 13.0,
@@ -15078,7 +15090,7 @@
         "score": 7.0,
         "max_score": 30,
         "rs": 39.0,
-        "relative_performance": -9.82
+        "relative_performance": -9.81
       },
       "momentum": {
         "score": 13.0,
@@ -15222,7 +15234,7 @@
         "score": 8.4,
         "max_score": 30,
         "rs": 46.7,
-        "relative_performance": -5.89
+        "relative_performance": -5.88
       },
       "momentum": {
         "score": 7.0,
@@ -15270,7 +15282,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 75.0,
-        "relative_performance": 7.44
+        "relative_performance": 7.45
       },
       "momentum": {
         "score": 16.0,
@@ -15318,7 +15330,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 99.0,
-        "relative_performance": 116.18
+        "relative_performance": 116.19
       },
       "momentum": {
         "score": 29.0,
@@ -15365,8 +15377,8 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 62.2,
-        "relative_performance": 0.85
+        "rs": 62.5,
+        "relative_performance": 0.86
       },
       "momentum": {
         "score": 7.0,
@@ -15510,7 +15522,7 @@
         "score": 1.0,
         "max_score": 30,
         "rs": 5.6,
-        "relative_performance": -31.4
+        "relative_performance": -31.39
       },
       "momentum": {
         "score": 0.0,
@@ -15541,7 +15553,7 @@
     {
       "ticker": "RGTI",
       "nombre": "Rigetti Computing, Inc.",
-      "total_score": 14.0,
+      "total_score": 13.9,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -15555,9 +15567,9 @@
         "ema200": 18.6
       },
       "relative_strength": {
-        "score": 2.0,
+        "score": 1.9,
         "max_score": 30,
-        "rs": 11.0,
+        "rs": 10.7,
         "relative_performance": -25.43
       },
       "momentum": {
@@ -15606,7 +15618,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 74.2,
-        "relative_performance": 6.94
+        "relative_performance": 6.95
       },
       "momentum": {
         "score": 10.0,
@@ -15750,7 +15762,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 69.1,
-        "relative_performance": 3.76
+        "relative_performance": 3.77
       },
       "momentum": {
         "score": 28.0,
@@ -15846,13 +15858,13 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 93.1,
-        "relative_performance": 37.28
+        "relative_performance": 37.31
       },
       "momentum": {
         "score": 22.0,
         "max_score": 30,
-        "distance_from_52w_high": -7.73,
-        "percentage_above_52w_low": 113.28,
+        "distance_from_52w_high": -7.72,
+        "percentage_above_52w_low": 113.31,
         "recent_52w_high": false
       },
       "volatility": {
@@ -15894,7 +15906,7 @@
         "score": 8.8,
         "max_score": 30,
         "rs": 48.7,
-        "relative_performance": -4.46
+        "relative_performance": -4.45
       },
       "momentum": {
         "score": 23.0,
@@ -15941,7 +15953,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 64.3,
+        "rs": 64.5,
         "relative_performance": 1.5
       },
       "momentum": {
@@ -15990,7 +16002,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 56.4,
-        "relative_performance": -0.99
+        "relative_performance": -0.98
       },
       "momentum": {
         "score": 23.0,
@@ -16038,13 +16050,13 @@
         "score": 4.3,
         "max_score": 30,
         "rs": 23.7,
-        "relative_performance": -17.91
+        "relative_performance": -17.87
       },
       "momentum": {
         "score": 16.0,
         "max_score": 30,
-        "distance_from_52w_high": -15.75,
-        "percentage_above_52w_low": 52.24,
+        "distance_from_52w_high": -15.72,
+        "percentage_above_52w_low": 52.3,
         "recent_52w_high": false
       },
       "volatility": {
@@ -16134,7 +16146,7 @@
         "score": 7.3,
         "max_score": 30,
         "rs": 40.3,
-        "relative_performance": -9.34
+        "relative_performance": -9.33
       },
       "momentum": {
         "score": 7.0,
@@ -16182,7 +16194,7 @@
         "score": 0.2,
         "max_score": 30,
         "rs": 1.0,
-        "relative_performance": -46.39
+        "relative_performance": -46.38
       },
       "momentum": {
         "score": 0.0,
@@ -16230,7 +16242,7 @@
         "score": 2.9,
         "max_score": 30,
         "rs": 16.1,
-        "relative_performance": -21.85
+        "relative_performance": -21.84
       },
       "momentum": {
         "score": 10.0,
@@ -16278,7 +16290,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 98.7,
-        "relative_performance": 114.6
+        "relative_performance": 114.61
       },
       "momentum": {
         "score": 10.0,
@@ -16326,7 +16338,7 @@
         "score": 0.1,
         "max_score": 30,
         "rs": 0.8,
-        "relative_performance": -47.02
+        "relative_performance": -47.01
       },
       "momentum": {
         "score": 10.0,
@@ -16518,7 +16530,7 @@
         "score": 2.2,
         "max_score": 30,
         "rs": 12.0,
-        "relative_performance": -25.2
+        "relative_performance": -25.19
       },
       "momentum": {
         "score": 3.0,
@@ -16662,7 +16674,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 61.5,
-        "relative_performance": 0.61
+        "relative_performance": 0.62
       },
       "momentum": {
         "score": 23.0,
@@ -16758,7 +16770,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 52.0,
-        "relative_performance": -2.76
+        "relative_performance": -2.75
       },
       "momentum": {
         "score": 10.0,
@@ -16854,7 +16866,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 50.5,
-        "relative_performance": -3.26
+        "relative_performance": -3.25
       },
       "momentum": {
         "score": 23.0,
@@ -16902,7 +16914,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 66.3,
-        "relative_performance": 2.15
+        "relative_performance": 2.16
       },
       "momentum": {
         "score": 25.0,
@@ -16933,7 +16945,7 @@
     {
       "ticker": "XME",
       "nombre": "State Street SPDR S&P Metals & ",
-      "total_score": 51.2,
+      "total_score": 48.2,
       "datos_suficientes": true,
       "trend": {
         "score": 21.0,
@@ -16950,19 +16962,19 @@
         "score": 7.2,
         "max_score": 30,
         "rs": 40.1,
-        "relative_performance": -9.41
+        "relative_performance": -9.44
       },
       "momentum": {
-        "score": 20.0,
+        "score": 17.0,
         "max_score": 30,
-        "distance_from_52w_high": -9.97,
-        "percentage_above_52w_low": 47.1,
+        "distance_from_52w_high": -10.0,
+        "percentage_above_52w_low": 47.04,
         "recent_52w_high": false
       },
       "volatility": {
         "score": 3.0,
         "max_score": 15,
-        "current_volatility": 39.2,
+        "current_volatility": 39.1,
         "historical_volatility": 36.2,
         "volatility_ratio": 1.08
       },
@@ -17046,7 +17058,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 97.2,
-        "relative_performance": 77.76
+        "relative_performance": 77.77
       },
       "momentum": {
         "score": 24.0,
@@ -17094,7 +17106,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 87.8,
-        "relative_performance": 22.93
+        "relative_performance": 22.94
       },
       "momentum": {
         "score": 24.0,
@@ -17238,7 +17250,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 99.2,
-        "relative_performance": 130.95
+        "relative_performance": 130.96
       },
       "momentum": {
         "score": 10.0,
@@ -17334,7 +17346,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 95.7,
-        "relative_performance": 55.28
+        "relative_performance": 55.29
       },
       "momentum": {
         "score": 10.0,
@@ -17430,7 +17442,7 @@
         "score": 18.0,
         "max_score": 30,
         "rs": 74.7,
-        "relative_performance": 7.15
+        "relative_performance": 7.16
       },
       "momentum": {
         "score": 30.0,
@@ -17526,7 +17538,7 @@
         "score": 3.3,
         "max_score": 30,
         "rs": 18.1,
-        "relative_performance": -20.93
+        "relative_performance": -20.92
       },
       "momentum": {
         "score": 8.0,
@@ -17622,7 +17634,7 @@
         "score": 1.8,
         "max_score": 30,
         "rs": 9.9,
-        "relative_performance": -26.05
+        "relative_performance": -26.04
       },
       "momentum": {
         "score": 0.0,
@@ -17670,7 +17682,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 88.5,
-        "relative_performance": 23.65
+        "relative_performance": 23.66
       },
       "momentum": {
         "score": 10.0,
@@ -17766,7 +17778,7 @@
         "score": 7.2,
         "max_score": 30,
         "rs": 39.8,
-        "relative_performance": -9.61
+        "relative_performance": -9.6
       },
       "momentum": {
         "score": 7.0,
@@ -17861,8 +17873,8 @@
       "relative_strength": {
         "score": 24.0,
         "max_score": 30,
-        "rs": 85.7,
-        "relative_performance": 18.55
+        "rs": 86.0,
+        "relative_performance": 18.56
       },
       "momentum": {
         "score": 16.0,
@@ -17985,7 +17997,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 88.8,
-        "relative_performance": 23.82
+        "relative_performance": 23.83
       },
       "momentum": {
         "score": 13.0,
@@ -18033,7 +18045,7 @@
         "score": 10.0,
         "max_score": 30,
         "rs": 53.6,
-        "relative_performance": -2.29
+        "relative_performance": -2.28
       },
       "momentum": {
         "score": 13.0,
@@ -18081,7 +18093,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 100.0,
-        "relative_performance": 199.42
+        "relative_performance": 199.44
       },
       "momentum": {
         "score": 30.0,
@@ -18129,7 +18141,7 @@
         "score": 3.6,
         "max_score": 30,
         "rs": 19.9,
-        "relative_performance": -20.08
+        "relative_performance": -20.07
       },
       "momentum": {
         "score": 0.0,
@@ -18225,7 +18237,7 @@
         "score": 30.0,
         "max_score": 30,
         "rs": 95.4,
-        "relative_performance": 53.12
+        "relative_performance": 53.13
       },
       "momentum": {
         "score": 10.0,
@@ -18273,7 +18285,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 82.1,
-        "relative_performance": 13.8
+        "relative_performance": 13.81
       },
       "momentum": {
         "score": 20.0,
@@ -18321,7 +18333,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 83.7,
-        "relative_performance": 15.0
+        "relative_performance": 15.01
       },
       "momentum": {
         "score": 25.0,
@@ -18513,7 +18525,7 @@
         "score": 5.4,
         "max_score": 30,
         "rs": 29.8,
-        "relative_performance": -14.73
+        "relative_performance": -14.72
       },
       "momentum": {
         "score": 9.0,
@@ -18561,7 +18573,7 @@
         "score": 27.0,
         "max_score": 30,
         "rs": 93.9,
-        "relative_performance": 42.64
+        "relative_performance": 42.65
       },
       "momentum": {
         "score": 29.0,
@@ -18609,7 +18621,7 @@
         "score": 8.9,
         "max_score": 30,
         "rs": 49.2,
-        "relative_performance": -4.12
+        "relative_performance": -4.11
       },
       "momentum": {
         "score": 26.0,
@@ -18705,7 +18717,7 @@
         "score": 24.0,
         "max_score": 30,
         "rs": 81.1,
-        "relative_performance": 12.22
+        "relative_performance": 12.23
       },
       "momentum": {
         "score": 30.0,
@@ -18752,7 +18764,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 63.8,
+        "rs": 64.0,
         "relative_performance": 1.23
       },
       "momentum": {
@@ -18801,7 +18813,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 68.4,
-        "relative_performance": 3.4
+        "relative_performance": 3.41
       },
       "momentum": {
         "score": 26.0,

@@ -2,6 +2,7 @@ import { useCallback, useRef, useState } from 'react'
 import { getKlines, sleep } from './binanceApi.js'
 import { ErrorRateLimit, segundosBloqueado } from './rateLimit.js'
 import { analyzeKlines } from './indicadores.js'
+import { VELAS } from './constantes.js'
 
 // Se pide en lotes para no dispararle ~500 requests de golpe a Binance.
 const TAMANO_LOTE = 15
@@ -20,9 +21,10 @@ export function useEscaneoBinance({ cargarSimbolos, intervalo, multiploATR, alTe
   const [progreso, setProgreso] = useState({ hecho: 0, total: 0 })
   const [ultimaActualizacion, setUltimaActualizacion] = useState(null)
   const [errorMsg, setErrorMsg] = useState(null)
-  // Simbolos que quedaron sin fila: klines que fallaron o con menos de 60
-  // velas (analyzeKlines devuelve null). Pasa con los recien listados en las
-  // temporalidades largas, asi que conviene mostrarlo en vez de ocultarlo.
+  // Simbolos que quedaron sin fila: klines que fallaron o con menos de 61
+  // velas — 60 cerradas + la que esta en curso, que analyzeKlines descarta.
+  // Pasa con los recien listados en las temporalidades largas, asi que
+  // conviene mostrarlo en vez de ocultarlo.
   const [omitidos, setOmitidos] = useState(0)
   const cacheKlines = useRef(new Map())
   const corriendoRef = useRef(false)
@@ -50,7 +52,7 @@ export function useEscaneoBinance({ cargarSimbolos, intervalo, multiploATR, alTe
         const lote = simbolos.slice(i, Math.min(i + TAMANO_LOTE, simbolos.length))
         const parciales = await Promise.all(
           lote.map(async ({ symbol, ...meta }) => {
-            const k = await getKlines(symbol, intervalo, 200)
+            const k = await getKlines(symbol, intervalo, VELAS)
             if (k) cacheKlines.current.set(symbol, k)
             const fila = analyzeKlines(symbol, k, multiploATR)
             // symbolRaw = el simbolo tal cual lo pide la API ('MSTRUSDT');

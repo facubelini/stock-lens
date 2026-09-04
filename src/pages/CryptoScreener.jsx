@@ -98,9 +98,10 @@ export default function CryptoScreener() {
         <p className="text-xs text-terminal-dim">
           Escanea todos los futuros perpetuos USDT de Binance en busca de señales de{' '}
           <b>LONG</b>/<b>SHORT</b> (RSI + StochRSI + MACD + Bollinger + alineación de EMAs +
-          volumen), con calculadora de apalancamiento y liquidación por posición. Corre 100% en tu
-          navegador (sin backend) — igual que "Crypto Screener v3". Orientativo, no es
-          recomendación de inversión.
+          volumen), con calculadora de apalancamiento y liquidación por posición. El score se
+          calcula sobre <b>velas cerradas</b>: la vela en curso se descarta, así que la señal no
+          cambia mientras la mirás (el precio de la tabla sí es el de ahora). Corre 100% en tu
+          navegador (sin backend). Orientativo, no es recomendación de inversión.
         </p>
       </div>
 
@@ -244,7 +245,15 @@ export default function CryptoScreener() {
                           ↗
                         </a>
                       </td>
-                      <td className="whitespace-nowrap px-2 py-1.5 tabular">{fmtPrice(r.price)}</td>
+                      {/* Precio de AHORA. El score se calculo con el ultimo cierre
+                          (precioSenal), asi que si la vela en curso ya se movio los
+                          dos numeros no coinciden — el tooltip lo aclara. */}
+                      <td
+                        className="whitespace-nowrap px-2 py-1.5 tabular"
+                        title={`Precio ahora. La señal se calculó con el último cierre: ${fmtPrice(r.precioSenal)}`}
+                      >
+                        {fmtPrice(r.price)}
+                      </td>
                       <td
                         className="whitespace-nowrap px-2 py-1.5 tabular"
                         style={{ color: r.chg24h >= 0 ? '#4ade80' : '#f87171' }}

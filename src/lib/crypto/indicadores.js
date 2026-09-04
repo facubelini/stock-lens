@@ -107,11 +107,15 @@ export function calcATR(highs, lows, closes, p = 14) {
 // Stop loss / take profits en base a ATR (mismos multiplos 1:1/1:2/1:3 que el
 // original) + un nivel de referencia por swing de las ultimas 20 velas.
 export function calcTPSL(r, klines, atrMult) {
-  if (!klines || klines.length < 30) return null
-  const closes = klines.map((k) => +k[4])
-  const highs = klines.map((k) => +k[2])
-  const lows = klines.map((k) => +k[3])
-  const price = closes[closes.length - 1]
+  if (!klines || klines.length < 31) return null
+  // ATR y swing salen de velas CERRADAS: el maximo/minimo de una vela a medio
+  // hacer se mueve mientras la mirás, asi que el SL cambiaba de lugar solo.
+  // La ENTRADA en cambio es el precio en vivo, que es al que realmente entras.
+  const cerradas = klines.slice(0, -1)
+  const closes = cerradas.map((k) => +k[4])
+  const highs = cerradas.map((k) => +k[2])
+  const lows = cerradas.map((k) => +k[3])
+  const price = +klines[klines.length - 1][4]
   const atr = calcATR(highs, lows, closes, 14)
   if (isNaN(atr)) return null
   const slDist = atr * atrMult
@@ -244,12 +248,28 @@ export function calcularEstacionalidad(klinesMensuales) {
 
 // Score de -10 a +10 (negativo = SHORT, positivo = LONG) a partir de RSI +
 // StochRSI + MACD + Bollinger + alineacion de EMAs + confirmacion de volumen.
+//
+// El score se calcula SOLO sobre velas CERRADAS. Binance devuelve la vela en
+// curso como ultimo elemento del array y hasta este arreglo entraba al calculo
+// como si fuera un cierre, con dos efectos feos:
+//  1. La señal repintaba. Escaneabas a mitad de hora, veias SHORT FUERTE,
+//     entrabas, y cuando la vela cerraba el score era otro — o sea que operabas
+//     una señal que despues no existia.
+//  2. El bonus de volumen (±1 si volRatio >= 2) comparaba el volumen PARCIAL
+//     de la vela en curso contra el promedio de 20 velas completas, asi que
+//     casi nunca disparaba al principio de la vela y disparaba de mas al final.
+// 'price' y 'chg24h' si usan el precio en vivo: son informativos para la tabla
+// y no entran al score.
 export function analyzeKlines(symbol, klines, atrMult) {
-  if (!klines || klines.length < 60) return null
-  const closes = klines.map((k) => +k[4])
-  const highs = klines.map((k) => +k[2])
-  const lows = klines.map((k) => +k[3])
-  const volumes = klines.map((k) => +k[5])
+  if (!klines || klines.length < 61) return null
+  const precioVivo = +klines[klines.length - 1][4]
+  const cerradas = klines.slice(0, -1)
+  const closes = cerradas.map((k) => +k[4])
+  const highs = cerradas.map((k) => +k[2])
+  const lows = cerradas.map((k) => +k[3])
+  const volumes = cerradas.map((k) => +k[5])
+  // Precio al que se evaluo la señal = ultimo cierre. Los % de SL/TP van
+  // contra este, no contra el precio en vivo.
   const price = closes[closes.length - 1]
 
   const rs = rsiSeries(closes)
@@ -265,7 +285,8 @@ export function analyzeKlines(symbol, klines, atrMult) {
   const volAvg = volumes.slice(-20).reduce((a, b) => a + b) / 20
   const volRatio = volumes[volumes.length - 1] / volAvg
   const lb = Math.min(24, closes.length - 1)
-  const chg24h = ((price - closes[closes.length - 1 - lb]) / closes[closes.length - 1 - lb]) * 100
+  const base24 = closes[closes.length - 1 - lb]
+  const chg24h = ((precioVivo - base24) / base24) * 100
 
   let score = 0
   const sigs = []
@@ -391,7 +412,10 @@ export function analyzeKlines(symbol, klines, atrMult) {
   return {
     symbol: symbol.replace('USDT', '/USDT'),
     link: `https://www.binance.com/es/futures/${base}USDT`,
-    price,
+    // price = precio de AHORA (lo que muestra la columna "Precio"), que puede
+    // diferir de precioSenal si la vela en curso ya se movio.
+    price: precioVivo,
+    precioSenal: price,
     chg24h: +chg24h.toFixed(2),
     rsi: +rsiVal.toFixed(1),
     srsi: +srsiVal.toFixed(1),

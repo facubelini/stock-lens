@@ -3,7 +3,7 @@ import { useParams, useLocation, Link } from 'react-router-dom'
 import { getKlines, getFundingRate, getOpenInterest, getLongShortRatio } from '../lib/crypto/binanceApi'
 import { analyzeKlines, calcularEstacionalidad } from '../lib/crypto/indicadores'
 import { fmtPrice } from '../lib/crypto/formato'
-import { INTERVALOS, MULTIPLOS_ATR } from '../lib/crypto/constantes'
+import { INTERVALOS, MULTIPLOS_ATR, VELAS } from '../lib/crypto/constantes'
 import Insignia from '../components/crypto/Insignia'
 import BarraRSI from '../components/crypto/BarraRSI'
 import CalculadoraApalancamiento from '../components/crypto/CalculadoraApalancamiento'
@@ -51,7 +51,7 @@ export default function CryptoDetalle() {
     let activo = true
     setCargando(true)
     setError(null)
-    getKlines(symbol, intervalo, 200)
+    getKlines(symbol, intervalo, VELAS)
       .then((k) => {
         if (!activo) return
         if (!k) {

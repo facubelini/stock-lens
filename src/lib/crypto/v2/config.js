@@ -23,6 +23,13 @@
 // Access-Control-Expose-Headers, asi que 'x-mbx-used-weight-1m' y
 // 'retry-after' son invisibles para fetch(). O sea que no hay forma de
 // autorregularse leyendo el header; el unico control es pedir menos.
+//
+// Tabla de peso real, medida con curl fuera del browser (2026-09-04), que
+// corrige lo que decia este comentario antes (creia que el salto era en 1000):
+//   limit <= 500  -> peso 2   |  501..1000 -> peso 5  |  >1000 -> peso 10
+// Con eso se entiende el baneo: 1500 velas x ~340 llamadas = ~3400 de peso,
+// contra un presupuesto de 2400 por minuto. A 500 velas son ~680. O sea que
+// 500 no es un compromiso: es el maximo que se puede pedir SIN pagar mas.
 export const VELAS = 500
 
 // Temporalidad de entrada -> temporalidad de tendencia (confluencia

@@ -7,6 +7,21 @@ export const INTERVALOS = [
   { valor: '1d', etiqueta: 'Diario' },
 ]
 export const MULTIPLOS_ATR = [1.5, 2.0, 3.0]
+
+// Cuantas velas se piden por simbolo. Estaba en 200, y con exactamente 200 la
+// EMA200 degeneraba en el promedio simple de la ventana: stdEMA() arranca con
+// la media de las primeras 200 y despues no le queda ni UNA iteracion
+// exponencial. O sea que el bloque "EMA alcista/bajista completo" (±2 puntos
+// del score) y la columna EMA salian de una SMA200 disfrazada, sobre una
+// ventana de 8 dias en 1h.
+//
+// 500 es el maximo que se puede pedir sin pagar mas rate limit. Medido contra
+// la API (2026-09-04, leyendo 'x-mbx-used-weight-1m' con curl, que desde el
+// browser no se puede porque Binance no expone el header):
+//   limit <= 500  -> peso 2   |  501..1000 -> peso 5  |  >1000 -> peso 10
+// El escaneo son ~500 simbolos x 1 llamada, asi que sigue costando ~1000 de
+// los 2400 por minuto: exactamente lo mismo que antes.
+export const VELAS = 500
 export const APALANCAMIENTOS = [2, 3, 5, 7, 10, 15, 20, 25, 30, 50, 75, 100, 125]
 export const CORTO = ['se', 'sf', 'sh', 'sw']
 export const LARGO = ['le', 'lf', 'lo', 'lw']

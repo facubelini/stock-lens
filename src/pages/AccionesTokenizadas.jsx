@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getSymbolsTradfi } from '../lib/crypto/binanceApi'
+import { getSymbolsTradfi, getTicker24h } from '../lib/crypto/binanceApi'
 import { useEscaneoBinance } from '../lib/crypto/useEscaneo'
 import {
   INTERVALOS,
@@ -44,7 +44,15 @@ export default function AccionesTokenizadas() {
     return m
   }, [medias])
 
-  const cargarSimbolos = useCallback(() => getSymbolsTradfi(), [])
+  // Igual que en el Crypto Screener: el 24h real viene del ticker, porque el
+  // que calcula analyzeKlines son 24 velas de la temporalidad elegida.
+  const cargarSimbolos = useCallback(async () => {
+    const [simbolos, t24] = await Promise.all([getSymbolsTradfi(), getTicker24h()])
+    return simbolos.map((m) => {
+      const real = t24.get(m.symbol)
+      return real == null ? m : { ...m, chg24h: +real.toFixed(2) }
+    })
+  }, [])
   const { datos, corriendo, progreso, ultimaActualizacion, errorMsg, omitidos, cacheKlines, escanear } =
     useEscaneoBinance({ cargarSimbolos, intervalo, multiploATR })
 

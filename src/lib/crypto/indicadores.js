@@ -246,6 +246,28 @@ export function calcularEstacionalidad(klinesMensuales) {
   return salida.length ? salida : null
 }
 
+// Cuanto subio/bajo en ventanas fijas de 1h, 4h y 1 dia, a partir de velas de
+// 15m. Punta = precio EN VIVO; base = el cierre de N velas atras. La ventana
+// real cae entre el periodo y el periodo menos 15 minutos, porque la vela en
+// curso puede estar recien abierta.
+//
+// OJO: el 'chg24h' de analyzeKlines NO es esto. Cuenta 24 VELAS de la
+// temporalidad elegida, que en 15m son 6 horas y en 4h son 4 dias. Para
+// "cuanto subio/bajo" hay que mirar esta funcion.
+export function calcularVariaciones(k15m) {
+  if (!k15m || k15m.length < 2) return null
+  const cierres = k15m.map((k) => +k[4])
+  const vivo = cierres[cierres.length - 1]
+  // velas de 15m que entran en cada ventana: 1h = 4, 4h = 16, 1 dia = 96
+  const pct = (velas) => {
+    const i = cierres.length - 1 - velas
+    if (i < 0) return null
+    const base = cierres[i]
+    return base ? +(((vivo - base) / base) * 100).toFixed(2) : null
+  }
+  return { h1: pct(4), h4: pct(16), d1: pct(96), precio: vivo }
+}
+
 // Score de -10 a +10 (negativo = SHORT, positivo = LONG) a partir de RSI +
 // StochRSI + MACD + Bollinger + alineacion de EMAs + confirmacion de volumen.
 //
@@ -288,103 +310,68 @@ export function analyzeKlines(symbol, klines, atrMult) {
   const base24 = closes[closes.length - 1 - lb]
   const chg24h = ((precioVivo - base24) / base24) * 100
 
-  let score = 0
-  const sigs = []
+  // Aportes al score, uno por bloque de indicador. 'puntos' con signo: > 0
+  // empuja a LONG, < 0 empuja a SHORT, 0 no mueve la aguja. La ficha los
+  // separa en pros y contras SEGUN el lado de la señal, asi que cada rama
+  // tiene que dejar su aporte aca — incluidas las de ±0.5, que antes movian
+  // el score en silencio sin aparecer en ninguna parte de la UI.
+  const aportes = []
+  const ap = (bloque, texto, puntos) => aportes.push({ bloque, texto, puntos })
 
-  if (rsiVal >= 80) {
-    score -= 2
-    sigs.push(`RSI ${rsiVal.toFixed(1)} extremo alto`)
-  } else if (rsiVal >= 70) {
-    score -= 1
-    sigs.push(`RSI ${rsiVal.toFixed(1)} sobrecompra`)
-  } else if (rsiVal <= 20) {
-    score += 2
-    sigs.push(`RSI ${rsiVal.toFixed(1)} extremo bajo`)
-  } else if (rsiVal <= 30) {
-    score += 1
-    sigs.push(`RSI ${rsiVal.toFixed(1)} sobreventa`)
+  if (rsiVal >= 80) ap('RSI', `RSI ${rsiVal.toFixed(1)}: sobrecompra severa`, -2)
+  else if (rsiVal >= 70) ap('RSI', `RSI ${rsiVal.toFixed(1)}: sobrecompra`, -1)
+  else if (rsiVal <= 20) ap('RSI', `RSI ${rsiVal.toFixed(1)}: sobreventa severa`, 2)
+  else if (rsiVal <= 30) ap('RSI', `RSI ${rsiVal.toFixed(1)}: sobreventa`, 1)
+  else ap('RSI', `RSI ${rsiVal.toFixed(1)}: sin saturar`, 0)
+
+  if (isNaN(srsiVal)) ap('StochRSI', 'StochRSI: sin datos', 0)
+  else if (srsiVal >= 90) ap('StochRSI', `StochRSI ${srsiVal.toFixed(1)}: sobrecompra severa`, -2)
+  else if (srsiVal >= 80) ap('StochRSI', `StochRSI ${srsiVal.toFixed(1)}: sobrecompra`, -1)
+  else if (srsiVal <= 10) ap('StochRSI', `StochRSI ${srsiVal.toFixed(1)}: sobreventa severa`, 2)
+  else if (srsiVal <= 20) ap('StochRSI', `StochRSI ${srsiVal.toFixed(1)}: sobreventa`, 1)
+  else ap('StochRSI', `StochRSI ${srsiVal.toFixed(1)}: sin saturar`, 0)
+
+  if (histCur < 0 && histPrv >= 0) ap('MACD', 'MACD: cruce bajista recién', -2)
+  else if (histCur > 0 && histPrv <= 0) ap('MACD', 'MACD: cruce alcista recién', 2)
+  else if (histCur < 0 && histCur < histPrv) ap('MACD', 'MACD: bajo cero y empeorando', -1)
+  else if (histCur > 0 && histCur > histPrv) ap('MACD', 'MACD: sobre cero y mejorando', 1)
+  else if (histCur < 0) ap('MACD', 'MACD: bajo cero pero recuperando', -0.5)
+  else ap('MACD', 'MACD: sobre cero pero perdiendo fuerza', 0.5)
+
+  // Math.round(-0.1) es -0, que se imprime "-0%". Se normaliza a 0.
+  const bbRed = Math.round(bbPct) === 0 ? 0 : Math.round(bbPct)
+  if (bbPct > 100) ap('Bollinger', `BB ${bbRed}%: por encima de la banda superior`, -1)
+  else if (bbPct > 90) ap('Bollinger', `BB ${bbRed}%: pegado a la banda superior`, -0.5)
+  else if (bbPct < 0) ap('Bollinger', `BB ${bbRed}%: por debajo de la banda inferior`, 1)
+  else if (bbPct < 10) ap('Bollinger', `BB ${bbRed}%: pegado a la banda inferior`, 0.5)
+  else ap('Bollinger', `BB ${bbRed}%: en el medio del canal`, 0)
+
+  if (isNaN(ema20) || isNaN(ema50) || isNaN(ema200)) {
+    ap('Tendencia', 'Sin velas suficientes para la EMA200', 0)
+  } else if (price < ema20 && ema20 < ema50 && ema50 < ema200) {
+    ap('Tendencia', 'EMAs alineadas a la baja (precio < 20 < 50 < 200)', -2)
+  } else if (price > ema20 && ema20 > ema50 && ema50 > ema200) {
+    ap('Tendencia', 'EMAs alineadas al alza (precio > 20 > 50 > 200)', 2)
+  } else if (price < ema200 && price < ema50) {
+    ap('Tendencia', 'Precio bajo la EMA200 y la EMA50', -1)
+  } else if (price > ema200 && price > ema50) {
+    ap('Tendencia', 'Precio sobre la EMA200 y la EMA50', 1)
+  } else if (price < ema200) {
+    ap('Tendencia', 'Bajo la EMA200 pero sobre la EMA50', -0.5)
   } else {
-    sigs.push(`RSI ${rsiVal.toFixed(1)}`)
+    ap('Tendencia', 'Sobre la EMA200 pero bajo la EMA50', 0.5)
   }
 
-  if (!isNaN(srsiVal)) {
-    if (srsiVal >= 90) {
-      score -= 2
-      sigs.push(`StochRSI ${srsiVal.toFixed(1)} extremo alto`)
-    } else if (srsiVal >= 80) {
-      score -= 1
-      sigs.push(`StochRSI ${srsiVal.toFixed(1)} sobrecompra`)
-    } else if (srsiVal <= 10) {
-      score += 2
-      sigs.push(`StochRSI ${srsiVal.toFixed(1)} extremo bajo`)
-    } else if (srsiVal <= 20) {
-      score += 1
-      sigs.push(`StochRSI ${srsiVal.toFixed(1)} sobreventa`)
-    } else {
-      sigs.push(`StochRSI ${srsiVal.toFixed(1)}`)
-    }
-  }
+  // El volumen no vota solo: solo CONFIRMA lo que ya venian diciendo los
+  // demas bloques, asi que se evalua contra el subtotal (igual que antes).
+  const subtotal = aportes.reduce((a, x) => a + x.puntos, 0)
+  const vx = `Vol ×${volRatio.toFixed(1)}`
+  if (volRatio >= 2 && subtotal <= -2) ap('Volumen', `${vx}: confirma la bajada`, -1)
+  else if (volRatio >= 2 && subtotal >= 2) ap('Volumen', `${vx}: confirma la subida`, 1)
+  else if (volRatio >= 2) ap('Volumen', `${vx}: alto, pero el resto no marca lado`, 0)
+  else ap('Volumen', `${vx}: sin volumen que confirme`, 0)
 
-  if (histCur < 0 && histPrv >= 0) {
-    score -= 2
-    sigs.push('MACD cruce bajista')
-  } else if (histCur > 0 && histPrv <= 0) {
-    score += 2
-    sigs.push('MACD cruce alcista')
-  } else if (histCur < 0 && histCur < histPrv) {
-    score -= 1
-    sigs.push('MACD empeorando')
-  } else if (histCur > 0 && histCur > histPrv) {
-    score += 1
-    sigs.push('MACD mejorando')
-  } else if (histCur < 0) {
-    score -= 0.5
-  } else {
-    score += 0.5
-  }
-
-  if (bbPct > 100) {
-    score -= 1
-    sigs.push(`BB ${bbPct.toFixed(0)}% sobre banda sup`)
-  } else if (bbPct > 90) {
-    score -= 0.5
-    sigs.push(`BB ${bbPct.toFixed(0)}% cerca banda sup`)
-  } else if (bbPct < 0) {
-    score += 1
-    sigs.push(`BB ${bbPct.toFixed(0)}% bajo banda inf`)
-  } else if (bbPct < 10) {
-    score += 0.5
-    sigs.push(`BB ${bbPct.toFixed(0)}% cerca banda inf`)
-  }
-
-  if (!isNaN(ema20) && !isNaN(ema50) && !isNaN(ema200)) {
-    if (price < ema20 && ema20 < ema50 && ema50 < ema200) {
-      score -= 2
-      sigs.push('EMA bajista completo')
-    } else if (price > ema20 && ema20 > ema50 && ema50 > ema200) {
-      score += 2
-      sigs.push('EMA alcista completo')
-    } else if (price < ema200 && price < ema50) {
-      score -= 1
-      sigs.push('Bajo EMA200 y EMA50')
-    } else if (price > ema200 && price > ema50) {
-      score += 1
-      sigs.push('Sobre EMA200 y EMA50')
-    } else if (price < ema200) {
-      score -= 0.5
-    } else {
-      score += 0.5
-    }
-  }
-
-  if (volRatio >= 2 && score <= -2) {
-    score -= 1
-    sigs.push(`Vol ×${volRatio.toFixed(1)} confirma bajada`)
-  }
-  if (volRatio >= 2 && score >= 2) {
-    score += 1
-    sigs.push(`Vol ×${volRatio.toFixed(1)} confirma subida`)
-  }
+  const score = +aportes.reduce((a, x) => a + x.puntos, 0).toFixed(1)
 
   let label
   let cls
@@ -411,6 +398,7 @@ export function analyzeKlines(symbol, klines, atrMult) {
   const base = symbol.replace('USDT', '')
   return {
     symbol: symbol.replace('USDT', '/USDT'),
+    symbolRaw: symbol,
     link: `https://www.binance.com/es/futures/${base}USDT`,
     // price = precio de AHORA (lo que muestra la columna "Precio"), que puede
     // diferir de precioSenal si la vela en curso ya se movio.
@@ -423,11 +411,13 @@ export function analyzeKlines(symbol, klines, atrMult) {
     ema_trend: !isNaN(ema200) && price > ema200 ? 'ALCISTA' : 'BAJISTA',
     vol_ratio: +volRatio.toFixed(2),
     atr_pct: +atrPct.toFixed(2),
-    score: +score.toFixed(1),
+    score,
     signal: label,
     cls,
+    // Aportes desglosados: la ficha los parte en pros y contras segun el lado.
+    aportes,
     sl_pct,
     tp2_pct,
-    details: sigs.join(' · '),
+    details: aportes.map((a) => a.texto).join(' · '),
   }
 }

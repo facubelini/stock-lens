@@ -77,6 +77,23 @@ export async function getLongShortRatio(symbol) {
   }
 }
 
+// Variacion real de 24h para TODOS los simbolos en un solo pedido (762
+// simbolos, peso 40 medido — contra 2400 por minuto no se siente).
+// Hace falta porque el 'chg24h' que calcula analyzeKlines son 24 VELAS de la
+// temporalidad elegida: 6 horas en 15m, 4 dias en 4h, 24 dias en diario.
+// Devuelve Map<symbol, %>.
+export async function getTicker24h() {
+  try {
+    const r = await pedirBinance(`${BINANCE}/fapi/v1/ticker/24hr`)
+    if (!r.ok) return new Map()
+    const d = await r.json()
+    return new Map(d.map((t) => [t.symbol, +t.priceChangePercent]))
+  } catch (e) {
+    if (e instanceof ErrorRateLimit) throw e
+    return new Map()
+  }
+}
+
 export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 // Universo "TradFi": perpetuos de acciones tokenizadas, ETFs, commodities e

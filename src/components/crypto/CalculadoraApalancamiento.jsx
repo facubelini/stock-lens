@@ -3,6 +3,8 @@ import { calcTPSL, calcLeverage } from '../../lib/crypto/indicadores'
 import { fmtPrice } from '../../lib/crypto/formato'
 import { APALANCAMIENTOS } from '../../lib/crypto/constantes'
 import Insignia from './Insignia'
+import ProsContras from './ProsContras'
+import VariacionPeriodos from './VariacionPeriodos'
 
 // Cuerpo de la calculadora de apalancamiento/liquidacion (margen + leverage +
 // tipo de margen -> precio de liquidacion, PnL y ROE en SL/TP1/TP2/TP3).
@@ -21,22 +23,33 @@ export default function CalculadoraApalancamiento({ fila, klines, atrMult }) {
 
   const f$ = (v) => (v >= 0 ? '+$' : '-$') + Math.abs(v).toFixed(2)
   const fROE = (v) => (v >= 0 ? '+' : '') + v.toFixed(1) + '%'
+  // Las filas de la vista de detalle no pasan por useEscaneo, asi que el
+  // simbolo crudo se deriva del de mostrar si no viene.
+  const symbolRaw = fila.symbolRaw ?? fila.symbol?.replace('/', '')
 
   return (
     <div className="p-4">
       <div className="mb-3">
         <div className="mb-1 text-sm text-terminal-text">
-          {fmtPrice(fila.price)}{' '}
-          <span className={fila.chg24h >= 0 ? 'text-terminal-up' : 'text-terminal-down'}>
-            {fila.chg24h >= 0 ? '+' : ''}
-            {fila.chg24h}% 24h
-          </span>
+          {fmtPrice(fila.price)}
+          {fila.precioSenal != null && fila.precioSenal !== fila.price && (
+            <span
+              className="ml-1.5 text-[11px] text-terminal-dim"
+              title="El score se calculó con el último cierre; este es el precio de ahora."
+            >
+              (señal en {fmtPrice(fila.precioSenal)})
+            </span>
+          )}
         </div>
         <Insignia cls={fila.cls}>{fila.signal}</Insignia>{' '}
         <span className="text-xs text-terminal-dim">
           Score: {fila.score > 0 ? '+' : ''}
           {fila.score}
         </span>
+      </div>
+
+      <div className="mb-3">
+        <VariacionPeriodos symbolRaw={symbolRaw} />
       </div>
       <hr className="mb-3 border-terminal-border" />
 
@@ -207,12 +220,7 @@ export default function CalculadoraApalancamiento({ fila, klines, atrMult }) {
       )}
 
       <hr className="my-3 border-terminal-border" />
-      <div className="mb-2 text-[10px] font-bold uppercase tracking-wide text-terminal-dim">Indicadores</div>
-      <div className="text-xs leading-relaxed text-terminal-text">
-        {fila.details.split(' · ').map((s) => (
-          <div key={s}>• {s}</div>
-        ))}
-      </div>
+      <ProsContras fila={fila} />
 
       <a
         href={fila.link}

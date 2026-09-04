@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { getSymbols } from '../lib/crypto/binanceApi'
+import { getSymbols, getTicker24h } from '../lib/crypto/binanceApi'
 import { useEscaneoBinance } from '../lib/crypto/useEscaneo'
 import { useCryptoScan } from '../lib/cryptoScan'
 import { INTERVALOS, MULTIPLOS_ATR, CORTO, LARGO, COLOR_SENAL } from '../lib/crypto/constantes'
@@ -22,10 +22,18 @@ export default function CryptoScreener() {
   // Universo cripto: perpetuos USDT con contractType 'PERPETUAL'. Los de
   // acciones tokenizadas son 'TRADIFI_PERPETUAL' y viven en su propia
   // pestania (/tokenizadas), asi que no entran aca.
-  const cargarSimbolos = useCallback(
-    async () => (await getSymbols()).map((symbol) => ({ symbol })),
-    [],
-  )
+  // La meta que se devuelve aca se pega a cada fila y PISA los campos que
+  // calcula analyzeKlines, asi que es donde se corrige el 24h: el de
+  // analyzeKlines son 24 velas de la temporalidad elegida (4 dias si estas en
+  // 4h), no 24 horas. Si un simbolo no viniera en el ticker se deja el viejo
+  // en vez de romper la celda.
+  const cargarSimbolos = useCallback(async () => {
+    const [simbolos, t24] = await Promise.all([getSymbols(), getTicker24h()])
+    return simbolos.map((symbol) => {
+      const real = t24.get(symbol)
+      return real == null ? { symbol } : { symbol, chg24h: +real.toFixed(2) }
+    })
+  }, [])
   const { datos, corriendo, progreso, ultimaActualizacion, errorMsg, cacheKlines, escanear } =
     useEscaneoBinance({
       cargarSimbolos,
@@ -79,7 +87,7 @@ export default function CryptoScreener() {
   const columnas = [
     { key: 'symbol', label: 'Símbolo' },
     { key: 'price', label: 'Precio' },
-    { key: 'chg24h', label: '24h %' },
+    { key: 'chg24h', label: '24h %', titulo: 'Variación real de las últimas 24 horas (ticker/24hr de Binance)' },
     { key: 'score', label: 'Score' },
     { key: 'signal', label: 'Señal' },
     { key: 'rsi', label: 'RSI' },
@@ -202,6 +210,7 @@ export default function CryptoScreener() {
                     <th
                       key={c.key}
                       onClick={() => ordenar(c.key)}
+                      title={c.titulo}
                       className={`cursor-pointer whitespace-nowrap px-2 py-2.5 font-semibold hover:text-terminal-text ${
                         sortKey === c.key ? 'text-terminal-accent' : ''
                       }`}

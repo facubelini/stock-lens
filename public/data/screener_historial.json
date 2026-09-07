@@ -71290,7 +71290,7 @@
         "mensual": "NEUTRAL"
       },
       "BBV.BA": {
-        "diario": "NEUTRAL",
+        "diario": "EXTENDIDO",
         "semanal": "EXTENDIDO",
         "mensual": "EXTENDIDO"
       },
@@ -71612,8 +71612,8 @@
         "mensual": "NEUTRAL"
       },
       "WBO.BA": {
-        "diario": "VENTA",
-        "semanal": "VENTA",
+        "diario": "NEUTRAL",
+        "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
       "XROX.BA": {
@@ -71965,16 +71965,6 @@
       },
       "NVO": {
         "diario": "COMPRA",
-        "semanal": "NEUTRAL",
-        "mensual": "NEUTRAL"
-      },
-      "AGRO.BA": {
-        "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
-        "mensual": "VENTA"
-      },
-      "SEMI.BA": {
-        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },

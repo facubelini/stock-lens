@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-09-08T17:33:54.395266-03:00",
+  "actualizado": "2026-09-08T20:11:21.739417-03:00",
   "tickers": [
     {
       "ticker": "MRNA",
@@ -3460,7 +3460,7 @@
     {
       "ticker": "BBD",
       "nombre": "Banco Bradesco Sa",
-      "total_score": 37.5,
+      "total_score": 37.6,
       "datos_suficientes": true,
       "trend": {
         "score": 17.0,
@@ -3474,9 +3474,9 @@
         "ema200": 3.38
       },
       "relative_strength": {
-        "score": 5.5,
+        "score": 5.6,
         "max_score": 30,
-        "rs": 30.6,
+        "rs": 30.9,
         "relative_performance": -13.77
       },
       "momentum": {
@@ -4484,7 +4484,7 @@
       "relative_strength": {
         "score": 5.6,
         "max_score": 30,
-        "rs": 30.9,
+        "rs": 31.1,
         "relative_performance": -13.75
       },
       "momentum": {
@@ -4852,7 +4852,7 @@
     {
       "ticker": "CEPU",
       "nombre": "Central Puerto S.A.",
-      "total_score": 33.6,
+      "total_score": 33.7,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -4866,9 +4866,9 @@
         "ema200": 14.37
       },
       "relative_strength": {
-        "score": 5.6,
+        "score": 5.7,
         "max_score": 30,
-        "rs": 31.1,
+        "rs": 31.4,
         "relative_performance": -13.57
       },
       "momentum": {
@@ -5876,7 +5876,7 @@
       "relative_strength": {
         "score": 5.8,
         "max_score": 30,
-        "rs": 32.1,
+        "rs": 32.4,
         "relative_performance": -12.76
       },
       "momentum": {
@@ -6916,7 +6916,7 @@
     {
       "ticker": "CAAP",
       "nombre": "Corporacion America Airports SA",
-      "total_score": 42.7,
+      "total_score": 42.8,
       "datos_suficientes": true,
       "trend": {
         "score": 17.0,
@@ -6930,9 +6930,9 @@
         "ema200": 23.82
       },
       "relative_strength": {
-        "score": 5.7,
+        "score": 5.8,
         "max_score": 30,
-        "rs": 31.9,
+        "rs": 32.1,
         "relative_performance": -13.35
       },
       "momentum": {
@@ -7652,7 +7652,7 @@
       "relative_strength": {
         "score": 5.7,
         "max_score": 30,
-        "rs": 31.4,
+        "rs": 31.6,
         "relative_performance": -13.46
       },
       "momentum": {
@@ -8613,7 +8613,7 @@
         "score": 14.0,
         "max_score": 30,
         "rs": 61.2,
-        "relative_performance": 0.0
+        "relative_performance": -0.0
       },
       "momentum": {
         "score": 23.0,
@@ -10852,7 +10852,7 @@
     {
       "ticker": "ALUA.BA",
       "nombre": "ALUAR ALUMINIO ARGENTINA SA",
-      "total_score": 35.8,
+      "total_score": 35.4,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -10862,14 +10862,14 @@
         "sma50_above_ema200": true,
         "sma50_rising": false,
         "ema200_rising": false,
-        "sma50": 926.91,
-        "ema200": 920.47
+        "sma50": 926.32,
+        "ema200": 920.62
       },
       "relative_strength": {
-        "score": 5.8,
+        "score": 5.4,
         "max_score": 30,
-        "rs": 32.4,
-        "relative_performance": -12.68
+        "rs": 30.1,
+        "relative_performance": -13.98
       },
       "momentum": {
         "score": 10.0,
@@ -10948,8 +10948,8 @@
     {
       "ticker": "AOCA.BA",
       "nombre": "AOCA.BA,0P0000D5TP,0",
-      "total_score": null,
-      "datos_suficientes": false,
+      "total_score": 48.1,
+      "datos_suficientes": true,
       "trend": {
         "score": 16.0,
         "max_score": 25,
@@ -10974,7 +10974,13 @@
         "percentage_above_52w_low": 0.0,
         "recent_52w_high": true
       },
-      "volatility": null,
+      "volatility": {
+        "score": 6.0,
+        "max_score": 15,
+        "current_volatility": 0.0,
+        "historical_volatility": 0.0,
+        "volatility_ratio": 1.0
+      },
       "gates": {
         "rs80": false,
         "ema200": true,
@@ -12163,7 +12169,7 @@
     {
       "ticker": "FNMA",
       "nombre": "Fannie Mae",
-      "total_score": 27.4,
+      "total_score": 27.5,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -12177,9 +12183,9 @@
         "ema200": 7.24
       },
       "relative_strength": {
-        "score": 5.4,
+        "score": 5.5,
         "max_score": 30,
-        "rs": 30.1,
+        "rs": 30.4,
         "relative_performance": -13.9
       },
       "momentum": {
@@ -12935,14 +12941,14 @@
         "sma50_above_ema200": false,
         "sma50_rising": false,
         "ema200_rising": false,
-        "sma50": 4.69,
-        "ema200": 6.66
+        "sma50": 4.7,
+        "ema200": 6.68
       },
       "relative_strength": {
         "score": 0.1,
         "max_score": 30,
         "rs": 0.8,
-        "relative_performance": -45.55
+        "relative_performance": -44.44
       },
       "momentum": {
         "score": 10.0,
@@ -12954,9 +12960,9 @@
       "volatility": {
         "score": 0.0,
         "max_score": 15,
-        "current_volatility": 91.0,
+        "current_volatility": 92.0,
         "historical_volatility": 57.3,
-        "volatility_ratio": 1.59
+        "volatility_ratio": 1.6
       },
       "gates": {
         "rs80": false,
@@ -14257,8 +14263,8 @@
     {
       "ticker": "WBO.BA",
       "nombre": "WEIBO CORPORATION CEDEARS EACH ",
-      "total_score": null,
-      "datos_suficientes": false,
+      "total_score": 30.2,
+      "datos_suficientes": true,
       "trend": {
         "score": 5.0,
         "max_score": 25,
@@ -14283,7 +14289,13 @@
         "percentage_above_52w_low": 0.0,
         "recent_52w_high": true
       },
-      "volatility": null,
+      "volatility": {
+        "score": 0.0,
+        "max_score": 15,
+        "current_volatility": 9.0,
+        "historical_volatility": 0.0,
+        "volatility_ratio": 2501403.93
+      },
       "gates": {
         "rs80": false,
         "ema200": false,
@@ -18470,7 +18482,7 @@
       "relative_strength": {
         "score": 5.5,
         "max_score": 30,
-        "rs": 30.4,
+        "rs": 30.6,
         "relative_performance": -13.85
       },
       "momentum": {
@@ -18518,7 +18530,7 @@
       "relative_strength": {
         "score": 5.7,
         "max_score": 30,
-        "rs": 31.6,
+        "rs": 31.9,
         "relative_performance": -13.42
       },
       "momentum": {

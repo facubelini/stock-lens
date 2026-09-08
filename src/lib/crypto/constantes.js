@@ -1,6 +1,16 @@
 // Constantes compartidas entre Crypto Screener y la vista de detalle de un
 // símbolo, para que ambas usen exactamente los mismos parámetros.
+// Las dos temporalidades mas cortas se agregaron despues, para scalping. Ojo
+// con ellas: el costo de operar es fijo (0,08% ida y vuelta taker) pero el
+// movimiento no. Medido sobre 40 perpetuos, movimiento mediano de una vela:
+//   1m -> 0,051%  ·  3m -> 0,094%  ·  15m -> 0,190%  ·  1h -> 0,363%
+// O sea que en 1m la comision sola es mas grande que el movimiento tipico de
+// una vela entera. Ademas, en la calibracion del v2 (commit 42a9f7a) las
+// temporalidades cortas midieron peor que las largas de forma consistente:
+// 15m/15m -0,086 y 15m/1h -0,071 contra 1h/4h +0,059 y 4h/4h +0,060.
 export const INTERVALOS = [
+  { valor: '1m', etiqueta: '1 minuto', corta: true },
+  { valor: '3m', etiqueta: '3 minutos', corta: true },
   { valor: '15m', etiqueta: '15 minutos' },
   { valor: '1h', etiqueta: '1 hora' },
   { valor: '4h', etiqueta: '4 horas' },

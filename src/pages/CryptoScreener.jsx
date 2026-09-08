@@ -151,6 +151,16 @@ export default function CryptoScreener() {
         )}
       </div>
 
+      {INTERVALOS.find((i) => i.valor === intervalo)?.corta && (
+        <div className="mb-4 rounded border border-terminal-warn/30 bg-terminal-warn/10 px-3 py-2 text-xs leading-relaxed text-terminal-warn">
+          ⚠️ <b>Temporalidad corta.</b> El costo de operar es fijo (~0,08% ida y vuelta taker) pero el movimiento
+          no: el movimiento mediano de una vela es {intervalo === '1m' ? '0,051%' : '0,094%'}, así que la comisión
+          sola se lleva {intervalo === '1m' ? '157%' : '85%'} de eso. Además, en la calibración del v2 las
+          temporalidades cortas midieron peor que las largas (15m/15m −0,086 contra 4h/4h +0,060). 1m y 3m no
+          están medidas todavía.
+        </div>
+      )}
+
       {corriendo && (
         <div className="mb-4 h-1 w-full overflow-hidden rounded bg-terminal-border">
           <div

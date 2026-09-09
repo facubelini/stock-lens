@@ -75446,7 +75446,7 @@
       },
       "PKS.BA": {
         "diario": "NEUTRAL",
-        "semanal": "NEUTRAL"
+        "semanal": "EXTENDIDO"
       },
       "PM": {
         "diario": "NEUTRAL",
@@ -75601,20 +75601,20 @@
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
-      "SEMI": {
-        "diario": "COMPRA",
+      "SEMI.BA": {
+        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
-        "mensual": "EXTENDIDO"
+        "mensual": "NEUTRAL"
       },
       "FERR.BA": {
         "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
-      "AGRO": {
-        "diario": "EXTENDIDO",
-        "semanal": "EXTENDIDO",
-        "mensual": "EXTENDIDO"
+      "AGRO.BA": {
+        "diario": "NEUTRAL",
+        "semanal": "NEUTRAL",
+        "mensual": "NEUTRAL"
       },
       "IRS": {
         "diario": "NEUTRAL",
@@ -75885,16 +75885,6 @@
       },
       "NVO": {
         "diario": "VENTA",
-        "semanal": "NEUTRAL",
-        "mensual": "NEUTRAL"
-      },
-      "AGRO.BA": {
-        "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
-        "mensual": "NEUTRAL"
-      },
-      "SEMI.BA": {
-        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },

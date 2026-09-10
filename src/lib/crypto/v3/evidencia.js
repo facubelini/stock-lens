@@ -9,6 +9,7 @@
 // Todo se calcula con las velas que el escaneo ya bajó: no cuesta ni un pedido
 // extra de red, solo CPU.
 import { armarSeries, aportesEn } from './series.js'
+import { crucesEn, CRUCE_POR_ID } from './cruces.js'
 
 // Costo de ida y vuelta: 0,08% de comisión taker + ~0,04% de funding a 1-2
 // días. Medido y discutido: por debajo de esto una señal no es operable.
@@ -31,6 +32,45 @@ export function bucketDe(score) {
   if (score >= 2) return 'LONG'
   if (score > 0) return 'LONG DÉBIL'
   return 'NEUTRAL'
+}
+
+// Simula un trade abierto en la vela i hacia la dirección dir, con el SL/TP
+// por ATR. Devuelve el retorno neto de costos y en qué vela salió.
+function simularTrade(s, i, dir, { atrMult, R, maxVelas }) {
+  const entrada = s.closes[i]
+  const sl = entrada - dir * s.atr[i] * atrMult
+  const tp = entrada + dir * s.atr[i] * atrMult * R
+  for (let j = i + 1; j <= i + maxVelas && j < s.n; j++) {
+    const tocaSL = dir > 0 ? s.lows[j] <= sl : s.highs[j] >= sl
+    const tocaTP = dir > 0 ? s.highs[j] >= tp : s.lows[j] <= tp
+    // Si en la misma vela toca los dos no se sabe cuál fue primero: se asume
+    // el peor caso (SL). Suponer lo contrario infla el backtest.
+    if (tocaSL) return { ret: (dir * (sl - entrada)) / entrada - COSTO_IDA_VUELTA, salida: j, motivo: 'stop' }
+    if (tocaTP) return { ret: (dir * (tp - entrada)) / entrada - COSTO_IDA_VUELTA, salida: j, motivo: 'objetivo' }
+  }
+  const fin = Math.min(i + maxVelas, s.n - 1)
+  return { ret: (dir * (s.closes[fin] - entrada)) / entrada - COSTO_IDA_VUELTA, salida: fin, motivo: 'tiempo' }
+}
+
+// Trades disparados por CRUCES de indicadores. Cada tipo de cruce lleva su
+// propia cuenta de solapamiento: dentro de un mismo tipo no se abre un trade
+// nuevo hasta que cerró el anterior, pero dos tipos distintos pueden estar
+// abiertos a la vez (son estrategias separadas, se miden por separado).
+export function simularCruces(series, cfg = CONFIG_DEFECTO) {
+  const s = series
+  const trades = []
+  const libre = new Map()
+  for (let i = 221; i < s.n - cfg.maxVelas - 1; i++) {
+    if (isNaN(s.atr[i]) || isNaN(s.ema200[i])) continue
+    for (const id of crucesEn(i, s)) {
+      if (i < (libre.get(id) ?? -1)) continue
+      const dir = CRUCE_POR_ID.get(id).dir
+      const r = simularTrade(s, i, dir, cfg)
+      libre.set(id, r.salida)
+      trades.push({ i, dir, bucket: id, ret: r.ret, motivo: r.motivo })
+    }
+  }
+  return trades
 }
 
 // Recorre la historia de un símbolo y devuelve un trade por cada señal.
@@ -96,9 +136,16 @@ export function resumir(trades) {
   // historia completa: los primeros 220 índices no tienen ninguno (hace falta
   // esa cantidad de velas para que exista la EMA200), y partir por la historia
   // entera dejaba el primer cuarto vacío y el test se quedaba en 3 tramos.
-  const idx = trades.map((t) => t.i)
-  const desde = Math.min(...idx)
-  const hasta = Math.max(...idx) + 1
+  // Con un solo bucle, no con Math.min(...idx): el spread de un array de más
+  // de ~100k elementos revienta el stack (medido: falla en 130.000, y la
+  // agregación de cruces sobre 200 símbolos llega a ese orden).
+  let desde = Infinity
+  let hasta = -Infinity
+  for (const tr of trades) {
+    if (tr.i < desde) desde = tr.i
+    if (tr.i > hasta) hasta = tr.i
+  }
+  hasta += 1
   const corte = Math.max(1, (hasta - desde) / 4)
   const tramos = [[], [], [], []]
   for (const tr of trades) tramos[Math.min(3, Math.floor((tr.i - desde) / corte))].push(tr.ret)
@@ -141,6 +188,10 @@ export function analizarSimbolo(klines, cfg = CONFIG_DEFECTO) {
   const a = aportesEn(i, s)
   const trades = simularHistoria(s, cfg)
   return {
+    // Cruces que ocurrieron en la ÚLTIMA vela cerrada: son los que estarían
+    // dando entrada ahora.
+    crucesAhora: crucesEn(i, s),
+    tradesCruces: simularCruces(s, cfg),
     score: a.total,
     aportes: a,
     bucket: bucketDe(a.total),

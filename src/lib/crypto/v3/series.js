@@ -137,6 +137,48 @@ export function atrSerie(highs, lows, closes, p = 14) {
   return out
 }
 
+// Estocastico clasico (el "Estocástico 14 1 3" de Binance): %K es el precio
+// dentro del rango de las ultimas p velas, suavizado; %D es la media de %K.
+// OJO que NO es el StochRSI: este mira el PRECIO, el otro mira el RSI.
+export function estocasticoSerie(highs, lows, closes, p = 14, suavK = 1, suavD = 3) {
+  const n = closes.length
+  const crudo = new Array(n).fill(NAN)
+  for (let i = p - 1; i < n; i++) {
+    let hi = -Infinity
+    let lo = Infinity
+    for (let j = i - p + 1; j <= i; j++) {
+      if (highs[j] > hi) hi = highs[j]
+      if (lows[j] < lo) lo = lows[j]
+    }
+    crudo[i] = hi === lo ? 50 : ((closes[i] - lo) / (hi - lo)) * 100
+  }
+  const k = sma(crudo, suavK)
+  const d = sma(k, suavD)
+  return { k, d }
+}
+
+// Media movil simple de una serie que puede empezar con NaN.
+export function sma(serie, p) {
+  const out = new Array(serie.length).fill(NAN)
+  if (p <= 1) return serie.slice()
+  let suma = 0
+  let cuenta = 0
+  for (let i = 0; i < serie.length; i++) {
+    if (!isNaN(serie[i])) {
+      suma += serie[i]
+      cuenta++
+    }
+    if (i >= p) {
+      if (!isNaN(serie[i - p])) {
+        suma -= serie[i - p]
+        cuenta--
+      }
+    }
+    if (cuenta === p) out[i] = suma / p
+  }
+  return out
+}
+
 // Arma todas las series de una vez, sobre velas YA CERRADAS.
 export function armarSeries(klinesCerradas) {
   const closes = klinesCerradas.map((k) => +k[4])
@@ -144,13 +186,23 @@ export function armarSeries(klinesCerradas) {
   const lows = klinesCerradas.map((k) => +k[3])
   const vols = klinesCerradas.map((k) => +k[5])
   const { cur, prv } = macdSerie(closes)
+  const rsi = rsiSerieAlineada(closes)
+  const srsi = srsiSerie(closes)
+  const est = estocasticoSerie(highs, lows, closes)
   return {
     n: closes.length,
     closes,
     highs,
     lows,
-    rsi: rsiSerieAlineada(closes),
-    srsi: srsiSerie(closes),
+    rsi,
+    srsi,
+    // Segunda linea del panel de RSI en Binance ("RSI 14 SMA 14").
+    rsiSma: sma(rsi, 14),
+    // %D del StochRSI: la media de 3 del %K que ya calculamos.
+    srsiD: sma(srsi, 3),
+    // Estocastico clasico, %K y %D.
+    estK: est.k,
+    estD: est.d,
     macdCur: cur,
     macdPrv: prv,
     bb: bbSerie(closes),

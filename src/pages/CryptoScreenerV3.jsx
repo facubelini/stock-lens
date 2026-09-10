@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getUniversoV2, getKlinesV2, sleep, ErrorRateLimit, segundosBloqueado } from '../lib/crypto/v2/datos'
-import { analizarSimbolo, resumir, veredicto, bucketDe, COSTO_IDA_VUELTA } from '../lib/crypto/v3/evidencia'
+import { analizarSimbolo, resumir, veredicto, COSTO_IDA_VUELTA } from '../lib/crypto/v3/evidencia'
+import { TIPOS_CRUCE, CRUCE_POR_ID } from '../lib/crypto/v3/cruces'
 import { fmtPrice } from '../lib/crypto/formato'
 import PanelApalancamiento from '../components/crypto/PanelApalancamiento'
 
@@ -72,6 +73,7 @@ export default function CryptoScreenerV3() {
       cache.current = new Map()
       const filas = []
       const todosLosTrades = []
+      const todosLosCruces = []
       let sinDatos = 0
       for (let i = 0; i < simbolos.length; i += TAMANO_LOTE) {
         const lote = simbolos.slice(i, i + TAMANO_LOTE)
@@ -91,7 +93,8 @@ export default function CryptoScreenerV3() {
             continue
           }
           filas.push(p)
-          todosLosTrades.push(...p.an.trades.map((t) => ({ ...t, totalVelas: p.an.totalVelas })))
+          todosLosTrades.push(...p.an.trades)
+          todosLosCruces.push(...p.an.tradesCruces)
         }
         setProgreso({ hecho: Math.min(i + TAMANO_LOTE, simbolos.length), total: simbolos.length })
         if (i + TAMANO_LOTE < simbolos.length) await sleep(150)
@@ -110,8 +113,20 @@ export default function CryptoScreenerV3() {
         evidencia.set(b, { resumen: r, veredicto: veredicto(r) })
       }
 
+      // Lo mismo pero por tipo de CRUCE, que se mide aparte del score.
+      const porCruce = new Map()
+      for (const t of todosLosCruces) {
+        if (!porCruce.has(t.bucket)) porCruce.set(t.bucket, [])
+        porCruce.get(t.bucket).push(t)
+      }
+      const evCruces = new Map()
+      for (const [id, trades] of porCruce) {
+        const r = resumir(trades)
+        evCruces.set(id, { resumen: r, veredicto: veredicto(r) })
+      }
+
       const salida = filas
-        .filter((f) => Math.abs(f.an.score) >= 2)
+        .filter((f) => Math.abs(f.an.score) >= 2 || f.an.crucesAhora.length > 0)
         .map((f) => {
           const ev = evidencia.get(f.an.bucket) ?? null
           return {
@@ -137,12 +152,20 @@ export default function CryptoScreenerV3() {
             tp2_pct: f.an.atrPct == null ? null : Math.sign(f.an.score) * f.an.atrPct * atrMult * R,
             ev,
             propia: f.an.propia,
+            cruces: f.an.crucesAhora,
           }
         })
       salida.sort((a, b) => (b.ev?.resumen?.expectativa ?? -9) - (a.ev?.resumen?.expectativa ?? -9))
 
       setDatos(salida)
-      setGlobal({ evidencia, descartadosPorLiquidez, analizados: filas.length, trades: todosLosTrades.length })
+      setGlobal({
+        evidencia,
+        evCruces,
+        descartadosPorLiquidez,
+        analizados: filas.length,
+        trades: todosLosTrades.length,
+        tradesCruces: todosLosCruces.length,
+      })
       setOmitidos(sinDatos)
       setUltima(new Date().toLocaleTimeString('es-AR'))
     } catch (e) {
@@ -327,6 +350,79 @@ export default function CryptoScreenerV3() {
         </div>
       )}
 
+      {global?.evCruces && (
+        <div className="mb-4 rounded-lg border border-terminal-border bg-terminal-panel p-3">
+          <div className="mb-2 text-[10px] font-bold uppercase tracking-wide text-terminal-dim">
+            Evidencia por tipo de CRUCE · {global.tradesCruces.toLocaleString('es-AR')} trades históricos
+          </div>
+          <p className="mb-2 text-[10px] leading-relaxed text-terminal-dim">
+            Un cruce es un <b>evento</b> (la línea acaba de pasar a la otra), no un estado. Cada fila simula entrar
+            en el cruce, con el mismo SL/TP de arriba, y salir a las {tf.maxVelas} velas si no toca ninguno. La
+            dirección de cada cruce es la convencional; que funcione o no lo dice la columna de la derecha.
+          </p>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse text-xs">
+              <thead>
+                <tr className="bg-terminal-bg text-[10px] uppercase text-terminal-dim">
+                  <td className="px-2 py-1.5">Cruce</td>
+                  <td className="px-2 py-1.5">Opera</td>
+                  <td className="px-2 py-1.5 text-right">n</td>
+                  <td className="px-2 py-1.5 text-right">Aciertos</td>
+                  <td className="px-2 py-1.5 text-right">Expectativa</td>
+                  <td className="px-2 py-1.5 text-right">Llega al TP</td>
+                  <td className="px-2 py-1.5 text-right">Tramos +</td>
+                  <td className="px-2 py-1.5">Veredicto</td>
+                </tr>
+              </thead>
+              <tbody>
+                {TIPOS_CRUCE.map((tipo) => {
+                  const e = global.evCruces.get(tipo.id)
+                  if (!e?.resumen) return null
+                  const r = e.resumen
+                  const c = COLOR_VEREDICTO[e.veredicto.nivel]
+                  return (
+                    <tr key={tipo.id} className="border-t border-terminal-border">
+                      <td className="whitespace-nowrap px-2 py-1.5 text-terminal-text">{tipo.etiqueta}</td>
+                      <td className="px-2 py-1.5">
+                        <span
+                          className="rounded px-1.5 py-0.5 text-[10px] font-semibold"
+                          style={{
+                            backgroundColor: tipo.dir > 0 ? 'rgba(34,197,94,0.19)' : 'rgba(239,68,68,0.19)',
+                            color: tipo.dir > 0 ? '#bbf7d0' : '#fca5a5',
+                          }}
+                        >
+                          {tipo.dir > 0 ? 'LONG' : 'SHORT'}
+                        </span>
+                      </td>
+                      <td className="px-2 py-1.5 text-right tabular text-terminal-dim">{r.n}</td>
+                      <td className="px-2 py-1.5 text-right tabular">{r.aciertos.toFixed(0)}%</td>
+                      <td
+                        className="px-2 py-1.5 text-right font-bold tabular"
+                        style={{ color: r.expectativa > 0 ? '#4ade80' : '#f87171' }}
+                      >
+                        {pct(r.expectativa, 3)}
+                      </td>
+                      <td className="px-2 py-1.5 text-right tabular text-terminal-dim">{r.porObjetivo.toFixed(0)}%</td>
+                      <td className="px-2 py-1.5 text-right tabular">
+                        {r.tramosPositivos}/{r.tramosConDatos}
+                      </td>
+                      <td className="px-2 py-1.5">
+                        <span
+                          className="whitespace-nowrap rounded px-1.5 py-0.5 text-[11px] font-semibold"
+                          style={{ backgroundColor: c.bg, color: c.text }}
+                        >
+                          {c.icono} {e.veredicto.texto}
+                        </span>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
+
       {datos.length > 0 && (
         <div className="mb-3 flex flex-wrap items-center gap-2">
           <button
@@ -359,6 +455,9 @@ export default function CryptoScreenerV3() {
                 <th className="px-2 py-2.5">24h</th>
                 <th className="px-2 py-2.5">Señal</th>
                 <th className="px-2 py-2.5">Score</th>
+                <th className="px-2 py-2.5" title="Cruces que ocurrieron en la última vela cerrada. El color es el veredicto medido de ese cruce, no una recomendación.">
+                  Cruces ahora
+                </th>
                 <th className="px-2 py-2.5" title="Funding actual. Medido: funding positivo antecede continuación, no reversión.">
                   Funding
                 </th>
@@ -411,6 +510,31 @@ export default function CryptoScreenerV3() {
                     <td className="whitespace-nowrap px-2 py-1.5 font-bold tabular text-terminal-text">
                       {r.score > 0 ? '+' : ''}
                       {r.score}
+                    </td>
+                    <td className="px-2 py-1.5">
+                      {r.cruces.length === 0 ? (
+                        <span className="text-terminal-dim">—</span>
+                      ) : (
+                        <div className="flex flex-wrap gap-1">
+                          {r.cruces.map((id) => {
+                            const tipo = CRUCE_POR_ID.get(id)
+                            const e = global?.evCruces?.get(id)
+                            const cc = COLOR_VEREDICTO[e?.veredicto.nivel ?? 'sin-datos']
+                            return (
+                              <span
+                                key={id}
+                                className="whitespace-nowrap rounded px-1 py-0.5 text-[10px] font-semibold"
+                                style={{ backgroundColor: cc.bg, color: cc.text }}
+                                title={`${tipo.etiqueta} · ${e?.veredicto.texto ?? 'sin datos'}${
+                                  e?.resumen ? ` · expectativa ${(e.resumen.expectativa * 100).toFixed(3)}% en ${e.resumen.n} trades` : ''
+                                }`}
+                              >
+                                {cc.icono} {tipo.corto}
+                              </span>
+                            )
+                          })}
+                        </div>
+                      )}
                     </td>
                     <td className="whitespace-nowrap px-2 py-1.5 tabular text-terminal-dim">
                       {r.fundingPct == null ? '—' : `${r.fundingPct > 0 ? '+' : ''}${r.fundingPct.toFixed(4)}%`}

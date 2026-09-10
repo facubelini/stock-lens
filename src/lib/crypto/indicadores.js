@@ -395,6 +395,24 @@ export function analyzeKlines(symbol, klines, atrMult) {
       ? +(((slDist * 2) / price) * 100).toFixed(2)
       : null
 
+  // ── Valores EN CURSO ──────────────────────────────────────────────────
+  // Los mismos indicadores pero incluyendo la vela abierta: son los que ves en
+  // el grafico de Binance. NO entran al score (eso sigue saliendo del cierre,
+  // para que la señal no repinte), pero sin mostrarlos el screener y el
+  // grafico se contradicen — y en diario la contradiccion llega a 22 puntos
+  // de RSI, porque "la ultima vela cerrada" son hasta 24 horas de atraso.
+  const closesVivo = klines.map((k) => +k[4])
+  const rsVivo = rsiSeries(closesVivo)
+  const rsiVivo = rsVivo[rsVivo.length - 1] ?? rsiVal
+  const srsiVivo = calcStochRSI(closesVivo)
+  const bbVivo = calcBB(closesVivo)
+  // Cuanto lleva transcurrido de la vela en curso. Con la vela recien abierta
+  // el valor cerrado es practicamente del periodo anterior entero.
+  const ultima = klines[klines.length - 1]
+  const abre = +ultima[0]
+  const cierra = +ultima[6]
+  const pctVela = cierra > abre ? Math.min(100, Math.max(0, ((Date.now() - abre) / (cierra - abre)) * 100)) : null
+
   const base = symbol.replace('USDT', '')
   return {
     symbol: symbol.replace('USDT', '/USDT'),
@@ -408,6 +426,11 @@ export function analyzeKlines(symbol, klines, atrMult) {
     rsi: +rsiVal.toFixed(1),
     srsi: +srsiVal.toFixed(1),
     bb_pct: +bbPct.toFixed(1),
+    // Mismos indicadores sobre la vela en curso (lo que muestra Binance).
+    rsi_vivo: +rsiVivo.toFixed(1),
+    srsi_vivo: +srsiVivo.toFixed(1),
+    bb_pct_vivo: +bbVivo.toFixed(1),
+    pct_vela: pctVela == null ? null : +pctVela.toFixed(0),
     ema_trend: !isNaN(ema200) && price > ema200 ? 'ALCISTA' : 'BAJISTA',
     vol_ratio: +volRatio.toFixed(2),
     atr_pct: +atrPct.toFixed(2),

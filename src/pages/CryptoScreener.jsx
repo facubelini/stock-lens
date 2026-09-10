@@ -90,7 +90,8 @@ export default function CryptoScreener() {
     { key: 'chg24h', label: '24h %', titulo: 'Variación real de las últimas 24 horas (ticker/24hr de Binance)' },
     { key: 'score', label: 'Score' },
     { key: 'signal', label: 'Señal' },
-    { key: 'rsi', label: 'RSI' },
+    { key: 'rsi', label: 'RSI', titulo: 'RSI de la última vela CERRADA. Es el que alimenta el score, para que la señal no cambie mientras la mirás.' },
+    { key: 'rsi_vivo', label: 'RSI ahora', titulo: 'RSI incluyendo la vela en curso: es el número que ves en el gráfico de Binance. No entra al score.' },
     { key: 'srsi', label: 'StochRSI' },
     { key: 'bb_pct', label: 'BB %' },
     { key: 'ema_trend', label: 'EMA' },
@@ -148,6 +149,15 @@ export default function CryptoScreener() {
         </button>
         {ultimaActualizacion && (
           <span className="text-xs text-terminal-dim">Actualizado: {ultimaActualizacion}</span>
+        )}
+        {datos.length > 0 && datos[0].pct_vela != null && (
+          <span
+            className={`text-xs ${datos[0].pct_vela < 25 ? 'text-terminal-warn' : 'text-terminal-dim'}`}
+            title="El score sale de la última vela CERRADA. Cuanto menos lleve la vela en curso, más viejo es ese dato."
+          >
+            · vela {intervalo}: {datos[0].pct_vela}% transcurrida
+            {datos[0].pct_vela < 25 && ' ⚠️ el score es del período anterior'}
+          </span>
         )}
       </div>
 
@@ -290,6 +300,18 @@ export default function CryptoScreener() {
                       <td className="whitespace-nowrap px-2 py-1.5 tabular">
                         {r.rsi}
                         <BarraRSI valor={r.rsi} />
+                      </td>
+                      <td
+                        className="whitespace-nowrap px-2 py-1.5 tabular"
+                        title={`Cerrada ${r.rsi} · en curso ${r.rsi_vivo}${r.pct_vela != null ? ` · vela ${r.pct_vela}% transcurrida` : ''}`}
+                      >
+                        {r.rsi_vivo}
+                        {Math.abs(r.rsi_vivo - r.rsi) >= 10 && (
+                          <span className="ml-1 text-[10px] font-bold text-terminal-warn">
+                            ⚠{(r.rsi_vivo - r.rsi) > 0 ? '+' : ''}{(r.rsi_vivo - r.rsi).toFixed(0)}
+                          </span>
+                        )}
+                        <BarraRSI valor={r.rsi_vivo} />
                       </td>
                       <td className="whitespace-nowrap px-2 py-1.5 tabular">
                         {r.srsi}

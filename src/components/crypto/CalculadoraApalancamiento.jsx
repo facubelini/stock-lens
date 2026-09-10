@@ -51,6 +51,53 @@ export default function CalculadoraApalancamiento({ fila, klines, atrMult }) {
       <div className="mb-3">
         <VariacionPeriodos symbolRaw={symbolRaw} />
       </div>
+
+      {fila.rsi_vivo != null && (
+        <div className="mb-3">
+          <div className="mb-2 text-[10px] font-bold uppercase tracking-wide text-terminal-dim">
+            Vela cerrada vs. en curso
+          </div>
+          <table className="w-full border-collapse text-xs">
+            <thead>
+              <tr className="bg-terminal-bg text-[10px] uppercase text-terminal-dim">
+                <td className="px-2 py-1">Indicador</td>
+                <td className="px-2 py-1 text-right" title="Alimenta el score. No cambia hasta que cierre la vela.">
+                  Cerrada
+                </td>
+                <td className="px-2 py-1 text-right" title="Lo que ves en el gráfico de Binance ahora mismo.">
+                  Ahora
+                </td>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ['RSI', fila.rsi, fila.rsi_vivo],
+                ['StochRSI', fila.srsi, fila.srsi_vivo],
+                ['BB %', fila.bb_pct, fila.bb_pct_vivo],
+              ].map(([et, cerrada, ahora]) => (
+                <tr key={et} className="border-t border-terminal-border">
+                  <td className="px-2 py-1 text-terminal-dim">{et}</td>
+                  <td className="px-2 py-1 text-right font-semibold text-terminal-text tabular">{cerrada}</td>
+                  <td
+                    className={`px-2 py-1 text-right font-semibold tabular ${
+                      Math.abs(ahora - cerrada) >= 10 ? 'text-terminal-warn' : 'text-terminal-text'
+                    }`}
+                  >
+                    {ahora}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {fila.pct_vela != null && (
+            <p className="mt-1 text-[10px] leading-relaxed text-terminal-dim">
+              La vela en curso lleva <b>{fila.pct_vela}%</b> transcurrida. El score sale de la columna{' '}
+              <b>Cerrada</b> para no repintar; con la vela recién abierta ese dato es prácticamente del período
+              anterior entero.
+            </p>
+          )}
+        </div>
+      )}
       <hr className="mb-3 border-terminal-border" />
 
       {!tpsl ? (

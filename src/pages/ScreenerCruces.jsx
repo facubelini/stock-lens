@@ -37,6 +37,12 @@ const VOLUMEN_AYUDA = {
   smi: 'Sin medir todavía: el SMI se agregó después del backtest de volumen.',
 }
 
+// Peso de cada estado al contar la dirección. Un cruce ya confirmado es un
+// hecho; uno en curso puede deshacerse; uno cerca todavía no pasó. Los tres
+// pesan distinto y los números están a la vista en el tooltip de cada fila
+// para que se pueda rehacer la cuenta a mano.
+const PESO_ESTADO = { confirmado: 2, 'en-curso': 1, cerca: 0.5 }
+
 const COLOR_ESTADO = {
   confirmado: { bg: 'rgba(34,197,94,0.22)', text: '#bbf7d0', icono: '●' },
   'en-curso': { bg: 'rgba(234,179,8,0.20)', text: '#fde68a', icono: '◐' },
@@ -51,6 +57,36 @@ const ETIQUETA_ESTADO = {
   cerca: 'Cerca de cruzar',
   lejos: 'Lejos',
   'sin-datos': 'Sin datos',
+}
+
+// Recuento de dirección de un símbolo: suma los cinco indicadores con el peso
+// de su estado. NO es una predicción ni un veredicto de calidad — es un
+// resumen de lo que dicen los indicadores, que es distinto. En el v3 está
+// medido qué rinde históricamente cada cruce, y ahí ninguno califica como
+// respaldado.
+function direccionDe(est) {
+  let puntos = 0
+  let alcistas = 0
+  let bajistas = 0
+  const detalle = []
+  for (const ind of INDICADORES) {
+    const e = est[ind.id]
+    if (!e || !e.dir || !PESO_ESTADO[e.estado]) continue
+    const p = PESO_ESTADO[e.estado] * e.dir
+    puntos += p
+    if (e.dir > 0) alcistas++
+    else bajistas++
+    detalle.push(`${ind.nombre} ${e.dir > 0 ? '↑' : '↓'} ${ETIQUETA_ESTADO[e.estado].toLowerCase()} (${p > 0 ? '+' : ''}${p})`)
+  }
+  const conDireccion = alcistas + bajistas
+  return {
+    puntos: +puntos.toFixed(1),
+    alcistas,
+    bajistas,
+    conDireccion,
+    lado: conDireccion === 0 ? null : puntos > 0 ? 'LONG' : puntos < 0 ? 'SHORT' : 'MIXTO',
+    detalle,
+  }
 }
 
 const selectCls =
@@ -74,6 +110,9 @@ export default function ScreenerCruces() {
   const [volMin, setVolMin] = useState(0)
   const [busqueda, setBusqueda] = useState('')
   const [seleccionado, setSeleccionado] = useState(null)
+  // Orden: por defecto la confluencia de mayor a menor. Primer click en una
+  // columna = de mayor a menor; segundo click invierte.
+  const [orden, setOrden] = useState({ campo: 'hits', asc: false })
 
   const cache = useRef(new Map())
   const corriendoRef = useRef(false)
@@ -137,6 +176,7 @@ export default function ScreenerCruces() {
               smi: isNaN(s.smi[iv]) ? null : +s.smi[iv].toFixed(1),
               pctVela: cierra > abre ? Math.min(100, ((Date.now() - abre) / (cierra - abre)) * 100) : null,
               est,
+              dir: direccionDe(est),
             }
           }),
         )
@@ -159,6 +199,42 @@ export default function ScreenerCruces() {
     }
   }
 
+  // Valor numérico (o texto) por el que se ordena cada columna. Tener esto en
+  // un solo lugar evita que el encabezado y el orden se desincronicen.
+  const COLUMNAS = useMemo(
+    () => [
+      { campo: 'symbol', label: 'Símbolo', valor: (r) => r.symbol, texto: true },
+      { campo: 'price', label: 'Precio', valor: (r) => r.price, align: 'right' },
+      { campo: 'chg24h', label: '24h', valor: (r) => r.chg24h, align: 'right' },
+      { campo: 'dir', label: 'Dirección', valor: (r) => r.dir.puntos, align: 'center',
+        titulo: 'Recuento de lo que dicen los 5 indicadores, pesando confirmado ×2, en curso ×1 y cerca ×0,5. NO es una predicción: es un resumen. Lo que rinde cada cruce históricamente está medido en el Screener v3.' },
+      ...INDICADORES.map((ind) => ({
+        campo: ind.id,
+        label: ind.nombre,
+        align: 'center',
+        titulo: VOLUMEN_AYUDA[ind.id],
+        valor: (r) => {
+          const e = r.est[ind.id]
+          return e && e.dir ? (PESO_ESTADO[e.estado] ?? 0) * e.dir : 0
+        },
+      })),
+      { campo: 'hits', label: 'Coinciden', valor: (r) => r.hits.length, align: 'right' },
+      // OJO con los nombres: 'rsi' y 'smi' ya los usan las columnas de CRUCE
+      // (vienen de INDICADORES). Si estas dos reusaran ese campo, las dos
+      // columnas se marcarían como ordenadas a la vez y el click iría siempre
+      // a la primera. Por eso el valor numérico va con su propio campo.
+      { campo: 'rsiValor', label: 'RSI val', valor: (r) => r.rsi ?? -1, align: 'right',
+        titulo: 'Valor del RSI ahora (con la vela en curso). La columna RSI de la izquierda es el CRUCE contra su media.' },
+      { campo: 'smiValor', label: 'SMI val', valor: (r) => r.smi ?? -999, align: 'right',
+        titulo: 'Valor del SMI ahora, de -100 a +100. La columna SMI de la izquierda es el CRUCE contra su señal.' },
+      { campo: 'volRatio', label: 'Vol×', valor: (r) => r.volRatio ?? -1, align: 'right' },
+    ],
+    [],
+  )
+
+  const ordenarPor = (campo) =>
+    setOrden((o) => (o.campo === campo ? { campo, asc: !o.asc } : { campo, asc: false }))
+
   // Una fila pasa el filtro si ALGUNO de los indicadores elegidos está en
   // alguno de los estados elegidos y en la dirección elegida.
   const filtradas = useMemo(() => {
@@ -178,14 +254,18 @@ export default function ScreenerCruces() {
       .filter((r) => r.hits.length > 0)
       .filter((r) => volMin === 0 || (r.volRatio ?? 0) >= volMin)
       .filter((r) => !q || r.symbol.includes(q))
-    // Primero los que tienen más indicadores coincidiendo: la confluencia es
-    // lo único que ordena acá, no un score inventado.
-    return conCoincidencias.sort((a, b) => {
+    const col = COLUMNAS.find((c) => c.campo === orden.campo) ?? COLUMNAS.find((c) => c.campo === 'hits')
+    const signo = orden.asc ? 1 : -1
+    return [...conCoincidencias].sort((a, b) => {
+      const va = col.valor(a)
+      const vb = col.valor(b)
+      if (col.texto) return signo * String(va).localeCompare(String(vb))
+      if (va !== vb) return signo * (va - vb)
+      // Desempate estable: más confluencia primero, después alfabético.
       if (b.hits.length !== a.hits.length) return b.hits.length - a.hits.length
-      const peso = (r) => r.hits.reduce((t, id) => t + (r.est[id].estado === 'confirmado' ? 2 : r.est[id].estado === 'en-curso' ? 1 : 0), 0)
-      return peso(b) - peso(a)
+      return a.symbol.localeCompare(b.symbol)
     })
-  }, [datos, indicadoresOn, estadosOn, direccion, volMin, busqueda])
+  }, [datos, indicadoresOn, estadosOn, direccion, volMin, busqueda, orden, COLUMNAS])
 
   const conteos = useMemo(() => {
     const c = {}
@@ -370,7 +450,11 @@ export default function ScreenerCruces() {
           </div>
 
           <div className="mb-2 text-xs text-terminal-dim">
-            {filtradas.length} de {datos.length} símbolos · ordenados por cuántos indicadores coinciden
+            {filtradas.length} de {datos.length} símbolos · click en cualquier encabezado para ordenar
+            {' · '}
+            <span title="La columna Dirección suma los 5 indicadores pesando confirmado ×2, en curso ×1 y cerca ×0,5. Los dos números al lado son cuántos apuntan a cada lado.">
+              la columna <b>Dirección</b> es un recuento de los indicadores, no una recomendación
+            </span>
           </div>
         </>
       )}
@@ -384,18 +468,19 @@ export default function ScreenerCruces() {
           <table className="w-full border-collapse text-sm">
             <thead className="bg-terminal-panel2 text-left text-xs text-terminal-dim">
               <tr>
-                <th className="px-2 py-2.5">Símbolo</th>
-                <th className="px-2 py-2.5 text-right">Precio</th>
-                <th className="px-2 py-2.5 text-right">24h</th>
-                {INDICADORES.map((ind) => (
-                  <th key={ind.id} className="px-2 py-2.5 text-center" title={VOLUMEN_AYUDA[ind.id]}>
-                    {ind.nombre}
+                {COLUMNAS.map((c) => (
+                  <th
+                    key={c.campo}
+                    onClick={() => ordenarPor(c.campo)}
+                    title={c.titulo ? `${c.titulo} (click para ordenar)` : 'Click para ordenar'}
+                    className={`cursor-pointer whitespace-nowrap px-2 py-2.5 font-semibold hover:text-terminal-text ${
+                      c.align === 'right' ? 'text-right' : c.align === 'center' ? 'text-center' : ''
+                    } ${orden.campo === c.campo ? 'text-terminal-accent' : ''}`}
+                  >
+                    {c.label}
+                    {orden.campo === c.campo ? (orden.asc ? ' ▲' : ' ▼') : ''}
                   </th>
                 ))}
-                <th className="px-2 py-2.5 text-right">Coinciden</th>
-                <th className="px-2 py-2.5 text-right">RSI</th>
-                <th className="px-2 py-2.5 text-right">SMI</th>
-                <th className="px-2 py-2.5 text-right">Vol×</th>
               </tr>
             </thead>
             <tbody>
@@ -426,6 +511,31 @@ export default function ScreenerCruces() {
                   >
                     {r.chg24h >= 0 ? '+' : ''}
                     {r.chg24h.toFixed(2)}%
+                  </td>
+                  <td className="whitespace-nowrap px-2 py-1.5 text-center">
+                    {r.dir.lado ? (
+                      <span
+                        className="rounded px-1.5 py-0.5 text-[11px] font-bold"
+                        style={{
+                          backgroundColor:
+                            r.dir.lado === 'LONG'
+                              ? 'rgba(34,197,94,0.22)'
+                              : r.dir.lado === 'SHORT'
+                                ? 'rgba(239,68,68,0.22)'
+                                : 'rgba(125,139,156,0.15)',
+                          color:
+                            r.dir.lado === 'LONG' ? '#86efac' : r.dir.lado === 'SHORT' ? '#fca5a5' : '#9ca3af',
+                        }}
+                        title={`${r.dir.detalle.join(" · ")} — Suma ${r.dir.puntos > 0 ? "+" : ""}${r.dir.puntos} (${r.dir.alcistas} al alza, ${r.dir.bajistas} a la baja). Pesos: confirmado x2, en curso x1, cerca x0,5. Es un recuento de los indicadores, NO una recomendacion.`}
+                      >
+                        {r.dir.lado === 'LONG' ? '↑ LONG' : r.dir.lado === 'SHORT' ? '↓ SHORT' : '= MIXTO'}{' '}
+                        <span className="font-normal opacity-70">
+                          {r.dir.alcistas}/{r.dir.bajistas}
+                        </span>
+                      </span>
+                    ) : (
+                      <span className="text-terminal-dim">—</span>
+                    )}
                   </td>
                   {INDICADORES.map((ind) => (
                     <td key={ind.id} className="px-2 py-1.5 text-center">

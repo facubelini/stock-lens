@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import Header from './components/Header'
 import WatchlistBar from './components/WatchlistBar'
 import Listado from './pages/Listado'
@@ -11,7 +11,7 @@ import HistoricoFundamental from './pages/HistoricoFundamental'
 import CryptoScreener from './pages/CryptoScreener'
 import CryptoDetalle from './pages/CryptoDetalle'
 import AccionesTokenizadas from './pages/AccionesTokenizadas'
-import CryptoScreenerV2 from './pages/CryptoScreenerV2'
+import ScreenerCruces from './pages/ScreenerCruces'
 import CryptoScreenerV3 from './pages/CryptoScreenerV3'
 import TopSenales from './pages/TopSenales'
 import Cartera from './pages/Cartera'
@@ -48,7 +48,10 @@ export default function App() {
           <Route path="/historico" element={<HistoricoFundamental />} />
           <Route path="/cripto" element={<CryptoScreener />} />
           <Route path="/cripto/:symbol" element={<CryptoDetalle />} />
-          <Route path="/cripto-v2" element={<CryptoScreenerV2 />} />
+          <Route path="/cruces" element={<ScreenerCruces />} />
+          {/* La v2 se reemplazó por el screener de cruces; se redirige para
+              no romper enlaces guardados. */}
+          <Route path="/cripto-v2" element={<Navigate to="/cruces" replace />} />
           <Route path="/cripto-v3" element={<CryptoScreenerV3 />} />
           <Route path="/tokenizadas" element={<AccionesTokenizadas />} />
           <Route path="/tokenizadas/:symbol" element={<CryptoDetalle />} />

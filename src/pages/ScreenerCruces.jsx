@@ -1,0 +1,459 @@
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { getUniversoV2, getKlinesV2, sleep, ErrorRateLimit, segundosBloqueado } from '../lib/crypto/v2/datos'
+import { armarSeries } from '../lib/crypto/v3/series'
+import { INDICADORES, estadoDeTodos } from '../lib/crypto/v3/proximidad'
+import { fmtPrice } from '../lib/crypto/formato'
+import PanelApalancamiento from '../components/crypto/PanelApalancamiento'
+
+// Screener de CRUCES. Reemplazó al "Screener Cripto v2".
+//
+// Diferencia de fondo con las otras dos pestañas: acá todo se calcula con la
+// VELA EN CURSO incluida, o sea con el precio de ahora. Es lo que hace falta
+// para ver un cruce que está por pasar — con la vela cerrada te enterás
+// tarde. El precio de esa decisión es que un cruce en curso puede deshacerse
+// antes de que la vela cierre, así que los estados están separados y
+// etiquetados: CONFIRMADO no cambia más, EN CURSO todavía puede volverse
+// atrás.
+
+const VELAS = 500
+const TAMANO_LOTE = 12
+const MIN_TURNOVER = 5e6
+
+const TEMPORALIDADES = [
+  { valor: '15m', etiqueta: '15 minutos' },
+  { valor: '1h', etiqueta: '1 hora' },
+  { valor: '4h', etiqueta: '4 horas' },
+  { valor: '1d', etiqueta: 'Diario' },
+]
+
+// Efecto medido del filtro de volumen sobre cada cruce, para no repetirlo de
+// memoria: 93.549 cruces en 4h sobre 120 perpetuos, 250 días, neto de costos.
+// Sólo dos merecen el filtro; en el resto empeora.
+const VOLUMEN_AYUDA = {
+  rsi: 'Medido: con volumen ≥1,5× este cruce pasa de +0,267% a +0,718% (n=1.274). Es el único caso donde el filtro ayuda claramente.',
+  macd: 'Medido: con volumen ≥1,5× pasa de +0,409% a +0,493% (n=1.225). Mejora leve.',
+  estoc: 'Medido: con volumen ≥1,5× EMPEORA (de +0,170% a −0,105%).',
+  srsi: 'Medido: con volumen ≥1,5× EMPEORA (de +0,210% a +0,118%).',
+  smi: 'Sin medir todavía: el SMI se agregó después del backtest de volumen.',
+}
+
+const COLOR_ESTADO = {
+  confirmado: { bg: 'rgba(34,197,94,0.22)', text: '#bbf7d0', icono: '●' },
+  'en-curso': { bg: 'rgba(234,179,8,0.20)', text: '#fde68a', icono: '◐' },
+  cerca: { bg: 'rgba(96,165,250,0.18)', text: '#bfdbfe', icono: '○' },
+  lejos: { bg: 'transparent', text: '#6b7280', icono: '·' },
+  'sin-datos': { bg: 'transparent', text: '#4b5563', icono: '—' },
+}
+
+const ETIQUETA_ESTADO = {
+  confirmado: 'Cruzó (confirmado)',
+  'en-curso': 'Cruzando ahora (sin confirmar)',
+  cerca: 'Cerca de cruzar',
+  lejos: 'Lejos',
+  'sin-datos': 'Sin datos',
+}
+
+const selectCls =
+  'rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-text ' +
+  'focus:border-terminal-accent focus:outline-none'
+
+export default function ScreenerCruces() {
+  const [temporalidad, setTemporalidad] = useState('4h')
+  const [datos, setDatos] = useState([])
+  const [corriendo, setCorriendo] = useState(false)
+  const [progreso, setProgreso] = useState({ hecho: 0, total: 0 })
+  const [error, setError] = useState(null)
+  const [ultima, setUltima] = useState(null)
+  const [omitidos, setOmitidos] = useState(0)
+  const [bloqueo, setBloqueo] = useState(0)
+
+  // Filtros
+  const [indicadoresOn, setIndicadoresOn] = useState(() => new Set(INDICADORES.map((i) => i.id)))
+  const [estadosOn, setEstadosOn] = useState(() => new Set(['confirmado', 'en-curso', 'cerca']))
+  const [direccion, setDireccion] = useState('todas')
+  const [volMin, setVolMin] = useState(0)
+  const [busqueda, setBusqueda] = useState('')
+  const [seleccionado, setSeleccionado] = useState(null)
+
+  const cache = useRef(new Map())
+  const corriendoRef = useRef(false)
+
+  useEffect(() => {
+    if (bloqueo <= 0) return
+    const t = setInterval(() => setBloqueo(segundosBloqueado()), 1000)
+    return () => clearInterval(t)
+  }, [bloqueo])
+
+  const toggle = useCallback((set, valor, setter) => {
+    const n = new Set(set)
+    if (n.has(valor)) n.delete(valor)
+    else n.add(valor)
+    setter(n)
+  }, [])
+
+  const escanear = async () => {
+    if (corriendoRef.current) return
+    const b = segundosBloqueado()
+    if (b > 0) {
+      setBloqueo(b)
+      setError(new ErrorRateLimit(b).message)
+      return
+    }
+    corriendoRef.current = true
+    setCorriendo(true)
+    setError(null)
+    setDatos([])
+    try {
+      const { simbolos } = await getUniversoV2({ minTurnover: MIN_TURNOVER })
+      setProgreso({ hecho: 0, total: simbolos.length })
+      cache.current = new Map()
+      const filas = []
+      let sinDatos = 0
+      for (let i = 0; i < simbolos.length; i += TAMANO_LOTE) {
+        const lote = simbolos.slice(i, i + TAMANO_LOTE)
+        const parciales = await Promise.all(
+          lote.map(async (meta) => {
+            const k = await getKlinesV2(meta.symbol, temporalidad, VELAS)
+            if (!k || k.length < 260) return null
+            // A propósito NO se descarta la última vela: acá se quiere el
+            // precio de ahora. armarSeries acepta cualquier array de velas.
+            const s = armarSeries(k)
+            const est = estadoDeTodos(s)
+            if (!est) return null
+            cache.current.set(meta.symbol, k)
+            const iv = s.n - 1
+            const ultima = k[k.length - 1]
+            const abre = +ultima[0]
+            const cierra = +ultima[6]
+            return {
+              symbol: `${meta.symbol.replace(/USDT$/, '')}/USDT`,
+              symbolRaw: meta.symbol,
+              link: `https://www.binance.com/es/futures/${meta.symbol}`,
+              price: s.closes[iv],
+              chg24h: meta.chg24hReal ?? 0,
+              turnover: meta.turnover ?? null,
+              volRatio: isNaN(s.volRatio[iv]) ? null : +s.volRatio[iv].toFixed(2),
+              rsi: isNaN(s.rsi[iv]) ? null : +s.rsi[iv].toFixed(1),
+              smi: isNaN(s.smi[iv]) ? null : +s.smi[iv].toFixed(1),
+              pctVela: cierra > abre ? Math.min(100, ((Date.now() - abre) / (cierra - abre)) * 100) : null,
+              est,
+            }
+          }),
+        )
+        for (const p of parciales) {
+          if (!p) sinDatos++
+          else filas.push(p)
+        }
+        setProgreso({ hecho: Math.min(i + TAMANO_LOTE, simbolos.length), total: simbolos.length })
+        if (i + TAMANO_LOTE < simbolos.length) await sleep(150)
+      }
+      setDatos(filas)
+      setOmitidos(sinDatos)
+      setUltima(new Date().toLocaleTimeString('es-AR'))
+    } catch (e) {
+      setError(e.message)
+      if (e instanceof ErrorRateLimit) setBloqueo(segundosBloqueado())
+    } finally {
+      corriendoRef.current = false
+      setCorriendo(false)
+    }
+  }
+
+  // Una fila pasa el filtro si ALGUNO de los indicadores elegidos está en
+  // alguno de los estados elegidos y en la dirección elegida.
+  const filtradas = useMemo(() => {
+    const q = busqueda.trim().toUpperCase()
+    const conCoincidencias = datos
+      .map((r) => {
+        const hits = INDICADORES.filter((ind) => {
+          if (!indicadoresOn.has(ind.id)) return false
+          const e = r.est[ind.id]
+          if (!e || !estadosOn.has(e.estado)) return false
+          if (direccion === 'alcista' && e.dir !== 1) return false
+          if (direccion === 'bajista' && e.dir !== -1) return false
+          return true
+        }).map((ind) => ind.id)
+        return { ...r, hits }
+      })
+      .filter((r) => r.hits.length > 0)
+      .filter((r) => volMin === 0 || (r.volRatio ?? 0) >= volMin)
+      .filter((r) => !q || r.symbol.includes(q))
+    // Primero los que tienen más indicadores coincidiendo: la confluencia es
+    // lo único que ordena acá, no un score inventado.
+    return conCoincidencias.sort((a, b) => {
+      if (b.hits.length !== a.hits.length) return b.hits.length - a.hits.length
+      const peso = (r) => r.hits.reduce((t, id) => t + (r.est[id].estado === 'confirmado' ? 2 : r.est[id].estado === 'en-curso' ? 1 : 0), 0)
+      return peso(b) - peso(a)
+    })
+  }, [datos, indicadoresOn, estadosOn, direccion, volMin, busqueda])
+
+  const conteos = useMemo(() => {
+    const c = {}
+    for (const ind of INDICADORES) {
+      c[ind.id] = { confirmado: 0, 'en-curso': 0, cerca: 0 }
+      for (const r of datos) {
+        const e = r.est[ind.id]
+        if (e && c[ind.id][e.estado] != null) c[ind.id][e.estado]++
+      }
+    }
+    return c
+  }, [datos])
+
+  const filaSel = seleccionado ? datos.find((r) => r.symbolRaw === seleccionado) : null
+
+  const insignia = (r, ind) => {
+    const e = r.est[ind.id]
+    if (!e) return null
+    const c = COLOR_ESTADO[e.estado]
+    const flecha = e.dir === 1 ? '↑' : e.dir === -1 ? '↓' : ''
+    const detalle =
+      e.estado === 'cerca' && e.velas != null
+        ? ` · cruza en ~${e.velas} vela${e.velas === 1 ? '' : 's'} si sigue así`
+        : ''
+    return (
+      <span
+        className="whitespace-nowrap rounded px-1.5 py-0.5 text-[11px] font-semibold"
+        style={{ backgroundColor: c.bg, color: c.text }}
+        title={`${ind.nombre}: ${ETIQUETA_ESTADO[e.estado]}${flecha ? ` ${flecha === '↑' ? 'alcista' : 'bajista'}` : ''}${detalle}\nGap ${e.gap?.toFixed(4)} (${e.gapRel ?? '—'}× su tamaño habitual)`}
+      >
+        {c.icono} {flecha || '·'}
+      </span>
+    )
+  }
+
+  return (
+    <div>
+      <div className="mb-4">
+        <h1 className="text-lg font-bold text-terminal-text">🎯 Screener de Cruces</h1>
+        <p className="text-xs leading-relaxed text-terminal-dim">
+          Cruces alcistas y bajistas de <b>MACD</b>, <b>RSI</b> (contra su media), <b>Estocástico</b>,{' '}
+          <b>StochRSI</b> y <b>SMI</b>, más los que están <b>cerca de cruzar</b>. Todo calculado con la{' '}
+          <b>vela en curso</b>, o sea con el precio de ahora — que es lo que hace falta para ver un cruce antes
+          de que termine de pasar.
+        </p>
+        <div className="mt-2 rounded border border-terminal-warn/30 bg-terminal-warn/10 px-3 py-2 text-xs leading-relaxed text-terminal-warn">
+          ⚠️ Usar la vela abierta tiene un costo: <b>un cruce en curso puede deshacerse</b> antes de que la vela
+          cierre. Por eso están separados: <b>● confirmado</b> pasó en una vela ya cerrada y no cambia más;{' '}
+          <b>◐ en curso</b> está pasando ahora y todavía puede volverse atrás; <b>○ cerca</b> todavía no cruzó.
+        </div>
+      </div>
+
+      <div className="mb-3 flex flex-wrap items-center gap-2">
+        <label className="text-xs text-terminal-dim">Temporalidad</label>
+        <select value={temporalidad} onChange={(e) => setTemporalidad(e.target.value)} className={selectCls}>
+          {TEMPORALIDADES.map((t) => (
+            <option key={t.valor} value={t.valor}>
+              {t.etiqueta}
+            </option>
+          ))}
+        </select>
+        <label className="text-xs text-terminal-dim">Volumen mín.</label>
+        <select value={volMin} onChange={(e) => setVolMin(Number(e.target.value))} className={selectCls}>
+          <option value={0}>sin filtro</option>
+          <option value={1.2}>≥ 1,2× el promedio</option>
+          <option value={1.5}>≥ 1,5× el promedio</option>
+          <option value={2}>≥ 2× el promedio</option>
+        </select>
+        <button
+          type="button"
+          onClick={escanear}
+          disabled={corriendo || bloqueo > 0}
+          className="rounded bg-terminal-accent px-3 py-1.5 text-sm font-semibold text-black hover:opacity-90 disabled:opacity-50"
+        >
+          {bloqueo > 0
+            ? `⛔ bloqueado ${Math.floor(bloqueo / 60)}:${String(bloqueo % 60).padStart(2, '0')}`
+            : corriendo
+              ? `⏳ ${progreso.hecho}/${progreso.total}`
+              : datos.length
+                ? '▶ Re-escanear'
+                : '▶ Escanear'}
+        </button>
+        {ultima && <span className="text-xs text-terminal-dim">Actualizado: {ultima}</span>}
+        {datos.length > 0 && datos[0].pctVela != null && (
+          <span className="text-xs text-terminal-dim">
+            · vela {temporalidad}: {datos[0].pctVela.toFixed(0)}% transcurrida
+          </span>
+        )}
+        {omitidos > 0 && <span className="text-xs text-terminal-dim">· {omitidos} sin datos</span>}
+      </div>
+
+      {volMin > 0 && (
+        <div className="mb-3 rounded border border-terminal-info/30 bg-terminal-info/10 px-3 py-2 text-xs leading-relaxed text-terminal-info">
+          ℹ️ <b>Filtro de volumen activo.</b> Medido sobre 93.549 cruces (4h, 120 perpetuos, 250 días): el
+          volumen <b>no confirma la dirección</b>, amplifica lo que ya venía pasando. Mejora en 5 cruces y
+          empeora en 11. Los LONG pasan de +0,213% a +0,404% con ≥2×, pero los SHORT empeoran de −0,549% a
+          −0,919%. El único caso claro a favor es el RSI cruzando su media al alza.
+        </div>
+      )}
+
+      {error && (
+        <div className="mb-4 rounded border border-terminal-down/40 bg-terminal-down/10 px-3 py-2 text-xs text-terminal-down">
+          Error: {error}
+        </div>
+      )}
+
+      {corriendo && (
+        <div className="mb-4 h-1 w-full overflow-hidden rounded bg-terminal-border">
+          <div
+            className="h-full bg-terminal-accent transition-all"
+            style={{ width: `${progreso.total ? (progreso.hecho / progreso.total) * 100 : 0}%` }}
+          />
+        </div>
+      )}
+
+      {datos.length > 0 && (
+        <>
+          <div className="mb-2 flex flex-wrap items-center gap-2">
+            <span className="text-[10px] font-bold uppercase tracking-wide text-terminal-dim">Indicador</span>
+            {INDICADORES.map((ind) => {
+              const on = indicadoresOn.has(ind.id)
+              const c = conteos[ind.id]
+              return (
+                <button
+                  key={ind.id}
+                  type="button"
+                  onClick={() => toggle(indicadoresOn, ind.id, setIndicadoresOn)}
+                  title={VOLUMEN_AYUDA[ind.id]}
+                  className={`rounded px-2 py-1 text-xs font-semibold transition-opacity ${
+                    on ? 'bg-terminal-panel2 text-terminal-text' : 'bg-terminal-panel text-terminal-dim opacity-50'
+                  }`}
+                >
+                  {ind.nombre}{' '}
+                  <span className="text-[10px] font-normal">
+                    ({c.confirmado}●/{c['en-curso']}◐/{c.cerca}○)
+                  </span>
+                </button>
+              )
+            })}
+          </div>
+
+          <div className="mb-2 flex flex-wrap items-center gap-2">
+            <span className="text-[10px] font-bold uppercase tracking-wide text-terminal-dim">Estado</span>
+            {['confirmado', 'en-curso', 'cerca'].map((e) => {
+              const on = estadosOn.has(e)
+              const c = COLOR_ESTADO[e]
+              return (
+                <button
+                  key={e}
+                  type="button"
+                  onClick={() => toggle(estadosOn, e, setEstadosOn)}
+                  className={`rounded px-2 py-1 text-xs font-semibold transition-opacity ${on ? '' : 'opacity-40'}`}
+                  style={{ backgroundColor: c.bg, color: c.text }}
+                >
+                  {c.icono} {ETIQUETA_ESTADO[e]}
+                </button>
+              )
+            })}
+            <span className="ml-2 text-[10px] font-bold uppercase tracking-wide text-terminal-dim">Dirección</span>
+            {[
+              ['todas', 'Todas'],
+              ['alcista', '↑ Alcistas'],
+              ['bajista', '↓ Bajistas'],
+            ].map(([k, l]) => (
+              <button
+                key={k}
+                type="button"
+                onClick={() => setDireccion(k)}
+                className={`rounded px-2 py-1 text-xs font-semibold ${
+                  direccion === k ? 'bg-terminal-accent text-black' : 'bg-terminal-panel text-terminal-dim'
+                }`}
+              >
+                {l}
+              </button>
+            ))}
+            <input
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              placeholder="Buscar símbolo…"
+              className="rounded border border-terminal-border bg-terminal-panel px-2 py-1 text-xs text-terminal-text focus:border-terminal-accent focus:outline-none"
+            />
+          </div>
+
+          <div className="mb-2 text-xs text-terminal-dim">
+            {filtradas.length} de {datos.length} símbolos · ordenados por cuántos indicadores coinciden
+          </div>
+        </>
+      )}
+
+      {!datos.length && !corriendo ? (
+        <div className="rounded-lg border border-terminal-border bg-terminal-panel p-10 text-center text-sm text-terminal-dim">
+          Presioná <b>Escanear</b>. Se analizan los perpetuos con más de $5M de volumen en 24h.
+        </div>
+      ) : (
+        <div className="overflow-x-auto rounded-lg border border-terminal-border">
+          <table className="w-full border-collapse text-sm">
+            <thead className="bg-terminal-panel2 text-left text-xs text-terminal-dim">
+              <tr>
+                <th className="px-2 py-2.5">Símbolo</th>
+                <th className="px-2 py-2.5 text-right">Precio</th>
+                <th className="px-2 py-2.5 text-right">24h</th>
+                {INDICADORES.map((ind) => (
+                  <th key={ind.id} className="px-2 py-2.5 text-center" title={VOLUMEN_AYUDA[ind.id]}>
+                    {ind.nombre}
+                  </th>
+                ))}
+                <th className="px-2 py-2.5 text-right">Coinciden</th>
+                <th className="px-2 py-2.5 text-right">RSI</th>
+                <th className="px-2 py-2.5 text-right">SMI</th>
+                <th className="px-2 py-2.5 text-right">Vol×</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filtradas.map((r) => (
+                <tr
+                  key={r.symbolRaw}
+                  onClick={() => setSeleccionado(r.symbolRaw)}
+                  className="cursor-pointer border-t border-terminal-border hover:bg-terminal-panel"
+                >
+                  <td className="whitespace-nowrap px-2 py-1.5 font-semibold text-terminal-text">
+                    {r.symbol}
+                    <a
+                      href={r.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="ml-1 opacity-60 hover:opacity-100"
+                    >
+                      ↗
+                    </a>
+                  </td>
+                  <td className="whitespace-nowrap px-2 py-1.5 text-right tabular text-terminal-text">
+                    {fmtPrice(r.price)}
+                  </td>
+                  <td
+                    className="whitespace-nowrap px-2 py-1.5 text-right tabular"
+                    style={{ color: r.chg24h >= 0 ? '#4ade80' : '#f87171' }}
+                  >
+                    {r.chg24h >= 0 ? '+' : ''}
+                    {r.chg24h.toFixed(2)}%
+                  </td>
+                  {INDICADORES.map((ind) => (
+                    <td key={ind.id} className="px-2 py-1.5 text-center">
+                      {insignia(r, ind)}
+                    </td>
+                  ))}
+                  <td className="px-2 py-1.5 text-right font-bold tabular text-terminal-accent">{r.hits.length}</td>
+                  <td className="px-2 py-1.5 text-right tabular text-terminal-dim">{r.rsi ?? '—'}</td>
+                  <td className="px-2 py-1.5 text-right tabular text-terminal-dim">{r.smi ?? '—'}</td>
+                  <td className="px-2 py-1.5 text-right tabular text-terminal-dim">
+                    {r.volRatio != null ? `×${r.volRatio}` : '—'}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      {filaSel && (
+        <PanelApalancamiento
+          fila={{ ...filaSel, cls: 'n', signal: 'CRUCES', score: filaSel.hits?.length ?? 0, details: '' }}
+          klines={cache.current.get(filaSel.symbolRaw)}
+          atrMult={2}
+          to={`/cripto/${encodeURIComponent(filaSel.symbolRaw)}`}
+          onCerrar={() => setSeleccionado(null)}
+        />
+      )}
+    </div>
+  )
+}

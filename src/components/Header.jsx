@@ -11,7 +11,7 @@ const tabs = [
   { to: '/screener', label: 'Screener' },
   { to: '/historico', label: 'Histórico Fundamental' },
   { to: '/cripto', label: 'Crypto Screener' },
-  { to: '/cripto-v2', label: '🧪 Screener Cripto v2' },
+  { to: '/cruces', label: '🎯 Cruces' },
   { to: '/cripto-v3', label: '🔬 Screener Cripto v3' },
   { to: '/tokenizadas', label: '🪙 Acciones Tokenizadas' },
   { to: '/top', label: '🔥 Top Señales' },

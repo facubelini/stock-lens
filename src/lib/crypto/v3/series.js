@@ -179,6 +179,57 @@ export function sma(serie, p) {
   return out
 }
 
+// EMA que tolera NaN al principio: arranca en el primer valor válido y usa
+// el mismo seed (media de los primeros p válidos) que emaSerie. Hace falta
+// para el SMI, que encadena EMAs sobre series que empiezan con NaN.
+export function emaTolerante(serie, p) {
+  const out = new Array(serie.length).fill(NAN)
+  const idx = []
+  for (let i = 0; i < serie.length; i++) if (!isNaN(serie[i])) idx.push(i)
+  if (idx.length < p) return out
+  const alpha = 2 / (p + 1)
+  let v = 0
+  for (let k = 0; k < p; k++) v += serie[idx[k]]
+  v /= p
+  out[idx[p - 1]] = v
+  for (let k = p; k < idx.length; k++) {
+    v = serie[idx[k]] * alpha + v * (1 - alpha)
+    out[idx[k]] = v
+  }
+  return out
+}
+
+// SMI (Stochastic Momentum Index, de William Blau). A diferencia del
+// estocástico clásico, que mide dónde está el cierre dentro del rango, el SMI
+// mide la distancia del cierre al CENTRO del rango, y la suaviza dos veces.
+// Va de -100 a +100 (0 = el cierre está justo en el medio del rango).
+//
+// Parámetros por defecto los de TradingView: %K 10, doble suavizado 3 y 3,
+// señal EMA 3. Sobrecompra por encima de +40, sobreventa por debajo de -40.
+export function smiSerie(highs, lows, closes, n = 10, r = 3, s = 3, sig = 3) {
+  const len = closes.length
+  const d = new Array(len).fill(NAN)
+  const hl = new Array(len).fill(NAN)
+  for (let i = n - 1; i < len; i++) {
+    let hh = -Infinity
+    let ll = Infinity
+    for (let j = i - n + 1; j <= i; j++) {
+      if (highs[j] > hh) hh = highs[j]
+      if (lows[j] < ll) ll = lows[j]
+    }
+    d[i] = closes[i] - (hh + ll) / 2
+    hl[i] = hh - ll
+  }
+  const ds = emaTolerante(emaTolerante(d, r), s)
+  const dhl = emaTolerante(emaTolerante(hl, r), s)
+  const smi = new Array(len).fill(NAN)
+  for (let i = 0; i < len; i++) {
+    if (isNaN(ds[i]) || isNaN(dhl[i]) || dhl[i] === 0) continue
+    smi[i] = (200 * ds[i]) / dhl[i]
+  }
+  return { smi, señal: emaTolerante(smi, sig) }
+}
+
 // Arma todas las series de una vez, sobre velas YA CERRADAS.
 export function armarSeries(klinesCerradas) {
   const closes = klinesCerradas.map((k) => +k[4])
@@ -189,6 +240,7 @@ export function armarSeries(klinesCerradas) {
   const rsi = rsiSerieAlineada(closes)
   const srsi = srsiSerie(closes)
   const est = estocasticoSerie(highs, lows, closes)
+  const smi = smiSerie(highs, lows, closes)
   return {
     n: closes.length,
     closes,
@@ -203,6 +255,9 @@ export function armarSeries(klinesCerradas) {
     // Estocastico clasico, %K y %D.
     estK: est.k,
     estD: est.d,
+    // SMI y su linea de señal.
+    smi: smi.smi,
+    smiSenal: smi.señal,
     macdCur: cur,
     macdPrv: prv,
     bb: bbSerie(closes),

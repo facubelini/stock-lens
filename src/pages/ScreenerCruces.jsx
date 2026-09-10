@@ -207,7 +207,7 @@ export default function ScreenerCruces() {
       { campo: 'price', label: 'Precio', valor: (r) => r.price, align: 'right' },
       { campo: 'chg24h', label: '24h', valor: (r) => r.chg24h, align: 'right' },
       { campo: 'dir', label: 'Dirección', valor: (r) => r.dir.puntos, align: 'center',
-        titulo: 'Recuento de lo que dicen los 5 indicadores, pesando confirmado ×2, en curso ×1 y cerca ×0,5. NO es una predicción: es un resumen. Lo que rinde cada cruce históricamente está medido en el Screener v3.' },
+        titulo: 'Suma de los 5 indicadores pesando confirmado ×2, en curso ×1 y cerca ×0,5. El número que se ve ES esa suma: va de -10 (los 5 bajistas confirmados) a +10 (los 5 alcistas confirmados). Los que están en "·" no tienen dirección y no suman. NO es una predicción: es un resumen. Lo que rinde cada cruce históricamente está medido en el Screener v3.' },
       ...INDICADORES.map((ind) => ({
         campo: ind.id,
         label: ind.nombre,
@@ -452,8 +452,9 @@ export default function ScreenerCruces() {
           <div className="mb-2 text-xs text-terminal-dim">
             {filtradas.length} de {datos.length} símbolos · click en cualquier encabezado para ordenar
             {' · '}
-            <span title="La columna Dirección suma los 5 indicadores pesando confirmado ×2, en curso ×1 y cerca ×0,5. Los dos números al lado son cuántos apuntan a cada lado.">
-              la columna <b>Dirección</b> es un recuento de los indicadores, no una recomendación
+            <span title="Pasá el mouse por cualquier insignia de Dirección para ver la cuenta indicador por indicador.">
+              en <b>Dirección</b>, el número es la <b>suma pesada</b> de los 5 indicadores (confirmado ×2, en
+              curso ×1, cerca ×0,5), de −10 a +10 — es un recuento, no una recomendación
             </span>
           </div>
         </>
@@ -526,11 +527,12 @@ export default function ScreenerCruces() {
                           color:
                             r.dir.lado === 'LONG' ? '#86efac' : r.dir.lado === 'SHORT' ? '#fca5a5' : '#9ca3af',
                         }}
-                        title={`${r.dir.detalle.join(" · ")} — Suma ${r.dir.puntos > 0 ? "+" : ""}${r.dir.puntos} (${r.dir.alcistas} al alza, ${r.dir.bajistas} a la baja). Pesos: confirmado x2, en curso x1, cerca x0,5. Es un recuento de los indicadores, NO una recomendacion.`}
+                        title={`Suma ${r.dir.puntos > 0 ? "+" : ""}${r.dir.puntos} = ${r.dir.detalle.join(" ")}. Conteo: ${r.dir.alcistas} al alza y ${r.dir.bajistas} a la baja, de 5 indicadores (los que están en "·" no tienen dirección y no cuentan). Pesos: confirmado x2, en curso x1, cerca x0,5. Es un recuento de los indicadores, NO una recomendacion.`}
                       >
                         {r.dir.lado === 'LONG' ? '↑ LONG' : r.dir.lado === 'SHORT' ? '↓ SHORT' : '= MIXTO'}{' '}
                         <span className="font-normal opacity-70">
-                          {r.dir.alcistas}/{r.dir.bajistas}
+                          {r.dir.puntos > 0 ? '+' : ''}
+                          {r.dir.puntos}
                         </span>
                       </span>
                     ) : (

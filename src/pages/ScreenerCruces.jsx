@@ -47,6 +47,7 @@ const COLOR_ESTADO = {
   confirmado: { bg: 'rgba(34,197,94,0.22)', text: '#bbf7d0', icono: '●' },
   'en-curso': { bg: 'rgba(234,179,8,0.20)', text: '#fde68a', icono: '◐' },
   cerca: { bg: 'rgba(96,165,250,0.18)', text: '#bfdbfe', icono: '○' },
+  revertido: { bg: 'rgba(148,163,184,0.18)', text: '#cbd5e1', icono: '⟲' },
   lejos: { bg: 'transparent', text: '#6b7280', icono: '·' },
   'sin-datos': { bg: 'transparent', text: '#4b5563', icono: '—' },
 }
@@ -55,6 +56,7 @@ const ETIQUETA_ESTADO = {
   confirmado: 'Cruzó (confirmado)',
   'en-curso': 'Cruzando ahora (sin confirmar)',
   cerca: 'Cerca de cruzar',
+  revertido: 'Cruzó pero ya volvió (no suma)',
   lejos: 'Lejos',
   'sin-datos': 'Sin datos',
 }
@@ -87,6 +89,15 @@ function direccionDe(est) {
     lado: conDireccion === 0 ? null : puntos > 0 ? 'LONG' : puntos < 0 ? 'SHORT' : 'MIXTO',
     detalle,
   }
+}
+
+// Traduce la suma de dirección a la clase que usa la calculadora para saber
+// si es long o short y con cuánta fuerza pintar la insignia.
+function clsDeDireccion(dir) {
+  if (!dir?.lado || dir.puntos === 0) return 'n'
+  const f = Math.abs(dir.puntos)
+  if (dir.puntos > 0) return f >= 6 ? 'lf' : f >= 3 ? 'lo' : 'lw'
+  return f >= 6 ? 'sf' : f >= 3 ? 'sh' : 'sw'
 }
 
 const selectCls =
@@ -559,7 +570,18 @@ export default function ScreenerCruces() {
 
       {filaSel && (
         <PanelApalancamiento
-          fila={{ ...filaSel, cls: 'n', signal: 'CRUCES', score: filaSel.hits?.length ?? 0, details: '' }}
+          fila={{
+            ...filaSel,
+            // Antes se pasaba cls:'n' fijo, así que la calculadora decía
+            // "señal NEUTRAL, sin niveles" incluso con los 5 indicadores
+            // alineados. La clase sale de la suma de dirección: no es un
+            // veredicto de calidad, sólo define el LADO para calcular SL/TP
+            // por ATR y pintar la insignia.
+            cls: clsDeDireccion(filaSel.dir),
+            signal: filaSel.dir.lado ?? 'SIN DIRECCIÓN',
+            score: filaSel.dir.puntos,
+            details: '',
+          }}
           klines={cache.current.get(filaSel.symbolRaw)}
           atrMult={2}
           to={`/cripto/${encodeURIComponent(filaSel.symbolRaw)}`}

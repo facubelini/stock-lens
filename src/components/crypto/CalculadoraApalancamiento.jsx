@@ -4,6 +4,7 @@ import { fmtPrice } from '../../lib/crypto/formato'
 import { APALANCAMIENTOS } from '../../lib/crypto/constantes'
 import Insignia from './Insignia'
 import ProsContras from './ProsContras'
+import DetalleCruces from './DetalleCruces'
 import VariacionPeriodos from './VariacionPeriodos'
 
 // Cuerpo de la calculadora de apalancamiento/liquidacion (margen + leverage +
@@ -267,7 +268,9 @@ export default function CalculadoraApalancamiento({ fila, klines, atrMult }) {
       )}
 
       <hr className="my-3 border-terminal-border" />
-      <ProsContras fila={fila} />
+      {/* Las filas del Screener de Cruces traen 'est' (estado por indicador) en
+          vez de los aportes del score del v1, así que llevan su propio panel. */}
+      {fila.est ? <DetalleCruces fila={fila} /> : <ProsContras fila={fila} />}
 
       <a
         href={fila.link}

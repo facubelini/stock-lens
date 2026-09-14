@@ -80005,7 +80005,7 @@
         "mensual": "EXTENDIDO"
       },
       "ITUB": {
-        "diario": "NEUTRAL",
+        "diario": "COMPRA",
         "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
@@ -80287,7 +80287,7 @@
       "BBD": {
         "diario": "COMPRA",
         "semanal": "COMPRA",
-        "mensual": "NEUTRAL"
+        "mensual": "EXTENDIDO"
       },
       "INFY": {
         "diario": "NEUTRAL",
@@ -80310,7 +80310,7 @@
         "mensual": "EXTENDIDO"
       },
       "SWKS": {
-        "diario": "EXTENDIDO",
+        "diario": "NEUTRAL",
         "semanal": "EXTENDIDO",
         "mensual": "NEUTRAL"
       },
@@ -80406,7 +80406,7 @@
       },
       "VZ": {
         "diario": "NEUTRAL",
-        "semanal": "EXTENDIDO",
+        "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
       "JD": {
@@ -80455,7 +80455,7 @@
         "mensual": "EXTENDIDO"
       },
       "VRSN": {
-        "diario": "COMPRA",
+        "diario": "CERCA",
         "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
@@ -80496,7 +80496,7 @@
       },
       "GOLD": {
         "diario": "CERCA",
-        "semanal": "EXTENDIDO",
+        "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
       "EBAY": {
@@ -80521,7 +80521,7 @@
       },
       "HL": {
         "diario": "NEUTRAL",
-        "semanal": "CERCA",
+        "semanal": "COMPRA",
         "mensual": "EXTENDIDO"
       },
       "SNOW": {
@@ -80580,7 +80580,7 @@
         "mensual": "VENTA"
       },
       "TCOM": {
-        "diario": "NEUTRAL",
+        "diario": "VENTA",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
@@ -80591,7 +80591,7 @@
       },
       "MDT": {
         "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
+        "semanal": "COMPRA",
         "mensual": "NEUTRAL"
       },
       "META": {
@@ -80726,7 +80726,7 @@
       },
       "GLW": {
         "diario": "NEUTRAL",
-        "semanal": "EXTENDIDO",
+        "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
       "LYG": {
@@ -80750,7 +80750,7 @@
         "mensual": "NEUTRAL"
       },
       "KMB": {
-        "diario": "NEUTRAL",
+        "diario": "VENTA",
         "semanal": "VENTA",
         "mensual": "NEUTRAL"
       },
@@ -80779,12 +80779,12 @@
         "semanal": "NEUTRAL"
       },
       "RTX": {
-        "diario": "VENTA",
+        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
       "GE": {
-        "diario": "VENTA",
+        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
@@ -80834,7 +80834,7 @@
         "mensual": "EXTENDIDO"
       },
       "CRM": {
-        "diario": "NEUTRAL",
+        "diario": "EXTENDIDO",
         "semanal": "NEUTRAL",
         "mensual": "COMPRA"
       },
@@ -80926,10 +80926,10 @@
       "ADP": {
         "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
-        "mensual": "NEUTRAL"
+        "mensual": "EXTENDIDO"
       },
       "PAM": {
-        "diario": "NEUTRAL",
+        "diario": "COMPRA",
         "semanal": "CERCA",
         "mensual": "NEUTRAL"
       },
@@ -80984,7 +80984,7 @@
         "mensual": "EXTENDIDO"
       },
       "HON": {
-        "diario": "VENTA",
+        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
@@ -80995,7 +80995,7 @@
       },
       "WFC": {
         "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
+        "semanal": "CERCA",
         "mensual": "EXTENDIDO"
       },
       "SCHW": {
@@ -81009,9 +81009,9 @@
         "mensual": "NEUTRAL"
       },
       "DOCU": {
-        "diario": "NEUTRAL",
+        "diario": "EXTENDIDO",
         "semanal": "NEUTRAL",
-        "mensual": "CERCA"
+        "mensual": "EXTENDIDO"
       },
       "TMUS": {
         "diario": "NEUTRAL",
@@ -81146,7 +81146,7 @@
       },
       "CRES.BA": {
         "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
+        "semanal": "EXTENDIDO",
         "mensual": "EXTENDIDO"
       },
       "CVS": {
@@ -81237,7 +81237,7 @@
       },
       "IRSA.BA": {
         "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
+        "semanal": "CERCA",
         "mensual": "EXTENDIDO"
       },
       "KB": {
@@ -81262,7 +81262,7 @@
       },
       "LREN3.SA": {
         "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
+        "semanal": "VENTA",
         "mensual": "VENTA"
       },
       "MBT.BA": {
@@ -81276,7 +81276,7 @@
         "mensual": "EXTENDIDO"
       },
       "MGLU3.SA": {
-        "diario": "EXTENDIDO",
+        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
@@ -81302,7 +81302,7 @@
       },
       "NOKA.BA": {
         "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
+        "semanal": "EXTENDIDO",
         "mensual": "EXTENDIDO"
       },
       "NSAN.BA": {},
@@ -81321,7 +81321,7 @@
         "mensual": "NEUTRAL"
       },
       "PAMP.BA": {
-        "diario": "COMPRA",
+        "diario": "CERCA",
         "semanal": "NEUTRAL",
         "mensual": "EXTENDIDO"
       },
@@ -81390,7 +81390,7 @@
       "TGNO4.BA": {
         "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
-        "mensual": "EXTENDIDO"
+        "mensual": "NEUTRAL"
       },
       "TGSU2.BA": {
         "diario": "NEUTRAL",
@@ -81463,13 +81463,13 @@
         "mensual": "NEUTRAL"
       },
       "NXE": {
-        "diario": "VENTA",
+        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
       "ORLY": {
         "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
+        "semanal": "VENTA",
         "mensual": "NEUTRAL"
       },
       "TJX": {
@@ -81526,12 +81526,12 @@
         "mensual": "EXTENDIDO"
       },
       "TEAM": {
-        "diario": "NEUTRAL",
+        "diario": "EXTENDIDO",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
       "AI": {
-        "diario": "EXTENDIDO",
+        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },
@@ -81548,7 +81548,7 @@
       "DECK": {
         "diario": "NEUTRAL",
         "semanal": "VENTA",
-        "mensual": "VENTA"
+        "mensual": "NEUTRAL"
       },
       "RGTI": {
         "diario": "NEUTRAL",
@@ -81566,7 +81566,7 @@
       },
       "PATH": {
         "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
+        "semanal": "EXTENDIDO",
         "mensual": "NEUTRAL"
       },
       "VRTX": {
@@ -81601,7 +81601,7 @@
       },
       "GDX": {
         "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
+        "semanal": "CERCA",
         "mensual": "EXTENDIDO"
       },
       "HOOD": {
@@ -81610,7 +81610,7 @@
         "mensual": "EXTENDIDO"
       },
       "CRWV": {
-        "diario": "NEUTRAL",
+        "diario": "VENTA",
         "semanal": "NEUTRAL"
       },
       "OKLO": {
@@ -81645,7 +81645,7 @@
       "SPHQ": {
         "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
-        "mensual": "EXTENDIDO"
+        "mensual": "NEUTRAL"
       },
       "URA": {
         "diario": "NEUTRAL",
@@ -81673,7 +81673,7 @@
         "mensual": "EXTENDIDO"
       },
       "BMNR": {
-        "diario": "NEUTRAL",
+        "diario": "EXTENDIDO",
         "semanal": "NEUTRAL"
       },
       "BX": {
@@ -81771,16 +81771,6 @@
       },
       "NVO": {
         "diario": "VENTA",
-        "semanal": "NEUTRAL",
-        "mensual": "NEUTRAL"
-      },
-      "AGRO.BA": {
-        "diario": "NEUTRAL",
-        "semanal": "NEUTRAL",
-        "mensual": "VENTA"
-      },
-      "SEMI.BA": {
-        "diario": "NEUTRAL",
         "semanal": "NEUTRAL",
         "mensual": "NEUTRAL"
       },

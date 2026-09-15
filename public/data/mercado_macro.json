@@ -1,26 +1,26 @@
 {
-  "actualizado": "2026-09-14T20:42:21.552300-03:00",
+  "actualizado": "2026-09-15T15:03:26.259030-03:00",
   "vix": {
-    "valor": 17.1,
-    "cambio_pct": 7.95
+    "valor": 17.61,
+    "cambio_pct": 2.98
   },
   "yield_curve": {
-    "diez_anios": 4.96,
-    "tres_meses": 3.93,
-    "spread": 1.03,
+    "diez_anios": 5.01,
+    "tres_meses": 3.96,
+    "spread": 1.05,
     "invertida": false
   },
   "fear_greed_cripto": {
-    "valor": 57,
+    "valor": 69,
     "clasificacion": "Greed"
   },
   "fear_greed_acciones": {
-    "valor": 31.1,
+    "valor": 29.3,
     "clasificacion": "fear",
-    "prev_cierre": 33.3,
-    "prev_semana": 45.2,
+    "prev_cierre": 31.1,
+    "prev_semana": 39.1,
     "prev_mes": 64.3,
-    "prev_anio": 61.3
+    "prev_anio": 64.5
   },
   "indicadores_usa": {
     "cpi_yoy": 3.71,

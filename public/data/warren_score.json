@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-09-21T18:32:19.160772-03:00",
+  "actualizado": "2026-09-21T20:49:21.358464-03:00",
   "tickers": [
     {
       "ticker": "MRNA",
@@ -212,7 +212,7 @@
       "relative_strength": {
         "score": 2.2,
         "max_score": 30,
-        "rs": 12.1,
+        "rs": 12.3,
         "relative_performance": -26.9
       },
       "momentum": {
@@ -548,7 +548,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 59.7,
+        "rs": 59.5,
         "relative_performance": -2.67
       },
       "momentum": {
@@ -1252,7 +1252,7 @@
     {
       "ticker": "IP",
       "nombre": "International Paper Company",
-      "total_score": 25.0,
+      "total_score": 25.1,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -1266,9 +1266,9 @@
         "ema200": 38.05
       },
       "relative_strength": {
-        "score": 8.0,
+        "score": 8.1,
         "max_score": 30,
-        "rs": 44.6,
+        "rs": 44.9,
         "relative_performance": -10.38
       },
       "momentum": {
@@ -1508,7 +1508,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 56.2,
+        "rs": 55.9,
         "relative_performance": -4.49
       },
       "momentum": {
@@ -2356,7 +2356,7 @@
     {
       "ticker": "AAP",
       "nombre": "Advance Auto Parts Inc.",
-      "total_score": 16.2,
+      "total_score": 16.3,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -2370,9 +2370,9 @@
         "ema200": 51.78
       },
       "relative_strength": {
-        "score": 2.2,
+        "score": 2.3,
         "max_score": 30,
-        "rs": 12.3,
+        "rs": 12.6,
         "relative_performance": -26.61
       },
       "momentum": {
@@ -2468,7 +2468,7 @@
       "relative_strength": {
         "score": 2.3,
         "max_score": 30,
-        "rs": 12.6,
+        "rs": 12.8,
         "relative_performance": -26.55
       },
       "momentum": {
@@ -2660,7 +2660,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 59.5,
+        "rs": 59.2,
         "relative_performance": -3.3
       },
       "momentum": {
@@ -3092,7 +3092,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 56.7,
+        "rs": 56.4,
         "relative_performance": -4.43
       },
       "momentum": {
@@ -3476,7 +3476,7 @@
       "relative_strength": {
         "score": 8.1,
         "max_score": 30,
-        "rs": 44.9,
+        "rs": 45.1,
         "relative_performance": -10.23
       },
       "momentum": {
@@ -4052,7 +4052,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 58.2,
+        "rs": 57.9,
         "relative_performance": -3.51
       },
       "momentum": {
@@ -4132,7 +4132,7 @@
     {
       "ticker": "BBAR",
       "nombre": "Banco BBVA Argentina S.A.",
-      "total_score": 38.2,
+      "total_score": 38.3,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -4146,9 +4146,9 @@
         "ema200": 16.35
       },
       "relative_strength": {
-        "score": 8.2,
+        "score": 8.3,
         "max_score": 30,
-        "rs": 45.6,
+        "rs": 45.9,
         "relative_performance": -9.99
       },
       "momentum": {
@@ -4580,7 +4580,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 60.8,
+        "rs": 60.5,
         "relative_performance": -2.33
       },
       "momentum": {
@@ -4868,7 +4868,7 @@
       "relative_strength": {
         "score": 2.4,
         "max_score": 30,
-        "rs": 13.1,
+        "rs": 13.3,
         "relative_performance": -26.32
       },
       "momentum": {
@@ -6004,7 +6004,7 @@
     {
       "ticker": "PEP",
       "nombre": "Pepsico, Inc.",
-      "total_score": 17.3,
+      "total_score": 17.4,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -6018,9 +6018,9 @@
         "ema200": 142.08
       },
       "relative_strength": {
-        "score": 2.3,
+        "score": 2.4,
         "max_score": 30,
-        "rs": 12.8,
+        "rs": 13.1,
         "relative_performance": -26.41
       },
       "momentum": {
@@ -6212,7 +6212,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 55.1,
+        "rs": 54.9,
         "relative_performance": -5.02
       },
       "momentum": {
@@ -6404,7 +6404,7 @@
       "relative_strength": {
         "score": 8.3,
         "max_score": 30,
-        "rs": 45.9,
+        "rs": 46.2,
         "relative_performance": -9.63
       },
       "momentum": {
@@ -7124,7 +7124,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 61.0,
+        "rs": 60.8,
         "relative_performance": -2.2
       },
       "momentum": {
@@ -7172,7 +7172,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 60.5,
+        "rs": 60.3,
         "relative_performance": -2.38
       },
       "momentum": {
@@ -7316,7 +7316,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 58.5,
+        "rs": 58.2,
         "relative_performance": -3.46
       },
       "momentum": {
@@ -7412,7 +7412,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 53.1,
+        "rs": 52.8,
         "relative_performance": -6.36
       },
       "momentum": {
@@ -7796,7 +7796,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 58.7,
+        "rs": 58.5,
         "relative_performance": -3.4
       },
       "momentum": {
@@ -8356,7 +8356,7 @@
     {
       "ticker": "LMT",
       "nombre": "Lockheed Martin Corporation",
-      "total_score": 36.0,
+      "total_score": 36.1,
       "datos_suficientes": true,
       "trend": {
         "score": 13.0,
@@ -8370,9 +8370,9 @@
         "ema200": 538.77
       },
       "relative_strength": {
-        "score": 2.0,
+        "score": 2.1,
         "max_score": 30,
-        "rs": 11.3,
+        "rs": 11.5,
         "relative_performance": -27.9
       },
       "momentum": {
@@ -9092,7 +9092,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 57.4,
+        "rs": 57.2,
         "relative_performance": -4.2
       },
       "momentum": {
@@ -9764,7 +9764,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 57.2,
+        "rs": 56.9,
         "relative_performance": -4.26
       },
       "momentum": {
@@ -9956,7 +9956,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 57.7,
+        "rs": 57.4,
         "relative_performance": -4.16
       },
       "momentum": {
@@ -10292,7 +10292,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 54.1,
+        "rs": 53.8,
         "relative_performance": -5.89
       },
       "momentum": {
@@ -10340,7 +10340,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 54.9,
+        "rs": 54.6,
         "relative_performance": -5.19
       },
       "momentum": {
@@ -10852,7 +10852,7 @@
     {
       "ticker": "ALUA.BA",
       "nombre": "ALUAR ALUMINIO ARGENTINA SA",
-      "total_score": 33.3,
+      "total_score": 33.0,
       "datos_suficientes": true,
       "trend": {
         "score": 0.0,
@@ -10862,14 +10862,14 @@
         "sma50_above_ema200": false,
         "sma50_rising": false,
         "ema200_rising": false,
-        "sma50": 906.15,
-        "ema200": 916.13
+        "sma50": 906.41,
+        "ema200": 915.99
       },
       "relative_strength": {
-        "score": 8.3,
+        "score": 8.0,
         "max_score": 30,
-        "rs": 46.2,
-        "relative_performance": -9.32
+        "rs": 44.6,
+        "relative_performance": -10.4
       },
       "momentum": {
         "score": 10.0,
@@ -10882,7 +10882,7 @@
         "score": 15.0,
         "max_score": 15,
         "current_volatility": 22.5,
-        "historical_volatility": 39.6,
+        "historical_volatility": 39.8,
         "volatility_ratio": 0.57
       },
       "gates": {
@@ -10948,8 +10948,8 @@
     {
       "ticker": "AOCA.BA",
       "nombre": "AOCA.BA,0P0000D5TP,0",
-      "total_score": null,
-      "datos_suficientes": false,
+      "total_score": 47.5,
+      "datos_suficientes": true,
       "trend": {
         "score": 16.0,
         "max_score": 25,
@@ -10974,7 +10974,13 @@
         "percentage_above_52w_low": 0.0,
         "recent_52w_high": true
       },
-      "volatility": null,
+      "volatility": {
+        "score": 6.0,
+        "max_score": 15,
+        "current_volatility": 0.0,
+        "historical_volatility": 0.0,
+        "volatility_ratio": 1.0
+      },
       "gates": {
         "rs80": false,
         "ema200": true,
@@ -11486,7 +11492,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 59.0,
+        "rs": 58.7,
         "relative_performance": -3.34
       },
       "momentum": {
@@ -11582,7 +11588,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 61.3,
+        "rs": 61.0,
         "relative_performance": -2.08
       },
       "momentum": {
@@ -11678,7 +11684,7 @@
       "relative_strength": {
         "score": 2.1,
         "max_score": 30,
-        "rs": 11.5,
+        "rs": 11.8,
         "relative_performance": -27.62
       },
       "momentum": {
@@ -12568,7 +12574,7 @@
     {
       "ticker": "IRSA.BA",
       "nombre": "IRSA INVERSIONES Y REPRESENTACI",
-      "total_score": 62.0,
+      "total_score": 66.0,
       "datos_suficientes": true,
       "trend": {
         "score": 21.0,
@@ -12578,14 +12584,14 @@
         "sma50_above_ema200": true,
         "sma50_rising": false,
         "ema200_rising": true,
-        "sma50": 2391.8,
-        "ema200": 2267.14
+        "sma50": 2392.7,
+        "ema200": 2266.35
       },
       "relative_strength": {
-        "score": 10.0,
+        "score": 14.0,
         "max_score": 30,
-        "rs": 52.1,
-        "relative_performance": -7.06
+        "rs": 61.3,
+        "relative_performance": -2.01
       },
       "momentum": {
         "score": 19.0,
@@ -12598,7 +12604,7 @@
         "score": 12.0,
         "max_score": 15,
         "current_volatility": 32.2,
-        "historical_volatility": 40.9,
+        "historical_volatility": 41.0,
         "volatility_ratio": 0.79
       },
       "gates": {
@@ -12968,7 +12974,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 52.3,
+        "rs": 52.1,
         "relative_performance": -7.02
       },
       "momentum": {
@@ -13213,8 +13219,8 @@
     {
       "ticker": "ORAN.BA",
       "nombre": "ORANGE CEDEAR EACH 1 REPR 1 ADR",
-      "total_score": 47.5,
-      "datos_suficientes": true,
+      "total_score": null,
+      "datos_suficientes": false,
       "trend": {
         "score": 16.0,
         "max_score": 25,
@@ -13239,13 +13245,7 @@
         "percentage_above_52w_low": 0.01,
         "recent_52w_high": true
       },
-      "volatility": {
-        "score": 6.0,
-        "max_score": 15,
-        "current_volatility": 0.0,
-        "historical_volatility": 0.0,
-        "volatility_ratio": 1.0
-      },
+      "volatility": null,
       "gates": {
         "rs80": false,
         "ema200": true,
@@ -13421,7 +13421,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 52.6,
+        "rs": 52.3,
         "relative_performance": -6.59
       },
       "momentum": {
@@ -13469,7 +13469,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 59.2,
+        "rs": 59.0,
         "relative_performance": -3.31
       },
       "momentum": {
@@ -13597,7 +13597,7 @@
     {
       "ticker": "RENT3.SA",
       "nombre": "LOCALIZA    ON      NM",
-      "total_score": 13.4,
+      "total_score": 13.0,
       "datos_suficientes": true,
       "trend": {
         "score": 5.0,
@@ -13607,14 +13607,14 @@
         "sma50_above_ema200": false,
         "sma50_rising": false,
         "ema200_rising": false,
-        "sma50": 36.39,
-        "ema200": 40.03
+        "sma50": 36.49,
+        "ema200": 40.07
       },
       "relative_strength": {
-        "score": 2.4,
+        "score": 2.0,
         "max_score": 30,
-        "rs": 13.3,
-        "relative_performance": -25.95
+        "rs": 11.0,
+        "relative_performance": -27.97
       },
       "momentum": {
         "score": 3.0,
@@ -13627,8 +13627,8 @@
         "score": 3.0,
         "max_score": 15,
         "current_volatility": 37.1,
-        "historical_volatility": 33.7,
-        "volatility_ratio": 1.1
+        "historical_volatility": 34.2,
+        "volatility_ratio": 1.09
       },
       "gates": {
         "rs80": false,
@@ -13805,7 +13805,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 52.8,
+        "rs": 52.6,
         "relative_performance": -6.43
       },
       "momentum": {
@@ -14204,7 +14204,7 @@
         "max_score": 15,
         "current_volatility": 5.7,
         "historical_volatility": 0.0,
-        "volatility_ratio": 1669595.73
+        "volatility_ratio": 1857163.68
       },
       "gates": {
         "rs80": false,
@@ -14477,7 +14477,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 55.9,
+        "rs": 55.6,
         "relative_performance": -4.5
       },
       "momentum": {
@@ -14605,7 +14605,7 @@
     {
       "ticker": "NXE",
       "nombre": "Nexgen Energy Ltd.",
-      "total_score": 22.1,
+      "total_score": 22.2,
       "datos_suficientes": true,
       "trend": {
         "score": 8.0,
@@ -14619,9 +14619,9 @@
         "ema200": 10.19
       },
       "relative_strength": {
-        "score": 2.1,
+        "score": 2.2,
         "max_score": 30,
-        "rs": 11.8,
+        "rs": 12.1,
         "relative_performance": -27.39
       },
       "momentum": {
@@ -14813,7 +14813,7 @@
       "relative_strength": {
         "score": 2.0,
         "max_score": 30,
-        "rs": 11.0,
+        "rs": 11.3,
         "relative_performance": -27.94
       },
       "momentum": {
@@ -15005,7 +15005,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 56.4,
+        "rs": 56.2,
         "relative_performance": -4.45
       },
       "momentum": {
@@ -15629,7 +15629,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 53.8,
+        "rs": 53.6,
         "relative_performance": -5.99
       },
       "momentum": {
@@ -15677,7 +15677,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 53.3,
+        "rs": 53.1,
         "relative_performance": -6.15
       },
       "momentum": {
@@ -15821,7 +15821,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 57.9,
+        "rs": 57.7,
         "relative_performance": -3.9
       },
       "momentum": {
@@ -16301,7 +16301,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 55.4,
+        "rs": 55.1,
         "relative_performance": -4.57
       },
       "momentum": {
@@ -16397,7 +16397,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 54.6,
+        "rs": 54.4,
         "relative_performance": -5.39
       },
       "momentum": {
@@ -16717,7 +16717,7 @@
     {
       "ticker": "BX",
       "nombre": "Blackstone Inc.",
-      "total_score": 45.0,
+      "total_score": 41.0,
       "datos_suficientes": true,
       "trend": {
         "score": 13.0,
@@ -16731,9 +16731,9 @@
         "ema200": 130.44
       },
       "relative_strength": {
-        "score": 14.0,
+        "score": 10.0,
         "max_score": 30,
-        "rs": 60.0,
+        "rs": 59.7,
         "relative_performance": -2.63
       },
       "momentum": {
@@ -16781,7 +16781,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 53.6,
+        "rs": 53.3,
         "relative_performance": -6.09
       },
       "momentum": {
@@ -17645,7 +17645,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 55.6,
+        "rs": 55.4,
         "relative_performance": -4.57
       },
       "momentum": {
@@ -18328,7 +18328,7 @@
     {
       "ticker": "PLD",
       "nombre": "Prologis, Inc.",
-      "total_score": 54.1,
+      "total_score": 54.2,
       "datos_suficientes": true,
       "trend": {
         "score": 16.0,
@@ -18342,9 +18342,9 @@
         "ema200": 134.23
       },
       "relative_strength": {
-        "score": 8.1,
+        "score": 8.2,
         "max_score": 30,
-        "rs": 45.1,
+        "rs": 45.4,
         "relative_performance": -10.13
       },
       "momentum": {
@@ -18536,7 +18536,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 56.9,
+        "rs": 56.7,
         "relative_performance": -4.34
       },
       "momentum": {
@@ -18632,7 +18632,7 @@
       "relative_strength": {
         "score": 10.0,
         "max_score": 30,
-        "rs": 54.4,
+        "rs": 54.1,
         "relative_performance": -5.63
       },
       "momentum": {
@@ -18680,7 +18680,7 @@
       "relative_strength": {
         "score": 8.2,
         "max_score": 30,
-        "rs": 45.4,
+        "rs": 45.6,
         "relative_performance": -10.05
       },
       "momentum": {
@@ -18728,7 +18728,7 @@
       "relative_strength": {
         "score": 14.0,
         "max_score": 30,
-        "rs": 60.3,
+        "rs": 60.0,
         "relative_performance": -2.58
       },
       "momentum": {

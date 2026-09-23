@@ -1,73 +1,81 @@
 name: Actualizar datos
 
-# Corre el pipeline de Python (yfinance) y commitea los JSON actualizados.
+# Corre el pipeline de Python (yfinance) + los indicadores de mercado/macro
+# (antes era un workflow aparte, "Mercado Macro": ahora es un paso mas, asi
+# cada corrida hace UN solo commit y UN solo deploy) y commitea los JSON.
 # El deploy se encadena solo: ver deploy.yml (trigger workflow_run).
 
 on:
   # Disparo manual desde la pestania Actions.
   workflow_dispatch:
 
-  # Programado (GitHub Actions usa horario UTC).
-  # Mercado USA ~9:30-16:00 ET => 14:30-21:00 UTC (EST) / 13:30-20:00 UTC (EDT).
-  # OJO: con cientos de tickers cada corrida tarda varios minutos y hace muchas
-  # llamadas a Yahoo; correr cada hora puede hacer que te limiten (rate-limit).
-  # Por eso corremos pocas veces: pre-market, apertura, mediodia, cierre y
-  # post-market, dias habiles. Las corridas de pre/post-market son ademas las
-  # unicas que capturan preMarketPrice/postMarketPrice (Yahoo solo los llena
-  # cuando el mercado esta realmente en esa sesion). Repo publico = minutos
-  # de Actions ilimitados, asi que sumar corridas no tiene costo real.
+  # Programado (GitHub Actions usa horario UTC). Mercado USA 9:30-16:00 ET
+  # => 13:30-20:00 UTC (EDT) / 14:30-21:00 UTC (EST).
+  # OJO 1: GitHub arranca los crons con MUCHO atraso (medido: 2.5-4.6 h), y
+  # los minutos "redondos" (:00/:30) son los mas demorados. Por eso minutos
+  # raros y horarios corridos hacia atras: con atraso cero o maximo, cada
+  # corrida sigue cayendo en una sesion util.
+  # OJO 2: preMarketPrice/postMarketPrice solo se capturan si la corrida cae
+  # en esa sesion (marketState PRE / POST-POSTPOST); el pipeline conserva el
+  # ultimo valor capturado con su timestamp, no lo pisa con null.
+  # Con cientos de tickers cada corrida hace muchas llamadas a Yahoo; mas
+  # corridas aumentan el riesgo de rate-limit. Repo publico = minutos de
+  # Actions ilimitados.
   schedule:
-    - cron: '30 12 * * 1-5'  # ~pre-market
-    - cron: '0 14 * * 1-5'   # ~apertura
-    - cron: '0 18 * * 1-5'   # ~mediodia
-    - cron: '0 21 * * 1-5'   # ~cierre
-    - cron: '30 22 * * 1-5'  # ~post-market
+    - cron: '17 9 * * 1-5'   # pre-market (sin atraso 05:17 ET; con 2.5-4.6 h, 07:47-09:53 ET)
+    - cron: '43 12 * * 1-5'  # ~apertura
+    - cron: '13 15 * * 1-5'  # ~mediodia
+    - cron: '37 17 * * 1-5'  # ~cierre
+    - cron: '47 20 * * 1-5'  # post-market (sin atraso 16:47 ET; con atraso cae en POST/POSTPOST)
 
 permissions:
-  contents: write   # necesario para commitear los JSON generados
+  contents: read
+
+# Un solo grupo para TODOS los workflows que commitean a public/data o data/
+# (datos, historico, backtest): nunca corren dos a la vez, asi no hay
+# carreras de push entre ellos. cancel-in-progress: false = la corrida en
+# curso termina; GitHub deja como maximo una en espera (si llega otra, la
+# pendiente mas vieja se descarta, no la que esta corriendo).
+concurrency:
+  group: datos-publicos
+  cancel-in-progress: false
 
 jobs:
   generar:
     runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write   # necesario para commitear los JSON generados
+    env:
+      PYTHONUNBUFFERED: '1'
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v7
         with:
           python-version: '3.12'
           cache: pip
+          cache-dependency-path: scripts/requirements.txt
 
       - name: Instalar dependencias
         run: pip install -r scripts/requirements.txt
 
-      - name: Generar JSON
+      - name: Generar JSON (acciones)
+        id: acciones
         run: python scripts/generar_datos.py
 
+      # No depende de la lista de tickers: si el paso anterior aborto (rate
+      # limit), igual se actualiza el macro. Un fallo aca no bloquea el commit.
+      - name: Mercado macro
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: python scripts/mercado_macro.py
+
       - name: Commitear datos si cambiaron
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add public/data
-          if git diff --staged --quiet; then
-            echo "Sin cambios en los datos."
-            exit 0
-          fi
-          git commit -m "datos: actualizacion automatica ($(date -u +'%Y-%m-%d %H:%M UTC'))"
-          # Otros workflows (cripto/historico/mercado/backtest/este mismo) pushean
-          # a la misma rama en paralelo — un push rechazado no es un error real,
-          # es la carrera esperada. Reintenta con rebase (-X theirs: nuestros
-          # JSON recien generados ganan sobre los del otro run) en vez de fallar
-          # el job entero y perder esta corrida.
-          for intento in 1 2 3 4 5; do
-            if git push; then
-              exit 0
-            fi
-            echo "Push rechazado (otra corrida pusheo antes) - intento $intento/5, reintentando..."
-            git fetch origin main
-            git rebase origin/main -X theirs
-            sleep $((5 + RANDOM % 10))
-          done
-          echo "No se pudo pushear despues de varios intentos."
-          exit 1
+        if: ${{ !cancelled() }}
+        uses: ./.github/actions/commit-datos
+        with:
+          rutas: public/data data
+          mensaje: 'datos: actualizacion automatica'

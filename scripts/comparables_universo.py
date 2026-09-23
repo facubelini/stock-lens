@@ -6,7 +6,7 @@ industria mas representativa en la pestana "Comparables". No se agregan a tu
 watchlist ni afectan el resto de las pestanas.
 
 Las claves estan normalizadas (minusculas, guiones con espacios: "banks - regional")
-via `_normalizar_industria()` en generar_datos.py, asi no importa si Yahoo
+via `normalizar_industria()` de comun.py, asi no importa si Yahoo
 devuelve el guion como "-", "–" o "—". Si una industria de tus tickers no
 aparece aca, simplemente no se genera su seccion de comparables (el pipeline
 avisa por consola cuales industrias quedaron sin mapeo).

@@ -6,23 +6,21 @@ de CNN (no oficial, sin API documentada — tolerante a fallos), e
 indicadores de EEUU (CPI/desempleo/tasa de la Fed) via el endpoint publico
 de descarga de graficos de FRED (CSV, no requiere API key).
 
+Si una fuente falla en una corrida, se conserva el ultimo valor bueno de
+la corrida anterior (campo por campo) en vez de publicar null.
+
 Uso:
-    python scripts/mercado_macro.py
+    python scripts/mercado_macro.py [--out CARPETA]
 """
 
-import json
+import argparse
 from datetime import datetime
 from pathlib import Path
-from zoneinfo import ZoneInfo
 
 import requests
 import yfinance as yf
 
-from generar_datos import num
-
-RAIZ = Path(__file__).resolve().parent.parent
-DIR_SALIDA = RAIZ / "public" / "data"
-TZ = ZoneInfo("America/Argentina/Buenos_Aires")
+from comun import DIR_DATOS_PUBLICOS, TZ, escribir_json, leer_json, num
 
 
 def obtener_vix():
@@ -135,21 +133,41 @@ def obtener_indicadores_usa():
     }
 
 
-def main():
+def _combinar(nuevo, previo):
+    """Campo por campo: si el valor nuevo es None (fuente caida), se queda
+    el de la corrida anterior. Recursivo para los dicts anidados."""
+    if nuevo is None:
+        return previo
+    if isinstance(nuevo, dict) and isinstance(previo, dict):
+        return {k: _combinar(nuevo.get(k), previo.get(k)) for k in dict.fromkeys([*nuevo, *previo])}
+    return nuevo
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(description="Indicadores de mercado/macro -> mercado_macro.json")
+    ap.add_argument("--out", type=Path, default=DIR_DATOS_PUBLICOS)
+    args = ap.parse_args(argv)
+    ruta = args.out / "mercado_macro.json"
+    previo = leer_json(ruta, {}) or {}
+
     ahora = datetime.now(TZ)
-    salida = {
-        "actualizado": ahora.isoformat(),
+    nuevos = {
         "vix": obtener_vix(),
         "yield_curve": obtener_yield_curve(),
         "fear_greed_cripto": obtener_fear_greed_cripto(),
         "fear_greed_acciones": obtener_fear_greed_acciones(),
         "indicadores_usa": obtener_indicadores_usa(),
     }
-    DIR_SALIDA.mkdir(parents=True, exist_ok=True)
-    ruta = DIR_SALIDA / "mercado_macro.json"
-    with open(ruta, "w", encoding="utf-8") as f:
-        json.dump(salida, f, ensure_ascii=False, indent=2)
-    print(f"-> {ruta.relative_to(RAIZ)}")
+    fallidos = [k for k, v in nuevos.items() if v is None or (isinstance(v, dict) and None in v.values())]
+    if fallidos:
+        print(f"  ! Sin dato nuevo (se conserva el anterior) en: {', '.join(fallidos)}")
+    salida = {"actualizado": ahora.isoformat()}
+    for k, v in nuevos.items():
+        salida[k] = _combinar(v, previo.get(k))
+    # Si solo cambio el timestamp (fin de semana: nada se movio) no se toca
+    # el archivo, asi la corrida no genera commit.
+    if not escribir_json(ruta, salida, ignorar_claves=("actualizado",)):
+        print("mercado_macro.json sin cambios.")
 
 
 if __name__ == "__main__":

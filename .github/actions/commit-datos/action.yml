@@ -1,0 +1,55 @@
+name: Commitear datos
+description: >
+  Commitea y pushea los JSON generados por un pipeline de datos. Si no hay
+  cambios no hace nada (una corrida sin datos nuevos no genera commit ni
+  deploy). Si el push es rechazado porque main avanzo, hace pull --rebase
+  (sin -X theirs: nunca se "resuelve" un conflicto pisando JSON a ciegas);
+  si ese rebase choca, aborta y falla con un error visible. Con el grupo de
+  concurrency compartido entre los workflows de datos, el unico caso
+  esperable de push rechazado es un commit de codigo en el medio, que no
+  toca los mismos archivos.
+
+inputs:
+  rutas:
+    description: Rutas (separadas por espacio) a commitear. Incluye borrados.
+    required: true
+  mensaje:
+    description: Prefijo del mensaje de commit (se le agrega la fecha UTC).
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Commit + push con reintento
+      shell: bash
+      env:
+        RUTAS: ${{ inputs.rutas }}
+        MENSAJE: ${{ inputs.mensaje }}
+        RAMA: ${{ github.ref_name }}
+      run: |
+        set -euo pipefail
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        # shellcheck disable=SC2086  # RUTAS se separa por espacios a proposito
+        git add -A -- $RUTAS
+        if git diff --staged --quiet; then
+          echo "Sin cambios en los datos: no se commitea."
+          exit 0
+        fi
+        git diff --staged --stat | tail -n 1
+        git commit -q -m "$MENSAJE ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+        for intento in 1 2 3; do
+          if git push -q origin "HEAD:$RAMA"; then
+            echo "Pusheado a $RAMA."
+            exit 0
+          fi
+          echo "Push rechazado (main avanzo), intento $intento/3: pull --rebase..."
+          if ! git pull -q --rebase origin "$RAMA"; then
+            git rebase --abort || true
+            echo "::error::Conflicto al rebasear los datos sobre $RAMA (otro commit toco los mismos archivos). No se fuerza nada: volver a correr el workflow."
+            exit 1
+          fi
+          sleep $((intento * 5))
+        done
+        echo "::error::No se pudo pushear despues de 3 intentos."
+        exit 1

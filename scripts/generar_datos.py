@@ -6,14 +6,19 @@ public/data/. No requiere API keys.
 
 Uso:
     python scripts/generar_datos.py
+    # prueba chica, sin tocar public/data ni data/:
+    python scripts/generar_datos.py --tickers AAPL,KEP,GGAL.BA --out /tmp/sl --estado /tmp/sl-estado
 """
 
+import argparse
 import json
 import math
 import re
+import sys
 import time
 import unicodedata
-from datetime import datetime, timedelta
+from concurrent.futures import ThreadPoolExecutor
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
@@ -22,20 +27,31 @@ import pandas as pd
 import yfinance as yf
 
 from comparables_universo import INDUSTRIA_COMPARABLES
+from comun import (  # noqa: F401  (num/rsi_wilder/RAIZ/TZ se re-exportan: los importan backtests y mock)
+    CLAVES_BENCH,
+    DIR_DATOS_PUBLICOS,
+    DIR_ESTADO,
+    RAIZ,
+    TZ,
+    base_ticker,
+    borrar_huerfanos,
+    escribir_json,
+    leer_json,
+    mediana_de,
+    moneda_por_sufijo,
+    normalizar_industria,
+    num,
+    rsi_serie,
+    rsi_wilder,
+    sig,
+)
 
 # --- Rutas y constantes ---
-RAIZ = Path(__file__).resolve().parent.parent
 ARCHIVO_TICKERS = RAIZ / "data" / "tickers.xlsx"
 ARCHIVO_RATIOS_MANUAL = RAIZ / "data" / "ratios_cedear_manual.json"
-DIR_SALIDA = RAIZ / "public" / "data"
-TZ = ZoneInfo("America/Argentina/Buenos_Aires")
-
-# Claves de ratios usadas tanto para la mediana de industria en Fundamentales
-# como para la mediana del universo de comparables.
-CLAVES_BENCH = [
-    "per_trailing", "per_forward", "peg", "ev_sales", "pb", "ps", "market_cap",
-    "eps", "profit_margin", "roe", "dividend_yield", "beta", "debt_to_equity", "current_ratio",
-]
+# Carpetas de salida/estado: se pueden redirigir con --out/--estado (ver
+# main) para probar contra un universo chico sin pisar los datos reales.
+DIR_SALIDA = DIR_DATOS_PUBLICOS
 
 # Encabezados aceptados para la columna de tickers (se normalizan sin acentos).
 NOMBRES_TICKER = ["ticker", "codigo", "symbol", "simbolo", "code", "tickers"]
@@ -44,14 +60,73 @@ NOMBRES_TICKER = ["ticker", "codigo", "symbol", "simbolo", "code", "tickers"]
 # screener tengan velas suficientes. 2y ya alcanzaba para SMA200/EMA150 diario.
 PERIODO_HISTORICO = "5y"
 # Si el ticker "pelado" no trae datos, se reintenta con estos sufijos:
-# .SA = B3 (Brasil), .BA = BYMA (Argentina).
+# .SA = B3 (Brasil), .BA = BYMA (Argentina). Solo para tickers que NUNCA
+# resolvieron: si ya resolvieron alguna vez, se usa siempre el mismo simbolo
+# (ver resolver_universo) para no saltar de plaza por un fallo transitorio
+# (paso con BK: un 404 puntual de Yahoo lo dejo resuelto como BK.BA, el
+# CEDEAR en pesos, en vez de la accion de NYSE).
 SUFIJOS = ["", ".SA", ".BA"]
-RUTA_HISTORIAL = DIR_SALIDA / "screener_historial.json"
 DIAS_HISTORIAL = 90
-RUTA_HISTORIAL_OPORTUNIDADES = DIR_SALIDA / "oportunidades_historial.json"
 # Los mismos 3 ratios que src/lib/valuacion.js (calcularDescuento) — si se
 # toca uno, tocar el otro para que no se desincronicen.
 RATIOS_VALOR_OPORTUNIDADES = ["per_trailing", "ev_sales", "ps"]
+
+# Descarga en lote (yf.download) en vez de un history() por ticker: la
+# corrida pasa de ~10 min a unos pocos. Los simbolos que fallan se
+# reintentan con espera creciente antes de darlos por perdidos.
+TAM_LOTE_DESCARGA = 80
+ESPERAS_REINTENTO = [5, 20]  # segundos antes de cada reintento
+WORKERS_INFO = 4  # tk.info/insiders en paralelo (I/O); mas alto arriesga rate-limit
+
+# Arrastre de datos viejos: si un ticker falla, se publica el ultimo dato
+# bueno marcado stale, pero no para siempre (SNP.BA quedo arrastrado desde
+# julio): pasados estos dias se descarta.
+DIAS_MAX_ARRASTRE = 7
+# Tickers que no resolvieron en ninguna plaza: no se reintentan en cada
+# corrida (eran ~50 x 3 sufijos) hasta que pase este TTL.
+TTL_INVALIDOS_DIAS = 7
+# Salvaguarda anti rate-limit: si los frescos quedan por debajo de esta
+# fraccion de los tickers intentados, se aborta sin escribir (exit 1).
+UMBRAL_ABORTO = 0.5
+# CCL implicito: los CEDEAR cuyo CCL se aleja mas que esto de la mediana
+# casi siempre son ratio mal cargado o precio viejo en BYMA -> se anulan.
+TOL_CCL = 0.15
+# Dividend yield por encima de esto es casi seguro un error de moneda/dato.
+DIVIDEND_YIELD_MAX = 25.0
+
+# Filtro de "basura" del Excel (se aplica por regla, el Excel no se toca):
+# filas que no son tickers (DIVIDENDOS, EFECTIVO...) y bonos soberanos
+# argentinos (AL29, GD30...), que Yahoo no tiene.
+# OJO: nada de siglas cortas tipo "CCL"/"USD": son tickers reales (Carnival,
+# ProShares Ultra Semiconductors).
+PALABRAS_NO_TICKER = {
+    "DIVIDENDOS", "DIVIDENDO", "EFECTIVO", "CAUCION", "CAUCIONES", "SALDO", "PESOS", "DOLARES",
+}
+RE_BONO_AR = re.compile(r"^(AL|GD|AE|TX|TZX|TV)\d{2}[DC]?$")
+RE_TICKER_VALIDO = re.compile(r"^[A-Z0-9][A-Z0-9.\-^=]*$")
+
+# Campos que se publican por par en comparables.json: solo lo que leen
+# Comparables.jsx / TickerDetalle.jsx (tabla de ratios + pool de peers
+# manuales) — el resto de la fila de fundamentales (estacionalidad,
+# dividendos, insiders...) ya esta en fundamentales.json y duplicarlo aca
+# inflaba el archivo a ~700KB.
+CAMPOS_PARES = [
+    "ticker", "nombre", "industria", "sector", "en_portfolio", "moneda",
+    "market_cap", "market_cap_usd",
+    "per_trailing", "per_forward", "peg", "ev_sales", "pb", "ps", "eps",
+    "profit_margin", "roe", "dividend_yield", "beta", "debt_to_equity", "current_ratio",
+    "target_mean_price", "upside_pct", "recommendation_key", "n_analistas",
+]
+# Ratios que mezclan precio (moneda de cotizacion) con datos contables
+# (financialCurrency). Si las dos monedas difieren, Yahoo divide market cap
+# en USD por ventas/patrimonio en la moneda local sin convertir: P/S y P/B
+# salen basura (TM P/S 0.00, TSM P/B 91, TXR.BA P/S 1053) -> None siempre.
+RATIOS_MONEDA_MIXTA = ["ev_sales", "pb", "ps"]
+# El PER si lo convierte bien cuando la cotizacion es en USD (ADRs: TSM 33,
+# BABA 25, SAP 28, coherentes), pero no cuando la especie cotiza en otra
+# moneda (CEDEARs en pesos: BBV.BA PER 308, NOKA.BA 478, PKS.BA 0.06) ->
+# None solo en ese caso.
+RATIOS_MONEDA_MIXTA_NO_USD = ["per_trailing", "per_forward", "peg"]
 
 
 # ---------------------------------------------------------------------------
@@ -107,43 +182,24 @@ def leer_tickers():
     return out.reset_index(drop=True)
 
 
+def es_ticker_basura(t):
+    """True si la fila del Excel no es un ticker cotizable en Yahoo: palabras
+    sueltas (DIVIDENDOS, EFECTIVO), bonos soberanos AR (AL30, GD29) o texto
+    con caracteres que ningun simbolo usa. Los deslistados no se detectan
+    aca: los filtra el cache de invalidos con TTL."""
+    t = str(t).upper()
+    base = base_ticker(t)
+    if base in PALABRAS_NO_TICKER or RE_BONO_AR.match(base):
+        return True
+    if not RE_TICKER_VALIDO.match(t):
+        return True
+    # Ningun ticker real es una palabra de 7+ letras (US <=5, B3 4+digitos).
+    return base.isalpha() and len(base) >= 7
+
+
 # ---------------------------------------------------------------------------
-# Indicadores
+# Indicadores (num/rsi_wilder/rsi_serie viven en comun.py)
 # ---------------------------------------------------------------------------
-def num(v, dec=2):
-    """Redondea a 'dec' decimales; None si no es un numero finito."""
-    if v is None:
-        return None
-    try:
-        f = float(v)
-    except (TypeError, ValueError):
-        return None
-    if math.isnan(f) or math.isinf(f):
-        return None
-    return round(f, dec)
-
-
-def rsi_wilder(closes, period=14):
-    """RSI de Wilder (suavizado exponencial 1/period, con semilla = media simple
-    de las primeras 'period' variaciones). Devuelve el ultimo valor o None."""
-    closes = np.asarray(closes, dtype="float64")
-    if len(closes) < period + 1:
-        return None
-    deltas = np.diff(closes)
-    semilla = deltas[:period]
-    avg_gain = semilla[semilla > 0].sum() / period
-    avg_loss = -semilla[semilla < 0].sum() / period
-    for d in deltas[period:]:
-        gain = d if d > 0 else 0.0
-        loss = -d if d < 0 else 0.0
-        avg_gain = (avg_gain * (period - 1) + gain) / period
-        avg_loss = (avg_loss * (period - 1) + loss) / period
-    if avg_loss == 0:
-        return 100.0
-    rs = avg_gain / avg_loss
-    return 100 - 100 / (1 + rs)
-
-
 def dist_pct(precio, media):
     """Distancia porcentual del precio a una media: (precio/media - 1) * 100."""
     if media is None or (isinstance(media, float) and (math.isnan(media) or media == 0)):
@@ -219,10 +275,21 @@ def _construir_motivo(estado, verdict, nombre_clave, dist_clave, rsi, macd_bull,
 
 
 def _wma_lineal(serie, periodo):
-    """WMA con pesos lineales crecientes (1,2,3...), igual que el analizador v8."""
-    return serie.rolling(window=periodo, min_periods=1).apply(
-        lambda x: np.average(x, weights=np.arange(1, len(x) + 1)), raw=True
-    )
+    """WMA con pesos lineales crecientes (1,2,3...), igual que el analizador v8.
+    Vectorizada con np.convolve (antes rolling().apply() con una lambda por
+    vela: era lo mas lento del pipeline). Mismo resultado que la version
+    anterior, incluido el arranque con ventana parcial (min_periods=1)."""
+    x = serie.to_numpy(dtype="float64")
+    n = len(x)
+    out = np.full(n, np.nan)
+    pesos = np.arange(1, periodo + 1, dtype="float64")
+    if n >= periodo:
+        # convolve invierte el kernel: pesos[::-1] deja el peso mayor sobre la vela mas reciente.
+        out[periodo - 1 :] = np.convolve(x, pesos[::-1], mode="valid") / pesos.sum()
+    for i in range(min(periodo - 1, n)):
+        w = pesos[: i + 1]
+        out[i] = np.dot(x[: i + 1], w) / w.sum()
+    return pd.Series(out, index=serie.index)
 
 
 def _calcular_asl(closes, periodo=ASL_LEN):
@@ -333,13 +400,12 @@ def perfil_setup(df, medias, clave, slope_lookback):
     else:
         verdict = "NEUTRAL"
 
+    # dist_clave/dist_asl/ma_clave ya no se publican (el front no los usaba;
+    # quedan dentro del texto de "motivo").
     return {
         "verdict": verdict,
         "estado": estado,
         "rsi": num(rsi, 1),
-        "dist_clave": num(dist_clave, 2),
-        "dist_asl": num(dist_asl, 2),
-        "ma_clave": nombre_clave,
         "motivo": _construir_motivo(estado, verdict, nombre_clave, dist_clave, rsi, macd_bull, smi_bull),
     }
 
@@ -566,25 +632,89 @@ def extraer_dividendos(hist):
     }
 
 
-def extraer_pre_post_market(info):
-    """Precio de pre/post-market, gratis dentro de tk.info (mismo request de
-    siempre, sin nada nuevo). Solo tiene sentido mostrarlo si el snapshot se
-    tomo realmente durante esa sesion (marketState PRE/POST) — el resto del
-    tiempo Yahoo puede dejar esos campos con datos viejos de la sesion
-    anterior, y mostrarlos ahi confundiria mas de lo que ayuda."""
-    estado = info.get("marketState")
-    return {
+def _ts_a_iso(ts):
+    try:
+        return datetime.fromtimestamp(int(ts), tz=TZ).isoformat() if ts else None
+    except (TypeError, ValueError, OSError):
+        return None
+
+
+def extraer_pre_post_market(info, previo=None, ahora_iso=None):
+    """Precio de pre/post-market, gratis dentro de tk.info. Yahoo solo lo
+    llena bien mientras el mercado esta en esa sesion (marketState PRE /
+    POST o POSTPOST), y GitHub arranca los crons con horas de atraso, asi
+    que muchas corridas caen fuera de esas ventanas. Por eso NUNCA se pisa un
+    valor capturado con None: se conserva el ultimo capturado junto con su
+    propio timestamp (pre_actualizado/post_actualizado, el preMarketTime/
+    postMarketTime de Yahoo) para que la UI sepa que tan viejo es."""
+    previo = previo or {}
+    estado = info.get("marketState") or previo.get("estado")
+    salida = {
         "estado": estado,
-        "pre_precio": num(info.get("preMarketPrice"), 2) if estado == "PRE" else None,
-        "pre_cambio_pct": num(info.get("preMarketChangePercent"), 2) if estado == "PRE" else None,
-        "post_precio": num(info.get("postMarketPrice"), 2) if estado == "POST" else None,
-        "post_cambio_pct": num(info.get("postMarketChangePercent"), 2) if estado == "POST" else None,
+        "pre_precio": previo.get("pre_precio"),
+        "pre_cambio_pct": previo.get("pre_cambio_pct"),
+        "pre_actualizado": previo.get("pre_actualizado"),
+        "post_precio": previo.get("post_precio"),
+        "post_cambio_pct": previo.get("post_cambio_pct"),
+        "post_actualizado": previo.get("post_actualizado"),
     }
+    if estado == "PRE" and num(info.get("preMarketPrice")) is not None:
+        salida["pre_precio"] = num(info.get("preMarketPrice"), 2)
+        salida["pre_cambio_pct"] = num(info.get("preMarketChangePercent"), 2)
+        salida["pre_actualizado"] = _ts_a_iso(info.get("preMarketTime")) or ahora_iso
+    if estado in ("POST", "POSTPOST") and num(info.get("postMarketPrice")) is not None:
+        salida["post_precio"] = num(info.get("postMarketPrice"), 2)
+        salida["post_cambio_pct"] = num(info.get("postMarketChangePercent"), 2)
+        salida["post_actualizado"] = _ts_a_iso(info.get("postMarketTime")) or ahora_iso
+    return salida
+
+
+def _normalizar_moneda(m):
+    """'GBp' (peniques) y similares se comparan contra su moneda mayor."""
+    if not m:
+        return None
+    return {"GBP": "GBP", "GBX": "GBP", "ILA": "ILS", "ZAC": "ZAR"}.get(str(m).upper(), str(m).upper())
+
+
+def moneda_mixta(moneda, moneda_financiera):
+    """True si el precio cotiza en una moneda y los estados contables estan
+    en otra (ADRs de KEP/KB/MUFG/HMC, CEDEARs .BA): los ratios precio/
+    contable que arma Yahoo quedan mezclados y no sirven."""
+    a, b = _normalizar_moneda(moneda), _normalizar_moneda(moneda_financiera)
+    return bool(a and b and a != b)
+
+
+def calcular_dividend_yield(dividendos, precio, info):
+    """Dividend yield en %. Primero desde los pagos reales de los ultimos 12
+    meses (columna Dividends del historico, misma moneda que el precio, asi
+    que nunca mezcla monedas) sobre el precio actual. Si no hay pagos
+    suficientes para estimarlo, cae a 'dividendYield' de Yahoo, que YA viene
+    en % (antes se usaba trailingAnnualDividendYield, que en ADRs divide el
+    dividendo en KRW/JPY por el precio en USD: KEP daba 13646%). Valores por
+    encima de DIVIDEND_YIELD_MAX se descartan."""
+    dy = None
+    if dividendos and precio:
+        pagos = dividendos.get("pagos") or []
+        ultimo = pagos[-1]["fecha"] if pagos else None
+        total = dividendos.get("total_ultimos_12m")
+        # Si el ultimo pago tiene mas de ~13 meses, o dejo de pagar o Yahoo
+        # tiene un hueco en el historial (pasa con varios ADRs: KB/MUFG/HMC
+        # sin pagos cargados desde 2025) -> no se estima desde pagos.
+        reciente = bool(ultimo) and (datetime.now() - datetime.fromisoformat(ultimo)).days <= 400
+        if reciente and total:
+            dy = total / precio * 100
+    if dy is None:
+        v = info.get("dividendYield")
+        dy = float(v) if isinstance(v, (int, float)) and not isinstance(v, bool) else None
+    if dy is None or not math.isfinite(dy) or dy < 0 or dy > DIVIDEND_YIELD_MAX:
+        return None
+    return dy
 
 
 def extraer_fundamentales(info):
     """Extrae los fundamentales de yf.Ticker(t).info, tolerando faltantes.
-    Margenes/ROE/Dividend yield se devuelven ya en formato porcentual."""
+    Margenes/ROE se devuelven ya en formato porcentual. El dividend yield se
+    calcula aparte (calcular_dividend_yield) porque necesita el historico."""
 
     def g(k):
         v = info.get(k)
@@ -594,29 +724,11 @@ def extraer_fundamentales(info):
             return float(v)
         return None
 
-    # Dividend yield: yfinance es inconsistente entre versiones. Preferimos
-    # trailingAnnualDividendYield (siempre fraccion) y caemos a dividendYield.
-    dy_frac = g("trailingAnnualDividendYield")
-    if dy_frac is not None:
-        dividend_yield = dy_frac * 100
-    else:
-        dy = g("dividendYield")
-        # Si parece fraccion (<1) la pasamos a %, si ya viene en % la dejamos.
-        dividend_yield = (dy * 100 if dy < 1 else dy) if dy is not None else None
-
     pm = g("profitMargins")
     roe = g("returnOnEquity")
     peg = g("trailingPegRatio")
     if peg is None:
         peg = g("pegRatio")
-
-    # Para valor intrinseco (Graham Number + calculadora DCF): bookValue y
-    # freeCashflow ya vienen gratis dentro de info, no hace falta un request
-    # nuevo. FCF por accion se calcula aca (no en el frontend) para no repetir
-    # la division en cada componente que lo use.
-    fcf = g("freeCashflow")
-    shares = g("sharesOutstanding")
-    fcf_por_accion = (fcf / shares) if fcf is not None and shares else None
 
     return {
         "per_trailing": g("trailingPE"),
@@ -629,7 +741,7 @@ def extraer_fundamentales(info):
         "eps": g("trailingEps"),
         "profit_margin": pm * 100 if pm is not None else None,
         "roe": roe * 100 if roe is not None else None,
-        "dividend_yield": dividend_yield,
+        "dividend_yield": None,  # se completa con calcular_dividend_yield()
         "beta": g("beta"),
         "debt_to_equity": g("debtToEquity"),
         "current_ratio": g("currentRatio"),
@@ -638,9 +750,18 @@ def extraer_fundamentales(info):
         "target_mean_price": g("targetMeanPrice"),
         "n_analistas": g("numberOfAnalystOpinions"),
         "recommendation_key": info.get("recommendationKey") or None,
-        "book_value": g("bookValue"),
-        "fcf_por_accion": fcf_por_accion,
+        # book_value/fcf_por_accion se sacaron: ningun componente los leia.
     }
+
+
+def anular_ratios_mixtos(fund, moneda, moneda_financiera):
+    """Pone en None los ratios que mezclan monedas (ver RATIOS_MONEDA_MIXTA
+    y RATIOS_MONEDA_MIXTA_NO_USD)."""
+    if moneda_mixta(moneda, moneda_financiera):
+        claves = RATIOS_MONEDA_MIXTA + (RATIOS_MONEDA_MIXTA_NO_USD if moneda != "USD" else [])
+        for k in claves:
+            fund[k] = None
+    return fund
 
 
 def obtener_holdings_etf(tk, quote_type):
@@ -706,31 +827,90 @@ def resumen_insider(tk):
         return None
 
 
-def _normalizar_industria(s):
-    """Normaliza un nombre de industria para matchear contra
-    INDUSTRIA_COMPARABLES sin depender del caracter de guion exacto que
-    devuelva Yahoo ("-", "–" o "—")."""
-    if not s:
-        return ""
-    s = str(s).replace("—", "-").replace("–", "-")
-    s = re.sub(r"\s*-\s*", " - ", s)
-    s = re.sub(r"\s+", " ", s)
-    return s.strip().lower()
+# Alias con el nombre viejo: la implementacion vive en comun.py.
+_normalizar_industria = normalizar_industria
+_base_ticker = base_ticker
 
 
-def mediana_de(filas, clave):
-    vals = sorted(f[clave] for f in filas if f.get(clave) is not None)
-    if not vals:
-        return None
-    n = len(vals)
-    m = n // 2
-    return vals[m] if n % 2 else (vals[m - 1] + vals[m]) / 2
+def fila_par(fila, en_portfolio):
+    """Recorta una fila de fundamentales a los campos que se publican por par
+    en comparables.json (CAMPOS_PARES)."""
+    out = {k: fila.get(k) for k in CAMPOS_PARES if k != "en_portfolio"}
+    out["en_portfolio"] = en_portfolio
+    return {k: out.get(k) for k in CAMPOS_PARES}
 
 
-def construir_comparables(fundamentales):
+def _fila_peer_desde_info(peer, info):
+    """Fila de un peer curado (fuera de tu universo), solo con su .info."""
+    nombre = info.get("shortName") or info.get("longName") or peer
+    moneda = info.get("currency") or moneda_por_sufijo(peer)
+    fund = extraer_fundamentales(info)
+    anular_ratios_mixtos(fund, moneda, info.get("financialCurrency"))
+    dy = info.get("dividendYield")
+    fund["dividend_yield"] = (
+        float(dy) if isinstance(dy, (int, float)) and not isinstance(dy, bool) and 0 <= dy <= DIVIDEND_YIELD_MAX else None
+    )
+    mc = fund.pop("market_cap")
+    recommendation_key = fund.pop("recommendation_key")
+    precio = num(info.get("currentPrice") or info.get("regularMarketPrice"), 4)
+    target = fund.get("target_mean_price")
+    upside = ((target / precio - 1) * 100) if target and precio else None
+    return {
+        "ticker": peer,
+        "nombre": nombre,
+        "sector": info.get("sector") or None,
+        "moneda": moneda,
+        **{k: num(v, 2) for k, v in fund.items()},
+        "market_cap": int(mc) if mc else None,
+        "market_cap_usd": None,  # se completa con el tipo de cambio de la corrida
+        "recommendation_key": recommendation_key,
+        "upside_pct": num(upside, 2),
+    }
+
+
+def obtener_peers(fundamentales, cache_peers, hoy):
+    """Fundamentales (.info) de los peers curados que NO estan en tu
+    universo, para las industrias presentes. Cache diario en
+    data/comparables_cache.json: el .info de un peer no cambia de forma
+    relevante entre las 5 corridas del dia, asi que se pide una sola vez por
+    dia en vez de en cada corrida. Devuelve (dict peer -> fila, cache_nuevo)."""
+    industrias = {normalizar_industria(f["industria"]) for f in fundamentales}
+    propios = {base_ticker(f["ticker"]) for f in fundamentales} | {f["ticker"] for f in fundamentales}
+    necesarios = sorted(
+        {p for ind in industrias for p in INDUSTRIA_COMPARABLES.get(ind, []) if p not in propios}
+    )
+    cache_hoy = cache_peers.get("pares", {}) if cache_peers.get("fecha") == hoy else {}
+    filas = {p: cache_hoy[p] for p in necesarios if p in cache_hoy}
+    faltan = [p for p in necesarios if p not in filas]
+
+    def _pedir(peer):
+        try:
+            info = yf.Ticker(peer).info or {}
+        except Exception:  # noqa: BLE001
+            return peer, None
+        if not info or not (info.get("shortName") or info.get("longName")):
+            return peer, None
+        return peer, _fila_peer_desde_info(peer, info)
+
+    if faltan:
+        print(f"  {len(faltan)} peers sin cache de hoy, pidiendo .info...")
+        with ThreadPoolExecutor(max_workers=WORKERS_INFO) as pool:
+            for peer, fila in pool.map(_pedir, faltan):
+                if fila:
+                    filas[peer] = fila
+    # Si Yahoo fallo hoy para un peer, se reusa el ultimo dato cacheado.
+    for p in necesarios:
+        if p not in filas and p in cache_peers.get("pares", {}):
+            filas[p] = cache_peers["pares"][p]
+    return filas, {"fecha": hoy, "pares": {p: filas[p] for p in sorted(filas)}}
+
+
+def construir_comparables(fundamentales, peers):
     """Para cada industria presente en tus tickers que tenga peers curados en
-    comparables_universo.INDUSTRIA_COMPARABLES, descarga fundamentales de esos
-    peers (livianos: solo .info, sin history) y arma la mediana del grupo."""
+    comparables_universo.INDUSTRIA_COMPARABLES, arma el grupo (tus tickers +
+    peers) y la mediana. La mediana usa solo tickers que cotizan en USD: un
+    CEDEAR en pesos o una accion de B3 no son comparables en market cap, y
+    sus multiplos suelen venir contaminados por mezcla de monedas."""
     por_industria = {}
     for f in fundamentales:
         por_industria.setdefault(f["industria"], []).append(f)
@@ -739,44 +919,25 @@ def construir_comparables(fundamentales):
     resultado, sin_mapeo = [], []
 
     for industria, propios in sorted(por_industria.items()):
-        clave = _normalizar_industria(industria)
-        peers_curados = INDUSTRIA_COMPARABLES.get(clave)
+        peers_curados = INDUSTRIA_COMPARABLES.get(normalizar_industria(industria))
         if not peers_curados:
             sin_mapeo.append(industria)
             continue
 
-        pares = [{**p, "en_portfolio": True} for p in propios]
+        pares = [fila_par(p, True) for p in propios]
         vistos = set(tickers_propios)
         for peer in peers_curados:
-            if peer in vistos:
+            if peer in vistos or peer not in peers:
                 continue
             vistos.add(peer)
-            try:
-                info = yf.Ticker(peer).info or {}
-            except Exception:  # noqa: BLE001
-                continue
-            if not info:
-                continue
-            nombre = info.get("shortName") or info.get("longName") or peer
-            fund = extraer_fundamentales(info)
-            mc = fund.pop("market_cap")
-            pares.append(
-                {
-                    "ticker": peer,
-                    "nombre": nombre,
-                    "industria": industria,
-                    "en_portfolio": False,
-                    **{k: num(v, 2) for k, v in fund.items()},
-                    "market_cap": int(mc) if mc else None,
-                    "sector": info.get("sector") or None,
-                }
-            )
+            pares.append(fila_par({**peers[peer], "industria": industria}, False))
 
+        en_usd = [p for p in pares if p.get("moneda") == "USD"]
         resultado.append(
             {
                 "industria": industria,
                 "pares": pares,
-                "mediana": {k: num(mediana_de(pares, k), 2) for k in CLAVES_BENCH},
+                "mediana": {k: num(mediana_de(en_usd, k), 2) for k in CLAVES_BENCH},
             }
         )
 
@@ -787,53 +948,49 @@ def construir_comparables(fundamentales):
 
 
 # ---------------------------------------------------------------------------
-# Escritura de salidas
+# Estado de la corrida anterior / historiales
 # ---------------------------------------------------------------------------
-def escribir(nombre, obj):
-    ruta = DIR_SALIDA / nombre
-    with open(ruta, "w", encoding="utf-8") as f:
-        json.dump(obj, f, ensure_ascii=False, indent=2)
-    print(f"  -> {ruta.relative_to(RAIZ)}")
-
-
-def _base_ticker(sym):
-    """Le saca el sufijo .SA/.BA a un simbolo resuelto, para poder matchear
-    contra el ticker "pelado" del Excel."""
-    return re.sub(r"\.(SA|BA)$", "", str(sym))
-
-
-def cargar_lista_previa(nombre, clave=None):
-    """Carga un JSON de la corrida anterior (si existe), indexado por ticker
-    pelado. Sirve para arrastrar el ultimo dato bueno de un ticker que falla
-    en la corrida actual (yfinance flaky / rate-limit puntual) en vez de que
-    desaparezca del todo hasta la proxima corrida exitosa."""
-    ruta = DIR_SALIDA / nombre
-    if not ruta.exists():
+def cargar_lista_previa(ruta, clave=None):
+    """Carga un JSON de la corrida anterior (si existe), indexado por el
+    simbolo resuelto (ej. "ALUA.BA"). Sirve para arrastrar el ultimo dato
+    bueno de un ticker que falla en la corrida actual (yfinance flaky /
+    rate-limit puntual) en vez de que desaparezca del todo hasta la proxima
+    corrida exitosa."""
+    data = leer_json(ruta)
+    if data is None:
         return {}
-    try:
-        data = json.loads(ruta.read_text(encoding="utf-8"))
-    except Exception:  # noqa: BLE001
-        return {}
-    lista = data.get(clave) if clave else data
+    lista = data.get(clave) if (clave and isinstance(data, dict)) else data
     if not isinstance(lista, list):
         return {}
-    return {_base_ticker(f["ticker"]): f for f in lista if f.get("ticker")}
+    return {f["ticker"]: f for f in lista if f.get("ticker")}
 
 
-def actualizar_historial_screener(screener_actual, ahora):
+def mapear_previos(tickers_excel, prev_listado):
+    """ticker del Excel -> simbolo con el que resolvio la corrida anterior.
+    Primero el match exacto; si no, el mismo ticker con sufijo .SA/.BA,
+    salvo que ese simbolo con sufijo este TAMBIEN en el Excel como fila
+    propia (el Excel tiene "SEMI" y "SEMI.BA", "AGRO" y "AGRO.BA": indexar
+    por ticker pelado los mezclaba y los dos terminaban como .BA)."""
+    reservados = set(tickers_excel)
+    mapa = {}
+    for t in tickers_excel:
+        if t in prev_listado:
+            mapa[t] = t
+            continue
+        for suf in SUFIJOS[1:]:
+            if f"{t}{suf}" in prev_listado and f"{t}{suf}" not in reservados:
+                mapa[t] = f"{t}{suf}"
+                break
+    return mapa
+
+
+def actualizar_historial_screener(historial, screener_actual, ahora):
     """Agrega (o pisa, si ya se corrio hoy) la entrada de hoy en el historial
-    de veredictos del screener, y recorta lo mas viejo que DIAS_HISTORIAL.
-    Solo guarda el verdict por temporalidad (no el detalle completo) para que
-    el JSON no crezca de mas."""
-    historial = []
-    if RUTA_HISTORIAL.exists():
-        try:
-            historial = json.loads(RUTA_HISTORIAL.read_text(encoding="utf-8"))
-            if not isinstance(historial, list):
-                historial = []
-        except Exception:  # noqa: BLE001
-            historial = []
-
+    maestro de veredictos del screener, y recorta lo mas viejo que
+    DIAS_HISTORIAL. Solo guarda el verdict por temporalidad (no el detalle
+    completo). El maestro vive en data/ (no se publica): lo que se publica
+    son los archivos por ticker (ver historial_por_ticker)."""
+    historial = historial if isinstance(historial, list) else []
     hoy = ahora.strftime("%Y-%m-%d")
     historial = [h for h in historial if h.get("fecha") != hoy]
     tickers_hoy = {
@@ -850,6 +1007,16 @@ def actualizar_historial_screener(screener_actual, ahora):
     historial = [h for h in historial if h.get("fecha", "") >= corte]
     historial.sort(key=lambda h: h["fecha"])
     return historial
+
+
+def historial_por_ticker(historial, ticker):
+    """[{fecha, diario, semanal, mensual}] del ticker, de mas viejo a mas
+    nuevo — lo que publica public/data/historial/<TICKER>.json."""
+    return [
+        {"fecha": h["fecha"], **h["tickers"][ticker]}
+        for h in sorted(historial, key=lambda h: h["fecha"])
+        if ticker in (h.get("tickers") or {})
+    ]
 
 
 def _descuento_valor(fila, mediana):
@@ -895,18 +1062,10 @@ def calcular_oportunidades_hoy(fundamentales, comparables, screener):
     return calificados
 
 
-def actualizar_historial_oportunidades(calificados_hoy, ahora):
+def actualizar_historial_oportunidades(historial, calificados_hoy, ahora):
     """Mismo patron que actualizar_historial_screener: un snapshot por dia
     (se pisa si ya corrio hoy), recortado a DIAS_HISTORIAL."""
-    historial = []
-    if RUTA_HISTORIAL_OPORTUNIDADES.exists():
-        try:
-            historial = json.loads(RUTA_HISTORIAL_OPORTUNIDADES.read_text(encoding="utf-8"))
-            if not isinstance(historial, list):
-                historial = []
-        except Exception:  # noqa: BLE001
-            historial = []
-
+    historial = historial if isinstance(historial, list) else []
     hoy = ahora.strftime("%Y-%m-%d")
     historial = [h for h in historial if h.get("fecha") != hoy]
     historial.append({"fecha": hoy, "tickers": calificados_hoy})
@@ -929,11 +1088,17 @@ def _retornos_diarios(closes, ventana=252):
     return ret
 
 
-def calcular_beta_sharpe(closes, bench_closes, ventana=252):
+def calcular_beta_sharpe(closes, bench_closes, ventana=252, en_usd=True):
     """Beta realizado y correlacion contra el benchmark (SPY) + Sharpe y
     volatilidad anualizada del propio ticker, todo sobre el ultimo anio de
     ruedas. Reusa el historico de 5y ya descargado (closes), no pide nada
-    nuevo salvo el benchmark (una sola vez por corrida, no por ticker)."""
+    nuevo salvo el benchmark (una sola vez por corrida, no por ticker).
+    Beta/correlacion solo para tickers que cotizan en USD: un CEDEAR en
+    pesos contra SPY en dolares mide sobre todo el movimiento del CCL, no
+    el del activo. Sharpe/volatilidad se dejan (son del propio ticker, en
+    su moneda)."""
+    if not en_usd:
+        bench_closes = None
     vacio = {"beta_realizado": None, "correlacion_mercado": None, "sharpe_1y": None, "volatilidad_1y": None}
     ret = _retornos_diarios(closes, ventana)
     if len(ret) < 30:
@@ -1005,19 +1170,9 @@ def calcular_estacionalidad_y_mensual(closes):
     return mensual_out, estacionalidad
 
 
-def _rsi_serie(closes, periodo=14):
-    """RSI de Wilder vectorizado (serie completa). rsi_wilder() solo da el
-    ultimo valor; para detectar divergencias contra el precio hace falta la
-    serie entera."""
-    delta = closes.diff()
-    ganancia = delta.clip(lower=0)
-    perdida = -delta.clip(upper=0)
-    avg_gain = ganancia.ewm(alpha=1 / periodo, adjust=False).mean()
-    avg_loss = perdida.ewm(alpha=1 / periodo, adjust=False).mean()
-    rs = avg_gain / avg_loss
-    rsi = 100 - 100 / (1 + rs)
-    rsi[avg_loss == 0] = 100.0
-    return rsi
+# Serie completa de RSI (para divergencias): misma implementacion unica de
+# comun.py que usa rsi_wilder() y los backtests.
+_rsi_serie = rsi_serie
 
 
 def _pivots(serie, ventana=5):
@@ -1132,23 +1287,173 @@ def detectar_cruce_medias(closes, corto=50, largo=200, tipo_corto="ema", tipo_la
     return {"tipo": tipo, "hace_ruedas": int(hace)}
 
 
+def _descargar_lote(simbolos, periodo, auto_adjust=True):
+    """Un yf.download para varios simbolos. dict sym -> DataFrame diario
+    (Open/High/Low/Close/Volume/Dividends/Stock Splits, indice sin tz);
+    los simbolos sin datos simplemente no aparecen. Mismo ajuste que el
+    history(auto_adjust=True) de antes."""
+    if not simbolos:
+        return {}
+    try:
+        df = yf.download(
+            list(simbolos),
+            period=periodo,
+            interval="1d",
+            group_by="ticker",
+            auto_adjust=auto_adjust,
+            actions=True,
+            threads=True,
+            progress=False,
+        )
+    except Exception as e:  # noqa: BLE001
+        print(f"  ! yf.download fallo para un lote de {len(simbolos)}: {e}")
+        return {}
+    if df is None or df.empty:
+        return {}
+    if not isinstance(df.columns, pd.MultiIndex):
+        df = pd.concat({simbolos[0]: df}, axis=1)
+    presentes = set(df.columns.get_level_values(0))
+    out = {}
+    for sym in simbolos:
+        if sym not in presentes:
+            continue
+        h = df[sym]
+        if "Close" not in h.columns:
+            continue
+        # El indice es la union de fechas de todo el lote (NYSE + BYMA + B3):
+        # se quedan solo las ruedas en las que ESTE simbolo opero.
+        h = h[h["Close"].notna()].copy()
+        if h.index.tz is not None:
+            h.index = h.index.tz_localize(None)
+        if len(h) >= 2:
+            out[sym] = h
+    return out
+
+
+def descargar_historicos(simbolos, periodo=PERIODO_HISTORICO, esperas=ESPERAS_REINTENTO, auto_adjust=True):
+    """Descarga en lotes y reintenta (con espera creciente) los simbolos que
+    no trajeron datos: un 404/timeout puntual de Yahoo no alcanza para dar
+    un ticker por perdido."""
+    pendientes = list(dict.fromkeys(simbolos))
+    resultado = {}
+    for intento in range(len(esperas) + 1):
+        if intento:
+            espera = esperas[intento - 1]
+            print(f"  reintento {intento}/{len(esperas)}: {len(pendientes)} simbolo(s) sin datos, espero {espera}s...")
+            time.sleep(espera)
+        for i in range(0, len(pendientes), TAM_LOTE_DESCARGA):
+            resultado.update(_descargar_lote(pendientes[i : i + TAM_LOTE_DESCARGA], periodo, auto_adjust))
+        pendientes = [s for s in pendientes if s not in resultado]
+        if not pendientes:
+            break
+    return resultado
+
+
+def resolver_universo(bases, simbolo_previo):
+    """dict ticker_base -> (simbolo_resuelto, hist).
+    1) Cada ticker se pide con el simbolo con el que resolvio la corrida
+       anterior (o pelado si nunca resolvio), con reintentos.
+    2) Solo los que NUNCA resolvieron prueban .SA/.BA. Uno que ya tenia
+       simbolo y hoy falla NO cambia de plaza: queda para el arrastre
+       (stale) y se reintenta en la proxima corrida con el mismo simbolo."""
+    candidato = {t: simbolo_previo.get(t, t) for t in bases}
+    hists = descargar_historicos(list(candidato.values()))
+    resueltos = {t: (s, hists[s]) for t, s in candidato.items() if s in hists}
+
+    nuevos = [t for t in bases if t not in resueltos and t not in simbolo_previo and "." not in t]
+    for suf in SUFIJOS[1:]:
+        faltan = [t for t in nuevos if t not in resueltos]
+        if not faltan:
+            break
+        print(f"  probando sufijo {suf} para {len(faltan)} ticker(s) nuevos sin datos...")
+        h = descargar_historicos([f"{t}{suf}" for t in faltan], esperas=[])
+        for t in faltan:
+            if f"{t}{suf}" in h:
+                resueltos[t] = (f"{t}{suf}", h[f"{t}{suf}"])
+    return resueltos
+
+
 def resolver_ticker(t):
-    """Descarga el historico probando el ticker tal cual y, si no hay datos,
-    con sufijos .SA (Brasil) y .BA (Argentina). Devuelve
-    (simbolo_resuelto, tk, hist, closes) o (None, None, None, None)."""
-    for suf in SUFIJOS:
-        sym = f"{t}{suf}"
-        try:
-            tk = yf.Ticker(sym)
-            hist = tk.history(period=PERIODO_HISTORICO, interval="1d", auto_adjust=True)
-        except Exception:  # noqa: BLE001
+    """Compatibilidad (un solo ticker): (sym, tk, hist, closes) o 4 None."""
+    r = resolver_universo([t], {})
+    if t not in r:
+        return None, None, None, None
+    sym, hist = r[t]
+    return sym, yf.Ticker(sym), hist, hist["Close"].dropna()
+
+
+def pedir_info(sym):
+    """.info + insiders + holdings (si es ETF) de un simbolo. Son los unicos
+    requests por ticker que quedan (el historico ya vino en lote); se
+    corren en paralelo con WORKERS_INFO hilos."""
+    tk = yf.Ticker(sym)
+    try:
+        info = tk.info or {}
+    except Exception:  # noqa: BLE001
+        info = {}
+    # Yahoo a veces devuelve un dict "vacio" con solo trailingPegRatio/símbolo.
+    if not (info.get("shortName") or info.get("longName") or info.get("quoteType")):
+        info = {}
+    insider = resumen_insider(tk) if info else None
+    holdings = obtener_holdings_etf(tk, info.get("quoteType")) if info else None
+    return sym, info, insider, holdings
+
+
+def obtener_fx(monedas, ccl):
+    """dict moneda -> unidades por 1 USD. ARS usa el CCL implicito mediano
+    de la corrida (lo que vale el dolar para un CEDEAR); el resto sale de
+    los pares USD{M}=X de Yahoo (USDBRL=X, etc.). Monedas menores (GBp,
+    ILA, ZAc) se pasan a la mayor dividiendo por 100."""
+    fx = {"USD": 1.0}
+    if ccl:
+        fx["ARS"] = ccl
+    # Case-sensitive a proposito: Yahoo usa "GBp" (peniques) y "GBP" (libras).
+    menores = {"GBp": ("GBP", 100), "GBX": ("GBP", 100), "ILA": ("ILS", 100), "ZAc": ("ZAR", 100)}
+    necesarias = set()
+    for m in monedas:
+        if not m or m in fx:
             continue
-        if hist is None or hist.empty or "Close" not in hist.columns:
-            continue
-        closes = hist["Close"].dropna()
-        if len(closes) >= 2:
-            return sym, tk, hist, closes
-    return None, None, None, None
+        mayor = menores.get(m, (str(m).upper(), 1))[0]
+        if mayor not in fx and mayor != "ARS":
+            necesarias.add(mayor)
+    if necesarias:
+        h = descargar_historicos([f"USD{m}=X" for m in sorted(necesarias)], periodo="5d", esperas=[5])
+        for m in necesarias:
+            serie = h.get(f"USD{m}=X")
+            if serie is not None and len(serie["Close"].dropna()):
+                fx[m] = float(serie["Close"].dropna().iloc[-1])
+    for m in monedas:
+        if m and m not in fx:
+            mayor, factor = menores.get(m, (str(m).upper(), 1))
+            if mayor in fx and factor != 1 and m != mayor:
+                fx[m] = fx[mayor] * factor
+    return fx
+
+
+def market_cap_usd(market_cap, moneda, fx):
+    if not market_cap or not moneda or moneda not in fx or not fx[moneda]:
+        return None
+    return int(market_cap / fx[moneda])
+
+
+# Horario de la rueda regular por plaza (hora local), para saber si la
+# ultima vela del historico es una sesion todavia abierta.
+HORARIOS_MERCADO = {
+    "": ("America/New_York", (9, 30), (16, 0)),
+    ".BA": ("America/Argentina/Buenos_Aires", (11, 0), (17, 0)),
+    ".SA": ("America/Sao_Paulo", (10, 0), (17, 0)),
+}
+
+
+def sesion_en_curso(sym, ultima_fecha, ahora_utc):
+    """True si la ultima vela es la de HOY y el mercado de ese simbolo esta
+    abierto ahora (la vela todavia no cerro: volumen parcial)."""
+    suf = ".BA" if sym.endswith(".BA") else (".SA" if sym.endswith(".SA") else "")
+    zona, ini, fin = HORARIOS_MERCADO[suf]
+    local = ahora_utc.astimezone(ZoneInfo(zona))
+    if local.weekday() >= 5 or pd.Timestamp(ultima_fecha).date() != local.date():
+        return False
+    return ini <= (local.hour, local.minute) < fin
 
 
 # URL del listado oficial de ratios de conversion CEDEAR de Banco Comafi
@@ -1229,24 +1534,21 @@ def combinar_ratios_cedear(automaticos, manuales):
     return combinado
 
 
-def obtener_precio_cedear(ticker_base):
-    """Ultimo cierre del simbolo '{ticker_base}.BA' (liviano: solo history
-    corta, no .info). None si no hay CEDEAR con ese codigo en BYMA. Un
-    reintento: yfinance falla seguido de forma transitoria en corridas largas
-    (cientos de tickers seguidos), y varios casos reales (VRTX, USO, ANET)
-    andan bien de forma aislada pero fallaban en la corrida completa."""
-    for intento in range(2):
-        try:
-            hist = yf.Ticker(f"{ticker_base}.BA").history(period="5d", interval="1d", auto_adjust=True)
-        except Exception:  # noqa: BLE001
-            hist = None
-        if hist is not None and not hist.empty and "Close" in hist.columns:
-            closes = hist["Close"].dropna()
+def obtener_precios_cedear(tickers_base):
+    """dict ticker_base -> ultimo cierre de '{ticker}.BA', todo en UN
+    yf.download de 5 dias (antes era un history() por ticker, con
+    reintento, dentro del loop principal). Los que fallan se reintentan
+    una vez con espera (casos reales: VRTX, USO, ANET fallaban de forma
+    transitoria en corridas largas)."""
+    h = descargar_historicos([f"{t}.BA" for t in tickers_base], periodo="5d", esperas=[5])
+    out = {}
+    for t in tickers_base:
+        serie = h.get(f"{t}.BA")
+        if serie is not None:
+            closes = serie["Close"].dropna()
             if len(closes):
-                return float(closes.iloc[-1])
-        if intento == 0:
-            time.sleep(1)
-    return None
+                out[t] = float(closes.iloc[-1])
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -1306,7 +1608,6 @@ def ws_calcular_trend(closes):
     )
     return {
         "score": num(score, 1),
-        "max_score": 25,
         "price_above_ema200": price_above_ema200,
         "price_above_sma50": price_above_sma50,
         "sma50_above_ema200": sma50_above_ema200,
@@ -1318,16 +1619,27 @@ def ws_calcular_trend(closes):
 
 
 def ws_calcular_relative_return(closes, bench_closes, ventana=WS_VENTANA_RS):
-    """Retorno relativo vs. SPY sobre ~6 meses (por posicion, "ruedas atras"
-    en cada serie — asi lo pide la spec, no por fecha). Valor crudo: el
-    percentil dentro del universo se calcula despues, en la segunda pasada."""
-    if len(closes) < ventana + 1 or bench_closes is None or len(bench_closes) < ventana + 1:
+    """Retorno relativo vs. SPY sobre ~6 meses. Las dos series se alinean
+    POR FECHA (join de ruedas en comun) antes de contar "ventana ruedas
+    atras": antes era por posicion en cada serie y, con feriados distintos
+    (BYMA/B3 vs NYSE) o huecos de datos, comparaba fechas distintas. Valor
+    crudo: el percentil dentro del universo se calcula despues, en la
+    segunda pasada. Solo se llama para tickers en USD (ver main)."""
+    if bench_closes is None or len(closes) < ventana + 1 or len(bench_closes) < ventana + 1:
         return None
-    precio_actual, precio_prev = closes.iloc[-1], closes.iloc[-1 - ventana]
-    spy_actual, spy_prev = bench_closes.iloc[-1], bench_closes.iloc[-1 - ventana]
-    if pd.isna(precio_actual) or pd.isna(precio_prev) or not precio_prev:
+    a = closes.copy()
+    b = bench_closes.copy()
+    for s_ in (a, b):
+        if s_.index.tz is not None:
+            s_.index = s_.index.tz_localize(None)
+    a.index = a.index.normalize()
+    b.index = b.index.normalize()
+    conjunto = pd.concat([a.rename("t"), b.rename("b")], axis=1, join="inner").dropna()
+    if len(conjunto) < ventana + 1:
         return None
-    if pd.isna(spy_actual) or pd.isna(spy_prev) or not spy_prev:
+    precio_actual, precio_prev = conjunto["t"].iloc[-1], conjunto["t"].iloc[-1 - ventana]
+    spy_actual, spy_prev = conjunto["b"].iloc[-1], conjunto["b"].iloc[-1 - ventana]
+    if not precio_prev or not spy_prev:
         return None
     stock_return = precio_actual / precio_prev - 1
     spy_return = spy_actual / spy_prev - 1
@@ -1409,7 +1721,6 @@ def ws_calcular_momentum(closes, high_52w, low_52w, precio):
 
     return {
         "score": num(p_high + p_low + p_breakout, 1),
-        "max_score": 30,
         "distance_from_52w_high": num(dist_high, 2),
         "percentage_above_52w_low": num(pct_above_low, 2),
         "recent_52w_high": nuevo_maximo_reciente,
@@ -1448,7 +1759,6 @@ def ws_calcular_volatility(closes):
 
     return {
         "score": num(score, 1),
-        "max_score": 15,
         "current_volatility": num(current_volatility, 1),
         "historical_volatility": num(historical_volatility, 1),
         "volatility_ratio": num(ratio, 2),
@@ -1499,8 +1809,7 @@ def calcular_warren_score(warren_datos):
         relative_strength = (
             {
                 "score": rs_score,
-                "max_score": 30,
-                "rs": rs,
+                        "rs": rs,
                 "relative_performance": num(rr * 100, 2),
             }
             if rr is not None
@@ -1526,22 +1835,266 @@ def calcular_warren_score(warren_datos):
 # ---------------------------------------------------------------------------
 # Main
 # ---------------------------------------------------------------------------
-def main():
-    DIR_SALIDA.mkdir(parents=True, exist_ok=True)
-    tickers = leer_tickers()
-    print(f"Procesando {len(tickers)} tickers (periodo {PERIODO_HISTORICO})...\n")
+# Campos que existian en versiones anteriores del JSON y ya no se publican:
+# se limpian tambien de las filas arrastradas (stale) de corridas viejas.
+CAMPOS_ELIMINADOS = {"book_value", "fcf_por_accion"}
+CAMPOS_ELIMINADOS_SCREENER = {"dist_clave", "dist_asl", "ma_clave"}
+
+
+def _limpiar_fila_vieja(fila):
+    fila = {k: v for k, v in fila.items() if k not in CAMPOS_ELIMINADOS}
+    for tf in ("diario", "semanal", "mensual"):
+        if isinstance(fila.get(tf), dict):
+            fila[tf] = {k: v for k, v in fila[tf].items() if k not in CAMPOS_ELIMINADOS_SCREENER}
+    return fila
+
+
+def _parsear_args(argv=None):
+    ap = argparse.ArgumentParser(description="Pipeline de datos de Stock Lens (yfinance -> JSON).")
+    ap.add_argument("--out", type=Path, default=DIR_DATOS_PUBLICOS, help="carpeta publicada (default: public/data)")
+    ap.add_argument("--estado", type=Path, default=DIR_ESTADO, help="carpeta de estado/caches (default: data/)")
+    ap.add_argument("--tickers", help="lista separada por comas que reemplaza al Excel (para pruebas)")
+    ap.add_argument("--limite", type=int, help="procesa solo los primeros N tickers del Excel (para pruebas)")
+    return ap.parse_args(argv)
+
+
+def _universo(args):
+    if args.tickers:
+        lista = [t.strip().upper() for t in args.tickers.split(",") if t.strip()]
+        df = pd.DataFrame({"Ticker": list(dict.fromkeys(lista))})
+        for c in ("Industria", "Pais", "Nombre"):
+            df[c] = ""
+    else:
+        df = leer_tickers()
+    if args.limite:
+        df = df.head(args.limite)
+    return df.reset_index(drop=True)
+
+
+def _edad_dias(ts_iso, ahora):
+    try:
+        return (ahora - datetime.fromisoformat(ts_iso)).total_seconds() / 86400
+    except (TypeError, ValueError):
+        return None
+
+
+def procesar_ticker(fila, sym, hist, info_datos, ctx):
+    """Calcula todas las filas (listado/medias/fundamentales/screener/
+    scanner/warren/mensual) de un ticker ya descargado. Cualquier excepcion
+    la maneja el llamador mandandolo al camino de arrastre."""
+    t = fila["Ticker"]
+    _, info, insider, holdings = info_datos
+    pf = ctx["prev_fundamentales"].get(sym) or {}
+    closes = hist["Close"].dropna()
+
+    # Si Yahoo no devolvio .info (quoteSummary 404, rate-limit), se reusan
+    # los datos "lentos" de la corrida anterior en vez de publicar None /
+    # "Sin clasificar": nombre, industria, ratios, analistas, insiders.
+    sin_info = not info
+    quote_type = info.get("quoteType")
+    es_fondo = quote_type in ("ETF", "MUTUALFUND")
+    industria_prev = pf.get("industria") if pf.get("industria") not in (None, "", "Sin clasificar") else None
+
+    nombre = fila["Nombre"] or info.get("shortName") or info.get("longName") or pf.get("nombre") or sym
+    # "industry" es la clasificacion granular de Yahoo (ej. "Semiconductors"),
+    # mas especifica que "sector" (ej. "Technology"). Los ETF no tienen ni
+    # una ni otra en Yahoo (eran 49 "Sin clasificar"): se agrupan como "ETF".
+    industria = (
+        fila["Industria"]
+        or info.get("industry")
+        or info.get("sector")
+        or ("ETF" if es_fondo else None)
+        or industria_prev
+        or "Sin clasificar"
+    )
+    pais = fila["Pais"] or info.get("country") or pf.get("pais") or "Sin país"
+    moneda = info.get("currency") or pf.get("moneda") or moneda_por_sufijo(sym)
+    moneda_financiera = info.get("financialCurrency") or (pf.get("moneda_financiera") if sin_info else None)
+    en_usd = moneda == "USD"
+
+    precio = float(closes.iloc[-1])
+    anterior = float(closes.iloc[-2])
+    var_pct = (precio / anterior - 1) * 100 if anterior else None
+    rsi = rsi_wilder(closes.values, 14)
+
+    ema21 = closes.ewm(span=21, adjust=False).mean().iloc[-1]
+    ema50 = closes.ewm(span=50, adjust=False).mean().iloc[-1]
+    ema150 = closes.ewm(span=150, adjust=False).mean().iloc[-1]
+    sma200 = closes.rolling(200).mean().iloc[-1] if len(closes) >= 200 else None
+
+    # Sin "actualizado" por fila: el timestamp global esta en meta.json y
+    # solo las filas arrastradas (stale) llevan el suyo. Asi una corrida sin
+    # datos nuevos no genera diff.
+    base = {"ticker": sym, "nombre": nombre, "industria": industria, "pais": pais, "stale": False}
+
+    # Sparkline: ultimas ~180 ruedas (~8-9 meses) de cierre, a 4 cifras
+    # significativas (alcanza para dibujarlo y pesa bastante menos).
+    spark = [sig(x, 4) for x in closes.tail(180).tolist()]
+    ventana_52w = closes.tail(min(len(closes), 252))
+    high_52w = float(ventana_52w.max())
+    low_52w = float(ventana_52w.min())
+
+    # Volumen de la ultima rueda CERRADA vs. promedio de las 20 anteriores.
+    # Si la corrida cae con el mercado abierto, la ultima vela tiene volumen
+    # parcial (a las 11 de la mañana siempre daba "volumen bajo"): en ese
+    # caso se usa la rueda anterior. vol_fecha dice que rueda se midio.
+    volumen = hist["Volume"].dropna() if "Volume" in hist.columns else pd.Series(dtype=float)
+    fin = -1
+    if len(volumen) >= 2 and sesion_en_curso(sym, volumen.index[-1], ctx["ahora_utc"]):
+        fin = -2
+    vol_hoy = vol_prom20 = vol_fecha = None
+    if len(volumen) >= -fin:
+        vol_hoy = float(volumen.iloc[fin])
+        vol_fecha = volumen.index[fin].strftime("%Y-%m-%d")
+        previos = volumen.iloc[fin - 20 : fin]
+        if len(previos) == 20:
+            vol_prom20 = float(previos.mean())
+    vol_ratio = (vol_hoy / vol_prom20) if vol_hoy and vol_prom20 else None
+
+    # Gap de apertura: hueco entre el cierre de ayer y la apertura de hoy.
+    apertura_hoy = float(hist["Open"].iloc[-1]) if "Open" in hist.columns and len(hist) else None
+    gap_pct = ((apertura_hoy / anterior) - 1) * 100 if apertura_hoy and anterior else None
+
+    filas = {}
+    filas["listado"] = {
+        **base,
+        "var_pct": num(var_pct, 2),
+        "rsi": num(rsi, 2),
+        "spark": spark,
+        "high_52w": num(high_52w, 2),
+        "low_52w": num(low_52w, 2),
+        "vol_hoy": int(vol_hoy) if vol_hoy else None,
+        "vol_prom20": int(vol_prom20) if vol_prom20 else None,
+        "vol_ratio": num(vol_ratio, 2),
+        "vol_fecha": vol_fecha,
+        "gap_pct": num(gap_pct, 2),
+    }
+
+    # CEDEAR: solo si el dato principal es la especie extranjera en USD (si
+    # ya resolvio como .BA, "precio" YA es el del CEDEAR). ratio N:1 = N
+    # certificados = 1 accion; CCL implicito = precio_cedear * ratio / precio.
+    cedear_precio = cedear_ratio = ccl_implicito = None
+    if not sym.endswith(".BA") and en_usd and t in ctx["ratios_cedear"]:
+        cedear_ratio = ctx["ratios_cedear"][t]
+        cedear_precio = ctx["precios_cedear"].get(t)
+        if cedear_precio and precio:
+            ccl_implicito = (cedear_precio * cedear_ratio) / precio
+
+    filas["medias"] = {
+        **base,
+        "precio": num(precio, 2),
+        "dist_ema21": num(dist_pct(precio, ema21), 2),
+        "dist_ema50": num(dist_pct(precio, ema50), 2),
+        "dist_ema150": num(dist_pct(precio, ema150), 2),
+        "dist_sma200": num(dist_pct(precio, sma200), 2),
+        "cedear_ticker": f"{t}.BA" if cedear_precio is not None else None,
+        "cedear_precio": num(cedear_precio, 2),
+        "cedear_ratio": cedear_ratio,
+        "cedear_ccl_implicito": num(ccl_implicito, 2),
+    }
+
+    claves_fund = list(extraer_fundamentales({}).keys())
+    if sin_info and pf:
+        fund = {k: pf.get(k) for k in claves_fund}
+        sector = pf.get("sector")
+        insider, holdings = pf.get("insider"), pf.get("holdings")
+        proximo_earnings = pf.get("proximo_earnings")
+    else:
+        fund = anular_ratios_mixtos(extraer_fundamentales(info), moneda, moneda_financiera)
+        sector = info.get("sector") or None
+        proximo_earnings = extraer_proximo_earnings(info)
+    mc = fund.pop("market_cap")
+    recommendation_key = fund.pop("recommendation_key")  # texto, no pasa por num()
+    dividendos = extraer_dividendos(hist)
+    dy = calcular_dividend_yield(dividendos, precio, info)
+    fund["dividend_yield"] = dy if (dy is not None or not sin_info) else pf.get("dividend_yield")
+    target_mean_price = fund.get("target_mean_price")
+    upside_pct = ((target_mean_price / precio - 1) * 100) if target_mean_price and precio else None
+    stats_mercado = calcular_beta_sharpe(closes, ctx["bench_closes"], en_usd=en_usd)
+    precios_mensuales, estacionalidad = calcular_estacionalidad_y_mensual(closes)
+    pre_post_market = extraer_pre_post_market(info, pf.get("pre_post_market"), ctx["ahora_iso"])
+
+    filas["fundamentales"] = {
+        **base,
+        **{k: num(v, 2) for k, v in fund.items()},
+        "market_cap": int(mc) if mc else None,
+        "market_cap_usd": None,  # se completa despues del loop (necesita el CCL mediano)
+        "moneda": moneda,
+        "moneda_financiera": moneda_financiera,
+        "sector": sector,
+        "recommendation_key": recommendation_key,
+        "upside_pct": num(upside_pct, 2),
+        "insider": insider,
+        "holdings": holdings,
+        **stats_mercado,
+        "estacionalidad": estacionalidad,
+        "proximo_earnings": proximo_earnings,
+        "dividendos": dividendos,
+        "pre_post_market": pre_post_market,
+    }
+    filas["screener"] = {**base, **calcular_screener(hist)}
+    filas["scanner_setups"] = {**base, **calcular_setup_scanner(hist)}
+    filas["mensual"] = precios_mensuales
+
+    # Warren Score: pilares A/C/D por ticker; el B (Fuerza Relativa) necesita
+    # el percentil de TODO el universo y se arma despues del loop. Solo
+    # tickers en USD entran al percentil de RS vs SPY (un CEDEAR en pesos
+    # "le gana" a SPY por la devaluacion, no por fuerza relativa real).
+    filas["warren"] = {
+        "ticker": sym,
+        "nombre": nombre,
+        "trend": ws_calcular_trend(closes),
+        "relative_return": ws_calcular_relative_return(closes, ctx["bench_closes"]) if en_usd else None,
+        "momentum": ws_calcular_momentum(closes, high_52w, low_52w, precio),
+        "volatility": ws_calcular_volatility(closes),
+    }
+    return filas
+
+
+def main(argv=None):
+    args = _parsear_args(argv)
+    out = args.out.resolve()
+    estado = args.estado.resolve()
+    out.mkdir(parents=True, exist_ok=True)
+    estado.mkdir(parents=True, exist_ok=True)
 
     ahora = datetime.now(TZ)
     ahora_iso = ahora.isoformat()
+    ahora_utc = datetime.now(timezone.utc)
+    hoy = ahora.strftime("%Y-%m-%d")
 
-    # Datos de la corrida anterior, para arrastrar el ultimo dato bueno de un
-    # ticker que falla hoy (yfinance flaky) en vez de que desaparezca del
-    # listado hasta la proxima corrida exitosa.
-    prev_listado = cargar_lista_previa("listado.json", clave="acciones")
-    prev_medias = cargar_lista_previa("medias.json")
-    prev_fundamentales = cargar_lista_previa("fundamentales.json")
-    prev_screener = cargar_lista_previa("screener.json")
-    prev_scanner_setups = cargar_lista_previa("scanner_setups.json")
+    # --- Universo: Excel - basura por regla - invalidos cacheados ---
+    tickers = _universo(args)
+    descartados = sorted(t for t in tickers["Ticker"] if es_ticker_basura(t))
+    tickers = tickers[~tickers["Ticker"].isin(descartados)].reset_index(drop=True)
+
+    ruta_invalidos = estado / "invalidos_cache.json"
+    cache_invalidos = leer_json(ruta_invalidos, {}) or {}
+    invalidos_vigentes = {}
+    for t, fecha in cache_invalidos.items():
+        try:
+            if (ahora.date() - datetime.fromisoformat(fecha).date()).days < TTL_INVALIDOS_DIAS:
+                invalidos_vigentes[t] = fecha
+        except (TypeError, ValueError):
+            pass
+    salteados = sorted(t for t in tickers["Ticker"] if t in invalidos_vigentes)
+    tickers = tickers[~tickers["Ticker"].isin(salteados)].reset_index(drop=True)
+    print(
+        f"Universo: {len(tickers)} tickers a procesar (periodo {PERIODO_HISTORICO}); "
+        f"{len(descartados)} descartados por regla, {len(salteados)} invalidos en cache (TTL {TTL_INVALIDOS_DIAS}d).\n"
+    )
+
+    # --- Estado de la corrida anterior ---
+    # Para arrastrar el ultimo dato bueno de un ticker que falla hoy
+    # (yfinance flaky) y para no cambiar de plaza el simbolo resuelto.
+    prev_listado = cargar_lista_previa(out / "listado.json", clave="acciones")
+    prev_medias = cargar_lista_previa(out / "medias.json")
+    prev_fundamentales = cargar_lista_previa(out / "fundamentales.json")
+    prev_screener = cargar_lista_previa(out / "screener.json")
+    prev_scanner_setups = cargar_lista_previa(out / "scanner_setups.json")
+    prev_meta = leer_json(out / "meta.json", {}) or {}
+    ts_prev = prev_meta.get("ultima_actualizacion")
+    simbolo_previo = mapear_previos(list(tickers["Ticker"]) + salteados, prev_listado)
 
     print("Descargando ratios de CEDEAR (Comafi)...")
     ratios_comafi = descargar_ratios_cedear()
@@ -1552,191 +2105,163 @@ def main():
         f"({len(ratios_comafi)} de Comafi + {len(ratios_cedear) - len(ratios_comafi)} manuales)."
     )
 
-    print("Descargando benchmark (SPY) para beta/correlacion realizados...")
-    _, _, _, bench_closes = resolver_ticker("SPY")
-    if bench_closes is None or bench_closes.empty:
-        print("  ! No se pudo descargar SPY: beta/correlacion van a quedar en None.")
+    print("Descargando historicos (en lote)...")
+    t0 = time.monotonic()
+    resueltos = resolver_universo(list(tickers["Ticker"]), simbolo_previo)
+    print(f"  {len(resueltos)}/{len(tickers)} resueltos en {time.monotonic() - t0:.0f}s.")
 
-    listado, medias, fundamentales, screener, invalidos = [], [], [], [], []
-    scanner_setups = []
-    historico_mensual = []
-    warren_datos = []
+    # Benchmark: si SPY esta en el universo se reusa (antes se bajaba dos veces).
+    bench_closes = None
+    for t, (sym, h) in resueltos.items():
+        if sym == "SPY":
+            bench_closes = h["Close"].dropna()
+    if bench_closes is None:
+        h = descargar_historicos(["SPY"]).get("SPY")
+        bench_closes = h["Close"].dropna() if h is not None else None
+    if bench_closes is None or bench_closes.empty:
+        print("  ! No se pudo descargar SPY: beta/correlacion/RS van a quedar en None.")
+
+    print(f"Pidiendo .info/insiders de {len(resueltos)} simbolos ({WORKERS_INFO} en paralelo)...")
+    t0 = time.monotonic()
+
+    def _pedir_seguro(sym):
+        try:
+            return pedir_info(sym)
+        except Exception:  # noqa: BLE001
+            return sym, {}, None, None
+
+    with ThreadPoolExecutor(max_workers=WORKERS_INFO) as pool:
+        infos = {r[0]: r for r in pool.map(_pedir_seguro, [s for s, _ in resueltos.values()])}
+    print(f"  listo en {time.monotonic() - t0:.0f}s ({sum(1 for r in infos.values() if not r[1])} sin .info).")
+
+    # Si "{t}.BA" es una fila propia del Excel (AGRO.BA = Agrometal, SEMI.BA =
+    # Molinos Semino), ese simbolo es una accion local, no el CEDEAR de t.
+    excel = set(tickers["Ticker"])
+    candidatos_cedear = [
+        t for t, (sym, _) in resueltos.items()
+        if not sym.endswith(".BA")
+        and t in ratios_cedear
+        and f"{t}.BA" not in excel
+        and (infos[sym][1].get("currency") or "USD") == "USD"
+    ]
+    print(f"Descargando precio de {len(candidatos_cedear)} CEDEARs (.BA, en lote)...")
+    precios_cedear = obtener_precios_cedear(candidatos_cedear)
+
+    ctx = {
+        "prev_fundamentales": prev_fundamentales,
+        "ratios_cedear": ratios_cedear,
+        "precios_cedear": precios_cedear,
+        "bench_closes": bench_closes,
+        "ahora_iso": ahora_iso,
+        "ahora_utc": ahora_utc,
+    }
+
+    listado, medias, fundamentales, screener, scanner_setups = [], [], [], [], []
+    mensuales, warren_datos = {}, []
+    invalidos, sin_arrastre, descartados_viejos = [], [], []
+    salidas = {
+        "listado": (listado, prev_listado),
+        "medias": (medias, prev_medias),
+        "fundamentales": (fundamentales, prev_fundamentales),
+        "screener": (screener, prev_screener),
+        "scanner_setups": (scanner_setups, prev_scanner_setups),
+    }
+
+    def arrastrar(t):
+        """Publica el ultimo dato bueno del ticker marcado stale (con el
+        timestamp de su ultima descarga exitosa). Devuelve False si no hay
+        dato previo o si ya tiene mas de DIAS_MAX_ARRASTRE dias."""
+        clave = simbolo_previo.get(t)
+        previo = prev_listado.get(clave) if clave else None
+        if not previo:
+            return False
+        ts = previo.get("actualizado") if previo.get("stale") else ts_prev
+        ts = ts or ts_prev
+        edad = _edad_dias(ts, ahora)
+        if edad is None or edad > DIAS_MAX_ARRASTRE:
+            print(f"  x {t}: dato arrastrado desde {ts} (> {DIAS_MAX_ARRASTRE} dias), se descarta.")
+            descartados_viejos.append(t)
+            return False
+        print(f"  ~ {t}: sin datos ahora, se mantiene el ultimo dato ({ts})")
+        for lista, prev in salidas.values():
+            if clave in prev:
+                lista.append({**_limpiar_fila_vieja(prev[clave]), "stale": True, "actualizado": ts})
+        return True
 
     for _, fila in tickers.iterrows():
         t = fila["Ticker"]
-
-        sym, tk, hist, closes = resolver_ticker(t)
-        if sym is None:
+        if t not in resueltos:
             invalidos.append(t)
-            previo = prev_listado.get(t)
-            if previo:
-                print(f"  ~ {t}: sin datos ahora, se mantiene el ultimo dato ({previo.get('actualizado', '?')})")
-                listado.append({**previo, "stale": True})
-                if t in prev_medias:
-                    medias.append({**prev_medias[t], "stale": True})
-                if t in prev_fundamentales:
-                    fundamentales.append({**prev_fundamentales[t], "stale": True})
-                if t in prev_screener:
-                    screener.append({**prev_screener[t], "stale": True})
-                if t in prev_scanner_setups:
-                    scanner_setups.append({**prev_scanner_setups[t], "stale": True})
-            else:
+            if not arrastrar(t):
+                sin_arrastre.append(t)
                 print(f"  ! {t}: sin datos (probe .SA / .BA)")
             continue
-
-        # info (fundamentales) — tolerante a fallos de red / campos faltantes.
+        sym, hist = resueltos[t]
         try:
-            info = tk.info or {}
-        except Exception:  # noqa: BLE001
-            info = {}
+            filas = procesar_ticker(fila, sym, hist, infos.get(sym) or (sym, {}, None, None), ctx)
+        except Exception as e:  # noqa: BLE001
+            # Un ticker roto (dato raro de Yahoo, bug en un indicador) no
+            # corta la corrida entera: va al mismo camino que un fallo de red.
+            print(f"  ! {t} ({sym}): error procesando ({type(e).__name__}: {e}), se intenta arrastre")
+            invalidos.append(t)
+            if not arrastrar(t):
+                sin_arrastre.append(t)
+            continue
+        for clave, (lista, _) in salidas.items():
+            lista.append(filas[clave])
+        mensuales[sym] = filas["mensual"]
+        warren_datos.append(filas["warren"])
+        print(f"  ok {sym} ({filas['listado']['nombre']})")
 
-        # Industria/Pais/Nombre: del Excel si vienen; si no, se derivan de yfinance.
-        # "industry" es la clasificacion granular de Yahoo (ej. "Semiconductors"),
-        # mas especifica que "sector" (ej. "Technology"). Si falta, cae a sector.
-        nombre = fila["Nombre"] or info.get("shortName") or info.get("longName") or sym
-        industria = fila["Industria"] or info.get("industry") or info.get("sector") or "Sin clasificar"
-        pais = fila["Pais"] or info.get("country") or "Sin país"
-
-        precio = float(closes.iloc[-1])
-        anterior = float(closes.iloc[-2])
-        var_pct = (precio / anterior - 1) * 100 if anterior else None
-        rsi = rsi_wilder(closes.values, 14)
-
-        ema21 = closes.ewm(span=21, adjust=False).mean().iloc[-1]
-        ema50 = closes.ewm(span=50, adjust=False).mean().iloc[-1]
-        ema150 = closes.ewm(span=150, adjust=False).mean().iloc[-1]
-        sma200 = closes.rolling(200).mean().iloc[-1] if len(closes) >= 200 else None
-
-        base = {
-            "ticker": sym,
-            "nombre": nombre,
-            "industria": industria,
-            "pais": pais,
-            "actualizado": ahora_iso,
-            "stale": False,
-        }
-
-        # Sparkline: ultimas ~180 ruedas (~8-9 meses) de cierre. El sparkline
-        # chico de las tarjetas de Listado usa las mismas ~180 (se ve igual,
-        # mas denso) y la vista de detalle de ticker lo agranda para que
-        # sirva como grafico de precio real.
-        spark = [round(float(x), 2) for x in closes.tail(180).tolist()]
-        # Rango de 52 semanas (o lo que haya, para tickers con poco historial).
-        ventana_52w = closes.tail(min(len(closes), 252))
-        high_52w = float(ventana_52w.max())
-        low_52w = float(ventana_52w.min())
-
-        # Volumen de hoy vs. promedio de los ultimos 20 dias (sin contar hoy):
-        # detecta picos de volumen inusual, no cuesta nada extra (mismo hist
-        # ya descargado). Igual logica que vol_ratio del Crypto Screener.
-        volumen = hist["Volume"].dropna() if "Volume" in hist.columns else pd.Series(dtype=float)
-        vol_hoy = float(volumen.iloc[-1]) if len(volumen) >= 1 else None
-        vol_prom20 = float(volumen.iloc[-21:-1].mean()) if len(volumen) >= 21 else None
-        vol_ratio = (vol_hoy / vol_prom20) if vol_hoy and vol_prom20 else None
-
-        # Gap de apertura: hueco entre el cierre de ayer y la apertura de
-        # hoy (mismo hist ya descargado, columna Open). Un gap grande suele
-        # anticipar mas volatilidad ese dia.
-        apertura_hoy = float(hist["Open"].iloc[-1]) if "Open" in hist.columns and len(hist) else None
-        gap_pct = ((apertura_hoy / anterior) - 1) * 100 if apertura_hoy and anterior else None
-
-        listado.append(
-            {
-                **base,
-                "var_pct": num(var_pct, 2),
-                "rsi": num(rsi, 2),
-                "spark": spark,
-                "high_52w": num(high_52w, 2),
-                "low_52w": num(low_52w, 2),
-                "vol_hoy": int(vol_hoy) if vol_hoy else None,
-                "vol_prom20": int(vol_prom20) if vol_prom20 else None,
-                "vol_ratio": num(vol_ratio, 2),
-                "gap_pct": num(gap_pct, 2),
-            }
+    # --- Salvaguarda anti rate-limit ---
+    # Se compara contra los tickers INTENTADOS en esta corrida (referencia
+    # estable, no el conteo de la corrida anterior: ese se podia ir
+    # achicando corrida a corrida si Yahoo fallaba de a poco). Aborta con
+    # exit 1 (el workflow queda en rojo y no commitea) en vez de exit 0.
+    n_intentados = len(tickers)
+    n_frescos = sum(1 for f in listado if not f.get("stale"))
+    if n_intentados >= 5 and n_frescos < n_intentados * UMBRAL_ABORTO:
+        msg = (
+            f"ABORTO: solo {n_frescos} tickers frescos de {n_intentados} intentados "
+            f"(< {UMBRAL_ABORTO:.0%}, posible rate-limit de Yahoo). No se escribio nada."
         )
+        print(f"\n::error::{msg}")
+        sys.exit(1)
 
-        # CEDEAR: solo tiene sentido si el dato principal de este ticker es
-        # la especie extranjera (sym sin sufijo .BA) — si ya resolvio como
-        # .BA, "precio" ya ES el precio del CEDEAR, no hay nada que agregar.
-        # ratio N:1 = N certificados CEDEAR representan 1 accion; CCL
-        # implicito = precio_cedear_ars * ratio / precio_accion_usd.
-        cedear_precio = cedear_ratio = ccl_implicito = None
-        if not sym.endswith(".BA") and t in ratios_cedear:
-            cedear_ratio = ratios_cedear[t]
-            cedear_precio = obtener_precio_cedear(t)
-            if cedear_precio and precio:
-                ccl_implicito = (cedear_precio * cedear_ratio) / precio
+    # --- CCL implicito: mediana + descarte de outliers ---
+    ccls = [m["cedear_ccl_implicito"] for m in medias if not m.get("stale") and m.get("cedear_ccl_implicito")]
+    ccl_mediana = float(np.median(ccls)) if ccls else None
+    if ccl_mediana:
+        fuera = []
+        for m in medias:
+            v = m.get("cedear_ccl_implicito")
+            if v and not m.get("stale") and abs(v / ccl_mediana - 1) > TOL_CCL:
+                fuera.append(f"{m['ticker']} ({v:.0f})")
+                m["cedear_ccl_implicito"] = None
+        print(f"\nCCL implicito mediano: {ccl_mediana:.2f} ({len(ccls)} CEDEARs).")
+        if fuera:
+            print(f"  CCL descartado por alejarse >{TOL_CCL:.0%} de la mediana: {', '.join(fuera)}")
 
-        medias.append(
-            {
-                **base,
-                "precio": num(precio, 2),
-                "dist_ema21": num(dist_pct(precio, ema21), 2),
-                "dist_ema50": num(dist_pct(precio, ema50), 2),
-                "dist_ema150": num(dist_pct(precio, ema150), 2),
-                "dist_sma200": num(dist_pct(precio, sma200), 2),
-                "cedear_ticker": f"{t}.BA" if cedear_precio is not None else None,
-                "cedear_precio": num(cedear_precio, 2),
-                "cedear_ratio": cedear_ratio,
-                "cedear_ccl_implicito": num(ccl_implicito, 2),
-            }
-        )
+    print("\nArmando comparables por industria...")
+    ruta_cache_peers = estado / "comparables_cache.json"
+    peers, cache_peers = obtener_peers(fundamentales, leer_json(ruta_cache_peers, {}) or {}, hoy)
 
-        fund = extraer_fundamentales(info)
-        mc = fund.pop("market_cap")
-        recommendation_key = fund.pop("recommendation_key")  # texto, no pasa por num()
-        target_mean_price = fund.get("target_mean_price")
-        upside_pct = ((target_mean_price / precio - 1) * 100) if target_mean_price and precio else None
-        insider = resumen_insider(tk)
-        holdings = obtener_holdings_etf(tk, info.get("quoteType"))
-        stats_mercado = calcular_beta_sharpe(closes, bench_closes)
-        precios_mensuales, estacionalidad = calcular_estacionalidad_y_mensual(closes)
-        historico_mensual.append({"ticker": sym, "precios": precios_mensuales})
-        proximo_earnings = extraer_proximo_earnings(info)
-        dividendos = extraer_dividendos(hist)
-        pre_post_market = extraer_pre_post_market(info)
-        fundamentales.append(
-            {
-                **base,
-                **{k: num(v, 2) for k, v in fund.items()},
-                "market_cap": int(mc) if mc else None,
-                "sector": info.get("sector") or None,
-                "recommendation_key": recommendation_key,
-                "upside_pct": num(upside_pct, 2),
-                "insider": insider,
-                "holdings": holdings,
-                **stats_mercado,
-                "estacionalidad": estacionalidad,
-                "proximo_earnings": proximo_earnings,
-                "dividendos": dividendos,
-                "pre_post_market": pre_post_market,
-            }
-        )
+    # --- Market cap en USD ---
+    monedas = {f.get("moneda") for f in fundamentales} | {p.get("moneda") for p in peers.values()}
+    fx = obtener_fx(monedas, ccl_mediana)
+    for f in fundamentales:
+        if not f.get("moneda"):
+            f["moneda"] = moneda_por_sufijo(f["ticker"])
+        if not f.get("stale") or f.get("market_cap_usd") is None:
+            f["market_cap_usd"] = market_cap_usd(f.get("market_cap"), f.get("moneda"), fx)
+    for p in peers.values():
+        p["market_cap_usd"] = market_cap_usd(p.get("market_cap"), p.get("moneda"), fx)
 
-        screener.append({**base, **calcular_screener(hist)})
-        scanner_setups.append({**base, **calcular_setup_scanner(hist)})
+    comparables = construir_comparables(fundamentales, peers)
 
-        # Warren Score: pilares A/C/D son por-ticker, se calculan aca; el
-        # pilar B (Fuerza Relativa) necesita el percentil de TODO el
-        # universo, asi que solo se guarda el retorno relativo crudo y se
-        # convierte a score despues del loop (calcular_warren_score).
-        warren_datos.append(
-            {
-                "ticker": sym,
-                "nombre": nombre,
-                "trend": ws_calcular_trend(closes),
-                "relative_return": ws_calcular_relative_return(closes, bench_closes),
-                "momentum": ws_calcular_momentum(closes, high_52w, low_52w, precio),
-                "volatility": ws_calcular_volatility(closes),
-            }
-        )
-
-        print(f"  ok {sym} ({nombre})")
-
-    print("\nCalculando Warren Score (percentil de fuerza relativa sobre el universo)...")
+    print("\nCalculando Warren Score (percentil de fuerza relativa sobre el universo USD)...")
     warren_score = calcular_warren_score(warren_datos)
 
-    # Promedios por industria para listado.json
     promedios = []
     if listado:
         df_l = pd.DataFrame(listado)
@@ -1750,68 +2275,101 @@ def main():
                 }
             )
 
-    # Salvaguarda: si esta corrida consiguio datos FRESCOS (no arrastrados) de
-    # muchos menos tickers que la ultima (tipico de un rate-limit de Yahoo en
-    # CI), no pisar los datos buenos. Se mide sobre frescos, no sobre el total
-    # con arrastre, porque con arrastre el listado se ve "completo" aunque
-    # yfinance haya fallado para casi todos hoy.
-    anterior_frescos = 0
-    meta_prev = DIR_SALIDA / "meta.json"
-    if meta_prev.exists():
-        try:
-            meta_datos_prev = json.loads(meta_prev.read_text(encoding="utf-8"))
-            anterior_frescos = int(meta_datos_prev.get("n_frescos", meta_datos_prev.get("n_tickers", 0)) or 0)
-        except Exception:  # noqa: BLE001
-            anterior_frescos = 0
-
-    n_frescos = sum(1 for f in listado if not f.get("stale"))
-    if anterior_frescos and n_frescos < anterior_frescos * 0.5:
-        print(
-            f"\nABORTO la escritura: {n_frescos} frescos vs {anterior_frescos} previos "
-            "(posible rate-limit). Se conservan los datos anteriores."
-        )
-        return
-
-    n_arrastrados = sum(1 for f in listado if f.get("stale"))
-    meta = {
-        "ultima_actualizacion": ahora_iso,
-        "n_tickers": len(listado),
-        "n_frescos": n_frescos,
-        "tickers_invalidos": invalidos,
-    }
-
-    print("\nArmando comparables por industria...")
-    comparables = construir_comparables(fundamentales)
-
     n_compra = sum(
         1 for f in screener if any((f.get(tf) or {}).get("verdict") == "COMPRA" for tf in ("diario", "semanal", "mensual"))
     )
     print(f"Screener: {n_compra} ticker(s) con señal de COMPRA en alguna temporalidad.")
 
     print("\nActualizando historial de señales...")
-    historial = actualizar_historial_screener(screener, ahora)
+    ruta_master = estado / "screener_historial.json"
+    legado_historial = out / "screener_historial.json"
+    master = leer_json(ruta_master)
+    if master is None:  # migracion: el maestro antes se publicaba en public/data
+        master = leer_json(legado_historial, []) or []
+    historial = actualizar_historial_screener(master, screener, ahora)
 
     print("Actualizando historial de Oportunidades...")
     calificados_hoy = calcular_oportunidades_hoy(fundamentales, comparables, screener)
-    historial_oportunidades = actualizar_historial_oportunidades(calificados_hoy, ahora)
+    historial_oportunidades = actualizar_historial_oportunidades(
+        leer_json(out / "oportunidades_historial.json", []), calificados_hoy, ahora
+    )
     print(f"  {len(calificados_hoy)} ticker(s) cumplen hoy valor+señal.")
 
+    # --- Escritura (atomica, minificada, solo si cambio) ---
     print("\nEscribiendo JSON:")
-    escribir("listado.json", {"acciones": listado, "promedios_por_industria": promedios})
-    escribir("medias.json", medias)
-    escribir("fundamentales.json", fundamentales)
-    escribir("comparables.json", comparables)
-    escribir("screener.json", screener)
-    escribir("scanner_setups.json", scanner_setups)
-    escribir("screener_historial.json", historial)
-    escribir("oportunidades_historial.json", historial_oportunidades)
-    escribir("historico_mensual.json", historico_mensual)
-    escribir("warren_score.json", {"actualizado": ahora_iso, "tickers": warren_score})
-    escribir("meta.json", meta)
+    cambios = 0
+    cambios += escribir_json(out / "listado.json", {"acciones": listado, "promedios_por_industria": promedios})
+    cambios += escribir_json(out / "medias.json", medias)
+    cambios += escribir_json(out / "fundamentales.json", fundamentales)
+    cambios += escribir_json(out / "comparables.json", comparables)
+    cambios += escribir_json(out / "screener.json", screener)
+    cambios += escribir_json(out / "scanner_setups.json", scanner_setups)
+    cambios += escribir_json(out / "oportunidades_historial.json", historial_oportunidades)
+    cambios += escribir_json(
+        out / "warren_score.json", {"actualizado": ahora_iso, "tickers": warren_score}, ignorar_claves=("actualizado",)
+    )
 
-    print(f"\nListo. {n_frescos} frescos, {n_arrastrados} arrastrados, {len(invalidos)} invalidos.")
+    # Migracion one-off al layout por ticker: el historico mensual pasa de un
+    # JSON unico (1.8MB) a mensual/<TICKER>.json (sirve para los arrastrados,
+    # que no traen precios nuevos en esta corrida).
+    legado_mensual = out / "historico_mensual.json"
+    if legado_mensual.exists():
+        for item in leer_json(legado_mensual, []) or []:
+            destino = out / "mensual" / f"{item['ticker']}.json"
+            if not destino.exists() and item.get("precios") and item["ticker"] not in mensuales:
+                escribir_json(destino, item["precios"], silencioso=True)
+
+    vigentes = {f["ticker"] for f in listado}
+    n_por_ticker = 0
+    for sym, precios in mensuales.items():
+        n_por_ticker += escribir_json(out / "mensual" / f"{sym}.json", precios, silencioso=True)
+    for sym in sorted(vigentes):
+        n_por_ticker += escribir_json(
+            out / "historial" / f"{sym}.json", historial_por_ticker(historial, sym), silencioso=True
+        )
+    print(f"  -> mensual/ e historial/: {n_por_ticker} archivo(s) por ticker escritos")
+    huerfanos = borrar_huerfanos(out / "mensual", vigentes) + borrar_huerfanos(out / "historial", vigentes)
+    if huerfanos:
+        print(f"  borrados {len(huerfanos)} archivo(s) por ticker huerfano(s): {sorted(set(huerfanos))}")
+    for legado in (legado_mensual, legado_historial):
+        if legado.exists():
+            legado.unlink()
+            print(f"  borrado {legado.name} (reemplazado por archivos por ticker)")
+            cambios += 1
+    cambios += n_por_ticker + len(huerfanos)
+
+    # Estado (data/): no se publica, pero se commitea para la proxima corrida.
+    escribir_json(ruta_master, historial)
+    escribir_json(ruta_cache_peers, cache_peers)
+    nuevos_invalidos = dict(invalidos_vigentes)
+    for t in sin_arrastre:
+        nuevos_invalidos[t] = hoy
+    escribir_json(ruta_invalidos, {t: nuevos_invalidos[t] for t in sorted(nuevos_invalidos)})
+
+    n_arrastrados = sum(1 for f in listado if f.get("stale"))
+    meta = {
+        "ultima_actualizacion": ahora_iso,
+        "n_tickers": len(listado),
+        "n_frescos": n_frescos,
+        "n_intentados": n_intentados,
+        "ccl_implicito_mediana": num(ccl_mediana, 2),
+        "tickers_invalidos": sorted(set(invalidos) | set(salteados)),
+        "tickers_descartados": descartados,
+    }
+    # meta.json solo cambia su timestamp si cambio algun dato publicado: una
+    # corrida sin novedades (fin de semana, feriado) no genera commit.
+    if cambios:
+        escribir_json(out / "meta.json", meta)
+    else:
+        escribir_json(out / "meta.json", meta, ignorar_claves=("ultima_actualizacion",))
+        print("  (sin cambios en los datos publicados)")
+
+    print(
+        f"\nListo. {n_frescos} frescos, {n_arrastrados} arrastrados, {len(invalidos)} sin datos hoy, "
+        f"{len(salteados)} salteados por cache, {len(descartados)} descartados por regla."
+    )
     if invalidos:
-        print(f"Invalidos: {invalidos}")
+        print(f"Sin datos hoy: {invalidos}")
 
 
 if __name__ == "__main__":

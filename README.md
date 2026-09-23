@@ -22,17 +22,37 @@ Todas las pestañas tienen **buscador, filtros por país e industria, ordenamien
 ## Estructura
 
 ```
-data/tickers.xlsx          # input: tu listado de tickers (lo cargás vos)
+data/
+  tickers.xlsx             # input: tu listado de tickers (lo cargás vos)
+  historico_tickers.json   # tickers del "Histórico fundamental" (editable desde la app)
+  ratios_cedear_manual.json# ratios CEDEAR que no están en el listado de Comafi
+  screener_historial.json  # estado: historial maestro de señales (NO se publica)
+  invalidos_cache.json     # estado: tickers sin datos, no se reintentan por 7 días
+  comparables_cache.json   # estado: .info de los peers de comparables (cache diario)
+  cik_cache.json           # estado: ticker -> CIK de la SEC
 scripts/
-  requirements.txt         # yfinance, pandas, numpy, openpyxl
+  requirements.txt         # versiones exactas (pineadas)
+  comun.py                 # utilidades compartidas (RSI único, num, JSON atómico/minificado)
   generar_datos.py         # pipeline real (lee Excel -> calcula -> escribe JSON)
+  mercado_macro.py         # VIX, yield curve, Fear & Greed, CPI/desempleo/Fed
+  historico_fundamental.py # P/E, EV/Sales, P/S históricos (SEC EDGAR)
+  backtests.py             # backtest del Screener + Score (una sola descarga)
   generar_datos_mock.py    # datos sintéticos para desarrollar la UI sin red
   crear_tickers_ejemplo.py # crea un data/tickers.xlsx de ejemplo
-public/data/*.json         # salida del pipeline (listado, medias, fundamentales, meta)
+public/data/               # salida publicada (JSON minificados)
+  listado.json, medias.json, fundamentales.json, comparables.json, screener.json,
+  scanner_setups.json, warren_score.json, oportunidades_historial.json,
+  mercado_macro.json, historico_fundamental.json, backtest_*.json, meta.json
+  historial/<TICKER>.json  # historial de señales del screener (90 días) por ticker
+  mensual/<TICKER>.json    # cierres de fin de mes (5 años) por ticker
 src/                        # frontend React (pages/, components/, lib/)
-.github/workflows/
-  datos.yml                # corre el pipeline y commitea los JSON
-  deploy.yml               # build + deploy a GitHub Pages
+.github/
+  actions/commit-datos/    # commit + push con reintento (compartido por los workflows)
+  workflows/
+    datos.yml              # pipeline de acciones + macro, commitea los JSON
+    historico.yml          # histórico fundamental (semanal)
+    backtest.yml           # backtests (mensual)
+    deploy.yml             # build + deploy a GitHub Pages
 ```
 
 ## El Excel de entrada (`data/tickers.xlsx`)
@@ -94,24 +114,62 @@ Corré el pipeline real (descarga de yfinance, necesita internet):
 python scripts/generar_datos.py
 ```
 
-¿Querés sólo ver la UI sin descargar nada? Usá datos sintéticos:
+Para probar un cambio sin tocar los datos reales, restringí el universo y
+mandá la salida y el estado a carpetas temporales:
 
 ```bash
-python scripts/generar_datos_mock.py
+python scripts/generar_datos.py --tickers AAPL,KEP,GGAL.BA,SPY --out /tmp/sl --estado /tmp/sl-estado
+python scripts/generar_datos.py --limite 20 --out /tmp/sl --estado /tmp/sl-estado
 ```
 
-Cualquiera de los dos escribe los JSON en `public/data/`.
+¿Querés sólo ver la UI sin descargar nada? Usá datos sintéticos (escriben en
+una carpeta temporal; para pisar `public/data/` hay que pedirlo con
+`--out public/data --forzar`):
+
+```bash
+python scripts/generar_datos_mock.py --out /tmp/sl-mock
+```
+
+### Cómo se comporta el pipeline
+
+- **Descarga en lote** (`yf.download`) con reintentos; los tickers que ya
+  resolvieron alguna vez usan siempre el mismo símbolo (no saltan de plaza
+  `.BA`/`.SA` por un fallo puntual). Sólo los que nunca resolvieron prueban
+  sufijos.
+- **Basura del Excel** (DIVIDENDOS, EFECTIVO, bonos AL/GD...) se descarta por
+  regla; los tickers sin datos van a `data/invalidos_cache.json` y no se
+  reintentan durante 7 días.
+- **Arrastre:** si un ticker falla (red o error de cálculo) se publica su último
+  dato bueno con `stale: true` y `actualizado` (timestamp de la última descarga
+  buena). Pasados 7 días se descarta.
+- **Salvaguarda:** si menos del 50% de los tickers intentados trae datos frescos
+  (rate-limit de Yahoo), aborta sin escribir nada y sale con error (el workflow
+  queda en rojo).
+- **Sin commits vacíos:** los JSON se escriben minificados, de forma atómica y
+  sólo si cambiaron; las filas no llevan timestamp propio (está en
+  `meta.json`), así una corrida sin novedades no genera commit ni deploy.
+- **Monedas:** `fundamentales.json` trae `moneda` y `market_cap_usd` (ARS con el
+  CCL implícito mediano de la corrida, el resto con `USD{M}=X`). Si el precio y
+  los balances están en monedas distintas, P/S, P/B y EV/Sales van en `null`
+  (y también el PER cuando la cotización no es en USD). Las medianas de
+  comparables sólo usan tickers en USD.
 
 ## Actualizar los datos en producción
 
-- **Automático:** el workflow **`Actualizar datos`** corre por cron (cada hora
-  en el horario de mercado USA, días hábiles). Editá el `schedule` en
+- **Automático:** el workflow **`Actualizar datos`** corre por cron 5 veces por
+  día hábil (pre-market, apertura, mediodía, cierre, post-market; los horarios
+  están corridos porque GitHub arranca los crons con horas de atraso). Incluye
+  los indicadores de mercado/macro. Editá el `schedule` en
   [`.github/workflows/datos.yml`](.github/workflows/datos.yml) para cambiar la frecuencia.
+- Los workflows de datos (`Actualizar datos`, `Historico fundamental`,
+  `Backtest Screener`) comparten un grupo de `concurrency`: nunca corren dos a
+  la vez, así que no se pisan los pushes.
 - **Manual:** GitHub → pestaña **Actions** → workflow **"Actualizar datos"** →
   **Run workflow**.
 
 Cuando el pipeline commitea JSON nuevos, el workflow **`Deploy a GitHub Pages`**
-se dispara solo (vía `workflow_run`) y vuelve a publicar el sitio.
+se dispara solo (vía `workflow_run`) y vuelve a publicar el sitio. Si la corrida
+no commiteó nada, no se deploya.
 
 ### Cambiar de tickers
 

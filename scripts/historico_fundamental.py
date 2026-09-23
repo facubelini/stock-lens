@@ -14,28 +14,35 @@ analistas historicas, que no existen gratis. Tampoco se calcula PEG: es un
 derivado de PER + crecimiento, y sumarle mas aproximaciones lo hace poco
 confiable comparado con los otros tres ratios.
 
+Sin look-ahead: cada dato contable se usa recien desde la fecha en que se
+PRESENTO (`filed` del 10-Q/10-K), no desde el cierre del trimestre (`end`):
+el P/E de una semana solo usa balances que el mercado ya conocia esa semana.
+Por la misma razon se toma, para cada trimestre, el valor tal como se
+presento originalmente (el primer `filed`), no la re-expresion posterior.
+Splits: los precios son los de cierre sin ajuste por dividendos
+(auto_adjust=False; el Close de Yahoo ya viene ajustado por splits) y EPS/
+acciones se llevan a la base de acciones actual con tk.splits.
+
 Uso:
-    python scripts/historico_fundamental.py
+    python scripts/historico_fundamental.py [--out CARPETA]
 """
 
-import json
+import argparse
 import threading
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, date
 from pathlib import Path
-from zoneinfo import ZoneInfo
 
 import numpy as np
 import pandas as pd
 import requests
 import yfinance as yf
 
-RAIZ = Path(__file__).resolve().parent.parent
+from comun import DIR_DATOS_PUBLICOS, RAIZ, TZ, escribir_json, leer_json
+
 ARCHIVO_TICKERS = RAIZ / "data" / "historico_tickers.json"
 CACHE_CIK = RAIZ / "data" / "cik_cache.json"
-DIR_SALIDA = RAIZ / "public" / "data"
-TZ = ZoneInfo("America/Argentina/Buenos_Aires")
 
 LIMITE_TICKERS = 20
 PERIODO_PRECIO = "5y"
@@ -45,7 +52,7 @@ WORKERS = 5  # tickers en paralelo (I/O-bound: la espera de red es el costo, no 
 # https://www.sec.gov/os/webmaster-faq#developers
 SEC_HEADERS = {"User-Agent": "Stock Lens (facundo.belini@raona.com)"}
 SEC_TICKERS_URL = "https://www.sec.gov/files/company_tickers.json"
-SEC_CONCEPT_URL = "https://data.sec.gov/api/xbrl/companyconcept/CIK{cik:010d}/us-gaap/{tag}.json"
+SEC_CONCEPT_URL = "https://data.sec.gov/api/xbrl/companyconcept/CIK{cik:010d}/{taxonomia}/{tag}.json"
 
 
 class LimitadorTasa:
@@ -80,7 +87,10 @@ TAGS_REVENUE = [
     "Revenues",
     "SalesRevenueNet",
 ]
-TAGS_SHARES = ["CommonStockSharesOutstanding", "EntityCommonStockSharesOutstanding"]
+# EntityCommonStockSharesOutstanding es de la portada del reporte: vive en
+# la taxonomia "dei", no en "us-gaap" (antes se pedia en us-gaap y daba 404
+# siempre, asi que ese fallback nunca funcionaba).
+TAGS_SHARES = ["CommonStockSharesOutstanding", ("dei", "EntityCommonStockSharesOutstanding")]
 TAGS_CASH = [
     "CashAndCashEquivalentsAtCarryingValue",
     "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents",
@@ -97,7 +107,7 @@ def leer_tickers_historico():
     if not ARCHIVO_TICKERS.exists():
         return []
     try:
-        tickers = json.loads(ARCHIVO_TICKERS.read_text(encoding="utf-8"))
+        tickers = leer_json(ARCHIVO_TICKERS, [])
     except Exception:  # noqa: BLE001
         return []
     if not isinstance(tickers, list):
@@ -119,16 +129,11 @@ def _sin_sufijo(ticker):
 
 
 def _cargar_cache_cik():
-    if CACHE_CIK.exists():
-        try:
-            return json.loads(CACHE_CIK.read_text(encoding="utf-8"))
-        except Exception:  # noqa: BLE001
-            return {}
-    return {}
+    return leer_json(CACHE_CIK, {}) or {}
 
 
 def _guardar_cache_cik(cache):
-    CACHE_CIK.write_text(json.dumps(cache, indent=2, ensure_ascii=False), encoding="utf-8")
+    escribir_json(CACHE_CIK, cache)
 
 
 def resolver_ciks(tickers):
@@ -150,13 +155,13 @@ def resolver_ciks(tickers):
     return cache
 
 
-def _obtener_companyconcept(cik, tag):
+def _obtener_companyconcept(cik, tag, taxonomia="us-gaap"):
     """Un solo concepto XBRL (ej. solo EPS), no el companyfacts completo de
     la empresa (que trae cientos de conceptos que no usamos — para AAPL son
     varios MB). Mucho mas liviano por request, a costa de mas requests (uno
     por tag candidato) — compensado con el limitador de tasa compartido."""
     LIMITADOR_SEC.esperar()
-    url = SEC_CONCEPT_URL.format(cik=cik, tag=tag)
+    url = SEC_CONCEPT_URL.format(cik=cik, tag=tag, taxonomia=taxonomia)
     r = requests.get(url, headers=SEC_HEADERS, timeout=20)
     if r.status_code == 404:
         return None
@@ -175,7 +180,8 @@ def _concepto_combinado(cik, tags):
     unidades_combinadas = {}
     nombre = None
     for tag in tags:
-        concepto = _obtener_companyconcept(cik, tag)
+        taxonomia, tag = tag if isinstance(tag, tuple) else ("us-gaap", tag)
+        concepto = _obtener_companyconcept(cik, tag, taxonomia)
         if not concepto:
             continue
         nombre = nombre or concepto.get("entityName")
@@ -186,115 +192,157 @@ def _concepto_combinado(cik, tags):
     return {"units": unidades_combinadas}, nombre
 
 
-def _serie_instantanea(concepto, unidad_preferida="USD"):
-    """Conceptos de balance (foto a una fecha): shares/cash/deuda. Devuelve
-    lista de (fecha, valor) sin duplicados, quedandose con la presentacion
-    mas reciente (`filed`) para cada fecha de corte."""
+def _entradas(concepto, unidad_preferida):
     if not concepto:
         return []
     unidades = concepto.get("units", {})
-    entradas = unidades.get(unidad_preferida) or next(iter(unidades.values()), [])
+    return unidades.get(unidad_preferida) or next(iter(unidades.values()), [])
+
+
+def _primera_presentacion(entradas, filtro):
+    """Para cada fecha de corte (`end`) se queda con la PRIMERA presentacion
+    (menor `filed`): es el dato tal como lo conocio el mercado ese dia. Las
+    re-expresiones posteriores (comparativos del año siguiente) aparecen
+    con un `filed` un año mas tarde y, si se usaran, correrian el dato hacia
+    adelante o meterian informacion que en esa fecha no existia."""
     por_fecha = {}
     for e in entradas:
-        if "start" in e:  # es de duracion, no instantaneo; ignorar
+        if not filtro(e) or not e.get("filed"):
             continue
         fin = e["end"]
         anterior = por_fecha.get(fin)
-        if anterior is None or e.get("filed", "") >= anterior.get("filed", ""):
+        if anterior is None or e["filed"] < anterior["filed"]:
             por_fecha[fin] = e
-    return sorted(((k, v["val"]) for k, v in por_fecha.items()), key=lambda x: x[0])
+    return por_fecha
 
 
-def _trimestres_reportados(concepto, unidad_preferida="USD"):
-    """Extrae los valores de UN trimestre (duracion ~90 dias) ya reportados
-    directamente (Q1/Q2/Q3 de los 10-Q). Devuelve dict fecha_fin -> valor."""
-    if not concepto:
-        return {}
-    unidades = concepto.get("units", {})
-    entradas = unidades.get(unidad_preferida) or next(iter(unidades.values()), [])
-    por_fecha = {}
-    for e in entradas:
-        if "start" not in e:
-            continue
-        dias = (date.fromisoformat(e["end"]) - date.fromisoformat(e["start"])).days
-        if not (DIAS_TRIMESTRE[0] <= dias <= DIAS_TRIMESTRE[1]):
-            continue
-        fin = e["end"]
-        anterior = por_fecha.get(fin)
-        if anterior is None or e.get("filed", "") >= anterior.get("filed", ""):
-            por_fecha[fin] = e
-    return {k: v["val"] for k, v in por_fecha.items()}
+def _factor_splits(splits):
+    """Devuelve f(fecha_iso) = producto de los splits POSTERIORES a esa fecha
+    (cuantas acciones de hoy equivale una acción de ese momento). EPS
+    presentado en esa fecha / f = EPS en base de acciones actual."""
+    if splits is None or len(splits) == 0:
+        return lambda _f: 1.0
+    s = splits[splits > 0]
+    fechas = [pd.Timestamp(d).tz_localize(None) if pd.Timestamp(d).tzinfo else pd.Timestamp(d) for d in s.index]
+    ratios = list(s.values)
+
+    def f(fecha_iso):
+        d = pd.Timestamp(fecha_iso)
+        factor = 1.0
+        for fs, r in zip(fechas, ratios):
+            if fs > d:
+                factor *= float(r)
+        return factor
+
+    return f
 
 
-def _anuales_reportados(concepto, unidad_preferida="USD"):
-    """Valores de un anio fiscal completo (10-K, duracion ~365 dias). Devuelve
-    dict fecha_fin -> (fecha_inicio, valor)."""
-    if not concepto:
-        return {}
-    unidades = concepto.get("units", {})
-    entradas = unidades.get(unidad_preferida) or next(iter(unidades.values()), [])
-    por_fecha = {}
-    for e in entradas:
-        if "start" not in e:
+def _serie_instantanea(concepto, unidad_preferida="USD", ajuste=None):
+    """Conceptos de balance (foto a una fecha): shares/cash/deuda. Devuelve
+    lista de (fecha_presentacion, valor), un punto por fecha de corte
+    (primera presentacion). 'ajuste(valor, filed)' lleva el valor a la base
+    de acciones actual (solo para shares)."""
+    por_fecha = _primera_presentacion(_entradas(concepto, unidad_preferida), lambda e: "start" not in e)
+    puntos = []
+    for fin, e in sorted(por_fecha.items()):
+        val = ajuste(e["val"], e["filed"]) if ajuste else e["val"]
+        puntos.append((e["filed"], fin, val))
+    return _por_presentacion(puntos)
+
+
+def _por_presentacion(puntos):
+    """puntos: [(filed, end, valor)]. Ordena por fecha de presentacion y
+    descarta los que llegan despues pero son de un corte MAS VIEJO que el
+    ya publicado (no deben pisar un dato mas nuevo)."""
+    salida, ultimo_fin = [], ""
+    for filed, fin, val in sorted(puntos):
+        if fin < ultimo_fin:
             continue
-        dias = (date.fromisoformat(e["end"]) - date.fromisoformat(e["start"])).days
-        if not (DIAS_ANUAL[0] <= dias <= DIAS_ANUAL[1]):
-            continue
-        fin = e["end"]
-        anterior = por_fecha.get(fin)
-        if anterior is None or e.get("filed", "") >= anterior.get("filed", ""):
-            por_fecha[fin] = e
-    return {k: (v["start"], v["val"]) for k, v in por_fecha.items()}
+        ultimo_fin = fin
+        salida.append((filed, val))
+    return salida
+
+
+def _duracion(e):
+    return (date.fromisoformat(e["end"]) - date.fromisoformat(e["start"])).days
+
+
+def _trimestres_reportados(concepto, unidad_preferida="USD", ajuste=None):
+    """Valores de UN trimestre (duracion ~90 dias) reportados directamente
+    (Q1/Q2/Q3 de los 10-Q). dict fecha_fin -> (valor, filed)."""
+    por_fecha = _primera_presentacion(
+        _entradas(concepto, unidad_preferida),
+        lambda e: "start" in e and DIAS_TRIMESTRE[0] <= _duracion(e) <= DIAS_TRIMESTRE[1],
+    )
+    return {
+        k: ((ajuste(v["val"], v["filed"]) if ajuste else v["val"]), v["filed"]) for k, v in por_fecha.items()
+    }
+
+
+def _anuales_reportados(concepto, unidad_preferida="USD", ajuste=None):
+    """Valores de un anio fiscal completo (10-K, ~365 dias). dict fecha_fin
+    -> (fecha_inicio, valor, filed)."""
+    por_fecha = _primera_presentacion(
+        _entradas(concepto, unidad_preferida),
+        lambda e: "start" in e and DIAS_ANUAL[0] <= _duracion(e) <= DIAS_ANUAL[1],
+    )
+    return {
+        k: (v["start"], (ajuste(v["val"], v["filed"]) if ajuste else v["val"]), v["filed"])
+        for k, v in por_fecha.items()
+    }
 
 
 def _completar_cuarto_trimestre(trimestres, anuales):
     """Muchas empresas no presentan un 10-Q para el 4to trimestre (queda
     "adentro" del 10-K anual). Lo reconstruye como anual - (T1+T2+T3) cuando
-    esos 3 trimestres del mismo anio fiscal ya estan disponibles."""
+    esos 3 trimestres del mismo anio fiscal ya estan disponibles; se conoce
+    recien cuando se presenta el 10-K."""
     trimestres = dict(trimestres)
     fines_trim = sorted(trimestres.keys())
-    for fin_anual, (inicio_anual, valor_anual) in anuales.items():
+    for fin_anual, (inicio_anual, valor_anual, filed_anual) in anuales.items():
         if fin_anual in trimestres:
             continue
-        # Trimestres cuyo fin cae estrictamente dentro del anio fiscal.
         del_anio = [f for f in fines_trim if inicio_anual < f < fin_anual]
         if len(del_anio) != 3:
             continue
-        suma = sum(trimestres[f] for f in del_anio)
-        trimestres[fin_anual] = valor_anual - suma
+        suma = sum(trimestres[f][0] for f in del_anio)
+        filed = max([filed_anual] + [trimestres[f][1] for f in del_anio])
+        trimestres[fin_anual] = (valor_anual - suma, filed)
     return trimestres
 
 
-def _serie_ttm(concepto, unidad_preferida="USD"):
-    """TTM (suma de los ultimos 4 trimestres) por fecha de corte. Solo emite
-    un punto cuando hay 4 trimestres consecutivos sin huecos grandes."""
-    trims = _trimestres_reportados(concepto, unidad_preferida)
-    anuales = _anuales_reportados(concepto, unidad_preferida)
+def _serie_ttm(concepto, unidad_preferida="USD", ajuste=None):
+    """TTM (suma de los ultimos 4 trimestres). Cada punto queda fechado en
+    la presentacion del ULTIMO de los 4 trimestres que lo componen (antes
+    del cual ese TTM no se podia calcular). Solo emite un punto cuando hay 4
+    trimestres consecutivos sin huecos grandes."""
+    trims = _trimestres_reportados(concepto, unidad_preferida, ajuste)
+    anuales = _anuales_reportados(concepto, unidad_preferida, ajuste)
     trims = _completar_cuarto_trimestre(trims, anuales)
     fechas = sorted(trims.keys())
 
-    ttm = []
+    puntos = []
     for i in range(3, len(fechas)):
         ult4 = fechas[i - 3 : i + 1]
-        # Que esten razonablemente espaciados (evita sumar trimestres con
-        # huecos de anios por datos faltantes).
         primero, ultimo = date.fromisoformat(ult4[0]), date.fromisoformat(ult4[-1])
         if not (250 <= (ultimo - primero).days <= 420):
             continue
-        ttm.append((ult4[-1], sum(trims[f] for f in ult4)))
-    return ttm
+        filed = max(trims[f][1] for f in ult4)
+        puntos.append((filed, ult4[-1], sum(trims[f][0] for f in ult4)))
+    return _por_presentacion(puntos)
 
 
 def _forward_fill_a_fechas(serie, fechas_objetivo):
-    """serie: lista de (fecha_iso, valor) ordenada. Devuelve un array alineado
-    a `fechas_objetivo` (pandas Timestamps) con el ultimo valor conocido a esa
+    """serie: lista de (fecha_presentacion_iso, valor). Devuelve una Serie
+    alineada a `fechas_objetivo` con el ultimo valor YA PRESENTADO a esa
     fecha (o NaN si todavia no habia dato)."""
     if not serie:
         return pd.Series(np.nan, index=fechas_objetivo)
     s = pd.Series(
         [v for _, v in serie],
         index=pd.to_datetime([f for f, _ in serie]),
-    ).sort_index()
+    )
+    s = s[~s.index.duplicated(keep="last")].sort_index()
     return s.reindex(s.index.union(fechas_objetivo)).ffill().reindex(fechas_objetivo)
 
 
@@ -311,17 +359,31 @@ def calcular_historico_ticker(ticker, cik):
     ni_concepto, _ = _concepto_combinado(cik, TAGS_NET_INCOME)
     nombre = nombre_a or nombre_b or nombre_c or ticker
 
-    hist = yf.Ticker(ticker).history(period=PERIODO_PRECIO, interval="1d", auto_adjust=True)
+    tk = yf.Ticker(ticker)
+    # auto_adjust=False: Close ajustado solo por splits (no por dividendos),
+    # que es el precio real de mercado en base de acciones actual.
+    hist = tk.history(period=PERIODO_PRECIO, interval="1d", auto_adjust=False)
     if hist is None or hist.empty:
         return {"ticker": ticker, "disponible": False, "motivo": "Sin historial de precio (yfinance)."}
     if hist.index.tz is not None:
         hist = hist.copy()
         hist.index = hist.index.tz_localize(None)  # simplifica: fechas EDGAR ya son naive
+    try:
+        splits = tk.splits
+    except Exception:  # noqa: BLE001
+        splits = hist["Stock Splits"] if "Stock Splits" in hist.columns else None
+    factor = _factor_splits(splits)
 
-    eps_ttm = _serie_ttm(eps_concepto, "USD/shares")
+    def ajuste_por_accion(val, filed):
+        return val / factor(filed)
+
+    def ajuste_acciones(val, filed):
+        return val * factor(filed)
+
+    eps_ttm = _serie_ttm(eps_concepto, "USD/shares", ajuste_por_accion)
     rev_ttm = _serie_ttm(rev_concepto, "USD")
     ni_ttm = _serie_ttm(ni_concepto, "USD")
-    shares = _serie_instantanea(shares_concepto, "shares")
+    shares = _serie_instantanea(shares_concepto, "shares", ajuste_acciones)
     cash = _serie_instantanea(cash_concepto, "USD")
     deuda_lp = _serie_instantanea(dlp_concepto, "USD")
     deuda_cp = _serie_instantanea(dcp_concepto, "USD")
@@ -329,8 +391,7 @@ def calcular_historico_ticker(ticker, cik):
     if not eps_ttm and not rev_ttm:
         return {"ticker": ticker, "disponible": False, "motivo": "Sin EPS/ventas trimestrales en EDGAR."}
 
-    # Downsample semanal (viernes) para que el JSON no sea gigante. date_range
-    # ya hereda el timezone de hist.index (sus limites son tz-aware).
+    # Downsample semanal (viernes) para que el JSON no sea gigante.
     fechas = pd.date_range(hist.index.min(), hist.index.max(), freq="W-FRI")
     precio = hist["Close"].reindex(hist.index.union(fechas)).ffill().reindex(fechas)
 
@@ -447,13 +508,19 @@ def _calcular_seguro(ticker, cik):
     try:
         return calcular_historico_ticker(ticker, cik)
     except Exception as e:  # noqa: BLE001
-        return {"ticker": ticker, "disponible": False, "motivo": f"Error: {e}"}
+        return {"ticker": ticker, "disponible": False, "motivo": f"Error: {e}", "_error": True}
 
 
-def main():
-    DIR_SALIDA.mkdir(parents=True, exist_ok=True)
+def main(argv=None):
+    ap = argparse.ArgumentParser(description="Historico fundamental (SEC EDGAR) -> historico_fundamental.json")
+    ap.add_argument("--out", type=Path, default=DIR_DATOS_PUBLICOS)
+    args = ap.parse_args(argv)
+    args.out.mkdir(parents=True, exist_ok=True)
+    ruta = args.out / "historico_fundamental.json"
+
     tickers = leer_tickers_historico()
     print(f"Historico fundamental para {len(tickers)} ticker(s): {tickers}")
+    previos = {r.get("ticker"): r for r in (leer_json(ruta, {}) or {}).get("tickers", []) if isinstance(r, dict)}
 
     resultados = []
     if tickers:
@@ -468,8 +535,17 @@ def main():
             }
             for fut in as_completed(futuros):
                 t = futuros[fut]
+                r = fut.result()
+                # Un error puntual (SEC/Yahoo caidos, timeout) no borra lo
+                # que ya habia: se conserva el ultimo resultado bueno del
+                # ticker, marcado stale. Los "no disponible" legitimos (sin
+                # CIK, sin datos en EDGAR) si se publican tal cual.
+                previo = previos.get(t)
+                if r.pop("_error", False) and previo and previo.get("disponible"):
+                    print(f"  ~ {t}: {r['motivo']} -> se conserva el dato anterior")
+                    r = {**previo, "stale": True}
                 print(f"  listo: {t}")
-                por_ticker[t] = fut.result()
+                por_ticker[t] = r
         resultados = [por_ticker[t] for t in tickers]  # mantener el orden original
     else:
         print("Lista vacia: se escribe igual un JSON valido (sin tickers) para que el front no vea 404.")
@@ -478,10 +554,8 @@ def main():
         "actualizado": datetime.now(TZ).isoformat(),
         "tickers": resultados,
     }
-    ruta = DIR_SALIDA / "historico_fundamental.json"
-    with open(ruta, "w", encoding="utf-8") as f:
-        json.dump(salida, f, ensure_ascii=False, indent=2)
-    print(f"-> {ruta.relative_to(RAIZ)}")
+    if not escribir_json(ruta, salida, ignorar_claves=("actualizado",)):
+        print("historico_fundamental.json sin cambios.")
 
     disponibles = sum(1 for r in resultados if r.get("disponible"))
     print(f"Listo: {disponibles}/{len(resultados)} con datos disponibles.")

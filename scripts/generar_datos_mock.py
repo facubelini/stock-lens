@@ -1,45 +1,33 @@
 """Genera JSON de PRUEBA (datos sinteticos, sin red) a partir de
 data/tickers.xlsx. Sirve para desarrollar/ver la UI sin depender de yfinance.
 
-NO usar en produccion: los numeros son ficticios pero deterministas.
+NO usar en produccion: los numeros son ficticios pero deterministas. Por
+eso escribe por defecto en una carpeta temporal (NO en public/data): antes
+pisaba los JSON reales y el meta.json publicado. Para apuntarlo a
+public/data hay que pedirlo explicitamente con --out public/data --forzar.
 
 Uso:
-    python scripts/generar_datos_mock.py
+    python scripts/generar_datos_mock.py [--out CARPETA] [--forzar]
 """
 
-import json
+import argparse
 import random
-import re
+import sys
+import tempfile
 from datetime import datetime
 from pathlib import Path
-from zoneinfo import ZoneInfo
 
 import pandas as pd
 
 from comparables_universo import INDUSTRIA_COMPARABLES
+from comun import CLAVES_BENCH, DIR_DATOS_PUBLICOS, TZ, escribir_json, normalizar_industria as _normalizar_industria
 from generar_datos import calcular_screener, calcular_setup_scanner, leer_tickers
 
-RAIZ = Path(__file__).resolve().parent.parent
-DIR_SALIDA = RAIZ / "public" / "data"
-TZ = ZoneInfo("America/Argentina/Buenos_Aires")
-
-CLAVES_BENCH = [
-    "per_trailing", "per_forward", "peg", "ev_sales", "pb", "ps", "market_cap",
-    "eps", "profit_margin", "roe", "dividend_yield", "beta", "debt_to_equity", "current_ratio",
-]
+DIR_MOCK_DEFECTO = Path(tempfile.gettempdir()) / "stock-lens-mock"
 
 
 def r2(v):
     return round(v, 2)
-
-
-def _normalizar_industria(s):
-    if not s:
-        return ""
-    s = str(s).replace("—", "-").replace("–", "-")
-    s = re.sub(r"\s*-\s*", " - ", s)
-    s = re.sub(r"\s+", " ", s)
-    return s.strip().lower()
 
 
 def _fundamentales_random(rng):
@@ -135,7 +123,14 @@ def construir_comparables_mock(fundamentales):
     return resultado
 
 
-def main():
+def main(argv=None):
+    ap = argparse.ArgumentParser(description="JSON de prueba (mock, sin red)")
+    ap.add_argument("--out", type=Path, default=DIR_MOCK_DEFECTO, help=f"carpeta de salida (default {DIR_MOCK_DEFECTO})")
+    ap.add_argument("--forzar", action="store_true", help="permite escribir en public/data (pisa los datos reales)")
+    args = ap.parse_args(argv)
+    DIR_SALIDA = args.out.resolve()
+    if DIR_SALIDA == DIR_DATOS_PUBLICOS.resolve() and not args.forzar:
+        sys.exit("Negado: el mock pisaria los datos reales de public/data. Usa --forzar si es a proposito.")
     DIR_SALIDA.mkdir(parents=True, exist_ok=True)
     df = leer_tickers()
 
@@ -152,7 +147,7 @@ def main():
         # Semilla deterministica por ticker (reproducible entre corridas).
         rng = random.Random(t)
         precio = rng.uniform(15, 600)
-        base = {"ticker": t, "nombre": nombre, "industria": industria, "pais": pais}
+        base = {"ticker": t, "nombre": nombre, "industria": industria, "pais": pais, "stale": False}
 
         # Sparkline mock: pequena caminata aleatoria de 30 puntos.
         spark, p = [], precio
@@ -205,7 +200,9 @@ def main():
                 "ev_sales": r2(rng.uniform(1, 15)),
                 "pb": r2(rng.uniform(0.8, 18)),
                 "ps": r2(rng.uniform(1, 14)),
-                "market_cap": int(rng.uniform(5e9, 3e12)),
+                "market_cap": (mc := int(rng.uniform(5e9, 3e12))),
+                "market_cap_usd": mc,
+                "moneda": "USD",
                 "eps": r2(rng.uniform(0.5, 25)),
                 "profit_margin": r2(rng.uniform(-5, 40)),
                 "roe": r2(rng.uniform(-10, 60)),
@@ -241,8 +238,7 @@ def main():
     }
 
     def escribir(nombre, obj):
-        with open(DIR_SALIDA / nombre, "w", encoding="utf-8") as f:
-            json.dump(obj, f, ensure_ascii=False, indent=2)
+        escribir_json(DIR_SALIDA / nombre, obj)
 
     comparables = construir_comparables_mock(fundamentales)
 
@@ -253,7 +249,7 @@ def main():
     escribir("screener.json", screener)
     escribir("scanner_setups.json", scanner_setups)
     escribir("meta.json", meta)
-    print(f"Mock generado: {len(listado)} tickers en {DIR_SALIDA.relative_to(RAIZ)}")
+    print(f"Mock generado: {len(listado)} tickers en {DIR_SALIDA}")
 
 
 if __name__ == "__main__":

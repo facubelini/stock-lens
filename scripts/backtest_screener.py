@@ -13,11 +13,24 @@ GLOBALES (no por ticker) — un backtest por ticker individual tendria muy
 pocas señales en 5 anios para ser estadisticamente significativo; agregando
 todos los tickers juntos el tamaño de muestra es mucho mas confiable.
 
+Metodologia (para no inflar los numeros):
+- Cada señal cuenta UNA vez: el primer dia de cada racha del mismo
+  veredicto (antes contaba cada dia de la racha, con retornos solapados
+  que multiplicaban el n sin aportar informacion nueva). La base toma una
+  muestra cada N ruedas por la misma razon.
+- Entrada a la APERTURA de la rueda siguiente a la señal (la señal se
+  conoce con el cierre, no se puede comprar a ese mismo cierre) y salida
+  al cierre N ruedas despues.
+- Solo tickers que cotizan en USD (un CEDEAR en pesos mezcla devaluacion).
+- Sesgo de supervivencia: el universo es la lista ACTUAL; se avisa en
+  `advertencias` del JSON para que la UI lo muestre.
+
 Uso:
-    python scripts/backtest_screener.py
+    python scripts/backtest_screener.py [--out CARPETA]
+    python scripts/backtests.py   # los dos backtests con una sola descarga
 """
 
-import json
+import argparse
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -38,34 +51,105 @@ from generar_datos import (  # noqa: E402
     TOL_CLAVE,
     TOL_EXTENSION,
     TZ,
-    RAIZ,
     _calcular_asl,
     _calcular_macd,
     _calcular_smi,
+    descargar_historicos,
     leer_tickers,
     num,
-    resolver_ticker,
 )
+from comun import DIR_DATOS_PUBLICOS, escribir_json, leer_json, moneda_por_sufijo, rsi_serie  # noqa: E402
 
-DIR_SALIDA = RAIZ / "public" / "data"
 HORIZONTES = [5, 10, 20]  # ruedas habiles (~1 semana, ~2 semanas, ~1 mes)
 MINIMO_VELAS = 300
 
+# Misma implementacion de RSI que la vista en vivo (comun.rsi_serie).
+_rsi_serie = rsi_serie
 
-def _rsi_serie(closes, periodo=14):
-    """RSI de Wilder vectorizado (serie completa, no solo el ultimo valor).
-    Aproximacion estandar via EWM — converge al mismo resultado en regimen
-    estable que el calculo manual punto a punto usado en vivo; para un
-    backtest agregado esto es suficiente, no hace falta bit-a-bit identico."""
-    delta = closes.diff()
-    ganancia = delta.clip(lower=0)
-    perdida = -delta.clip(upper=0)
-    avg_g = ganancia.ewm(alpha=1 / periodo, adjust=False, min_periods=periodo).mean()
-    avg_p = perdida.ewm(alpha=1 / periodo, adjust=False, min_periods=periodo).mean()
-    rs = avg_g / avg_p
-    rsi = 100 - 100 / (1 + rs)
-    rsi[avg_p == 0] = 100
-    return rsi
+ADVERTENCIAS_COMUNES = [
+    "Sesgo de supervivencia: el universo es tu lista ACTUAL de tickers. Las empresas que quebraron o "
+    "se deslistaron en estos 5 años no están, así que los retornos tienden a verse mejores de lo que fueron.",
+    "Solo tickers que cotizan en USD: los CEDEAR en pesos y las acciones de B3 se excluyen porque su "
+    "retorno mezcla la devaluación de la moneda.",
+    "Cada señal cuenta una sola vez (el primer día de cada racha) y la base toma una muestra cada N "
+    "ruedas, para no contar varias veces el mismo movimiento.",
+    "Entrada a la apertura de la rueda siguiente a la señal y salida al cierre N ruedas después. "
+    "No incluye comisiones, spreads, impuestos ni slippage.",
+    "Rendimientos pasados no garantizan rendimientos futuros.",
+]
+
+
+def universo_usd(out=DIR_DATOS_PUBLICOS):
+    """Simbolos ya resueltos por el pipeline (listado.json, no arrastrados)
+    que cotizan en USD segun fundamentales.json. Evita volver a resolver
+    sufijos y a reintentar los tickers invalidos del Excel. Si no hay
+    listado todavia, cae a los tickers del Excel sin sufijo."""
+    listado = (leer_json(Path(out) / "listado.json", {}) or {}).get("acciones") or []
+    monedas = {f["ticker"]: f.get("moneda") for f in (leer_json(Path(out) / "fundamentales.json", []) or [])}
+    if listado:
+        return sorted(
+            {
+                f["ticker"]
+                for f in listado
+                if not f.get("stale") and (monedas.get(f["ticker"]) or moneda_por_sufijo(f["ticker"])) == "USD"
+            }
+        )
+    return sorted({t for t in leer_tickers()["Ticker"] if "." not in t})
+
+
+def descargar_para_backtest(simbolos):
+    """Una sola descarga en lote (5y, auto_adjust=True, igual que el
+    pipeline) que comparten los dos backtests."""
+    print(f"Descargando 5y de {len(simbolos)} simbolos USD (en lote)...")
+    return descargar_historicos(simbolos)
+
+
+def retornos_forward(ohlc, h):
+    """Retorno % entrando a la apertura de la rueda siguiente (t+1) y
+    saliendo al cierre de t+h. NaN al final de la serie."""
+    entrada = ohlc["Open"].shift(-1)
+    salida = ohlc["Close"].shift(-h)
+    return (salida / entrada - 1) * 100
+
+
+def muestras_no_solapadas(etiquetas, ohlc, etiqueta_base="BASELINE"):
+    """Filas (etiqueta, h, retorno): una por racha de cada etiqueta (primer
+    dia) + la base muestreada cada h ruedas."""
+    inicio_racha = etiquetas.notna() & (etiquetas != etiquetas.shift(1))
+    filas = []
+    for h in HORIZONTES:
+        ret = retornos_forward(ohlc, h)
+        sel = inicio_racha & ret.notna()
+        filas.extend((v, h, float(r)) for v, r in zip(etiquetas[sel], ret[sel]))
+        validos = np.flatnonzero((etiquetas.notna() & ret.notna()).to_numpy())[::h]
+        filas.extend((etiqueta_base, h, float(r)) for r in ret.iloc[validos])
+    return filas
+
+
+def agregar_stats_filas(filas, bajistas=()):
+    """stats[etiqueta][h] = {n, retorno_prom, hit_rate}. Para etiquetas
+    bajistas (VENTA) el acierto es que el precio baje."""
+    if not filas:
+        return {}
+    df = pd.DataFrame(filas, columns=["etiqueta", "h", "ret"])
+    resultado = {}
+    orden = ["BASELINE"] + sorted(e for e in df["etiqueta"].unique() if e != "BASELINE")
+    for etiqueta in orden:
+        grupo = df[df["etiqueta"] == etiqueta]
+        por_horizonte = {}
+        for h in HORIZONTES:
+            validos = grupo.loc[grupo["h"] == h, "ret"]
+            if not len(validos):
+                por_horizonte[str(h)] = None
+                continue
+            acierto = (validos < 0) if etiqueta in bajistas else (validos > 0)
+            por_horizonte[str(h)] = {
+                "n": int(len(validos)),
+                "retorno_prom": num(validos.mean(), 2),
+                "hit_rate": num(acierto.mean() * 100, 1),
+            }
+        resultado[etiqueta] = por_horizonte
+    return resultado
 
 
 def evaluar_serie_diaria(ohlc):
@@ -142,89 +226,34 @@ def evaluar_serie_diaria(ohlc):
 
 
 def backtest_ticker(sym, ohlc):
-    veredictos = evaluar_serie_diaria(ohlc)
-    closes = ohlc["Close"]
-    validos = veredictos.notna()
-    sub_veredicto = veredictos[validos]
-    retornos_h = {h: ((closes.shift(-h) / closes - 1) * 100)[validos] for h in HORIZONTES}
-
-    filas = []
-    for i in range(len(sub_veredicto)):
-        fila = {"verdict": sub_veredicto.iloc[i]}
-        for h in HORIZONTES:
-            r = retornos_h[h].iloc[i]
-            fila[f"ret_{h}d"] = None if pd.isna(r) else float(r)
-        filas.append(fila)
-    return filas
+    return muestras_no_solapadas(evaluar_serie_diaria(ohlc), ohlc)
 
 
-def agregar_stats(filas_totales):
-    if not filas_totales:
-        return {}
-    df = pd.DataFrame(filas_totales)
-    resultado = {}
-
-    baseline = {}
-    for h in HORIZONTES:
-        validos = df[f"ret_{h}d"].dropna()
-        baseline[str(h)] = (
-            {
-                "n": int(len(validos)),
-                "retorno_prom": num(validos.mean(), 2),
-                "hit_rate": num((validos > 0).mean() * 100, 1),
-            }
-            if len(validos)
-            else None
-        )
-    resultado["BASELINE"] = baseline
-
-    for verdict, grupo in df.groupby("verdict"):
-        es_bajista = verdict == "VENTA"
-        por_horizonte = {}
-        for h in HORIZONTES:
-            validos = grupo[f"ret_{h}d"].dropna()
-            if not len(validos):
-                por_horizonte[str(h)] = None
-                continue
-            acierto = (validos < 0) if es_bajista else (validos > 0)
-            por_horizonte[str(h)] = {
-                "n": int(len(validos)),
-                "retorno_prom": num(validos.mean(), 2),
-                "hit_rate": num(acierto.mean() * 100, 1),
-            }
-        resultado[verdict] = por_horizonte
-
-    return resultado
-
-
-def main():
-    DIR_SALIDA.mkdir(parents=True, exist_ok=True)
-    tickers = leer_tickers()
-    print(f"Backtest (diario) sobre {len(tickers)} tickers, horizontes {HORIZONTES} ruedas...\n")
+def main(argv=None, historicos=None):
+    ap = argparse.ArgumentParser(description="Backtest del Screener (diario)")
+    ap.add_argument("--out", type=Path, default=DIR_DATOS_PUBLICOS)
+    args = ap.parse_args(argv)
+    args.out.mkdir(parents=True, exist_ok=True)
+    if historicos is None:
+        historicos = descargar_para_backtest(universo_usd(args.out))
+    print(f"Backtest (diario) sobre {len(historicos)} tickers, horizontes {HORIZONTES} ruedas...")
 
     todas_filas = []
     ok, fallidos = 0, 0
-    for _, fila in tickers.iterrows():
-        t = fila["Ticker"]
-        sym, _tk, hist, _closes = resolver_ticker(t)
-        if sym is None:
-            fallidos += 1
-            continue
+    for sym, hist in sorted(historicos.items()):
         try:
-            ohlc = hist[["High", "Low", "Close"]].dropna()
+            ohlc = hist[["Open", "High", "Low", "Close"]].dropna()
             if len(ohlc) < MINIMO_VELAS:
                 fallidos += 1
                 continue
-            filas = backtest_ticker(sym, ohlc)
-            todas_filas.extend(filas)
+            todas_filas.extend(backtest_ticker(sym, ohlc))
             ok += 1
-            print(f"  ok {sym} ({len(filas)} veredictos evaluables)")
         except Exception as e:  # noqa: BLE001
-            print(f"  ! {t}: error {e}")
+            print(f"  ! {sym}: error {e}")
             fallidos += 1
 
-    print("\nAgregando estadisticas...")
-    stats = agregar_stats(todas_filas)
+    print("Agregando estadisticas...")
+    stats = agregar_stats_filas(todas_filas, bajistas=("VENTA",))
 
     salida = {
         "actualizado": datetime.now(TZ).isoformat(),
@@ -232,13 +261,12 @@ def main():
         "horizontes_dias": HORIZONTES,
         "n_tickers_evaluados": ok,
         "n_tickers_fallidos": fallidos,
+        "metodologia": "primer dia de cada racha; entrada apertura t+1, salida cierre t+h; base muestreada cada h ruedas",
+        "advertencias": ADVERTENCIAS_COMUNES,
         "stats": stats,
     }
-    ruta = DIR_SALIDA / "backtest_screener.json"
-    with open(ruta, "w", encoding="utf-8") as f:
-        json.dump(salida, f, ensure_ascii=False, indent=2)
-    print(f"-> {ruta.relative_to(RAIZ)}")
-    print(f"\nListo: {ok} tickers evaluados, {fallidos} sin datos suficientes.")
+    escribir_json(args.out / "backtest_screener.json", salida, ignorar_claves=("actualizado",))
+    print(f"Listo: {ok} tickers evaluados, {fallidos} sin datos suficientes.")
 
 
 if __name__ == "__main__":

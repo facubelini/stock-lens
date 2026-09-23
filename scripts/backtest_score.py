@@ -12,11 +12,16 @@ entre las partes disponibles" que calcularScore() ya usa hoy cuando a un
 ticker le falta Valuacion -- no es una heuristica nueva, es la misma
 formula aplicada hacia atras en el tiempo.
 
+Misma metodologia que backtest_screener.py: una muestra por racha de cada
+bucket (primer dia), entrada a la apertura siguiente, solo tickers en USD,
+y advertencias (supervivencia, etc.) en el JSON.
+
 Uso:
-    python scripts/backtest_score.py
+    python scripts/backtest_score.py [--out CARPETA]
+    python scripts/backtests.py   # los dos backtests con una sola descarga
 """
 
-import json
+import argparse
 import sys
 from datetime import datetime
 from pathlib import Path
@@ -25,10 +30,16 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from generar_datos import RAIZ, TZ, leer_tickers, num, resolver_ticker  # noqa: E402
-from backtest_screener import HORIZONTES, _rsi_serie  # noqa: E402
+from backtest_screener import (  # noqa: E402
+    ADVERTENCIAS_COMUNES,
+    HORIZONTES,
+    agregar_stats_filas,
+    descargar_para_backtest,
+    muestras_no_solapadas,
+    universo_usd,
+)
+from comun import DIR_DATOS_PUBLICOS, TZ, escribir_json, rsi_serie  # noqa: E402
 
-DIR_SALIDA = RAIZ / "public" / "data"
 MINIMO_VELAS = 300
 
 
@@ -38,7 +49,7 @@ def _score_tecnico_serie(closes):
     no tiene serie historica)."""
     ema50 = closes.ewm(span=50, adjust=False).mean()
     sma200 = closes.rolling(200).mean()
-    rsi = _rsi_serie(closes, 14)
+    rsi = rsi_serie(closes, 14)
 
     dist_ema50 = (closes / ema50 - 1) * 100
     dist_sma200 = (closes / sma200 - 1) * 100
@@ -54,112 +65,57 @@ def _score_tecnico_serie(closes):
     return score.round()
 
 
-def _bucket(score):
-    if pd.isna(score):
-        return None
-    if score >= 66:
-        return "FAVORABLE"
-    if score >= 40:
-        return "NEUTRAL"
-    return "FLOJO"
+def _buckets(score):
+    """Serie de etiquetas FAVORABLE/NEUTRAL/FLOJO (NaN sin score)."""
+    etiquetas = pd.Series(np.nan, index=score.index, dtype="object")
+    etiquetas[score >= 66] = "FAVORABLE"
+    etiquetas[(score >= 40) & (score < 66)] = "NEUTRAL"
+    etiquetas[score < 40] = "FLOJO"
+    return etiquetas
 
 
-def backtest_ticker(closes):
-    score = _score_tecnico_serie(closes)
-    validos = score.notna()
-    sub_score = score[validos]
-    retornos_h = {h: ((closes.shift(-h) / closes - 1) * 100)[validos] for h in HORIZONTES}
-
-    filas = []
-    for i in range(len(sub_score)):
-        bucket = _bucket(sub_score.iloc[i])
-        if bucket is None:
-            continue
-        fila = {"bucket": bucket}
-        for h in HORIZONTES:
-            r = retornos_h[h].iloc[i]
-            fila[f"ret_{h}d"] = None if pd.isna(r) else float(r)
-        filas.append(fila)
-    return filas
+def backtest_ticker(ohlc):
+    return muestras_no_solapadas(_buckets(_score_tecnico_serie(ohlc["Close"])), ohlc)
 
 
-def agregar_stats(filas_totales):
-    if not filas_totales:
-        return {}
-    df = pd.DataFrame(filas_totales)
-    resultado = {}
-
-    baseline = {}
-    for h in HORIZONTES:
-        validos = df[f"ret_{h}d"].dropna()
-        baseline[str(h)] = (
-            {
-                "n": int(len(validos)),
-                "retorno_prom": num(validos.mean(), 2),
-                "hit_rate": num((validos > 0).mean() * 100, 1),
-            }
-            if len(validos)
-            else None
-        )
-    resultado["BASELINE"] = baseline
-
-    for bucket, grupo in df.groupby("bucket"):
-        por_horizonte = {}
-        for h in HORIZONTES:
-            validos = grupo[f"ret_{h}d"].dropna()
-            if not len(validos):
-                por_horizonte[str(h)] = None
-                continue
-            por_horizonte[str(h)] = {
-                "n": int(len(validos)),
-                "retorno_prom": num(validos.mean(), 2),
-                "hit_rate": num((validos > 0).mean() * 100, 1),
-            }
-        resultado[bucket] = por_horizonte
-
-    return resultado
-
-
-def main():
-    DIR_SALIDA.mkdir(parents=True, exist_ok=True)
-    tickers = leer_tickers()
-    print(f"Backtest del score (aprox. tecnica, sin Valuacion) sobre {len(tickers)} tickers...\n")
+def main(argv=None, historicos=None):
+    ap = argparse.ArgumentParser(description="Backtest del Score tecnico de Listado")
+    ap.add_argument("--out", type=Path, default=DIR_DATOS_PUBLICOS)
+    args = ap.parse_args(argv)
+    args.out.mkdir(parents=True, exist_ok=True)
+    if historicos is None:
+        historicos = descargar_para_backtest(universo_usd(args.out))
+    print(f"Backtest del score (aprox. tecnica, sin Valuacion) sobre {len(historicos)} tickers...")
 
     todas_filas = []
     ok, fallidos = 0, 0
-    for _, fila in tickers.iterrows():
-        t = fila["Ticker"]
-        sym, _tk, hist, closes = resolver_ticker(t)
-        if sym is None:
-            fallidos += 1
-            continue
+    for sym, hist in sorted(historicos.items()):
         try:
-            if len(closes) < MINIMO_VELAS:
+            ohlc = hist[["Open", "Close"]].dropna()
+            if len(ohlc) < MINIMO_VELAS:
                 fallidos += 1
                 continue
-            filas = backtest_ticker(closes)
-            todas_filas.extend(filas)
+            todas_filas.extend(backtest_ticker(ohlc))
             ok += 1
-            print(f"  ok {sym} ({len(filas)} puntos evaluables)")
         except Exception as e:  # noqa: BLE001
-            print(f"  ! {t}: error {e}")
+            print(f"  ! {sym}: error {e}")
             fallidos += 1
 
-    print("\nAgregando estadisticas...")
-    stats = agregar_stats(todas_filas)
+    print("Agregando estadisticas...")
+    stats = agregar_stats_filas(todas_filas)
 
     salida = {
         "actualizado": datetime.now(TZ).isoformat(),
         "horizontes_dias": HORIZONTES,
         "n_tickers_evaluados": ok,
         "n_tickers_fallidos": fallidos,
+        "metodologia": "primer dia de cada racha por bucket; entrada apertura t+1, salida cierre t+h; base muestreada cada h ruedas",
+        "advertencias": ADVERTENCIAS_COMUNES
+        + ["Score aproximado solo con Tendencia y Momentum: la Valuación (PER/PEG) no tiene serie histórica."],
         "stats": stats,
     }
-    ruta = DIR_SALIDA / "backtest_score.json"
-    with open(ruta, "w", encoding="utf-8") as f:
-        json.dump(salida, f, ensure_ascii=False, indent=2)
-    print(f"-> {ruta.relative_to(RAIZ)}")
-    print(f"\nListo: {ok} tickers evaluados, {fallidos} sin datos suficientes.")
+    escribir_json(args.out / "backtest_score.json", salida, ignorar_claves=("actualizado",))
+    print(f"Listo: {ok} tickers evaluados, {fallidos} sin datos suficientes.")
 
 
 if __name__ == "__main__":

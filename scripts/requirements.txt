@@ -1,5 +1,9 @@
-yfinance>=0.2.50
-pandas>=2.0
-numpy>=1.26
-openpyxl>=3.1
-requests>=2.31
+# Versiones exactas: las que instalo el ultimo run verde de "Actualizar datos"
+# (CPython 3.12). Un yfinance nuevo sin pinear rompio mas de una vez el
+# pipeline sin tocar una linea; subirlas a mano y probar antes.
+yfinance==1.7.0
+curl_cffi==0.16.3
+pandas==3.0.6
+numpy==2.5.3
+openpyxl==3.1.5
+requests==2.34.2

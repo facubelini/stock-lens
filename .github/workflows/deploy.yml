@@ -5,11 +5,13 @@ on:
   push:
     branches: [main]
 
-  # Deploy encadenado cuando termina "Actualizar datos".
+  # Deploy encadenado cuando termina un pipeline de datos.
   # Necesario porque los commits hechos con GITHUB_TOKEN NO disparan el evento
   # 'push' en otros workflows (salvaguarda anti-recursion de GitHub).
+  # ("Mercado Macro" ahora es un paso de "Actualizar datos" y el Crypto
+  # Screener dejo de tener workflow: se calcula en el navegador.)
   workflow_run:
-    workflows: ['Actualizar datos', 'Historico fundamental', 'Backtest Screener', 'Mercado Macro', 'Crypto Screener']
+    workflows: ['Actualizar datos', 'Historico fundamental', 'Backtest Screener']
     types: [completed]
 
   # Disparo manual.
@@ -17,27 +19,65 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
-# Un solo deploy a la vez.
+# Un solo deploy a la vez. cancel-in-progress: false: cancelar un deploy a
+# mitad de camino puede dejar Pages con un deploy colgado/fallido.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
-  build:
+  # Si vino por workflow_run, solo deployar si esa corrida realmente commiteo
+  # algo: main tiene que haber avanzado respecto del commit con el que arranco
+  # (head_sha). Una corrida "sin cambios en los datos" no genera deploy.
+  verificar:
     runs-on: ubuntu-latest
-    # Si vino por workflow_run, solo continuar si el pipeline de datos fue exitoso.
-    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    outputs:
+      desplegar: ${{ steps.chequeo.outputs.desplegar }}
+    steps:
+      - name: ¿Hay algo nuevo para deployar?
+        id: chequeo
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENTO: ${{ github.event_name }}
+          HEAD_RUN: ${{ github.event.workflow_run.head_sha }}
+          CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          RAMA: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          if [ "$EVENTO" != "workflow_run" ]; then
+            echo "desplegar=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if [ "$CONCLUSION" = "cancelled" ] || [ "$CONCLUSION" = "skipped" ]; then
+            echo "Corrida $CONCLUSION: no se deploya."
+            echo "desplegar=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          actual=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${RAMA:-main}" --jq .sha)
+          if [ "$actual" = "$HEAD_RUN" ]; then
+            echo "La corrida no commiteo nada (main sigue en $HEAD_RUN): no se deploya."
+            echo "desplegar=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "main avanzo ($HEAD_RUN -> $actual): se deploya."
+            echo "desplegar=true" >> "$GITHUB_OUTPUT"
+          fi
+
+  build:
+    needs: verificar
+    if: ${{ needs.verificar.outputs.desplegar == 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
 
       - name: Instalar dependencias
@@ -47,17 +87,21 @@ jobs:
         run: npm run build
 
       - name: Subir artefacto de Pages
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: dist
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - name: Deploy a GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

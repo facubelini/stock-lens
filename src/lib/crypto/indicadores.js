@@ -4,16 +4,14 @@
 // entra tal cual en la arquitectura estatica de Stock Lens sin pipeline ni
 // backend nuevo.
 
-// EMA de Wilder (alpha = 1/p): usada para ATR, igual que en RSI.
-export function wilderEMA(arr, p) {
-  if (arr.length < p) return NaN
-  let v = arr.slice(0, p).reduce((a, b) => a + b) / p
-  const a = 1 / p
-  for (let i = p; i < arr.length; i++) v = v * (1 - a) + arr[i] * a
-  return v
-}
+import { rsiSeries, stdEMAFull, srsiSerie, macdSerie, atrSerie } from './series.js'
 
-// EMA estandar (alpha = 2/(p+1)): usada para MACD/EMA20-50-200.
+// Los primitivos en serie viven en series.js; se re-exportan para no romper
+// a quien los importaba de aca.
+export { rsiSeries, stdEMAFull }
+
+// EMA estandar (alpha = 2/(p+1)): usada para EMA20-50-200. Mismo seed que
+// stdEMAFull (media de las primeras p), solo que devuelve el ultimo valor.
 export function stdEMA(arr, p) {
   if (arr.length < p) return NaN
   const a = 2 / (p + 1)
@@ -22,67 +20,27 @@ export function stdEMA(arr, p) {
   return v
 }
 
-// Igual que stdEMA pero devuelve la serie completa (NaN mientras no hay
-// suficientes velas) — la necesita MACD para el histograma actual/previo.
-export function stdEMAFull(arr, p) {
-  if (arr.length < p) return arr.map(() => NaN)
-  const a = 2 / (p + 1)
-  const out = new Array(p - 1).fill(NaN)
-  let v = arr.slice(0, p).reduce((s, x) => s + x) / p
-  out.push(v)
-  for (let i = p; i < arr.length; i++) {
-    v = arr[i] * a + v * (1 - a)
-    out.push(v)
-  }
-  return out
-}
+// Los tres de abajo son el ULTIMO valor de su serie en series.js (verificado
+// numericamente contra la implementacion anterior sobre velas reales de
+// BTC/ETH/SOL: mismo resultado bit a bit). Tenerlos en un solo lugar evita
+// que el screener y Cruces calculen distinto el mismo indicador.
 
-export function rsiSeries(closes, p = 14) {
-  const g = []
-  const l = []
-  for (let i = 1; i < closes.length; i++) {
-    const d = closes[i] - closes[i - 1]
-    g.push(d > 0 ? d : 0)
-    l.push(d < 0 ? -d : 0)
-  }
-  if (g.length < p) return []
-  const a = 1 / p
-  let ag = g.slice(0, p).reduce((s, x) => s + x) / p
-  let al = l.slice(0, p).reduce((s, x) => s + x) / p
-  const out = [al === 0 ? 100 : 100 - 100 / (1 + ag / al)]
-  for (let i = p; i < g.length; i++) {
-    ag = ag * (1 - a) + g[i] * a
-    al = al * (1 - a) + l[i] * a
-    out.push(al === 0 ? 100 : 100 - 100 / (1 + ag / al))
-  }
-  return out
-}
-
+// StochRSI (RSI 14, estocastico 14, %K suavizado 3). Devuelve NaN si no hay
+// velas suficientes — antes devolvia 50, que se leia como "sin saturar" y
+// nunca caia en la rama "StochRSI: sin datos" de analyzeKlines.
 export function calcStochRSI(closes, rP = 14, stP = 14, sk = 3) {
-  const rs = rsiSeries(closes, rP)
-  if (rs.length < stP + sk) return 50
-  const raw = []
-  for (let i = stP - 1; i < rs.length; i++) {
-    const w = rs.slice(i - stP + 1, i + 1)
-    const lo = Math.min(...w)
-    const hi = Math.max(...w)
-    raw.push(hi === lo ? 50 : ((rs[i] - lo) / (hi - lo)) * 100)
-  }
-  if (raw.length < sk) return 50
-  let k = 0
-  for (let i = raw.length - sk; i < raw.length; i++) k += raw[i]
-  return k / sk
+  const serie = srsiSerie(closes, rP, stP, sk)
+  return serie.length ? serie[serie.length - 1] : NaN
 }
 
+// Histograma del MACD en la ultima vela y en la anterior. Sin datos
+// suficientes queda en 0 (igual que antes: "sin cruce").
 export function calcMACD(closes) {
-  const fast = stdEMAFull(closes, 12)
-  const slow = stdEMAFull(closes, 26)
-  const macd = fast.map((v, i) => (isNaN(v) || isNaN(slow[i]) ? NaN : v - slow[i]))
-  const valid = macd.filter((v) => !isNaN(v))
-  if (valid.length < 9) return { histCur: 0, histPrv: 0 }
-  const sig = stdEMAFull(valid, 9)
-  const hist = sig.map((v, i) => (isNaN(v) ? NaN : valid[i] - v)).filter((v) => !isNaN(v))
-  return { histCur: hist[hist.length - 1] ?? 0, histPrv: hist[hist.length - 2] ?? 0 }
+  const { cur, prv } = macdSerie(closes)
+  const n = closes.length
+  const histCur = n ? cur[n - 1] : NaN
+  const histPrv = n ? prv[n - 1] : NaN
+  return { histCur: isNaN(histCur) ? 0 : histCur, histPrv: isNaN(histPrv) ? 0 : histPrv }
 }
 
 export function calcBB(closes, p = 20) {
@@ -96,17 +54,18 @@ export function calcBB(closes, p = 20) {
   return up === lo ? 50 : ((price - lo) / (up - lo)) * 100
 }
 
+// ATR de Wilder (14) en la ultima vela. NaN si no hay p+1 velas.
 export function calcATR(highs, lows, closes, p = 14) {
-  const trs = []
-  for (let i = 1; i < closes.length; i++) {
-    trs.push(Math.max(highs[i] - lows[i], Math.abs(highs[i] - closes[i - 1]), Math.abs(lows[i] - closes[i - 1])))
-  }
-  return wilderEMA(trs, p)
+  const serie = atrSerie(highs, lows, closes, p)
+  return serie.length ? serie[serie.length - 1] : NaN
 }
 
-// Stop loss / take profits en base a ATR (mismos multiplos 1:1/1:2/1:3 que el
-// original) + un nivel de referencia por swing de las ultimas 20 velas.
-export function calcTPSL(r, klines, atrMult) {
+// Stop loss / take profits en base a ATR + un nivel de referencia por swing
+// de las ultimas 20 velas. Los TP son multiplos del riesgo (distancia al SL):
+// por defecto 1:1, 1:2 y 1:3, configurables desde la calculadora.
+export const MULTIPLOS_TP_DEFAULT = [1, 2, 3]
+
+export function calcTPSL(r, klines, atrMult, multiplosTP = MULTIPLOS_TP_DEFAULT) {
   if (!klines || klines.length < 31) return null
   // ATR y swing salen de velas CERRADAS: el maximo/minimo de una vela a medio
   // hacer se mueve mientras la mirás, asi que el SL cambiaba de lugar solo.
@@ -123,87 +82,151 @@ export function calcTPSL(r, klines, atrMult) {
   const isActionable = isShort || ['le', 'lf', 'lo', 'lw'].includes(r.cls)
   if (!isActionable) return null
   const dir = isShort ? 1 : -1
+  const pct = (v, b) => +(((v - b) / b) * 100).toFixed(2)
   const sl = price + dir * slDist
-  const tp1 = price - dir * slDist
-  const tp2 = price - dir * slDist * 2
-  const tp3 = price - dir * slDist * 3
+  const tps = multiplosTP.map((mult) => {
+    const precio = price - dir * slDist * mult
+    return { mult, precio, pct: pct(precio, price) }
+  })
   const last20H = Math.max(...highs.slice(-20))
   const last20L = Math.min(...lows.slice(-20))
   const slSwing = isShort ? last20H * 1.003 : last20L * 0.997
-  const pct = (v, b) => +(((v - b) / b) * 100).toFixed(2)
   return {
     isShort,
     entry: price,
     atr,
+    atrMult,
     slDist,
     sl,
     slPct: pct(sl, price),
-    tp1,
-    tp1Pct: pct(tp1, price),
-    tp2,
-    tp2Pct: pct(tp2, price),
-    tp3,
-    tp3Pct: pct(tp3, price),
+    tps,
+    // Compatibilidad: los tres primeros como campos sueltos.
+    tp1: tps[0]?.precio,
+    tp1Pct: tps[0]?.pct,
+    tp2: tps[1]?.precio,
+    tp2Pct: tps[1]?.pct,
+    tp3: tps[2]?.precio,
+    tp3Pct: tps[2]?.pct,
     slSwing,
     slSwingPct: pct(slSwing, price),
   }
 }
 
-// Tasa de margen de mantenimiento aproximada por tramo de apalancamiento
-// (estilo Binance USDT-M). Orientativo — Binance ajusta esto por símbolo.
-export function getMMR(lev) {
-  if (lev <= 10) return 0.004
-  if (lev <= 25) return 0.005
-  if (lev <= 50) return 0.0065
-  if (lev <= 75) return 0.01
-  if (lev <= 100) return 0.025
-  return 0.05 // 125x
+// ── Apalancamiento ────────────────────────────────────────────────────────
+// Tope de apalancamiento y tasa de margen de mantenimiento (MMR) del PRIMER
+// tramo del "leverage bracket" de Binance, aproximados. Los reales salen de
+// /fapi/v1/leverageBracket, que es un endpoint FIRMADO (pide API key), asi
+// que desde un sitio estatico no se pueden leer. Aproximacion:
+//   BTC             125× · MMR 0,40%
+//   ETH             125× · MMR 0,50%
+//   mayores (abajo)  75× · MMR 1%
+//   resto cripto     50× · MMR 1%
+//   TradFi (acciones/commodities tokenizadas) 20× · MMR 1%
+// Valen para posiciones chicas: con nocionales grandes Binance pasa a tramos
+// con menos apalancamiento y mas MMR. El valor exacto lo muestra Binance en
+// el panel de la orden.
+//
+// Antes habia una tabla de MMR POR APALANCAMIENTO (5% en 125×, 2,5% en 100×)
+// combinada con la formula Entry·(1 − 1/L + MMR): en 100× y 125× el MMR era
+// mas grande que 1/L y la liquidacion de un LONG quedaba POR ENCIMA de la
+// entrada, y el chequeo del SL (por distancia absoluta) decia "seguro".
+const MAYORES = new Set([
+  'BNB', 'SOL', 'XRP', 'DOGE', 'ADA', 'TRX', 'LINK', 'AVAX', 'LTC', 'BCH',
+  'DOT', 'TON', 'SUI', 'XLM', 'ETC', 'NEAR', 'APT', 'UNI', 'FIL', 'ATOM',
+])
+
+export function perfilApalancamiento(symbolRaw, { tradfi = false } = {}) {
+  const base = String(symbolRaw ?? '').replace(/USDT$/, '')
+  if (tradfi) return { maxLev: 20, mmr: 0.01, grupo: 'TradFi (acciones/commodities)' }
+  if (base === 'BTC') return { maxLev: 125, mmr: 0.004, grupo: 'BTC' }
+  if (base === 'ETH') return { maxLev: 125, mmr: 0.005, grupo: 'ETH' }
+  if (MAYORES.has(base)) return { maxLev: 75, mmr: 0.01, grupo: 'cripto mayor' }
+  return { maxLev: 50, mmr: 0.01, grupo: 'resto de cripto' }
 }
 
-export function calcLeverage(tpsl, margin, leverage, mType) {
+// Comision taker por lado (Binance USDT-M, cuenta sin descuentos): 0,05%.
+export const COMISION_TAKER = 0.0005
+
+// Precio de liquidacion en margen AISLADO, primer tramo (monto de
+// mantenimiento = 0). Sale de la formula de Binance
+//   LP = (WB + cum − lado·Q·E) / (Q·MMR − lado·Q),  con WB = Q·E/L
+// que simplificada queda:
+//   Long:  LP = E · (1 − 1/L) / (1 − MMR)
+//   Short: LP = E · (1 + 1/L) / (1 + MMR)
+// Si 1/L <= MMR la posicion no tiene margen ni para el mantenimiento: se
+// liquidaria apenas abre. Se marca como inviable y el precio se clava en la
+// entrada, asi nunca queda del lado equivocado.
+export function precioLiquidacion(entry, leverage, mmr, isShort) {
+  const cruda = isShort ? (entry * (1 + 1 / leverage)) / (1 + mmr) : (entry * (1 - 1 / leverage)) / (1 - mmr)
+  const inviable = 1 / leverage <= mmr
+  const precio = isShort ? Math.max(cruda, entry) : Math.min(cruda, entry)
+  return { precio, cruda, inviable }
+}
+
+// opciones: { mmr, comision } — mmr sale de perfilApalancamiento; comision es
+// la taker por lado (se cobra al entrar y al salir, sobre el nocional de cada
+// lado). Las G/P que devuelve son NETAS de las dos comisiones.
+export function calcLeverage(tpsl, margin, leverage, mType, { mmr = 0.01, comision = COMISION_TAKER } = {}) {
   if (!tpsl || !margin || !leverage) return null
   const posSize = margin * leverage
   const qty = posSize / tpsl.entry
-  const mmr = getMMR(leverage)
-  const imr = 1 / leverage
-  const { isShort, entry, sl, tp1, tp2, tp3 } = tpsl
+  const { isShort, entry, sl } = tpsl
+  const lado = isShort ? -1 : 1
 
-  const pnl = (exit) => (isShort ? qty * (entry - exit) : qty * (exit - entry))
-  const slPnL = pnl(sl)
-  const tp1PnL = pnl(tp1)
-  const tp2PnL = pnl(tp2)
-  const tp3PnL = pnl(tp3)
-
-  // En aislado la perdida no puede superar el margen depositado.
-  const effSlPnL = mType === 'isolated' ? Math.max(slPnL, -margin) : slPnL
-  const roe = (v) => +((v / margin) * 100).toFixed(1)
-
-  // Precio de liquidacion (formula aislada estilo Binance):
-  // Long: Liq = Entry x (1 - IMR + MMR) · Short: Liq = Entry x (1 + IMR - MMR)
-  const liqPrice = !isShort ? entry * (1 - imr + mmr) : entry * (1 + imr - mmr)
+  const liq = precioLiquidacion(entry, leverage, mmr, isShort)
+  const liqPrice = liq.precio
   const liqPct = +(((liqPrice - entry) / entry) * 100).toFixed(2)
-
   const liqDistPct = Math.abs(((liqPrice - entry) / entry) * 100)
   const slDistPct = Math.abs(((sl - entry) / entry) * 100)
-  const slSafe = liqDistPct > slDistPct // el SL dispara antes que la liquidacion
+  // Con signo: en un long el SL tiene que estar POR ENCIMA de la liquidacion
+  // (salta antes al bajar); en un short, POR DEBAJO.
+  const slSafe = !liq.inviable && (isShort ? sl < liqPrice : sl > liqPrice)
+
+  const comisionEntrada = qty * entry * comision
+  const comisionSalida = (salida) => qty * salida * comision
+  const bruto = (salida) => lado * qty * (salida - entry)
+  const neto = (salida) => bruto(salida) - comisionEntrada - comisionSalida(salida)
+  const roe = (v) => +((v / margin) * 100).toFixed(1)
+
+  // Liquidado en aislado se pierde el margen entero, mas la comision de
+  // entrada que ya se habia pagado. Binance cobra ademas una tasa de
+  // liquidacion que aca no se modela.
+  const perdidaLiquidacion = -(margin + comisionEntrada)
+  let slPnL = neto(sl)
+  if (mType === 'isolated' && !slSafe) slPnL = perdidaLiquidacion
+
+  const tps = (tpsl.tps ?? []).map((t) => {
+    const pnl = neto(t.precio)
+    return { ...t, pnl, roe: roe(pnl), comision: comisionEntrada + comisionSalida(t.precio) }
+  })
 
   return {
     posSize,
     qty,
     mmr,
+    imr: 1 / leverage,
+    comision,
     liqPrice,
+    liqCruda: liq.cruda,
+    inviable: liq.inviable,
     liqPct,
     liqDistPct,
     slDistPct,
     slSafe,
-    slPnL: effSlPnL,
-    slROE: roe(effSlPnL),
-    tp1PnL,
-    tp1ROE: roe(tp1PnL),
-    tp2PnL,
-    tp2ROE: roe(tp2PnL),
-    tp3PnL,
-    tp3ROE: roe(tp3PnL),
+    comisionEntrada,
+    comisionSl: comisionEntrada + comisionSalida(sl),
+    slBruto: bruto(sl),
+    slPnL,
+    slROE: roe(slPnL),
+    perdidaLiquidacion,
+    tps,
+    // Compatibilidad con los tres TP fijos.
+    tp1PnL: tps[0]?.pnl,
+    tp1ROE: tps[0]?.roe,
+    tp2PnL: tps[1]?.pnl,
+    tp2ROE: tps[1]?.roe,
+    tp3PnL: tps[2]?.pnl,
+    tp3ROE: tps[2]?.roe,
   }
 }
 
@@ -424,14 +447,18 @@ export function analyzeKlines(symbol, klines, atrMult) {
     precioSenal: price,
     chg24h: +chg24h.toFixed(2),
     rsi: +rsiVal.toFixed(1),
-    srsi: +srsiVal.toFixed(1),
+    // null si no hubo velas para calcularlo (la tabla muestra '—').
+    srsi: isNaN(srsiVal) ? null : +srsiVal.toFixed(1),
     bb_pct: +bbPct.toFixed(1),
     // Mismos indicadores sobre la vela en curso (lo que muestra Binance).
     rsi_vivo: +rsiVivo.toFixed(1),
-    srsi_vivo: +srsiVivo.toFixed(1),
+    srsi_vivo: isNaN(srsiVivo) ? null : +srsiVivo.toFixed(1),
     bb_pct_vivo: +bbVivo.toFixed(1),
     pct_vela: pctVela == null ? null : +pctVela.toFixed(0),
-    ema_trend: !isNaN(ema200) && price > ema200 ? 'ALCISTA' : 'BAJISTA',
+    // Sin EMA200 (menos de 200 velas cerradas: recien listados, o diario de
+    // un simbolo joven) no hay tendencia: null, la tabla muestra '—'. Antes
+    // caia en 'BAJISTA' por descarte.
+    ema_trend: isNaN(ema200) ? null : price > ema200 ? 'ALCISTA' : 'BAJISTA',
     vol_ratio: +volRatio.toFixed(2),
     atr_pct: +atrPct.toFixed(2),
     score,

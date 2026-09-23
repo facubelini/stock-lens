@@ -1,23 +1,11 @@
 import { GLOSARIO_POR_CLAVE } from '../lib/glosario'
+import { RATIOS, valorRatio } from '../lib/ratios'
 
 // Filtros de rango (min/max) por ratio, estilo screener de Finviz. Se
 // combinan con los filtros de industria/sector/búsqueda ya existentes.
-export const RATIOS_FILTRABLES = [
-  { key: 'per_trailing', label: 'PER' },
-  { key: 'per_forward', label: 'PER fwd' },
-  { key: 'peg', label: 'PEG' },
-  { key: 'ev_sales', label: 'EV/Sales' },
-  { key: 'pb', label: 'P/B' },
-  { key: 'ps', label: 'P/S' },
-  { key: 'market_cap', label: 'Market Cap', unidad: 'B', escala: 1e9 },
-  { key: 'eps', label: 'EPS' },
-  { key: 'profit_margin', label: 'Margen', unidad: '%' },
-  { key: 'roe', label: 'ROE', unidad: '%' },
-  { key: 'dividend_yield', label: 'Div. Yield', unidad: '%' },
-  { key: 'beta', label: 'Beta' },
-  { key: 'debt_to_equity', label: 'Deuda/Eq.' },
-  { key: 'current_ratio', label: 'Liquidez' },
-]
+// Mismos ratios que la tabla (src/lib/ratios.js); Market Cap se filtra en
+// miles de millones de USD (market_cap_usd), no en la moneda local.
+export const RATIOS_FILTRABLES = RATIOS
 
 function rangoActivo(rg) {
   return rg && (rg.min !== '' || rg.max !== '')
@@ -30,7 +18,7 @@ export function aplicarFiltrosRango(filas, rangos) {
   if (!activos.length) return filas
   return filas.filter((fila) =>
     activos.every((r) => {
-      const valor = fila[r.key]
+      const valor = valorRatio(r, fila)
       if (valor == null) return false
       const v = r.escala ? valor / r.escala : valor
       const rg = rangos[r.key]
@@ -76,6 +64,7 @@ export default function FiltrosRango({ rangos, setRango, onLimpiar }) {
                   value={rg.min}
                   onChange={(e) => setRango(r.key, 'min', e.target.value)}
                   placeholder="min"
+                  aria-label={`${r.label} mínimo`}
                   className={inputCls}
                 />
                 <span className="text-terminal-dim">–</span>
@@ -85,6 +74,7 @@ export default function FiltrosRango({ rangos, setRango, onLimpiar }) {
                   value={rg.max}
                   onChange={(e) => setRango(r.key, 'max', e.target.value)}
                   placeholder="max"
+                  aria-label={`${r.label} máximo`}
                   className={inputCls}
                 />
               </div>

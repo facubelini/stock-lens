@@ -1,21 +1,18 @@
 import { useMemo, useState } from 'react'
-import { useDatosCombinados } from '../lib/useDatosCombinados'
-import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
+import { useFilasCombinadas } from '../lib/useFilas'
 import { useTabla } from '../lib/useTabla'
+import { inputCls } from '../lib/estilos'
 import Tabla from '../components/Tabla'
 import TickerLink from '../components/TickerLink'
-import { Vacio } from '../components/Estados'
-import { fmtPct, fmtNum, fmtPrecio, fmtMarketCap, estiloValor } from '../lib/formato'
+import { MensajeError, Vacio } from '../components/Estados'
+import { fmtPct, fmtNum, fmtPrecio, fmtMarketCap, fmtFechaCorta, estiloValor, hoyAR } from '../lib/formato'
 
-// Las mismas 5 señales de Herramientas.jsx (gaps, volumen, 52 semanas,
-// insiders, próximos resultados), pero como tabla ordenable/agrupable
-// reusando el componente Tabla+useTabla que ya usan Screener/Oportunidades,
-// en vez de <table> a mano repetida 5 veces. Herramientas.jsx no se toca:
-// sigue con su propia versión, esta es una vista nueva y adicional.
-
-const inputCls =
-  'rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-text ' +
-  'focus:border-terminal-accent focus:outline-none'
+// "Radar de eventos" (ruta /screeners): 5 scans rápidos del universo —
+// volumen inusual, gaps de apertura, cerca de 52 semanas, compras de
+// insiders y próximos resultados — como tablas ordenables (Tabla+useTabla).
+// Antes vivían en Herramientas.jsx; se mudaron acá y ya no están allá.
+// No confundir con el Screener técnico (/screener), que da veredictos
+// COMPRA/CERCA/VENTA por temporalidad.
 
 const colTicker = {
   key: 'ticker',
@@ -92,7 +89,7 @@ function VistaVolumen({ filas }) {
     <div>
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <label className="text-xs text-terminal-dim">Mostrar con volumen ≥</label>
-        <select value={umbral} onChange={(e) => setUmbral(Number(e.target.value))} className={inputCls}>
+        <select aria-label="Umbral" value={umbral} onChange={(e) => setUmbral(Number(e.target.value))} className={inputCls}>
           {UMBRALES_VOLUMEN.map((u) => (
             <option key={u} value={u}>
               {u}×
@@ -147,7 +144,7 @@ function VistaGaps({ filas }) {
     <div>
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <label className="text-xs text-terminal-dim">Mostrar con gap ≥</label>
-        <select value={umbral} onChange={(e) => setUmbral(Number(e.target.value))} className={inputCls}>
+        <select aria-label="Umbral" value={umbral} onChange={(e) => setUmbral(Number(e.target.value))} className={inputCls}>
           {UMBRALES_GAP.map((u) => (
             <option key={u} value={u}>
               {u}%
@@ -228,7 +225,7 @@ function Vista52Semanas({ filas }) {
     <div>
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <label className="text-xs text-terminal-dim">Mostrar a menos de</label>
-        <select value={umbral} onChange={(e) => setUmbral(Number(e.target.value))} className={inputCls}>
+        <select aria-label="Umbral" value={umbral} onChange={(e) => setUmbral(Number(e.target.value))} className={inputCls}>
           {UMBRALES_52S.map((u) => (
             <option key={u} value={u}>
               {u}%
@@ -295,7 +292,8 @@ function VistaInsiders({ filas }) {
 }
 
 function VistaResultados({ filas }) {
-  const hoy = new Date().toISOString().slice(0, 10)
+  // 'Hoy' en Buenos Aires (en UTC, desde las 21 hs ya era mañana).
+  const hoy = hoyAR()
   const destacados = useMemo(
     () =>
       filas
@@ -316,8 +314,8 @@ function VistaResultados({ filas }) {
       valor: (r) => r.proximo_earnings.fecha,
       render: (r) => (
         <span className="whitespace-nowrap font-semibold text-terminal-text">
-          {r.proximo_earnings.fecha.split('-').reverse().join('/')}
-          {r.proximo_earnings.fecha_fin && ` – ${r.proximo_earnings.fecha_fin.split('-').reverse().join('/')}`}
+          {fmtFechaCorta(r.proximo_earnings.fecha)}
+          {r.proximo_earnings.fecha_fin && ` – ${fmtFechaCorta(r.proximo_earnings.fecha_fin)}`}
         </span>
       ),
     },
@@ -346,30 +344,22 @@ const VISTAS = [
 ]
 
 export default function Screeners() {
-  const { filas: base, cargando, error } = useDatosCombinados()
-  const { overrides } = useClasificacion()
-  const filas = useMemo(() => aplicarClasificacion(base, overrides), [base, overrides])
+  const { filas, cargando, error } = useFilasCombinadas()
   const [vista, setVista] = useState('volumen')
 
   if (cargando) return <div className="skeleton h-64 rounded-lg" />
-  if (error) {
-    return (
-      <div className="rounded-lg border border-terminal-down/40 bg-terminal-down/10 p-6 text-center">
-        <p className="font-semibold text-terminal-down">No se pudieron cargar los datos</p>
-        <p className="text-sm text-terminal-dim">{error}</p>
-      </div>
-    )
-  }
+  if (error) return <MensajeError mensaje={error} />
 
   const { Componente } = VISTAS.find((v) => v.key === vista)
 
   return (
     <div className="flex flex-col gap-4">
       <div>
-        <h1 className="text-lg font-bold text-terminal-text">Screeners</h1>
+        <h1 className="text-lg font-bold text-terminal-text">📡 Radar de eventos</h1>
         <p className="text-xs text-terminal-dim">
-          5 señales rápidas de tu universo (antes vivían en Herramientas), ordenables y agrupables
-          en una sola tabla por vista en vez de scroll infinito de tablas fijas.
+          5 scans rápidos de eventos del día en tu universo — volumen inusual, gaps, cerca de
+          máximos/mínimos de 52 semanas, compras de insiders y próximos resultados — cada uno como
+          tabla ordenable. Para veredictos técnicos de compra/venta está el Screener técnico.
         </p>
       </div>
 
@@ -379,6 +369,7 @@ export default function Screeners() {
             key={v.key}
             type="button"
             onClick={() => setVista(v.key)}
+            aria-pressed={vista === v.key}
             className={`rounded px-3 py-1.5 text-sm transition-colors ${
               vista === v.key
                 ? 'bg-terminal-accent font-semibold text-black'

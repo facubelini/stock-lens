@@ -15,6 +15,8 @@
 // es la diferencia entre ellas pasando por cero.
 
 export const INDICADORES = [
+  // MACD: el gap es directamente el histograma (linea - señal), que ya viene
+  // calculado; linea y señal (series.js) se usan solo para mostrarlas.
   { id: 'macd', nombre: 'MACD', rapida: 'macdLinea', lenta: 'macdSenal', gapDirecto: 'macdCur' },
   { id: 'rsi', nombre: 'RSI', rapida: 'rsi', lenta: 'rsiSma' },
   { id: 'estoc', nombre: 'Estocástico', rapida: 'estK', lenta: 'estD' },
@@ -79,8 +81,12 @@ export function estadoIndicador(s, ind, i, iCerrada) {
         : -1
       : 0
 
-  // Convergencia: el gap se está achicando hacia cero.
-  const velocidad = gap - gapAnt
+  // Convergencia: el gap se está achicando hacia cero. La velocidad sale de
+  // las dos últimas velas CERRADAS (cuánto cambió el gap en una vela
+  // completa). Antes era gap(en curso) − gap(cerrada): el cambio de una vela
+  // a medio hacer, que con la vela recién abierta es casi cero y hacía creer
+  // que faltaban decenas de velas. La DISTANCIA sí es la de ahora.
+  const velocidad = !isNaN(gapCerr) && !isNaN(gapCerrAnt) ? gapCerr - gapCerrAnt : gap - gapAnt
   const convergiendo = Math.sign(velocidad) !== Math.sign(gap) && velocidad !== 0
   const velas = convergiendo ? Math.abs(gap) / Math.abs(velocidad) : Infinity
 
@@ -120,8 +126,8 @@ export function estadoIndicador(s, ind, i, iCerrada) {
     gapRel: isNaN(gapRel) ? null : +gapRel.toFixed(2),
     velas: velas === Infinity ? null : +velas.toFixed(1),
     convergiendo,
-    rapida: ind.gapDirecto ? gap : s[ind.rapida][i],
-    lenta: ind.gapDirecto ? 0 : s[ind.lenta][i],
+    rapida: s[ind.rapida]?.[i] ?? NaN,
+    lenta: s[ind.lenta]?.[i] ?? NaN,
   }
 }
 

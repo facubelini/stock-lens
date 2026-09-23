@@ -6,13 +6,26 @@
 // Agrega '<campo>_yoy' (variacion % vs. el mismo punto ~52 semanas atras) para
 // cada campo pedido. La serie debe venir ordenada por fecha ascendente (asi
 // la escribe el pipeline).
+//
+// Formula: (actual - anterior) / |anterior| × 100. Con el valor absoluto en
+// el denominador una base negativa da el signo correcto (EPS de -2 a -1 es
+// +50%, antes daba -50%). Si el signo cambia (pérdida -> ganancia o al
+// reves), el % no tiene sentido: queda en null y se marca '<campo>_yoy_ns'
+// ("no significativo") para mostrar "n/s" en vez de un numero.
 export function conCrecimientoYoY(serie, campos) {
   return serie.map((p, i) => {
     const extra = {}
     for (const c of campos) {
       const anterior = i >= 52 ? serie[i - 52]?.[c] : null
-      extra[`${c}_yoy`] =
-        anterior != null && anterior !== 0 && p[c] != null ? ((p[c] / anterior - 1) * 100) : null
+      const actual = p[c]
+      let yoy = null
+      let ns = false
+      if (anterior != null && anterior !== 0 && actual != null) {
+        if ((anterior < 0 && actual > 0) || (anterior > 0 && actual < 0)) ns = true
+        else yoy = ((actual - anterior) / Math.abs(anterior)) * 100
+      }
+      extra[`${c}_yoy`] = yoy
+      if (ns) extra[`${c}_yoy_ns`] = true
     }
     return { ...p, ...extra }
   })

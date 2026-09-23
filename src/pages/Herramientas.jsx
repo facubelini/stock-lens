@@ -1,34 +1,50 @@
 import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useDatosCombinados } from '../lib/useDatosCombinados'
-import { useJson } from '../lib/useJson'
+import { useFilasCombinadas } from '../lib/useFilas'
+import { useJsonPrimero } from '../lib/useJson'
 import { useWatchlist } from '../lib/watchlist'
 import { useAlertas, seCumpleAlerta, CAMPOS_ALERTA } from '../lib/alertas'
-import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
+import { inputCls } from '../lib/estilos'
+import { RATIO_POR_CLAVE, renderRatio, marketCapUsd } from '../lib/ratios'
 import TickerLink from '../components/TickerLink'
 import BuscadorTicker from '../components/BuscadorTicker'
-import { Vacio } from '../components/Estados'
-import { fmtPct, fmtNum, fmtPrecio, fmtMarketCap, estiloValor, estiloPER, estiloPEG } from '../lib/formato'
+import ComoSeCalcula, { Formula } from '../components/ComoSeCalcula'
+import { MensajeError, Vacio } from '../components/Estados'
+import { fmtPct, fmtNum, fmtPrecio, estiloValor } from '../lib/formato'
 
-const inputCls =
-  'rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-text ' +
-  'focus:border-terminal-accent focus:outline-none'
+// Ratios fundamentales desde la definicion compartida (src/lib/ratios.js);
+// el resto son metricas de precio/riesgo propias del comparador.
+const desdeRatio = (key) => {
+  const def = RATIO_POR_CLAVE[key]
+  return {
+    key,
+    label: def.label,
+    render: (f) => renderRatio(def, f),
+    estilo: def.estilo ? (f) => def.estilo(f[key]) : undefined,
+  }
+}
+const deCampo = (key, label, fmt, estilo) => ({
+  key,
+  label,
+  render: (f) => fmt(f[key]),
+  estilo: estilo ? (f) => estilo(f[key]) : undefined,
+})
 
 const COMPARADOR_CAMPOS = [
-  { key: 'precio', label: 'Precio', render: (v) => fmtPrecio(v) },
-  { key: 'var_pct', label: 'Var. hoy', render: (v) => fmtPct(v, { signo: true }), estilo: (v) => estiloValor(v, 6) },
-  { key: 'per_trailing', label: 'PER', render: (v) => fmtNum(v, 1), estilo: estiloPER },
-  { key: 'peg', label: 'PEG', render: (v) => fmtNum(v, 2), estilo: estiloPEG },
-  { key: 'ev_sales', label: 'EV/Sales', render: (v) => fmtNum(v, 2) },
-  { key: 'ps', label: 'P/S', render: (v) => fmtNum(v, 2) },
-  { key: 'profit_margin', label: 'Margen', render: (v) => fmtPct(v) },
-  { key: 'roe', label: 'ROE', render: (v) => fmtPct(v) },
-  { key: 'dividend_yield', label: 'Div. Yield', render: (v) => fmtPct(v) },
-  { key: 'beta_realizado', label: 'Beta (1a)', render: (v) => fmtNum(v, 2) },
-  { key: 'correlacion_mercado', label: 'Correl. c/ SPY', render: (v) => fmtNum(v, 2) },
-  { key: 'sharpe_1y', label: 'Sharpe (1a)', render: (v) => fmtNum(v, 2) },
-  { key: 'volatilidad_1y', label: 'Volatilidad anual.', render: (v) => fmtPct(v) },
-  { key: 'market_cap', label: 'Market Cap', render: (v) => fmtMarketCap(v) },
+  deCampo('precio', 'Precio', fmtPrecio),
+  deCampo('var_pct', 'Var. hoy', (v) => fmtPct(v, { signo: true }), (v) => estiloValor(v, 6)),
+  desdeRatio('per_trailing'),
+  desdeRatio('peg'),
+  desdeRatio('ev_sales'),
+  desdeRatio('ps'),
+  desdeRatio('profit_margin'),
+  desdeRatio('roe'),
+  desdeRatio('dividend_yield'),
+  deCampo('beta_realizado', 'Beta (1a)', (v) => fmtNum(v, 2)),
+  deCampo('correlacion_mercado', 'Correl. c/ SPY', (v) => fmtNum(v, 2)),
+  deCampo('sharpe_1y', 'Sharpe (1a)', (v) => fmtNum(v, 2)),
+  deCampo('volatilidad_1y', 'Volatilidad anual.', (v) => fmtPct(v)),
+  desdeRatio('market_cap'),
 ]
 
 function Chips({ tickers, onRemove }) {
@@ -46,6 +62,7 @@ function Chips({ tickers, onRemove }) {
             onClick={() => onRemove(t)}
             className="text-terminal-dim hover:text-terminal-down"
             title="Quitar"
+            aria-label={`Quitar ${t}`}
           >
             ✕
           </button>
@@ -84,9 +101,9 @@ function Comparador({ filas, seleccion }) {
                 <td
                   key={f.ticker}
                   className="px-2 py-1.5 text-right tabular font-semibold"
-                  style={c.estilo ? c.estilo(f[c.key]) : undefined}
+                  style={c.estilo ? c.estilo(f) : undefined}
                 >
-                  {c.render(f[c.key])}
+                  {c.render(f)}
                 </td>
               ))}
             </tr>
@@ -179,9 +196,10 @@ function MatrizCorrelacion({ filas, seleccion }) {
         </tbody>
       </table>
       <p className="mt-2 text-[11px] text-terminal-dim">
-        Correlación de retornos diarios sobre las últimas ~180 ruedas. Cerca de +1: se mueven casi
-        igual (diversifican poco entre sí) · cerca de -1: se mueven en contra · cerca de 0: no hay
-        relación lineal clara.
+        Correlación de Pearson de los retornos diarios (<code>cierre_t / cierre_t−1 − 1</code>) sobre
+        las ruedas que tienen en común los dos tickers (hasta ~180, mínimo 20). Cerca de +1: se mueven
+        casi igual (diversifican poco entre sí) · cerca de -1: se mueven en contra · cerca de 0: no
+        hay relación lineal clara.
       </p>
     </div>
   )
@@ -195,7 +213,10 @@ function HeatmapSectorial({ filas }) {
       const sector = f.sector || 'Sin sector'
       if (!m.has(sector)) m.set(sector, { total: 0, peso: 0, n: 0 })
       const acc = m.get(sector)
-      const peso = f.market_cap > 0 ? f.market_cap : 1
+      // Peso = market cap en USD (sin mezclar monedas); sin dato pesa 1, es
+      // decir casi nada al lado de una empresa grande.
+      const mc = marketCapUsd(f)
+      const peso = mc > 0 ? mc : 1
       acc.total += f.var_pct * peso
       acc.peso += peso
       acc.n += 1
@@ -231,15 +252,16 @@ function HeatmapSectorial({ filas }) {
         ))}
       </div>
       <p className="mt-2 text-[11px] text-terminal-dim">
-        Variación de hoy promediada por sector (ponderada por market cap) — de tu universo de
-        tickers, no del mercado entero.
+        Variación de hoy promediada por sector, ponderada por market cap en USD:{' '}
+        <code>Σ(var% × mcap) / Σ mcap</code> — de tu universo de tickers, no del mercado entero. Un
+        ticker sin market cap en USD pesa 1 (prácticamente no mueve el promedio).
       </p>
     </div>
   )
 }
 
 function AlertasPrecio({ filas }) {
-  const { alertas, crear, eliminar, marcarDisparada } = useAlertas()
+  const { alertas, crear, eliminar, marcarDisparada, reactivar } = useAlertas()
   const [ticker, setTicker] = useState('')
   const [campo, setCampo] = useState('precio')
   const [operador, setOperador] = useState('mayor')
@@ -280,7 +302,7 @@ function AlertasPrecio({ filas }) {
         </div>
         <div>
           <label className="mb-1 block text-[11px] text-terminal-dim">Cuando</label>
-          <select value={campo} onChange={(e) => setCampo(e.target.value)} className={inputCls}>
+          <select aria-label="Campo de la alerta" value={campo} onChange={(e) => setCampo(e.target.value)} className={inputCls}>
             {Object.entries(CAMPOS_ALERTA).map(([v, l]) => (
               <option key={v} value={v}>
                 {l}
@@ -290,7 +312,7 @@ function AlertasPrecio({ filas }) {
         </div>
         <div>
           <label className="mb-1 block text-[11px] text-terminal-dim">Sea</label>
-          <select value={operador} onChange={(e) => setOperador(e.target.value)} className={inputCls}>
+          <select aria-label="Operador" value={operador} onChange={(e) => setOperador(e.target.value)} className={inputCls}>
             <option value="mayor">≥ mayor o igual a</option>
             <option value="menor">≤ menor o igual a</option>
           </select>
@@ -350,6 +372,16 @@ function AlertasPrecio({ filas }) {
                     )}
                   </td>
                   <td className="whitespace-nowrap px-2 py-1.5 text-right">
+                    {a.disparada && (
+                      <button
+                        type="button"
+                        onClick={() => reactivar(a.id)}
+                        className="mr-2 text-xs text-terminal-dim hover:text-terminal-accent hover:underline"
+                        title="Volver a marcarla como no vista"
+                      >
+                        ↺ Reactivar
+                      </button>
+                    )}
                     {a._cumple && !a.disparada && (
                       <button
                         type="button"
@@ -363,6 +395,7 @@ function AlertasPrecio({ filas }) {
                       type="button"
                       onClick={() => eliminar(a.id)}
                       className="text-xs text-terminal-dim hover:text-terminal-down"
+                      aria-label={`Eliminar alerta de ${a.ticker}`}
                     >
                       ✕ Eliminar
                     </button>
@@ -384,15 +417,25 @@ function AlertasPrecio({ filas }) {
 const DURACIONES = [1, 2, 3, 5]
 
 function SimuladorDCA({ filas }) {
-  const { data: historicoMensual } = useJson('historico_mensual.json')
   const [ticker, setTicker] = useState('')
   const [monto, setMonto] = useState(100)
   const [anios, setAnios] = useState(3)
+  // Historial mensual por ticker, recien cuando se elige uno (antes se bajaba
+  // historico_mensual.json entero, ~1,8 MB, al abrir la pestaña). Si el
+  // pipeline todavia no publico el layout nuevo (mensual/<T>.json), se cae al
+  // archivo viejo.
+  const { data: historico, fuente, cargando: cargandoHist, error: errorHist } = useJsonPrimero(
+    ticker ? [`mensual/${encodeURIComponent(ticker)}.json`, 'historico_mensual.json'] : null,
+  )
 
   const precios = useMemo(() => {
-    const lista = Array.isArray(historicoMensual) ? historicoMensual : []
+    if (!historico) return []
+    if (fuente !== 'historico_mensual.json') {
+      return Array.isArray(historico) ? historico : (historico.precios ?? [])
+    }
+    const lista = Array.isArray(historico) ? historico : []
     return lista.find((x) => x.ticker === ticker)?.precios ?? []
-  }, [historicoMensual, ticker])
+  }, [historico, fuente, ticker])
 
   const resultado = useMemo(() => {
     if (!precios.length || !monto) return null
@@ -448,7 +491,7 @@ function SimuladorDCA({ filas }) {
         </div>
         <div>
           <label className="mb-1 block text-[11px] text-terminal-dim">Duración</label>
-          <select value={anios} onChange={(e) => setAnios(Number(e.target.value))} className={inputCls}>
+          <select aria-label="Duración" value={anios} onChange={(e) => setAnios(Number(e.target.value))} className={inputCls}>
             {DURACIONES.map((a) => (
               <option key={a} value={a}>
                 {a} año{a === 1 ? '' : 's'}
@@ -460,6 +503,10 @@ function SimuladorDCA({ filas }) {
 
       {!ticker ? (
         <Vacio texto="Elegí un ticker para simular la inversión." />
+      ) : cargandoHist ? (
+        <div className="skeleton h-16 rounded-lg" />
+      ) : errorHist ? (
+        <MensajeError mensaje={errorHist} />
       ) : !resultado ? (
         <Vacio texto="No hay suficiente historial mensual para ese ticker todavía." />
       ) : (
@@ -491,18 +538,28 @@ function SimuladorDCA({ filas }) {
           </div>
         </div>
       )}
-      <p className="mt-2 text-[11px] text-terminal-dim">
-        Simulación retrospectiva con cierres de fin de mes (ajustados por dividendos/splits). No
-        incluye comisiones ni impuestos. Rendimiento pasado, no garantiza nada a futuro.
-      </p>
+      <ComoSeCalcula className="mt-3">
+        <p>
+          <b className="text-terminal-text">DCA</b>: cada mes de la ventana se compran{' '}
+          <Formula>monto / cierre del mes</Formula> acciones.{' '}
+          <Formula>valor hoy = acciones acumuladas × último cierre</Formula>,{' '}
+          <Formula>retorno = valor hoy / invertido − 1</Formula>.
+        </p>
+        <p>
+          <b className="text-terminal-text">Lump sum</b>: el mismo total invertido de una sola vez al
+          cierre del primer mes: <Formula>último cierre / primer cierre − 1</Formula>.
+        </p>
+        <p>
+          Simulación retrospectiva con cierres de fin de mes (ajustados por dividendos/splits). No
+          incluye comisiones ni impuestos. Rendimiento pasado, no garantiza nada a futuro.
+        </p>
+      </ComoSeCalcula>
     </div>
   )
 }
 
 export default function Herramientas() {
-  const { filas: base, cargando, error } = useDatosCombinados()
-  const { overrides } = useClasificacion()
-  const filas = useMemo(() => aplicarClasificacion(base, overrides), [base, overrides])
+  const { filas, cargando, error } = useFilasCombinadas()
   const { watchlist } = useWatchlist()
 
   const [seleccion, setSeleccion] = useState(() =>
@@ -513,14 +570,7 @@ export default function Herramientas() {
   const quitar = (t) => setSeleccion((prev) => prev.filter((x) => x !== t))
 
   if (cargando) return <div className="skeleton h-64 rounded-lg" />
-  if (error) {
-    return (
-      <div className="rounded-lg border border-terminal-down/40 bg-terminal-down/10 p-6 text-center">
-        <p className="font-semibold text-terminal-down">No se pudieron cargar los datos</p>
-        <p className="text-sm text-terminal-dim">{error}</p>
-      </div>
-    )
-  }
+  if (error) return <MensajeError mensaje={error} />
 
   return (
     <div className="flex flex-col gap-6">
@@ -531,7 +581,7 @@ export default function Herramientas() {
           entre activos, heatmap sectorial y un simulador de DCA retrospectivo.{' '}
           <Link to="/screeners" className="text-terminal-dim hover:text-terminal-accent">
             (los scans rápidos — volumen, gaps, 52 semanas, insiders, próximos resultados — se
-            mudaron a 📡 Screeners →)
+            mudaron a 📡 Radar de eventos →)
           </Link>
         </p>
       </div>

@@ -25,7 +25,8 @@ export function ClasificacionProvider({ children }) {
       const next = { ...prev }
       const actual = { ...(next[ticker] ?? {}) }
       for (const [campo, valor] of Object.entries(campos)) {
-        const v = (valor ?? '').trim()
+        // String(): un backup restaurado puede traer numeros/null en vez de texto.
+        const v = String(valor ?? '').trim()
         if (v) actual[campo] = v
         else delete actual[campo]
       }

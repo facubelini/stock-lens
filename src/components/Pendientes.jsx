@@ -58,6 +58,7 @@ export default function Pendientes({ pendientes, watchlist }) {
               type="button"
               onClick={() => quitar(p.ticker)}
               title="Quitar de mi lista"
+              aria-label={`Quitar ${p.ticker} de mi lista`}
               className="text-terminal-dim hover:text-terminal-down"
             >
               ✕

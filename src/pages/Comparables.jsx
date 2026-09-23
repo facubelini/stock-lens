@@ -4,34 +4,16 @@ import { GLOSARIO_POR_CLAVE } from '../lib/glosario'
 import Glosario from '../components/Glosario'
 import TickerLink from '../components/TickerLink'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
-import { fmtNum, fmtPct, fmtMarketCap, estiloPER, estiloPEG, claseAlineacion } from '../lib/formato'
+import { claseAlineacion } from '../lib/formato'
+import { RATIOS, renderRatio, marketCapUsd, monedaNoUsd } from '../lib/ratios'
+import { selectCls } from '../lib/estilos'
 
 const ayudaDe = (key) => GLOSARIO_POR_CLAVE[key]?.def
 
-// Mismas columnas de ratios que Fundamentales, pero sin depender de esa pagina
-// (los datos de comparables tienen forma distinta: un grupo por industria).
-const COLUMNAS = [
-  { key: 'per_trailing', label: 'PER', dec: 1, estilo: estiloPER },
-  { key: 'per_forward', label: 'PER fwd', dec: 1, estilo: estiloPER },
-  { key: 'peg', label: 'PEG', dec: 2, estilo: estiloPEG },
-  { key: 'ev_sales', label: 'EV/Sales', dec: 2 },
-  { key: 'pb', label: 'P/B', dec: 2 },
-  { key: 'ps', label: 'P/S', dec: 2 },
-  { key: 'market_cap', label: 'Market Cap', esCap: true },
-  { key: 'eps', label: 'EPS', dec: 2 },
-  { key: 'profit_margin', label: 'Margen', esPct: true },
-  { key: 'roe', label: 'ROE', esPct: true },
-  { key: 'dividend_yield', label: 'Div. Yield', esPct: true },
-  { key: 'beta', label: 'Beta', dec: 2 },
-  { key: 'debt_to_equity', label: 'Deuda/Eq.', dec: 2 },
-  { key: 'current_ratio', label: 'Liquidez', dec: 2 },
-]
-
-function renderValor(col, valor) {
-  if (col.esCap) return fmtMarketCap(valor)
-  if (col.esPct) return fmtPct(valor)
-  return fmtNum(valor, col.dec ?? 2)
-}
+// Mismas columnas de ratios que Fundamentales (definicion compartida en
+// src/lib/ratios.js); los datos de comparables tienen forma distinta: un
+// grupo por industria con sus pares y la mediana.
+const COLUMNAS = RATIOS
 
 export default function Comparables() {
   const { data, cargando, error } = useJson('comparables.json')
@@ -45,7 +27,8 @@ export default function Comparables() {
 
   const pares = useMemo(() => {
     if (!grupo) return []
-    return [...grupo.pares].sort((a, b) => (b.market_cap ?? 0) - (a.market_cap ?? 0))
+    // Orden por market cap en USD (sin convertir queda al final).
+    return [...grupo.pares].sort((a, b) => (marketCapUsd(b) ?? -1) - (marketCapUsd(a) ?? -1))
   }, [grupo])
 
   return (
@@ -71,7 +54,8 @@ export default function Comparables() {
         <>
           <div className="mb-4 flex flex-wrap items-center gap-2">
             <select
-              className="rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-text focus:border-terminal-accent focus:outline-none"
+              className={selectCls}
+              aria-label="Industria"
               value={grupo?.industria ?? ''}
               onChange={(e) => setIndustriaSel(e.target.value)}
             >
@@ -86,7 +70,7 @@ export default function Comparables() {
             </span>
           </div>
 
-          <div className="overflow-x-auto rounded-lg border border-terminal-border">
+          <div className="max-h-[75vh] overflow-auto rounded-lg border border-terminal-border">
             <table className="min-w-full border-collapse text-sm">
               <thead className="sticky top-0 z-10">
                 <tr className="bg-terminal-panel2 text-left text-xs uppercase tracking-wide text-terminal-dim">
@@ -114,7 +98,7 @@ export default function Comparables() {
                   </td>
                   {COLUMNAS.map((c) => (
                     <td key={c.key} className="px-1.5 py-2 text-right tabular text-terminal-info">
-                      {renderValor(c, grupo?.mediana?.[c.key])}
+                      {renderRatio(c, grupo?.mediana)}
                     </td>
                   ))}
                 </tr>
@@ -128,6 +112,11 @@ export default function Comparables() {
                     <td className="whitespace-nowrap px-1.5 py-1.5 font-semibold text-terminal-text">
                       {p.en_portfolio && <span className="text-terminal-accent">★ </span>}
                       <TickerLink ticker={p.ticker} />
+                      {monedaNoUsd(p) && (
+                        <span className="ml-1 rounded bg-terminal-panel2 px-1 text-[10px] font-normal text-terminal-dim" title={`Cotiza en ${p.moneda}`}>
+                          {p.moneda}
+                        </span>
+                      )}
                     </td>
                     <td className="max-w-[180px] truncate px-1.5 py-1.5 text-terminal-dim" title={p.nombre}>
                       {p.nombre || '—'}
@@ -138,7 +127,7 @@ export default function Comparables() {
                         className="px-1.5 py-1.5 text-right tabular"
                         style={c.estilo ? c.estilo(p[c.key]) : undefined}
                       >
-                        {renderValor(c, p[c.key])}
+                        {renderRatio(c, p)}
                       </td>
                     ))}
                   </tr>

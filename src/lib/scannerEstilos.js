@@ -29,10 +29,6 @@ const PESO_GLOBAL = {
   OK: 0,
 }
 
-export function tieneSetup(fila) {
-  return PESO_GLOBAL[fila?.status_global] > 0
-}
-
 export function esSetupConfirmado(fila) {
   const g = fila?.status_global
   return g === 'BUY_BOTH' || g === 'BUY_CORTO' || g === 'BUY_LARGO'

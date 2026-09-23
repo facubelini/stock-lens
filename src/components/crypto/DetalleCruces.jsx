@@ -1,4 +1,4 @@
-import { INDICADORES } from '../../lib/crypto/v3/proximidad'
+import { INDICADORES } from '../../lib/crypto/proximidad'
 
 // Detalle del Screener de Cruces para un símbolo: los cinco indicadores con
 // sus dos líneas, la distancia entre ellas y cuánto les falta para cruzarse.
@@ -30,7 +30,7 @@ const ETIQUETA_ESTADO = {
 
 // Cómo se llama cada línea en cada indicador, para no mostrar "rápida/lenta".
 const LINEAS = {
-  macd: ['Histograma', 'cero'],
+  macd: ['MACD', 'señal'],
   rsi: ['RSI', 'media 14'],
   estoc: ['%K', '%D'],
   srsi: ['%K', '%D'],
@@ -123,7 +123,7 @@ export default function DetalleCruces({ fila }) {
               <td className="px-1.5 py-1 text-right" title="Distancia entre las dos líneas, relativa a su separación típica de las últimas 50 velas. 0,10 = está al 10% de lo normal, o sea muy pegado.">
                 Dist.
               </td>
-              <td className="px-1.5 py-1 text-right" title="Velas estimadas hasta el cruce, extrapolando a qué velocidad se están acercando. Sólo si convergen.">
+              <td className="px-1.5 py-1 text-right" title="Velas estimadas hasta el cruce = distancia de ahora ÷ cuánto se acercaron las líneas en la última vela CERRADA. Sólo si convergen.">
                 Faltan
               </td>
               <td className="px-1.5 py-1">Estado</td>
@@ -174,7 +174,7 @@ export default function DetalleCruces({ fila }) {
           ['SMI', num(fila.smi, 1), fila.smi >= 40 ? '#f87171' : fila.smi <= -40 ? '#4ade80' : null,
             fila.smi >= 40 ? 'Sobrecompra' : fila.smi <= -40 ? 'Sobreventa' : 'Zona neutral'],
           ['Vol ×', num(fila.volRatio, 2), fila.volRatio >= 1.5 ? '#fde68a' : null,
-            'Volumen de la vela contra el promedio de 20'],
+            'Volumen de la última vela CERRADA dividido el promedio de las 20 cerradas (la en curso tiene volumen parcial)'],
           ['Vela', fila.pctVela == null ? '—' : `${Math.round(fila.pctVela)}%`, null,
             'Cuánto lleva transcurrida la vela en curso'],
         ].map(([et, val, color, ayuda]) => (
@@ -209,7 +209,7 @@ export default function DetalleCruces({ fila }) {
               })}
             </div>
             <p className="mt-1.5 text-[10px] leading-relaxed text-terminal-dim">
-              Esta vela tiene <b>{num(fila.volRatio, 2)}×</b> el volumen promedio.
+              La última vela cerrada tiene <b>{num(fila.volRatio, 2)}×</b> el volumen promedio de 20 velas.
             </p>
           </div>
         )

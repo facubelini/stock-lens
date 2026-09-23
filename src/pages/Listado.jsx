@@ -1,21 +1,24 @@
-import { useMemo, useState } from 'react'
-import { useDatosCombinados } from '../lib/useDatosCombinados'
-import { useJson } from '../lib/useJson'
+import { memo, useMemo, useState } from 'react'
+import { useFilasCombinadas } from '../lib/useFilas'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
-import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { calcularScore } from '../lib/score'
 import { exportarCSV } from '../lib/csv'
-import { estiloValor, estiloRSI, fmtPct, fmtNum } from '../lib/formato'
+import { crearComparador } from '../lib/ordenar'
+import { selectCls } from '../lib/estilos'
+import { estiloValor, estiloRSI, fmtPct, fmtNum, promedio } from '../lib/formato'
 import Controles from '../components/Controles'
 import TarjetaIndustria from '../components/TarjetaIndustria'
 import Leyenda from '../components/Leyenda'
 import BotonPin from '../components/BotonPin'
 import EditorClasificacion from '../components/EditorClasificacion'
 import Semaforo from '../components/Semaforo'
-import BacktestScore from '../components/BacktestScore'
+import Backtest from '../components/Backtest'
 import Sparkline from '../components/Sparkline'
 import TickerLink from '../components/TickerLink'
+import MarcaStale from '../components/MarcaStale'
+import EncabezadoOrdenable from '../components/EncabezadoOrdenable'
+import { ExplicacionScore } from '../components/Explicaciones'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 
 function HeatmapIndustrias({ titulo, datos, valorKey, colorFn, formatFn, ayuda }) {
@@ -45,37 +48,103 @@ function HeatmapIndustrias({ titulo, datos, valorKey, colorFn, formatFn, ayuda }
   )
 }
 
+// Promedio simple por industria (var % y RSI), calculado en el cliente sobre
+// las filas YA reclasificadas a mano — antes se usaba promedios_por_industria
+// del pipeline, que ignoraba las clasificaciones manuales y no coincidia con
+// los recuadros de abajo.
+function promediosPorIndustria(filas) {
+  const g = new Map()
+  for (const f of filas) {
+    const k = f.industria || '—'
+    if (!g.has(k)) g.set(k, [])
+    g.get(k).push(f)
+  }
+  return [...g.entries()].map(([industria, fs]) => ({
+    industria,
+    n: fs.length,
+    var_pct_promedio: promedio(fs, (f) => f.var_pct),
+    rsi_promedio: promedio(fs, (f) => f.rsi),
+  }))
+}
+
+// Fila memoizada: al tipear en el buscador o cambiar el orden solo se
+// re-renderizan las filas que cambiaron.
+const FilaLista = memo(function FilaLista({ r, fijada, isPinned, toggle, industrias, sectores }) {
+  return (
+    <tr
+      className={`border-t border-terminal-border transition-colors hover:bg-terminal-panel2/40 ${
+        fijada ? 'bg-terminal-accent/5' : ''
+      }`}
+    >
+      <td className="w-6 py-1 pl-2 pr-0 text-center align-middle">
+        <BotonPin ticker={r.ticker} isPinned={isPinned} toggle={toggle} />
+      </td>
+      <td className="whitespace-nowrap py-1 px-2 align-middle">
+        <span className="flex items-center gap-1.5">
+          <TickerLink ticker={r.ticker} className="font-semibold" title={r.nombre} />
+          <MarcaStale fila={r} />
+          <EditorClasificacion
+            ticker={r.ticker}
+            industria={r.industria}
+            sector={r.sector}
+            industrias={industrias}
+            sectores={sectores}
+          />
+        </span>
+      </td>
+      <td className="max-w-[160px] truncate px-2 py-1 text-terminal-dim" title={r.industria}>
+        {r.industria || '—'}
+      </td>
+      <td className="whitespace-nowrap px-2 py-1 text-terminal-dim">{r.pais || '—'}</td>
+      <td className="px-2 py-1">
+        <Sparkline datos={r.spark} />
+      </td>
+      <td className="px-2 py-1 text-right tabular" style={estiloValor(r.var_pct, 6)}>
+        {fmtPct(r.var_pct, { signo: true })}
+      </td>
+      <td className="px-2 py-1 text-right tabular" style={estiloRSI(r.rsi)}>
+        {fmtNum(r.rsi, 1)}
+      </td>
+      <td className="px-2 py-1 text-right">
+        <Semaforo resultado={r._score} />
+      </td>
+    </tr>
+  )
+})
+
 // Tabla plana (sin agrupar por industria), con headers clickeables para
 // ordenar de mayor a menor — complementa el select de orden, que en esta
 // vista ordena la lista entera en vez de solo dentro de cada grupo.
-function ListaGeneral({ filas, orden, setOrden, isPinned, toggle, industrias, sectores }) {
+function ListaGeneral({ filas, orden, setOrden, pins, isPinned, toggle, industrias, sectores }) {
   const [campoActual, dirActual] = orden.split('|')
 
   const th = (campo, label, align = 'right') => {
     const activo = campoActual === campo
     return (
-      <th
+      <EncabezadoOrdenable
+        label={label}
+        align={align}
+        activa={activo}
+        dir={dirActual}
         onClick={() => setOrden(`${campo}|${activo && dirActual === 'desc' ? 'asc' : 'desc'}`)}
-        className={`cursor-pointer whitespace-nowrap px-2 py-2.5 font-semibold hover:text-terminal-text ${
-          align === 'right' ? 'text-right' : 'text-left'
-        } ${activo ? 'text-terminal-accent' : ''}`}
-      >
-        {label}
-        {activo ? (dirActual === 'desc' ? ' ▼' : ' ▲') : ''}
-      </th>
+        className="whitespace-nowrap px-2 py-2.5 font-semibold"
+      />
     )
   }
 
+  // El scroll vive en el contenedor para que el thead sticky funcione.
   return (
-    <div className="overflow-x-auto rounded-lg border border-terminal-border">
+    <div className="max-h-[75vh] overflow-auto rounded-lg border border-terminal-border">
       <table className="min-w-full border-collapse text-sm">
         <thead className="sticky top-0 z-10">
           <tr className="bg-terminal-panel2 text-left text-xs uppercase tracking-wide text-terminal-dim">
-            <th className="w-6 px-1 py-2.5" />
+            <th scope="col" className="w-6 px-1 py-2.5">
+              <span className="sr-only">Favorito</span>
+            </th>
             {th('ticker', 'Ticker', 'left')}
-            <th className="whitespace-nowrap px-2 py-2.5 font-semibold">Industria</th>
-            <th className="whitespace-nowrap px-2 py-2.5 font-semibold">País</th>
-            <th className="px-2 py-2.5 font-semibold">Gráfico</th>
+            <th scope="col" className="whitespace-nowrap px-2 py-2.5 font-semibold">Industria</th>
+            <th scope="col" className="whitespace-nowrap px-2 py-2.5 font-semibold">País</th>
+            <th scope="col" className="px-2 py-2.5 font-semibold">Gráfico</th>
             {th('var_pct', 'Var %')}
             {th('rsi', 'RSI')}
             {th('score', 'Score')}
@@ -83,47 +152,15 @@ function ListaGeneral({ filas, orden, setOrden, isPinned, toggle, industrias, se
         </thead>
         <tbody>
           {filas.map((r) => (
-            <tr key={r.ticker} className="border-t border-terminal-border transition-colors hover:bg-terminal-panel2/40">
-              <td className="w-6 py-1 pl-2 pr-0 text-center align-middle">
-                <BotonPin ticker={r.ticker} isPinned={isPinned} toggle={toggle} />
-              </td>
-              <td className="whitespace-nowrap py-1 px-2 align-middle">
-                <span className="flex items-center gap-1.5">
-                  <TickerLink ticker={r.ticker} className="font-semibold" title={r.nombre} />
-                  {r.stale && (
-                    <span
-                      className="text-terminal-warn"
-                      title={`Dato arrastrado de la última corrida exitosa (${r.actualizado ?? '?'})`}
-                    >
-                      🕒
-                    </span>
-                  )}
-                  <EditorClasificacion
-                    ticker={r.ticker}
-                    industria={r.industria}
-                    sector={r.sector}
-                    industrias={industrias}
-                    sectores={sectores}
-                  />
-                </span>
-              </td>
-              <td className="max-w-[160px] truncate px-2 py-1 text-terminal-dim" title={r.industria}>
-                {r.industria || '—'}
-              </td>
-              <td className="whitespace-nowrap px-2 py-1 text-terminal-dim">{r.pais || '—'}</td>
-              <td className="px-2 py-1">
-                <Sparkline datos={r.spark} />
-              </td>
-              <td className="px-2 py-1 text-right tabular" style={estiloValor(r.var_pct, 6)}>
-                {fmtPct(r.var_pct, { signo: true })}
-              </td>
-              <td className="px-2 py-1 text-right tabular" style={estiloRSI(r.rsi)}>
-                {fmtNum(r.rsi, 1)}
-              </td>
-              <td className="px-2 py-1 text-right">
-                <Semaforo resultado={r._score} />
-              </td>
-            </tr>
+            <FilaLista
+              key={r.ticker}
+              r={r}
+              fijada={pins.has(r.ticker)}
+              isPinned={isPinned}
+              toggle={toggle}
+              industrias={industrias}
+              sectores={sectores}
+            />
           ))}
         </tbody>
       </table>
@@ -153,44 +190,26 @@ const COLS_CSV = [
 ]
 
 export default function Listado() {
-  const { filas: merged, cargando, error } = useDatosCombinados()
-  const { data: listadoData } = useJson('listado.json')
-  const promediosPorIndustria = useMemo(
-    () => (Array.isArray(listadoData?.promedios_por_industria) ? listadoData.promedios_por_industria : []),
-    [listadoData],
-  )
+  const { filas: base, cargando, error } = useFilasCombinadas()
+  const promedios = useMemo(() => promediosPorIndustria(base), [base])
   const { pins, isPinned, toggle } = usePins()
-  const { overrides } = useClasificacion()
   const [orden, setOrden] = useState('score|desc')
   const [vista, setVista] = useState('industria') // 'industria' | 'lista'
 
-  const base = useMemo(
-    () => aplicarClasificacion(merged, overrides),
-    [merged, overrides],
+  // Largo real del sparkline (el pipeline manda N cierres; antes el texto
+  // decia "~30 ruedas" fijo aunque vinieran 180).
+  const largoSpark = useMemo(
+    () => base.reduce((m, r) => Math.max(m, Array.isArray(r.spark) ? r.spark.length : 0), 0),
+    [base],
   )
+
   const scored = useMemo(() => base.map((r) => ({ ...r, _score: calcularScore(r) })), [base])
   const t = useTabla(scored, { camposBusqueda: CAMPOS })
 
   const comparar = useMemo(() => {
     const [campo, dir] = orden.split('|')
     const getv = (r) => (campo === 'score' ? r._score?.score : r[campo])
-    return (a, b) => {
-      const pa = pins.has(a.ticker)
-      const pb = pins.has(b.ticker)
-      if (pa !== pb) return pa ? -1 : 1
-      const va = getv(a)
-      const vb = getv(b)
-      const na = va == null || Number.isNaN(va)
-      const nb = vb == null || Number.isNaN(vb)
-      if (na && nb) return 0
-      if (na) return 1
-      if (nb) return -1
-      if (typeof va === 'string' || typeof vb === 'string') {
-        const r = String(va).localeCompare(String(vb), 'es')
-        return dir === 'asc' ? r : -r
-      }
-      return dir === 'asc' ? va - vb : vb - va
-    }
+    return crearComparador(getv, dir, pins)
   }, [orden, pins])
 
   const grupos = useMemo(() => {
@@ -210,7 +229,8 @@ export default function Listado() {
 
   const ordenSelect = (
     <select
-      className="rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-text focus:border-terminal-accent focus:outline-none"
+      className={selectCls}
+      aria-label="Ordenar"
       value={orden}
       onChange={(e) => setOrden(e.target.value)}
       title={vista === 'lista' ? 'Ordenar la lista completa' : 'Ordenar dentro de cada industria'}
@@ -232,6 +252,7 @@ export default function Listado() {
         <button
           key={o.val}
           type="button"
+          aria-pressed={vista === o.val}
           onClick={() => setVista(o.val)}
           className={`px-2.5 py-1.5 ${
             vista === o.val
@@ -251,27 +272,30 @@ export default function Listado() {
         <h1 className="text-lg font-bold text-terminal-text">Listado</h1>
         <p className="text-xs text-terminal-dim">
           Variación % del día, RSI(14) y un <b>score orientativo</b> (tendencia + momentum +
-          valuación) por industria. El sparkline muestra las últimas ~30 ruedas.
+          valuación) por industria. El sparkline muestra las últimas{' '}
+          {largoSpark > 0 ? largoSpark : 'N'} ruedas.
         </p>
       </div>
 
-      {promediosPorIndustria.length > 0 && (
+      <ExplicacionScore />
+
+      {promedios.length > 0 && (
         <div className="mb-5 grid grid-cols-1 gap-4 xl:grid-cols-2">
           <HeatmapIndustrias
             titulo="Industrias — variación de hoy"
-            datos={promediosPorIndustria}
+            datos={promedios}
             valorKey="var_pct_promedio"
             colorFn={(v) => estiloValor(v, 3)}
             formatFn={(v) => fmtPct(v, { signo: true })}
-            ayuda="Promedio simple de la variación % de hoy, por industria (de tu universo de tickers)."
+            ayuda="Promedio simple (sin ponderar por tamaño) de la variación % de hoy de los tickers de cada industria de tu universo, con tus clasificaciones manuales aplicadas."
           />
           <HeatmapIndustrias
             titulo="Industrias — RSI promedio"
-            datos={promediosPorIndustria}
+            datos={promedios}
             valorKey="rsi_promedio"
             colorFn={(v) => estiloRSI(v)}
             formatFn={(v) => fmtNum(v, 1)}
-            ayuda="RSI(14) promedio por industria — >70 sobrecompra, <30 sobreventa."
+            ayuda="Promedio simple del RSI(14) de los tickers de cada industria — >70 sobrecompra, <30 sobreventa."
           />
         </div>
       )}
@@ -312,6 +336,7 @@ export default function Listado() {
           filas={listaGeneral}
           orden={orden}
           setOrden={setOrden}
+          pins={pins}
           isPinned={isPinned}
           toggle={toggle}
           industrias={t.industrias}
@@ -344,7 +369,7 @@ export default function Listado() {
         </div>
       )}
 
-      <BacktestScore />
+      <Backtest tipo="score" />
     </div>
   )
 }

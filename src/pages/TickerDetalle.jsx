@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useParams, Link } from 'react-router-dom'
-import { useJson } from '../lib/useJson'
+import { useParams, Link, useNavigate } from 'react-router-dom'
+import { useJson, useJsonPrimero, useMeta } from '../lib/useJson'
 import { useDatosCombinados } from '../lib/useDatosCombinados'
 import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { useWatchlist } from '../lib/watchlist'
@@ -16,46 +16,31 @@ import {
   fmtPrecio,
   fmtMarketCap,
   fmtFecha,
+  fmtFechaCorta,
+  hoyAR,
   estiloValor,
   estiloRSI,
-  estiloPER,
-  estiloPEG,
 } from '../lib/formato'
+import {
+  RATIOS as RATIOS_BASE,
+  RATIOS_ANALISTAS,
+  RECOMENDACION_LABEL,
+  renderRatio,
+  marketCapUsd,
+  monedaNoUsd,
+} from '../lib/ratios'
 import Sparkline from '../components/Sparkline'
 import BotonPin from '../components/BotonPin'
 import EditorClasificacion from '../components/EditorClasificacion'
 import TickerLink from '../components/TickerLink'
 import BuscadorTicker from '../components/BuscadorTicker'
 import GraficoEstacionalidad from '../components/GraficoEstacionalidad'
+import MarcaStale, { fechaDeFila } from '../components/MarcaStale'
+import { ExplicacionConviccion, ExplicacionDescuento } from '../components/Explicaciones'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 
-const RATIOS = [
-  { key: 'per_trailing', label: 'PER', dec: 1, estilo: estiloPER },
-  { key: 'per_forward', label: 'PER fwd', dec: 1, estilo: estiloPER },
-  { key: 'peg', label: 'PEG', dec: 2, estilo: estiloPEG },
-  { key: 'ev_sales', label: 'EV/Sales', dec: 2 },
-  { key: 'pb', label: 'P/B', dec: 2 },
-  { key: 'ps', label: 'P/S', dec: 2 },
-  { key: 'market_cap', label: 'Market Cap', esCap: true },
-  { key: 'eps', label: 'EPS', dec: 2 },
-  { key: 'profit_margin', label: 'Margen', esPct: true },
-  { key: 'roe', label: 'ROE', esPct: true },
-  { key: 'dividend_yield', label: 'Div. Yield', esPct: true },
-  { key: 'beta', label: 'Beta', dec: 2 },
-  { key: 'debt_to_equity', label: 'Deuda/Eq.', dec: 2 },
-  { key: 'current_ratio', label: 'Liquidez', dec: 2 },
-  { key: 'target_mean_price', label: 'Precio objetivo', dec: 2 },
-  { key: 'upside_pct', label: 'Upside', esPct: true },
-]
-
-const RECOMENDACION_LABEL = {
-  strong_buy: 'Compra fuerte',
-  buy: 'Compra',
-  hold: 'Mantener',
-  underperform: 'Bajo rendimiento',
-  sell: 'Venta',
-  strong_sell: 'Venta fuerte',
-}
+// Ratios fundamentales (definicion compartida) + los de analistas.
+const RATIOS = [...RATIOS_BASE, ...RATIOS_ANALISTAS]
 
 const DIST_MEDIAS = [
   { key: 'dist_ema21', label: 'EMA21' },
@@ -66,33 +51,42 @@ const DIST_MEDIAS = [
 
 const N_PEERS = 2
 
-function renderRatio(r, valor) {
-  if (r.esCap) return fmtMarketCap(valor)
-  if (r.esPct) return fmtPct(valor)
-  return fmtNum(valor, r.dec ?? 2)
-}
-
 function esETF(datos) {
   return /etf/i.test(datos?.sector ?? '') || /etf/i.test(datos?.industria ?? '')
 }
 
 // El proximo_earnings del pipeline a veces queda un dia o dos atras (Yahoo
 // tarda en correr la fecha siguiente apenas paso el reporte) — solo tiene
-// sentido mostrarlo si todavia no paso.
+// sentido mostrarlo si todavia no paso. "Hoy" en hora de Buenos Aires.
 function esFuturo(fechaISO) {
   if (!fechaISO) return false
-  const hoy = new Date().toISOString().slice(0, 10)
-  return fechaISO >= hoy
+  return fechaISO >= hoyAR()
 }
 
-function fmtFechaCorta(fechaISO) {
-  if (!fechaISO) return '—'
-  const [anio, mes, dia] = fechaISO.split('-')
-  return `${dia}/${mes}/${anio}`
+// Solo links http(s): el link de la noticia viene de un feed externo
+// (rss2json) y un "javascript:" o "data:" no puede terminar en un href.
+function urlSegura(url) {
+  try {
+    const u = new URL(url)
+    return u.protocol === 'https:' || u.protocol === 'http:' ? u.href : null
+  } catch {
+    return null
+  }
+}
+
+// TradingView usa el exchange como prefijo: los .BA son BCBA:XXX y los .SA
+// BMFBOVESPA:XXX (antes se armaba "YPFD-BA", que no existe).
+function urlTradingView(ticker) {
+  const m = /^(.+)\.(BA|SA)$/.exec(ticker)
+  if (m) {
+    const exchange = m[2] === 'BA' ? 'BCBA' : 'BMFBOVESPA'
+    return `https://www.tradingview.com/chart/?symbol=${encodeURIComponent(`${exchange}:${m[1]}`)}`
+  }
+  return `https://www.tradingview.com/symbols/${encodeURIComponent(ticker.replace('.', '-'))}/`
 }
 
 const EXPLICACION_PARTE = {
-  Tendencia: 'Precio vs. EMA50/SMA200 — más arriba de esas medias, más puntos.',
+  Tendencia: 'Precio vs. SMA200/EMA50 — más arriba de esas medias, más puntos.',
   Momentum: 'RSI — mejor cerca de 55 (ni sobrecomprado ni sobrevendido), penaliza los extremos.',
   Valuación: 'PER y PEG bajos suman — más barata, mejor.',
 }
@@ -126,14 +120,23 @@ function DesgloseScore({ resultado }) {
               <div className="h-full rounded-full bg-terminal-accent" style={{ width: `${p.v}%` }} />
             </div>
             <p className="mt-1.5 text-[10px] text-terminal-dim">
-              {EXPLICACION_PARTE[p.k]} (peso {Math.round(p.w * 100)}%)
+              {EXPLICACION_PARTE[p.k]} Peso {Math.round(p.w * 100)}%
+              {Math.abs((p.wEfectivo ?? p.w) - p.w) > 0.001 && ` (efectivo ${Math.round(p.wEfectivo * 100)}%, falta otra parte)`}.
             </p>
+            {p.calculo && (
+              <p className="mt-1 rounded bg-terminal-bg px-1.5 py-1 font-mono text-[10px] leading-snug text-terminal-text">
+                {p.calculo}
+              </p>
+            )}
           </div>
         ))}
       </div>
       <p className="mt-2 text-[11px] text-terminal-dim">
-        Score orientativo 0-100 — no es recomendación de inversión. Si falta algún dato (ej. PEG),
-        el peso de esa parte se reparte entre las que sí están disponibles.
+        <code>Score = Σ(parte × peso) / Σ(pesos disponibles)</code> ={' '}
+        {resultado.partes.map((p) => `${p.v}×${Math.round(p.w * 100)}%`).join(' + ')} →{' '}
+        <b className="text-terminal-text">{resultado.score}</b>. Cortes: ≥66 Favorable · ≥40 Neutral · &lt;40
+        Flojo. Score orientativo 0-100 — no es recomendación de inversión. Si falta algún dato (ej.
+        PEG), el peso de esa parte se reparte entre las que sí están disponibles.
       </p>
     </div>
   )
@@ -242,12 +245,14 @@ function NoticiasTicker({ ticker }) {
         <div className="flex flex-col gap-2 rounded-lg border border-terminal-border bg-terminal-panel p-3">
           {itemsConSentimiento.map((n, i) => {
             const s = ETIQUETA_SENTIMIENTO[n._sentimiento]
+            const href = urlSegura(n.link)
+            if (!href) return null
             return (
               <a
                 key={i}
-                href={n.link}
+                href={href}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="text-sm text-terminal-text hover:text-terminal-accent hover:underline"
                 title={`Sentimiento: ${s.texto} (heurística de palabras clave, no reemplaza leer la noticia)`}
               >
@@ -347,16 +352,32 @@ const btnExterno =
 export default function TickerDetalle() {
   const { ticker: tickerParam } = useParams()
   const ticker = decodeURIComponent(tickerParam || '').toUpperCase()
+  const navigate = useNavigate()
+  const meta = useMeta()
 
   const { filas: base, cargando: cargandoBase, error: errorBase } = useDatosCombinados()
-  const { data: screenerData, cargando: cargandoScreener } = useJson('screener.json')
-  const { data: comparablesData, cargando: cargandoComparables } = useJson('comparables.json')
-  const { data: historialData } = useJson('screener_historial.json')
-  const { data: historicoTickersData } = useJson('historico_tickers.json')
+  const { data: screenerData, cargando: cargandoScreener, error: errorScreener } = useJson('screener.json')
+  const {
+    data: comparablesData,
+    cargando: cargandoComparables,
+    error: errorComparables,
+  } = useJson('comparables.json')
+  // Historial de señales por ticker (historial/<T>.json, ~KB) en vez del
+  // screener_historial.json completo (varios MB). Si el pipeline todavia no
+  // publico el layout nuevo, se cae al archivo viejo.
+  const { data: historialData, fuente: fuenteHistorial } = useJsonPrimero(
+    ticker ? [`historial/${encodeURIComponent(ticker)}.json`, 'screener_historial.json'] : null,
+  )
+  // historico_tickers.json no se publica: la lista de tickers con histórico
+  // sale del propio historico_fundamental.json.
+  const { data: historicoFundData } = useJson('historico_fundamental.json')
   const { overrides } = useClasificacion()
   const { watchlist, agregar, quitar } = useWatchlist()
   const { isPinned, toggle } = usePins()
   const [manualPeers, setManualPeers] = useState([])
+  // Al pasar de un ticker a otro (link de un peer) los competidores agregados
+  // a mano eran del anterior: se limpian.
+  useEffect(() => setManualPeers([]), [ticker])
 
   const conOverrides = useMemo(() => aplicarClasificacion(base, overrides), [base, overrides])
   const fila = useMemo(
@@ -395,7 +416,8 @@ export default function TickerDetalle() {
     if (!grupoComparables) return []
     return [...grupoComparables.pares]
       .filter((p) => p.ticker.toUpperCase() !== ticker)
-      .sort((a, b) => (b.market_cap ?? 0) - (a.market_cap ?? 0))
+      // Por market cap en USD (no se mezclan monedas; sin dato va al final).
+      .sort((a, b) => (marketCapUsd(b) ?? -1) - (marketCapUsd(a) ?? -1))
       .slice(0, N_PEERS)
   }, [grupoComparables, ticker])
 
@@ -427,16 +449,36 @@ export default function TickerDetalle() {
 
   const historialTicker = useMemo(() => {
     const hist = Array.isArray(historialData) ? historialData : []
+    // Layout nuevo: [{ fecha, diario, semanal, mensual }] ascendente.
+    if (fuenteHistorial && fuenteHistorial !== 'screener_historial.json') {
+      return hist.filter((h) => h?.fecha)
+    }
+    // Layout viejo: [{ fecha, tickers: { TICKER: {...} } }].
     return hist
       .filter((h) => h.tickers?.[ticker])
       .map((h) => ({ fecha: h.fecha, ...h.tickers[ticker] }))
-  }, [historialData, ticker])
+  }, [historialData, fuenteHistorial, ticker])
 
-  const enHistoricoFundamental = Array.isArray(historicoTickersData)
-    ? historicoTickersData.includes(ticker)
-    : false
+  const enHistoricoFundamental = useMemo(() => {
+    const lista = Array.isArray(historicoFundData?.tickers) ? historicoFundData.tickers : []
+    return lista.some((t) => String(t.ticker).toUpperCase() === ticker && t.disponible !== false)
+  }, [historicoFundData, ticker])
+
+  // "← Volver": a la pantalla anterior si se llegó navegando dentro de la
+  // app; si se abrió el link directo (sin historial propio), al Listado.
+  const volver = (e) => {
+    e.preventDefault()
+    if ((window.history.state?.idx ?? 0) > 0) navigate(-1)
+    else navigate('/')
+  }
+  const linkVolver = (clase) => (
+    <Link to="/" onClick={volver} className={clase}>
+      ← Volver
+    </Link>
+  )
 
   const cargando = cargandoBase || cargandoScreener || cargandoComparables
+  const errorCarga = [errorBase, errorScreener, errorComparables].filter(Boolean).join(' · ') || null
 
   // Ni datos propios (pipeline) ni como peer de comparables: no hay nada que mostrar.
   const soloComparable = !fila && parPropio
@@ -446,11 +488,18 @@ export default function TickerDetalle() {
   }
 
   if (!fila && !parPropio) {
+    // Si fallo la carga no se puede afirmar que el ticker "no existe".
+    if (errorCarga) {
+      return (
+        <div>
+          {linkVolver('mb-4 inline-block text-sm text-terminal-dim hover:text-terminal-text')}
+          <MensajeError mensaje={errorCarga} />
+        </div>
+      )
+    }
     return (
       <div>
-        <Link to="/" className="mb-4 inline-block text-sm text-terminal-dim hover:text-terminal-text">
-          ← Volver
-        </Link>
+        {linkVolver('mb-4 inline-block text-sm text-terminal-dim hover:text-terminal-text')}
         <Vacio
           texto={`${ticker} no está en tu universo de tickers ni aparece como comparable de ninguna industria.`}
         />
@@ -471,9 +520,13 @@ export default function TickerDetalle() {
 
   return (
     <div>
-      <Link to="/" className="mb-3 inline-block text-sm text-terminal-dim hover:text-terminal-text">
-        ← Volver
-      </Link>
+      {linkVolver('mb-3 inline-block text-sm text-terminal-dim hover:text-terminal-text')}
+
+      {errorCarga && (
+        <p className="mb-3 rounded border border-terminal-down/40 bg-terminal-down/10 px-3 py-2 text-xs text-terminal-down">
+          Algunos datos no se pudieron cargar ({errorCarga}) — la vista puede estar incompleta.
+        </p>
+      )}
 
       <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
         <div>
@@ -503,12 +556,13 @@ export default function TickerDetalle() {
                 />
               </>
             )}
-            {datos.stale && (
+            <MarcaStale fila={datos} className="text-sm" texto="desactualizado" />
+            {monedaNoUsd(datos) && (
               <span
-                className="text-sm text-terminal-warn"
-                title={`Dato arrastrado de la última corrida exitosa (${datos.actualizado ?? '?'})`}
+                className="rounded bg-terminal-panel2 px-1.5 py-0.5 text-xs text-terminal-dim"
+                title={`Cotiza en ${datos.moneda}. Los ratios que mezclan monedas vienen en N/D; el market cap se muestra en USD si el pipeline lo convirtió.`}
               >
-                🕒 desactualizado
+                {datos.moneda}
               </span>
             )}
           </div>
@@ -516,21 +570,21 @@ export default function TickerDetalle() {
           <p className="mt-1 text-xs text-terminal-dim">
             {datos.industria || 'Sin industria'}
             {datos.sector && datos.sector !== datos.industria && <> · {datos.sector}</>}
-            {fila?.actualizado && <> · actualizado {fmtFecha(fila.actualizado)}</>}
+            {fila && fechaDeFila(fila, meta) && <> · actualizado {fmtFecha(fechaDeFila(fila, meta))}</>}
           </p>
           <div className="mt-2 flex gap-2">
             <a
               href={`https://finance.yahoo.com/quote/${encodeURIComponent(ticker)}`}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className={btnExterno}
             >
               Yahoo Finance ↗
             </a>
             <a
-              href={`https://www.tradingview.com/symbols/${encodeURIComponent(ticker.replace('.', '-'))}/`}
+              href={urlTradingView(ticker)}
               target="_blank"
-              rel="noreferrer"
+              rel="noopener noreferrer"
               className={btnExterno}
             >
               TradingView ↗
@@ -618,7 +672,7 @@ export default function TickerDetalle() {
             Screener
             <span
               className="font-normal text-terminal-dim"
-              title="Score de convicción (el mismo que ordena Top Señales): favorece COMPRA/CERCA, penaliza VENTA"
+              title="Score de convicción (el mismo que ordena Top Señales): Σ peso(veredicto) × peso(temporalidad)"
             >
               · conv. {prioridadScreener(screenerFila) > 0 ? '+' : ''}
               {prioridadScreener(screenerFila).toFixed(1)}
@@ -629,6 +683,7 @@ export default function TickerDetalle() {
               <CardVerdict key={tf.key} tf={tf} dato={screenerFila[tf.key]} />
             ))}
           </div>
+          <ExplicacionConviccion fila={screenerFila} className="mt-2" />
         </div>
       )}
 
@@ -904,10 +959,11 @@ export default function TickerDetalle() {
                   )}
                 </div>
                 <p className="mt-1 text-[11px] text-terminal-dim">
-                  Mismo cálculo que la pestaña Oportunidades — promedio del descuento/prima en los 3
-                  ratios de valuación contra la mediana de industria curada, no contra el mercado
-                  entero.
+                  Mismo cálculo que la pestaña Oportunidades — promedio del descuento/prima en los
+                  ratios de valuación disponibles contra la mediana de industria curada, no contra el
+                  mercado entero.
                 </p>
+                <ExplicacionDescuento className="mt-2" />
               </div>
             )}
             <div className="mb-2 flex flex-wrap items-center gap-2">
@@ -927,6 +983,7 @@ export default function TickerDetalle() {
                     type="button"
                     onClick={() => quitarPeerManual(p.ticker)}
                     title="Quitar de la comparación"
+                    aria-label={`Quitar ${p.ticker} de la comparación`}
                     className="text-terminal-dim hover:text-terminal-down"
                   >
                     ✕
@@ -958,6 +1015,7 @@ export default function TickerDetalle() {
                             type="button"
                             onClick={() => quitarPeerManual(p.ticker)}
                             title="Quitar de la comparación"
+                            aria-label={`Quitar ${p.ticker} de la comparación`}
                             className="font-normal text-terminal-dim hover:text-terminal-down"
                           >
                             ✕
@@ -982,21 +1040,21 @@ export default function TickerDetalle() {
                         className="px-2 py-1.5 text-right tabular font-semibold"
                         style={r.estilo ? r.estilo(datos[r.key]) : undefined}
                       >
-                        {renderRatio(r, datos[r.key])}
+                        {renderRatio(r, datos)}
                       </td>
                       {peersTop.map((p) => (
                         <td key={p.ticker} className="px-2 py-1.5 text-right tabular text-terminal-dim">
-                          {renderRatio(r, p[r.key])}
+                          {renderRatio(r, p)}
                         </td>
                       ))}
                       {manualPeersResueltos.map((p) => (
                         <td key={p.ticker} className="px-2 py-1.5 text-right tabular text-terminal-dim">
-                          {renderRatio(r, p[r.key])}
+                          {renderRatio(r, p)}
                         </td>
                       ))}
                       {grupoComparables && (
                         <td className="px-2 py-1.5 text-right tabular text-terminal-info">
-                          {renderRatio(r, grupoComparables.mediana?.[r.key])}
+                          {renderRatio(r, grupoComparables.mediana)}
                         </td>
                       )}
                     </tr>
@@ -1026,7 +1084,6 @@ export default function TickerDetalle() {
           📈 Ver evolución histórica (EDGAR, 5+ años) en Histórico Fundamental →
         </Link>
       )}
-      {errorBase && <MensajeError mensaje={errorBase} />}
     </div>
   )
 }

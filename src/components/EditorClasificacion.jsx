@@ -2,10 +2,8 @@ import { useState } from 'react'
 import { useClasificacion } from '../lib/clasificacion'
 import { useWatchlist } from '../lib/watchlist'
 import { getPat, quitarTickerRemoto } from '../lib/githubApi'
-
-const inputCls =
-  'mt-1 w-full rounded border border-terminal-border bg-terminal-bg px-2 py-1.5 text-sm text-terminal-text ' +
-  'focus:border-terminal-accent focus:outline-none'
+import { inputModalCls as inputCls } from '../lib/estilos'
+import Modal from './Modal'
 
 const OTRA = '__otra__'
 
@@ -127,23 +125,22 @@ export default function EditorClasificacion({
         type="button"
         onClick={abrir}
         title={editado ? 'Clasificacion editada a mano' : 'Editar categoría/subcategoría de este ticker'}
+        aria-label={`Editar clasificación de ${ticker}`}
         className={`shrink-0 text-xs ${editado ? 'text-terminal-accent' : 'text-terminal-dim'} hover:text-terminal-text`}
       >
         ✏️
       </button>
 
       {abierto && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4"
-          onClick={() => setAbierto(false)}
-        >
-          <div
-            className="w-full max-w-sm rounded-lg border border-terminal-border bg-terminal-panel p-4"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3 className="mb-3 text-sm font-semibold text-terminal-text">
+        <Modal
+          onClose={() => setAbierto(false)}
+          titulo={
+            <>
               Clasificación de <span className="text-terminal-accent">{ticker}</span>
-            </h3>
+            </>
+          }
+          className="w-full max-w-sm rounded-lg border border-terminal-border bg-terminal-panel p-4"
+        >
 
             <label className="mb-2 block text-xs text-terminal-dim">
               Categoría (sector, general — ej. Technology)
@@ -197,7 +194,7 @@ export default function EditorClasificacion({
 
             <p className="mt-3 text-[11px] leading-relaxed text-terminal-dim">
               Se guarda en tu navegador y reemplaza la clasificación de yfinance para este ticker
-              en Listado, Medias y Fundamentales.
+              en todas las pestañas (Listado, Medias, Fundamentales, Screener, Cartera, etc.).
             </p>
 
             <div className="mt-3 border-t border-terminal-border pt-3">
@@ -238,8 +235,7 @@ export default function EditorClasificacion({
                 </p>
               )}
             </div>
-          </div>
-        </div>
+        </Modal>
       )}
     </>
   )

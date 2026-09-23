@@ -1,8 +1,9 @@
 import { createContext, useCallback, useContext, useState } from 'react'
 
-// Watchlist global del usuario, cargada desde un Excel y persistida en el
-// navegador. Cuando hay una watchlist activa, las 3 pestañas muestran sólo
-// esos tickers (con la industria/país/nombre del Excel del usuario).
+// Watchlist global del usuario ("Mi lista"), cargada desde un Excel o a mano
+// y persistida en el navegador. Hoy la usan Mi Cartera (resumen de esos
+// tickers, con la industria/país/nombre del Excel del usuario) y el filtro
+// "Mi lista" de Warren Score — no filtra el resto de las pestañas.
 const KEY = 'stocklens_watchlist'
 const Ctx = createContext(null)
 
@@ -68,13 +69,28 @@ export function useWatchlist() {
 // Aplica la watchlist a un set de filas con datos: filtra a esos tickers,
 // pisa industria/país/nombre con los del usuario, y reporta los pendientes
 // (tickers de la lista que todavía no tienen datos calculados).
+//
+// El match ignora el sufijo .BA/.SA (mismo criterio que _sinSufijo en
+// githubApi.js): en el Excel suele estar "BAYN" y el pipeline lo resuelve
+// como "BAYN.BA" — sin esto quedaba para siempre como "pendiente".
+function _sinSufijo(t) {
+  return String(t ?? '').trim().toUpperCase().replace(/\.(SA|BA)$/, '')
+}
+
 export function aplicarWatchlist(filas, watchlist) {
   if (!watchlist) return { filas, pendientes: [] }
-  const porTicker = new Map((filas ?? []).map((f) => [String(f.ticker).toUpperCase(), f]))
+  const porTicker = new Map()
+  const porBase = new Map()
+  for (const f of filas ?? []) {
+    porTicker.set(String(f.ticker).toUpperCase(), f)
+    const base = _sinSufijo(f.ticker)
+    if (!porBase.has(base)) porBase.set(base, f)
+  }
   const out = []
   const pendientes = []
   for (const w of watchlist) {
-    const f = porTicker.get(w.ticker)
+    const tk = String(w.ticker ?? '').toUpperCase()
+    const f = porTicker.get(tk) ?? porBase.get(_sinSufijo(tk))
     if (f) {
       out.push({
         ...f,

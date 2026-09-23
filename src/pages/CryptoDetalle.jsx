@@ -4,7 +4,7 @@ import { getKlines, getFundingRate, getOpenInterest, getLongShortRatio } from '.
 import { analyzeKlines, calcularEstacionalidad } from '../lib/crypto/indicadores'
 import { fmtPrice } from '../lib/crypto/formato'
 import { INTERVALOS, MULTIPLOS_ATR, VELAS } from '../lib/crypto/constantes'
-import Insignia from '../components/crypto/Insignia'
+import Insignia, { TendenciaEma } from '../components/crypto/Insignia'
 import BarraRSI from '../components/crypto/BarraRSI'
 import CalculadoraApalancamiento from '../components/crypto/CalculadoraApalancamiento'
 import Sparkline from '../components/Sparkline'
@@ -44,8 +44,9 @@ export default function CryptoDetalle() {
   const [klines, setKlines] = useState(null)
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState(null)
-  const [futuros, setFuturos] = useState(null) // { funding, oi, ls } — independiente de klines/intervalo
-  const [estacionalidad, setEstacionalidad] = useState(null) // undefined = todavia no llego, null = sin datos suficientes
+  const [futuros, setFuturos] = useState(null) // { funding, oi, ls } | { error } — independiente de klines/intervalo
+  const [estacionalidad, setEstacionalidad] = useState(null) // null = sin datos suficientes (o todavia no llego)
+  const [errorEstacionalidad, setErrorEstacionalidad] = useState(null)
 
   useEffect(() => {
     let activo = true
@@ -73,11 +74,16 @@ export default function CryptoDetalle() {
   useEffect(() => {
     let activo = true
     setFuturos(null)
-    Promise.all([getFundingRate(symbol), getOpenInterest(symbol), getLongShortRatio(symbol)]).then(
-      ([funding, oi, ls]) => {
+    // Cada getter devuelve null si SU dato falla (se muestra N/D), pero tira
+    // con rate limit o region bloqueada: eso se muestra como error del bloque
+    // en vez de quedar "Cargando…" para siempre.
+    Promise.all([getFundingRate(symbol), getOpenInterest(symbol), getLongShortRatio(symbol)])
+      .then(([funding, oi, ls]) => {
         if (activo) setFuturos({ funding, oi, ls })
-      },
-    )
+      })
+      .catch((e) => {
+        if (activo) setFuturos({ error: e.message })
+      })
     return () => {
       activo = false
     }
@@ -89,9 +95,14 @@ export default function CryptoDetalle() {
   useEffect(() => {
     let activo = true
     setEstacionalidad(null)
-    getKlines(symbol, '1M', 60).then((k) => {
-      if (activo) setEstacionalidad(calcularEstacionalidad(k))
-    })
+    setErrorEstacionalidad(null)
+    getKlines(symbol, '1M', 60)
+      .then((k) => {
+        if (activo) setEstacionalidad(calcularEstacionalidad(k))
+      })
+      .catch((e) => {
+        if (activo) setErrorEstacionalidad(e.message)
+      })
     return () => {
       activo = false
     }
@@ -180,8 +191,8 @@ export default function CryptoDetalle() {
                 <div>
                   <span className="block text-[10px] uppercase text-terminal-dim">StochRSI</span>
                   <span className="font-semibold text-terminal-text">
-                    {fila.srsi}
-                    <BarraRSI valor={fila.srsi} />
+                    {fila.srsi ?? '—'}
+                    {fila.srsi != null && <BarraRSI valor={fila.srsi} />}
                   </span>
                 </div>
                 <div>
@@ -191,8 +202,7 @@ export default function CryptoDetalle() {
                 <div>
                   <span className="block text-[10px] uppercase text-terminal-dim">Tendencia EMA</span>
                   <span className="font-semibold text-terminal-text">
-                    {fila.ema_trend === 'ALCISTA' ? '↑ ' : '↓ '}
-                    {fila.ema_trend}
+                    <TendenciaEma valor={fila.ema_trend} />
                   </span>
                 </div>
                 <div>
@@ -220,6 +230,8 @@ export default function CryptoDetalle() {
               </div>
               {!futuros ? (
                 <p className="text-xs text-terminal-dim">Cargando…</p>
+              ) : futuros.error ? (
+                <p className="text-xs text-terminal-down">No se pudieron traer: {futuros.error}</p>
               ) : (
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                   <div>
@@ -287,6 +299,11 @@ export default function CryptoDetalle() {
               )}
             </div>
 
+            {errorEstacionalidad && (
+              <div className="rounded-lg border border-terminal-down/40 bg-terminal-down/10 p-4 text-xs text-terminal-down">
+                Estacionalidad: no se pudieron traer las velas mensuales. {errorEstacionalidad}
+              </div>
+            )}
             {estacionalidad && (
               <div className="rounded-lg border border-terminal-border bg-terminal-panel p-4">
                 <div className="mb-2 text-[10px] font-bold uppercase tracking-wide text-terminal-dim">
@@ -306,7 +323,12 @@ export default function CryptoDetalle() {
             <div className="border-b border-terminal-border px-4 py-2.5 text-sm font-semibold text-terminal-text">
               Calculadora de apalancamiento · indicadores · link
             </div>
-            <CalculadoraApalancamiento fila={fila} klines={klines} atrMult={multiploATR} />
+            <CalculadoraApalancamiento
+              fila={fila}
+              klines={klines}
+              atrMult={multiploATR}
+              tradfi={pathname.startsWith('/tokenizadas')}
+            />
           </div>
         </div>
       )}

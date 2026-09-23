@@ -1,30 +1,28 @@
 import { useMemo, useState } from 'react'
-import { useJson } from '../lib/useJson'
+import { useFilas } from '../lib/useFilas'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
-import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { exportarCSV } from '../lib/csv'
 import { medianaDe } from '../lib/benchmarks'
 import { GLOSARIO_POR_CLAVE } from '../lib/glosario'
+import {
+  RATIOS,
+  RATIOS_ANALISTAS,
+  RATIO_POR_CLAVE,
+  RECOMENDACION_LABEL,
+  renderRatio,
+  valorRatio,
+  monedaNoUsd,
+} from '../lib/ratios'
 import Controles from '../components/Controles'
 import Tabla from '../components/Tabla'
-import BotonPin from '../components/BotonPin'
 import EditorClasificacion from '../components/EditorClasificacion'
 import FiltrosRango, { aplicarFiltrosRango } from '../components/FiltrosRango'
 import Leyenda from '../components/Leyenda'
 import Glosario from '../components/Glosario'
-import TickerLink from '../components/TickerLink'
+import { columnaPin, columnaTicker } from '../components/columnas'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
-import { fmtNum, fmtPct, fmtMarketCap, estiloPER, estiloPEG, estiloValor } from '../lib/formato'
-
-const RECOMENDACION_LABEL = {
-  strong_buy: 'Compra fuerte',
-  buy: 'Compra',
-  hold: 'Mantener',
-  underperform: 'Bajo rendimiento',
-  sell: 'Venta',
-  strong_sell: 'Venta fuerte',
-}
+import { estiloValor, fmtPct } from '../lib/formato'
 
 const CAMPOS = ['ticker', 'nombre']
 const ayudaDe = (key) => GLOSARIO_POR_CLAVE[key]?.def
@@ -38,44 +36,37 @@ const valorAcotado = (texto) => (
   </span>
 )
 
-const numCol = (key, label, dec = 2) => ({
-  key,
-  label,
+// Columna generada desde la definicion compartida de src/lib/ratios.js. El
+// market cap se ordena/filtra en USD (market_cap_usd) para no mezclar pesos
+// con dolares.
+const colRatio = (def) => ({
+  key: def.key,
+  label: def.label,
   align: 'right',
-  valor: (r) => r[key],
-  render: (r) => valorAcotado(fmtNum(r[key], dec)),
-  ayuda: ayudaDe(key),
+  valor: (r) => valorRatio(def, r),
+  estilo: def.estilo ? (r) => def.estilo(r[def.key]) : undefined,
+  render: (r) => (def.esCap ? renderRatio(def, r) : valorAcotado(renderRatio(def, r))),
+  valorCSV: (r) => valorRatio(def, r),
+  ayuda: def.esCap
+    ? `${ayudaDe(def.key) ?? ''} En USD (convertido si la acción cotiza en otra moneda).`.trim()
+    : ayudaDe(def.key),
 })
 
-const pctCol = (key, label) => ({
-  key,
-  label,
-  align: 'right',
-  valor: (r) => r[key],
-  render: (r) => valorAcotado(fmtPct(r[key])),
-  ayuda: ayudaDe(key),
-})
+// Moneda de cotización cuando no es USD (ratios mixtos llegan en null desde el pipeline).
+const extraMoneda = (r) => {
+  const m = monedaNoUsd(r)
+  return m ? (
+    <span
+      className="rounded bg-terminal-panel2 px-1 text-[10px] font-normal text-terminal-dim"
+      title={`Cotiza en ${m}. Los ratios que mezclan monedas (ej. precio en ${m} vs. balance en USD) vienen en N/D.`}
+    >
+      {m}
+    </span>
+  ) : null
+}
 
 const columnas = [
-  {
-    key: 'ticker',
-    label: 'Ticker',
-    align: 'left',
-    valor: (r) => r.ticker,
-    render: (r) => (
-      <span className="inline-flex items-center gap-1 font-semibold text-terminal-text">
-        <TickerLink ticker={r.ticker} title={r.nombre || r.ticker} />
-        {r.stale && (
-          <span
-            className="text-terminal-warn"
-            title={`Dato arrastrado de la última corrida exitosa (${r.actualizado ?? '?'})`}
-          >
-            🕒
-          </span>
-        )}
-      </span>
-    ),
-  },
+  columnaTicker({ extra: extraMoneda }),
   {
     key: 'nombre',
     label: 'Empresa',
@@ -98,60 +89,12 @@ const columnas = [
       </span>
     ),
   },
+  ...RATIOS.map(colRatio),
+  colRatio({ ...RATIOS_ANALISTAS[0], label: 'Precio obj.' }),
   {
-    key: 'per_trailing',
-    label: 'PER',
-    align: 'right',
-    valor: (r) => r.per_trailing,
-    estilo: (r) => estiloPER(r.per_trailing),
-    render: (r) => valorAcotado(fmtNum(r.per_trailing, 1)),
-    ayuda: ayudaDe('per_trailing'),
-  },
-  {
-    key: 'per_forward',
-    label: 'PER fwd',
-    align: 'right',
-    valor: (r) => r.per_forward,
-    estilo: (r) => estiloPER(r.per_forward),
-    render: (r) => valorAcotado(fmtNum(r.per_forward, 1)),
-    ayuda: ayudaDe('per_forward'),
-  },
-  {
-    key: 'peg',
-    label: 'PEG',
-    align: 'right',
-    valor: (r) => r.peg,
-    estilo: (r) => estiloPEG(r.peg),
-    render: (r) => valorAcotado(fmtNum(r.peg, 2)),
-    ayuda: ayudaDe('peg'),
-  },
-  numCol('ev_sales', 'EV/Sales'),
-  numCol('pb', 'P/B'),
-  numCol('ps', 'P/S'),
-  {
-    key: 'market_cap',
-    label: 'Market Cap',
-    align: 'right',
-    valor: (r) => r.market_cap,
-    render: (r) => fmtMarketCap(r.market_cap),
-    ayuda: ayudaDe('market_cap'),
-  },
-  numCol('eps', 'EPS'),
-  pctCol('profit_margin', 'Margen'),
-  pctCol('roe', 'ROE'),
-  pctCol('dividend_yield', 'Div. Yield'),
-  numCol('beta', 'Beta'),
-  numCol('debt_to_equity', 'Deuda/Eq.'),
-  numCol('current_ratio', 'Liquidez'),
-  numCol('target_mean_price', 'Precio obj.'),
-  {
-    key: 'upside_pct',
-    label: 'Upside',
-    align: 'right',
-    valor: (r) => r.upside_pct,
+    ...colRatio(RATIOS_ANALISTAS[1]),
     estilo: (r) => estiloValor(r.upside_pct, 25),
     render: (r) => valorAcotado(fmtPct(r.upside_pct, { signo: true })),
-    ayuda: ayudaDe('upside_pct'),
   },
   {
     key: 'recommendation_key',
@@ -165,16 +108,12 @@ const columnas = [
 ]
 
 // Claves numéricas para la fila de mediana por industria (benchmark).
-const CLAVES_BENCH = [
-  'per_trailing', 'per_forward', 'peg', 'ev_sales', 'pb', 'ps', 'market_cap',
-  'eps', 'profit_margin', 'roe', 'dividend_yield', 'beta', 'debt_to_equity', 'current_ratio',
-  'target_mean_price', 'upside_pct',
-]
+const CLAVES_BENCH = [...RATIOS, ...RATIOS_ANALISTAS].map((r) => r.key)
 
 // Fila de resumen: mediana de cada ratio dentro de la industria (parámetro real del grupo).
 function resumenGrupo(industria, fs, cols) {
   const med = {}
-  for (const k of CLAVES_BENCH) med[k] = medianaDe(fs, (f) => f[k])
+  for (const k of CLAVES_BENCH) med[k] = medianaDe(fs, (f) => valorRatio(RATIO_POR_CLAVE[k], f))
   return (
     <tr className="border-t-2 border-terminal-border bg-terminal-panel2">
       {cols.map((c) => {
@@ -206,17 +145,12 @@ function resumenGrupo(industria, fs, cols) {
 }
 
 export default function Fundamentales() {
-  const { data, cargando, error } = useJson('fundamentales.json')
-  const raw = useMemo(() => (Array.isArray(data) ? data : (data?.acciones ?? [])), [data])
-  const { overrides } = useClasificacion()
-  const filas = useMemo(
-    () => aplicarClasificacion(raw, overrides),
-    [raw, overrides],
-  )
+  const { filas, cargando, error } = useFilas('fundamentales.json')
   const { pins, isPinned, toggle } = usePins()
   const [agrupar, setAgrupar] = useState(true)
   const t = useTabla(filas, {
     camposBusqueda: CAMPOS,
+    // Tabla.jsx ordena con col.valor: para market_cap es el valor en USD.
     ordenInicial: { key: 'market_cap', dir: 'desc' },
   })
 
@@ -228,15 +162,7 @@ export default function Fundamentales() {
 
   const columnasConPin = useMemo(
     () => [
-      {
-        key: '_pin',
-        label: '',
-        align: 'center',
-        sortable: false,
-        csv: false,
-        tdClass: 'w-6 px-0.5',
-        render: (r) => <BotonPin ticker={r.ticker} isPinned={isPinned} toggle={toggle} />,
-      },
+      columnaPin(isPinned, toggle),
       {
         key: '_editar',
         label: '',
@@ -267,6 +193,7 @@ export default function Fundamentales() {
           Múltiplos y métricas por empresa (<code>N/D</code> si falta el dato). Pasá el mouse por
           el <span className="text-terminal-dim">ⓘ</span> de cada columna para ver qué significa.
           Con <b>Agrupar por industria</b> ves la <b>mediana de cada grupo</b> como referencia.
+          Market cap en USD; si una acción cotiza en otra moneda se marca al lado del ticker.
         </p>
       </div>
 

@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useJson } from '../lib/useJson'
-import { getSymbols } from '../lib/crypto/binanceApi'
 
 const MAX_RESULTADOS = 8
 
@@ -9,6 +8,8 @@ const MAX_RESULTADOS = 8
 // saltar directo a su vista de detalle, sin pasar por el buscador de cada
 // tabla. Los símbolos de cripto se traen recién al abrir la paleta la
 // primera vez (no en cada carga de la app) y quedan cacheados en memoria.
+// Tanto listado.json como el cliente de Binance (import dinámico) se piden
+// recién al abrirla, así no engordan la carga inicial de la app.
 export default function ComandoPaleta() {
   const [abierta, setAbierta] = useState(false)
   const [query, setQuery] = useState('')
@@ -16,13 +17,14 @@ export default function ComandoPaleta() {
   const [cripto, setCripto] = useState(null) // null = todavia no se pidio
   const inputRef = useRef(null)
   const navigate = useNavigate()
-  const { data } = useJson('listado.json')
+  const { data } = useJson(abierta ? 'listado.json' : null)
 
   const acciones = useMemo(() => data?.acciones ?? [], [data])
 
   useEffect(() => {
     if (abierta && cripto === null) {
-      getSymbols()
+      import('../lib/crypto/binanceApi')
+        .then(({ getSymbols }) => getSymbols())
         .then((simbolos) => setCripto(simbolos))
         .catch(() => setCripto([]))
     }
@@ -106,6 +108,9 @@ export default function ComandoPaleta() {
       onClick={() => setAbierta(false)}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Buscar ticker"
         className="w-full max-w-lg overflow-hidden rounded-lg border border-terminal-border bg-terminal-panel shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
@@ -115,14 +120,19 @@ export default function ComandoPaleta() {
           onChange={(e) => setQuery(e.target.value)}
           onKeyDown={onKeyDownInput}
           placeholder="Buscar ticker, empresa o cripto… (Esc para cerrar)"
+          aria-label="Buscar ticker, empresa o cripto"
+          role="combobox"
+          aria-expanded={resultados.length > 0}
+          aria-controls="paleta-resultados"
+          aria-activedescendant={resultados[activo] ? `paleta-op-${activo}` : undefined}
           className="w-full border-b border-terminal-border bg-transparent px-4 py-3 text-sm text-terminal-text focus:outline-none"
         />
         {resultados.length === 0 ? (
           <p className="px-4 py-6 text-center text-sm text-terminal-dim">Sin resultados.</p>
         ) : (
-          <ul className="max-h-80 overflow-y-auto">
+          <ul id="paleta-resultados" role="listbox" className="max-h-80 overflow-y-auto">
             {resultados.map((item, i) => (
-              <li key={`${item.tipo}-${item.ticker}`}>
+              <li key={`${item.tipo}-${item.ticker}`} id={`paleta-op-${i}`} role="option" aria-selected={i === activo}>
                 <button
                   type="button"
                   onClick={() => ir(item)}

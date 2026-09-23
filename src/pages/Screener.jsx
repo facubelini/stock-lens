@@ -1,13 +1,14 @@
 import { useMemo, useState } from 'react'
-import { useJson } from '../lib/useJson'
+import { useFilas } from '../lib/useFilas'
 import { useTabla } from '../lib/useTabla'
-import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { exportarCSV } from '../lib/csv'
-import { getPat, dispararActualizacionDatos } from '../lib/githubApi'
 import { TIMEFRAMES, ESTILO_VERDICT, tieneSenal, prioridadScreener } from '../lib/screenerEstilos'
 import Controles from '../components/Controles'
 import TickerLink from '../components/TickerLink'
-import BacktestScreener from '../components/BacktestScreener'
+import MarcaStale from '../components/MarcaStale'
+import BotonActualizar from '../components/BotonActualizar'
+import Backtest from '../components/Backtest'
+import { ExplicacionConviccion } from '../components/Explicaciones'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 
 const CAMPOS = ['ticker', 'nombre']
@@ -42,39 +43,11 @@ function Celda({ dato }) {
 }
 
 export default function Screener() {
-  const { data, cargando, error } = useJson('screener.json')
-  const raw = useMemo(() => (Array.isArray(data) ? data : []), [data])
-  const { overrides } = useClasificacion()
-  const filas = useMemo(
-    () => aplicarClasificacion(raw, overrides),
-    [raw, overrides],
-  )
+  const { filas, cargando, error } = useFilas('screener.json')
   const [tfFiltro, setTfFiltro] = useState({ diario: true, semanal: true, mensual: true })
   const [exigirTodas, setExigirTodas] = useState(false)
-  const [refresh, setRefresh] = useState(null) // { tipo: 'cargando'|'ok'|'error', texto }
   const toggleTf = (key) => setTfFiltro((prev) => ({ ...prev, [key]: !prev[key] }))
   const t = useTabla(filas, { camposBusqueda: CAMPOS })
-
-  const onRefrescar = async () => {
-    if (!getPat()) {
-      setRefresh({
-        tipo: 'error',
-        texto: 'Configurá tu GitHub token (barra superior, "🔑 Configurar auto") para poder disparar la actualización.',
-      })
-      return
-    }
-    setRefresh({ tipo: 'cargando' })
-    try {
-      await dispararActualizacionDatos()
-      setRefresh({
-        tipo: 'ok',
-        texto:
-          'Actualización disparada. El pipeline tarda unos minutos en correr y GitHub Pages cachea los JSON hasta 10 min más.',
-      })
-    } catch (err) {
-      setRefresh({ tipo: 'error', texto: err.message })
-    }
-  }
 
   const tfKeysActivas = useMemo(
     () => TIMEFRAMES.map((tf) => tf.key).filter((key) => tfFiltro[key]),
@@ -105,7 +78,7 @@ export default function Screener() {
     <div>
       <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
         <div>
-          <h1 className="text-lg font-bold text-terminal-text">Screener</h1>
+          <h1 className="text-lg font-bold text-terminal-text">Screener técnico</h1>
           <p className="text-xs text-terminal-dim">
             Para cada acción de tu lista, un veredicto <b>Diario / Semanal / Mensual</b>: exige
             confluencia de tendencia (medias adaptativas) + <b>MACD</b> + <b>SMI</b> + RSI, y una
@@ -113,31 +86,14 @@ export default function Screener() {
             combina el indicador de TradingView con la lógica del analizador v8. <b>COMPRA</b> =
             confluencia alcista en pullback · <b>CERCA</b> = confluencia alcista acercándose ·{' '}
             <b>EXTENDIDO</b> = alcista pero lejos de ambas referencias, esperar retroceso ·{' '}
-            <b>VENTA</b> = confluencia bajista confirmada. Orientativo, no es recomendación de
-            inversión.
+            <b>VENTA</b> = confluencia bajista confirmada. La lista se ordena por convicción
+            (ver abajo). Orientativo, no es recomendación de inversión.
           </p>
         </div>
-        <div className="flex flex-col items-end gap-1">
-          <button
-            type="button"
-            onClick={onRefrescar}
-            disabled={refresh?.tipo === 'cargando'}
-            className="whitespace-nowrap rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-xs text-terminal-dim hover:border-terminal-accent hover:text-terminal-text disabled:cursor-not-allowed disabled:opacity-50"
-            title="Dispara el pipeline (Actualizar datos) fuera del cron habitual"
-          >
-            {refresh?.tipo === 'cargando' ? '⏳ Actualizando…' : '🔄 Actualizar ahora'}
-          </button>
-          {refresh && refresh.tipo !== 'cargando' && (
-            <span
-              className={`max-w-xs text-right text-[11px] leading-snug ${
-                refresh.tipo === 'error' ? 'text-terminal-down' : 'text-terminal-accent'
-              }`}
-            >
-              {refresh.texto}
-            </span>
-          )}
-        </div>
+        <BotonActualizar />
       </div>
+
+      <ExplicacionConviccion />
 
       <Controles
         busqueda={t.busqueda}
@@ -208,7 +164,7 @@ export default function Screener() {
           }
         />
       ) : (
-        <div className="overflow-x-auto rounded-lg border border-terminal-border">
+        <div className="max-h-[75vh] overflow-auto rounded-lg border border-terminal-border">
           <table className="min-w-full border-collapse text-sm">
             <thead className="sticky top-0 z-10">
               <tr className="bg-terminal-panel2 text-left text-xs uppercase tracking-wide text-terminal-dim">
@@ -262,14 +218,7 @@ export default function Screener() {
                         {f.cruce_corto.tipo === 'golden' ? '🔼' : '🔽'}
                       </span>
                     )}
-                    {f.stale && (
-                      <span
-                        className="ml-1 text-terminal-warn"
-                        title={`Dato arrastrado de la última corrida exitosa (${f.actualizado ?? '?'}), yfinance falló hoy para este ticker`}
-                      >
-                        🕒
-                      </span>
-                    )}
+                    <MarcaStale fila={f} className="ml-1" detalle="yfinance falló hoy para este ticker" />
                   </td>
                   <td
                     className="max-w-[160px] truncate px-2 py-1.5 text-terminal-dim"
@@ -295,7 +244,7 @@ export default function Screener() {
         </div>
       )}
 
-      <BacktestScreener />
+      <Backtest tipo="screener" />
     </div>
   )
 }

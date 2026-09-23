@@ -1,13 +1,52 @@
-// Los mismos indicadores del v1, pero calculados EN SERIE (un valor por vela)
-// en vez de solo en la última. Sin esto no se puede medir qué hizo una señal
-// históricamente, que es todo el punto del v3.
+// Los mismos indicadores del Crypto Screener, pero calculados EN SERIE (un
+// valor por vela) en vez de solo en la ultima. Los usa el Screener de Cruces
+// (que necesita la vela anterior para saber si hubo cruce) y el propio motor
+// del screener: calcStochRSI, calcMACD y calcATR de indicadores.js son el
+// ultimo valor de estas series, asi que no hay dos implementaciones de la
+// misma cuenta que se puedan desincronizar.
 //
-// Está validado contra el motor del v1: para el último índice, aportesEn()
-// devuelve exactamente el mismo score que analyzeKlines(). Si tocás algo acá,
-// corré esa comprobación de nuevo (hay un test en la propia pestaña).
-import { rsiSeries, stdEMAFull } from '../indicadores.js'
+// rsiSeries y stdEMAFull viven aca (y indicadores.js los re-exporta) para
+// que la dependencia vaya en un solo sentido: indicadores -> series.
 
 const NAN = Number.NaN
+
+// EMA estandar (alpha = 2/(p+1)) devolviendo la serie completa (NaN mientras
+// no hay suficientes velas). Seed = media simple de las primeras p.
+export function stdEMAFull(arr, p) {
+  if (arr.length < p) return arr.map(() => NaN)
+  const a = 2 / (p + 1)
+  const out = new Array(p - 1).fill(NaN)
+  let v = arr.slice(0, p).reduce((s, x) => s + x) / p
+  out.push(v)
+  for (let i = p; i < arr.length; i++) {
+    v = arr[i] * a + v * (1 - a)
+    out.push(v)
+  }
+  return out
+}
+
+// RSI de Wilder. OJO: devuelve un array MAS CORTO que closes (arranca en la
+// vela p): rs[j] corresponde a closes[j + p]. rsiSerieAlineada lo alinea.
+export function rsiSeries(closes, p = 14) {
+  const g = []
+  const l = []
+  for (let i = 1; i < closes.length; i++) {
+    const d = closes[i] - closes[i - 1]
+    g.push(d > 0 ? d : 0)
+    l.push(d < 0 ? -d : 0)
+  }
+  if (g.length < p) return []
+  const a = 1 / p
+  let ag = g.slice(0, p).reduce((s, x) => s + x) / p
+  let al = l.slice(0, p).reduce((s, x) => s + x) / p
+  const out = [al === 0 ? 100 : 100 - 100 / (1 + ag / al)]
+  for (let i = p; i < g.length; i++) {
+    ag = ag * (1 - a) + g[i] * a
+    al = al * (1 - a) + l[i] * a
+    out.push(al === 0 ? 100 : 100 - 100 / (1 + ag / al))
+  }
+  return out
+}
 
 // StochRSI del v1: rsiP=14, stochP=14, suavizado k=3 (SMA de los 3 crudos).
 export function srsiSerie(closes, rP = 14, stP = 14, sk = 3) {
@@ -36,10 +75,14 @@ export function rsiSerieAlineada(closes, p = 14) {
   return out
 }
 
-// Histograma del MACD: valor actual y el inmediatamente anterior.
+// MACD (12, 26, señal 9). cur = histograma (linea - señal) en cada vela,
+// prv = el histograma de la vela anterior. linea/senal son las dos lineas
+// que dibuja Binance, alineadas con closes.
 export function macdSerie(closes) {
   const n = closes.length
   const cur = new Array(n).fill(NAN)
+  const linea = new Array(n).fill(NAN)
+  const senal = new Array(n).fill(NAN)
   const fast = stdEMAFull(closes, 12)
   const slow = stdEMAFull(closes, 26)
   const macd = fast.map((v, i) => (isNaN(v) || isNaN(slow[i]) ? NAN : v - slow[i]))
@@ -51,16 +94,21 @@ export function macdSerie(closes) {
       valid.push(macd[i])
     }
   }
-  if (valid.length < 9) return { cur, prv: cur.slice() }
+  for (let k = 0; k < valid.length; k++) linea[idx[k]] = valid[k]
+  if (valid.length < 9) return { cur, prv: cur.slice(), linea, senal }
   const sig = stdEMAFull(valid, 9)
-  for (let k = 0; k < valid.length; k++) if (!isNaN(sig[k])) cur[idx[k]] = valid[k] - sig[k]
+  for (let k = 0; k < valid.length; k++) {
+    if (isNaN(sig[k])) continue
+    senal[idx[k]] = sig[k]
+    cur[idx[k]] = valid[k] - sig[k]
+  }
   const prv = new Array(n).fill(NAN)
   let ultimo = NAN
   for (let i = 0; i < n; i++) {
     prv[i] = ultimo
     if (!isNaN(cur[i])) ultimo = cur[i]
   }
-  return { cur, prv }
+  return { cur, prv, linea, senal }
 }
 
 export function bbSerie(closes, p = 20) {
@@ -230,13 +278,14 @@ export function smiSerie(highs, lows, closes, n = 10, r = 3, s = 3, sig = 3) {
   return { smi, señal: emaTolerante(smi, sig) }
 }
 
-// Arma todas las series de una vez, sobre velas YA CERRADAS.
+// Arma todas las series de una vez. Acepta cualquier array de velas: el
+// Screener de Cruces le pasa la vela en curso incluida a proposito.
 export function armarSeries(klinesCerradas) {
   const closes = klinesCerradas.map((k) => +k[4])
   const highs = klinesCerradas.map((k) => +k[2])
   const lows = klinesCerradas.map((k) => +k[3])
   const vols = klinesCerradas.map((k) => +k[5])
-  const { cur, prv } = macdSerie(closes)
+  const { cur, prv, linea, senal } = macdSerie(closes)
   const rsi = rsiSerieAlineada(closes)
   const srsi = srsiSerie(closes)
   const est = estocasticoSerie(highs, lows, closes)
@@ -260,6 +309,8 @@ export function armarSeries(klinesCerradas) {
     smiSenal: smi.señal,
     macdCur: cur,
     macdPrv: prv,
+    macdLinea: linea,
+    macdSenal: senal,
     bb: bbSerie(closes),
     ema20: emaSerie(closes, 20),
     ema50: emaSerie(closes, 50),
@@ -267,43 +318,4 @@ export function armarSeries(klinesCerradas) {
     volRatio: volRatioSerie(vols),
     atr: atrSerie(highs, lows, closes),
   }
-}
-
-// Aportes del score del v1 en el índice i. MISMAS ramas que analyzeKlines:
-// si cambian allá, tienen que cambiar acá o la evidencia deja de medir la
-// señal que el screener muestra.
-export function aportesEn(i, s) {
-  const a = {}
-  const r = s.rsi[i]
-  a.rsi = r >= 80 ? -2 : r >= 70 ? -1 : r <= 20 ? 2 : r <= 30 ? 1 : 0
-  const sr = s.srsi[i]
-  a.srsi = isNaN(sr) ? 0 : sr >= 90 ? -2 : sr >= 80 ? -1 : sr <= 10 ? 2 : sr <= 20 ? 1 : 0
-  const hc = s.macdCur[i]
-  const hp = s.macdPrv[i]
-  a.macd =
-    hc < 0 && hp >= 0 ? -2
-    : hc > 0 && hp <= 0 ? 2
-    : hc < 0 && hc < hp ? -1
-    : hc > 0 && hc > hp ? 1
-    : hc < 0 ? -0.5
-    : 0.5
-  const bb = s.bb[i]
-  a.bb = bb > 100 ? -1 : bb > 90 ? -0.5 : bb < 0 ? 1 : bb < 10 ? 0.5 : 0
-  const p = s.closes[i]
-  const e20 = s.ema20[i]
-  const e50 = s.ema50[i]
-  const e200 = s.ema200[i]
-  a.ema =
-    isNaN(e20) || isNaN(e50) || isNaN(e200) ? 0
-    : p < e20 && e20 < e50 && e50 < e200 ? -2
-    : p > e20 && e20 > e50 && e50 > e200 ? 2
-    : p < e200 && p < e50 ? -1
-    : p > e200 && p > e50 ? 1
-    : p < e200 ? -0.5
-    : 0.5
-  const sub = a.rsi + a.srsi + a.macd + a.bb + a.ema
-  const vr = s.volRatio[i]
-  a.vol = vr >= 2 && sub <= -2 ? -1 : vr >= 2 && sub >= 2 ? 1 : 0
-  a.total = +(sub + a.vol).toFixed(1)
-  return a
 }

@@ -60,6 +60,51 @@ export function fmtFecha(iso) {
   }
 }
 
+// 'AAAA-MM-DD' -> 'dd/mm/aaaa' (fechas sin hora del pipeline).
+export function fmtFechaCorta(fechaISO) {
+  if (!fechaISO) return '—'
+  const [anio, mes, dia] = String(fechaISO).slice(0, 10).split('-')
+  if (!dia) return fechaISO
+  return `${dia}/${mes}/${anio}`
+}
+
+const fmtISOAR = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'America/Argentina/Buenos_Aires',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+})
+
+// Fecha 'AAAA-MM-DD' de `d` en hora de Buenos Aires. Antes se usaba
+// toISOString() (UTC): desde las 21 hs de Argentina ya daba "mañana" y un
+// earnings de hoy aparecia como pasado.
+export function fechaISOEnAR(d = new Date()) {
+  return fmtISOAR.format(d)
+}
+
+export function hoyAR() {
+  return fechaISOEnAR(new Date())
+}
+
+// Suma dias a una fecha 'AAAA-MM-DD' (aritmetica de calendario en UTC, sin
+// problemas de horario de verano).
+export function sumarDiasISO(fechaISO, dias) {
+  const [a, m, d] = fechaISO.split('-').map(Number)
+  return new Date(Date.UTC(a, m - 1, d + dias)).toISOString().slice(0, 10)
+}
+
+// "hace 5 min" / "hace 3 h" / "hace 2 días" a partir de un ISO con hora.
+export function fmtAntiguedad(iso, ahora = Date.now()) {
+  if (!iso) return ND
+  const t = new Date(iso).getTime()
+  if (Number.isNaN(t)) return ND
+  const min = Math.max(0, Math.round((ahora - t) / 60000))
+  if (min < 60) return `hace ${min} min`
+  const h = Math.round(min / 60)
+  if (h < 48) return `hace ${h} h`
+  return `hace ${Math.round(h / 24)} días`
+}
+
 // Promedio ignorando nulos / NaN.
 export function promedio(arr, fn) {
   const vals = (arr ?? []).map(fn).filter((v) => !esNulo(v))

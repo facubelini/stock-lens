@@ -8,8 +8,8 @@ import { TIMEFRAMES, ESTILO_VERDICT, tieneSenal, prioridadScreener } from '../li
 import { calcularDescuento, evaluarCalidad, señalesTrampaValor } from '../lib/valuacion'
 import Controles from '../components/Controles'
 import Tabla from '../components/Tabla'
-import BotonPin from '../components/BotonPin'
-import TickerLink from '../components/TickerLink'
+import { columnaPin, columnaTicker } from '../components/columnas'
+import { ExplicacionConviccion, ExplicacionDescuento } from '../components/Explicaciones'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 import { fmtNum, fmtPct, estiloValor } from '../lib/formato'
 
@@ -17,8 +17,8 @@ const CAMPOS = ['ticker', 'nombre']
 
 export default function Oportunidades() {
   const { data: fundData, cargando: cargF, error: errF } = useJson('fundamentales.json')
-  const { data: compData, cargando: cargC } = useJson('comparables.json')
-  const { data: screenerData, cargando: cargS } = useJson('screener.json')
+  const { data: compData, cargando: cargC, error: errC } = useJson('comparables.json')
+  const { data: screenerData, cargando: cargS, error: errS } = useJson('screener.json')
   const { data: historialData } = useJson('oportunidades_historial.json')
   const { overrides } = useClasificacion()
   const { pins, isPinned, toggle } = usePins()
@@ -84,32 +84,17 @@ export default function Oportunidades() {
     ordenInicial: { key: '_descuento', dir: 'desc' },
   })
 
-  const columnas = [
-    {
-      key: '_pin',
-      label: '',
-      align: 'center',
-      sortable: false,
-      csv: false,
-      tdClass: 'w-6 px-0.5',
-      render: (r) => <BotonPin ticker={r.ticker} isPinned={isPinned} toggle={toggle} />,
-    },
-    {
-      key: 'ticker',
-      label: 'Ticker',
-      align: 'left',
-      valor: (r) => r.ticker,
-      render: (r) => (
-        <span className="inline-flex items-center gap-1">
-          <TickerLink ticker={r.ticker} className="font-semibold text-terminal-text" />
-          {r._trampaValor.length > 0 && (
-            <span className="text-terminal-warn" title={`Posible trampa de valor: ${r._trampaValor.join(', ')}`}>
-              ⚠️
-            </span>
-          )}
-        </span>
-      ),
-    },
+  const columnas = useMemo(() => [
+    columnaPin(isPinned, toggle),
+    columnaTicker({
+      conNombreEnTitle: false,
+      extra: (r) =>
+        r._trampaValor.length > 0 && (
+          <span className="text-terminal-warn" title={`Posible trampa de valor: ${r._trampaValor.join(', ')}`}>
+            ⚠️
+          </span>
+        ),
+    }),
     {
       key: 'nombre',
       label: 'Empresa',
@@ -192,7 +177,7 @@ export default function Oportunidades() {
           {r._prioridad.toFixed(1)}
         </span>
       ),
-      ayuda: 'Score de convicción del Screener (el mismo que ordena Top Señales).',
+      ayuda: 'Score de convicción del Screener técnico: Σ peso(veredicto) × peso(temporalidad). Ver "¿Cómo se calcula?" arriba.',
     },
     {
       key: '_calidad',
@@ -224,9 +209,13 @@ export default function Oportunidades() {
       render: (r) => (r._diasEnLista <= 1 ? 'Nuevo hoy' : `${r._diasEnLista} días`),
       ayuda: 'Días consecutivos que este ticker viene cumpliendo las condiciones — se arma con el tiempo desde que se activó esta función.',
     },
-  ]
+  ], [isPinned, toggle])
 
   const cargando = cargF || cargC || cargS
+  // Las 3 fuentes son necesarias (sin comparables no hay descuento, sin
+  // screener no hay señal): cualquier error se muestra, no solo el de
+  // fundamentales.
+  const error = [errF, errC, errS].filter(Boolean).join(' · ') || null
 
   return (
     <div>
@@ -242,6 +231,11 @@ export default function Oportunidades() {
           si tu industria no está ahí, no vas a ver esos tickers acá aunque estén baratos o con
           señal. Orientativo, no es recomendación de inversión.
         </p>
+      </div>
+
+      <div className="mb-4 grid grid-cols-1 gap-2 lg:grid-cols-2">
+        <ExplicacionDescuento className="" />
+        <ExplicacionConviccion className="" />
       </div>
 
       <Controles
@@ -260,8 +254,8 @@ export default function Oportunidades() {
 
       {cargando ? (
         <TablaSkeleton columnas={8} />
-      ) : errF ? (
-        <MensajeError mensaje={errF} />
+      ) : error ? (
+        <MensajeError mensaje={error} />
       ) : t.filtradas.length === 0 ? (
         <Vacio texto="Ningún ticker cumple hoy las dos condiciones (barato vs. industria + señal técnica) a la vez." />
       ) : (

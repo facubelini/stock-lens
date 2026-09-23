@@ -1,28 +1,54 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
+import { Routes, Route, Navigate, Link } from 'react-router-dom'
 import Header from './components/Header'
 import WatchlistBar from './components/WatchlistBar'
-import Listado from './pages/Listado'
-import Medias from './pages/Medias'
-import Fundamentales from './pages/Fundamentales'
-import Comparables from './pages/Comparables'
-import Oportunidades from './pages/Oportunidades'
-import Screener from './pages/Screener'
-import HistoricoFundamental from './pages/HistoricoFundamental'
-import CryptoScreener from './pages/CryptoScreener'
-import CryptoDetalle from './pages/CryptoDetalle'
-import AccionesTokenizadas from './pages/AccionesTokenizadas'
-import ScreenerCruces from './pages/ScreenerCruces'
-import CryptoScreenerV3 from './pages/CryptoScreenerV3'
-import TopSenales from './pages/TopSenales'
-import Cartera from './pages/Cartera'
-import Macro from './pages/Macro'
-import Herramientas from './pages/Herramientas'
-import Screeners from './pages/Screeners'
-import PrePostMarket from './pages/PrePostMarket'
-import Scanner from './pages/Scanner'
-import WarrenScore from './pages/WarrenScore'
-import TickerDetalle from './pages/TickerDetalle'
 import ComandoPaleta from './components/ComandoPaleta'
+import { TablaSkeleton } from './components/Estados'
+
+// Cada pestaña es un chunk aparte (React.lazy): el bundle inicial solo trae
+// el shell (header, barra de lista, paleta) y la pagina que se abre; el
+// resto se baja al navegar.
+const Listado = lazy(() => import('./pages/Listado'))
+const Medias = lazy(() => import('./pages/Medias'))
+const Fundamentales = lazy(() => import('./pages/Fundamentales'))
+const Comparables = lazy(() => import('./pages/Comparables'))
+const Oportunidades = lazy(() => import('./pages/Oportunidades'))
+const Screener = lazy(() => import('./pages/Screener'))
+const HistoricoFundamental = lazy(() => import('./pages/HistoricoFundamental'))
+const CryptoScreener = lazy(() => import('./pages/CryptoScreener'))
+const CryptoDetalle = lazy(() => import('./pages/CryptoDetalle'))
+const AccionesTokenizadas = lazy(() => import('./pages/AccionesTokenizadas'))
+const ScreenerCruces = lazy(() => import('./pages/ScreenerCruces'))
+const TopSenales = lazy(() => import('./pages/TopSenales'))
+const Cartera = lazy(() => import('./pages/Cartera'))
+const Macro = lazy(() => import('./pages/Macro'))
+const Herramientas = lazy(() => import('./pages/Herramientas'))
+const Screeners = lazy(() => import('./pages/Screeners'))
+const PrePostMarket = lazy(() => import('./pages/PrePostMarket'))
+const Scanner = lazy(() => import('./pages/Scanner'))
+const WarrenScore = lazy(() => import('./pages/WarrenScore'))
+const TickerDetalle = lazy(() => import('./pages/TickerDetalle'))
+
+function CargandoPagina() {
+  return (
+    <div role="status" aria-label="Cargando pestaña">
+      <div className="skeleton mb-4 h-6 w-48" />
+      <TablaSkeleton columnas={5} filas={8} />
+    </div>
+  )
+}
+
+function NoEncontrada() {
+  return (
+    <div className="rounded-lg border border-terminal-border bg-terminal-panel p-8 text-center">
+      <p className="mb-1 text-lg font-semibold text-terminal-text">Página no encontrada</p>
+      <p className="mb-4 text-sm text-terminal-dim">La dirección no corresponde a ninguna pestaña de Stock Lens.</p>
+      <Link to="/" className="rounded bg-terminal-accent px-3 py-1.5 text-sm font-semibold text-black hover:opacity-90">
+        Ir al Listado
+      </Link>
+    </div>
+  )
+}
 
 export default function App() {
   return (
@@ -31,34 +57,36 @@ export default function App() {
       <Header />
       <WatchlistBar />
       <main className="w-full flex-1 px-4 py-5">
-        <Routes>
-          <Route path="/" element={<Listado />} />
-          <Route path="/medias" element={<Medias />} />
-          <Route path="/fundamentales" element={<Fundamentales />} />
-          <Route path="/comparables" element={<Comparables />} />
-          <Route path="/oportunidades" element={<Oportunidades />} />
-          <Route path="/cartera" element={<Cartera />} />
-          <Route path="/macro" element={<Macro />} />
-          <Route path="/herramientas" element={<Herramientas />} />
-          <Route path="/screeners" element={<Screeners />} />
-          <Route path="/pre-post" element={<PrePostMarket />} />
-          <Route path="/scanner" element={<Scanner />} />
-          <Route path="/warren-score" element={<WarrenScore />} />
-          <Route path="/screener" element={<Screener />} />
-          <Route path="/historico" element={<HistoricoFundamental />} />
-          <Route path="/cripto" element={<CryptoScreener />} />
-          <Route path="/cripto/:symbol" element={<CryptoDetalle />} />
-          <Route path="/cruces" element={<ScreenerCruces />} />
-          {/* La v2 se reemplazó por el screener de cruces; se redirige para
-              no romper enlaces guardados. */}
-          <Route path="/cripto-v2" element={<Navigate to="/cruces" replace />} />
-          <Route path="/cripto-v3" element={<CryptoScreenerV3 />} />
-          <Route path="/tokenizadas" element={<AccionesTokenizadas />} />
-          <Route path="/tokenizadas/:symbol" element={<CryptoDetalle />} />
-          <Route path="/top" element={<TopSenales />} />
-          <Route path="/ticker/:ticker" element={<TickerDetalle />} />
-          <Route path="*" element={<Listado />} />
-        </Routes>
+        <Suspense fallback={<CargandoPagina />}>
+          <Routes>
+            <Route path="/" element={<Listado />} />
+            <Route path="/medias" element={<Medias />} />
+            <Route path="/fundamentales" element={<Fundamentales />} />
+            <Route path="/comparables" element={<Comparables />} />
+            <Route path="/oportunidades" element={<Oportunidades />} />
+            <Route path="/cartera" element={<Cartera />} />
+            <Route path="/macro" element={<Macro />} />
+            <Route path="/herramientas" element={<Herramientas />} />
+            <Route path="/screeners" element={<Screeners />} />
+            <Route path="/pre-post" element={<PrePostMarket />} />
+            <Route path="/scanner" element={<Scanner />} />
+            <Route path="/warren-score" element={<WarrenScore />} />
+            <Route path="/screener" element={<Screener />} />
+            <Route path="/historico" element={<HistoricoFundamental />} />
+            <Route path="/cripto" element={<CryptoScreener />} />
+            <Route path="/cripto/:symbol" element={<CryptoDetalle />} />
+            <Route path="/cruces" element={<ScreenerCruces />} />
+            {/* La v2 y la v3 se reemplazaron por el screener de cruces; se
+                redirige para no romper enlaces guardados. */}
+            <Route path="/cripto-v2" element={<Navigate to="/cruces" replace />} />
+            <Route path="/cripto-v3" element={<Navigate to="/cruces" replace />} />
+            <Route path="/tokenizadas" element={<AccionesTokenizadas />} />
+            <Route path="/tokenizadas/:symbol" element={<CryptoDetalle />} />
+            <Route path="/top" element={<TopSenales />} />
+            <Route path="/ticker/:ticker" element={<TickerDetalle />} />
+            <Route path="*" element={<NoEncontrada />} />
+          </Routes>
+        </Suspense>
       </main>
       <footer className="border-t border-terminal-border px-4 py-3 text-center text-[11px] text-terminal-dim">
         Stock Lens · datos vía yfinance, sólo con fines informativos. No constituye recomendación

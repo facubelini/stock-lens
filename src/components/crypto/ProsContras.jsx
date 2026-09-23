@@ -6,8 +6,21 @@
 // Antes esto se mostraba como una lista plana donde no se veía qué empujaba
 // para cada lado ni cuánto pesaba, y los aportes de ±0.5 no aparecían.
 //
-// Las filas del Screener v2 no traen 'aportes' (su score es una cuenta de
-// condiciones cumplidas, sin signo), así que ahí se cae al listado de siempre.
+// Si una fila no trae 'aportes' se cae al listado plano de 'details'.
+
+// Nombre para mostrar de cada bloque. analyzeKlines ya los manda legibles
+// ('RSI', 'StochRSI'...), pero si algun dia llega una clave cruda ('rsi',
+// 'srsi', 'ema') no se muestra tal cual.
+const ETIQUETA_BLOQUE = {
+  rsi: 'RSI',
+  srsi: 'StochRSI',
+  macd: 'MACD',
+  bb: 'Bollinger',
+  ema: 'Tendencia (EMAs)',
+  vol: 'Volumen',
+}
+const etiquetaBloque = (b) => ETIQUETA_BLOQUE[b] ?? b
+
 export default function ProsContras({ fila }) {
   if (!fila.aportes?.length) {
     return (
@@ -50,7 +63,7 @@ export default function ProsContras({ fila }) {
             >
               {conSigno(a.puntos)}
             </span>
-            <span className="text-terminal-text">{a.texto}</span>
+            <span className="text-terminal-text">{a.texto ?? etiquetaBloque(a.bloque)}</span>
           </div>
         ))
       )}
@@ -84,7 +97,7 @@ export default function ProsContras({ fila }) {
           </div>
           <div className="text-xs leading-relaxed text-terminal-dim">
             {neutros.map((a) => (
-              <div key={a.bloque}>• {a.texto}</div>
+              <div key={a.bloque}>• {a.texto ?? etiquetaBloque(a.bloque)}</div>
             ))}
           </div>
         </div>

@@ -4,9 +4,10 @@
 // Excel a mano.
 //
 // Requiere un GitHub Personal Access Token (PAT) del propio usuario, guardado
-// solo en su navegador (localStorage) — mismo patron que el editor del
-// portfolio. El token nunca sale de acá: se usa solo para llamar directo a
-// api.github.com desde el browser.
+// solo en su navegador. Por defecto en sessionStorage (se borra al cerrar la
+// pestaña); con "recordar en este dispositivo" va a localStorage. El token
+// nunca sale de acá: se usa solo para llamar directo a api.github.com desde
+// el browser.
 
 const OWNER = 'facubelini'
 const REPO = 'stock-lens'
@@ -18,18 +19,41 @@ const WORKFLOW_HISTORICO = 'historico.yml'
 const LIMITE_HISTORICO = 20
 const KEY_PAT = 'stocklens_gh_pat'
 
-export function getPat() {
+function _leer(storage) {
   try {
-    return localStorage.getItem(KEY_PAT) || ''
+    return storage.getItem(KEY_PAT) || ''
   } catch {
     return ''
   }
 }
 
-export function setPat(pat) {
+function _borrar(storage) {
   try {
-    if (pat) localStorage.setItem(KEY_PAT, pat.trim())
-    else localStorage.removeItem(KEY_PAT)
+    storage.removeItem(KEY_PAT)
+  } catch {
+    /* almacenamiento no disponible: ignorar */
+  }
+}
+
+export function getPat() {
+  return _leer(sessionStorage) || _leer(localStorage)
+}
+
+// true si el token actual esta persistido (localStorage, sobrevive a cerrar
+// el navegador). Las versiones anteriores lo guardaban siempre ahi: esos
+// tokens se siguen leyendo igual (migracion transparente) y se muestran como
+// "recordado" hasta que el usuario lo vuelva a guardar o lo borre.
+export function patRecordado() {
+  return Boolean(_leer(localStorage))
+}
+
+export function setPat(pat, { recordar = false } = {}) {
+  const valor = String(pat ?? '').trim()
+  _borrar(sessionStorage)
+  _borrar(localStorage)
+  if (!valor) return
+  try {
+    ;(recordar ? localStorage : sessionStorage).setItem(KEY_PAT, valor)
   } catch {
     /* almacenamiento no disponible: ignorar */
   }
@@ -51,10 +75,13 @@ async function ghFetch(path, opts = {}) {
   if (!res.ok) {
     const cuerpo = await res.json().catch(() => ({}))
     const base = cuerpo.message || `${res.status} ${res.statusText}`
-    if (res.status === 401) throw new Error('Token inválido o vencido. Volvé a configurarlo.')
-    if (res.status === 403) throw new Error(`Sin permisos suficientes (${base}). Revisá los scopes del token.`)
-    if (res.status === 404) throw new Error(`No encontrado (${base}). Revisá owner/repo.`)
-    throw new Error(base)
+    let msg = base
+    if (res.status === 401) msg = 'Token inválido o vencido. Volvé a configurarlo.'
+    else if (res.status === 403) msg = `Sin permisos suficientes (${base}). Revisá los scopes del token.`
+    else if (res.status === 404) msg = `No encontrado (${base}). Revisá owner/repo.`
+    const err = new Error(msg)
+    err.status = res.status
+    throw err
   }
   return res.status === 204 ? null : res.json()
 }
@@ -145,7 +172,9 @@ async function conReintento(fn) {
   try {
     return await fn()
   } catch (e) {
-    if (String(e.message).toLowerCase().includes('sha')) return await fn()
+    // 409 = conflicto de sha; algunas respuestas 422 tambien lo mencionan en
+    // el mensaje ("sha wasn't supplied" / "does not match").
+    if (e.status === 409 || String(e.message).toLowerCase().includes('sha')) return await fn()
     throw e
   }
 }
@@ -175,7 +204,7 @@ export async function dispararActualizacionDatos() {
   await dispararWorkflow()
 }
 
-// --- Lista de hasta 10 tickers para "Histórico Fundamental" (data/historico_tickers.json) ---
+// --- Lista de hasta 20 tickers (LIMITE_HISTORICO) para "Histórico Fundamental" (data/historico_tickers.json) ---
 
 function _base64ToUtf8(base64) {
   return decodeURIComponent(escape(atob(base64.replace(/\n/g, ''))))
@@ -209,12 +238,7 @@ async function escribirListaHistorico(lista, sha, mensaje) {
   })
 }
 
-export async function obtenerTickersHistorico() {
-  const { lista } = await leerListaHistorico()
-  return lista
-}
-
-// Agrega un ticker a data/historico_tickers.json (máximo 10) y dispara el
+// Agrega un ticker a data/historico_tickers.json (máximo LIMITE_HISTORICO = 20) y dispara el
 // workflow "Historico fundamental".
 export async function agregarTickerHistorico(ticker) {
   const tk = String(ticker).trim().toUpperCase()

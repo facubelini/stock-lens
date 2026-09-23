@@ -32,6 +32,26 @@ export const MULTIPLOS_ATR = [1.5, 2.0, 3.0]
 // El escaneo son ~500 simbolos x 1 llamada, asi que sigue costando ~1000 de
 // los 2400 por minuto: exactamente lo mismo que antes.
 export const VELAS = 500
+
+// Escaneo por lotes (compartido por Crypto Screener, Cruces y Acciones
+// Tokenizadas): se piden TAMANO_LOTE simbolos en paralelo y se espera
+// PAUSA_LOTE_MS entre lote y lote, para no dispararle ~500 requests de golpe
+// a Binance.
+export const TAMANO_LOTE = 15
+export const PAUSA_LOTE_MS = 150
+// Pausa minima entre el fin de un escaneo y el siguiente. Un escaneo del v1
+// consume ~1000 de peso de los 2400 por minuto: dos seguidos en el mismo
+// minuto ya rozan el limite.
+export const ENFRIAMIENTO_ESCANEO_S = 30
+
+// Screener de Cruces: solo perpetuos con al menos esto de volumen en 24h
+// (USDT), y sin las temporalidades de scalping (1m/3m) del v1.
+export const MIN_TURNOVER_CRUCES = 5e6
+export const TEMPORALIDADES_CRUCES = INTERVALOS.filter((i) => !i.corta)
+
+// Opciones del selector de la calculadora. El tope real depende del simbolo
+// (ver perfilApalancamiento en indicadores.js): las que lo superan no se
+// ofrecen.
 export const APALANCAMIENTOS = [2, 3, 5, 7, 10, 15, 20, 25, 30, 50, 75, 100, 125]
 export const CORTO = ['se', 'sf', 'sh', 'sw']
 export const LARGO = ['le', 'lf', 'lo', 'lw']

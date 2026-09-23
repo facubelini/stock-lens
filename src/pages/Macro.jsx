@@ -1,6 +1,17 @@
-import { useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useJson } from '../lib/useJson'
-import { fmtFecha } from '../lib/formato'
+import {
+  obtenerAltseason,
+  leerCacheAltseason,
+  guardarCacheAltseason,
+  clasificarAltseason,
+  N_ALTS,
+  DIAS,
+  UMBRAL_ALTSEASON,
+  UMBRAL_BTC,
+  TTL_ALTSEASON_MS,
+} from '../lib/crypto/altseason'
+import { fmtFecha, hoyAR, sumarDiasISO } from '../lib/formato'
 import { calendarioEconomico } from '../lib/calendarioEconomico'
 
 const MESES = [
@@ -13,6 +24,32 @@ function fmtMes(fechaIso) {
   const [anio, mes] = fechaIso.split('-')
   return `${MESES[Number(mes) - 1]} ${anio}`
 }
+
+// Las dos fuentes mandan la clasificacion en ingles ('Greed' en
+// alternative.me, 'extreme fear' en minuscula en CNN). Si no viene, se deduce
+// del valor con las mismas bandas que usan ellas.
+const FEAR_GREED_ES = {
+  'extreme fear': 'Miedo extremo',
+  fear: 'Miedo',
+  neutral: 'Neutral',
+  greed: 'Codicia',
+  'extreme greed': 'Codicia extrema',
+}
+
+function clasificacionFearGreed(clasificacion, valor) {
+  const t = FEAR_GREED_ES[String(clasificacion ?? '').trim().toLowerCase()]
+  if (t) return t
+  if (clasificacion) return clasificacion
+  if (valor == null) return null
+  if (valor < 25) return 'Miedo extremo'
+  if (valor < 45) return 'Miedo'
+  if (valor <= 55) return 'Neutral'
+  if (valor <= 75) return 'Codicia'
+  return 'Codicia extrema'
+}
+
+const ESCALA_FEAR_GREED =
+  'Escala 0–100: 0–24 miedo extremo · 25–44 miedo · 45–55 neutral · 56–75 codicia · 76–100 codicia extrema.'
 
 function colorFearGreed(v) {
   if (v == null) return '#7d8b9c'
@@ -117,33 +154,45 @@ function TarjetaVix({ vix }) {
   )
 }
 
+const fmtTasa = (v) => (v == null || isNaN(v) ? '—' : `${(+v).toFixed(2)}%`)
+
 function TarjetaYieldCurve({ yc }) {
+  // Con una fuente caida pueden faltar campos sueltos: cada numero se muestra
+  // si esta, y el spread se recalcula si no vino.
+  const diez = yc?.diez_anios ?? null
+  const tres = yc?.tres_meses ?? null
+  const spread = yc?.spread ?? (diez != null && tres != null ? diez - tres : null)
+  const invertida = yc?.invertida ?? (spread != null ? spread < 0 : null)
+  const hayAlgo = diez != null || tres != null || spread != null
   return (
     <div className="rounded-lg border border-terminal-border bg-terminal-panel p-4">
       <h3 className="mb-3 text-sm font-semibold text-terminal-text">Curva de rendimientos (10a vs. 3m)</h3>
-      {yc ? (
+      {hayAlgo ? (
         <>
           <div className="grid grid-cols-3 gap-2 text-center">
             <div>
               <div className="text-[10px] uppercase text-terminal-dim">10 años</div>
-              <div className="tabular font-semibold text-terminal-text">{yc.diez_anios.toFixed(2)}%</div>
+              <div className="tabular font-semibold text-terminal-text">{fmtTasa(diez)}</div>
             </div>
             <div>
               <div className="text-[10px] uppercase text-terminal-dim">3 meses</div>
-              <div className="tabular font-semibold text-terminal-text">{yc.tres_meses.toFixed(2)}%</div>
+              <div className="tabular font-semibold text-terminal-text">{fmtTasa(tres)}</div>
             </div>
             <div>
-              <div className="text-[10px] uppercase text-terminal-dim">Spread</div>
+              <div className="text-[10px] uppercase text-terminal-dim" title="Spread = rendimiento 10 años − rendimiento 3 meses">
+                Spread
+              </div>
               <div
                 className="tabular font-semibold"
-                style={{ color: yc.invertida ? '#ef4444' : '#22c55e' }}
+                style={{ color: invertida == null ? undefined : invertida ? '#ef4444' : '#22c55e' }}
               >
-                {yc.spread >= 0 ? '+' : ''}
-                {yc.spread.toFixed(2)}
+                {spread == null ? '—' : `${spread >= 0 ? '+' : ''}${(+spread).toFixed(2)}`}
               </div>
             </div>
           </div>
-          {yc.invertida ? (
+          {invertida == null ? (
+            <p className="mt-2.5 text-[11px] text-terminal-dim">Falta uno de los dos plazos para calcular el spread.</p>
+          ) : invertida ? (
             <p className="mt-2.5 text-xs font-semibold text-terminal-down">
               ⚠️ Curva invertida — históricamente uno de los indicadores de recesión más seguidos
               (aunque con retrasos largos e inciertos).
@@ -175,38 +224,112 @@ function TarjetaIndicador({ titulo, valor, unidad, actualizado, nota }) {
   )
 }
 
-// Proxy simple de "temporada de altcoins": % de futuros perpetuos (menos
-// BTC) que le ganaron a BTC en la ventana disponible del historial de
-// crypto_historial.json (no es la dominancia real por market cap — esa
-// necesitaria datos que Binance no da — pero mide lo mismo que le importa
-// a quien opera: ¿estan rotando de BTC a alts o no?). El historial recien
-// arranco, asi que al principio la ventana real va a ser mucho mas chica
-// que 'diasLookback' — se muestra igual, con los dias reales usados.
-function calcularAltseason(historial, diasLookback = 30) {
-  if (!Array.isArray(historial) || historial.length < 2) return null
-  const ahora = historial[historial.length - 1]
-  const corteMs = new Date(ahora.fecha_hora).getTime() - diasLookback * 24 * 60 * 60 * 1000
-  const inicio = historial.find((h) => new Date(h.fecha_hora).getTime() >= corteMs) ?? historial[0]
-  if (inicio === ahora) return null
+// Altseason Index calculado en el navegador contra Binance (ver
+// lib/crypto/altseason.js para la formula). Se cachea ~1h en memoria y en
+// sessionStorage: sale de velas diarias cerradas, no cambia en la hora.
+function useAltseason() {
+  const [estado, setEstado] = useState(() => {
+    const c = leerCacheAltseason()
+    return c ? { datos: c, cargando: false, error: null } : { datos: null, cargando: true, error: null }
+  })
+  const ctrl = useRef(null)
 
-  const btcInicio = inicio.tickers?.['BTC/USDT']?.precio
-  const btcAhora = ahora.tickers?.['BTC/USDT']?.precio
-  if (!btcInicio || !btcAhora) return null
-  const retornoBtc = btcAhora / btcInicio - 1
+  const calcular = useCallback(async ({ forzar = false } = {}) => {
+    if (!forzar) {
+      const c = leerCacheAltseason()
+      if (c) {
+        setEstado({ datos: c, cargando: false, error: null })
+        return
+      }
+    }
+    ctrl.current?.abort()
+    const controller = new AbortController()
+    ctrl.current = controller
+    setEstado((e) => ({ ...e, cargando: true, error: null }))
+    try {
+      const d = await obtenerAltseason({ signal: controller.signal })
+      guardarCacheAltseason(d)
+      if (!controller.signal.aborted) setEstado({ datos: d, cargando: false, error: null })
+    } catch (e) {
+      if (controller.signal.aborted) return
+      setEstado((prev) => ({ ...prev, cargando: false, error: e.message }))
+    }
+  }, [])
 
-  let total = 0
-  let ganaron = 0
-  for (const [symbol, datoAhora] of Object.entries(ahora.tickers)) {
-    if (symbol === 'BTC/USDT') continue
-    const datoInicio = inicio.tickers?.[symbol]
-    if (!datoInicio?.precio || !datoAhora?.precio) continue
-    total++
-    if (datoAhora.precio / datoInicio.precio - 1 > retornoBtc) ganaron++
-  }
-  if (total < 10) return null
+  useEffect(() => {
+    calcular()
+    return () => ctrl.current?.abort()
+  }, [calcular])
 
-  const dias = Math.round((new Date(ahora.fecha_hora) - new Date(inicio.fecha_hora)) / (24 * 60 * 60 * 1000))
-  return { pct: Math.round((ganaron / total) * 100), n: total, dias, retornoBtc: retornoBtc * 100 }
+  return { ...estado, recalcular: () => calcular({ forzar: true }) }
+}
+
+const fmtHoraCorta = (ms) => new Date(ms).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })
+const fmtDia = (ms) => new Date(ms).toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', timeZone: 'UTC' })
+const fmtRet = (v) => `${v >= 0 ? '+' : ''}${v.toFixed(1)}%`
+const sinUsdt = (s) => s.replace(/USDT$/, '')
+
+function TarjetaAltseason({ alt }) {
+  const { datos, cargando, error, recalcular } = alt
+  const venceEn = datos ? Math.max(0, Math.round((datos.calculadoEn + TTL_ALTSEASON_MS - Date.now()) / 60000)) : null
+  return (
+    <div className="flex flex-col gap-2">
+      <GaugeFearGreed
+        titulo="Altseason Index"
+        valor={datos?.pct}
+        clasificacion={clasificarAltseason(datos?.pct)}
+        etiquetaBaja="Temporada Bitcoin"
+        etiquetaAlta="Temporada altcoins"
+        nota={
+          cargando && !datos
+            ? `Calculando: velas diarias de BTC y de los ${N_ALTS} perpetuos con más volumen en Binance…`
+            : null
+        }
+      />
+      {error && (
+        <div className="rounded border border-terminal-down/40 bg-terminal-down/10 px-3 py-2 text-xs text-terminal-down">
+          No se pudo calcular el Altseason Index: {error}
+        </div>
+      )}
+      <div className="rounded-lg border border-terminal-border bg-terminal-panel p-3 text-[11px] leading-relaxed text-terminal-dim">
+        {datos && (
+          <p className="mb-1.5 text-terminal-text">
+            <b>{datos.ganaron}</b> de <b>{datos.n}</b> perpetuos le ganaron a BTC ({fmtRet(datos.retornoBtc)}) entre el{' '}
+            {fmtDia(datos.desde)} y el {fmtDia(datos.hasta)} a las 00:00 UTC (cierres diarios) → {datos.ganaron} ÷ {datos.n} ={' '}
+            <b>{datos.pct}%</b>.
+            {datos.sinHistorial > 0 && ` ${datos.sinHistorial} sin ${DIAS} días de historial, no cuentan.`}
+            <br />
+            Mejores: {datos.mejores.map((m) => `${sinUsdt(m.symbol)} ${fmtRet(m.ret)}`).join(' · ')} — Peores:{' '}
+            {datos.peores.map((m) => `${sinUsdt(m.symbol)} ${fmtRet(m.ret)}`).join(' · ')}
+          </p>
+        )}
+        <p>
+          <b>Fórmula:</b> % de los {N_ALTS} perpetuos USDT con más volumen en 24h (sin BTC, stablecoins ni tokens de
+          oro) cuyo retorno de {DIAS} días supera al de BTC. Retorno = cierre de ayer ÷ cierre de {DIAS} días antes − 1,
+          con velas diarias <b>cerradas</b> de Binance Futures. <b>Criterio:</b> ≥ {UMBRAL_ALTSEASON}% temporada de
+          altcoins, ≤ {UMBRAL_BTC}% temporada de Bitcoin, en el medio mixto (umbrales convencionales). Es un proxy:
+          el índice «oficial» usa el top 50 por market cap y 90 días, que Binance no da.
+        </p>
+        <div className="mt-1.5 flex flex-wrap items-center gap-2">
+          {datos && (
+            <span>
+              Calculado a las {fmtHoraCorta(datos.calculadoEn)} en {(datos.duracionMs / 1000).toFixed(1)} s · se
+              reutiliza {venceEn} min más.
+            </span>
+          )}
+          {cargando && datos && <span>Recalculando…</span>}
+          <button
+            type="button"
+            onClick={recalcular}
+            disabled={cargando}
+            className="rounded border border-terminal-border px-2 py-0.5 text-[11px] text-terminal-text hover:border-terminal-accent disabled:opacity-50"
+          >
+            ↻ Recalcular
+          </button>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 const ETIQUETA_EVENTO = {
@@ -221,7 +344,7 @@ function fmtFechaCortaCal(fechaISO) {
 }
 
 function TarjetaCalendario({ eventos }) {
-  const en7dias = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 10)
+  const en7dias = sumarDiasISO(hoyAR(), 7)
   return (
     <div className="rounded-lg border border-terminal-border bg-terminal-panel p-4">
       <h3 className="mb-3 text-sm font-semibold text-terminal-text">Próximos eventos</h3>
@@ -250,8 +373,8 @@ function TarjetaCalendario({ eventos }) {
         })}
       </div>
       <p className="mt-2 text-[11px] text-terminal-dim">
-        🏛️ FOMC: fechas oficiales de la Fed. 👷 NFP (empleo): siempre el primer viernes del mes,
-        regla estable del BLS. 📈 CPI: aproximado (el BLS no publica una fecha fija con
+        🏛️ FOMC: fechas oficiales de la Fed. 👷 NFP (empleo): aproximado, por regla del primer viernes
+        del mes (el BLS a veces lo corre al segundo). 📈 CPI: aproximado (el BLS no publica una fecha fija con
         anticipación) — puede variar unos días.
       </p>
     </div>
@@ -260,20 +383,8 @@ function TarjetaCalendario({ eventos }) {
 
 export default function Macro() {
   const { data, cargando, error } = useJson('mercado_macro.json')
-  const { data: cryptoHistorial } = useJson('crypto_historial.json')
-
-  const altseason = useMemo(
-    () => calcularAltseason(Array.isArray(cryptoHistorial) ? cryptoHistorial : []),
-    [cryptoHistorial],
-  )
-  const altseasonLabel =
-    altseason == null
-      ? null
-      : altseason.pct >= 75
-        ? 'Temporada de altcoins'
-        : altseason.pct <= 25
-          ? 'Temporada de Bitcoin'
-          : 'Mixto'
+  // Independiente de mercado_macro.json: sale en vivo de Binance.
+  const altseason = useAltseason()
 
   const eventos = useMemo(() => calendarioEconomico(), [])
 
@@ -313,7 +424,10 @@ export default function Macro() {
               <GaugeFearGreed
                 titulo="Acciones (CNN)"
                 valor={data?.fear_greed_acciones?.valor}
-                clasificacion={data?.fear_greed_acciones?.clasificacion}
+                clasificacion={clasificacionFearGreed(
+                  data?.fear_greed_acciones?.clasificacion,
+                  data?.fear_greed_acciones?.valor,
+                )}
                 historial={
                   data?.fear_greed_acciones && [
                     ['Ayer', data.fear_greed_acciones.prev_cierre],
@@ -322,12 +436,16 @@ export default function Macro() {
                     ['Año pasado', data.fear_greed_acciones.prev_anio],
                   ]
                 }
-                nota="Fuente no oficial (CNN no publica una API documentada) — puede fallar temporalmente."
+                nota={`${ESCALA_FEAR_GREED} Combina 7 indicadores del mercado de EEUU (momentum del S&P 500, máximos vs. mínimos, amplitud, put/call, bonos basura, VIX y demanda de refugio). Fuente no oficial (CNN no publica una API documentada) — puede fallar temporalmente.`}
               />
               <GaugeFearGreed
                 titulo="Cripto (alternative.me)"
                 valor={data?.fear_greed_cripto?.valor}
-                clasificacion={data?.fear_greed_cripto?.clasificacion}
+                clasificacion={clasificacionFearGreed(
+                  data?.fear_greed_cripto?.clasificacion,
+                  data?.fear_greed_cripto?.valor,
+                )}
+                nota={`${ESCALA_FEAR_GREED} alternative.me lo arma con volatilidad, momentum/volumen, redes sociales, dominancia de BTC y tendencias de búsqueda. Se actualiza una vez por día.`}
               />
             </div>
           </div>
@@ -336,20 +454,7 @@ export default function Macro() {
             <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-terminal-dim">
               Rotación cripto
             </h2>
-            <GaugeFearGreed
-              titulo="Altseason Index"
-              valor={altseason?.pct}
-              clasificacion={altseasonLabel}
-              etiquetaBaja="Temporada Bitcoin"
-              etiquetaAlta="Temporada altcoins"
-              nota={
-                altseason
-                  ? `% de ${altseason.n} futuros (sin contar BTC) que le ganaron a BTC en ${
-                      altseason.dias < 1 ? 'las últimas horas' : `los últimos ${altseason.dias} días`
-                    } — BTC ${altseason.retornoBtc >= 0 ? '+' : ''}${altseason.retornoBtc.toFixed(1)}% en esa ventana. El historial recién arranca, con el tiempo esta ventana va a acercarse a 30 días. No es la dominancia real (market cap), es un proxy con los precios que ya trae el Crypto Screener.`
-                  : 'Esperando que se acumule más historial del Crypto Screener (corre 2 veces al día) para poder calcularlo.'
-              }
-            />
+            <TarjetaAltseason alt={altseason} />
           </div>
 
           <div>

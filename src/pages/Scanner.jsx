@@ -1,10 +1,9 @@
 import { useMemo, useState } from 'react'
-import { useJson } from '../lib/useJson'
-import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
+import { useFilas } from '../lib/useFilas'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
 import { exportarCSV } from '../lib/csv'
-import { getPat, dispararActualizacionDatos } from '../lib/githubApi'
+import { selectCls } from '../lib/estilos'
 import {
   ESTILO_STATUS,
   ESTILO_GLOBAL,
@@ -14,15 +13,13 @@ import {
 } from '../lib/scannerEstilos'
 import Controles from '../components/Controles'
 import Tabla from '../components/Tabla'
-import BotonPin from '../components/BotonPin'
-import TickerLink from '../components/TickerLink'
+import BotonActualizar from '../components/BotonActualizar'
+import ComoSeCalcula, { Formula } from '../components/ComoSeCalcula'
+import { columnaPin, columnaTicker } from '../components/columnas'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 import { fmtNum } from '../lib/formato'
 
 const CAMPOS = ['ticker', 'nombre']
-const selectCls =
-  'rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-text ' +
-  'focus:border-terminal-accent focus:outline-none'
 const RSI_OPCIONES = ['Todos', ...Array.from({ length: 21 }, (_, i) => String(i * 5))]
 
 function Badge({ estilo }) {
@@ -47,7 +44,12 @@ function CeldaPerfil({ perfil }) {
         <Badge estilo={ESTILO_STATUS[perfil.status]} />
         <span className="text-[11px] text-terminal-dim">RSI {fmtNum(perfil.rsi, 0)}</span>
         {perfil.score != null && (
-          <span className="text-[11px] font-semibold text-terminal-text">{perfil.score}/6</span>
+          <span
+            className="cursor-help text-[11px] font-semibold text-terminal-text"
+            title="Criterios cumplidos de 6: distancia al ASL · distancia a la SMA30 · precio ≥ EMA200 · MACD > señal · SMI > señal · RSI > 50"
+          >
+            {perfil.score}/6
+          </span>
         )}
       </div>
       {perfil.motivo && (
@@ -63,10 +65,7 @@ function CeldaPerfil({ perfil }) {
 }
 
 export default function Scanner() {
-  const { data, cargando, error } = useJson('scanner_setups.json')
-  const raw = useMemo(() => (Array.isArray(data) ? data : []), [data])
-  const { overrides } = useClasificacion()
-  const filas = useMemo(() => aplicarClasificacion(raw, overrides), [raw, overrides])
+  const { filas, cargando, error } = useFilas('scanner_setups.json')
   const { pins, isPinned, toggle } = usePins()
 
   const [filtroSetup, setFiltroSetup] = useState('todos') // todos | setup | cerca
@@ -74,29 +73,6 @@ export default function Scanner() {
   const [rsiTarget, setRsiTarget] = useState('corto') // corto | largo
   const [rsiMin, setRsiMin] = useState('Todos')
   const [rsiMax, setRsiMax] = useState('Todos')
-  const [refresh, setRefresh] = useState(null) // { tipo: 'cargando'|'ok'|'error', texto }
-
-  const onRefrescar = async () => {
-    if (!getPat()) {
-      setRefresh({
-        tipo: 'error',
-        texto: 'Configurá tu GitHub token (barra superior, "🔑 Configurar auto") para poder disparar la actualización.',
-      })
-      return
-    }
-    setRefresh({ tipo: 'cargando' })
-    try {
-      await dispararActualizacionDatos()
-      setRefresh({
-        tipo: 'ok',
-        texto:
-          'Actualización disparada. El pipeline tarda unos minutos en correr y GitHub Pages cachea los JSON hasta 10 min más.',
-      })
-    } catch (err) {
-      setRefresh({ tipo: 'error', texto: err.message })
-    }
-  }
-
   const t = useTabla(filas, { camposBusqueda: CAMPOS, ordenInicial: { key: '_prioridad', dir: 'desc' } })
 
   const filtradas = useMemo(() => {
@@ -104,34 +80,25 @@ export default function Scanner() {
     if (soloFavoritos) base = base.filter((f) => pins.has(f.ticker))
     if (filtroSetup === 'setup') base = base.filter(esSetupConfirmado)
     if (filtroSetup === 'cerca') base = base.filter(esCerca)
-    if (rsiMin !== 'Todos' && rsiMax !== 'Todos') {
-      const min = Number(rsiMin)
-      const max = Number(rsiMax)
+    // Cada extremo se aplica por separado: antes solo filtraba si estaban
+    // los DOS elegidos, y "RSI ≥ 50" solo no hacia nada.
+    const min = rsiMin === 'Todos' ? null : Number(rsiMin)
+    const max = rsiMax === 'Todos' ? null : Number(rsiMax)
+    if (min != null || max != null) {
       base = base.filter((f) => {
         const rsi = f[rsiTarget]?.rsi
-        return rsi != null && rsi >= min && rsi <= max
+        if (rsi == null) return false
+        return (min == null || rsi >= min) && (max == null || rsi <= max)
       })
     }
     return base
   }, [t.filtradas, soloFavoritos, pins, filtroSetup, rsiTarget, rsiMin, rsiMax])
 
-  const columnas = [
-    {
-      key: '_pin',
-      label: '',
-      align: 'center',
-      sortable: false,
-      csv: false,
-      tdClass: 'w-6 px-0.5',
-      render: (r) => <BotonPin ticker={r.ticker} isPinned={isPinned} toggle={toggle} />,
-    },
-    {
-      key: 'ticker',
-      label: 'Ticker',
-      align: 'left',
-      valor: (r) => r.ticker,
-      render: (r) => <TickerLink ticker={r.ticker} className="font-semibold" />,
-    },
+  const tfCorto = filas[0]?.corto?.tf ?? 'Diario'
+  const tfLargo = filas[0]?.largo?.tf ?? 'Semanal'
+  const columnas = useMemo(() => [
+    columnaPin(isPinned, toggle),
+    columnaTicker(),
     {
       key: 'nombre',
       label: 'Empresa',
@@ -152,7 +119,7 @@ export default function Scanner() {
     },
     {
       key: '_corto',
-      label: `Corto (${filas[0]?.corto?.tf ?? 'Diario'})`,
+      label: `Corto (${tfCorto})`,
       align: 'left',
       sortable: false,
       csv: false,
@@ -160,13 +127,13 @@ export default function Scanner() {
     },
     {
       key: '_largo',
-      label: `Largo (${filas[0]?.largo?.tf ?? 'Semanal'})`,
+      label: `Largo (${tfLargo})`,
       align: 'left',
       sortable: false,
       csv: false,
       render: (r) => <CeldaPerfil perfil={r.largo} />,
     },
-  ]
+  ], [isPinned, toggle, tfCorto, tfLargo])
 
   const colsCSV = [
     { key: 'ticker', label: 'Ticker' },
@@ -200,27 +167,29 @@ export default function Scanner() {
             no se usan velas intradía reales. Orientativo, no es recomendación de inversión.
           </p>
         </div>
-        <div className="flex flex-col items-end gap-1">
-          <button
-            type="button"
-            onClick={onRefrescar}
-            disabled={refresh?.tipo === 'cargando'}
-            className="whitespace-nowrap rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-xs text-terminal-dim hover:border-terminal-accent hover:text-terminal-text disabled:cursor-not-allowed disabled:opacity-50"
-            title="Dispara el pipeline (Actualizar datos) fuera del cron habitual"
-          >
-            {refresh?.tipo === 'cargando' ? '⏳ Actualizando…' : '🔄 Actualizar ahora'}
-          </button>
-          {refresh && refresh.tipo !== 'cargando' && (
-            <span
-              className={`max-w-xs text-right text-[11px] leading-snug ${
-                refresh.tipo === 'error' ? 'text-terminal-down' : 'text-terminal-accent'
-              }`}
-            >
-              {refresh.texto}
-            </span>
-          )}
-        </div>
+        <BotonActualizar />
       </div>
+
+      <ComoSeCalcula titulo="¿Cómo se calcula el setup y el x/6?">
+        <p>
+          <b className="text-terminal-text">Zona de pullback</b>: <Formula>|dist. al ASL(21)| ≤ tol_ASL</Formula> Y{' '}
+          <Formula>|dist. a la SMA30| ≤ tol_SMA</Formula>, las dos a la vez. Tolerancias: Corto (diario)
+          1,5% / 2,5% · Largo (semanal) 3% / 5%. <b className="text-terminal-text">CERCA</b> = misma
+          regla con las tolerancias × 1,5.
+        </p>
+        <p>
+          <b className="text-terminal-text">Tendencia confirmada</b>: precio ≥ EMA200 · MACD &gt; su señal ·
+          SMI &gt; su señal · RSI(14) &gt; 50 — las 4. <b className="text-terminal-text">SETUP</b> = zona +
+          tendencia; <b className="text-terminal-text">CERCA</b> = zona ampliada + tendencia.
+        </p>
+        <p>
+          <b className="text-terminal-text">x/6</b> (solo en SETUP/CERCA): cuántos de estos 6 criterios se
+          cumplen — hay distancia al ASL · hay distancia a la SMA30 · precio ≥ EMA200 · MACD alcista · SMI
+          alcista · RSI &gt; 50. El motivo lista los que faltan. <b className="text-terminal-text">Global</b>:
+          SETUP AMBOS (5) &gt; SETUP CORTO/LARGO (3) &gt; CERCA AMBOS (2) &gt; CERCA CORTO/LARGO (1) &gt; OK (0),
+          es el orden de la columna Global.
+        </p>
+      </ComoSeCalcula>
 
       <Controles
         busqueda={t.busqueda}
@@ -233,7 +202,7 @@ export default function Scanner() {
         industrias={t.industrias}
         extra={
           <div className="flex flex-wrap items-center gap-2 rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-dim">
-            <select className={selectCls} value={filtroSetup} onChange={(e) => setFiltroSetup(e.target.value)}>
+            <select className={selectCls} aria-label="Filtrar por setup" value={filtroSetup} onChange={(e) => setFiltroSetup(e.target.value)}>
               <option value="todos">Todos</option>
               <option value="setup">Sólo con setup</option>
               <option value="cerca">Sólo cerca</option>
@@ -252,12 +221,12 @@ export default function Scanner() {
             <span className="mx-1 h-4 w-px bg-terminal-border" />
 
             <span className="text-xs">RSI de:</span>
-            <select className={selectCls} value={rsiTarget} onChange={(e) => setRsiTarget(e.target.value)}>
+            <select className={selectCls} aria-label="Perfil del RSI" value={rsiTarget} onChange={(e) => setRsiTarget(e.target.value)}>
               <option value="corto">Corto</option>
               <option value="largo">Largo</option>
             </select>
             <span className="text-xs">entre</span>
-            <select className={selectCls} value={rsiMin} onChange={(e) => setRsiMin(e.target.value)}>
+            <select className={selectCls} aria-label="RSI mínimo" value={rsiMin} onChange={(e) => setRsiMin(e.target.value)}>
               {RSI_OPCIONES.map((o) => (
                 <option key={o} value={o}>
                   {o}
@@ -265,7 +234,7 @@ export default function Scanner() {
               ))}
             </select>
             <span className="text-xs">y</span>
-            <select className={selectCls} value={rsiMax} onChange={(e) => setRsiMax(e.target.value)}>
+            <select className={selectCls} aria-label="RSI máximo" value={rsiMax} onChange={(e) => setRsiMax(e.target.value)}>
               {RSI_OPCIONES.map((o) => (
                 <option key={o} value={o}>
                   {o}

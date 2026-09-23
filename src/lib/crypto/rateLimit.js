@@ -1,5 +1,6 @@
 // Guardia de rate limit de Binance, COMPARTIDA por todas las pestanias de
-// cripto (v1, v2 y Acciones Tokenizadas) y por el script de Actions.
+// cripto (Crypto Screener, Cruces, Acciones Tokenizadas, ficha de simbolo y
+// el Altseason de Macro).
 //
 // Por que existe: Binance limita por IP con un presupuesto de "peso" por
 // minuto. Al pasarse responde 429, y si uno sigue mandando pedidos escala a
@@ -52,12 +53,63 @@ function registrarBloqueo(r) {
   return seg
 }
 
+// Errores HTTP "globales": no dependen del simbolo pedido, asi que si uno
+// falla van a fallar todos. Se cortan de una en vez de dejar que el escaneo
+// los cuente como cientos de "omitidos" en silencio.
+//   451  Binance bloquea la region (pasa con los runners de GitHub Actions en
+//        EEUU; desde Argentina el browser anda).
+//   403  el WAF de Binance corto la IP (limite de pedidos por otra via).
+export class ErrorBinanceHttp extends Error {
+  constructor(status, ruta = '') {
+    super(mensajeHttp(status, ruta))
+    this.name = 'ErrorBinanceHttp'
+    this.status = status
+  }
+}
+
+export function mensajeHttp(status, ruta = '') {
+  const donde = ruta ? ` en ${ruta}` : ''
+  if (status === 451) {
+    return `Binance bloquea tu región (HTTP 451${donde}). Desde Argentina funciona; si usás VPN, probá sin ella.`
+  }
+  if (status === 403) return `Binance rechazó el pedido (HTTP 403${donde}): su firewall cortó esta IP. Esperá unos minutos.`
+  if (status >= 500) return `Binance respondió con un error propio (HTTP ${status}${donde}). Suele ser transitorio.`
+  return `Binance respondió HTTP ${status}${donde}.`
+}
+
 // Todo pedido a Binance pasa por aca. Si ya sabemos que estamos bloqueados,
 // falla sin tocar la red.
-export async function pedirBinance(url) {
+//
+// Devuelve la Response tal cual para los errores "por simbolo" (400 de un
+// simbolo que no existe, 5xx transitorio): cada llamador decide si los salta.
+// Los que afectan a TODO (418/429 rate limit, 451 region, 403 WAF) tiran.
+// 'signal' es un AbortSignal opcional para cancelar el escaneo en curso.
+export async function pedirBinance(url, { signal } = {}) {
   const falta = segundosBloqueado()
   if (falta > 0) throw new ErrorRateLimit(falta)
-  const r = await fetch(url)
+  const r = await fetch(url, signal ? { signal } : undefined)
   if (r.status === 429 || r.status === 418) throw new ErrorRateLimit(registrarBloqueo(r))
+  if (r.status === 451 || r.status === 403) throw new ErrorBinanceHttp(r.status, rutaDe(url))
   return r
 }
+
+// Igual que pedirBinance pero exige 2xx y devuelve el JSON. Para los
+// endpoints de "todo el mercado" (exchangeInfo, ticker/24hr, premiumIndex),
+// donde un error no se puede saltear como un simbolo suelto.
+export async function pedirJsonBinance(url, opciones) {
+  const r = await pedirBinance(url, opciones)
+  if (!r.ok) throw new ErrorBinanceHttp(r.status, rutaDe(url))
+  return r.json()
+}
+
+function rutaDe(url) {
+  try {
+    return new URL(url).pathname
+  } catch {
+    return ''
+  }
+}
+
+// Un fetch cancelado a proposito no es un error de Binance: el escaneo lo
+// usa para cortar sin mostrar "Error: ..." al salir de la pestania.
+export const esCancelacion = (e) => e?.name === 'AbortError'

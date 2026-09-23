@@ -22,12 +22,33 @@ export function tieneSenal(dato) {
 // Prioridad para ordenar: favorece COMPRA/CERCA, penaliza VENTA. El diario
 // pesa un poco menos que semanal/mensual (una senal de mas largo plazo es
 // mas relevante para "esta para comprar" que un rebote de un dia).
-const PESO_VERDICT = { COMPRA: 4, CERCA: 2.5, EXTENDIDO: 0.5, NEUTRAL: 0, VENTA: -3 }
-const PESO_TF = { diario: 0.8, semanal: 1.1, mensual: 1.1 }
+export const PESO_VERDICT = { COMPRA: 4, CERCA: 2.5, EXTENDIDO: 0.5, NEUTRAL: 0, VENTA: -3 }
+export const PESO_TF = { diario: 0.8, semanal: 1.1, mensual: 1.1 }
 
 export function prioridadScreener(fila) {
   return TIMEFRAMES.reduce((acc, { key }) => {
     const v = fila[key]?.verdict
     return acc + (v ? (PESO_VERDICT[v] ?? 0) * PESO_TF[key] : 0)
   }, 0)
+}
+
+// Mismo calculo que prioridadScreener, pero devolviendo cada termino
+// (peso del veredicto × peso de la temporalidad) para mostrarlo en la UI.
+export function desgloseConviccion(fila) {
+  const terminos = TIMEFRAMES.map(({ key, label }) => {
+    const v = fila?.[key]?.verdict ?? null
+    const pv = v ? (PESO_VERDICT[v] ?? 0) : 0
+    return { key, label, verdict: v, pesoVerdict: pv, pesoTf: PESO_TF[key], aporte: pv * PESO_TF[key] }
+  })
+  return { terminos, total: terminos.reduce((a, t) => a + t.aporte, 0) }
+}
+
+// Hay señal alcista "de verdad" si al menos una temporalidad da COMPRA o
+// CERCA (EXTENDIDO solo no alcanza: es alcista pero sin punto de entrada).
+export function tieneSenalAlcista(fila) {
+  return TIMEFRAMES.some(({ key }) => tieneSenal(fila?.[key]))
+}
+
+export function tieneSenalVenta(fila) {
+  return TIMEFRAMES.some(({ key }) => fila?.[key]?.verdict === 'VENTA')
 }

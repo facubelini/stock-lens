@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { memo, useCallback, useMemo, useState } from 'react'
 import { useJson } from '../lib/useJson'
 import { getPat, agregarTickerHistorico, quitarTickerHistorico } from '../lib/githubApi'
 import { conCrecimientoYoY, OPCIONES_VENTANA } from '../lib/historicoDerivados'
@@ -7,7 +7,8 @@ import { exportarCSV } from '../lib/csv'
 import GraficoRatio from '../components/GraficoRatio'
 import GraficoComparativo from '../components/GraficoComparativo'
 import GraficoCrecimiento from '../components/GraficoCrecimiento'
-import { TablaSkeleton, MensajeError } from '../components/Estados'
+import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
+import { selectCls, btnCls } from '../lib/estilos'
 
 const LIMITE = 20
 const CAMPOS_YOY = ['eps_ttm', 'revenue_ttm']
@@ -65,12 +66,62 @@ function BadgePercentil({ etiqueta, valor }) {
 const inputCls =
   'w-40 rounded border border-terminal-border bg-terminal-panel px-2 py-1.5 text-sm text-terminal-text ' +
   'focus:border-terminal-accent focus:outline-none'
-const selectCls =
-  'rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-text ' +
-  'focus:border-terminal-accent focus:outline-none'
-const btnCls =
-  'rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-dim ' +
-  'hover:border-terminal-accent hover:text-terminal-text'
+
+// Bloque de un ticker (header + graficos), memoizado: tipear en el input de
+// alta o cambiar el estado de un request no re-calcula los ~9 graficos SVG de
+// cada ticker (cada uno recorre su serie semanal de 5+ años). Solo se
+// re-renderiza si cambia su serie, la ventana o si se puede quitar.
+const BloqueTicker = memo(function BloqueTicker({ t, serie, ventanaMeses, puedeQuitar, onQuitar }) {
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center gap-2">
+        <span className="text-sm font-semibold text-terminal-text">{t.ticker}</span>
+        {t.nombre && <span className="text-xs text-terminal-dim">{t.nombre}</span>}
+        {t.percentiles && (
+          <span className="flex gap-1">
+            {Object.entries(ETIQUETAS_PERCENTIL).map(([campo, etiqueta]) => (
+              <BadgePercentil key={campo} etiqueta={etiqueta} valor={t.percentiles[campo]} />
+            ))}
+          </span>
+        )}
+        {puedeQuitar && (
+          <button
+            type="button"
+            onClick={() => onQuitar(t.ticker)}
+            title="Sacar de la lista de histórico"
+            aria-label={`Sacar ${t.ticker} de la lista de histórico`}
+            className="ml-auto text-xs text-terminal-dim hover:text-terminal-down"
+          >
+            ✕ quitar
+          </button>
+        )}
+      </div>
+
+      {!t.disponible ? (
+        <div className="rounded-lg border border-terminal-warn/40 bg-terminal-warn/10 px-3 py-2 text-xs text-terminal-text">
+          Sin datos: {t.motivo}
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          <GraficoCrecimiento ticker={t.ticker} nombre={t.nombre} serie={serie} />
+          {TODOS_RATIOS.map((r) => (
+            <GraficoRatio
+              key={r.campo}
+              ticker={t.ticker}
+              nombre={t.nombre}
+              etiqueta={r.etiqueta}
+              color={r.color}
+              serie={serie}
+              campo={r.campo}
+              formatoValor={r.formato}
+              ventanaMeses={ventanaMeses}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  )
+})
 
 export default function HistoricoFundamental() {
   const { data, cargando, error } = useJson('historico_fundamental.json')
@@ -134,7 +185,10 @@ export default function HistoricoFundamental() {
     }
   }
 
-  const quitar = async (ticker) => {
+  // Sacarlo de la lista dispara el workflow y borra su histórico en la
+  // proxima corrida: se pide confirmacion (antes un click suelto lo borraba).
+  const quitar = useCallback(async (ticker) => {
+    if (!window.confirm(`¿Sacar ${ticker} de Histórico Fundamental? Se deja de actualizar y desaparece en la próxima corrida.`)) return
     setTickersComparar((prev) => prev.filter((t) => t !== ticker))
     setEstado({ tipo: 'cargando', ticker })
     try {
@@ -143,7 +197,7 @@ export default function HistoricoFundamental() {
     } catch (err) {
       setEstado({ tipo: 'error', ticker, texto: err.message })
     }
-  }
+  }, [])
 
   const toggleComparar = (ticker) =>
     setTickersComparar((prev) => (prev.includes(ticker) ? prev.filter((t) => t !== ticker) : [...prev, ticker]))
@@ -189,6 +243,7 @@ export default function HistoricoFundamental() {
             value={nuevo}
             onChange={(e) => setNuevo(e.target.value)}
             placeholder="+ ticker (ej. AAPL)"
+            aria-label="Agregar ticker al histórico"
             className={inputCls}
           />
           <button type="submit" className={btnCls}>
@@ -223,15 +278,14 @@ export default function HistoricoFundamental() {
       ) : error ? (
         <MensajeError mensaje={error} />
       ) : tickers.length === 0 ? (
-        <div className="rounded-lg border border-terminal-border bg-terminal-panel p-8 text-center text-sm text-terminal-dim">
-          Todavía no elegiste ningún ticker para el histórico fundamental.
-        </div>
+        <Vacio texto="Todavía no elegiste ningún ticker para el histórico fundamental." />
       ) : (
         <>
           <div className="mb-5 flex flex-wrap items-center gap-2">
             <label className="text-xs text-terminal-dim">Ver:</label>
             <select
               className={selectCls}
+              aria-label="Ventana de tiempo"
               value={ventanaMeses}
               onChange={(e) => setVentanaMeses(Number(e.target.value))}
             >
@@ -294,52 +348,14 @@ export default function HistoricoFundamental() {
 
           <div className="flex flex-col gap-6">
             {tickers.map((t) => (
-              <div key={t.ticker} className="flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-semibold text-terminal-text">{t.ticker}</span>
-                  {t.nombre && <span className="text-xs text-terminal-dim">{t.nombre}</span>}
-                  {t.percentiles && (
-                    <span className="flex gap-1">
-                      {Object.entries(ETIQUETAS_PERCENTIL).map(([campo, etiqueta]) => (
-                        <BadgePercentil key={campo} etiqueta={etiqueta} valor={t.percentiles[campo]} />
-                      ))}
-                    </span>
-                  )}
-                  {patConfigurado && (
-                    <button
-                      type="button"
-                      onClick={() => quitar(t.ticker)}
-                      title="Sacar de la lista de histórico"
-                      className="ml-auto text-xs text-terminal-dim hover:text-terminal-down"
-                    >
-                      ✕ quitar
-                    </button>
-                  )}
-                </div>
-
-                {!t.disponible ? (
-                  <div className="rounded-lg border border-terminal-warn/40 bg-terminal-warn/10 px-3 py-2 text-xs text-terminal-text">
-                    Sin datos: {t.motivo}
-                  </div>
-                ) : (
-                  <div className="flex flex-col gap-3">
-                    <GraficoCrecimiento ticker={t.ticker} nombre={t.nombre} serie={seriesPorTicker.get(t.ticker)} />
-                    {TODOS_RATIOS.map((r) => (
-                      <GraficoRatio
-                        key={r.campo}
-                        ticker={t.ticker}
-                        nombre={t.nombre}
-                        etiqueta={r.etiqueta}
-                        color={r.color}
-                        serie={seriesPorTicker.get(t.ticker)}
-                        campo={r.campo}
-                        formatoValor={r.formato}
-                        ventanaMeses={ventanaMeses}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
+              <BloqueTicker
+                key={t.ticker}
+                t={t}
+                serie={seriesPorTicker.get(t.ticker)}
+                ventanaMeses={ventanaMeses}
+                puedeQuitar={patConfigurado}
+                onQuitar={quitar}
+              />
             ))}
           </div>
         </>

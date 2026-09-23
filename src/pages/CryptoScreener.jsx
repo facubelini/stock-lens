@@ -1,13 +1,14 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getSymbols, getTicker24h } from '../lib/crypto/binanceApi'
-import { useEscaneoBinance } from '../lib/crypto/useEscaneo'
+import { useEscaneoBinance, parametrosCambiaron } from '../lib/crypto/useEscaneo'
 import { useCryptoScan } from '../lib/cryptoScan'
 import { INTERVALOS, MULTIPLOS_ATR, CORTO, LARGO, COLOR_SENAL } from '../lib/crypto/constantes'
 import { fmtPrice } from '../lib/crypto/formato'
-import Insignia from '../components/crypto/Insignia'
+import Insignia, { TendenciaEma } from '../components/crypto/Insignia'
 import BarraRSI from '../components/crypto/BarraRSI'
 import PanelApalancamiento from '../components/crypto/PanelApalancamiento'
+import BotonEscanear, { AvisoParametros } from '../components/crypto/BotonEscanear'
 
 export default function CryptoScreener() {
   const [intervalo, setIntervalo] = useState('1h')
@@ -34,13 +35,21 @@ export default function CryptoScreener() {
       return real == null ? { symbol } : { symbol, chg24h: +real.toFixed(2) }
     })
   }, [])
-  const { datos, corriendo, progreso, ultimaActualizacion, errorMsg, cacheKlines, escanear } =
-    useEscaneoBinance({
-      cargarSimbolos,
-      intervalo,
-      multiploATR,
-      alTerminar: setUltimoScan,
-    })
+  const parametros = useMemo(() => ({ intervalo, multiploATR }), [intervalo, multiploATR])
+  const escaneo = useEscaneoBinance({
+    cargarSimbolos,
+    intervalo,
+    multiploATR,
+    parametros,
+    alTerminar: setUltimoScan,
+  })
+  const { datos, corriendo, progreso, ultimaActualizacion, errorMsg, omitidos, cacheKlines, parametrosEscaneo } =
+    escaneo
+  // Si cambiaste temporalidad o ATR despues de escanear, la tabla sigue siendo
+  // la del escaneo anterior: se avisa, y la calculadora usa el ATR con el que
+  // se escaneo (las velas cacheadas son de esa temporalidad).
+  const cambiados = !corriendo && datos.length > 0 && parametrosCambiaron(parametrosEscaneo, parametros)
+  const atrEscaneo = parametrosEscaneo?.multiploATR ?? multiploATR
 
   const conteos = useMemo(
     () => ({
@@ -139,27 +148,33 @@ export default function CryptoScreener() {
             </option>
           ))}
         </select>
-        <button
-          type="button"
-          onClick={escanear}
-          disabled={corriendo}
-          className="rounded bg-terminal-accent px-3 py-1.5 text-sm font-semibold text-black hover:opacity-90 disabled:opacity-50"
-        >
-          {corriendo ? '⏳ Escaneando…' : datos.length ? '▶ Re-escanear' : '▶ Escanear'}
-        </button>
+        <BotonEscanear escaneo={escaneo} hayDatos={datos.length > 0} />
         {ultimaActualizacion && (
-          <span className="text-xs text-terminal-dim">Actualizado: {ultimaActualizacion}</span>
+          <span className="text-xs text-terminal-dim">
+            Actualizado: {ultimaActualizacion}
+            {omitidos > 0 && (
+              <span title="Símbolos sin fila: el pedido de velas falló o no tienen historial suficiente en esta temporalidad (hacen falta 61 velas: 60 cerradas + la en curso). Pasa con los recién listados.">
+                {' '}
+                · {omitidos} omitidos
+              </span>
+            )}
+          </span>
         )}
-        {datos.length > 0 && datos[0].pct_vela != null && (
+        {datos.length > 0 && datos[0].pct_vela != null && !cambiados && (
           <span
             className={`text-xs ${datos[0].pct_vela < 25 ? 'text-terminal-warn' : 'text-terminal-dim'}`}
             title="El score sale de la última vela CERRADA. Cuanto menos lleve la vela en curso, más viejo es ese dato."
           >
-            · vela {intervalo}: {datos[0].pct_vela}% transcurrida
+            · vela {parametrosEscaneo?.intervalo ?? intervalo}: {datos[0].pct_vela}% transcurrida
             {datos[0].pct_vela < 25 && ' ⚠️ el score es del período anterior'}
           </span>
         )}
       </div>
+
+      <AvisoParametros
+        visible={cambiados}
+        escaneados={`temporalidad ${parametrosEscaneo?.intervalo} y SL ${parametrosEscaneo?.multiploATR}× ATR`}
+      />
 
       {INTERVALOS.find((i) => i.valor === intervalo)?.corta && (
         <div className="mb-4 rounded border border-terminal-warn/30 bg-terminal-warn/10 px-3 py-2 text-xs leading-relaxed text-terminal-warn">
@@ -314,13 +329,12 @@ export default function CryptoScreener() {
                         <BarraRSI valor={r.rsi_vivo} />
                       </td>
                       <td className="whitespace-nowrap px-2 py-1.5 tabular">
-                        {r.srsi}
-                        <BarraRSI valor={r.srsi} />
+                        {r.srsi ?? '—'}
+                        {r.srsi != null && <BarraRSI valor={r.srsi} />}
                       </td>
                       <td className="whitespace-nowrap px-2 py-1.5 tabular">{r.bb_pct}%</td>
                       <td className="whitespace-nowrap px-2 py-1.5 font-semibold">
-                        {r.ema_trend === 'ALCISTA' ? '↑ ' : '↓ '}
-                        {r.ema_trend}
+                        <TendenciaEma valor={r.ema_trend} />
                       </td>
                       <td className="whitespace-nowrap px-2 py-1.5 tabular">
                         {r.vol_ratio >= 2 ? <b>×{r.vol_ratio}</b> : `×${r.vol_ratio}`}
@@ -344,7 +358,7 @@ export default function CryptoScreener() {
         <PanelApalancamiento
           fila={filaSeleccionada}
           klines={klinesSeleccionado}
-          atrMult={multiploATR}
+          atrMult={atrEscaneo}
           to={`/cripto/${encodeURIComponent(filaSeleccionada.symbolRaw)}`}
           onCerrar={() => setSeleccionado(null)}
         />

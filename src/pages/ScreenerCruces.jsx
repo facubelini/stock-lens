@@ -1,9 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { getUniversoV2, getKlinesV2, sleep, ErrorRateLimit, segundosBloqueado } from '../lib/crypto/v2/datos'
-import { armarSeries } from '../lib/crypto/v3/series'
-import { INDICADORES, estadoDeTodos } from '../lib/crypto/v3/proximidad'
+import { useCallback, useMemo, useState } from 'react'
+import { getUniverso } from '../lib/crypto/binanceApi'
+import { armarSeries } from '../lib/crypto/series'
+import { INDICADORES, estadoDeTodos } from '../lib/crypto/proximidad'
+import { useEscaneoBinance, parametrosCambiaron } from '../lib/crypto/useEscaneo'
+import { MIN_TURNOVER_CRUCES, TEMPORALIDADES_CRUCES, MULTIPLOS_ATR } from '../lib/crypto/constantes'
 import { fmtPrice } from '../lib/crypto/formato'
 import PanelApalancamiento from '../components/crypto/PanelApalancamiento'
+import BotonEscanear, { AvisoParametros } from '../components/crypto/BotonEscanear'
 
 // Screener de CRUCES. Reemplazó al "Screener Cripto v2".
 //
@@ -13,22 +16,50 @@ import PanelApalancamiento from '../components/crypto/PanelApalancamiento'
 // tarde. El precio de esa decisión es que un cruce en curso puede deshacerse
 // antes de que la vela cierre, así que los estados están separados y
 // etiquetados: CONFIRMADO no cambia más, EN CURSO todavía puede volverse
-// atrás.
+// atrás. La excepción es el volumen (Vol×): ese sale de la última vela
+// CERRADA, porque el volumen parcial de una vela a medio hacer no se puede
+// comparar con el promedio de 20 velas completas.
 
-const VELAS = 500
-const TAMANO_LOTE = 12
-const MIN_TURNOVER = 5e6
+// Velas mínimas: EMA200 + margen para que el SMI/StochRSI ya estén
+// estabilizados.
+const VELAS_MINIMAS = 260
 
-const TEMPORALIDADES = [
-  { valor: '15m', etiqueta: '15 minutos' },
-  { valor: '1h', etiqueta: '1 hora' },
-  { valor: '4h', etiqueta: '4 horas' },
-  { valor: '1d', etiqueta: 'Diario' },
-]
+// Analiza un símbolo del universo. A propósito NO se descarta la última
+// vela: acá se quiere el precio de ahora. armarSeries acepta cualquier array.
+function analizarCruces(symbol, k, meta) {
+  if (!k || k.length < VELAS_MINIMAS) return null
+  const s = armarSeries(k)
+  const est = estadoDeTodos(s)
+  if (!est) return null
+  const iv = s.n - 1
+  // Volumen: última vela CERRADA contra el promedio de las 20 cerradas que
+  // terminan en ella (igual que analyzeKlines del v1).
+  const volCerr = s.volRatio[iv - 1]
+  const ultima = k[k.length - 1]
+  const abre = +ultima[0]
+  const cierra = +ultima[6]
+  return {
+    symbol: `${symbol.replace(/USDT$/, '')}/USDT`,
+    symbolRaw: symbol,
+    link: `https://www.binance.com/es/futures/${symbol}`,
+    price: s.closes[iv],
+    chg24h: meta.chg24hReal ?? 0,
+    turnover: meta.turnover ?? null,
+    volRatio: isNaN(volCerr) ? null : +volCerr.toFixed(2),
+    rsi: isNaN(s.rsi[iv]) ? null : +s.rsi[iv].toFixed(1),
+    smi: isNaN(s.smi[iv]) ? null : +s.smi[iv].toFixed(1),
+    pctVela: cierra > abre ? Math.min(100, ((Date.now() - abre) / (cierra - abre)) * 100) : null,
+    est,
+    dir: direccionDe(est),
+  }
+}
+
+const cargarUniverso = async () => (await getUniverso({ minTurnover: MIN_TURNOVER_CRUCES })).simbolos
 
 // Efecto medido del filtro de volumen sobre cada cruce, para no repetirlo de
 // memoria: 93.549 cruces en 4h sobre 120 perpetuos, 250 días, neto de costos.
 // Sólo dos merecen el filtro; en el resto empeora.
+// Vol× es el de la última vela CERRADA (ver arriba).
 const VOLUMEN_AYUDA = {
   rsi: 'Medido: con volumen ≥1,5× este cruce pasa de +0,267% a +0,718% (n=1.274). Es el único caso donde el filtro ayuda claramente.',
   macd: 'Medido: con volumen ≥1,5× pasa de +0,409% a +0,493% (n=1.225). Mejora leve.',
@@ -63,9 +94,8 @@ const ETIQUETA_ESTADO = {
 
 // Recuento de dirección de un símbolo: suma los cinco indicadores con el peso
 // de su estado. NO es una predicción ni un veredicto de calidad — es un
-// resumen de lo que dicen los indicadores, que es distinto. En el v3 está
-// medido qué rinde históricamente cada cruce, y ahí ninguno califica como
-// respaldado.
+// resumen de lo que dicen los indicadores, que es distinto. En el backtest
+// del ex Screener v3 (ya retirado) ningún cruce calificó como respaldado.
 function direccionDe(est) {
   let puntos = 0
   let alcistas = 0
@@ -106,13 +136,8 @@ const selectCls =
 
 export default function ScreenerCruces() {
   const [temporalidad, setTemporalidad] = useState('4h')
-  const [datos, setDatos] = useState([])
-  const [corriendo, setCorriendo] = useState(false)
-  const [progreso, setProgreso] = useState({ hecho: 0, total: 0 })
-  const [error, setError] = useState(null)
-  const [ultima, setUltima] = useState(null)
-  const [omitidos, setOmitidos] = useState(0)
-  const [bloqueo, setBloqueo] = useState(0)
+  // SL por ATR para la calculadora, igual que en el v1 (antes fijo en 2).
+  const [multiploATR, setMultiploATR] = useState(2.0)
 
   // Filtros
   const [indicadoresOn, setIndicadoresOn] = useState(() => new Set(INDICADORES.map((i) => i.id)))
@@ -125,14 +150,24 @@ export default function ScreenerCruces() {
   // columna = de mayor a menor; segundo click invierte.
   const [orden, setOrden] = useState({ campo: 'hits', asc: false })
 
-  const cache = useRef(new Map())
-  const corriendoRef = useRef(false)
-
-  useEffect(() => {
-    if (bloqueo <= 0) return
-    const t = setInterval(() => setBloqueo(segundosBloqueado()), 1000)
-    return () => clearInterval(t)
-  }, [bloqueo])
+  // El loop de escaneo es el mismo del v1 (useEscaneo): cancelación al salir,
+  // un solo escaneo a la vez en toda la app y pausa entre escaneos. Solo
+  // cambian el universo (perpetuos con liquidez) y el analizador.
+  // El ATR no cambia el escaneo (solo la calculadora), así que no entra en
+  // los parámetros que invalidan la tabla.
+  const parametros = useMemo(() => ({ intervalo: temporalidad }), [temporalidad])
+  const escaneo = useEscaneoBinance({
+    cargarSimbolos: cargarUniverso,
+    intervalo: temporalidad,
+    analizar: analizarCruces,
+    parametros,
+    ordenar: null,
+  })
+  const { datos, corriendo, progreso, errorMsg: error, ultimaActualizacion: ultima, omitidos, parametrosEscaneo } =
+    escaneo
+  const cache = escaneo.cacheKlines
+  const cambiados = !corriendo && datos.length > 0 && parametrosCambiaron(parametrosEscaneo, parametros)
+  const temporalidadEscaneo = parametrosEscaneo?.intervalo ?? temporalidad
 
   const toggle = useCallback((set, valor, setter) => {
     const n = new Set(set)
@@ -140,75 +175,6 @@ export default function ScreenerCruces() {
     else n.add(valor)
     setter(n)
   }, [])
-
-  const escanear = async () => {
-    if (corriendoRef.current) return
-    const b = segundosBloqueado()
-    if (b > 0) {
-      setBloqueo(b)
-      setError(new ErrorRateLimit(b).message)
-      return
-    }
-    corriendoRef.current = true
-    setCorriendo(true)
-    setError(null)
-    setDatos([])
-    try {
-      const { simbolos } = await getUniversoV2({ minTurnover: MIN_TURNOVER })
-      setProgreso({ hecho: 0, total: simbolos.length })
-      cache.current = new Map()
-      const filas = []
-      let sinDatos = 0
-      for (let i = 0; i < simbolos.length; i += TAMANO_LOTE) {
-        const lote = simbolos.slice(i, i + TAMANO_LOTE)
-        const parciales = await Promise.all(
-          lote.map(async (meta) => {
-            const k = await getKlinesV2(meta.symbol, temporalidad, VELAS)
-            if (!k || k.length < 260) return null
-            // A propósito NO se descarta la última vela: acá se quiere el
-            // precio de ahora. armarSeries acepta cualquier array de velas.
-            const s = armarSeries(k)
-            const est = estadoDeTodos(s)
-            if (!est) return null
-            cache.current.set(meta.symbol, k)
-            const iv = s.n - 1
-            const ultima = k[k.length - 1]
-            const abre = +ultima[0]
-            const cierra = +ultima[6]
-            return {
-              symbol: `${meta.symbol.replace(/USDT$/, '')}/USDT`,
-              symbolRaw: meta.symbol,
-              link: `https://www.binance.com/es/futures/${meta.symbol}`,
-              price: s.closes[iv],
-              chg24h: meta.chg24hReal ?? 0,
-              turnover: meta.turnover ?? null,
-              volRatio: isNaN(s.volRatio[iv]) ? null : +s.volRatio[iv].toFixed(2),
-              rsi: isNaN(s.rsi[iv]) ? null : +s.rsi[iv].toFixed(1),
-              smi: isNaN(s.smi[iv]) ? null : +s.smi[iv].toFixed(1),
-              pctVela: cierra > abre ? Math.min(100, ((Date.now() - abre) / (cierra - abre)) * 100) : null,
-              est,
-              dir: direccionDe(est),
-            }
-          }),
-        )
-        for (const p of parciales) {
-          if (!p) sinDatos++
-          else filas.push(p)
-        }
-        setProgreso({ hecho: Math.min(i + TAMANO_LOTE, simbolos.length), total: simbolos.length })
-        if (i + TAMANO_LOTE < simbolos.length) await sleep(150)
-      }
-      setDatos(filas)
-      setOmitidos(sinDatos)
-      setUltima(new Date().toLocaleTimeString('es-AR'))
-    } catch (e) {
-      setError(e.message)
-      if (e instanceof ErrorRateLimit) setBloqueo(segundosBloqueado())
-    } finally {
-      corriendoRef.current = false
-      setCorriendo(false)
-    }
-  }
 
   // Valor numérico (o texto) por el que se ordena cada columna. Tener esto en
   // un solo lugar evita que el encabezado y el orden se desincronicen.
@@ -218,7 +184,7 @@ export default function ScreenerCruces() {
       { campo: 'price', label: 'Precio', valor: (r) => r.price, align: 'right' },
       { campo: 'chg24h', label: '24h', valor: (r) => r.chg24h, align: 'right' },
       { campo: 'dir', label: 'Dirección', valor: (r) => r.dir.puntos, align: 'center',
-        titulo: 'Suma de los 5 indicadores pesando confirmado ×2, en curso ×1 y cerca ×0,5. El número que se ve ES esa suma: va de -10 (los 5 bajistas confirmados) a +10 (los 5 alcistas confirmados). Los que están en "·" no tienen dirección y no suman. NO es una predicción: es un resumen. Lo que rinde cada cruce históricamente está medido en el Screener v3.' },
+        titulo: 'Suma de los 5 indicadores pesando confirmado ×2, en curso ×1 y cerca ×0,5. El número que se ve ES esa suma: va de -10 (los 5 bajistas confirmados) a +10 (los 5 alcistas confirmados). Los que están en "·" no tienen dirección y no suman. NO es una predicción: es un resumen. En el backtest del ex Screener v3 ningún cruce calificó como respaldado por la evidencia.' },
       ...INDICADORES.map((ind) => ({
         campo: ind.id,
         label: ind.nombre,
@@ -238,7 +204,8 @@ export default function ScreenerCruces() {
         titulo: 'Valor del RSI ahora (con la vela en curso). La columna RSI de la izquierda es el CRUCE contra su media.' },
       { campo: 'smiValor', label: 'SMI val', valor: (r) => r.smi ?? -999, align: 'right',
         titulo: 'Valor del SMI ahora, de -100 a +100. La columna SMI de la izquierda es el CRUCE contra su señal.' },
-      { campo: 'volRatio', label: 'Vol×', valor: (r) => r.volRatio ?? -1, align: 'right' },
+      { campo: 'volRatio', label: 'Vol×', valor: (r) => r.volRatio ?? -1, align: 'right',
+        titulo: 'Volumen de la última vela CERRADA dividido el promedio de las 20 velas cerradas que terminan en ella. No usa la vela en curso: su volumen es parcial.' },
     ],
     [],
   )
@@ -332,7 +299,7 @@ export default function ScreenerCruces() {
       <div className="mb-3 flex flex-wrap items-center gap-2">
         <label className="text-xs text-terminal-dim">Temporalidad</label>
         <select value={temporalidad} onChange={(e) => setTemporalidad(e.target.value)} className={selectCls}>
-          {TEMPORALIDADES.map((t) => (
+          {TEMPORALIDADES_CRUCES.map((t) => (
             <option key={t.valor} value={t.valor}>
               {t.etiqueta}
             </option>
@@ -345,28 +312,34 @@ export default function ScreenerCruces() {
           <option value={1.5}>≥ 1,5× el promedio</option>
           <option value={2}>≥ 2× el promedio</option>
         </select>
-        <button
-          type="button"
-          onClick={escanear}
-          disabled={corriendo || bloqueo > 0}
-          className="rounded bg-terminal-accent px-3 py-1.5 text-sm font-semibold text-black hover:opacity-90 disabled:opacity-50"
-        >
-          {bloqueo > 0
-            ? `⛔ bloqueado ${Math.floor(bloqueo / 60)}:${String(bloqueo % 60).padStart(2, '0')}`
-            : corriendo
-              ? `⏳ ${progreso.hecho}/${progreso.total}`
-              : datos.length
-                ? '▶ Re-escanear'
-                : '▶ Escanear'}
-        </button>
+        <label className="text-xs text-terminal-dim" title="Solo para la calculadora del panel lateral: no cambia los cruces.">
+          SL (ATR ×)
+        </label>
+        <select value={multiploATR} onChange={(e) => setMultiploATR(Number(e.target.value))} className={selectCls}>
+          {MULTIPLOS_ATR.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+        <BotonEscanear escaneo={escaneo} hayDatos={datos.length > 0} />
         {ultima && <span className="text-xs text-terminal-dim">Actualizado: {ultima}</span>}
         {datos.length > 0 && datos[0].pctVela != null && (
           <span className="text-xs text-terminal-dim">
-            · vela {temporalidad}: {datos[0].pctVela.toFixed(0)}% transcurrida
+            · vela {temporalidadEscaneo}: {datos[0].pctVela.toFixed(0)}% transcurrida
           </span>
         )}
-        {omitidos > 0 && <span className="text-xs text-terminal-dim">· {omitidos} sin datos</span>}
+        {omitidos > 0 && (
+          <span
+            className="text-xs text-terminal-dim"
+            title={`Sin velas suficientes (hacen falta ${VELAS_MINIMAS} en esta temporalidad) o el pedido falló.`}
+          >
+            · {omitidos} sin datos
+          </span>
+        )}
       </div>
+
+      <AvisoParametros visible={cambiados} escaneados={`temporalidad ${parametrosEscaneo?.intervalo}`} />
 
       {volMin > 0 && (
         <div className="mb-3 rounded border border-terminal-info/30 bg-terminal-info/10 px-3 py-2 text-xs leading-relaxed text-terminal-info">
@@ -583,7 +556,7 @@ export default function ScreenerCruces() {
             details: '',
           }}
           klines={cache.current.get(filaSel.symbolRaw)}
-          atrMult={2}
+          atrMult={multiploATR}
           to={`/cripto/${encodeURIComponent(filaSel.symbolRaw)}`}
           onCerrar={() => setSeleccionado(null)}
         />

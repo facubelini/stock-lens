@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useDeferredValue, useMemo, useState } from 'react'
 
 // Estado compartido de las tablas: busqueda, filtro por pais e industria,
 // y ordenamiento por columna. Devuelve las filas ya filtradas (el orden lo
@@ -37,13 +37,17 @@ export function useTabla(filas, { camposBusqueda = ['ticker', 'nombre'], ordenIn
     [filas],
   )
 
+  // La busqueda filtra con el valor diferido: el input responde al toque y
+  // el re-filtrado/re-render de la tabla grande se hace en segundo plano.
+  const busquedaDiferida = useDeferredValue(busqueda)
+
   const camposKey = camposBusqueda.join(',')
   const filtradas = useMemo(() => {
     let r = filas ?? []
     if (pais) r = r.filter((f) => f.pais === pais)
     if (industria) r = r.filter((f) => f.industria === industria)
     if (sector) r = r.filter((f) => f.sector === sector)
-    const q = busqueda.trim().toLowerCase()
+    const q = busquedaDiferida.trim().toLowerCase()
     if (q) {
       r = r.filter((f) =>
         camposBusqueda.some((c) => String(f[c] ?? '').toLowerCase().includes(q)),
@@ -51,7 +55,7 @@ export function useTabla(filas, { camposBusqueda = ['ticker', 'nombre'], ordenIn
     }
     return r
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filas, pais, industria, sector, busqueda, camposKey])
+  }, [filas, pais, industria, sector, busquedaDiferida, camposKey])
 
   const ordenar = (clave) => {
     if (sortKey === clave) {

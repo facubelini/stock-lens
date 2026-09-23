@@ -5,11 +5,13 @@ export default function Semaforo({ resultado, mostrarNumero = true }) {
   if (!resultado) return <span className="text-terminal-border">·</span>
   const { score, partes } = resultado
   const n = nivelScore(score)
-  const detalle = partes.map((p) => `${p.k} ${p.v}`).join(' · ')
+  const detalle = partes
+    .map((p) => `${p.k} ${p.v} × ${Math.round((p.wEfectivo ?? p.w) * 100)}%`)
+    .join(' + ')
   return (
     <span
       className="inline-flex items-center gap-1"
-      title={`Score ${score}/100 (${n.txt}) — ${detalle}. Orientativo, no es recomendación.`}
+      title={`Score ${score}/100 (${n.txt}) = ${detalle}. Cortes: ≥66 Favorable, ≥40 Neutral. Orientativo, no es recomendación.`}
     >
       <span
         className="inline-block h-2.5 w-2.5 shrink-0 rounded-full"

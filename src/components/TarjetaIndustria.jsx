@@ -5,6 +5,7 @@ import EditorClasificacion from './EditorClasificacion'
 import Semaforo from './Semaforo'
 import Sparkline from './Sparkline'
 import TickerLink from './TickerLink'
+import MarcaStale from './MarcaStale'
 
 // Recuadro de una industria: encabezado con promedios (Var%, RSI, score) +
 // lista de tickers con favorito, score, sparkline, Var% y RSI.
@@ -33,17 +34,25 @@ export default function TarjetaIndustria({
           {industria} <span className="font-normal text-terminal-dim">· {filas.length}</span>
         </div>
         <div className="flex shrink-0 items-center gap-1.5 text-xs">
-          <span className="rounded px-1.5 py-0.5 tabular" style={estiloValor(varProm, 6)}>
+          <span
+            className="rounded px-1.5 py-0.5 tabular"
+            style={estiloValor(varProm, 6)}
+            title="Promedio simple (sin ponderar por tamaño) de la Var. % de hoy de los tickers de este recuadro"
+          >
             {fmtPct(varProm, { signo: true })}
           </span>
-          <span className="rounded px-1.5 py-0.5 tabular" style={estiloRSI(rsiProm)}>
+          <span
+            className="rounded px-1.5 py-0.5 tabular"
+            style={estiloRSI(rsiProm)}
+            title="Promedio simple del RSI(14) de los tickers de este recuadro"
+          >
             RSI {fmtNum(rsiProm, 0)}
           </span>
           {scoreProm != null && (
             <span
               className="flex items-center gap-1 tabular"
               style={{ color: nivel.color }}
-              title="Score promedio del grupo (orientativo)"
+              title="Score del grupo = promedio simple de los scores de sus tickers (orientativo)"
             >
               <span
                 className="inline-block h-2 w-2 rounded-full"
@@ -69,14 +78,7 @@ export default function TarjetaIndustria({
                 <span className="flex items-center gap-1.5">
                   <Semaforo resultado={r._score} mostrarNumero={false} />
                   <TickerLink ticker={r.ticker} className="font-semibold" title={r.nombre} />
-                  {r.stale && (
-                    <span
-                      className="text-terminal-warn"
-                      title={`Dato arrastrado de la última corrida exitosa (${r.actualizado ?? '?'})`}
-                    >
-                      🕒
-                    </span>
-                  )}
+                  <MarcaStale fila={r} />
                   <EditorClasificacion
                     ticker={r.ticker}
                     industria={r.industria}

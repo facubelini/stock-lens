@@ -11,3 +11,21 @@ export default function Insignia({ cls, children }) {
     </span>
   )
 }
+
+// Tendencia por EMA200 ('ALCISTA' / 'BAJISTA'). null = no hay 200 velas
+// cerradas para calcularla: se muestra '—' en vez de inventar un lado.
+export function TendenciaEma({ valor }) {
+  if (!valor) {
+    return (
+      <span className="text-terminal-dim" title="Sin velas suficientes para la EMA200 (hacen falta 200 cerradas).">
+        —
+      </span>
+    )
+  }
+  return (
+    <>
+      {valor === 'ALCISTA' ? '↑ ' : '↓ '}
+      {valor}
+    </>
+  )
+}

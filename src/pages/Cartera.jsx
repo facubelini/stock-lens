@@ -7,17 +7,21 @@ import { useWatchlist, aplicarWatchlist } from '../lib/watchlist'
 import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { calcularScore, nivelScore } from '../lib/score'
 import { calcularDescuento } from '../lib/valuacion'
-import { TIMEFRAMES, ESTILO_VERDICT, tieneSenal } from '../lib/screenerEstilos'
+import { TIMEFRAMES, ESTILO_VERDICT } from '../lib/screenerEstilos'
 import { exportarCSV } from '../lib/csv'
 import Controles from '../components/Controles'
 import Tabla from '../components/Tabla'
-import BotonPin from '../components/BotonPin'
-import TickerLink from '../components/TickerLink'
 import Pendientes from '../components/Pendientes'
+import { columnaPin, columnaTicker } from '../components/columnas'
+import { ExplicacionScore, ExplicacionDescuento } from '../components/Explicaciones'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 import { fmtPct, fmtNum, estiloValor, estiloRSI } from '../lib/formato'
 
 const CAMPOS = ['ticker', 'nombre']
+// Minimo de ruedas en comun para comparar contra SPY: con menos, un ticker
+// recien listado (o con historial corto) achicaba la ventana de TODA la
+// cartera a un par de semanas.
+const MIN_PUNTOS_BENCHMARK = 60
 const COLORES_SECTOR = ['#f5a524', '#38bdf8', '#7ee2a8', '#c084fc', '#f87171', '#facc15', '#4ade80', '#fb923c']
 
 // Concentración de `filas` agrupadas por lo que devuelva `obtenerClave`
@@ -81,7 +85,7 @@ function BarraConcentracion({ titulo, datos }) {
   )
 }
 
-function GraficoVsBenchmark({ cartera, spy, dias }) {
+function GraficoVsBenchmark({ cartera, spy, dias, n, excluidos }) {
   const ANCHO = 700
   const ALTO = 150
   const todos = [...cartera, ...spy]
@@ -118,8 +122,17 @@ function GraficoVsBenchmark({ cartera, spy, dias }) {
         <polyline points={puntos(cartera)} fill="none" stroke="#f5a524" strokeWidth="2" />
       </svg>
       <p className="mt-1 text-[11px] text-terminal-dim">
-        Promedio simple (no ponderado por tamaño de posición) del % de variación de tus tickers
-        seguidos, contra el mismo período en SPY.
+        Promedio simple (no ponderado por tamaño de posición) del % de variación de tus {n} tickers
+        seguidos (cada serie normalizada a 0% en el primer día: <code>precio / precio inicial − 1</code>),
+        contra el mismo período en SPY.
+        {excluidos.length > 0 && (
+          <span className="text-terminal-warn">
+            {' '}
+            Se excluyen {excluidos.length} ticker(s) con menos de {MIN_PUNTOS_BENCHMARK} ruedas de historial (
+            {excluidos.slice(0, 6).join(', ')}
+            {excluidos.length > 6 ? '…' : ''}) para no recortar la ventana de toda la cartera.
+          </span>
+        )}
       </p>
     </div>
   )
@@ -180,10 +193,12 @@ export default function Cartera() {
   }, [listadoData])
 
   const comparativaBenchmark = useMemo(() => {
-    const conSpark = filas.filter((f) => Array.isArray(f.spark) && f.spark.length > 1)
-    if (!conSpark.length || !spySpark || spySpark.length < 2) return null
+    const conSpark = filas.filter((f) => Array.isArray(f.spark) && f.spark.length >= MIN_PUNTOS_BENCHMARK)
+    const excluidos = filas
+      .filter((f) => !Array.isArray(f.spark) || f.spark.length < MIN_PUNTOS_BENCHMARK)
+      .map((f) => f.ticker)
+    if (!conSpark.length || !spySpark || spySpark.length < MIN_PUNTOS_BENCHMARK) return null
     const dias = Math.min(...conSpark.map((f) => f.spark.length), spySpark.length)
-    if (dias < 2) return null
     const normalizadas = conSpark.map((f) => normalizarSerie(f.spark.slice(-dias))).filter(Boolean)
     if (!normalizadas.length) return null
     const cartera = []
@@ -192,37 +207,14 @@ export default function Cartera() {
       cartera.push(suma / normalizadas.length)
     }
     const spy = normalizarSerie(spySpark.slice(-dias))
-    return spy ? { cartera, spy, dias } : null
+    return spy ? { cartera, spy, dias, n: normalizadas.length, excluidos } : null
   }, [filas, spySpark])
 
   const t = useTabla(filas, { camposBusqueda: CAMPOS, ordenInicial: { key: '_score', dir: 'desc' } })
 
-  const columnas = [
-    {
-      key: '_pin',
-      label: '',
-      align: 'center',
-      sortable: false,
-      csv: false,
-      tdClass: 'w-6 px-0.5',
-      render: (r) => <BotonPin ticker={r.ticker} isPinned={isPinned} toggle={toggle} />,
-    },
-    {
-      key: 'ticker',
-      label: 'Ticker',
-      align: 'left',
-      valor: (r) => r.ticker,
-      render: (r) => (
-        <span className="inline-flex items-center gap-1 font-semibold text-terminal-text">
-          <TickerLink ticker={r.ticker} />
-          {r.stale && (
-            <span className="text-terminal-warn" title={`Dato arrastrado (${r.actualizado ?? '?'})`}>
-              🕒
-            </span>
-          )}
-        </span>
-      ),
-    },
+  const columnas = useMemo(() => [
+    columnaPin(isPinned, toggle),
+    columnaTicker(),
     {
       key: 'nombre',
       label: 'Empresa',
@@ -306,9 +298,9 @@ export default function Cartera() {
         ) : (
           fmtPct(r._descuento, { signo: true })
         ),
-      ayuda: 'Descuento vs. la mediana de tu industria en PER/EV-Sales/P-S (solo si hay comparables curados).',
+      ayuda: 'Promedio de (mediana − valor) / mediana en PER/EV-Sales/P-S contra tu industria (solo si hay comparables curados; ratios ≤ 0 no cuentan). Ver "¿Cómo se calcula?" arriba.',
     },
-  ]
+  ], [isPinned, toggle])
 
   const cargando2 = cargando || cargScreener || cargComp
 
@@ -338,6 +330,11 @@ export default function Cartera() {
         </p>
       </div>
 
+      <div className="mb-4 grid grid-cols-1 gap-2 lg:grid-cols-2">
+        <ExplicacionScore className="" />
+        <ExplicacionDescuento className="" />
+      </div>
+
       {(concentracionSector.length > 0 || concentracionPais.length > 0 || comparativaBenchmark) && (
         <div className="mb-5 grid grid-cols-1 gap-3 lg:grid-cols-2 xl:grid-cols-3">
           <BarraConcentracion titulo="Diversificación por sector" datos={concentracionSector} />
@@ -348,6 +345,8 @@ export default function Cartera() {
               cartera={comparativaBenchmark.cartera}
               spy={comparativaBenchmark.spy}
               dias={comparativaBenchmark.dias}
+              n={comparativaBenchmark.n}
+              excluidos={comparativaBenchmark.excluidos}
             />
           )}
         </div>
@@ -367,7 +366,9 @@ export default function Cartera() {
         mostrados={t.filtradas.length}
       />
 
-      <Pendientes pendientes={pendientes} watchlist={watchlist} />
+      {/* Mientras carga (o si fallo la carga) todos los tickers parecen
+          "sin datos": no se muestra el aviso hasta tener los datos reales. */}
+      {!cargando && !error && <Pendientes pendientes={pendientes} watchlist={watchlist} />}
 
       {cargando2 ? (
         <TablaSkeleton columnas={8} />

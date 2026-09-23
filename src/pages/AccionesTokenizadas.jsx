@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getSymbolsTradfi, getTicker24h } from '../lib/crypto/binanceApi'
-import { useEscaneoBinance } from '../lib/crypto/useEscaneo'
+import { useEscaneoBinance, parametrosCambiaron } from '../lib/crypto/useEscaneo'
 import {
   INTERVALOS,
   MULTIPLOS_ATR,
@@ -13,9 +13,10 @@ import {
 } from '../lib/crypto/constantes'
 import { fmtPrecioAccion } from '../lib/crypto/formato'
 import { useJson } from '../lib/useJson'
-import Insignia from '../components/crypto/Insignia'
+import Insignia, { TendenciaEma } from '../components/crypto/Insignia'
 import BarraRSI from '../components/crypto/BarraRSI'
 import PanelApalancamiento from '../components/crypto/PanelApalancamiento'
+import BotonEscanear, { AvisoParametros } from '../components/crypto/BotonEscanear'
 
 const selectCls =
   'rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-text ' +
@@ -23,6 +24,52 @@ const selectCls =
 
 function cat(tipo) {
   return CATEGORIAS_TRADFI[tipo] ?? CATEGORIA_DEFAULT
+}
+
+// Fecha / dia / minuto del dia en Nueva York (donde cotiza la accion real).
+function enNY(d) {
+  const p = Object.fromEntries(
+    new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/New_York',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      weekday: 'short',
+      hourCycle: 'h23',
+    })
+      .formatToParts(d)
+      .map((x) => [x.type, x.value]),
+  )
+  return { fecha: `${p.year}-${p.month}-${p.day}`, dia: p.weekday, minutos: +p.hour * 60 + +p.minute }
+}
+
+// "vs cierre": perp contra el precio de la accion real. Solo tiene sentido
+// si el subyacente cotiza en EEUU (es lo que trae el pipeline de yfinance) y
+// si ese precio es DE HOY con el mercado ya abierto: contra un cierre de otro
+// dia la diferencia mezcla el movimiento de dias distintos (un lunes a la
+// mañana comparaba el perp de hoy con el viernes) y no mide ninguna prima.
+// Devuelve { dif, motivo }: dif null + motivo cuando no se compara.
+function difContraAccion(r, real) {
+  if (r.tipo !== 'EQUITY') {
+    return { dif: null, motivo: 'El subyacente no cotiza en EEUU: el pipeline solo trae precios de acciones y ETFs de EEUU.' }
+  }
+  if (!real) return { dif: null, motivo: `${r.base} no está en tu tickers.xlsx, no hay precio de la acción real.` }
+  if (real.stale) return { dif: null, motivo: `El precio de ${r.base} está desactualizado en el pipeline (stale).` }
+  if (!real.actualizado) return { dif: null, motivo: 'No se sabe de cuándo es el precio de la acción real.' }
+  const ahora = enNY(new Date())
+  const precio = enNY(new Date(real.actualizado))
+  const abierto = precio.minutos >= 9 * 60 + 30 && precio.dia !== 'Sat' && precio.dia !== 'Sun'
+  if (precio.fecha !== ahora.fecha || !abierto) {
+    return {
+      dif: null,
+      motivo: `El último precio de ${r.base} es del ${precio.fecha.split('-').reverse().join('/')} (hora NY, ${
+        abierto ? 'con mercado abierto' : 'antes de la apertura o en fin de semana'
+      }), no de la rueda de hoy: compararlo con el perpetuo de ahora mezclaría días distintos.`,
+    }
+  }
+  return { dif: +(((r.price - real.precio) / real.precio) * 100).toFixed(2), motivo: null }
 }
 
 export default function AccionesTokenizadas() {
@@ -35,14 +82,23 @@ export default function AccionesTokenizadas() {
   const [sortAsc, setSortAsc] = useState(true)
   const [seleccionado, setSeleccionado] = useState(null)
 
-  // Precios de cierre de la accion real (pipeline yfinance) para calcular la
-  // diferencia contra el perpetuo, que cotiza 24/7.
+  // Precios de la accion real (pipeline yfinance) para calcular la
+  // diferencia contra el perpetuo, que cotiza 24/7. La frescura sale de la
+  // fila si la trae (solo las viejas la traen) o del meta.json global.
   const { data: medias } = useJson('medias.json')
+  const { data: meta } = useJson('meta.json')
   const precioReal = useMemo(() => {
     const m = new Map()
-    for (const f of medias ?? []) if (f.precio != null) m.set(f.ticker, f.precio)
+    for (const f of medias ?? []) {
+      if (f.precio == null) continue
+      m.set(f.ticker, {
+        precio: f.precio,
+        actualizado: f.actualizado ?? meta?.ultima_actualizacion ?? null,
+        stale: !!f.stale,
+      })
+    }
     return m
-  }, [medias])
+  }, [medias, meta])
 
   // Igual que en el Crypto Screener: el 24h real viene del ticker, porque el
   // que calcula analyzeKlines son 24 velas de la temporalidad elegida.
@@ -53,18 +109,26 @@ export default function AccionesTokenizadas() {
       return real == null ? m : { ...m, chg24h: +real.toFixed(2) }
     })
   }, [])
-  const { datos, corriendo, progreso, ultimaActualizacion, errorMsg, omitidos, cacheKlines, escanear } =
-    useEscaneoBinance({ cargarSimbolos, intervalo, multiploATR })
+  const parametros = useMemo(() => ({ intervalo, multiploATR }), [intervalo, multiploATR])
+  const escaneo = useEscaneoBinance({ cargarSimbolos, intervalo, multiploATR, parametros })
+  const { datos, corriendo, progreso, ultimaActualizacion, errorMsg, omitidos, cacheKlines, parametrosEscaneo } =
+    escaneo
+  const cambiados = !corriendo && datos.length > 0 && parametrosCambiaron(parametrosEscaneo, parametros)
+  const atrEscaneo = parametrosEscaneo?.multiploATR ?? multiploATR
 
   // Se le pega a cada fila el precio de la accion real y la diferencia %.
+  // Solo se compara si la comparacion tiene sentido (ver difContraAccion).
   const filas = useMemo(
     () =>
       datos.map((r) => {
         const real = precioReal.get(r.base)
+        const { dif, motivo } = difContraAccion(r, real)
         return {
           ...r,
-          precio_real: real ?? null,
-          dif_real: real ? +(((r.price - real) / real) * 100).toFixed(2) : null,
+          en_medias: real != null,
+          precio_real: real?.precio ?? null,
+          dif_real: dif,
+          dif_motivo: motivo,
         }
       }),
     [datos, precioReal],
@@ -118,7 +182,7 @@ export default function AccionesTokenizadas() {
     { key: 'symbol', label: 'Símbolo' },
     { key: 'tipo', label: 'Mercado' },
     { key: 'price', label: 'Perp' },
-    { key: 'dif_real', label: 'vs cierre', titulo: 'Diferencia entre el perpetuo (cotiza 24/7) y el último cierre de la acción real según el pipeline de yfinance. Fuera del horario de mercado incluye el movimiento que la acción todavía no reflejó.' },
+    { key: 'dif_real', label: 'vs acción', titulo: 'Diferencia entre el perpetuo (cotiza 24/7) y el precio de la acción real según el pipeline de yfinance. Solo para subyacentes de EEUU con precio de la rueda de hoy; si no, "—" (pasá el mouse por la celda para ver por qué).' },
     { key: 'chg24h', label: '24h %' },
     { key: 'score', label: 'Score' },
     { key: 'signal', label: 'Señal' },
@@ -167,14 +231,7 @@ export default function AccionesTokenizadas() {
             </option>
           ))}
         </select>
-        <button
-          type="button"
-          onClick={escanear}
-          disabled={corriendo}
-          className="rounded bg-terminal-accent px-3 py-1.5 text-sm font-semibold text-black hover:opacity-90 disabled:opacity-50"
-        >
-          {corriendo ? '⏳ Escaneando…' : filas.length ? '▶ Re-escanear' : '▶ Escanear'}
-        </button>
+        <BotonEscanear escaneo={escaneo} hayDatos={filas.length > 0} />
         {ultimaActualizacion && (
           <span className="text-xs text-terminal-dim">
             Actualizado: {ultimaActualizacion}
@@ -187,6 +244,11 @@ export default function AccionesTokenizadas() {
           </span>
         )}
       </div>
+
+      <AvisoParametros
+        visible={cambiados}
+        escaneados={`temporalidad ${parametrosEscaneo?.intervalo} y SL ${parametrosEscaneo?.multiploATR}× ATR`}
+      />
 
       {corriendo && (
         <div className="mb-4 h-1 w-full overflow-hidden rounded bg-terminal-border">
@@ -303,7 +365,7 @@ export default function AccionesTokenizadas() {
                         >
                           ↗
                         </a>
-                        {r.precio_real != null && (
+                        {r.en_medias && (
                           <Link
                             to={`/ticker/${encodeURIComponent(r.base)}`}
                             onClick={(e) => e.stopPropagation()}
@@ -324,9 +386,9 @@ export default function AccionesTokenizadas() {
                       <td
                         className="whitespace-nowrap px-2 py-1.5 tabular"
                         title={
-                          r.precio_real != null
-                            ? `Perp ${fmtPrecioAccion(r.price)} vs cierre de ${r.base} ${fmtPrecioAccion(r.precio_real)}`
-                            : 'La acción real no está en tu tickers.xlsx'
+                          r.dif_real != null
+                            ? `(Perp ${fmtPrecioAccion(r.price)} − ${r.base} ${fmtPrecioAccion(r.precio_real)}) / ${fmtPrecioAccion(r.precio_real)} × 100`
+                            : r.dif_motivo
                         }
                       >
                         {r.dif_real != null ? (
@@ -357,13 +419,12 @@ export default function AccionesTokenizadas() {
                         <BarraRSI valor={r.rsi} />
                       </td>
                       <td className="whitespace-nowrap px-2 py-1.5 tabular">
-                        {r.srsi}
-                        <BarraRSI valor={r.srsi} />
+                        {r.srsi ?? '—'}
+                        {r.srsi != null && <BarraRSI valor={r.srsi} />}
                       </td>
                       <td className="whitespace-nowrap px-2 py-1.5 tabular">{r.bb_pct}%</td>
                       <td className="whitespace-nowrap px-2 py-1.5 font-semibold">
-                        {r.ema_trend === 'ALCISTA' ? '↑ ' : '↓ '}
-                        {r.ema_trend}
+                        <TendenciaEma valor={r.ema_trend} />
                       </td>
                       <td className="whitespace-nowrap px-2 py-1.5 tabular">
                         {r.vol_ratio >= 2 ? <b>×{r.vol_ratio}</b> : `×${r.vol_ratio}`}
@@ -393,7 +454,7 @@ export default function AccionesTokenizadas() {
         <PanelApalancamiento
           fila={filaSeleccionada}
           klines={cacheKlines.current.get(filaSeleccionada.symbolRaw)}
-          atrMult={multiploATR}
+          atrMult={atrEscaneo}
           to={`/tokenizadas/${encodeURIComponent(filaSeleccionada.symbolRaw)}`}
           onCerrar={() => setSeleccionado(null)}
         />

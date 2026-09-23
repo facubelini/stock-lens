@@ -2,22 +2,21 @@ import { useRef, useState } from 'react'
 import { useWatchlist } from '../lib/watchlist'
 import { useClasificacion } from '../lib/clasificacion'
 import { parsearExcelTickers, descargarTickersXlsx } from '../lib/excel'
-import { getPat, setPat, agregarTickerRemoto } from '../lib/githubApi'
+import { getPat, setPat, patRecordado, agregarTickerRemoto } from '../lib/githubApi'
 import { exportarConfig, parsearConfig } from '../lib/configBackup'
+import { inputModalCls } from '../lib/estilos'
+import Modal from './Modal'
 
 const btn =
   'rounded border border-terminal-border bg-terminal-panel px-2.5 py-1 hover:border-terminal-accent hover:text-terminal-text'
 
-const inputCls =
-  'mt-1 w-full rounded border border-terminal-border bg-terminal-bg px-2 py-1.5 text-sm text-terminal-text ' +
-  'focus:border-terminal-accent focus:outline-none'
-
 function ModalConfigPat({ onClose }) {
   const [valor, setValor] = useState('')
   const [guardado, setGuardado] = useState(Boolean(getPat()))
+  const [recordar, setRecordar] = useState(patRecordado())
 
   const guardar = () => {
-    setPat(valor)
+    setPat(valor, { recordar })
     setGuardado(Boolean(valor.trim()))
     setValor('')
   }
@@ -28,81 +27,101 @@ function ModalConfigPat({ onClose }) {
     setValor('')
   }
 
+  // Cambiar el checkbox con un token ya guardado lo mueve de almacenamiento
+  // sin tener que volver a pegarlo.
+  const cambiarRecordar = (v) => {
+    setRecordar(v)
+    const actual = getPat()
+    if (actual) setPat(actual, { recordar: v })
+  }
+
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 px-4" onClick={onClose}>
-      <div
-        className="w-full max-w-md rounded-lg border border-terminal-border bg-terminal-panel p-4"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h3 className="mb-2 text-sm font-semibold text-terminal-text">
-          Alta/baja automática de tickers
-        </h3>
-        <p className="mb-3 text-xs leading-relaxed text-terminal-dim">
-          Con un GitHub token configurado, al apretar <b>Agregar</b> la app suma el ticker a{' '}
-          <code>data/tickers.xlsx</code> del repo y dispara "Actualizar datos" sola. También podés
-          sacar un ticker para siempre (ej. se deslistó, ya no te interesa) desde el botón ✏️ de
-          cada fila en Listado/Fundamentales — no hace falta descargar el Excel ni tocar nada a
-          mano. El token se guarda solo en este navegador y se usa únicamente para llamar a la API
-          de GitHub.
-        </p>
-        <p className="mb-3 text-xs text-terminal-dim">
-          Necesitás un{' '}
-          <a
-            href="https://github.com/settings/tokens?type=beta"
-            target="_blank"
-            rel="noreferrer"
-            className="underline hover:text-terminal-accent"
-          >
-            fine-grained token
-          </a>{' '}
-          sobre el repo <code>facubelini/stock-lens</code> con permisos <b>Contents: Read and
-          write</b> y <b>Actions: Read and write</b>.
-        </p>
+    <Modal onClose={onClose} titulo="Alta/baja automática de tickers">
+      <p className="mb-3 text-xs leading-relaxed text-terminal-dim">
+        Con un GitHub token configurado, al apretar <b>Agregar</b> la app suma el ticker a{' '}
+        <code>data/tickers.xlsx</code> del repo y dispara "Actualizar datos" sola. También podés
+        sacar un ticker para siempre (ej. se deslistó, ya no te interesa) desde el botón ✏️ de
+        cada fila en Listado/Fundamentales — no hace falta descargar el Excel ni tocar nada a
+        mano. El token se guarda solo en este navegador y se usa únicamente para llamar a la API
+        de GitHub.
+      </p>
+      <p className="mb-3 text-xs text-terminal-dim">
+        Necesitás un{' '}
+        <a
+          href="https://github.com/settings/tokens?type=beta"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="underline hover:text-terminal-accent"
+        >
+          fine-grained token
+        </a>{' '}
+        sobre el repo <code>facubelini/stock-lens</code> con permisos <b>Contents: Read and
+        write</b> y <b>Actions: Read and write</b>.
+      </p>
 
-        {guardado && (
-          <p className="mb-2 text-xs text-terminal-accent">✓ Token configurado en este navegador.</p>
-        )}
+      {guardado && (
+        <p className="mb-2 text-xs text-terminal-accent">
+          ✓ Token configurado {recordar ? 'en este dispositivo (recordado)' : 'solo para esta pestaña'}.
+        </p>
+      )}
 
+      <label className="block text-xs text-terminal-dim">
+        Token
         <input
           type="password"
           value={valor}
           onChange={(e) => setValor(e.target.value)}
           placeholder="github_pat_..."
-          className={inputCls}
+          autoComplete="off"
+          className={inputModalCls}
+          data-autofocus
         />
+      </label>
 
-        <div className="mt-3 flex items-center justify-between gap-2">
-          {guardado ? (
-            <button
-              type="button"
-              onClick={borrar}
-              className="rounded border border-terminal-border px-2.5 py-1.5 text-xs text-terminal-dim hover:border-terminal-down hover:text-terminal-down"
-            >
-              Borrar token
-            </button>
-          ) : (
-            <span />
-          )}
-          <div className="flex gap-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="rounded border border-terminal-border px-2.5 py-1.5 text-xs text-terminal-dim hover:text-terminal-text"
-            >
-              Cerrar
-            </button>
-            <button
-              type="button"
-              onClick={guardar}
-              disabled={!valor.trim()}
-              className="rounded bg-terminal-accent px-2.5 py-1.5 text-xs font-semibold text-black hover:opacity-90 disabled:opacity-40"
-            >
-              Guardar
-            </button>
-          </div>
+      <label className="mt-2 flex cursor-pointer select-none items-start gap-1.5 text-xs text-terminal-dim">
+        <input
+          type="checkbox"
+          checked={recordar}
+          onChange={(e) => cambiarRecordar(e.target.checked)}
+          className="mt-0.5 accent-terminal-accent"
+        />
+        <span>
+          Recordar en este dispositivo. Sin tildar, el token vive solo en esta pestaña
+          (sessionStorage) y se borra al cerrarla — más seguro si la compu es compartida.
+        </span>
+      </label>
+
+      <div className="mt-3 flex items-center justify-between gap-2">
+        {guardado ? (
+          <button
+            type="button"
+            onClick={borrar}
+            className="rounded border border-terminal-border px-2.5 py-1.5 text-xs text-terminal-dim hover:border-terminal-down hover:text-terminal-down"
+          >
+            Borrar token
+          </button>
+        ) : (
+          <span />
+        )}
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={onClose}
+            className="rounded border border-terminal-border px-2.5 py-1.5 text-xs text-terminal-dim hover:text-terminal-text"
+          >
+            Cerrar
+          </button>
+          <button
+            type="button"
+            onClick={guardar}
+            disabled={!valor.trim()}
+            className="rounded bg-terminal-accent px-2.5 py-1.5 text-xs font-semibold text-black hover:opacity-90 disabled:opacity-40"
+          >
+            Guardar
+          </button>
         </div>
       </div>
-    </div>
+    </Modal>
   )
 }
 
@@ -234,6 +253,7 @@ export default function WatchlistBar() {
             value={nuevo}
             onChange={(e) => setNuevo(e.target.value)}
             placeholder="+ ticker (ej. AAPL)"
+            aria-label="Agregar ticker a mi lista"
             className="w-36 rounded border border-terminal-border bg-terminal-panel px-2 py-1 text-terminal-text focus:border-terminal-accent focus:outline-none"
           />
           <button type="submit" className={btn}>

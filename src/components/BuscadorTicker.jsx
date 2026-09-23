@@ -1,11 +1,8 @@
 import { useMemo, useState } from 'react'
-
-const inputCls =
-  'rounded border border-terminal-border bg-terminal-panel px-2.5 py-1.5 text-sm text-terminal-text ' +
-  'focus:border-terminal-accent focus:outline-none'
+import { inputCls } from '../lib/estilos'
 
 // Buscador con autocompletado por ticker/nombre — compartido entre
-// Herramientas.jsx y Valuaciones.jsx (antes copiado y pegado entre las dos).
+// Herramientas.jsx (comparador, alertas, DCA) y TickerDetalle.jsx (competidores a mano).
 export default function BuscadorTicker({ filas, excluir = [], onAdd, placeholder = 'Agregar ticker…' }) {
   const [q, setQ] = useState('')
   const sugeridos = useMemo(() => {
@@ -24,6 +21,7 @@ export default function BuscadorTicker({ filas, excluir = [], onAdd, placeholder
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder={placeholder}
+        aria-label={placeholder}
         className={`${inputCls} w-56`}
       />
       {sugeridos.length > 0 && (

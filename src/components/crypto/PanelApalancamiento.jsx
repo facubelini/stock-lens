@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 import CalculadoraApalancamiento from './CalculadoraApalancamiento'
 
 // Panel lateral con la calculadora de apalancamiento/liquidacion. Compartido
-// por "Crypto Screener" y "Acciones Tokenizadas"; 'to' es el link a la ficha
-// del simbolo, que cambia segun la pestania (/cripto vs /tokenizadas).
+// por "Crypto Screener", "Cruces" y "Acciones Tokenizadas"; 'to' es el link a
+// la ficha del simbolo, que cambia segun la pestania (/cripto vs /tokenizadas).
 export default function PanelApalancamiento({ fila, klines, atrMult, to, onCerrar }) {
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-black/60" onClick={onCerrar}>

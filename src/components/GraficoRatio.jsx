@@ -12,6 +12,9 @@ export default function GraficoRatio({ ticker, nombre, etiqueta, color, serie, c
   const puntosCompletos = (serie ?? []).filter((p) => p[campo] != null)
   const puntos = filtrarPorVentana(puntosCompletos, ventanaMeses)
   const stats = rangoYPercentil(puntosCompletos, campo)
+  // El ultimo punto de la serie (con o sin dato) marcado "no significativo"
+  // por conCrecimientoYoY (cambio de signo).
+  const ultimoNs = Boolean(serie?.length && serie[serie.length - 1]?.[`${campo}_ns`])
 
   const header = (
     <div
@@ -30,10 +33,19 @@ export default function GraficoRatio({ ticker, nombre, etiqueta, color, serie, c
           {formatoValor(stats.promedio)} · percentil {stats.percentil}%
         </span>
       )}
-      {puntosCompletos.length > 0 && (
-        <span className="ml-auto font-semibold tabular" style={{ color }}>
-          {formatoValor(puntosCompletos[puntosCompletos.length - 1][campo])}
+      {ultimoNs ? (
+        <span
+          className="ml-auto cursor-help font-semibold tabular text-terminal-dim"
+          title="No significativo: el valor cambió de signo contra hace un año (pérdida ↔ ganancia), un % de crecimiento no tiene sentido."
+        >
+          n/s
         </span>
+      ) : (
+        puntosCompletos.length > 0 && (
+          <span className="ml-auto font-semibold tabular" style={{ color }}>
+            {formatoValor(puntosCompletos[puntosCompletos.length - 1][campo])}
+          </span>
+        )
       )}
     </div>
   )

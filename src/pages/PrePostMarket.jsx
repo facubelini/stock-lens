@@ -1,142 +1,175 @@
 import { useMemo } from 'react'
-import { useDatosCombinados } from '../lib/useDatosCombinados'
-import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
+import { useFilasCombinadas } from '../lib/useFilas'
+import { useMeta } from '../lib/useJson'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
 import { exportarCSV } from '../lib/csv'
 import Controles from '../components/Controles'
 import Tabla from '../components/Tabla'
-import BotonPin from '../components/BotonPin'
 import TickerLink from '../components/TickerLink'
+import { columnaPin } from '../components/columnas'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
-import { fmtPrecio, fmtPct, fmtFecha, estiloValor } from '../lib/formato'
+import { fmtPrecio, fmtPct, fmtFecha, fmtAntiguedad, estiloValor, hoyAR, sumarDiasISO } from '../lib/formato'
 
 const CAMPOS = ['ticker', 'nombre']
+const DIAS_REPORTE_RECIENTE = 5
 
 // Mismo chequeo que ya usa TickerDetalle para "próximo earnings": Yahoo
 // tarda 1-2 dias en correr la fecha a la siguiente despues de un reporte,
 // asi que una fecha ya pasada en proximo_earnings es, en la practica, la
 // señal de que el ticker reporto resultados muy recientemente — justo lo
 // que hace que un movimiento de pre/post-market sea mas interesante que
-// cualquier otro dia.
-function reporteReciente(proximoEarnings) {
-  if (!proximoEarnings?.fecha) return false
-  const hoy = new Date().toISOString().slice(0, 10)
-  return proximoEarnings.fecha < hoy
+// cualquier otro dia. Solo cuenta si paso hace ≤5 dias: una fecha vieja que
+// Yahoo nunca actualizo no es "reportó hace poco".
+function reporteReciente(proximoEarnings, hoy) {
+  const f = proximoEarnings?.fecha
+  if (!f) return false
+  return f < hoy && f >= sumarDiasISO(hoy, -DIAS_REPORTE_RECIENTE)
+}
+
+// Sesion del dato: se prefiere el `estado` que manda el pipeline (PRE/POST);
+// si no viene, se infiere de que precio esta presente.
+function sesionDe(ppm) {
+  if (ppm?.estado === 'PRE' && ppm.pre_precio != null) return 'PRE'
+  if (ppm?.estado === 'POST' && ppm.post_precio != null) return 'POST'
+  if (ppm?.pre_precio != null) return 'PRE'
+  if (ppm?.post_precio != null) return 'POST'
+  return null
 }
 
 export default function PrePostMarket() {
-  const { filas: base, cargando, error } = useDatosCombinados()
-  const { overrides } = useClasificacion()
-  const conOverrides = useMemo(() => aplicarClasificacion(base, overrides), [base, overrides])
+  const { filas: conOverrides, cargando, error } = useFilasCombinadas()
+  const meta = useMeta()
   const { pins, isPinned, toggle } = usePins()
+  const hoy = hoyAR()
 
   const conDato = useMemo(() => {
     return conOverrides
-      .filter((f) => f.pre_post_market?.pre_precio != null || f.pre_post_market?.post_precio != null)
-      .map((f) => {
+      .map((f) => ({ f, sesion: sesionDe(f.pre_post_market) }))
+      .filter(({ sesion }) => sesion)
+      .map(({ f, sesion }) => {
         const ppm = f.pre_post_market
-        const esPre = ppm.pre_precio != null
-        const precio = esPre ? ppm.pre_precio : ppm.post_precio
-        const cambioPct = esPre ? ppm.pre_cambio_pct : ppm.post_cambio_pct
+        const esPre = sesion === 'PRE'
         return {
           ...f,
-          _sesion: esPre ? 'PRE' : 'POST',
-          _precioSesion: precio,
-          _cambioPct: cambioPct,
-          _reporteReciente: reporteReciente(f.proximo_earnings),
+          _sesion: sesion,
+          _precioSesion: esPre ? ppm.pre_precio : ppm.post_precio,
+          _cambioPct: esPre ? ppm.pre_cambio_pct : ppm.post_cambio_pct,
+          _actualizadoSesion: (esPre ? ppm.pre_actualizado : ppm.post_actualizado) ?? null,
+          _reporteReciente: reporteReciente(f.proximo_earnings, hoy),
         }
       })
-  }, [conOverrides])
+  }, [conOverrides, hoy])
 
   const t = useTabla(conDato, { camposBusqueda: CAMPOS, ordenInicial: { key: '_cambioPct', dir: 'desc' } })
 
-  const columnas = [
-    {
-      key: '_pin',
-      label: '',
-      align: 'center',
-      sortable: false,
-      csv: false,
-      tdClass: 'w-6 px-0.5',
-      render: (r) => <BotonPin ticker={r.ticker} isPinned={isPinned} toggle={toggle} />,
-    },
-    {
-      key: 'ticker',
-      label: 'Ticker',
-      align: 'left',
-      valor: (r) => r.ticker,
-      render: (r) => (
-        <span className="inline-flex items-center gap-1">
-          <TickerLink ticker={r.ticker} className="font-semibold" />
-          {r._reporteReciente && (
-            <span className="text-terminal-warn" title="Reportó resultados en las últimas ruedas — el movimiento puede ser reacción a eso">
-              📣
+  // Referencia del % de cambio: en pre-market es el cierre de AYER; en
+  // post-market es el cierre regular de HOY. El nombre de la columna sigue a
+  // la sesion que hay en los datos.
+  const sesiones = useMemo(() => new Set(conDato.map((f) => f._sesion)), [conDato])
+  const labelCierre =
+    sesiones.size === 1 ? (sesiones.has('PRE') ? 'Cierre anterior' : 'Cierre regular (hoy)') : 'Cierre de referencia'
+
+  const columnas = useMemo(
+    () => [
+      columnaPin(isPinned, toggle),
+      {
+        key: 'ticker',
+        label: 'Ticker',
+        align: 'left',
+        valor: (r) => r.ticker,
+        render: (r) => (
+          <span className="inline-flex items-center gap-1">
+            <TickerLink ticker={r.ticker} className="font-semibold" />
+            {r._reporteReciente && (
+              <span
+                className="text-terminal-warn"
+                title={`Reportó resultados el ${r.proximo_earnings.fecha.split('-').reverse().join('/')} (últimos ${DIAS_REPORTE_RECIENTE} días) — el movimiento puede ser reacción a eso`}
+              >
+                📣
+              </span>
+            )}
+          </span>
+        ),
+      },
+      {
+        key: 'nombre',
+        label: 'Empresa',
+        align: 'left',
+        valor: (r) => r.nombre,
+        render: (r) => (
+          <span className="block max-w-[180px] truncate text-terminal-dim" title={r.nombre}>
+            {r.nombre}
+          </span>
+        ),
+      },
+      {
+        key: '_sesion',
+        label: 'Sesión',
+        align: 'left',
+        valor: (r) => r._sesion,
+        render: (r) => (
+          <span
+            className={`inline-block rounded px-1.5 py-0.5 text-[11px] font-semibold ${
+              r._sesion === 'PRE' ? 'bg-terminal-info/20 text-terminal-info' : 'bg-terminal-accent/20 text-terminal-accent'
+            }`}
+          >
+            {r._sesion === 'PRE' ? 'Pre-market' : 'Post-market'}
+          </span>
+        ),
+      },
+      {
+        key: '_precioSesion',
+        label: 'Precio',
+        align: 'right',
+        valor: (r) => r._precioSesion,
+        render: (r) => fmtPrecio(r._precioSesion),
+      },
+      {
+        key: '_cambioPct',
+        label: 'Var. %',
+        align: 'right',
+        valor: (r) => r._cambioPct,
+        estilo: (r) => estiloValor(r._cambioPct, 3),
+        render: (r) => <span className="font-bold">{fmtPct(r._cambioPct, { signo: true })}</span>,
+        ayuda: 'Precio de la sesión extendida vs. el cierre regular de referencia (columna de al lado).',
+      },
+      {
+        key: '_actualizadoSesion',
+        label: 'Dato de',
+        align: 'right',
+        valor: (r) => (r._actualizadoSesion ? new Date(r._actualizadoSesion).getTime() : null),
+        render: (r) =>
+          r._actualizadoSesion ? (
+            <span className="whitespace-nowrap text-terminal-dim" title={fmtFecha(r._actualizadoSesion)}>
+              {fmtAntiguedad(r._actualizadoSesion)}
             </span>
-          )}
-        </span>
-      ),
-    },
-    {
-      key: 'nombre',
-      label: 'Empresa',
-      align: 'left',
-      valor: (r) => r.nombre,
-      render: (r) => (
-        <span className="block max-w-[180px] truncate text-terminal-dim" title={r.nombre}>
-          {r.nombre}
-        </span>
-      ),
-    },
-    {
-      key: '_sesion',
-      label: 'Sesión',
-      align: 'left',
-      valor: (r) => r._sesion,
-      render: (r) => (
-        <span
-          className={`inline-block rounded px-1.5 py-0.5 text-[11px] font-semibold ${
-            r._sesion === 'PRE' ? 'bg-terminal-info/20 text-terminal-info' : 'bg-terminal-accent/20 text-terminal-accent'
-          }`}
-        >
-          {r._sesion === 'PRE' ? 'Pre-market' : 'Post-market'}
-        </span>
-      ),
-    },
-    {
-      key: '_precioSesion',
-      label: 'Precio',
-      align: 'right',
-      valor: (r) => r._precioSesion,
-      render: (r) => fmtPrecio(r._precioSesion),
-    },
-    {
-      key: '_cambioPct',
-      label: 'Var. %',
-      align: 'right',
-      valor: (r) => r._cambioPct,
-      estilo: (r) => estiloValor(r._cambioPct, 3),
-      render: (r) => <span className="font-bold">{fmtPct(r._cambioPct, { signo: true })}</span>,
-    },
-    {
-      key: 'precio',
-      label: 'Cierre anterior',
-      align: 'right',
-      valor: (r) => r.precio,
-      render: (r) => <span className="text-terminal-dim">{fmtPrecio(r.precio)}</span>,
-    },
-    {
-      key: 'industria',
-      label: 'Industria',
-      align: 'left',
-      valor: (r) => r.industria,
-      render: (r) => (
-        <span className="block max-w-[140px] truncate text-terminal-dim" title={r.industria}>
-          {r.industria}
-        </span>
-      ),
-    },
-  ]
+          ) : (
+            <span className="text-terminal-dim">—</span>
+          ),
+        ayuda: 'Hace cuánto se tomó el precio de pre/post-market (Yahoo lo actualiza con demora y fuera del horario regular hay poco volumen).',
+      },
+      {
+        key: 'precio',
+        label: labelCierre,
+        align: 'right',
+        valor: (r) => r.precio,
+        render: (r) => <span className="text-terminal-dim">{fmtPrecio(r.precio)}</span>,
+      },
+      {
+        key: 'industria',
+        label: 'Industria',
+        align: 'left',
+        valor: (r) => r.industria,
+        render: (r) => (
+          <span className="block max-w-[140px] truncate text-terminal-dim" title={r.industria}>
+            {r.industria}
+          </span>
+        ),
+      },
+    ],
+    [isPinned, toggle, labelCierre],
+  )
 
   const colsCSV = [
     { key: 'ticker', label: 'Ticker' },
@@ -144,11 +177,14 @@ export default function PrePostMarket() {
     { key: 'sesion', label: 'Sesión', valorCSV: (r) => r._sesion },
     { key: 'precio_sesion', label: 'Precio', valorCSV: (r) => r._precioSesion },
     { key: 'var_pct', label: 'Var. %', valorCSV: (r) => r._cambioPct },
-    { key: 'precio_cierre', label: 'Cierre anterior', valorCSV: (r) => r.precio },
+    { key: 'actualizado_sesion', label: 'Dato de', valorCSV: (r) => r._actualizadoSesion ?? '' },
+    { key: 'precio_cierre', label: labelCierre, valorCSV: (r) => r.precio },
     { key: 'reporte_reciente', label: 'Reporte reciente', valorCSV: (r) => (r._reporteReciente ? 'Sí' : '') },
   ]
 
-  const ultimaActualizacion = conOverrides[0]?.actualizado
+  // Hora de la ultima corrida del pipeline (meta.json), no la de una fila
+  // cualquiera: las filas solo traen `actualizado` si estan arrastradas.
+  const ultimaActualizacion = meta?.ultima_actualizacion
 
   return (
     <div>
@@ -157,10 +193,10 @@ export default function PrePostMarket() {
         <p className="text-xs text-terminal-dim">
           Movimientos de pre-market y post-market de tu universo, ordenados por variación % —
           quiénes se mueven más antes de la apertura o después del cierre. 📣 marca tickers que
-          reportaron resultados hace muy poco (probable reacción del mercado a eso). Solo se
-          completa durante la corrida de pre-market o post-market del pipeline y se borra en la
-          siguiente corrida — si no ves nada acá es porque estás en horario de mercado regular o
-          cerrado, no un error.
+          reportaron resultados en los últimos {DIAS_REPORTE_RECIENTE} días (probable reacción del
+          mercado a eso). Solo se completa durante la corrida de pre-market o post-market del
+          pipeline y se borra en la siguiente corrida — si no ves nada acá es porque estás en
+          horario de mercado regular o cerrado, no un error.
           {ultimaActualizacion && (
             <> Último snapshot: <b>{fmtFecha(ultimaActualizacion)}</b>.</>
           )}

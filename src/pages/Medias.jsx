@@ -1,14 +1,12 @@
 import { useMemo, useState } from 'react'
-import { useJson } from '../lib/useJson'
+import { useFilas } from '../lib/useFilas'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
-import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { exportarCSV } from '../lib/csv'
 import Controles from '../components/Controles'
 import Tabla from '../components/Tabla'
-import BotonPin from '../components/BotonPin'
 import Leyenda from '../components/Leyenda'
-import TickerLink from '../components/TickerLink'
+import { columnaPin, columnaTicker } from '../components/columnas'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 import { fmtPct, fmtPrecio, estiloValor, promedio } from '../lib/formato'
 
@@ -25,25 +23,7 @@ const distCol = (key, label) => ({
 })
 
 const columnas = [
-  {
-    key: 'ticker',
-    label: 'Ticker',
-    align: 'left',
-    valor: (r) => r.ticker,
-    render: (r) => (
-      <span className="inline-flex items-center gap-1 font-semibold text-terminal-text">
-        <TickerLink ticker={r.ticker} title={r.nombre || r.ticker} />
-        {r.stale && (
-          <span
-            className="text-terminal-warn"
-            title={`Dato arrastrado de la última corrida exitosa (${r.actualizado ?? '?'})`}
-          >
-            🕒
-          </span>
-        )}
-      </span>
-    ),
-  },
+  columnaTicker(),
   {
     key: 'nombre',
     label: 'Empresa',
@@ -93,13 +73,7 @@ function resumenGrupo(industria, fs, cols) {
 }
 
 export default function Medias() {
-  const { data, cargando, error } = useJson('medias.json')
-  const raw = useMemo(() => (Array.isArray(data) ? data : (data?.acciones ?? [])), [data])
-  const { overrides } = useClasificacion()
-  const filas = useMemo(
-    () => aplicarClasificacion(raw, overrides),
-    [raw, overrides],
-  )
+  const { filas, cargando, error } = useFilas('medias.json')
   const { pins, isPinned, toggle } = usePins()
   const [agrupar, setAgrupar] = useState(false)
   const t = useTabla(filas, {
@@ -108,18 +82,7 @@ export default function Medias() {
   })
 
   const columnasConPin = useMemo(
-    () => [
-      {
-        key: '_pin',
-        label: '',
-        align: 'center',
-        sortable: false,
-        csv: false,
-        tdClass: 'w-6 px-0.5',
-        render: (r) => <BotonPin ticker={r.ticker} isPinned={isPinned} toggle={toggle} />,
-      },
-      ...columnas,
-    ],
+    () => [columnaPin(isPinned, toggle), ...columnas],
     [isPinned, toggle],
   )
 

@@ -76,6 +76,9 @@ jobs:
   monitoreo:
     needs: backtest
     if: ${{ !cancelled() }}
+    permissions:
+      contents: read
+      issues: write
     uses: ./.github/workflows/_monitoreo-falla.yml
     with:
       workflow_nombre: 'Backtest Screener'

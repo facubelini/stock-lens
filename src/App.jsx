@@ -27,6 +27,7 @@ const Screeners = lazy(() => import('./pages/Screeners'))
 const PrePostMarket = lazy(() => import('./pages/PrePostMarket'))
 const Scanner = lazy(() => import('./pages/Scanner'))
 const WarrenScore = lazy(() => import('./pages/WarrenScore'))
+const Senales = lazy(() => import('./pages/Senales'))
 const TickerDetalle = lazy(() => import('./pages/TickerDetalle'))
 
 function CargandoPagina() {
@@ -71,6 +72,7 @@ export default function App() {
             <Route path="/pre-post" element={<PrePostMarket />} />
             <Route path="/scanner" element={<Scanner />} />
             <Route path="/warren-score" element={<WarrenScore />} />
+            <Route path="/senales" element={<Senales />} />
             <Route path="/screener" element={<Screener />} />
             <Route path="/historico" element={<HistoricoFundamental />} />
             <Route path="/cripto" element={<CryptoScreener />} />

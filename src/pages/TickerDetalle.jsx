@@ -36,7 +36,10 @@ import TickerLink from '../components/TickerLink'
 import BuscadorTicker from '../components/BuscadorTicker'
 import GraficoEstacionalidad from '../components/GraficoEstacionalidad'
 import MarcaStale, { fechaDeFila } from '../components/MarcaStale'
-import { ExplicacionConviccion, ExplicacionDescuento } from '../components/Explicaciones'
+import { ExplicacionConviccion, ExplicacionDescuento, ExplicacionWarrenScore } from '../components/Explicaciones'
+import ComoSeCalcula, { Formula } from '../components/ComoSeCalcula'
+import { Anillo, Banderas, MiniBarra, colorScore } from '../components/WarrenScoreVisual'
+import { panelesDelTicker } from '../lib/senales'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 
 // Ratios fundamentales (definicion compartida) + los de analistas.
@@ -326,21 +329,179 @@ function FranjaHistorial({ tfKey, entradas }) {
   )
 }
 
-// Posición del precio dentro del rango de 52 semanas.
+// Posición del precio dentro del rango de 52 semanas: barra rojo -> ámbar ->
+// verde con un marcador en (precio − mín) / (máx − mín).
 function Rango52Semanas({ precio, min, max }) {
   if (precio == null || min == null || max == null || max <= min) return null
   const pos = Math.min(100, Math.max(0, ((precio - min) / (max - min)) * 100))
   return (
     <div className="rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2.5">
-      <div className="mb-1.5 flex items-center justify-between text-[11px] text-terminal-dim">
-        <span>52 semanas: {fmtPrecio(min)}</span>
-        <span>{fmtPrecio(max)}</span>
+      <div className="mb-2 flex items-baseline justify-between gap-2">
+        <h2 className="text-xs font-semibold text-terminal-text">Posición en el rango de 52 semanas</h2>
+        <span className="tabular text-sm font-bold" style={{ color: pos >= 66 ? '#22c55e' : pos >= 33 ? '#f5a524' : '#ef4444' }}>
+          {fmtNum(pos, 0)}%
+        </span>
       </div>
-      <div className="relative h-1.5 rounded-full bg-terminal-border">
+      <div
+        className="relative h-2 rounded-full"
+        style={{ background: 'linear-gradient(to right, #ef4444, #f5a524 50%, #22c55e)' }}
+        role="img"
+        aria-label={`Precio en el ${fmtNum(pos, 0)}% del rango de 52 semanas`}
+      >
         <div
-          className="absolute top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-terminal-accent"
+          className="absolute top-1/2 h-3.5 w-3.5 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-terminal-bg bg-terminal-text shadow"
           style={{ left: `${pos}%` }}
         />
+      </div>
+      <div className="mt-1.5 flex items-center justify-between text-[11px] tabular text-terminal-dim">
+        <span>mín {fmtPrecio(min)}</span>
+        <span className="text-terminal-text">{fmtPrecio(precio)}</span>
+        <span>máx {fmtPrecio(max)}</span>
+      </div>
+      <ComoSeCalcula className="mt-2">
+        <p>
+          <Formula>posición = (precio − mín 52s) / (máx 52s − mín 52s) × 100</Formula>, con mínimo y máximo
+          de los cierres de las últimas 252 ruedas. 0% = en el mínimo del año, 100% = en el máximo.
+        </p>
+      </ComoSeCalcula>
+    </div>
+  )
+}
+
+// Precio "justo" del CEDEAR según el CCL implícito mediano de todos los
+// CEDEARs del universo (meta.json) y el ratio de conversión.
+function PrecioCedear({ fila, ccl }) {
+  if (fila?.cedear_ratio == null || fila.precio == null || !ccl) return null
+  const recomendado = (fila.precio * ccl) / fila.cedear_ratio
+  const dif = fila.cedear_precio != null ? (fila.cedear_precio / recomendado - 1) * 100 : null
+  return (
+    <div className="rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2.5">
+      <h2 className="text-xs font-semibold text-terminal-text">🇦🇷 Precio recomendado del CEDEAR</h2>
+      <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <span className="tabular text-xl font-bold text-terminal-accent">${fmtPrecio(recomendado)}</span>
+        {fila.cedear_precio != null && (
+          <span className="tabular text-xs text-terminal-dim">
+            real ${fmtPrecio(fila.cedear_precio)}{' '}
+            <span style={{ color: Math.abs(dif) <= 2 ? undefined : dif > 0 ? '#ef4444' : '#22c55e' }}>
+              ({fmtPct(dif, { signo: true })})
+            </span>
+          </span>
+        )}
+      </div>
+      <p className="mt-1 text-[11px] text-terminal-dim">
+        Según CCL ${fmtNum(ccl, 2)} y ratio {fila.cedear_ratio}:1 — comparalo con el precio real en tu broker.
+      </p>
+      <ComoSeCalcula className="mt-2">
+        <p>
+          <Formula>precio CEDEAR = precio en USD × CCL ÷ ratio</Formula> = {fmtPrecio(fila.precio)} × {fmtNum(ccl, 2)} ÷{' '}
+          {fila.cedear_ratio}. CCL = mediana del CCL implícito <Formula>precio CEDEAR × ratio / precio USD</Formula> de
+          todos los CEDEARs del universo en la última corrida (descartando los que se alejan más de 15%). Ratio N:1 =
+          N CEDEARs equivalen a 1 acción (Banco Comafi + carga manual).
+        </p>
+        {dif != null && (
+          <p>
+            Diferencia <Formula>real / recomendado − 1</Formula>: positiva = el CEDEAR cotiza más caro que lo que
+            implica el CCL promedio (en rojo si pasa de ±2%), negativa = más barato. El precio real es el de BYMA vía
+            Yahoo en la misma corrida, puede tener demora.
+          </p>
+        )}
+      </ComoSeCalcula>
+    </div>
+  )
+}
+
+const PILARES_FICHA = [
+  { key: 'tendencia', nombre: 'Tendencia', max: 20 },
+  { key: 'fuerza', nombre: 'Fuerza RS', max: 25 },
+  { key: 'contraccion', nombre: 'Contracción', max: 35 },
+  { key: 'gatillo', nombre: 'Setup/Gatillo', max: 20 },
+]
+
+function TarjetaWarren({ ws }) {
+  if (!ws) return null
+  const conScore = ws.total_score != null
+  return (
+    <div className="rounded-lg border border-terminal-border bg-terminal-panel p-3">
+      <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+        <h2 className="text-sm font-semibold text-terminal-text">
+          🏆 Warren Score
+          {ws.rank != null && (
+            <span className="ml-2 font-normal text-terminal-dim">
+              #{ws.rank} de {ws.total}
+            </span>
+          )}
+        </h2>
+        <Link to="/warren-score" className="text-xs text-terminal-dim hover:text-terminal-accent">
+          Ver ranking →
+        </Link>
+      </div>
+      {conScore ? (
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="flex shrink-0 items-center gap-3">
+            <Anillo score={ws.total_score} tam={72} />
+            <div className="text-[11px] text-terminal-dim">
+              {ws.stage && (
+                <div title={ws.stage.tip}>
+                  Stage {ws.stage.n}: <span className="text-terminal-text">{ws.stage.label}</span>
+                </div>
+              )}
+              <div>
+                RS <span className="text-terminal-text">{fmtNum(ws.rs_score ?? ws.pilares?.fuerza?.rs, 0)}</span>
+                {ws.penalizacion?.pts < 0 && <> · penal. <span className="text-terminal-down">{fmtNum(ws.penalizacion.pts, 0)}</span></>}
+              </div>
+              {ws.penalizacion?.flags?.length > 0 && (
+                <div className="mt-0.5 text-sm">
+                  <Banderas flags={ws.penalizacion.flags} />
+                </div>
+              )}
+              {ws.caps?.length > 0 && <div className="text-terminal-warn">Con tope: {ws.caps.join(', ')}</div>}
+            </div>
+          </div>
+          <div className="grid min-w-0 flex-1 grid-cols-1 gap-1.5 sm:grid-cols-2">
+            {PILARES_FICHA.map((p) => {
+              const pts = ws.pilares?.[p.key]?.pts
+              return (
+                <div key={p.key} className="min-w-0">
+                  <div className="mb-0.5 text-[11px] text-terminal-dim">
+                    {p.nombre} /{p.max}
+                  </div>
+                  <MiniBarra pts={pts} max={p.max} ancho="w-full" />
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      ) : (
+        <p className="text-xs text-terminal-dim">Sin Warren Score: {ws.motivo ?? 'datos insuficientes'}.</p>
+      )}
+      {conScore && (
+        <p className="mt-2 text-[11px] text-terminal-dim">
+          Puesto = 1 + cantidad de tickers con score estrictamente mayor, entre los {ws.total} que tienen score (empates
+          comparten puesto).
+        </p>
+      )}
+      <ExplicacionWarrenScore className="mt-2" />
+    </div>
+  )
+}
+
+// Paneles de Señales (y el podio del Warren Score) donde aparece el ticker hoy.
+function TambienDestaca({ items }) {
+  if (!items.length) return null
+  return (
+    <div className="mb-5 rounded-lg border border-terminal-border bg-terminal-panel px-3 py-2.5">
+      <h2 className="mb-1.5 text-xs font-semibold text-terminal-text">También destaca en</h2>
+      <div className="flex flex-wrap gap-1.5">
+        {items.map((it) => (
+          <Link
+            key={it.key}
+            to={it.to}
+            className="rounded-full border border-terminal-border px-2.5 py-1 text-xs text-terminal-text hover:border-terminal-accent hover:text-terminal-accent"
+          >
+            {it.texto}
+            {it.detalle && <span className="ml-1 text-terminal-dim">· {it.detalle}</span>}
+          </Link>
+        ))}
       </div>
     </div>
   )
@@ -371,6 +532,8 @@ export default function TickerDetalle() {
   // historico_tickers.json no se publica: la lista de tickers con histórico
   // sale del propio historico_fundamental.json.
   const { data: historicoFundData } = useJson('historico_fundamental.json')
+  const { data: warrenData } = useJson('warren_score.json')
+  const { data: senalesData } = useJson('senales.json')
   const { overrides } = useClasificacion()
   const { watchlist, agregar, quitar } = useWatchlist()
   const { isPinned, toggle } = usePins()
@@ -459,6 +622,24 @@ export default function TickerDetalle() {
       .map((h) => ({ fecha: h.fecha, ...h.tickers[ticker] }))
   }, [historialData, fuenteHistorial, ticker])
 
+  const warrenFila = useMemo(() => {
+    const lista = Array.isArray(warrenData?.tickers) ? warrenData.tickers : []
+    return lista.find((w) => String(w.ticker).toUpperCase() === ticker) ?? null
+  }, [warrenData, ticker])
+
+  const destacados = useMemo(() => {
+    const items = panelesDelTicker(senalesData, ticker)
+    if (warrenFila?.rank != null && warrenFila.rank <= 3) {
+      items.unshift({
+        key: 'podio',
+        to: '/warren-score',
+        texto: `🏆 Podio del Warren Score`,
+        detalle: `#${warrenFila.rank} · ${fmtNum(warrenFila.total_score, 1)}`,
+      })
+    }
+    return items
+  }, [senalesData, ticker, warrenFila])
+
   const enHistoricoFundamental = useMemo(() => {
     const lista = Array.isArray(historicoFundData?.tickers) ? historicoFundData.tickers : []
     return lista.some((t) => String(t.ticker).toUpperCase() === ticker && t.disponible !== false)
@@ -532,6 +713,16 @@ export default function TickerDetalle() {
         <div>
           <div className="flex flex-wrap items-center gap-2">
             <h1 className="text-2xl font-bold text-terminal-text">{ticker}</h1>
+            {warrenFila?.rank != null && (
+              <Link
+                to="/warren-score"
+                title={`Puesto en el Warren Score (${fmtNum(warrenFila.total_score, 1)} pts) entre ${warrenFila.total} tickers con score`}
+                className="rounded border px-1.5 py-0.5 text-xs font-semibold tabular hover:opacity-80"
+                style={{ color: colorScore(warrenFila.total_score), borderColor: `${colorScore(warrenFila.total_score)}66` }}
+              >
+                #{warrenFila.rank} de {warrenFila.total}
+              </Link>
+            )}
             {fila && (
               <>
                 <BotonPin ticker={ticker} isPinned={isPinned} toggle={toggle} />
@@ -649,18 +840,29 @@ export default function TickerDetalle() {
         )}
       </div>
 
-      {fila?.spark?.length > 1 && (
+      <TambienDestaca items={fila ? destacados : []} />
+
+      {fila && (warrenFila || fila.cedear_ratio != null || fila.high_52w != null) && (
         <div className="mb-5 grid grid-cols-1 gap-3 lg:grid-cols-3">
-          <div className="overflow-hidden rounded-lg border border-terminal-border bg-terminal-panel p-3 lg:col-span-2">
-            <div className="mb-1.5 flex items-center justify-between text-[11px] text-terminal-dim">
-              <span>Precio (últimas {fila.spark.length} ruedas)</span>
-              <span>
-                mín {fmtPrecio(Math.min(...fila.spark))} · máx {fmtPrecio(Math.max(...fila.spark))}
-              </span>
-            </div>
-            <Sparkline datos={fila.spark} ancho={860} alto={140} />
+          <div className="min-w-0 lg:col-span-2">
+            <TarjetaWarren ws={warrenFila} />
           </div>
-          <Rango52Semanas precio={fila.precio} min={fila.low_52w} max={fila.high_52w} />
+          <div className="flex min-w-0 flex-col gap-3">
+            <Rango52Semanas precio={fila.precio} min={fila.low_52w} max={fila.high_52w} />
+            <PrecioCedear fila={fila} ccl={meta?.ccl_implicito_mediana} />
+          </div>
+        </div>
+      )}
+
+      {fila?.spark?.length > 1 && (
+        <div className="mb-5 overflow-hidden rounded-lg border border-terminal-border bg-terminal-panel p-3">
+          <div className="mb-1.5 flex items-center justify-between text-[11px] text-terminal-dim">
+            <span>Precio (últimas {fila.spark.length} ruedas)</span>
+            <span>
+              mín {fmtPrecio(Math.min(...fila.spark))} · máx {fmtPrecio(Math.max(...fila.spark))}
+            </span>
+          </div>
+          <Sparkline datos={fila.spark} ancho={860} alto={140} />
         </div>
       )}
 

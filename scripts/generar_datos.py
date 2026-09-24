@@ -17,6 +17,7 @@ import re
 import sys
 import time
 import unicodedata
+from bisect import bisect_left, bisect_right
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -1570,6 +1571,10 @@ def obtener_precios_cedear(tickers_base):
 WS_RUEDAS_PENDIENTE = 20  # pendiente EMA200 = variacion diaria promedio (%) en 20 ruedas
 WS_PESOS_RS = ((63, 0.4), (126, 0.2), (189, 0.2), (252, 0.2))  # tipo IBD: el ultimo trimestre pesa doble
 WS_DESFASES_RS = (0, 5, 21)  # RS hoy / hace una semana / hace un mes
+# Para la pagina Señales hace falta el RS "a la fecha del contacto": se
+# calcula el percentil del universo en cada rueda de las ultimas 10 y en
+# cada semana (5 ruedas) de los ultimos ~6 meses; se toma el mas cercano.
+WS_DESFASES_RS_EXT = tuple(sorted(set(WS_DESFASES_RS) | set(range(11)) | {5 * k for k in range(27)}))
 WS_VENTANA_VOL = 20  # volatilidad realizada de 20 ruedas
 WS_VENTANA_VOL_HIST = 252  # mediana de esa volatilidad en el ultimo anio
 WS_MEMORIA_CONTRACCION = 7  # minimo del ratio en las ultimas 7 ruedas
@@ -1691,7 +1696,7 @@ def ws_detectar_vcp(df, atr_pct):
     contracciones = []  # (profundidad %, pos. maximo, pos. minimo)
     for s1, s2 in zip(base, base[1:]):
         if s1[1] == "H" and s2[1] == "L" and s1[2]:
-            contracciones.append(((s1[2] - s2[2]) / s1[2] * 100, s1[0], s2[0]))
+            contracciones.append(((s1[2] - s2[2]) / s1[2] * 100, s1[0], s2[0], s2[2]))
     pivote = float(tope[2])
     precio = float(sub["Close"].iloc[-1])
     dist = (precio / pivote - 1) * 100
@@ -1704,8 +1709,8 @@ def ws_detectar_vcp(df, atr_pct):
             break
     vol_decreciente = False
     if len(contracciones) >= 2:
-        _, h1, l1 = contracciones[-1]
-        _, h0, l0 = contracciones[-2]
+        _, h1, l1, _ = contracciones[-1]
+        _, h0, l0, _ = contracciones[-2]
         v_ult, v_prev = vol[h1 : l1 + 1].mean(), vol[h0 : l0 + 1].mean()
         vol_decreciente = bool(v_prev > 0 and v_ult < v_prev)
     ultima = contracciones[-1][0] if contracciones else None
@@ -1725,7 +1730,114 @@ def ws_detectar_vcp(df, atr_pct):
         "pivote": num(pivote, 2),
         "vol_decreciente": vol_decreciente,
         "profundidades": [num(c[0], 1) for c in contracciones[-4:]],
+        # minimo de la ultima contraccion: si un cierre lo perfora antes de
+        # romper el pivote, la base fallo (ver ws_ciclo_vcp)
+        "min_ultima": num(contracciones[-1][3], 2) if contracciones else None,
+        # el minimo de la ultima contraccion ya giro (hubo rebote >= umbral
+        # desde ahi); si es el ultimo extremo del ZigZag todavia se esta formando
+        "ultima_confirmada": bool(contracciones and swings[-1][0] != contracciones[-1][2]),
     }
+
+
+# Ciclo de vida de la base VCP (pagina Señales · Bases VCP). Si se toca un
+# umbral aca, tocarlo tambien en la explicacion de src/pages/Senales.jsx.
+VCP_RUEDAS_CICLO = 15  # ruedas hacia atras donde se busca la ruptura (o la falla) de la base
+VCP_RUEDAS_RECIEN = 3  # "Recién rompió": primer cierre sobre el pivote en las ultimas 3 ruedas (hace 0-2)
+VCP_TOL_FALLA = 3.0  # % bajo el pivote que, despues de romper, cuenta como ruptura fallida
+VCP_SEGUIMIENTO = 3.0  # % sobre el pivote que confirma la ruptura (o 2 cierres mas altos que el de la ruptura)
+VCP_ULTIMA_ARMADO = 8.0  # la ultima contraccion tiene que medir <= 8% para "Armado"
+VCP_DIST_ARMADO = -5.0  # ... y el precio estar a <= 5% abajo del pivote
+
+
+def ws_ciclo_vcp(df, atr_pct_s):
+    """VCP de hoy (el mismo de ws_detectar_vcp, que puntua el pilar C) mas
+    el ESTADO de la base en su ciclo de vida. Para saber si una base ya
+    rompio o fallo hay que mirarla como estaba ANTES: la ruptura crea un
+    maximo nuevo y ws_detectar_vcp de hoy ya no la ve. Se re-detecta el VCP
+    con los datos cortados en cada una de las ultimas ~15 ruedas:
+      1. Ruptura en la rueda b = el VCP detectado al cierre de b-1 tiene
+         pivote P, cierre(b-1) <= P < cierre(b). Desde b: algun cierre
+         < P x 0,97 -> "Rompió y falló"; si no, b en las ultimas 3 ruedas ->
+         "Recién rompió"; si no, todos los cierres >= P y seguimiento
+         (maximo cierre >= P x 1,03 o 2 cierres mas altos que el de b) ->
+         "Rompió y confirmó"; si no -> "Rompió sin confirmar".
+      2. Sin ruptura y VCP detectado hoy: ultima contraccion <= 8% y precio
+         entre -5% y 0% del pivote -> "Armado"; si no -> "Formándose".
+      3. Sin VCP hoy pero con uno detectado en las ultimas 15 ruedas cuya
+         ultima contraccion ya habia girado (minimo confirmado por el
+         ZigZag), y un cierre posterior abajo de ese minimo ->
+         "Falló antes de romper".
+    Devuelve (vcp_hoy + "estado", ciclo) con ciclo = la base de referencia
+    (o None si no hay base)."""
+    n = len(df)
+    closes = df["Close"].values
+    cache = {}
+
+    def det(i):  # VCP con los datos hasta la rueda i inclusive
+        if i not in cache:
+            a = float(atr_pct_s.iloc[i])
+            cache[i] = ws_detectar_vcp(df.iloc[: i + 1], a if _es_valido(a) else None)
+        return cache[i]
+
+    hoy = det(n - 1)
+    precio = float(closes[-1])
+
+    def fila(base, estado, **extra):
+        piv = base["pivote"]
+        return {
+            "estado": estado,
+            "score": base["score"],
+            "contracciones": base["contracciones"],
+            "profundidades": base["profundidades"],
+            "pivote": piv,
+            "dist_pivote_pct": num((precio / piv - 1) * 100, 2) if piv else None,
+            "vol_decreciente": base["vol_decreciente"],
+            **extra,
+        }
+
+    # 1. Ruptura en las ultimas VCP_RUEDAS_CICLO ruedas (la mas reciente).
+    for hace in range(0, VCP_RUEDAS_CICLO + 1):
+        b = n - 1 - hace
+        if b < 41:
+            break
+        if closes[b] <= closes[b - 1]:  # una ruptura siempre cierra arriba de la rueda anterior
+            continue
+        base = det(b - 1)
+        piv = base["pivote"]
+        if not base["detectado"] or not piv or not (closes[b - 1] <= piv < closes[b]):
+            continue
+        tramo = closes[b:]
+        if tramo.min() < piv * (1 - VCP_TOL_FALLA / 100):
+            estado = "Rompió y falló"
+        elif hace < VCP_RUEDAS_RECIEN:
+            estado = "Recién rompió"
+        else:
+            seguimiento = tramo.max() >= piv * (1 + VCP_SEGUIMIENTO / 100) or int((tramo[1:] > tramo[0]).sum()) >= 2
+            estado = "Rompió y confirmó" if tramo.min() >= piv and seguimiento else "Rompió sin confirmar"
+        return {**hoy, "estado": estado}, fila(base, estado, hace_ruptura=hace)
+
+    # 2. Base viva hoy.
+    if hoy["detectado"]:
+        ultima = hoy["profundidades"][-1] if hoy["profundidades"] else None
+        dist = hoy["dist_pivote_pct"]
+        armado = ultima is not None and ultima <= VCP_ULTIMA_ARMADO and dist is not None and VCP_DIST_ARMADO <= dist <= 0
+        estado = "Armado" if armado else "Formándose"
+        return {**hoy, "estado": estado}, fila(hoy, estado)
+
+    # 3. Base que se deshizo perforando su ultima contraccion.
+    for hace in range(1, VCP_RUEDAS_CICLO + 1):
+        i = n - 1 - hace
+        if i < 40:
+            break
+        base = det(i)
+        if base["detectado"]:
+            # Solo cuenta perforar un minimo YA confirmado: si la ultima
+            # contraccion seguia abierta, un cierre mas bajo solo la hace
+            # mas profunda (no es una falla de la base).
+            if base["ultima_confirmada"] and base["min_ultima"] and closes[i + 1 :].min() < base["min_ultima"]:
+                return {**hoy, "estado": "Falló antes de romper"}, fila(base, "Falló antes de romper", hace_base=hace)
+            break
+    return {**hoy, "estado": None}, None
 
 
 def ws_base_y_pivote(df):
@@ -1914,13 +2026,20 @@ def ws_penalizaciones(df, ind, fin):
     return {"pts": num(pts, 1), "flags": flags}, rechazo_confirmado
 
 
+def ohlcv_limpio(hist):
+    """OHLCV sin las filas vacias que mete la descarga en lote (fechas en que
+    otro simbolo del lote opero y este no) y con O/H/L faltantes = cierre."""
+    df = hist[["Open", "High", "Low", "Close", "Volume"]].copy()
+    df = df[df["Close"].notna()]
+    df[["Open", "High", "Low"]] = df[["Open", "High", "Low"]].apply(lambda s: s.fillna(df["Close"]))
+    return df
+
+
 def ws_calcular_ticker(hist, bench_closes, en_usd, fin_vol, vol_1y):
     """Primera pasada: pilares A, C y D, penalizaciones, stage y el
     rendimiento relativo crudo para el B. None si no hay historia suficiente
     (EMA200 + su pendiente)."""
-    df = hist[["Open", "High", "Low", "Close", "Volume"]].copy()
-    df = df[df["Close"].notna()]
-    df[["Open", "High", "Low"]] = df[["Open", "High", "Low"]].apply(lambda s: s.fillna(df["Close"]))
+    df = ohlcv_limpio(hist)
     c = df["Close"]
     if len(c) < WS_MIN_RUEDAS:
         return None
@@ -1980,10 +2099,12 @@ def ws_calcular_ticker(hist, bench_closes, en_usd, fin_vol, vol_1y):
 
     # --- Pilar B (crudo): rendimiento relativo + linea de FR vs su SMA50 ---
     rs_crudo = [None] * len(WS_DESFASES_RS)
+    rs_ext = {}
     fr_sobre_sma50 = None
     if en_usd:
         conjunto = _alinear_con_bench(c, bench_closes)
-        rs_crudo = [ws_rendimiento_relativo(conjunto, d) for d in WS_DESFASES_RS]
+        rs_ext = {d: ws_rendimiento_relativo(conjunto, d) for d in WS_DESFASES_RS_EXT}
+        rs_crudo = [rs_ext[d] for d in WS_DESFASES_RS]
         if conjunto is not None and len(conjunto) >= 50:
             linea = conjunto["t"] / conjunto["b"]
             fr_sobre_sma50 = bool(linea.iloc[-1] > linea.rolling(50).mean().iloc[-1])
@@ -1998,7 +2119,7 @@ def ws_calcular_ticker(hist, bench_closes, en_usd, fin_vol, vol_1y):
     factor = 1 - 0.5 * min(1.0, max(0.0, (neto - 0.8) / 1.7)) if neto is not None else 1.0
     pts_contr = tri(ratio_min7, 0, 0, 0.70, 1.05) * 15.25 * factor if ratio_min7 is not None else None
     pts_rsi = tri(rsi, 30, 45, 60, 70) * 11.25
-    vcp = ws_detectar_vcp(df, atr_pct)
+    vcp, vcp_ciclo = ws_ciclo_vcp(df, atr_s / c * 100)
     pts_vcp = lineal(vcp["score"], 40, 100, 0, 6.8) + (1.7 if vcp["detectado"] and vcp["vol_decreciente"] else 0)
     if pts_contr is not None:
         base_c = min(pts_contr + pts_rsi + pts_vcp, 35)
@@ -2064,14 +2185,10 @@ def ws_calcular_ticker(hist, bench_closes, en_usd, fin_vol, vol_1y):
         "gatillo": gatillo,
         "penalizacion": penalizacion,
         "rs_crudo": rs_crudo,
+        "rs_ext": rs_ext,
         "fr_sobre_sma50": fr_sobre_sma50,
+        "vcp_ciclo": vcp_ciclo,  # no se publica en warren_score.json: lo usa senales.json
     }
-
-
-def _percentil(valor, universo):
-    if valor is None or not universo:
-        return None
-    return round(sum(1 for v in universo if v <= valor) / len(universo) * 100, 1)
 
 
 def ws_pilar_fuerza(rs, rs_sem, rs_mes, fr_sobre_sma50):
@@ -2092,14 +2209,31 @@ def ws_pilar_fuerza(rs, rs_sem, rs_mes, fr_sobre_sma50):
     }
 
 
-def calcular_warren_score(warren_datos):
+def rs_percentiles(warren_datos):
+    """Percentil de RS (0-100) de cada ticker USD dentro del universo, para
+    cada desfase de WS_DESFASES_RS_EXT: {ticker: {desfase: percentil}}. Percentil
+    = proporcion del universo con valor <= al del ticker, x 100 (bisect sobre
+    el universo ordenado: son ~35 desfases x ~350 tickers)."""
+    universos = {
+        d: sorted(w["calc"]["rs_ext"][d] for w in warren_datos if w["calc"] and w["calc"]["rs_ext"].get(d) is not None)
+        for d in WS_DESFASES_RS_EXT
+    }
+    mapa = {}
+    for w in warren_datos:
+        ext = (w["calc"] or {}).get("rs_ext") or {}
+        mapa[w["ticker"]] = {
+            d: round(bisect_right(universos[d], ext[d]) / len(universos[d]) * 100, 1)
+            for d in WS_DESFASES_RS_EXT
+            if ext.get(d) is not None and universos[d]
+        }
+    return mapa
+
+
+def calcular_warren_score(warren_datos, rs_mapa):
     """Segunda pasada: percentil de RS (hoy, hace 5 y hace 21 ruedas) dentro
-    del universo USD, pilar B, total y caps. Tickers no-USD o sin historia
-    suficiente: total None y datos_suficientes False (no se inventa un 0)."""
-    universos = [
-        [w["calc"]["rs_crudo"][k] for w in warren_datos if w["calc"] and w["calc"]["rs_crudo"][k] is not None]
-        for k in range(len(WS_DESFASES_RS))
-    ]
+    del universo USD (rs_mapa, de rs_percentiles), pilar B, total y caps.
+    Tickers no-USD o sin historia suficiente: total None y datos_suficientes
+    False (no se inventa un 0). Al final, puesto en el ranking (rank/total)."""
     salida = []
     for w in warren_datos:
         calc = w["calc"]
@@ -2109,7 +2243,7 @@ def calcular_warren_score(warren_datos):
             continue
         fuerza = None
         if w["en_usd"]:
-            rs, rs_sem, rs_mes = (_percentil(calc["rs_crudo"][k], universos[k]) for k in range(len(WS_DESFASES_RS)))
+            rs, rs_sem, rs_mes = (rs_mapa.get(w["ticker"], {}).get(d) for d in WS_DESFASES_RS)
             b = ws_pilar_fuerza(rs, rs_sem, rs_mes, calc["fr_sobre_sma50"])
             fuerza = {
                 "pts": b["pts"],
@@ -2145,6 +2279,7 @@ def calcular_warren_score(warren_datos):
                 "precio": calc["precio"],
                 "dist_max52_pct": calc["dist_max52_pct"],
                 "total_score": total,
+                "rs_score": fuerza["rs"] if fuerza else None,
                 "datos_suficientes": total is not None,
                 "motivo": None if total is not None else "no cotiza en USD (sin RS vs SPY)",
                 "stage": calc["stage"],
@@ -2154,6 +2289,198 @@ def calcular_warren_score(warren_datos):
                 "caps": caps,
             }
         )
+    # Puesto en el ranking entre los que tienen score (empates comparten puesto).
+    puntajes = sorted((f["total_score"] for f in salida if f.get("total_score") is not None), reverse=True)
+    for f in salida:
+        if f.get("total_score") is not None:
+            f["rank"] = 1 + bisect_left([-v for v in puntajes], -f["total_score"])
+            f["total"] = len(puntajes)
+    return salida
+
+# ---------------------------------------------------------------------------
+# Señales (public/data/senales.json): EMA200 rebote / cruce (diaria y
+# semanal), bases VCP y cruce del RSI semanal con su SMA14. Todo sale del
+# mismo 'hist' diario de 5 años; las velas semanales se arman UNA vez por
+# ticker (W-FRI). El RS a la fecha del contacto sale de rs_percentiles. Si se
+# toca un umbral aca, tocarlo tambien en src/pages/Senales.jsx.
+# ---------------------------------------------------------------------------
+SEN_TOQUE = 1.01  # la rueda "toca" la EMA si su minimo <= EMA x 1,01
+SEN_FRAC_TRAMO = 0.8  # "tramo sostenido" = >= 80% de los cierres del tramo del mismo lado de la EMA
+SEN_EMA = {
+    # tramo: velas previas que tienen que estar (mayormente) del mismo lado;
+    # reciente: solo contactos en las ultimas N velas; desde: velas de
+    # calentamiento de la EMA antes de buscar contactos (para "Última vez").
+    "diario": {"tramo": 20, "reciente": 10, "desde": 200, "min_velas": 250},
+    "semanal": {"tramo": 10, "reciente": 4, "desde": 150, "min_velas": 150},
+}
+SEN_CLIMAX_RADIO = 2  # velas a cada lado del contacto donde se busca el climax de volumen
+SEN_CLIMAX_VOL = 1.5  # 🌊: volumen >= 1,5x el promedio de 20 velas...
+SEN_CLIMAX_POS = 0.6  # ... y cierre en el 40% superior del rango (posicion >= 60%)
+SEN_RSI_SEMANAS = 3  # cruces del RSI semanal en las ultimas 3 semanas (0 = la semana en curso)
+SEN_VCP_MIN = 60  # score VCP minimo para listar la base
+
+
+def velas_semanales(df):
+    """Velas semanales (cierre del viernes) desde las diarias. La ultima es la
+    semana EN CURSO (parcial) si la corrida cae de lunes a jueves."""
+    sem = df.resample("W-FRI").agg({"Open": "first", "High": "max", "Low": "min", "Close": "last", "Volume": "sum"})
+    return sem[sem["Close"].notna()]
+
+
+def _desfase_mas_cercano(ruedas):
+    return min(WS_DESFASES_RS_EXT, key=lambda d: (abs(d - ruedas), d))
+
+
+def sen_contactos_ema(velas, cfg, adjust):
+    """Rebote y cruce al alza sobre la EMA200 de 'velas' (diarias o semanales).
+      Rebote (vela i): minimo <= EMA x 1,01 y cierre > EMA, con >= 80% de los
+        cierres de las 'tramo' velas anteriores arriba de la EMA.
+      Cruce al alza (vela i): cierre > EMA y cierre anterior <= EMA, con >= 80%
+        de los cierres de las 'tramo' velas anteriores abajo de la EMA.
+    Solo cuenta el contacto mas reciente dentro de las ultimas 'reciente'
+    velas, y solo si HOY el cierre sigue arriba de la EMA. Devuelve
+    {"rebote": {...}|None, "cruce": {...}|None} con la posicion del contacto,
+    el climax de volumen alrededor y la fecha del contacto anterior."""
+    n = len(velas)
+    if n < cfg["min_velas"]:
+        return None
+    c, h, l, v = (velas[k] for k in ("Close", "High", "Low", "Volume"))
+    ema = c.ewm(span=200, adjust=adjust).mean()
+    arriba = c > ema
+    frac_arriba = arriba.astype(float).rolling(cfg["tramo"]).mean().shift(1)
+    rebote = (l <= ema * SEN_TOQUE) & arriba & (frac_arriba >= SEN_FRAC_TRAMO)
+    cruce = arriba & ~arriba.shift(1, fill_value=True) & ((1 - frac_arriba) >= SEN_FRAC_TRAMO)
+    desde = min(cfg["desde"], n - 1)
+    rebote.iloc[:desde] = False
+    cruce.iloc[:desde] = False
+    if not bool(arriba.iloc[-1]):
+        return {"rebote": None, "cruce": None}
+
+    vv = v.fillna(0).values
+    prom20 = v.fillna(0).rolling(20).mean().shift(1).values
+    cc, hh, ll = c.values, h.values, l.values
+    fechas = velas.index
+
+    def detalle(i, eventos, separacion):
+        a, b = max(0, i - SEN_CLIMAX_RADIO), min(n - 1, i + SEN_CLIMAX_RADIO)
+        k = a + int(np.argmax(vv[a : b + 1]))
+        ratio = vv[k] / prom20[k] if _es_valido(float(prom20[k])) and prom20[k] > 0 else None
+        rango = hh[k] - ll[k]
+        pos = (cc[k] - ll[k]) / rango if rango > 0 else None
+        # Contacto anterior (mismo criterio): para el rebote, anterior al tramo
+        # sostenido que precedio a este contacto (si no, un toque de ayer
+        # contaria como "la vez anterior"); para el cruce, cualquier cruce previo.
+        previos = np.flatnonzero(eventos.values[: max(0, i - separacion)])
+        anterior = fechas[previos[-1]] if len(previos) else None
+        return {
+            "pos": i,
+            "hace": n - 1 - i,
+            "fecha": fechas[i].strftime("%Y-%m-%d"),
+            "ema": num(ema.iloc[i], 2),
+            "climax_ratio": num(ratio, 2),
+            "climax_pos_pct": num(pos * 100, 0) if pos is not None else None,
+            "climax_ola": bool(ratio is not None and pos is not None and ratio >= SEN_CLIMAX_VOL and pos >= SEN_CLIMAX_POS),
+            "climax_fecha": fechas[k].strftime("%Y-%m-%d"),
+            "ultima_vez_dias": int((fechas[i] - anterior).days) if anterior is not None else None,
+            "dist_ema_pct": num((cc[-1] / ema.iloc[-1] - 1) * 100, 2),
+        }
+
+    salida = {}
+    for tipo, eventos, sep in (("rebote", rebote, cfg["tramo"]), ("cruce", cruce, 0)):
+        recientes = np.flatnonzero(eventos.values[n - cfg["reciente"] :])
+        salida[tipo] = detalle(n - cfg["reciente"] + int(recientes[-1]), eventos, sep) if len(recientes) else None
+    return salida
+
+
+def sen_rsi_semanal(sem):
+    """Cruce del RSI(14) semanal (Wilder, cierres semanales) con su SMA14 en
+    las ultimas 3 velas semanales, contando la semana en curso como "esta
+    semana" (hace 0). Solo el cruce mas reciente."""
+    if len(sem) < 30:
+        return None
+    rsi = rsi_serie(sem["Close"], 14)
+    sma = rsi.rolling(14).mean()
+    sobre = rsi > sma
+    valido = rsi.notna() & sma.notna()
+    n = len(sem)
+    for hace in range(SEN_RSI_SEMANAS):
+        i = n - 1 - hace
+        if not (valido.iloc[i] and valido.iloc[i - 1]) or sobre.iloc[i] == sobre.iloc[i - 1]:
+            continue
+        return {
+            "tipo": "alcista" if sobre.iloc[i] else "bajista",
+            "hace": hace,
+            "fecha": sem.index[i].strftime("%Y-%m-%d"),
+            "rsi": num(rsi.iloc[-1], 1),
+            "sma14": num(sma.iloc[-1], 1),
+        }
+    return None
+
+
+def senales_ticker(hist, calc_ws):
+    """Primera pasada de senales.json para un ticker (sin RS: el percentil
+    del universo se agrega en construir_senales)."""
+    df = ohlcv_limpio(hist)
+    if len(df) < 60:
+        return None
+    sem = velas_semanales(df)
+    ema_d = sen_contactos_ema(df, SEN_EMA["diario"], adjust=False)
+    # Semanal con adjust=True: con 150-260 velas la semilla de un EMA
+    # recursivo todavia pesa; asi es el promedio exponencial de lo disponible.
+    ema_s = sen_contactos_ema(sem, SEN_EMA["semanal"], adjust=True)
+    if ema_s:
+        # desfase en RUEDAS de cada contacto semanal (para el RS a esa fecha):
+        # ruedas diarias posteriores al ultimo dia de esa semana.
+        dias = df.index
+        for x in ema_s.values():
+            if x:
+                ult = int(np.searchsorted(dias, sem.index[x["pos"]], side="right")) - 1
+                x["ruedas"] = len(dias) - 1 - ult
+    if calc_ws and calc_ws.get("vcp_ciclo") is not None:
+        vcp = calc_ws["vcp_ciclo"]
+    elif calc_ws:
+        vcp = None
+    else:
+        _, vcp = ws_ciclo_vcp(df, atr_serie(df["High"], df["Low"], df["Close"], 14) / df["Close"] * 100)
+    return {"ema_diario": ema_d, "ema_semanal": ema_s, "vcp": vcp, "rsi_semanal": sen_rsi_semanal(sem)}
+
+
+def construir_senales(senales_datos, rs_mapa, ahora_iso):
+    """Segunda pasada: arma senales.json con el RS (percentil del universo
+    USD) hoy y a la fecha de cada contacto. Tickers no-USD: RS None."""
+    salida = {
+        "actualizado": ahora_iso,
+        "ema200": {tf: {"rebote": [], "cruce": []} for tf in SEN_EMA},
+        "vcp": [],
+        "rsi_semanal": {"alcista": [], "bajista": []},
+    }
+    for d in senales_datos:
+        s_ = d["senales"]
+        if not s_:
+            continue
+        rs_t = rs_mapa.get(d["ticker"], {})
+        rs_hoy = rs_t.get(0)
+        base = {"ticker": d["ticker"], "nombre": d["nombre"]}
+        for tf, clave in (("diario", "ema_diario"), ("semanal", "ema_semanal")):
+            for tipo, x in (s_.get(clave) or {}).items():
+                if not x:
+                    continue
+                ruedas = x["hace"] if tf == "diario" else x["ruedas"]
+                rs_contacto = rs_t.get(_desfase_mas_cercano(ruedas)) if rs_t else None
+                fila = {k: v for k, v in x.items() if k not in ("pos", "ruedas")}
+                salida["ema200"][tf][tipo].append({**base, **fila, "rs_contacto": rs_contacto, "rs_hoy": rs_hoy})
+        vcp = s_.get("vcp")
+        if vcp and vcp.get("score") is not None and vcp["score"] >= SEN_VCP_MIN:
+            salida["vcp"].append({**base, **vcp, "rs_hoy": rs_hoy})
+        r = s_.get("rsi_semanal")
+        if r:
+            salida["rsi_semanal"][r["tipo"]].append({**base, **{k: v for k, v in r.items() if k != "tipo"}, "rs": rs_hoy})
+    for tf in salida["ema200"].values():
+        for lista in tf.values():
+            lista.sort(key=lambda f: (-(f["rs_hoy"] if f["rs_hoy"] is not None else -1), f["ticker"]))
+    salida["vcp"].sort(key=lambda f: (-f["score"], f["ticker"]))
+    for lista in salida["rsi_semanal"].values():
+        lista.sort(key=lambda f: (f["hace"], -(f["rs"] if f["rs"] is not None else -1), f["ticker"]))
     return salida
 
 
@@ -2380,6 +2707,14 @@ def procesar_ticker(fila, sym, hist, info_datos, ctx):
         "en_usd": en_usd,
         "calc": calc_ws,
     }
+    # Señales (EMA200 / VCP / RSI semanal): mismo criterio, una falla no
+    # tumba el ticker.
+    try:
+        senales = senales_ticker(hist, calc_ws)
+    except Exception as e:  # noqa: BLE001
+        print(f"  ! {sym}: señales sin calcular ({type(e).__name__}: {e})")
+        senales = None
+    filas["senales"] = {"ticker": sym, "nombre": nombre, "senales": senales}
     return filas
 
 
@@ -2489,7 +2824,7 @@ def main(argv=None):
     }
 
     listado, medias, fundamentales, screener, scanner_setups = [], [], [], [], []
-    mensuales, warren_datos = {}, []
+    mensuales, warren_datos, senales_datos = {}, [], []
     invalidos, sin_arrastre, descartados_viejos = [], [], []
     salidas = {
         "listado": (listado, prev_listado),
@@ -2543,6 +2878,7 @@ def main(argv=None):
             lista.append(filas[clave])
         mensuales[sym] = filas["mensual"]
         warren_datos.append(filas["warren"])
+        senales_datos.append(filas["senales"])
         print(f"  ok {sym} ({filas['listado']['nombre']})")
 
     # --- Salvaguarda anti rate-limit ---
@@ -2592,7 +2928,15 @@ def main(argv=None):
     comparables = construir_comparables(fundamentales, peers)
 
     print("\nCalculando Warren Score (percentil de fuerza relativa sobre el universo USD)...")
-    warren_score = calcular_warren_score(warren_datos)
+    rs_mapa = rs_percentiles(warren_datos)
+    warren_score = calcular_warren_score(warren_datos, rs_mapa)
+    senales = construir_senales(senales_datos, rs_mapa, ahora_iso)
+    print(
+        "Señales: EMA200 diaria {}/{} · semanal {}/{} (rebote/cruce) · {} bases VCP · RSI semanal {}/{}".format(
+            *(len(senales["ema200"][tf][t]) for tf in ("diario", "semanal") for t in ("rebote", "cruce")),
+            len(senales["vcp"]), len(senales["rsi_semanal"]["alcista"]), len(senales["rsi_semanal"]["bajista"]),
+        )
+    )
 
     promedios = []
     if listado:
@@ -2640,6 +2984,7 @@ def main(argv=None):
     cambios += escribir_json(
         out / "warren_score.json", {"actualizado": ahora_iso, "tickers": warren_score}, ignorar_claves=("actualizado",)
     )
+    cambios += escribir_json(out / "senales.json", senales, ignorar_claves=("actualizado",))
 
     # Migracion one-off al layout por ticker: el historico mensual pasa de un
     # JSON unico (1.8MB) a mensual/<TICKER>.json (sirve para los arrastrados,

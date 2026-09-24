@@ -33,10 +33,12 @@ from comun import (  # noqa: F401  (num/rsi_wilder/RAIZ/TZ se re-exportan: los i
     DIR_ESTADO,
     RAIZ,
     TZ,
+    atr_serie,
     base_ticker,
     borrar_huerfanos,
     escribir_json,
     leer_json,
+    lineal,
     mediana_de,
     moneda_por_sufijo,
     normalizar_industria,
@@ -44,6 +46,7 @@ from comun import (  # noqa: F401  (num/rsi_wilder/RAIZ/TZ se re-exportan: los i
     rsi_serie,
     rsi_wilder,
     sig,
+    tri,
 )
 
 # --- Rutas y constantes ---
@@ -1552,281 +1555,603 @@ def obtener_precios_cedear(tickers_base):
 
 
 # ---------------------------------------------------------------------------
-# Warren Score: screener tecnico/cuantitativo (0-100), NO fundamental. Ver
-# spec completa en la conversacion — 4 pilares (Tendencia/25, Fuerza
-# relativa/30, Momentum/30, Volatilidad/15). Reusa el 'closes'/'bench_closes'
-# ya descargado para beta/sharpe, no pide nada nuevo a yfinance. La Fuerza
-# Relativa necesita el percentil dentro de TODO el universo, asi que se
-# calcula en dos pasadas (igual patron que promedios_por_industria): primera
-# pasada guarda el retorno relativo crudo de cada ticker, segunda pasada (ya
-# con el universo completo) lo convierte a percentil + puntos.
+# Warren Score: screener tecnico/cuantitativo (0-100), NO fundamental.
+# Modelo tipo "Warren Bife Dashboard" v4.9, implementacion propia:
+#   score = clamp(A + B + C + D + penalizaciones, 0, 100) y despues caps.
+#   A Tendencia /20 · B Fuerza relativa /25 · C Contraccion /35 · D Gatillo /20.
+# Todo sale del 'hist' OHLCV ya descargado (no pide nada nuevo a yfinance).
+# La Fuerza Relativa necesita el percentil dentro de TODO el universo USD,
+# asi que se arma en dos pasadas (mismo patron que promedios_por_industria):
+# la primera (ws_calcular_ticker) guarda el rendimiento relativo crudo hoy,
+# hace 5 y hace 21 ruedas; la segunda (calcular_warren_score) lo convierte
+# en percentil y cierra el total. Si se toca un umbral aca, tocarlo tambien
+# en src/pages/WarrenScore.jsx y en ExplicacionWarrenScore (Explicaciones.jsx).
 # ---------------------------------------------------------------------------
-WS_LOOKBACK_PENDIENTE = 20  # ruedas atras para "pendiente positiva" de una media
-WS_VENTANA_RS = 126  # ~6 meses de ruedas para el retorno relativo vs SPY
-WS_VENTANA_BREAKOUT = 20  # ruedas para "hizo un nuevo maximo de 52 semanas recientemente"
-WS_VENTANA_VOL_HIST = 252  # ~1 anio de volatilidades moviles de 20 ruedas, para la mediana
+WS_RUEDAS_PENDIENTE = 20  # pendiente EMA200 = variacion diaria promedio (%) en 20 ruedas
+WS_PESOS_RS = ((63, 0.4), (126, 0.2), (189, 0.2), (252, 0.2))  # tipo IBD: el ultimo trimestre pesa doble
+WS_DESFASES_RS = (0, 5, 21)  # RS hoy / hace una semana / hace un mes
+WS_VENTANA_VOL = 20  # volatilidad realizada de 20 ruedas
+WS_VENTANA_VOL_HIST = 252  # mediana de esa volatilidad en el ultimo anio
+WS_MEMORIA_CONTRACCION = 7  # minimo del ratio en las ultimas 7 ruedas
+WS_VENTANA_VCP = 120  # ruedas donde se busca el VCP
+WS_VENTANA_BASE = 275  # ~55 semanas para el pivote de la base
+WS_CAP_GATE = 40
+WS_CAP_RECHAZO = 70
+WS_TOPE_AGOTAMIENTO = -14
+WS_MIN_RUEDAS = 200 + WS_RUEDAS_PENDIENTE  # EMA200 + su pendiente
 
 
-def _pendiente_positiva(serie, lookback=WS_LOOKBACK_PENDIENTE):
-    """Compara el valor actual de una media contra su valor 'lookback' ruedas
-    atras. None (no bool) si no hay historial suficiente — nunca se inventa
-    un True/False sin dato real detras."""
-    if len(serie) < lookback + 1:
+def _es_valido(x):
+    return x is not None and not (isinstance(x, float) and (math.isnan(x) or math.isinf(x)))
+
+
+def _alinear_con_bench(closes, bench_closes):
+    """Join POR FECHA (ruedas en comun) del ticker contra SPY. Antes era por
+    posicion en cada serie y, con feriados distintos (BYMA/B3 vs NYSE) o
+    huecos de datos, comparaba fechas distintas."""
+    if bench_closes is None or bench_closes.empty:
         return None
-    actual, anterior = serie.iloc[-1], serie.iloc[-1 - lookback]
-    if pd.isna(actual) or pd.isna(anterior):
-        return None
-    return bool(actual > anterior)
-
-
-def ws_calcular_trend(closes):
-    """Pilar A (25 pts): estructura de SMA50/EMA200. OJO: son las medias que
-    pide la spec del Warren Score, DISTINTAS de las que ya usa el resto de la
-    app para 'Distancia a medias'/golden-death cross (que usan EMA50/SMA200,
-    exactamente al reves) — no son intercambiables, se calculan aparte."""
-    minimo = 200 + WS_LOOKBACK_PENDIENTE
-    if len(closes) < minimo:
-        return None
-    sma50 = closes.rolling(50).mean()
-    ema200 = closes.ewm(span=200, adjust=False).mean()
-    precio, sma50_v, ema200_v = closes.iloc[-1], sma50.iloc[-1], ema200.iloc[-1]
-    if pd.isna(sma50_v) or pd.isna(ema200_v):
-        return None
-
-    price_above_ema200 = bool(precio > ema200_v)
-    price_above_sma50 = bool(precio > sma50_v)
-    sma50_above_ema200 = bool(sma50_v > ema200_v)
-    sma50_rising = _pendiente_positiva(sma50)
-    ema200_rising = _pendiente_positiva(ema200)
-
-    score = (
-        (7 if price_above_ema200 else 0)
-        + (5 if price_above_sma50 else 0)
-        + (5 if sma50_above_ema200 else 0)
-        + (4 if sma50_rising else 0)
-        + (4 if ema200_rising else 0)
-    )
-    return {
-        "score": num(score, 1),
-        "price_above_ema200": price_above_ema200,
-        "price_above_sma50": price_above_sma50,
-        "sma50_above_ema200": sma50_above_ema200,
-        "sma50_rising": sma50_rising,
-        "ema200_rising": ema200_rising,
-        "sma50": num(sma50_v, 2),
-        "ema200": num(ema200_v, 2),
-    }
-
-
-def ws_calcular_relative_return(closes, bench_closes, ventana=WS_VENTANA_RS):
-    """Retorno relativo vs. SPY sobre ~6 meses. Las dos series se alinean
-    POR FECHA (join de ruedas en comun) antes de contar "ventana ruedas
-    atras": antes era por posicion en cada serie y, con feriados distintos
-    (BYMA/B3 vs NYSE) o huecos de datos, comparaba fechas distintas. Valor
-    crudo: el percentil dentro del universo se calcula despues, en la
-    segunda pasada. Solo se llama para tickers en USD (ver main)."""
-    if bench_closes is None or len(closes) < ventana + 1 or len(bench_closes) < ventana + 1:
-        return None
-    a = closes.copy()
-    b = bench_closes.copy()
+    a, b = closes.copy(), bench_closes.copy()
     for s_ in (a, b):
         if s_.index.tz is not None:
             s_.index = s_.index.tz_localize(None)
-    a.index = a.index.normalize()
-    b.index = b.index.normalize()
+        s_.index = s_.index.normalize()
     conjunto = pd.concat([a.rename("t"), b.rename("b")], axis=1, join="inner").dropna()
-    if len(conjunto) < ventana + 1:
+    conjunto = conjunto[~conjunto.index.duplicated(keep="last")]
+    return conjunto if len(conjunto) else None
+
+
+def ws_rendimiento_relativo(conjunto, desfase=0):
+    """Rendimiento relativo ponderado vs SPY (tipo IBD) al cierre de hace
+    'desfase' ruedas: 0.4·r63 + 0.2·r126 + 0.2·r189 + 0.2·r252 con
+    rN = (1 + ret ticker N) / (1 + ret SPY N) − 1. Si faltan las ventanas
+    largas se re-normalizan los pesos sobre las disponibles (minimo r63).
+    Valor crudo: el percentil se calcula en la segunda pasada."""
+    if conjunto is None:
         return None
-    precio_actual, precio_prev = conjunto["t"].iloc[-1], conjunto["t"].iloc[-1 - ventana]
-    spy_actual, spy_prev = conjunto["b"].iloc[-1], conjunto["b"].iloc[-1 - ventana]
-    if not precio_prev or not spy_prev:
+    fin = len(conjunto) - 1 - desfase
+    t, b = conjunto["t"].values, conjunto["b"].values
+    suma = pesos = 0.0
+    for n, peso in WS_PESOS_RS:
+        ini = fin - n
+        if ini < 0:
+            break
+        if not t[ini] or not b[ini] or not b[fin]:
+            continue
+        suma += ((t[fin] / t[ini]) / (b[fin] / b[ini]) - 1) * peso
+        pesos += peso
+    if pesos < WS_PESOS_RS[0][1]:  # sin r63 no hay RS
         return None
-    stock_return = precio_actual / precio_prev - 1
-    spy_return = spy_actual / spy_prev - 1
-    denominador = 1 + spy_return
-    if denominador == 0:
-        return None
-    return ((1 + stock_return) / denominador) - 1
+    return suma / pesos
 
 
-def ws_rs_score_desde_percentil(rs_percentil):
-    """Puntos del pilar B a partir del percentil (0-100) de fuerza relativa,
-    segun la tabla de la spec. Por debajo de 50, proporcional (sin saltos)."""
-    if rs_percentil is None:
-        return None
-    if rs_percentil >= 95:
-        return 30.0
-    if rs_percentil >= 90:
-        return 27.0
-    if rs_percentil >= 80:
-        return 24.0
-    if rs_percentil >= 70:
-        return 18.0
-    if rs_percentil >= 60:
-        return 14.0
-    if rs_percentil >= 50:
-        return 10.0
-    return round((rs_percentil / 50) * 9, 1)
+def ws_zigzag(high, low, umbral_pct):
+    """Swings de un ZigZag sobre maximos/minimos: un giro se confirma cuando
+    el precio se aleja 'umbral_pct' % del extremo vigente. Devuelve la lista
+    [(posicion, 'H'|'L', precio)] con el ultimo extremo (todavia sin
+    confirmar) al final."""
+    u = umbral_pct / 100
+    swings = []
+    tendencia = None
+    i_max = i_min = 0
+    for i in range(len(high)):
+        if tendencia is None:
+            if high[i] > high[i_max]:
+                i_max = i
+            if low[i] < low[i_min]:
+                i_min = i
+            if high[i] >= low[i_min] * (1 + u) and i_min < i:
+                swings.append((i_min, "L", low[i_min]))
+                tendencia, i_ext = "sube", i
+            elif low[i] <= high[i_max] * (1 - u) and i_max < i:
+                swings.append((i_max, "H", high[i_max]))
+                tendencia, i_ext = "baja", i
+            continue
+        if tendencia == "sube":
+            if high[i] >= high[i_ext]:
+                i_ext = i
+            elif low[i] <= high[i_ext] * (1 - u):
+                swings.append((i_ext, "H", high[i_ext]))
+                tendencia, i_ext = "baja", i
+        else:
+            if low[i] <= low[i_ext]:
+                i_ext = i
+            elif high[i] >= low[i_ext] * (1 + u):
+                swings.append((i_ext, "L", low[i_ext]))
+                tendencia, i_ext = "sube", i
+    if tendencia == "sube":
+        swings.append((i_ext, "H", high[i_ext]))
+    elif tendencia == "baja":
+        swings.append((i_ext, "L", low[i_ext]))
+    return swings
 
 
-def ws_calcular_momentum(closes, high_52w, low_52w, precio):
-    """Pilar C (30 pts): cercania al maximo de 52w (15) + distancia sobre el
-    minimo de 52w (10) + breakout reciente (5). Reusa high_52w/low_52w que
-    el pipeline ya calcula para listado.json."""
-    if high_52w is None or low_52w is None or high_52w <= 0 or len(closes) < 30:
-        return None
-    dist_high = (precio / high_52w - 1) * 100  # <= 0 (o ~0 si es el maximo)
-    pct_above_low = (precio / low_52w - 1) * 100 if low_52w > 0 else None
-
-    d = abs(dist_high)
-    if d <= 3:
-        p_high = 15
-    elif d <= 5:
-        p_high = 14
-    elif d <= 10:
-        p_high = 12
-    elif d <= 15:
-        p_high = 9
-    elif d <= 20:
-        p_high = 6
-    elif d <= 25:
-        p_high = 3
-    else:
-        p_high = 0
-
-    if pct_above_low is None:
-        p_low = 0
-    elif pct_above_low >= 50:
-        p_low = 10
-    elif pct_above_low >= 40:
-        p_low = 8
-    elif pct_above_low >= 30:
-        p_low = 7
-    elif pct_above_low >= 25:
-        p_low = 6
-    elif pct_above_low >= 15:
-        p_low = 3
-    else:
-        p_low = 0
-
-    # Nuevo maximo de 52 semanas en las ultimas 20 ruedas: el cierre de ese
-    # dia estuvo (con 0.1% de tolerancia) en su propio maximo movil de 252
-    # ruedas hasta esa fecha — sobre la serie completa, no un slice, para que
-    # el "maximo movil" sea el trailing real y no un maximo truncado.
-    rolling_max_252 = closes.rolling(252, min_periods=1).max()
-    recientes_close = closes.tail(WS_VENTANA_BREAKOUT)
-    recientes_max = rolling_max_252.tail(WS_VENTANA_BREAKOUT)
-    nuevo_maximo_reciente = bool((recientes_close >= recientes_max * 0.999).any())
-    p_breakout = 5 if nuevo_maximo_reciente else 0
-
+def ws_detectar_vcp(df, atr_pct):
+    """VCP (Volatility Contraction Pattern), deteccion propia: ZigZag con
+    umbral adaptativo max(3%, 1.5 × ATR14%) sobre las ultimas ~120 ruedas.
+    La base arranca en el swing high mas alto; cada tramo maximo -> minimo
+    siguiente es una contraccion (profundidad % desde el maximo). Hay VCP si
+    las ultimas >= 2 contracciones son cada una menos profunda que la
+    anterior (10% de tolerancia), la ultima mide <= 12% y el precio esta
+    entre 10% abajo y 2% arriba del pivote (maximo de la base)."""
+    vacio = {"detectado": False, "score": 0, "contracciones": 0, "dist_pivote_pct": None, "pivote": None,
+             "vol_decreciente": False, "profundidades": []}
+    sub = df.tail(WS_VENTANA_VCP)
+    if len(sub) < 40:
+        return vacio
+    high, low = sub["High"].values, sub["Low"].values
+    vol = sub["Volume"].fillna(0).values
+    umbral = max(3.0, 1.5 * atr_pct) if _es_valido(atr_pct) else 3.0
+    swings = ws_zigzag(high, low, umbral)
+    maximos = [s for s in swings if s[1] == "H"]
+    if not maximos:
+        return vacio
+    tope = max(maximos, key=lambda s: s[2])
+    base = [s for s in swings if s[0] >= tope[0]]
+    contracciones = []  # (profundidad %, pos. maximo, pos. minimo)
+    for s1, s2 in zip(base, base[1:]):
+        if s1[1] == "H" and s2[1] == "L" and s1[2]:
+            contracciones.append(((s1[2] - s2[2]) / s1[2] * 100, s1[0], s2[0]))
+    pivote = float(tope[2])
+    precio = float(sub["Close"].iloc[-1])
+    dist = (precio / pivote - 1) * 100
+    # Cadena final de contracciones decrecientes (desde la ultima para atras).
+    n = 1 if contracciones else 0
+    for k in range(len(contracciones) - 1, 0, -1):
+        if contracciones[k][0] <= contracciones[k - 1][0] * 1.1:
+            n += 1
+        else:
+            break
+    vol_decreciente = False
+    if len(contracciones) >= 2:
+        _, h1, l1 = contracciones[-1]
+        _, h0, l0 = contracciones[-2]
+        v_ult, v_prev = vol[h1 : l1 + 1].mean(), vol[h0 : l0 + 1].mean()
+        vol_decreciente = bool(v_prev > 0 and v_ult < v_prev)
+    ultima = contracciones[-1][0] if contracciones else None
+    detectado = bool(n >= 2 and ultima is not None and ultima <= 12 and -10 <= dist <= 2)
+    score = 0.0
+    if detectado:
+        score = {2: 50, 3: 70}.get(n, 85)
+        score += lineal(ultima, 12, 3, 0, 10)  # mas apretada, mas puntos
+        score += lineal(dist, -10, -2, 0, 5)  # mas cerca del pivote, mas puntos
+        score += 5 if vol_decreciente else 0
+        score = min(100.0, score)
     return {
-        "score": num(p_high + p_low + p_breakout, 1),
-        "distance_from_52w_high": num(dist_high, 2),
-        "percentage_above_52w_low": num(pct_above_low, 2),
-        "recent_52w_high": nuevo_maximo_reciente,
-    }
-
-
-def ws_calcular_volatility(closes):
-    """Pilar D (15 pts): volatilidad realizada actual (20 ruedas, anualizada)
-    vs. la mediana de esa misma metrica en el ultimo anio — no es "mucha o
-    poca" volatilidad en absoluto, es relativa a la propia historia reciente
-    del activo."""
-    ret = closes.pct_change().dropna()
-    if len(ret) < WS_VENTANA_VOL_HIST + 20:
-        return None
-    vol_movil_20 = ret.rolling(20).std() * math.sqrt(252) * 100
-    current_volatility = vol_movil_20.iloc[-1]
-    historical_volatility = vol_movil_20.tail(WS_VENTANA_VOL_HIST).median()
-    if pd.isna(current_volatility) or pd.isna(historical_volatility) or not historical_volatility:
-        return None
-    ratio = current_volatility / historical_volatility
-
-    if ratio <= 0.60:
-        score = 15
-    elif ratio <= 0.70:
-        score = 14
-    elif ratio <= 0.80:
-        score = 12
-    elif ratio <= 0.90:
-        score = 9
-    elif ratio <= 1.00:
-        score = 6
-    elif ratio <= 1.20:
-        score = 3
-    else:
-        score = 0
-
-    return {
+        "detectado": detectado,
         "score": num(score, 1),
-        "current_volatility": num(current_volatility, 1),
-        "historical_volatility": num(historical_volatility, 1),
-        "volatility_ratio": num(ratio, 2),
+        "contracciones": int(n),
+        "dist_pivote_pct": num(dist, 2),
+        "pivote": num(pivote, 2),
+        "vol_decreciente": vol_decreciente,
+        "profundidades": [num(c[0], 1) for c in contracciones[-4:]],
     }
 
 
-def ws_calcular_gates(trend, rs, momentum, volatility):
-    """Criterios rapidos independientes del score — no suman puntos, son
-    filtros. 'count' y los 4 principales (rs80/ema200/sma50/above25_from_low)
-    quedan expuestos para los filtros de la UI."""
-    gates = {
-        "rs80": bool(rs is not None and rs >= 80),
-        "ema200": bool(trend and trend["price_above_ema200"]),
-        "sma50": bool(trend and trend["price_above_sma50"]),
-        "above25_from_low": bool(
-            momentum and momentum["percentage_above_52w_low"] is not None and momentum["percentage_above_52w_low"] >= 25
-        ),
-        "vol_below_08": bool(volatility and volatility["volatility_ratio"] is not None and volatility["volatility_ratio"] < 0.80),
-        "sma50_rising": bool(trend and trend["sma50_rising"]),
-        "ema200_rising": bool(trend and trend["ema200_rising"]),
+def ws_base_y_pivote(df):
+    """Base = consolidacion desde el pivote (maximo mas alto de las ultimas
+    ~55 semanas). Si ese maximo es de las ultimas 3 ruedas (esta rompiendo o
+    en nuevo maximo) se mide la base que ACABA de terminar: desde el maximo
+    previo a esas ruedas hasta la ruptura."""
+    sub = df.tail(WS_VENTANA_BASE)
+    high, low = sub["High"].values, sub["Low"].values
+    n = len(sub)
+    if n < 30:
+        return None
+    j = int(np.argmax(high))
+    ruptura = j >= n - 3
+    if ruptura:
+        j = int(np.argmax(high[: n - 3]))
+        fin = n - 1
+        # la base termina en la primera rueda que cerro arriba del pivote
+        cierres = sub["Close"].values
+        for k in range(j + 1, n):
+            if cierres[k] > high[j]:
+                fin = k
+                break
+    else:
+        fin = n - 1
+    pivote = float(high[j])
+    minimo = float(low[j : fin + 1].min())
+    precio = float(sub["Close"].iloc[-1])
+    posicion = (precio - minimo) / (pivote - minimo) * 100 if pivote > minimo else None
+    return {
+        "pivote": pivote,
+        "minimo": minimo,
+        "semanas": (fin - j) / 5,
+        "posicion_pct": posicion,
+        "ruptura": bool(ruptura),
     }
-    gates["count"] = sum(1 for k, v in gates.items() if v)
-    principales = ("rs80", "ema200", "sma50", "above25_from_low")
-    gates["all_main_gates_passed"] = all(gates[g] for g in principales)
-    return gates
+
+
+def _obv(close, volume):
+    return (np.sign(close.diff().fillna(0)) * volume.fillna(0)).cumsum()
+
+
+def ws_penalizaciones(df, ind, fin):
+    """Banderas con puntos negativos (y el 💣, positivo sin puntos). 'fin' =
+    posicion de la ultima rueda CERRADA (-2 si la corrida cae con el
+    mercado abierto), igual que vol_ratio: las reglas de volumen no se miden
+    sobre una vela parcial."""
+    c, o, h, l, v = (df[k] for k in ("Close", "Open", "High", "Low", "Volume"))
+    v = v.fillna(0)
+    precio, high_52w, atr, atr_pct, rsi = ind["precio"], ind["high_52w"], ind["atr"], ind["atr_pct"], ind["rsi"]
+    cerca_max = lambda tol: bool(high_52w and precio >= high_52w * (1 - tol))  # noqa: E731
+    flags = []
+
+    def agregar(emoji, clave, pts, detalle):
+        flags.append({"emoji": emoji, "clave": clave, "pts": pts, "detalle": detalle})
+
+    # 🎈 Sobreextension
+    d50 = ind["dist_sma50_pct"]
+    ext_atr = d50 / atr_pct if _es_valido(d50) and _es_valido(atr_pct) and atr_pct else None
+    sobre = (ext_atr is not None and ext_atr > 7) or (ext_atr is None and _es_valido(d50) and d50 > 25)
+    if sobre or (_es_valido(rsi) and rsi > 80):
+        motivo = f"{ext_atr:.1f} ATR sobre la SMA50" if ext_atr is not None else f"{d50:.1f}% sobre la SMA50"
+        agregar("🎈", "sobreextension", -6, f"Sobreextendida: {motivo}, RSI {rsi:.0f} (umbral > 7 ATR o RSI > 80)"
+                if _es_valido(rsi) else f"Sobreextendida: {motivo} (umbral > 7 ATR)")
+
+    # Ventanas terminadas en la ultima rueda cerrada.
+    corte = len(df) + fin + 1
+    cc, oo, hh, ll, vv = (s.iloc[:corte] for s in (c, o, h, l, v))
+    prom20 = float(vv.iloc[-21:-1].mean()) if len(vv) >= 21 else None
+
+    # 🩸 Distribucion activa
+    if cerca_max(0.05) and len(cc) >= 8:
+        ult_c, ult_o, ult_v = cc.tail(8), oo.tail(8), vv.tail(8)
+        rojas = ult_c < ult_o
+        vol_rojo, vol_verde = float(ult_v[rojas].sum()), float(ult_v[~rojas].sum())
+        if int(rojas.sum()) >= 6 and vol_rojo > 0 and vol_verde < 0.8 * vol_rojo:
+            agregar("🩸", "distribucion", -15,
+                    f"Distribución: {int(rojas.sum())}/8 velas rojas cerca del máximo 52s, volumen verde "
+                    f"{vol_verde / vol_rojo * 100:.0f}% del rojo (umbral ≥6 rojas y < 80%)")
+
+    # 💥 Reversion con volumen
+    if len(cc) >= 21 and prom20:
+        var = (cc.iloc[-1] / cc.iloc[-2] - 1) * 100
+        rv = float(vv.iloc[-1]) / prom20
+        if var < -3 and rv > 1.5:
+            agregar("💥", "reversion_volumen", -8,
+                    f"Reversión con volumen: {var:.1f}% con {rv:.1f}× el volumen promedio de 20 ruedas "
+                    f"(umbral < −3% y > 1,5×)")
+
+    # ⛔ Breakout fallido: cerro arriba del maximo previo de 52s hace 6-15
+    # ruedas y hoy esta de nuevo abajo de ese nivel.
+    max_prev = hh.rolling(252, min_periods=60).max().shift(1)
+    for k in range(6, 16):
+        if len(cc) < k + 2:
+            break
+        d = len(cc) - 1 - k
+        niv, niv_ant = max_prev.iloc[d], max_prev.iloc[d - 1]
+        if _es_valido(niv) and _es_valido(niv_ant) and cc.iloc[d] > niv and cc.iloc[d - 1] <= niv_ant and precio < niv:
+            agregar("⛔", "breakout_fallido", -10,
+                    f"Breakout fallido: rompió {niv:.2f} hace {k} ruedas y hoy cierra abajo ({precio:.2f})")
+            break
+
+    # Agotamiento (tope −14 entre los tres). Divergencias: los dos ultimos
+    # swing highs de cierre (maximo local de ±5 ruedas en las ultimas 90),
+    # el mas reciente dentro de las ultimas 20 ruedas, mas alto que el
+    # anterior, y con el precio todavia a <= 5% del maximo de 52s.
+    agot = []
+    if cerca_max(0.05) and len(cc) >= 100:
+        tramo = cc.tail(100).reset_index(drop=True)
+        rsi_t = rsi_serie(cc, 14).tail(100).reset_index(drop=True)
+        obv_t = _obv(cc, vv).tail(100).reset_index(drop=True)
+        _, altos = _pivots(tramo, 5)
+        if len(altos) >= 2:
+            i_p, i_r = altos[-2], altos[-1]
+            if len(tramo) - 1 - i_r <= 20 and tramo.iloc[i_r] > tramo.iloc[i_p]:
+                r_r, r_p = rsi_t.iloc[i_r], rsi_t.iloc[i_p]
+                if _es_valido(r_r) and _es_valido(r_p) and r_r < r_p - 3:
+                    agot.append(("📉", "divergencia_rsi", -8,
+                                 f"Divergencia RSI: máximo más alto ({tramo.iloc[i_r]:.2f} > {tramo.iloc[i_p]:.2f}) "
+                                 f"con RSI más bajo ({r_r:.0f} vs {r_p:.0f})"))
+                if prom20 and obv_t.iloc[i_r] < obv_t.iloc[i_p] - prom20:
+                    agot.append(("🪫", "divergencia_obv", -4,
+                                 f"Divergencia OBV: máximo más alto de precio con OBV más bajo "
+                                 f"({(obv_t.iloc[i_p] - obv_t.iloc[i_r]) / prom20:.1f} días de volumen menos)"))
+    if cerca_max(0.03) and len(cc) >= 26 and _es_valido(atr) and atr:
+        v5 = float(vv.tail(5).mean())
+        v_base = float(vv.iloc[-25:-5].mean())
+        avance = (cc.iloc[-1] - cc.iloc[-6]) / atr
+        if v_base and v5 > 1.5 * v_base and avance < 0.5:
+            agot.append(("🐘", "churning", -4,
+                         f"Churning en máximos: volumen de 5 ruedas {v5 / v_base:.1f}× el promedio con avance neto "
+                         f"de {avance:.2f} ATR (umbral > 1,5× y < 0,5 ATR)"))
+    total_agot = sum(a[2] for a in agot)
+    for a in agot:
+        agregar(*a)
+
+    # ⚠️ Vela de rechazo en maximos (ultimas 10 ruedas): mecha superior
+    # >= 2× cuerpo y >= 50% del rango, cerca del maximo 52s, volumen arriba
+    # del promedio. Si es la ultima rueda queda "sin confirmar" (aviso, sin
+    # cap); si la rueda siguiente cierra roja queda "confirmada" (cap 70)
+    # hasta 2 verdes seguidas o un maximo nuevo sobre esa vela.
+    rechazo_confirmado = False
+    max_movil = cc.rolling(252, min_periods=60).max()
+    vol_prom = vv.rolling(20).mean().shift(1)
+    for k in range(0, min(10, len(cc) - 21)):
+        r = len(cc) - 1 - k
+        rango = hh.iloc[r] - ll.iloc[r]
+        cuerpo = abs(cc.iloc[r] - oo.iloc[r])
+        mecha = hh.iloc[r] - max(cc.iloc[r], oo.iloc[r])
+        if not (rango > 0 and mecha >= 2 * cuerpo and mecha >= 0.5 * rango):
+            continue
+        if not (_es_valido(max_movil.iloc[r]) and hh.iloc[r] >= max_movil.iloc[r] * 0.97):
+            continue
+        if not (_es_valido(vol_prom.iloc[r]) and vv.iloc[r] > vol_prom.iloc[r]):
+            continue
+        estado = "sin confirmar"
+        if r + 1 < len(cc) and cc.iloc[r + 1] >= oo.iloc[r + 1]:
+            estado = "invalidada"  # la rueda siguiente no cerro roja: no se confirmo
+        elif r + 1 < len(cc):
+            estado = "confirmada"
+            verdes = 0
+            for q in range(r + 2, len(cc)):
+                verdes = verdes + 1 if cc.iloc[q] > oo.iloc[q] else 0
+                if verdes >= 2 or hh.iloc[q] > hh.iloc[r]:
+                    estado = "invalidada"
+                    break
+        if estado != "invalidada":
+            rechazo_confirmado = estado == "confirmada"
+            agregar("⚠️", "vela_rechazo", 0,
+                    f"Vela de rechazo en máximos {'en la última rueda' if k == 0 else f'hace {k} rueda(s)'} ({estado})"
+                    + (": score topeado en 70" if rechazo_confirmado else ""))
+        break
+
+    # 💣 Bomba: rompio el maximo previo de 52s con volumen >= 1,5× y cierre
+    # en el 30% superior del rango del dia.
+    if len(cc) >= 21 and prom20:
+        rango = hh.iloc[-1] - ll.iloc[-1]
+        niv = max_prev.iloc[-1]
+        if (_es_valido(niv) and cc.iloc[-1] > niv and float(vv.iloc[-1]) >= 1.5 * prom20
+                and rango > 0 and (cc.iloc[-1] - ll.iloc[-1]) / rango >= 0.7):
+            agregar("💣", "bomba", 0,
+                    f"Bomba: rompió el máximo previo {niv:.2f} con {float(vv.iloc[-1]) / prom20:.1f}× volumen y "
+                    "cierre en el 30% superior del rango")
+
+    pts = sum(f["pts"] for f in flags) - total_agot + max(WS_TOPE_AGOTAMIENTO, total_agot)
+    return {"pts": num(pts, 1), "flags": flags}, rechazo_confirmado
+
+
+def ws_calcular_ticker(hist, bench_closes, en_usd, fin_vol, vol_1y):
+    """Primera pasada: pilares A, C y D, penalizaciones, stage y el
+    rendimiento relativo crudo para el B. None si no hay historia suficiente
+    (EMA200 + su pendiente)."""
+    df = hist[["Open", "High", "Low", "Close", "Volume"]].copy()
+    df = df[df["Close"].notna()]
+    df[["Open", "High", "Low"]] = df[["Open", "High", "Low"]].apply(lambda s: s.fillna(df["Close"]))
+    c = df["Close"]
+    if len(c) < WS_MIN_RUEDAS:
+        return None
+    precio = float(c.iloc[-1])
+    sma50 = float(c.rolling(50).mean().iloc[-1])
+    ema200_s = c.ewm(span=200, adjust=False).mean()
+    ema200 = float(ema200_s.iloc[-1])
+    atr_s = atr_serie(df["High"], df["Low"], c, 14)
+    atr = float(atr_s.iloc[-1]) if _es_valido(float(atr_s.iloc[-1])) else None
+    atr_pct = atr / precio * 100 if atr and precio else None
+    rsi = rsi_wilder(c.values, 14)
+    ventana_52w = c.tail(252)
+    high_52w, low_52w = float(ventana_52w.max()), float(ventana_52w.min())
+
+    dist50 = (precio / sma50 - 1) * 100
+    dist200 = (precio / ema200 - 1) * 100
+    # Pendiente de la EMA200: variacion diaria promedio (%) en las ultimas
+    # 20 ruedas (0,15 ≈ +3% en 20 ruedas).
+    pendiente = float(ema200_s.pct_change().tail(WS_RUEDAS_PENDIENTE).mean() * 100)
+
+    # --- Pilar A · Tendencia (20) ---
+    if atr_pct:
+        d50_atr, d200_atr = dist50 / atr_pct, dist200 / atr_pct
+        pts50 = tri(d50_atr, -5, -2, 4, 8) * 10
+        pts200 = tri(d200_atr, 0, 0, 8, 14) * 5.8333
+    else:
+        d50_atr = d200_atr = None
+        exceso = max(0.0, -5 - dist50, dist50 - 20)
+        pts50 = max(0.0, 10 - exceso)
+        pts200 = tri(dist200, 0, 10, 50, 70) * 5.8333
+    pts_pend = lineal(pendiente, 0, 0.15, 0, 4.1667)
+    tendencia = {
+        "pts": num(min(pts50 + pts200 + pts_pend, 20), 1),
+        "max": 20,
+        "sma50": num(sma50, 2),
+        "ema200": num(ema200, 2),
+        "atr_pct": num(atr_pct, 2),
+        "dist_sma50_pct": num(dist50, 2),
+        "dist_sma50_atr": num(d50_atr, 2),
+        "dist_ema200_pct": num(dist200, 2),
+        "dist_ema200_atr": num(d200_atr, 2),
+        "pendiente_ema200": num(pendiente, 3),
+        "pts_sma50": num(pts50, 2),
+        "pts_ema200": num(pts200, 2),
+        "pts_pendiente": num(pts_pend, 2),
+    }
+
+    # --- Stage de Weinstein ---
+    if dist200 > 0 and pendiente > 0:
+        stage = {"n": 2, "label": "Avance confirmado", "tip": "Precio sobre la EMA200 y EMA200 subiendo"}
+    elif dist200 > 0:
+        stage = {"n": 3, "label": "Posible techo", "tip": "Precio sobre la EMA200 pero la EMA200 ya no sube"}
+    elif pendiente > 0:
+        stage = {"n": 1, "label": "Base / acumulación", "tip": "Precio bajo la EMA200 con la EMA200 todavía subiendo"}
+    else:
+        stage = {"n": 4, "label": "Declive", "tip": "Precio bajo la EMA200 y EMA200 bajando"}
+
+    # --- Pilar B (crudo): rendimiento relativo + linea de FR vs su SMA50 ---
+    rs_crudo = [None] * len(WS_DESFASES_RS)
+    fr_sobre_sma50 = None
+    if en_usd:
+        conjunto = _alinear_con_bench(c, bench_closes)
+        rs_crudo = [ws_rendimiento_relativo(conjunto, d) for d in WS_DESFASES_RS]
+        if conjunto is not None and len(conjunto) >= 50:
+            linea = conjunto["t"] / conjunto["b"]
+            fr_sobre_sma50 = bool(linea.iloc[-1] > linea.rolling(50).mean().iloc[-1])
+
+    # --- Pilar C · Contraccion (35) ---
+    ret = c.pct_change()
+    vol20 = ret.rolling(WS_VENTANA_VOL).std()
+    ratio_s = vol20 / vol20.rolling(WS_VENTANA_VOL_HIST, min_periods=WS_VENTANA_VOL_HIST).median()
+    ratio_min7 = ratio_s.tail(WS_MEMORIA_CONTRACCION).min()
+    ratio_min7 = float(ratio_min7) if _es_valido(float(ratio_min7)) else None
+    neto = (precio - float(c.iloc[-6])) / atr if atr else None
+    factor = 1 - 0.5 * min(1.0, max(0.0, (neto - 0.8) / 1.7)) if neto is not None else 1.0
+    pts_contr = tri(ratio_min7, 0, 0, 0.70, 1.05) * 15.25 * factor if ratio_min7 is not None else None
+    pts_rsi = tri(rsi, 30, 45, 60, 70) * 11.25
+    vcp = ws_detectar_vcp(df, atr_pct)
+    pts_vcp = lineal(vcp["score"], 40, 100, 0, 6.8) + (1.7 if vcp["detectado"] and vcp["vol_decreciente"] else 0)
+    if pts_contr is not None:
+        base_c = min(pts_contr + pts_rsi + pts_vcp, 35)
+    else:
+        base_c = min((pts_rsi + pts_vcp) * 35 / 19.75, 35)
+    velocidad = ((precio / float(c.tail(15).min()) - 1) * 100) / atr_pct if atr_pct else None
+    resta = lineal(velocidad, 5, 11, 0, 8)
+    contraccion = {
+        "pts": num(max(0.0, base_c - resta), 1),
+        "max": 35,
+        "ratio_min7": num(ratio_min7, 2),
+        "ratio_hoy": num(ratio_s.iloc[-1], 2),
+        "avance_neto_atr": num(neto, 2),
+        "factor_direccion": num(factor, 3),
+        "rsi": num(rsi, 1),
+        "pts_contraccion": num(pts_contr, 2),
+        "pts_rsi": num(pts_rsi, 2),
+        "pts_vcp": num(pts_vcp, 2),
+        "velocidad_atr": num(velocidad, 2),
+        "resta_verticalidad": num(resta, 2),
+        "vcp": vcp,
+    }
+
+    # --- Pilar D · Gatillo (20) ---
+    dist_low = (precio / low_52w - 1) * 100 if low_52w else None
+    ext = dist_low / vol_1y if _es_valido(dist_low) and vol_1y else None
+    pts_ext = tri(ext, 0.3, 0.5, 1.8, 3.2) * 5 if ext is not None else tri(dist_low, 25, 35, 110, 220) * 5
+    base = ws_base_y_pivote(df)
+    pts_sem = tri(base["semanas"], 1, 7, 26, 55) * 10 if base else 0.0
+    pts_pos = lineal(base["posicion_pct"], 20, 50, 0, 5) if base else 0.0
+    total_d = min(pts_ext + pts_sem + pts_pos, 20)
+    piso = total_d < 10
+    gatillo = {
+        "pts": num(0.0 if piso else total_d, 1),
+        "max": 20,
+        "dist_min52_pct": num(dist_low, 2),
+        "vol_1y": num(vol_1y, 1),
+        "ext": num(ext, 2),
+        "pivote": num(base["pivote"], 2) if base else None,
+        "base_minimo": num(base["minimo"], 2) if base else None,
+        "base_semanas": num(base["semanas"], 1) if base else None,
+        "base_posicion_pct": num(base["posicion_pct"], 1) if base else None,
+        "base_ruptura": base["ruptura"] if base else False,
+        "pts_ext": num(pts_ext, 2),
+        "pts_semanas": num(pts_sem, 2),
+        "pts_posicion": num(pts_pos, 2),
+        "suma_bruta": num(total_d, 2),
+        "piso_aplicado": piso,
+    }
+
+    ind = {"precio": precio, "high_52w": high_52w, "atr": atr, "atr_pct": atr_pct, "rsi": rsi, "dist_sma50_pct": dist50}
+    penalizacion, rechazo_confirmado = ws_penalizaciones(df, ind, fin_vol)
+
+    return {
+        "precio": num(precio, 2),
+        "dist_max52_pct": num((precio / high_52w - 1) * 100, 2) if high_52w else None,
+        "precio_sobre_ema200": bool(precio > ema200),
+        "sin_52w": not (high_52w and low_52w),
+        "rechazo_confirmado": rechazo_confirmado,
+        "stage": stage,
+        "tendencia": tendencia,
+        "contraccion": contraccion,
+        "gatillo": gatillo,
+        "penalizacion": penalizacion,
+        "rs_crudo": rs_crudo,
+        "fr_sobre_sma50": fr_sobre_sma50,
+    }
+
+
+def _percentil(valor, universo):
+    if valor is None or not universo:
+        return None
+    return round(sum(1 for v in universo if v <= valor) / len(universo) * 100, 1)
+
+
+def ws_pilar_fuerza(rs, rs_sem, rs_mes, fr_sobre_sma50):
+    """Pilar B (25): max(via nivel, via delta) + 5 si la linea de FR esta
+    sobre su SMA50."""
+    fr_pts = 5 if fr_sobre_sma50 else 0
+    if rs is None:
+        return {"pts": num(min(fr_pts * 5, 25), 1), "via_nivel": None, "via_delta": None, "fr_pts": fr_pts}
+    via_nivel = lineal(rs, 45, 75, 0, 20)
+    via_delta = 0.0
+    if rs_sem is not None and rs_mes is not None and (rs - rs_sem) > -5:
+        via_delta = lineal(rs - max(rs_mes, 40), 0, 20, 0, 20)
+    return {
+        "pts": num(min(max(via_nivel, via_delta) + fr_pts, 25), 1),
+        "via_nivel": num(via_nivel, 2),
+        "via_delta": num(via_delta, 2),
+        "fr_pts": fr_pts,
+    }
 
 
 def calcular_warren_score(warren_datos):
-    """Segunda pasada: convierte el retorno relativo crudo de cada ticker en
-    percentil (0-100) dentro del universo completo, arma el score total
-    (A+B+C+D, siempre exacto) y los gates. Si falta cualquier pilar, el total
-    queda en None (no se inventa un 0) y 'datos_suficientes' en False."""
-    validos_rr = [w["relative_return"] for w in warren_datos if w["relative_return"] is not None]
+    """Segunda pasada: percentil de RS (hoy, hace 5 y hace 21 ruedas) dentro
+    del universo USD, pilar B, total y caps. Tickers no-USD o sin historia
+    suficiente: total None y datos_suficientes False (no se inventa un 0)."""
+    universos = [
+        [w["calc"]["rs_crudo"][k] for w in warren_datos if w["calc"] and w["calc"]["rs_crudo"][k] is not None]
+        for k in range(len(WS_DESFASES_RS))
+    ]
     salida = []
     for w in warren_datos:
-        rr = w["relative_return"]
-        rs = None
-        rs_score = None
-        if rr is not None and validos_rr:
-            rs = round((sum(1 for v in validos_rr if v <= rr) / len(validos_rr)) * 100, 1)
-            rs_score = ws_rs_score_desde_percentil(rs)
-
-        trend, momentum, volatility = w["trend"], w["momentum"], w["volatility"]
-        partes = [trend["score"] if trend else None, rs_score, momentum["score"] if momentum else None, volatility["score"] if volatility else None]
-        datos_suficientes = all(p is not None for p in partes)
-        total = num(min(100.0, max(0.0, sum(partes))), 1) if datos_suficientes else None
-
-        relative_strength = (
-            {
-                "score": rs_score,
-                        "rs": rs,
-                "relative_performance": num(rr * 100, 2),
+        calc = w["calc"]
+        fila = {"ticker": w["ticker"], "nombre": w["nombre"], "sector": w["sector"]}
+        if not calc:
+            salida.append({**fila, "total_score": None, "datos_suficientes": False, "motivo": "historia insuficiente"})
+            continue
+        fuerza = None
+        if w["en_usd"]:
+            rs, rs_sem, rs_mes = (_percentil(calc["rs_crudo"][k], universos[k]) for k in range(len(WS_DESFASES_RS)))
+            b = ws_pilar_fuerza(rs, rs_sem, rs_mes, calc["fr_sobre_sma50"])
+            fuerza = {
+                "pts": b["pts"],
+                "max": 25,
+                "rs": rs,
+                "rs_semana_ant": rs_sem,
+                "rs_mes_ant": rs_mes,
+                "rendimiento_relativo_pct": num(calc["rs_crudo"][0] * 100, 2) if calc["rs_crudo"][0] is not None else None,
+                "via_nivel": b["via_nivel"],
+                "via_delta": b["via_delta"],
+                "fr_sobre_sma50": calc["fr_sobre_sma50"],
+                "fr_pts": b["fr_pts"],
             }
-            if rr is not None
-            else None
-        )
-
+        pilares = {"tendencia": calc["tendencia"], "fuerza": fuerza, "contraccion": calc["contraccion"], "gatillo": calc["gatillo"]}
+        fallas = [] if calc["precio_sobre_ema200"] else ["Precio ≤ EMA200"]
+        caps = []
+        total = None
+        if fuerza is not None:
+            bruto = sum(p["pts"] for p in pilares.values()) + calc["penalizacion"]["pts"]
+            total = round(min(100.0, max(0.0, bruto)), 1)
+            if fallas and total > WS_CAP_GATE:
+                caps.append("gate_ema200")
+                total = float(WS_CAP_GATE)
+            if calc["sin_52w"] and total > WS_CAP_GATE:
+                caps.append("sin_52w")
+                total = float(WS_CAP_GATE)
+            if calc["rechazo_confirmado"] and total > WS_CAP_RECHAZO:
+                caps.append("rechazo_confirmado")
+                total = float(WS_CAP_RECHAZO)
         salida.append(
             {
-                "ticker": w["ticker"],
-                "nombre": w["nombre"],
+                **fila,
+                "precio": calc["precio"],
+                "dist_max52_pct": calc["dist_max52_pct"],
                 "total_score": total,
-                "datos_suficientes": datos_suficientes,
-                "trend": trend,
-                "relative_strength": relative_strength,
-                "momentum": momentum,
-                "volatility": volatility,
-                "gates": ws_calcular_gates(trend, rs, momentum, volatility),
+                "datos_suficientes": total is not None,
+                "motivo": None if total is not None else "no cotiza en USD (sin RS vs SPY)",
+                "stage": calc["stage"],
+                "gates": {"fallas": fallas, "ok": not fallas},
+                "pilares": pilares,
+                "penalizacion": calc["penalizacion"],
+                "caps": caps,
             }
         )
     return salida
@@ -2036,17 +2361,24 @@ def procesar_ticker(fila, sym, hist, info_datos, ctx):
     filas["scanner_setups"] = {**base, **calcular_setup_scanner(hist)}
     filas["mensual"] = precios_mensuales
 
-    # Warren Score: pilares A/C/D por ticker; el B (Fuerza Relativa) necesita
-    # el percentil de TODO el universo y se arma despues del loop. Solo
-    # tickers en USD entran al percentil de RS vs SPY (un CEDEAR en pesos
-    # "le gana" a SPY por la devaluacion, no por fuerza relativa real).
+    # Warren Score: pilares A/C/D + penalizaciones por ticker; el B (Fuerza
+    # Relativa) necesita el percentil de TODO el universo y se arma despues
+    # del loop. Solo tickers en USD entran al percentil de RS vs SPY (un
+    # CEDEAR en pesos "le gana" a SPY por la devaluacion, no por fuerza
+    # relativa real).
+    # Un dato raro en el Warren Score no tiene que mandar el ticker entero
+    # al camino de arrastre: queda sin score y el resto se publica igual.
+    try:
+        calc_ws = ws_calcular_ticker(hist, ctx["bench_closes"], en_usd, fin, stats_mercado.get("volatilidad_1y"))
+    except Exception as e:  # noqa: BLE001
+        print(f"  ! {sym}: Warren Score sin calcular ({type(e).__name__}: {e})")
+        calc_ws = None
     filas["warren"] = {
         "ticker": sym,
         "nombre": nombre,
-        "trend": ws_calcular_trend(closes),
-        "relative_return": ws_calcular_relative_return(closes, ctx["bench_closes"]) if en_usd else None,
-        "momentum": ws_calcular_momentum(closes, high_52w, low_52w, precio),
-        "volatility": ws_calcular_volatility(closes),
+        "sector": sector or ("ETF" if es_fondo else industria),
+        "en_usd": en_usd,
+        "calc": calc_ws,
     }
     return filas
 

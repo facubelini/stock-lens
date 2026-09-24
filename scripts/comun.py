@@ -108,6 +108,46 @@ def rsi_wilder(closes, period=14):
     return float(serie.iloc[-1])
 
 
+def atr_serie(high, low, close, periodo=14):
+    """ATR de Wilder sobre la serie completa: true range = max(H-L, |H-C
+    ant.|, |L-C ant.|) suavizado con alpha=1/n (mismo EWM que el RSI). NaN
+    mientras no hay 'periodo' ruedas."""
+    cierre_ant = close.shift(1)
+    tr = pd.concat([high - low, (high - cierre_ant).abs(), (low - cierre_ant).abs()], axis=1).max(axis=1)
+    return tr.ewm(alpha=1 / periodo, adjust=False, min_periods=periodo).mean()
+
+
+def _es_num(x):
+    return x is not None and not isinstance(x, bool) and not (isinstance(x, float) and math.isnan(x))
+
+
+def tri(x, a, b, c, d):
+    """Pertenencia trapezoidal: 0 hasta 'a', sube lineal hasta 1 en 'b',
+    vale 1 entre 'b' y 'c', baja lineal hasta 0 en 'd'. Con a == b el lado
+    izquierdo es plano (1 desde 'a'); con c == d, el derecho (1 hasta 'c').
+    Dato faltante = 0 (no suma)."""
+    if not _es_num(x):
+        return 0.0
+    if x < a:
+        return 0.0
+    if x < b:
+        return (x - a) / (b - a)
+    if x <= c:
+        return 1.0
+    if x < d:
+        return (d - x) / (d - c)
+    return 0.0
+
+
+def lineal(x, x0, x1, y0, y1):
+    """Mapa lineal x0->y0, x1->y1, recortado al tramo [y0, y1] (sirve
+    tambien con x0 > x1). Dato faltante = y0."""
+    if not _es_num(x) or x1 == x0:
+        return float(y0)
+    t = min(1.0, max(0.0, (x - x0) / (x1 - x0)))
+    return y0 + t * (y1 - y0)
+
+
 # ---------------------------------------------------------------------------
 # Textos / tickers
 # ---------------------------------------------------------------------------

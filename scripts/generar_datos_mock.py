@@ -21,7 +21,8 @@ import pandas as pd
 
 from comparables_universo import INDUSTRIA_COMPARABLES
 from comun import CLAVES_BENCH, DIR_DATOS_PUBLICOS, TZ, escribir_json, normalizar_industria as _normalizar_industria
-from generar_datos import calcular_screener, calcular_setup_scanner, leer_tickers
+from pipeline.tecnico import calcular_screener, calcular_setup_scanner
+from pipeline.universo import leer_tickers
 
 DIR_MOCK_DEFECTO = Path(tempfile.gettempdir()) / "stock-lens-mock"
 

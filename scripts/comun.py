@@ -121,6 +121,11 @@ def _es_num(x):
     return x is not None and not isinstance(x, bool) and not (isinstance(x, float) and math.isnan(x))
 
 
+def es_valido(x):
+    """True si x no es None ni un float NaN/inf (los ints/np.float64 pasan)."""
+    return x is not None and not (isinstance(x, float) and (math.isnan(x) or math.isinf(x)))
+
+
 def tri(x, a, b, c, d):
     """Pertenencia trapezoidal: 0 hasta 'a', sube lineal hasta 1 en 'b',
     vale 1 entre 'b' y 'c', baja lineal hasta 0 en 'd'. Con a == b el lado

@@ -3,7 +3,7 @@ anios de historial, que tan bien predice cada veredicto (COMPRA/CERCA/VENTA/
 EXTENDIDO) un retorno favorable en los dias siguientes, comparado contra el
 retorno "base" (cualquier dia, sin filtrar por veredicto).
 
-Reutiliza las MISMAS constantes y funciones que generar_datos.py (PERFIL_DIARIO,
+Reutiliza las MISMAS constantes y funciones de pipeline/tecnico.py (PERFIL_DIARIO,
 _calcular_asl/_calcular_macd/_calcular_smi, etc.) para que el backtest evalue
 exactamente la misma logica que corre en produccion, no una reimplementacion
 aparte que se pueda desincronizar.
@@ -39,7 +39,9 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from generar_datos import (  # noqa: E402
+from comun import TZ, DIR_DATOS_PUBLICOS, escribir_json, leer_json, moneda_por_sufijo, num, rsi_serie  # noqa: E402
+from pipeline.descarga import descargar_historicos  # noqa: E402
+from pipeline.tecnico import (  # noqa: E402
     ASL_LEN,
     MACD_SLOW,
     NEAR_FACTOR,
@@ -50,15 +52,11 @@ from generar_datos import (  # noqa: E402
     TOL_ASL,
     TOL_CLAVE,
     TOL_EXTENSION,
-    TZ,
     _calcular_asl,
     _calcular_macd,
     _calcular_smi,
-    descargar_historicos,
-    leer_tickers,
-    num,
 )
-from comun import DIR_DATOS_PUBLICOS, escribir_json, leer_json, moneda_por_sufijo, rsi_serie  # noqa: E402
+from pipeline.universo import leer_tickers  # noqa: E402
 
 HORIZONTES = [5, 10, 20]  # ruedas habiles (~1 semana, ~2 semanas, ~1 mes)
 MINIMO_VELAS = 300

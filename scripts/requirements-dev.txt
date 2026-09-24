@@ -1,0 +1,5 @@
+# Dependencias de los tests (pytest -q desde la raiz del repo). Encima de
+# requirements.txt, con el mismo criterio: versiones exactas.
+-r requirements.txt
+pytest==9.1.1
+time-machine==3.5.1

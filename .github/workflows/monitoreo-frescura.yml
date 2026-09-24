@@ -1,0 +1,105 @@
+name: Monitoreo de frescura de datos
+
+# Chequea cada pocas horas en dias habiles que meta.json (rama `datos`) no
+# tenga mas de ~26h (mismo umbral que el banner de la app, ver
+# src/lib/frescura.js): si la corrida cae en un fin de semana el umbral sube
+# a 74h (mercado cerrado, no es una falla que no haya corridas nuevas). Si
+# esta desactualizado abre/comenta un issue "⚠️ Datos desactualizados"
+# labeled monitoreo y manda Telegram (si estan los secrets); si esta fresco y
+# habia un issue abierto, lo cierra.
+
+on:
+  workflow_dispatch:
+
+  # Cada 4 horas en dias habiles (UTC; alcanza para pescar un umbral de 26h
+  # sin ruido). Corre igual el fin de semana: solo compara contra el umbral
+  # mas laxo (74h), no hace falta restringir el 'schedule' a Lun-Vie.
+  schedule:
+    - cron: '11 */4 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  chequeo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      TITULO: "⚠️ Datos desactualizados"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Traer solo meta.json de la rama datos
+        run: |
+          if ! git fetch --depth=1 origin datos; then
+            echo "::error::La rama 'datos' todavía no existe (falta migrar, ver README)."
+            exit 1
+          fi
+          git archive origin/datos public/data/meta.json | tar -x
+
+      - name: Setup Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Instalar requests (Telegram)
+        run: pip install requests
+
+      - name: Chequear frescura
+        id: chequeo
+        continue-on-error: true
+        run: |
+          set +e   # el chequeo puede salir 1 (desactualizado): no es una falla del step
+          salida="$(python scripts/monitoreo/chequeo_frescura.py public/data/meta.json)"
+          codigo=$?
+          set -e
+          echo "$salida"
+          {
+            echo "detalle<<EOF_DETALLE"
+            echo "$salida"
+            echo "EOF_DETALLE"
+          } >> "$GITHUB_OUTPUT"
+          exit $codigo
+
+      - name: Buscar issue abierto
+        id: buscar
+        run: |
+          id=$(gh issue list --repo "$REPO" --label monitoreo --state open --search "in:title \"$TITULO\"" \
+               --json number,title --jq "[.[] | select(.title == \"$TITULO\")][0].number // empty")
+          echo "numero=$id" >> "$GITHUB_OUTPUT"
+
+      - name: Abrir o comentar el issue
+        if: ${{ steps.chequeo.outcome == 'failure' }}
+        env:
+          DETALLE: ${{ steps.chequeo.outputs.detalle }}
+        run: |
+          cuerpo="$DETALLE"$'\n\nRevisar los workflows de datos (Actions).'
+          if [ -n "${{ steps.buscar.outputs.numero }}" ]; then
+            gh issue comment "${{ steps.buscar.outputs.numero }}" --repo "$REPO" --body "$cuerpo"
+          else
+            gh issue create --repo "$REPO" --title "$TITULO" --label monitoreo --body "$cuerpo"
+          fi
+
+      - name: Aviso por Telegram
+        if: ${{ steps.chequeo.outcome == 'failure' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          DETALLE: ${{ steps.chequeo.outputs.detalle }}
+        run: |
+          python scripts/monitoreo/aviso_falla.py \
+            --titulo "$TITULO" \
+            --detalle "$DETALLE" \
+            --url "https://facubelini.github.io/stock-lens/"
+
+      - name: Cerrar el issue si ya esta fresco
+        if: ${{ steps.chequeo.outcome == 'success' && steps.buscar.outputs.numero != '' }}
+        run: |
+          gh issue comment "${{ steps.buscar.outputs.numero }}" --repo "$REPO" --body "Se resolvió: los datos ya están frescos."
+          gh issue close "${{ steps.buscar.outputs.numero }}" --repo "$REPO"

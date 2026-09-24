@@ -1,6 +1,6 @@
 // Datos compartidos de la pagina Señales (pages/Senales.jsx) y la ficha del
 // ticker ("También destaca en"). Los calculos viven en
-// scripts/generar_datos.py (sen_contactos_ema / ws_ciclo_vcp /
+// scripts/pipeline/senales.py y vcp.py (sen_contactos_ema / ws_ciclo_vcp /
 // sen_rsi_semanal / construir_senales); aca solo se formatean.
 
 // Paneles de la pagina: el id es el ancla (/senales?panel=<id>&tab=<tab>).

@@ -264,7 +264,9 @@ function useAltseason() {
   return { ...estado, recalcular: () => calcular({ forzar: true }) }
 }
 
-const fmtHoraCorta = (ms) => new Date(ms).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })
+// Sin hourCycle, el CLDR actual de es-AR da reloj de 12 h ("10:30 p. m.").
+const fmtHoraCorta = (ms) =>
+  new Date(ms).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
 const fmtDia = (ms) => new Date(ms).toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', timeZone: 'UTC' })
 const fmtRet = (v) => `${v >= 0 ? '+' : ''}${v.toFixed(1)}%`
 const sinUsdt = (s) => s.replace(/USDT$/, '')

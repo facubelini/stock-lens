@@ -1,0 +1,76 @@
+name: Commitear datos (rama datos)
+description: >
+  Empaqueta public/data/ + data/ (estado) del working tree en UN commit
+  huerfano (sin padre) y lo fuerza a la rama `datos`, sin tocar el checkout
+  de `main` que uso el resto del job (arma el arbol con un indice de git
+  temporal, aparte del indice real). Si el arbol nuevo es identico al de
+  origin/datos no hace nada (una corrida sin cambios no genera push ni
+  deploy). Asume que un paso previo del workflow ya trajo el estado anterior
+  con "git archive origin/datos | tar -x" (ver datos.yml/historico.yml/
+  backtest.yml) y que los scripts corrieron encima de eso: por ESO el arbol
+  se arma con TODO public/data + data, no solo con lo que toco este
+  workflow — sino se perderia lo que escribieron los otros pipelines de
+  datos en corridas anteriores.
+
+  El grupo de concurrency compartido (datos-publicos) evita que dos workflows
+  arranquen a la vez; por eso alcanza con push --force (no hace falta
+  pull --rebase: cada commit a `datos` es una raiz nueva sin padre en comun).
+
+inputs:
+  mensaje:
+    description: Prefijo del mensaje de commit (se le agrega la fecha UTC).
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Armar y pushear el commit huerfano
+      shell: bash
+      env:
+        MENSAJE: ${{ inputs.mensaje }}
+      run: |
+        set -euo pipefail
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+        if [ ! -d public/data ] && [ ! -d data ]; then
+          echo "Ni public/data ni data existen: nada que commitear."
+          exit 0
+        fi
+
+        # Indice temporal (aparte del real de main): git add acá NO toca el
+        # checkout de main ni deja nada "staged" en esa rama.
+        # -f: public/data y data/* estan en .gitignore de main (a proposito:
+        # ya no se versionan ahi) — sin -f, 'git add' los saltearia TAMBIEN
+        # aca y el commit a `datos` saldria casi vacio.
+        INDICE_TMP="$(mktemp)"
+        rm -f "$INDICE_TMP"
+        export GIT_INDEX_FILE="$INDICE_TMP"
+        # Cada path por separado: si uno no existe (ej. corrida vieja sin
+        # data/), un solo 'git add' con ambos pathspecs abortaria entero por
+        # el que falta.
+        if [ -d public/data ]; then git add -f -A -- public/data; fi
+        if [ -d data ]; then git add -f -A -- data; fi
+        ARBOL="$(git write-tree)"
+        unset GIT_INDEX_FILE
+        rm -f "$INDICE_TMP"
+
+        ARBOL_PREVIO="$(git rev-parse --verify -q origin/datos^{tree} || true)"
+        if [ "$ARBOL" = "$ARBOL_PREVIO" ]; then
+          echo "Sin cambios en los datos (mismo árbol que origin/datos): no se commitea."
+          exit 0
+        fi
+
+        COMMIT="$(git commit-tree "$ARBOL" -m "$MENSAJE ($(date -u +'%Y-%m-%d %H:%M UTC'))")"
+        echo "Nuevo commit $COMMIT (árbol $ARBOL, previo ${ARBOL_PREVIO:-ninguno})."
+
+        for intento in 1 2 3; do
+          if git push --force -q origin "$COMMIT:refs/heads/datos"; then
+            echo "Pusheado a datos."
+            exit 0
+          fi
+          echo "Push rechazado/fallido, intento $intento/3..."
+          sleep $((intento * 5))
+        done
+        echo "::error::No se pudo pushear a datos despues de 3 intentos."
+        exit 1

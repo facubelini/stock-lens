@@ -27,9 +27,16 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Si vino por workflow_run, solo deployar si esa corrida realmente commiteo
-  # algo: main tiene que haber avanzado respecto del commit con el que arranco
-  # (head_sha). Una corrida "sin cambios en los datos" no genera deploy.
+  # Si vino por workflow_run de un pipeline de datos, solo deployar si esa
+  # corrida realmente empujo algo nuevo a la rama `datos`. Desde la migracion
+  # a la rama huerfana (ver README, "Rama de datos"), esos workflows YA NO
+  # avanzan `main` (commitean a `datos`, que se pushea SIEMPRE con --force
+  # como un commit fresco sin padre): comparar el sha de main como antes
+  # siempre daria "no cambio nada". En cambio se compara la FECHA del commit
+  # actual de `datos` contra el inicio de la corrida que disparo este deploy:
+  # si es posterior, esa corrida sí empujo (el commit es mas nuevo que su
+  # propio arranque); si es anterior, el commit-datos-rama de esa corrida
+  # comparo arboles y no hizo push (nada cambio) y no hace falta deployar.
   verificar:
     runs-on: ubuntu-latest
     timeout-minutes: 5
@@ -43,24 +50,27 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           EVENTO: ${{ github.event_name }}
-          HEAD_RUN: ${{ github.event.workflow_run.head_sha }}
+          INICIO_CORRIDA: ${{ github.event.workflow_run.run_started_at }}
           CONCLUSION: ${{ github.event.workflow_run.conclusion }}
-          RAMA: ${{ github.event.workflow_run.head_branch }}
         run: |
           if [ "$EVENTO" != "workflow_run" ]; then
             echo "desplegar=true" >> "$GITHUB_OUTPUT"; exit 0
           fi
-          if [ "$CONCLUSION" = "cancelled" ] || [ "$CONCLUSION" = "skipped" ]; then
+          if [ "$CONCLUSION" = "cancelled" ] || [ "$CONCLUSION" = "skipped" ] || [ "$CONCLUSION" = "failure" ]; then
             echo "Corrida $CONCLUSION: no se deploya."
             echo "desplegar=false" >> "$GITHUB_OUTPUT"; exit 0
           fi
-          actual=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${RAMA:-main}" --jq .sha)
-          if [ "$actual" = "$HEAD_RUN" ]; then
-            echo "La corrida no commiteo nada (main sigue en $HEAD_RUN): no se deploya."
-            echo "desplegar=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "main avanzo ($HEAD_RUN -> $actual): se deploya."
+          fecha_datos=$(gh api "repos/${GITHUB_REPOSITORY}/commits/datos" --jq .commit.committer.date 2>/dev/null || echo "")
+          if [ -z "$fecha_datos" ]; then
+            echo "La rama 'datos' todavia no existe: no se deploya (falta migrar, ver README)."
+            echo "desplegar=false" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if [[ "$fecha_datos" > "$INICIO_CORRIDA" ]]; then
+            echo "datos avanzo (commit $fecha_datos es posterior al arranque $INICIO_CORRIDA de la corrida): se deploya."
             echo "desplegar=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "La corrida no empujo nada nuevo a 'datos' (commit $fecha_datos <= arranque $INICIO_CORRIDA): no se deploya."
+            echo "desplegar=false" >> "$GITHUB_OUTPUT"
           fi
 
   build:
@@ -73,6 +83,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+
+      # Solo public/data: es lo unico que sirve el frontend (data/ es estado
+      # interno del pipeline, no lo usa el build).
+      - name: Traer datos publicados (rama datos)
+        run: |
+          git fetch --depth=1 origin datos
+          git archive origin/datos public/data | tar -x
 
       - name: Setup Node
         uses: actions/setup-node@v7
@@ -105,3 +122,14 @@ jobs:
       - name: Deploy a GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v5
+
+  monitoreo:
+    needs: [verificar, build, deploy]
+    if: ${{ !cancelled() }}
+    uses: ./.github/workflows/_monitoreo-falla.yml
+    with:
+      workflow_nombre: 'Deploy a GitHub Pages'
+      # Si no tocaba deployar (desplegar == 'false'), verificar/build/deploy
+      # terminan "skipped": eso no es una falla, se trata como éxito.
+      resultado: ${{ (contains(needs.*.result, 'failure') && 'failure') || 'success' }}
+    secrets: inherit

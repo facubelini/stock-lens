@@ -9,7 +9,7 @@ export function CryptoScanProvider({ children }) {
   const [ultimoScan, setUltimoScanState] = useState(null) // { resultados, timestamp }
 
   const setUltimoScan = useCallback((resultados) => {
-    setUltimoScanState({ resultados, timestamp: new Date().toLocaleTimeString('es-AR') })
+    setUltimoScanState({ resultados, timestamp: new Date().toLocaleTimeString('es-AR', { hourCycle: 'h23' }) })
   }, [])
 
   return <Ctx.Provider value={{ ultimoScan, setUltimoScan }}>{children}</Ctx.Provider>

@@ -1,11 +1,13 @@
 name: Backtest Screener
 
-# Backtest de la logica del Screener (temporalidad diaria) y del Score de
-# Listado contra 5 anios de historial: miden si las señales/niveles
-# realmente predicen algo vs. el retorno "base" (cualquier dia). Los dos
-# comparten UNA sola descarga (scripts/backtests.py). Las estadisticas no
-# cambian de un dia para el otro, asi que corre mensual + disparo manual.
-# El deploy se encadena solo, igual que el resto de los pipelines.
+# Backtest de la logica del Screener (temporalidad diaria), del Score de
+# Listado y de las señales de la pagina Señales/Warren Score (EMA200, VCP,
+# RSI semanal, Warren Score) contra 5 anios de historial: miden si las
+# señales/niveles realmente predicen algo vs. el retorno "base" (cualquier
+# dia). Los tres comparten UNA sola descarga (scripts/backtests.py). Las
+# estadisticas no cambian de un dia para el otro, asi que corre mensual +
+# disparo manual. El deploy se encadena solo, igual que el resto de los
+# pipelines.
 
 on:
   workflow_dispatch:
@@ -24,7 +26,7 @@ concurrency:
 jobs:
   backtest:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 40
     permissions:
       contents: write
     env:
@@ -43,11 +45,39 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r scripts/requirements.txt
 
-      - name: Correr backtests (Screener + Score, una sola descarga)
+      # universo_usd() lee public/data/listado.json: ya no vive en main, vive
+      # en la rama `datos`.
+      - name: Traer datos previos (rama datos)
+        run: |
+          if git fetch --depth=1 origin datos; then
+            git archive origin/datos | tar -x
+          else
+            echo "Rama 'datos' no existe todavia (primera corrida): arranca sin estado previo."
+          fi
+
+      - name: Correr backtests (Screener + Score + Señales, una sola descarga)
         run: python scripts/backtests.py
 
+      # Solo los JSON que commitea este workflow (el resto de public/data
+      # es de "Actualizar datos" y no se toca aca). backtest_senales.json
+      # todavia no tiene reglas en validar_datos.py (su forma se valida en
+      # tests/test_backtest_senales.py); agregarlo aca queda para cuando el
+      # validador aprenda esas reglas.
+      - name: Validar datos
+        id: validar
+        run: python scripts/validar_datos.py public/data --solo backtest_screener,backtest_score
+
       - name: Commitear datos si cambiaron
-        uses: ./.github/actions/commit-datos
+        if: ${{ steps.validar.outcome == 'success' }}
+        uses: ./.github/actions/commit-datos-rama
         with:
-          rutas: public/data/backtest_screener.json public/data/backtest_score.json
           mensaje: 'backtest: actualizacion automatica'
+
+  monitoreo:
+    needs: backtest
+    if: ${{ !cancelled() }}
+    uses: ./.github/workflows/_monitoreo-falla.yml
+    with:
+      workflow_nombre: 'Backtest Screener'
+      resultado: ${{ needs.backtest.result }}
+    secrets: inherit

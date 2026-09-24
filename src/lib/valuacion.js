@@ -1,6 +1,6 @@
 // Descuento de valuación vs. la mediana de industria (comparables.json),
 // compartido entre Oportunidades y Mi Cartera para no duplicar el cálculo.
-// Ojo: scripts/generar_datos.py tiene una version Python de esto mismo
+// Ojo: scripts/pipeline/comparables.py tiene una version Python de esto mismo
 // (_descuento_valor) para el historial de Oportunidades — si se toca un
 // lado, tocar el otro.
 export const RATIOS_VALOR = ['per_trailing', 'ev_sales', 'ps']
@@ -34,7 +34,7 @@ export function evaluarCalidad(fila, mediana) {
 // Señales de alerta de "trampa de valor": barato + señal técnica no
 // significa que el negocio esté sano. Se fija en rentabilidad negativa e
 // insiders vendiendo sin ninguna compra en los últimos 6 meses (ver
-// resumen_insider en generar_datos.py). No excluye al ticker de la lista,
+// resumen_insider en scripts/pipeline/fundamentales.py). No excluye al ticker de la lista,
 // solo lo marca para que el usuario lo mire con más cuidado.
 export function señalesTrampaValor(fila) {
   const señales = []

@@ -1,0 +1,98 @@
+name: Monitoreo de fallas (reusable)
+
+# Job reusable (workflow_call) que abren/actualizan datos.yml, historico.yml,
+# backtest.yml y deploy.yml al terminar: si el job de datos/deploy fallo,
+# abre (o comenta, si ya esta abierto) un issue "⚠️ Falla en <workflow>"
+# labeled "monitoreo" con el link a la corrida y el/los jobs que fallaron; si
+# salio bien, cierra ese issue si estaba abierto (auto-resuelto). Ademas, si
+# estan los secrets de Telegram, manda un aviso corto solo cuando falla.
+#
+# Corre en el MISMO run que el caller (workflow_call no crea una corrida
+# aparte), asi que github.run_id/github.repository apuntan a esa misma
+# corrida y el link que arma es el correcto.
+
+on:
+  workflow_call:
+    inputs:
+      workflow_nombre:
+        description: Nombre "lindo" del workflow (para el titulo del issue).
+        required: true
+        type: string
+      resultado:
+        description: needs.<job>.result del caller ('success' | 'failure' | 'cancelled' | 'skipped').
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  monitoreo:
+    if: ${{ inputs.resultado == 'failure' || inputs.resultado == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      issues: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      TITULO: "⚠️ Falla en ${{ inputs.workflow_nombre }}"
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+    steps:
+      - name: Checkout (para el aviso de Telegram)
+        if: ${{ inputs.resultado == 'failure' }}
+        uses: actions/checkout@v7
+
+      - name: Setup Python
+        if: ${{ inputs.resultado == 'failure' }}
+        uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+
+      - name: Instalar requests (Telegram)
+        if: ${{ inputs.resultado == 'failure' }}
+        run: pip install requests
+
+      - name: Buscar issue abierto de este workflow
+        id: buscar
+        run: |
+          id=$(gh issue list --repo "$REPO" --label monitoreo --state open --search "in:title \"$TITULO\"" \
+               --json number,title --jq "[.[] | select(.title == \"$TITULO\")][0].number // empty")
+          echo "numero=$id" >> "$GITHUB_OUTPUT"
+
+      - name: ¿Que job(s) fallaron?
+        id: jobs
+        if: ${{ inputs.resultado == 'failure' }}
+        run: |
+          fallidos=$(gh run view "$GITHUB_RUN_ID" --repo "$REPO" --json jobs \
+            --jq '[.jobs[] | select(.conclusion=="failure") | .name] | join(", ")')
+          echo "fallidos=${fallidos:-(no se pudo determinar el job exacto)}" >> "$GITHUB_OUTPUT"
+
+      - name: Abrir o comentar el issue de falla
+        if: ${{ inputs.resultado == 'failure' }}
+        run: |
+          cuerpo=$'Job(s) que fallaron: '"${{ steps.jobs.outputs.fallidos }}"$'\n\nCorrida: '"$RUN_URL"$'\n\n_Se cierra solo cuando la proxima corrida de este workflow termine bien._'
+          if [ -n "${{ steps.buscar.outputs.numero }}" ]; then
+            gh issue comment "${{ steps.buscar.outputs.numero }}" --repo "$REPO" --body "$cuerpo"
+          else
+            gh issue create --repo "$REPO" --title "$TITULO" --label monitoreo --body "$cuerpo"
+          fi
+
+      - name: Aviso por Telegram
+        if: ${{ inputs.resultado == 'failure' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          python scripts/monitoreo/aviso_falla.py \
+            --titulo "$TITULO" \
+            --detalle "Job(s): ${{ steps.jobs.outputs.fallidos }}" \
+            --url "$RUN_URL"
+
+      - name: Cerrar el issue si ya estaba resuelto
+        if: ${{ inputs.resultado == 'success' && steps.buscar.outputs.numero != '' }}
+        run: |
+          gh issue comment "${{ steps.buscar.outputs.numero }}" --repo "$REPO" \
+            --body "Se resolvió: la corrida $RUN_URL terminó bien."
+          gh issue close "${{ steps.buscar.outputs.numero }}" --repo "$REPO"

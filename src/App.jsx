@@ -3,6 +3,7 @@ import { Routes, Route, Navigate, Link } from 'react-router-dom'
 import Header from './components/Header'
 import WatchlistBar from './components/WatchlistBar'
 import ComandoPaleta from './components/ComandoPaleta'
+import BannerDatosDesactualizados from './components/BannerDatosDesactualizados'
 import { TablaSkeleton } from './components/Estados'
 
 // Cada pestaña es un chunk aparte (React.lazy): el bundle inicial solo trae
@@ -56,6 +57,7 @@ export default function App() {
     <div className="flex min-h-full flex-col">
       <ComandoPaleta />
       <Header />
+      <BannerDatosDesactualizados />
       <WatchlistBar />
       <main className="w-full flex-1 px-4 py-5">
         <Suspense fallback={<CargandoPagina />}>

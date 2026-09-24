@@ -97,7 +97,7 @@ export function ExplicacionDescuento({ className }) {
 }
 
 // Warren Score (modelo tipo "Warren Bife Dashboard" v4.9). Mismos umbrales
-// que scripts/generar_datos.py (ws_calcular_ticker / ws_pilar_fuerza /
+// que scripts/pipeline/warren.py (ws_calcular_ticker / ws_pilar_fuerza /
 // ws_penalizaciones / calcular_warren_score): si se toca uno alla, tocarlo aca.
 export function ExplicacionWarrenScore({ className }) {
   return (

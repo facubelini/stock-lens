@@ -10,11 +10,12 @@ import Tabla from '../components/Tabla'
 import TickerLink from '../components/TickerLink'
 import ComoSeCalcula, { Formula } from '../components/ComoSeCalcula'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
+import BadgeEvidencia, { TablaEvidenciaMultiple } from '../components/BadgeEvidencia'
 
 // Señales: paneles tipo "Warren Bife" armados por el pipeline en
 // public/data/senales.json (EMA200 rebote/cruce, bases VCP, RSI semanal) mas
 // la Cartelera del día, que sale de listado.json en el navegador. Los
-// umbrales de las explicaciones son los de scripts/generar_datos.py
+// umbrales de las explicaciones son los de scripts/pipeline/senales.py y vcp.py
 // (SEN_* / VCP_*): si se toca uno alla, tocarlo aca.
 
 const COLOR = { rojo: '239, 68, 68', ambar: '245, 165, 36', verde: '34, 197, 94', azul: '56, 189, 248' }
@@ -302,6 +303,14 @@ function PanelEma({ panel, datos, semanal }) {
           <span className="w-6 tabular text-terminal-text">{rsMin}</span>
         </label>
       </div>
+      <BadgeEvidencia
+        ruta={[semanal ? 'ema_semanal' : 'ema_diario', tab]}
+        valor={tab.toUpperCase()}
+        horizonte={semanal ? 8 : 10}
+        unidad={velas}
+        señalVivo={`ema_${semanal ? 'semanal' : 'diario'}_${tab}`}
+        titulo={`${semanal ? 'EMA200 semanal' : 'EMA200 diaria'}: ${tab === 'rebote' ? 'rebote' : 'cruce al alza'}`}
+      />
       {filtradas.length === 0 ? (
         <Vacio texto={rsMin > 0 ? `Ningún ${tab === 'rebote' ? 'rebote' : 'cruce'} con RS ≥ ${rsMin}.` : `Sin ${tab === 'rebote' ? 'rebotes' : 'cruces'} en las últimas ${reciente} ${velas}.`} />
       ) : (
@@ -435,6 +444,13 @@ function PanelVcp({ filasVcp }) {
         </select>
       }
     >
+      <TablaEvidenciaMultiple
+        ruta={['vcp_estado']}
+        etiquetas={ESTADOS_VCP.map((e) => e.estado)}
+        horizonte={10}
+        señalVivo="vcp"
+        titulo="estado de la base"
+      />
       {filtradas.length === 0 ? (
         <Vacio texto="Ninguna base VCP con score ≥ 60 en este estado." />
       ) : (
@@ -534,6 +550,14 @@ function PanelRsiSemanal({ datos }) {
           { valor: 'alcista', label: '▲ Cruce alcista', n: datos?.alcista?.length ?? 0 },
           { valor: 'bajista', label: '▼ Cruce bajista', n: datos?.bajista?.length ?? 0 },
         ]}
+      />
+      <BadgeEvidencia
+        ruta={['rsi_semanal', tab]}
+        valor={tab.toUpperCase()}
+        horizonte={8}
+        unidad="semanas"
+        señalVivo={`rsi_semanal_${tab}`}
+        titulo={`RSI semanal: cruce ${tab === 'alcista' ? 'alcista' : 'bajista'}`}
       />
       {filtradas.length === 0 ? (
         <Vacio texto="Sin cruces en las últimas 3 semanas." />

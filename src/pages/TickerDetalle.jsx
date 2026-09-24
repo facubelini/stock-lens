@@ -370,7 +370,7 @@ function Rango52Semanas({ precio, min, max }) {
 
 // Precio "justo" del CEDEAR según el CCL implícito mediano de todos los
 // CEDEARs del universo (meta.json) y el ratio de conversión.
-function PrecioCedear({ fila, ccl }) {
+function PrecioCedear({ fila, ccl, cclData912 }) {
   if (fila?.cedear_ratio == null || fila.precio == null || !ccl) return null
   const recomendado = (fila.precio * ccl) / fila.cedear_ratio
   const dif = fila.cedear_precio != null ? (fila.cedear_precio / recomendado - 1) * 100 : null
@@ -397,12 +397,20 @@ function PrecioCedear({ fila, ccl }) {
           {fila.cedear_ratio}. CCL = mediana del CCL implícito <Formula>precio CEDEAR × ratio / precio USD</Formula> de
           todos los CEDEARs del universo en la última corrida (descartando los que se alejan más de 15%). Ratio N:1 =
           N CEDEARs equivalen a 1 acción (Banco Comafi + carga manual).
+          {cclData912 != null && (
+            <>
+              {' '}
+              Cruce con data912.com (su propio CCL mediano del panel CEDEAR): ${fmtNum(cclData912, 2)} — se usa solo
+              como comparación, el valor que se aplica arriba sigue siendo la mediana implícita propia.
+            </>
+          )}
         </p>
         {dif != null && (
           <p>
             Diferencia <Formula>real / recomendado − 1</Formula>: positiva = el CEDEAR cotiza más caro que lo que
-            implica el CCL promedio (en rojo si pasa de ±2%), negativa = más barato. El precio real es el de BYMA vía
-            Yahoo en la misma corrida, puede tener demora.
+            implica el CCL promedio (en rojo si pasa de ±2%), negativa = más barato. El precio real sale de data912.com
+            (en vivo) y, si ese ticker no está ahí, del último cierre de BYMA vía Yahoo — el precio real puede tener
+            demora en cualquiera de las dos fuentes.
           </p>
         )}
       </ComoSeCalcula>
@@ -529,9 +537,9 @@ export default function TickerDetalle() {
   const { data: historialData, fuente: fuenteHistorial } = useJsonPrimero(
     ticker ? [`historial/${encodeURIComponent(ticker)}.json`, 'screener_historial.json'] : null,
   )
-  // historico_tickers.json no se publica: la lista de tickers con histórico
-  // sale del propio historico_fundamental.json.
-  const { data: historicoFundData } = useJson('historico_fundamental.json')
+  // Índice liviano del Histórico fundamental (todo el universo que reporta a
+  // la SEC): solo se usa para saber si mostrar el link.
+  const { data: historicoFundData } = useJson('fundamental/indice.json')
   const { data: warrenData } = useJson('warren_score.json')
   const { data: senalesData } = useJson('senales.json')
   const { overrides } = useClasificacion()
@@ -642,7 +650,7 @@ export default function TickerDetalle() {
 
   const enHistoricoFundamental = useMemo(() => {
     const lista = Array.isArray(historicoFundData?.tickers) ? historicoFundData.tickers : []
-    return lista.some((t) => String(t.ticker).toUpperCase() === ticker && t.disponible !== false)
+    return lista.some((t) => String(t.ticker).toUpperCase() === ticker && t.disponible)
   }, [historicoFundData, ticker])
 
   // "← Volver": a la pantalla anterior si se llegó navegando dentro de la
@@ -822,11 +830,26 @@ export default function TickerDetalle() {
                       {fila.cedear_ccl_implicito != null && (
                         <> · CCL implícito ${fmtNum(fila.cedear_ccl_implicito, 0)}</>
                       )}
+                      {fila.cedear_fuente && (
+                        <span
+                          className="ml-1 text-terminal-dim/70"
+                          title={
+                            fila.cedear_fuente === 'data912'
+                              ? 'Precio y volumen en vivo de data912.com (fuente primaria)'
+                              : 'data912 no trajo este ticker hoy: precio de respaldo, cierre de BYMA vía Yahoo'
+                          }
+                        >
+                          ({fila.cedear_fuente === 'data912' ? 'data912' : 'Yahoo, respaldo'})
+                        </span>
+                      )}
+                      {fila.cedear_volumen != null && (
+                        <> · vol. {fila.cedear_volumen.toLocaleString('es-AR')}</>
+                      )}
                     </>
                   ) : (
                     <>
                       CEDEAR: ratio {fila.cedear_ratio}:1{' '}
-                      <span className="text-terminal-dim/70">(sin cotización en BYMA vía Yahoo)</span>
+                      <span className="text-terminal-dim/70">(sin cotización en data912 ni en BYMA vía Yahoo)</span>
                     </>
                   )}
                 </div>
@@ -849,7 +872,7 @@ export default function TickerDetalle() {
           </div>
           <div className="flex min-w-0 flex-col gap-3">
             <Rango52Semanas precio={fila.precio} min={fila.low_52w} max={fila.high_52w} />
-            <PrecioCedear fila={fila} ccl={meta?.ccl_implicito_mediana} />
+            <PrecioCedear fila={fila} ccl={meta?.ccl_implicito_mediana} cclData912={meta?.ccl_data912} />
           </div>
         </div>
       )}
@@ -1280,10 +1303,10 @@ export default function TickerDetalle() {
 
       {enHistoricoFundamental && (
         <Link
-          to="/historico"
+          to={`/historico?t=${encodeURIComponent(ticker)}`}
           className="inline-block rounded border border-terminal-border bg-terminal-panel px-3 py-2 text-xs text-terminal-dim hover:border-terminal-accent hover:text-terminal-text"
         >
-          📈 Ver evolución histórica (EDGAR, 5+ años) en Histórico Fundamental →
+          📈 Histórico: P/E, P/S, EV/EBITDA, márgenes y crecimiento (SEC EDGAR, ~15 años) →
         </Link>
       )}
     </div>

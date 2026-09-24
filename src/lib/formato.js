@@ -52,6 +52,8 @@ export function fmtFecha(iso) {
       year: 'numeric',
       hour: '2-digit',
       minute: '2-digit',
+      // Sin hourCycle, el CLDR actual de es-AR da reloj de 12 h ("10:30 p. m. hs").
+      hourCycle: 'h23',
       timeZone: 'America/Argentina/Buenos_Aires',
     }).format(d)
     return `${s} hs`

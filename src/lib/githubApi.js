@@ -14,9 +14,6 @@ const REPO = 'stock-lens'
 const BRANCH = 'main'
 const ARCHIVO = 'data/tickers.xlsx'
 const WORKFLOW = 'datos.yml'
-const ARCHIVO_HISTORICO = 'data/historico_tickers.json'
-const WORKFLOW_HISTORICO = 'historico.yml'
-const LIMITE_HISTORICO = 20
 const KEY_PAT = 'stocklens_gh_pat'
 
 function _leer(storage) {
@@ -202,72 +199,4 @@ export async function quitarTickerRemoto(ticker) {
 // tocar tickers.xlsx — sirve para forzar una corrida fuera del cron.
 export async function dispararActualizacionDatos() {
   await dispararWorkflow()
-}
-
-// --- Lista de hasta 20 tickers (LIMITE_HISTORICO) para "Histórico Fundamental" (data/historico_tickers.json) ---
-
-function _base64ToUtf8(base64) {
-  return decodeURIComponent(escape(atob(base64.replace(/\n/g, ''))))
-}
-
-function _utf8ToBase64(texto) {
-  return btoa(unescape(encodeURIComponent(texto)))
-}
-
-async function leerListaHistorico() {
-  const actual = await ghFetch(`/repos/${OWNER}/${REPO}/contents/${ARCHIVO_HISTORICO}?ref=${BRANCH}`)
-  let lista = []
-  try {
-    const parseado = JSON.parse(_base64ToUtf8(actual.content))
-    if (Array.isArray(parseado)) lista = parseado
-  } catch {
-    /* archivo vacío o corrupto: se trata como lista vacía */
-  }
-  return { lista, sha: actual.sha }
-}
-
-async function escribirListaHistorico(lista, sha, mensaje) {
-  await ghFetch(`/repos/${OWNER}/${REPO}/contents/${ARCHIVO_HISTORICO}`, {
-    method: 'PUT',
-    body: JSON.stringify({
-      message: mensaje,
-      content: _utf8ToBase64(JSON.stringify(lista, null, 2)),
-      sha,
-      branch: BRANCH,
-    }),
-  })
-}
-
-// Agrega un ticker a data/historico_tickers.json (máximo LIMITE_HISTORICO = 20) y dispara el
-// workflow "Historico fundamental".
-export async function agregarTickerHistorico(ticker) {
-  const tk = String(ticker).trim().toUpperCase()
-  if (!tk) throw new Error('Ticker vacío.')
-  const resultado = await conReintento(async () => {
-    const { lista, sha } = await leerListaHistorico()
-    if (lista.includes(tk)) return { agregado: false, lista }
-    if (lista.length >= LIMITE_HISTORICO) {
-      throw new Error(`Ya tenés el máximo de ${LIMITE_HISTORICO} tickers. Sacá uno antes de agregar otro.`)
-    }
-    const nueva = [...lista, tk]
-    await escribirListaHistorico(nueva, sha, `historico: agregar ${tk}`)
-    return { agregado: true, lista: nueva }
-  })
-  if (resultado.agregado) await dispararWorkflow(WORKFLOW_HISTORICO)
-  return resultado
-}
-
-// Saca un ticker de data/historico_tickers.json y dispara el workflow.
-export async function quitarTickerHistorico(ticker) {
-  const tk = String(ticker).trim().toUpperCase()
-  if (!tk) throw new Error('Ticker vacío.')
-  const resultado = await conReintento(async () => {
-    const { lista, sha } = await leerListaHistorico()
-    if (!lista.includes(tk)) return { eliminado: false, lista }
-    const nueva = lista.filter((t) => t !== tk)
-    await escribirListaHistorico(nueva, sha, `historico: eliminar ${tk}`)
-    return { eliminado: true, lista: nueva }
-  })
-  if (resultado.eliminado) await dispararWorkflow(WORKFLOW_HISTORICO)
-  return resultado
 }

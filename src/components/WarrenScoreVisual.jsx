@@ -2,7 +2,7 @@ import { fmtNum } from '../lib/formato'
 
 // Piezas visuales del Warren Score compartidas entre la pestaña
 // (pages/WarrenScore.jsx) y la ficha del ticker (pages/TickerDetalle.jsx).
-// Topes de cada pilar (mismos que scripts/generar_datos.py):
+// Topes de cada pilar (mismos que scripts/pipeline/warren.py):
 export const PILARES = [
   { key: 'tendencia', corto: 'Tend', nombre: 'Tendencia', max: 20 },
   { key: 'fuerza', corto: 'F.Rel', nombre: 'Fuerza relativa', max: 25 },

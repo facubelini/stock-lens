@@ -11,10 +11,11 @@ import { Formula } from '../components/ComoSeCalcula'
 import { ExplicacionWarrenScore } from '../components/Explicaciones'
 import { PILARES, colorScore, Anillo, MiniBarra, Banderas } from '../components/WarrenScoreVisual'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
+import { TablaEvidenciaMultiple } from '../components/BadgeEvidencia'
 
 // Warren Score: screener tecnico/cuantitativo 0-100 (NO fundamental), modelo
 // tipo "Warren Bife Dashboard" v4.9. El calculo vive en
-// scripts/generar_datos.py (ws_calcular_ticker / calcular_warren_score); aca
+// scripts/pipeline/warren.py (ws_calcular_ticker / calcular_warren_score); aca
 // solo se muestra con sus formulas. Pilares, anillo y barras en
 // components/WarrenScoreVisual.jsx (los usa tambien la ficha del ticker).
 
@@ -439,6 +440,13 @@ export default function WarrenScore() {
       </div>
 
       <ExplicacionWarrenScore className="mb-4" />
+      <TablaEvidenciaMultiple
+        ruta={['warren_bucket']}
+        etiquetas={['<40', '40-60', '60-70', '70-80', '≥80']}
+        horizonte={10}
+        señalVivo={null}
+        titulo="nivel de Warren Score"
+      />
 
       {cargando ? (
         <TablaSkeleton columnas={8} />

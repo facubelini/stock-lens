@@ -62,6 +62,14 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r scripts/requirements.txt
 
+      - name: Traer datos previos (rama datos)
+        run: |
+          if git fetch --depth=1 origin datos; then
+            git archive origin/datos | tar -x
+          else
+            echo "Rama 'datos' no existe todavia (primera corrida): arranca sin estado previo."
+          fi
+
       - name: Generar JSON (acciones)
         id: acciones
         run: python scripts/generar_datos.py
@@ -73,9 +81,47 @@ jobs:
         continue-on-error: true
         run: python scripts/mercado_macro.py
 
-      - name: Commitear datos si cambiaron
+      # Contrato de datos (forma, rangos, archivos por ticker, n_frescos vs.
+      # el meta.json de HEAD): si algo no cumple, NO se commitea nada. Corre
+      # aunque el paso de acciones haya abortado (ahi valida los datos
+      # anteriores + el macro nuevo, que si se commitean).
+      - name: Validar datos
+        id: validar
         if: ${{ !cancelled() }}
-        uses: ./.github/actions/commit-datos
+        run: python scripts/validar_datos.py public/data
+
+      - name: Commitear datos si cambiaron
+        id: commit
+        if: ${{ !cancelled() && steps.validar.outcome == 'success' }}
+        uses: ./.github/actions/commit-datos-rama
         with:
-          rutas: public/data data
           mensaje: 'datos: actualizacion automatica'
+
+      # Alertas por Telegram (VCP, Warren Score, EMA200/RSI semanal, watchlist).
+      # Si faltan los secrets no hace nada (exit 0): no requiere que esten
+      # configurados para que el resto del workflow siga funcionando.
+      - name: Alertas
+        if: ${{ !cancelled() && steps.validar.outcome == 'success' }}
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python scripts/alertas.py
+
+      # El estado de alertas (data/alertas_estado.json) cambio en disco pero
+      # todavia no esta en la rama datos (el commit de arriba se armo ANTES
+      # de correr las alertas): un segundo commit chiquito lo agrega. Sin
+      # esto, la proxima corrida repetiria los mismos eventos.
+      - name: Commitear estado de alertas si cambio
+        if: ${{ !cancelled() && steps.validar.outcome == 'success' }}
+        uses: ./.github/actions/commit-datos-rama
+        with:
+          mensaje: 'datos: estado de alertas'
+
+  monitoreo:
+    needs: generar
+    if: ${{ !cancelled() }}
+    uses: ./.github/workflows/_monitoreo-falla.yml
+    with:
+      workflow_nombre: 'Actualizar datos'
+      resultado: ${{ needs.generar.result }}
+    secrets: inherit

@@ -232,7 +232,7 @@ export function calcLeverage(tpsl, margin, leverage, mType, { mmr = 0.01, comisi
 
 // Estacionalidad (retorno promedio por mes calendario), a partir de velas
 // mensuales (interval='1M' de Binance). Misma logica que el lado Python de
-// acciones (generar_datos.py calcular_estacionalidad_y_mensual) — si se
+// acciones (scripts/pipeline/tecnico.py calcular_estacionalidad_y_mensual) — si se
 // toca uno, tocar el otro. Requiere al menos 2 años de velas cerradas;
 // muchas altcoins nuevas no van a tener suficiente historial todavia.
 export function calcularEstacionalidad(klinesMensuales) {

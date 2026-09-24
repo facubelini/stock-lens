@@ -181,7 +181,8 @@ export function useEscaneoBinance({
       setDatos(filas)
       setOmitidos(om)
       setParametrosEscaneo(params)
-      setUltimaActualizacion(new Date().toLocaleTimeString('es-AR'))
+      // Sin hourCycle, es-AR sale en 12 h y sin "p. m." (las 22:30 quedan "10:30:15").
+      setUltimaActualizacion(new Date().toLocaleTimeString('es-AR', { hourCycle: 'h23' }))
       alTerminar?.(filas)
     } catch (e) {
       if (!esCancelacion(e)) setErrorMsg(e.message)

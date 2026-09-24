@@ -13,7 +13,8 @@ import { Vacio } from '../components/Estados'
 
 function fmtHora(ts) {
   if (!ts) return '—'
-  return new Date(ts).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })
+  // Sin hourCycle, el CLDR actual de es-AR da reloj de 12 h ("10:30 p. m.").
+  return new Date(ts).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit', hourCycle: 'h23' })
 }
 
 function fmtCompacto(n) {

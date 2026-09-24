@@ -1,14 +1,15 @@
 name: Historico fundamental
 
-# Corre el script de SEC EDGAR (P/E, EV/Sales, P/S "LTM") para los tickers de
-# data/historico_tickers.json (maximo 20, ver LIMITE_TICKERS en
-# scripts/historico_fundamental.py). Los fundamentals cambian solo
+# Corre scripts/historico_fundamental.py (SEC EDGAR + precio de Yahoo) para
+# TODO el universo de public/data/listado.json y escribe
+# public/data/fundamental/<TICKER>.json + indice.json. companyfacts se cachea
+# (flaco, gz) en data/edgar_cache/ y solo se re-baja cuando la empresa
+# presento un reporte nuevo. Los fundamentals cambian solo
 # trimestralmente, asi que no hace falta correrlo tan seguido como
 # "Actualizar datos" (precio/RSI). El deploy se encadena solo, igual que ahi.
 
 on:
-  # Disparo manual (tambien lo dispara la app cuando agregas/sacas un ticker
-  # de esta lista via la API de GitHub).
+  # Disparo manual.
   workflow_dispatch:
 
   # Semanal alcanza de sobra (los balances no cambian todas las semanas).
@@ -27,7 +28,7 @@ concurrency:
 jobs:
   generar:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 60   # la primera corrida (sin cache EDGAR) baja ~350 companyfacts
     permissions:
       contents: write   # necesario para commitear el JSON generado
     env:
@@ -46,11 +47,38 @@ jobs:
       - name: Instalar dependencias
         run: pip install -r scripts/requirements.txt
 
+      # Necesario para tener public/data/listado.json (universo) y
+      # data/edgar_cache + data/cik_cache.json (para no re-bajar todo): ya no
+      # viven en main, viven en la rama `datos`.
+      - name: Traer datos previos (rama datos)
+        run: |
+          if git fetch --depth=1 origin datos; then
+            git archive origin/datos | tar -x
+          else
+            echo "Rama 'datos' no existe todavia (primera corrida): arranca sin estado previo."
+          fi
+
       - name: Generar JSON
-        run: python scripts/historico_fundamental.py
+        # SEC fair access: se puede declarar un User-Agent con contacto en la
+        # variable de repo SEC_USER_AGENT (Settings > Variables) sin commitearlo.
+        run: SEC_USER_AGENT="${{ vars.SEC_USER_AGENT }}" python scripts/historico_fundamental.py
+
+      # Solo lo que commitea este workflow: fundamental/ (JSON estrictos + indice).
+      - name: Validar datos
+        id: validar
+        run: python scripts/validar_datos.py public/data --solo fundamental
 
       - name: Commitear datos si cambiaron
-        uses: ./.github/actions/commit-datos
+        if: ${{ steps.validar.outcome == 'success' }}
+        uses: ./.github/actions/commit-datos-rama
         with:
-          rutas: public/data/historico_fundamental.json data/cik_cache.json
           mensaje: 'historico: actualizacion automatica'
+
+  monitoreo:
+    needs: generar
+    if: ${{ !cancelled() }}
+    uses: ./.github/workflows/_monitoreo-falla.yml
+    with:
+      workflow_nombre: 'Historico fundamental'
+      resultado: ${{ needs.generar.result }}
+    secrets: inherit

@@ -18,3 +18,15 @@ __pycache__/
 .env
 .env.local
 .claude/
+.pytest_cache/
+
+# Datos publicados (JSON del pipeline) y estado/caches: viven en la rama
+# huerfana `datos` (ver README, seccion "Rama de datos"), no en main. `npm
+# run datos` los trae al working tree para dev/build locales; los workflows
+# de datos los traen solos antes de correr los scripts. Los INPUTS a mano
+# (tickers.xlsx, ratios_cedear_manual.json) siguen versionados en main: las
+# excepciones de abajo los desingnoran.
+/public/data/*
+/data/*
+!/data/tickers.xlsx
+!/data/ratios_cedear_manual.json

@@ -13,6 +13,7 @@ import {
 } from '../lib/crypto/altseason'
 import { fmtFecha, hoyAR, sumarDiasISO } from '../lib/formato'
 import { calendarioEconomico } from '../lib/calendarioEconomico'
+import RegimenMercado from '../components/RegimenMercado'
 
 const MESES = [
   'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
@@ -418,6 +419,13 @@ export default function Macro() {
         </div>
       ) : (
         <div className="flex flex-col gap-4">
+          <div>
+            <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-terminal-dim">
+              Régimen de mercado
+            </h2>
+            <RegimenMercado regimen={data?.regimen} />
+          </div>
+
           <div>
             <h2 className="mb-2 text-xs font-semibold uppercase tracking-wide text-terminal-dim">
               Fear &amp; Greed

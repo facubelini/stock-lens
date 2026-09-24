@@ -23,6 +23,7 @@ const ScreenerCruces = lazy(() => import('./pages/ScreenerCruces'))
 const TopSenales = lazy(() => import('./pages/TopSenales'))
 const Cartera = lazy(() => import('./pages/Cartera'))
 const Macro = lazy(() => import('./pages/Macro'))
+const Rotacion = lazy(() => import('./pages/Rotacion'))
 const Herramientas = lazy(() => import('./pages/Herramientas'))
 const Screeners = lazy(() => import('./pages/Screeners'))
 const PrePostMarket = lazy(() => import('./pages/PrePostMarket'))
@@ -69,6 +70,7 @@ export default function App() {
             <Route path="/oportunidades" element={<Oportunidades />} />
             <Route path="/cartera" element={<Cartera />} />
             <Route path="/macro" element={<Macro />} />
+            <Route path="/rotacion" element={<Rotacion />} />
             <Route path="/herramientas" element={<Herramientas />} />
             <Route path="/screeners" element={<Screeners />} />
             <Route path="/pre-post" element={<PrePostMarket />} />

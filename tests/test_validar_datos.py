@@ -62,12 +62,12 @@ def test_campo_obligatorio_faltante(carpeta):
 
 def test_pilar_sobre_su_maximo_y_total_score(carpeta):
     def romper(d):
-        d["tickers"][0]["pilares"]["contraccion"]["pts"] = 36.0
+        d["tickers"][0]["pilares"]["contraccion"]["pts"] = 31.0
         d["tickers"][1]["total_score"] = 101.0
 
     _editar(carpeta, "warren_score.json", romper)
     errores = _errores(carpeta)
-    assert any("pilares.contraccion.pts = 36.0 fuera de rango [0, 35]" in e for e in errores)
+    assert any("pilares.contraccion.pts = 31.0 fuera de rango [0, 30]" in e for e in errores)
     assert any("total_score = 101.0" in e for e in errores)
 
 

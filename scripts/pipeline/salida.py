@@ -117,6 +117,7 @@ def escribir_publicados(out, datos, historial, ahora_iso):
         out / "warren_score.json", {"actualizado": ahora_iso, "tickers": datos["warren_score"]}, ignorar_claves=("actualizado",)
     )
     cambios += escribir_json(out / "senales.json", datos["senales"], ignorar_claves=("actualizado",))
+    cambios += escribir_json(out / "rotacion.json", datos["rotacion"], ignorar_claves=("actualizado",))
 
     # Migracion one-off al layout por ticker: el historico mensual pasa de un
     # JSON unico (1.8MB) a mensual/<TICKER>.json (sirve para los arrastrados,

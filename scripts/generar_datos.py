@@ -52,6 +52,7 @@ from pipeline.salida import (  # noqa: E402
     escribir_publicados,
     historial_screener,
 )
+from pipeline.rotacion import rot_actualizar_historial, rot_construir, rot_filas_semana, semana_iso  # noqa: E402
 from pipeline.senales import construir_senales  # noqa: E402
 from pipeline.seguimiento import actualizar_log, resumen_publicable  # noqa: E402
 from pipeline.tecnico import promedios_por_industria  # noqa: E402
@@ -169,6 +170,15 @@ def main(argv=None):
         )
     )
 
+    print("Actualizando el historial semanal de Rotacion (RRG)...")
+    filas_semana = rot_filas_semana(res["warren_datos"], rs_mapa, fundamentales)
+    historial_rotacion = rot_actualizar_historial(
+        leer_json(estado / "rotacion_historial.json", {}) or {}, filas_semana, semana_iso(ahora)
+    )
+    escribir_json(estado / "rotacion_historial.json", historial_rotacion)
+    rotacion = rot_construir(historial_rotacion, ahora_iso)
+    print(f"  {len(rotacion['acciones'])} accion(es) + {len(rotacion['etfs'])} ETF(s) con RS Score esta semana.")
+
     n_compra = sum(
         1 for f in screener if any((f.get(tf) or {}).get("verdict") == "COMPRA" for tf in ("diario", "semanal", "mensual"))
     )
@@ -207,6 +217,7 @@ def main(argv=None):
             "historial_oportunidades": historial_oportunidades,
             "warren_score": warren_score,
             "senales": senales,
+            "rotacion": rotacion,
             "mensuales": res["mensuales"],
         },
         historial,

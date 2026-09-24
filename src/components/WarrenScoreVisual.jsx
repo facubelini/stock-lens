@@ -4,10 +4,10 @@ import { fmtNum } from '../lib/formato'
 // (pages/WarrenScore.jsx) y la ficha del ticker (pages/TickerDetalle.jsx).
 // Topes de cada pilar (mismos que scripts/pipeline/warren.py):
 export const PILARES = [
-  { key: 'tendencia', corto: 'Tend', nombre: 'Tendencia', max: 20 },
-  { key: 'fuerza', corto: 'F.Rel', nombre: 'Fuerza relativa', max: 25 },
-  { key: 'contraccion', corto: 'Contr', nombre: 'Contracción', max: 35 },
-  { key: 'gatillo', corto: 'Gatillo', nombre: 'Gatillo / setup', max: 20 },
+  { key: 'tendencia', corto: 'Tend', nombre: 'Tendencia', max: 25 },
+  { key: 'fuerza', corto: 'F.Rel', nombre: 'Fuerza relativa', max: 30 },
+  { key: 'contraccion', corto: 'Contr', nombre: 'Contracción', max: 30 },
+  { key: 'gatillo', corto: 'Gatillo', nombre: 'Gatillo / setup', max: 15 },
 ]
 
 export function colorScore(score) {

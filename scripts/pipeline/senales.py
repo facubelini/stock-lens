@@ -31,6 +31,9 @@ SEN_CLIMAX_VOL = 1.5  # 🌊: volumen >= 1,5x el promedio de 20 velas...
 SEN_CLIMAX_POS = 0.6  # ... y cierre en el 40% superior del rango (posicion >= 60%)
 SEN_RSI_SEMANAS = 3  # cruces del RSI semanal en las ultimas 3 semanas (0 = la semana en curso)
 SEN_VCP_MIN = 60  # score VCP minimo para listar la base
+SV_RUEDAS = 10  # ruedas cerradas que entran al ranking de Sesiones & Volumen
+SV_VENTANA_VOL = 20  # promedio movil de volumen contra el que se pondera cada rueda
+SV_TOP = 60  # cuantos tickers se publican en senales.json.sesiones_volumen
 
 
 def velas_semanales(df):
@@ -154,6 +157,29 @@ def sen_rsi_semanal(sem):
     return None
 
 
+def sen_sesiones_volumen(df, ruedas=SV_RUEDAS, ventana_vol=SV_VENTANA_VOL):
+    """Ranking de conviccion/acumulacion: en cada una de las ultimas
+    'ruedas' sesiones CERRADAS que cerro arriba del cierre anterior, se
+    suma (volumen de ese dia / promedio movil de 'ventana_vol' ruedas
+    vigente en ESE momento, sin look-ahead: las 'ventana_vol' ruedas
+    anteriores a ese dia, sin incluirlo). score = esa suma (0 si ningun dia
+    subio; sin tope superior, un dia con 3x el volumen promedio aporta 3).
+    dias_alcistas = cantidad de esos dias subiendo, sin ponderar (0-10).
+    None si no hay suficiente historia (ruedas + ventana_vol + 1)."""
+    c, v = df["Close"], df["Volume"].fillna(0)
+    if len(c) < ruedas + ventana_vol + 1:
+        return None
+    sube = c.diff() > 0
+    vol_prom = v.rolling(ventana_vol).mean().shift(1)
+    with np.errstate(divide="ignore", invalid="ignore"):
+        ratio = v / vol_prom
+    ultimos_sube = sube.tail(ruedas)
+    ultimos_ratio = ratio.tail(ruedas)[ultimos_sube]
+    dias_alcistas = int(ultimos_sube.sum())
+    score = float(ultimos_ratio[ultimos_ratio.notna()].sum())
+    return {"dias_alcistas": dias_alcistas, "score": num(score, 3)}
+
+
 def senales_ticker(hist, calc_ws):
     """Primera pasada de senales.json para un ticker (sin RS: el percentil
     del universo se agrega en construir_senales)."""
@@ -179,7 +205,13 @@ def senales_ticker(hist, calc_ws):
         vcp = None
     else:
         _, vcp = ws_ciclo_vcp(df, atr_serie(df["High"], df["Low"], df["Close"], 14) / df["Close"] * 100)
-    return {"ema_diario": ema_d, "ema_semanal": ema_s, "vcp": vcp, "rsi_semanal": sen_rsi_semanal(sem)}
+    return {
+        "ema_diario": ema_d,
+        "ema_semanal": ema_s,
+        "vcp": vcp,
+        "rsi_semanal": sen_rsi_semanal(sem),
+        "sesiones_volumen": sen_sesiones_volumen(df),
+    }
 
 
 def construir_senales(senales_datos, rs_mapa, ahora_iso):
@@ -190,6 +222,7 @@ def construir_senales(senales_datos, rs_mapa, ahora_iso):
         "ema200": {tf: {"rebote": [], "cruce": []} for tf in SEN_EMA},
         "vcp": [],
         "rsi_semanal": {"alcista": [], "bajista": []},
+        "sesiones_volumen": [],
     }
     for d in senales_datos:
         s_ = d["senales"]
@@ -212,10 +245,16 @@ def construir_senales(senales_datos, rs_mapa, ahora_iso):
         r = s_.get("rsi_semanal")
         if r:
             salida["rsi_semanal"][r["tipo"]].append({**base, **{k: v for k, v in r.items() if k != "tipo"}, "rs": rs_hoy})
+        sv = s_.get("sesiones_volumen")
+        if sv:
+            salida["sesiones_volumen"].append({**base, "industria": d.get("industria"), **sv})
     for tf in salida["ema200"].values():
         for lista in tf.values():
             lista.sort(key=lambda f: (-(f["rs_hoy"] if f["rs_hoy"] is not None else -1), f["ticker"]))
     salida["vcp"].sort(key=lambda f: (-f["score"], f["ticker"]))
     for lista in salida["rsi_semanal"].values():
         lista.sort(key=lambda f: (f["hace"], -(f["rs"] if f["rs"] is not None else -1), f["ticker"]))
+    # Top SV_TOP por score desc (empate: mas dias alcistas, despues ticker).
+    salida["sesiones_volumen"].sort(key=lambda f: (-f["score"], -f["dias_alcistas"], f["ticker"]))
+    salida["sesiones_volumen"] = salida["sesiones_volumen"][:SV_TOP]
     return salida

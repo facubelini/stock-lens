@@ -6,11 +6,15 @@ import { fmtFecha, fmtNum, fmtPct, fmtPrecio } from '../lib/formato'
 import { compararValores } from '../lib/ordenar'
 import { selectCls } from '../lib/estilos'
 import { PANELES, ESTADOS_VCP, COLOR_ESTADO_VCP, fmtHace, fmtUltimaVez } from '../lib/senales'
+import { useFiltroRapido } from '../lib/filtroGlobal'
 import Tabla from '../components/Tabla'
 import TickerLink from '../components/TickerLink'
 import ComoSeCalcula, { Formula } from '../components/ComoSeCalcula'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 import BadgeEvidencia, { TablaEvidenciaMultiple } from '../components/BadgeEvidencia'
+import TiraEarnings from '../components/TiraEarnings'
+import KpisRapidos from '../components/KpisRapidos'
+import EpisodicPivots from '../components/EpisodicPivots'
 
 // Señales: paneles tipo "Warren Bife" armados por el pipeline en
 // public/data/senales.json (EMA200 rebote/cruce, bases VCP, RSI semanal) mas
@@ -120,10 +124,16 @@ function MiniTabla({ titulo, filas, campo, render }) {
 function Cartelera() {
   const { data, cargando, error } = useJson('listado.json')
   const meta = useMeta()
+  // Sin stale ni especies sin operar: sin promedio de volumen de 20 ruedas
+  // (CEDEARs ilíquidos con el precio clavado) el RSI da 100 / 0 y la var. 0.
+  const filasBase = useMemo(
+    () => (Array.isArray(data?.acciones) ? data.acciones : []).filter((f) => !f.stale && f.vol_prom20 > 0),
+    [data],
+  )
+  // KPIs rápidos (src/lib/filtroGlobal.js): filtran el universo de la
+  // cartelera Y de Episodic Pivots de abajo con un click.
+  const { filas, kpis, filtro, toggle } = useFiltroRapido(filasBase)
   const tops = useMemo(() => {
-    // Sin stale ni especies sin operar: sin promedio de volumen de 20 ruedas
-    // (CEDEARs ilíquidos con el precio clavado) el RSI da 100 / 0 y la var. 0.
-    const filas = (Array.isArray(data?.acciones) ? data.acciones : []).filter((f) => !f.stale && f.vol_prom20 > 0)
     const top = (campo, dir) =>
       filas
         .filter((f) => f[campo] != null)
@@ -136,44 +146,50 @@ function Cartelera() {
       sobrevendidos: top('rsi', 'asc'),
       n: filas.length,
     }
-  }, [data])
+  }, [filas])
 
   return (
     <Panel
       panel={PANELES.cartelera}
       subtitulo={`Top 5 del universo (${tops.n} tickers con dato fresco y volumen) · foto de la corrida del ${meta ? fmtFecha(meta.ultima_actualizacion) : '—'}`}
     >
+      {!cargando && !error && <KpisRapidos kpis={kpis} filtro={filtro} toggle={toggle} />}
       {cargando ? (
         <TablaSkeleton columnas={4} filas={5} />
       ) : error ? (
         <MensajeError mensaje={error} />
       ) : (
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-4">
-          <MiniTabla
-            titulo="🟢 Top Ganadores"
-            filas={tops.ganadores}
-            campo="var_pct"
-            render={(f) => <Pastilla color={f.var_pct >= 0 ? 'verde' : 'rojo'}>{fmtPct(f.var_pct, { signo: true })}</Pastilla>}
-          />
-          <MiniTabla
-            titulo="🔴 Top Perdedores"
-            filas={tops.perdedores}
-            campo="var_pct"
-            render={(f) => <Pastilla color={f.var_pct >= 0 ? 'verde' : 'rojo'}>{fmtPct(f.var_pct, { signo: true })}</Pastilla>}
-          />
-          <MiniTabla
-            titulo="🟠 Sobrecomprados"
-            filas={tops.sobrecomprados}
-            campo="rsi"
-            render={(f) => <Pastilla color={f.rsi > 70 ? 'rojo' : 'ambar'}>RSI {fmtNum(f.rsi, 1)}</Pastilla>}
-          />
-          <MiniTabla
-            titulo="🔵 Sobrevendidos"
-            filas={tops.sobrevendidos}
-            campo="rsi"
-            render={(f) => <Pastilla color={f.rsi < 30 ? 'azul' : 'ambar'}>RSI {fmtNum(f.rsi, 1)}</Pastilla>}
-          />
-        </div>
+        <>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 xl:grid-cols-4">
+            <MiniTabla
+              titulo="🟢 Top Ganadores"
+              filas={tops.ganadores}
+              campo="var_pct"
+              render={(f) => <Pastilla color={f.var_pct >= 0 ? 'verde' : 'rojo'}>{fmtPct(f.var_pct, { signo: true })}</Pastilla>}
+            />
+            <MiniTabla
+              titulo="🔴 Top Perdedores"
+              filas={tops.perdedores}
+              campo="var_pct"
+              render={(f) => <Pastilla color={f.var_pct >= 0 ? 'verde' : 'rojo'}>{fmtPct(f.var_pct, { signo: true })}</Pastilla>}
+            />
+            <MiniTabla
+              titulo="🟠 Sobrecomprados"
+              filas={tops.sobrecomprados}
+              campo="rsi"
+              render={(f) => <Pastilla color={f.rsi > 70 ? 'rojo' : 'ambar'}>RSI {fmtNum(f.rsi, 1)}</Pastilla>}
+            />
+            <MiniTabla
+              titulo="🔵 Sobrevendidos"
+              filas={tops.sobrevendidos}
+              campo="rsi"
+              render={(f) => <Pastilla color={f.rsi < 30 ? 'azul' : 'ambar'}>RSI {fmtNum(f.rsi, 1)}</Pastilla>}
+            />
+          </div>
+          <div className="mt-3">
+            <EpisodicPivots filas={filas} />
+          </div>
+        </>
       )}
       <ComoSeCalcula className="mt-2">
         <p>
@@ -610,6 +626,8 @@ export default function Senales() {
         </p>
         {data?.actualizado && <p className="mt-1 text-[11px] text-terminal-dim">Señales actualizadas: {fmtFecha(data.actualizado)}</p>}
       </div>
+
+      <TiraEarnings />
 
       <Cartelera />
 

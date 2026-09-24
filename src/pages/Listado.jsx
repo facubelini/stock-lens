@@ -2,6 +2,7 @@ import { memo, useMemo, useState } from 'react'
 import { useFilasCombinadas } from '../lib/useFilas'
 import { useTabla } from '../lib/useTabla'
 import { usePins } from '../lib/usePins'
+import { useFiltroRapido } from '../lib/filtroGlobal'
 import { calcularScore } from '../lib/score'
 import { exportarCSV } from '../lib/csv'
 import { crearComparador } from '../lib/ordenar'
@@ -20,6 +21,9 @@ import MarcaStale from '../components/MarcaStale'
 import EncabezadoOrdenable from '../components/EncabezadoOrdenable'
 import { ExplicacionScore } from '../components/Explicaciones'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
+import TiraEarnings from '../components/TiraEarnings'
+import KpisRapidos from '../components/KpisRapidos'
+import HeatmapTreemap from '../components/HeatmapTreemap'
 
 function HeatmapIndustrias({ titulo, datos, valorKey, colorFn, formatFn, ayuda }) {
   const ordenado = useMemo(
@@ -204,7 +208,8 @@ export default function Listado() {
   )
 
   const scored = useMemo(() => base.map((r) => ({ ...r, _score: calcularScore(r) })), [base])
-  const t = useTabla(scored, { camposBusqueda: CAMPOS })
+  const { filas: scoredKpi, kpis, filtro: filtroKpi, toggle: toggleKpi } = useFiltroRapido(scored)
+  const t = useTabla(scoredKpi, { camposBusqueda: CAMPOS })
 
   const comparar = useMemo(() => {
     const [campo, dir] = orden.split('|')
@@ -248,6 +253,7 @@ export default function Listado() {
       {[
         { val: 'industria', label: 'Por industria' },
         { val: 'lista', label: 'Lista general' },
+        { val: 'treemap', label: 'Treemap' },
       ].map((o) => (
         <button
           key={o.val}
@@ -276,6 +282,10 @@ export default function Listado() {
           {largoSpark > 0 ? largoSpark : 'N'} ruedas.
         </p>
       </div>
+
+      <TiraEarnings />
+
+      <KpisRapidos kpis={kpis} filtro={filtroKpi} toggle={toggleKpi} />
 
       <ExplicacionScore />
 
@@ -342,6 +352,8 @@ export default function Listado() {
           industrias={t.industrias}
           sectores={t.sectores}
         />
+      ) : vista === 'treemap' ? (
+        <HeatmapTreemap filas={listaGeneral} />
       ) : (
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
           {favoritos.length > 0 && (

@@ -15,9 +15,12 @@ from .vcp import ws_ciclo_vcp
 
 # ---------------------------------------------------------------------------
 # Warren Score: screener tecnico/cuantitativo (0-100), NO fundamental.
-# Modelo tipo "Warren Bife Dashboard" v4.9, implementacion propia:
+# Modelo tipo "Warren Bife Dashboard" (pesos de su guia publica, guia.html):
 #   score = clamp(A + B + C + D + penalizaciones, 0, 100) y despues caps.
-#   A Tendencia /20 · B Fuerza relativa /25 · C Contraccion /35 · D Gatillo /20.
+#   A Tendencia /25 · B Fuerza relativa /30 · C Contraccion /30 · D Gatillo /15.
+# (Version anterior, propia: 20/25/35/20 -- si hace falta volver a esos
+# pesos, son los que salian de leer el JS real del dashboard en vivo en vez
+# de su guia; la guia y el codigo del sitio no coinciden entre si).
 # Todo sale del 'hist' OHLCV ya descargado (no pide nada nuevo a yfinance).
 # La Fuerza Relativa necesita el percentil dentro de TODO el universo USD,
 # asi que se arma en dos pasadas (mismo patron que promedios_por_industria):
@@ -306,20 +309,20 @@ def ws_calcular_ticker(hist, bench_closes, en_usd, fin_vol, vol_1y, df=None, cac
     # 20 ruedas (0,15 ≈ +3% en 20 ruedas).
     pendiente = float(ema200_s.pct_change().tail(WS_RUEDAS_PENDIENTE).mean() * 100)
 
-    # --- Pilar A · Tendencia (20) ---
+    # --- Pilar A · Tendencia (25) --- (10/5,8333/4,1667 x 1,25 = 12,5/7,2916/5,2084)
     if atr_pct:
         d50_atr, d200_atr = dist50 / atr_pct, dist200 / atr_pct
-        pts50 = tri(d50_atr, -5, -2, 4, 8) * 10
-        pts200 = tri(d200_atr, 0, 0, 8, 14) * 5.8333
+        pts50 = tri(d50_atr, -5, -2, 4, 8) * 12.5
+        pts200 = tri(d200_atr, 0, 0, 8, 14) * 7.2916
     else:
         d50_atr = d200_atr = None
         exceso = max(0.0, -5 - dist50, dist50 - 20)
-        pts50 = max(0.0, 10 - exceso)
-        pts200 = tri(dist200, 0, 10, 50, 70) * 5.8333
-    pts_pend = lineal(pendiente, 0, 0.15, 0, 4.1667)
+        pts50 = max(0.0, 1.25 * (10 - exceso))
+        pts200 = tri(dist200, 0, 10, 50, 70) * 7.2916
+    pts_pend = lineal(pendiente, 0, 0.15, 0, 5.2084)
     tendencia = {
-        "pts": num(min(pts50 + pts200 + pts_pend, 20), 1),
-        "max": 20,
+        "pts": num(min(pts50 + pts200 + pts_pend, 25), 1),
+        "max": 25,
         "sma50": num(sma50, 2),
         "ema200": num(ema200, 2),
         "atr_pct": num(atr_pct, 2),
@@ -355,7 +358,9 @@ def ws_calcular_ticker(hist, bench_closes, en_usd, fin_vol, vol_1y, df=None, cac
             linea = conjunto["t"] / conjunto["b"]
             fr_sobre_sma50 = bool(linea.iloc[-1] > linea.rolling(50).mean().iloc[-1])
 
-    # --- Pilar C · Contraccion (35) ---
+    # --- Pilar C · Contraccion (30) --- (15,25/11,25/6,8/1,7/8 x 6/7 =
+    # 13,0714/9,6429/5,8286/1,4571/6,8571; la proporcion 35/19,75 del "else"
+    # es la misma reescalada, 30/16,9286 = 35/19,75)
     ret = c.pct_change()
     vol20 = ret.rolling(WS_VENTANA_VOL).std()
     ratio_s = vol20 / vol20.rolling(WS_VENTANA_VOL_HIST, min_periods=WS_VENTANA_VOL_HIST).median()
@@ -363,19 +368,19 @@ def ws_calcular_ticker(hist, bench_closes, en_usd, fin_vol, vol_1y, df=None, cac
     ratio_min7 = float(ratio_min7) if es_valido(float(ratio_min7)) else None
     neto = (precio - float(c.iloc[-6])) / atr if atr else None
     factor = 1 - 0.5 * min(1.0, max(0.0, (neto - 0.8) / 1.7)) if neto is not None else 1.0
-    pts_contr = tri(ratio_min7, 0, 0, 0.70, 1.05) * 15.25 * factor if ratio_min7 is not None else None
-    pts_rsi = tri(rsi, 30, 45, 60, 70) * 11.25
+    pts_contr = tri(ratio_min7, 0, 0, 0.70, 1.05) * 13.0714 * factor if ratio_min7 is not None else None
+    pts_rsi = tri(rsi, 30, 45, 60, 70) * 9.6429
     vcp, vcp_ciclo = ws_ciclo_vcp(df, atr_s / c * 100, cache=cache_vcp)
-    pts_vcp = lineal(vcp["score"], 40, 100, 0, 6.8) + (1.7 if vcp["detectado"] and vcp["vol_decreciente"] else 0)
+    pts_vcp = lineal(vcp["score"], 40, 100, 0, 5.8286) + (1.4571 if vcp["detectado"] and vcp["vol_decreciente"] else 0)
     if pts_contr is not None:
-        base_c = min(pts_contr + pts_rsi + pts_vcp, 35)
+        base_c = min(pts_contr + pts_rsi + pts_vcp, 30)
     else:
-        base_c = min((pts_rsi + pts_vcp) * 35 / 19.75, 35)
+        base_c = min((pts_rsi + pts_vcp) * 30 / 16.9286, 30)
     velocidad = ((precio / float(c.tail(15).min()) - 1) * 100) / atr_pct if atr_pct else None
-    resta = lineal(velocidad, 5, 11, 0, 8)
+    resta = lineal(velocidad, 5, 11, 0, 6.8571)
     contraccion = {
         "pts": num(max(0.0, base_c - resta), 1),
-        "max": 35,
+        "max": 30,
         "ratio_min7": num(ratio_min7, 2),
         "ratio_hoy": num(ratio_s.iloc[-1], 2),
         "avance_neto_atr": num(neto, 2),
@@ -389,18 +394,19 @@ def ws_calcular_ticker(hist, bench_closes, en_usd, fin_vol, vol_1y, df=None, cac
         "vcp": vcp,
     }
 
-    # --- Pilar D · Gatillo (20) ---
+    # --- Pilar D · Gatillo (15) --- (5/10/5 x 0,75 = 3,75/7,5/3,75; piso a
+    # la mitad del max, igual que antes: 15/2 = 7,5)
     dist_low = (precio / low_52w - 1) * 100 if low_52w else None
     ext = dist_low / vol_1y if es_valido(dist_low) and vol_1y else None
-    pts_ext = tri(ext, 0.3, 0.5, 1.8, 3.2) * 5 if ext is not None else tri(dist_low, 25, 35, 110, 220) * 5
+    pts_ext = tri(ext, 0.3, 0.5, 1.8, 3.2) * 3.75 if ext is not None else tri(dist_low, 25, 35, 110, 220) * 3.75
     base = ws_base_y_pivote(df)
-    pts_sem = tri(base["semanas"], 1, 7, 26, 55) * 10 if base else 0.0
-    pts_pos = lineal(base["posicion_pct"], 20, 50, 0, 5) if base else 0.0
-    total_d = min(pts_ext + pts_sem + pts_pos, 20)
-    piso = total_d < 10
+    pts_sem = tri(base["semanas"], 1, 7, 26, 55) * 7.5 if base else 0.0
+    pts_pos = lineal(base["posicion_pct"], 20, 50, 0, 3.75) if base else 0.0
+    total_d = min(pts_ext + pts_sem + pts_pos, 15)
+    piso = total_d < 7.5
     gatillo = {
         "pts": num(0.0 if piso else total_d, 1),
-        "max": 20,
+        "max": 15,
         "dist_min52_pct": num(dist_low, 2),
         "vol_1y": num(vol_1y, 1),
         "ext": num(ext, 2),
@@ -438,17 +444,17 @@ def ws_calcular_ticker(hist, bench_closes, en_usd, fin_vol, vol_1y, df=None, cac
 
 
 def ws_pilar_fuerza(rs, rs_sem, rs_mes, fr_sobre_sma50):
-    """Pilar B (25): max(via nivel, via delta) + 5 si la linea de FR esta
-    sobre su SMA50."""
-    fr_pts = 5 if fr_sobre_sma50 else 0
+    """Pilar B (30): max(via nivel, via delta) + 6 si la linea de FR esta
+    sobre su SMA50 (20/5 x 1,2 = 24/6)."""
+    fr_pts = 6 if fr_sobre_sma50 else 0
     if rs is None:
-        return {"pts": num(min(fr_pts * 5, 25), 1), "via_nivel": None, "via_delta": None, "fr_pts": fr_pts}
-    via_nivel = lineal(rs, 45, 75, 0, 20)
+        return {"pts": num(min(fr_pts * 5, 30), 1), "via_nivel": None, "via_delta": None, "fr_pts": fr_pts}
+    via_nivel = lineal(rs, 45, 75, 0, 24)
     via_delta = 0.0
     if rs_sem is not None and rs_mes is not None and (rs - rs_sem) > -5:
-        via_delta = lineal(rs - max(rs_mes, 40), 0, 20, 0, 20)
+        via_delta = lineal(rs - max(rs_mes, 40), 0, 20, 0, 24)
     return {
-        "pts": num(min(max(via_nivel, via_delta) + fr_pts, 25), 1),
+        "pts": num(min(max(via_nivel, via_delta) + fr_pts, 30), 1),
         "via_nivel": num(via_nivel, 2),
         "via_delta": num(via_delta, 2),
         "fr_pts": fr_pts,
@@ -513,7 +519,7 @@ def calcular_warren_score(warren_datos, rs_mapa):
             b = ws_pilar_fuerza(rs, rs_sem, rs_mes, calc["fr_sobre_sma50"])
             fuerza = {
                 "pts": b["pts"],
-                "max": 25,
+                "max": 30,
                 "rs": rs,
                 "rs_semana_ant": rs_sem,
                 "rs_mes_ant": rs_mes,

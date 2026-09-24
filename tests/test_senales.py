@@ -1,10 +1,19 @@
 """Señales: rebote / cruce sobre la EMA200 y cruce del RSI semanal con su
 SMA14, sobre series sinteticas."""
 
+import numpy as np
 import pandas as pd
+import pytest
 
 from conftest import ohlcv, tramos
-from pipeline.senales import SEN_EMA, construir_senales, sen_contactos_ema, sen_rsi_semanal, velas_semanales
+from pipeline.senales import (
+    SEN_EMA,
+    construir_senales,
+    sen_contactos_ema,
+    sen_rsi_semanal,
+    sen_sesiones_volumen,
+    velas_semanales,
+)
 
 DIARIO = SEN_EMA["diario"]
 
@@ -65,6 +74,51 @@ class TestRSISemanal:
 
     def test_pocas_semanas(self):
         assert sen_rsi_semanal(_semanal(LATERAL[:25])) is None
+
+
+def _serie_10_dias(patron, n_calentamiento=30):
+    """Serie con 'n_calentamiento' ruedas de relleno + 10 ruedas finales que
+    suben (+1) o bajan (-1) segun 'patron' (10 valores)."""
+    base = list(np.linspace(100, 110, n_calentamiento))
+    ultimos = [base[-1]]
+    for p in patron:
+        ultimos.append(ultimos[-1] * (1 + 0.01 * p))
+    return np.array(base + ultimos[1:])
+
+
+class TestSesionesVolumen:
+    PATRON = [1, -1, 1, 1, -1, 1, -1, 1, 1, -1]  # 6 ruedas alcistas de 10
+
+    def test_con_volumen_constante_el_score_es_la_cuenta_de_alcistas(self):
+        # Volumen igual todos los dias: el ratio vol_dia/prom20 da exactamente
+        # 1.0 en cada rueda alcista, asi que score == dias_alcistas.
+        df = ohlcv(_serie_10_dias(self.PATRON), volumen=1_000_000.0)
+        r = sen_sesiones_volumen(df, ruedas=10, ventana_vol=20)
+        assert r is not None
+        assert r["dias_alcistas"] == 6
+        assert r["score"] == pytest.approx(6.0, rel=1e-6)
+
+    def test_mas_volumen_en_un_dia_alcista_sube_el_score(self):
+        closes = _serie_10_dias(self.PATRON)
+        base = ohlcv(closes, volumen=1_000_000.0)
+        r_base = sen_sesiones_volumen(base, ruedas=10, ventana_vol=20)
+
+        vol = np.full(len(closes), 1_000_000.0)
+        vol[-2] *= 3  # el anteultimo dia (patron[8] = +1, alcista) triplica su volumen
+        pesado = ohlcv(closes, volumen=vol)
+        r_pesado = sen_sesiones_volumen(pesado, ruedas=10, ventana_vol=20)
+
+        assert r_pesado["dias_alcistas"] == r_base["dias_alcistas"] == 6
+        assert r_pesado["score"] > r_base["score"]
+
+    def test_todos_los_dias_bajistas_da_score_cero(self):
+        df = ohlcv(_serie_10_dias([-1] * 10), volumen=1_000_000.0)
+        r = sen_sesiones_volumen(df, ruedas=10, ventana_vol=20)
+        assert r == {"dias_alcistas": 0, "score": 0.0}
+
+    def test_sin_historia_suficiente_da_none(self):
+        df = ohlcv(_serie_10_dias(self.PATRON, n_calentamiento=5), volumen=1_000_000.0)
+        assert sen_sesiones_volumen(df, ruedas=10, ventana_vol=20) is None
 
 
 def test_velas_semanales_cierran_el_viernes():

@@ -96,9 +96,10 @@ export function ExplicacionDescuento({ className }) {
   )
 }
 
-// Warren Score (modelo tipo "Warren Bife Dashboard" v4.9). Mismos umbrales
-// que scripts/pipeline/warren.py (ws_calcular_ticker / ws_pilar_fuerza /
-// ws_penalizaciones / calcular_warren_score): si se toca uno alla, tocarlo aca.
+// Warren Score (modelo tipo "Warren Bife Dashboard", pesos de su guia
+// publica: A/B/C/D = 25/30/30/15). Mismos umbrales que scripts/pipeline/
+// warren.py (ws_calcular_ticker / ws_pilar_fuerza / ws_penalizaciones /
+// calcular_warren_score): si se toca uno alla, tocarlo aca.
 export function ExplicacionWarrenScore({ className }) {
   return (
     <ComoSeCalcula titulo="¿Cómo se calcula el Warren Score?" className={className}>
@@ -114,31 +115,31 @@ export function ExplicacionWarrenScore({ className }) {
         distancias se miden en ATRs para que una acción volátil no quede siempre “extendida”.
       </p>
       <p>
-        <b className="text-terminal-text">A · Tendencia (20)</b>:{' '}
-        <Formula>tri(dist SMA50 en ATR, −5, −2, 4, 8) × 10</Formula> +{' '}
-        <Formula>tri(dist EMA200 en ATR, 0, 0, 8, 14) × 5,83</Formula> +{' '}
-        <Formula>lineal(pendiente EMA200, 0, 0,15, 0, 4,17)</Formula>. Pendiente = variación diaria
+        <b className="text-terminal-text">A · Tendencia (25)</b>:{' '}
+        <Formula>tri(dist SMA50 en ATR, −5, −2, 4, 8) × 12,5</Formula> +{' '}
+        <Formula>tri(dist EMA200 en ATR, 0, 0, 8, 14) × 7,29</Formula> +{' '}
+        <Formula>lineal(pendiente EMA200, 0, 0,15, 0, 5,21)</Formula>. Pendiente = variación diaria
         promedio (%) de la EMA200 en las últimas 20 ruedas (0,15 ≈ +3% en 20 ruedas). Premia estar
         arriba de las medias pero sin estirarse.
       </p>
       <p>
-        <b className="text-terminal-text">B · Fuerza relativa (25)</b>: rendimiento relativo vs SPY
+        <b className="text-terminal-text">B · Fuerza relativa (30)</b>: rendimiento relativo vs SPY
         (series alineadas por fecha) <Formula>0,4·r63 + 0,2·r126 + 0,2·r189 + 0,2·r252</Formula> con{' '}
         <Formula>rN = (1 + ret N) / (1 + ret SPY N) − 1</Formula>; RS = percentil 0-100 en el
         universo USD (también hace 5 y 21 ruedas).{' '}
-        <Formula>vía nivel = lineal(RS, 45, 75, 0, 20)</Formula>;{' '}
-        <Formula>vía delta = lineal(RS − max(RS mes ant., 40), 0, 20, 0, 20)</Formula> si RS − RS
-        semana ant. &gt; −5. Puntos = <Formula>min(max(vía nivel, vía delta) + 5 si FR &gt; SMA50, 25)</Formula>,
+        <Formula>vía nivel = lineal(RS, 45, 75, 0, 24)</Formula>;{' '}
+        <Formula>vía delta = lineal(RS − max(RS mes ant., 40), 0, 20, 0, 24)</Formula> si RS − RS
+        semana ant. &gt; −5. Puntos = <Formula>min(max(vía nivel, vía delta) + 6 si FR &gt; SMA50, 30)</Formula>,
         donde FR = precio / SPY.
       </p>
       <p>
-        <b className="text-terminal-text">C · Contracción (35)</b>: ratio = volatilidad de 20 ruedas /
+        <b className="text-terminal-text">C · Contracción (30)</b>: ratio = volatilidad de 20 ruedas /
         su mediana del último año, el <b>mínimo de las últimas 7 ruedas</b>.{' '}
-        <Formula>tri(ratio, 0, 0, 0,70, 1,05) × 15,25 × factor</Formula>, con{' '}
+        <Formula>tri(ratio, 0, 0, 0,70, 1,05) × 13,07 × factor</Formula>, con{' '}
         <Formula>factor = 1 − 0,5 × clamp((avance 5 ruedas en ATR − 0,8) / 1,7, 0, 1)</Formula> +{' '}
-        <Formula>tri(RSI14, 30, 45, 60, 70) × 11,25</Formula> + VCP{' '}
-        <Formula>lineal(score VCP, 40, 100, 0, 6,8) + 1,7 si el volumen se secó</Formula>. Menos la
-        verticalidad: <Formula>lineal(subida desde el mínimo de 15 ruedas en ATR, 5, 11, 0, 8)</Formula>.
+        <Formula>tri(RSI14, 30, 45, 60, 70) × 9,64</Formula> + VCP{' '}
+        <Formula>lineal(score VCP, 40, 100, 0, 5,83) + 1,46 si el volumen se secó</Formula>. Menos la
+        verticalidad: <Formula>lineal(subida desde el mínimo de 15 ruedas en ATR, 5, 11, 0, 6,86)</Formula>.
       </p>
       <p>
         VCP: ZigZag con umbral <Formula>max(3%, 1,5 × ATR14%)</Formula> sobre ~120 ruedas; desde el
@@ -148,12 +149,12 @@ export function ExplicacionWarrenScore({ className }) {
         apretada de la última, 5 por cercanía al pivote y 5 si bajó el volumen.
       </p>
       <p>
-        <b className="text-terminal-text">D · Gatillo (20)</b>:{' '}
-        <Formula>tri(dist. mín. 52s % / volatilidad anual %, 0,3, 0,5, 1,8, 3,2) × 5</Formula> +{' '}
-        <Formula>tri(semanas de base, 1, 7, 26, 55) × 10</Formula> +{' '}
-        <Formula>lineal(posición en la base %, 20, 50, 0, 5)</Formula>. Base = desde el máximo más
+        <b className="text-terminal-text">D · Gatillo (15)</b>:{' '}
+        <Formula>tri(dist. mín. 52s % / volatilidad anual %, 0,3, 0,5, 1,8, 3,2) × 3,75</Formula> +{' '}
+        <Formula>tri(semanas de base, 1, 7, 26, 55) × 7,5</Formula> +{' '}
+        <Formula>lineal(posición en la base %, 20, 50, 0, 3,75)</Formula>. Base = desde el máximo más
         alto de ~55 semanas (si está rompiendo, la base que acaba de terminar); posición = (precio −
-        mínimo de la base) / (pivote − mínimo). Si D suma menos de 10 vale 0 (setup inmaduro).
+        mínimo de la base) / (pivote − mínimo). Si D suma menos de 7,5 vale 0 (setup inmaduro).
       </p>
       <p>
         <b className="text-terminal-text">Penalizaciones</b>: 🎈 sobreextensión (&gt;7 ATR sobre la

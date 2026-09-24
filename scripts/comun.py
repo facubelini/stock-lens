@@ -117,6 +117,43 @@ def atr_serie(high, low, close, periodo=14):
     return tr.ewm(alpha=1 / periodo, adjust=False, min_periods=periodo).mean()
 
 
+def adx_dmi_serie(high, low, close, periodo=14):
+    """ADX(14) de Wilder con +DI/-DI (usado por el Regimen de Mercado).
+    Formula estandar: +DM/-DM por rueda (solo el mayor de los dos si ambos
+    son positivos, si no 0), suavizados con el mismo EWM alpha=1/periodo que
+    el RSI/ATR; +DI/-DI = 100 * DM_suavizado / ATR(periodo); DX = 100 *
+    |+DI - -DI| / (+DI + -DI); ADX = EWM(alpha=1/periodo) de DX. Devuelve
+    (adx, plus_di, minus_di), tres pd.Series alineadas al indice de 'close'
+    (NaN mientras no hay 'periodo' ruedas)."""
+    high = pd.Series(high, dtype="float64") if not isinstance(high, pd.Series) else high.astype("float64")
+    low = pd.Series(low, dtype="float64") if not isinstance(low, pd.Series) else low.astype("float64")
+    close = pd.Series(close, dtype="float64") if not isinstance(close, pd.Series) else close.astype("float64")
+    subida, bajada = high.diff(), -low.diff()
+    plus_dm = pd.Series(np.where((subida > bajada) & (subida > 0), subida, 0.0), index=high.index)
+    minus_dm = pd.Series(np.where((bajada > subida) & (bajada > 0), bajada, 0.0), index=high.index)
+    atr = atr_serie(high, low, close, periodo)
+    plus_dm_s = plus_dm.ewm(alpha=1 / periodo, adjust=False, min_periods=periodo).mean()
+    minus_dm_s = minus_dm.ewm(alpha=1 / periodo, adjust=False, min_periods=periodo).mean()
+    with np.errstate(divide="ignore", invalid="ignore"):
+        plus_di = 100 * plus_dm_s / atr
+        minus_di = 100 * minus_dm_s / atr
+        dx = 100 * (plus_di - minus_di).abs() / (plus_di + minus_di)
+    adx = dx.ewm(alpha=1 / periodo, adjust=False, min_periods=periodo).mean()
+    return adx, plus_di, minus_di
+
+
+def dias_distribucion(close, volume, ventana=25, caida_pct=0.2):
+    """Cuenta de 'dias de distribucion' (regla clasica estilo O'Neil/IBD) en
+    las ultimas 'ventana' ruedas: una rueda cuenta si el cierre bajo >=
+    'caida_pct'% Y el volumen de esa rueda fue mayor al de la rueda anterior.
+    Usado por el Regimen de Mercado (indices SPY/QQQ). Devuelve un int."""
+    close = pd.Series(close, dtype="float64") if not isinstance(close, pd.Series) else close.astype("float64")
+    volume = pd.Series(volume, dtype="float64") if not isinstance(volume, pd.Series) else volume.astype("float64")
+    var_pct = close.pct_change() * 100
+    es_distribucion = (var_pct <= -caida_pct) & (volume > volume.shift(1))
+    return int(es_distribucion.tail(ventana).fillna(False).sum())
+
+
 def _es_num(x):
     return x is not None and not isinstance(x, bool) and not (isinstance(x, float) and math.isnan(x))
 

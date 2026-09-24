@@ -419,10 +419,10 @@ function PrecioCedear({ fila, ccl, cclData912 }) {
 }
 
 const PILARES_FICHA = [
-  { key: 'tendencia', nombre: 'Tendencia', max: 20 },
-  { key: 'fuerza', nombre: 'Fuerza RS', max: 25 },
-  { key: 'contraccion', nombre: 'Contracción', max: 35 },
-  { key: 'gatillo', nombre: 'Setup/Gatillo', max: 20 },
+  { key: 'tendencia', nombre: 'Tendencia', max: 25 },
+  { key: 'fuerza', nombre: 'Fuerza RS', max: 30 },
+  { key: 'contraccion', nombre: 'Contracción', max: 30 },
+  { key: 'gatillo', nombre: 'Setup/Gatillo', max: 15 },
 ]
 
 function TarjetaWarren({ ws }) {

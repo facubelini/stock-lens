@@ -16,7 +16,7 @@ from pipeline.warren import (
     ws_pilar_fuerza,
 )
 
-MAXIMOS = {"tendencia": 20, "fuerza": 25, "contraccion": 35, "gatillo": 20}
+MAXIMOS = {"tendencia": 25, "fuerza": 30, "contraccion": 30, "gatillo": 15}
 
 
 def _bench(n=600, semilla=0):
@@ -82,11 +82,11 @@ def test_ranking_y_percentiles():
 
 
 def _calc_sintetico(**extra):
-    """calc con pilares llenos (20+35+20 = 75 + fuerza) para probar caps."""
+    """calc con pilares llenos (25+30+15 = 70 + fuerza) para probar caps."""
     calc = {
         "precio": 100.0, "dist_max52_pct": -1.0, "precio_sobre_ema200": True, "sin_52w": False,
-        "rechazo_confirmado": False, "stage": {"n": 2}, "tendencia": {"pts": 20.0}, "contraccion": {"pts": 35.0},
-        "gatillo": {"pts": 20.0}, "penalizacion": {"pts": 0.0, "flags": []}, "rs_crudo": [0.5, 0.4, 0.3],
+        "rechazo_confirmado": False, "stage": {"n": 2}, "tendencia": {"pts": 25.0}, "contraccion": {"pts": 30.0},
+        "gatillo": {"pts": 15.0}, "penalizacion": {"pts": 0.0, "flags": []}, "rs_crudo": [0.5, 0.4, 0.3],
         "fr_sobre_sma50": True,
     }
     calc.update(extra)
@@ -124,17 +124,17 @@ def test_no_usd_queda_sin_total():
 
 class TestPilarFuerza:
     def test_via_nivel_y_tope(self):
-        assert ws_pilar_fuerza(75, 70, 60, False)["pts"] == 20.0
-        assert ws_pilar_fuerza(95, 90, 80, True)["pts"] == 25.0  # 20 + 5, tope 25
+        assert ws_pilar_fuerza(75, 70, 60, False)["pts"] == 24.0
+        assert ws_pilar_fuerza(95, 90, 80, True)["pts"] == 30.0  # 24 + 6, tope 30
         assert ws_pilar_fuerza(45, 45, 45, False)["pts"] == 0.0
 
     def test_via_delta_premia_la_mejora(self):
-        # RS 60 (nivel = 10) pero subio 20 puntos en el mes -> delta = 20
+        # RS 60 (nivel = 12) pero subio 20 puntos en el mes -> delta = 24 (tope)
         b = ws_pilar_fuerza(60, 58, 40, False)
-        assert b["via_nivel"] == 10.0 and b["via_delta"] == 20.0 and b["pts"] == 20.0
+        assert b["via_nivel"] == 12.0 and b["via_delta"] == 24.0 and b["pts"] == 24.0
         # si cayo mas de 5 en la semana, la via delta no cuenta
         assert ws_pilar_fuerza(60, 70, 40, False)["via_delta"] == 0.0
 
     def test_sin_rs_reescala_la_linea_de_fr(self):
-        assert ws_pilar_fuerza(None, None, None, True)["pts"] == 25.0
+        assert ws_pilar_fuerza(None, None, None, True)["pts"] == 30.0
         assert ws_pilar_fuerza(None, None, None, False)["pts"] == 0.0

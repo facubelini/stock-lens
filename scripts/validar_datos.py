@@ -43,7 +43,7 @@ RAIZ = Path(__file__).resolve().parent.parent
 MAX_CAIDA_FRESCOS = 0.30
 RANGO_VAR_PCT = 60.0
 DIVIDEND_YIELD_MAX = 25.0  # mismo tope que pipeline/fundamentales.py
-MAX_PILARES = {"tendencia": 20, "fuerza": 25, "contraccion": 35, "gatillo": 20}
+MAX_PILARES = {"tendencia": 25, "fuerza": 30, "contraccion": 30, "gatillo": 15}
 VEREDICTOS = {"COMPRA", "CERCA", "VENTA", "EXTENDIDO", "NEUTRAL"}
 STATUS_SCANNER = {"SETUP_LONG", "NEAR_SETUP", "OK", "NO_DATA"}
 STATUS_GLOBAL = {"BUY_BOTH", "BUY_CORTO", "BUY_LARGO", "NEAR_BOTH", "NEAR_CORTO", "NEAR_LARGO", "OK"}
@@ -51,6 +51,7 @@ ESTADOS_VCP = {
     "Armado", "Formándose", "Recién rompió", "Rompió y confirmó", "Rompió sin confirmar", "Rompió y falló",
     "Falló antes de romper",
 }
+CUADRANTES_ROTACION = {"liderando", "debilitando", "recuperando", "rezagando"}
 
 BASE_TICKER = ["ticker", "nombre", "industria", "pais", "stale"]
 CAMPOS = {
@@ -69,7 +70,7 @@ CAMPOS = {
 ARCHIVOS_DATOS = ["listado", "medias", "fundamentales", "screener", "scanner_setups", "comparables", "warren_score",
                   "senales", "meta"]
 ARCHIVOS_OPCIONALES = ["mercado_macro", "historico_fundamental", "fundamental", "oportunidades_historial",
-                       "backtest_screener", "backtest_score"]
+                       "backtest_screener", "backtest_score", "rotacion"]
 
 
 def _es_num(v):
@@ -322,6 +323,51 @@ class Validador:
                 donde = f"senales.json rsi_semanal.{tipo}[{i}] ({x.get('ticker')})"
                 self.rango(donde, "rsi", x.get("rsi"), 0, 100)
                 self.rango(donde, "sma14", x.get("sma14"), 0, 100)
+        sv = d.get("sesiones_volumen")
+        if sv is not None:
+            if not isinstance(sv, list):
+                self.error("senales.json sesiones_volumen: se esperaba una lista")
+            else:
+                for i, x in enumerate(sv):
+                    donde = f"senales.json sesiones_volumen[{i}] ({x.get('ticker') if isinstance(x, dict) else '?'})"
+                    if not isinstance(x, dict) or not {"ticker", "nombre", "dias_alcistas", "score"} <= set(x):
+                        self.error(f"{donde}: se esperaba {{ticker, nombre, dias_alcistas, score, industria}}")
+                        continue
+                    self.rango(donde, "dias_alcistas", x.get("dias_alcistas"), 0, 10, nulo_ok=False)
+                    self.rango(donde, "score", x.get("score"), 0, math.inf, nulo_ok=False)
+
+    def rotacion(self):
+        d = self.cargar("rotacion", obligatorio=False)
+        if d is None:
+            return
+        if not isinstance(d, dict) or not {"actualizado", "semanas", "acciones", "etfs"} <= set(d):
+            self.error("rotacion.json: se esperaba {actualizado, semanas, acciones, etfs, recien_a_lideres, aceleracion_inusual}")
+            return
+        if not isinstance(d.get("semanas"), list):
+            self.error("rotacion.json semanas: se esperaba una lista")
+        n_semanas = len(d["semanas"]) if isinstance(d.get("semanas"), list) else 0
+        for grupo in ("acciones", "etfs"):
+            lista = d.get(grupo)
+            if not isinstance(lista, list):
+                self.error(f"rotacion.json {grupo}: se esperaba una lista")
+                continue
+            for i, f in enumerate(lista):
+                donde = f"rotacion.json {grupo}[{i}] ({f.get('ticker') if isinstance(f, dict) else '?'})"
+                if not isinstance(f, dict) or not {"ticker", "rs_score", "cuadrante", "historial"} <= set(f):
+                    self.error(f"{donde}: se esperaba {{ticker, nombre, sector, market_cap_usd, rs_score, "
+                               "rs_score_semana_ant, cuadrante, historial}}")
+                    continue
+                self.rango(donde, "rs_score", f.get("rs_score"), 0, 100, nulo_ok=False)
+                self.rango(donde, "rs_score_semana_ant", f.get("rs_score_semana_ant"), 0, 100)
+                self.en(donde, "cuadrante", f.get("cuadrante"), CUADRANTES_ROTACION)
+                if not isinstance(f.get("historial"), list) or (n_semanas and len(f["historial"]) != n_semanas):
+                    self.error(f"{donde}.historial: se esperaba una lista de {n_semanas} valore(s)")
+        for i, t in enumerate(d.get("recien_a_lideres") or []):
+            if not isinstance(t, str):
+                self.error(f"rotacion.json recien_a_lideres[{i}]: se esperaba un ticker (texto)")
+        for i, x in enumerate(d.get("aceleracion_inusual") or []):
+            if not isinstance(x, dict) or "ticker" not in x or "fr_sobre_sma50_cruce_reciente" not in x:
+                self.error(f"rotacion.json aceleracion_inusual[{i}]: se esperaba {{ticker, fr_sobre_sma50_cruce_reciente}}")
 
     def meta(self, meta_previo):
         m = self.cargar("meta")
@@ -365,6 +411,24 @@ class Validador:
         self.rango("mercado_macro.json vix", "valor", vix, 0, 200)
         for k in ("fear_greed_cripto", "fear_greed_acciones"):
             self.rango(f"mercado_macro.json {k}", "valor", (d.get(k) or {}).get("valor"), 0, 100)
+        regimen = d.get("regimen")
+        if regimen is not None:
+            if not isinstance(regimen, dict) or not {"score", "max", "criterio_exposicion", "capas"} <= set(regimen):
+                self.error("mercado_macro.json regimen: se esperaba {score, max, criterio_exposicion, capas}")
+                return
+            self.rango("mercado_macro.json regimen", "score", regimen.get("score"), 0, regimen.get("max") or 100, nulo_ok=False)
+            capas = regimen.get("capas")
+            if not isinstance(capas, dict) or not capas:
+                self.error("mercado_macro.json regimen.capas: se esperaba un objeto no vacio")
+                return
+            for nombre, capa in capas.items():
+                donde = f"mercado_macro.json regimen.capas.{nombre}"
+                if not isinstance(capa, dict) or "pts" not in capa or "max" not in capa:
+                    self.error(f"{donde}: se esperaba {{pts, max, detalle}}")
+                    continue
+                self.rango(donde, "pts", capa.get("pts"), 0, capa.get("max") or 0, nulo_ok=False)
+                if nombre == "sentimiento" and "pc_disponible" not in capa:
+                    self.error(f"{donde}: falta 'pc_disponible'")
 
     def historico_fundamental(self):
         # Formato en reescritura: solo se exige un objeto (y, si trae
@@ -504,7 +568,7 @@ def validar(carpeta, solo=None, meta_previo=None):
     reglas = {
         "listado": v.listado, "medias": v.medias, "fundamentales": v.fundamentales, "screener": v.screener,
         "scanner_setups": v.scanner_setups, "comparables": v.comparables, "warren_score": v.warren_score,
-        "senales": v.senales, "meta": lambda: v.meta(meta_previo), "mercado_macro": v.mercado_macro,
+        "senales": v.senales, "rotacion": v.rotacion, "meta": lambda: v.meta(meta_previo), "mercado_macro": v.mercado_macro,
         "historico_fundamental": v.historico_fundamental, "oportunidades_historial": v.oportunidades_historial,
         "fundamental": lambda: v.fundamental(obligatorio=bool(solo)),
         "backtest_screener": lambda: v.backtest("backtest_screener"), "backtest_score": lambda: v.backtest("backtest_score"),

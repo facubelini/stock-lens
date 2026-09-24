@@ -31,6 +31,7 @@ const SECCIONES = [
       { to: '/senales', label: '🎯 Señales' },
       { to: '/screeners', label: '📡 Radar de eventos' },
       { to: '/pre-post', label: '🌗 Pre/Post market' },
+      { to: '/rotacion', label: '🔄 Rotación' },
     ],
   },
   {

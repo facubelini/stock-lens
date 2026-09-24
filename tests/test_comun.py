@@ -7,8 +7,10 @@ import pandas as pd
 import pytest
 
 from comun import (
+    adx_dmi_serie,
     atr_serie,
     borrar_huerfanos,
+    dias_distribucion,
     es_valido,
     escribir_json,
     leer_json,
@@ -110,6 +112,58 @@ class TestATR:
         c = pd.Series([100.0] * n)
         atr = atr_serie(c + 1, c - 1, c, 14)
         assert atr.iloc[-1] == pytest.approx(2.0)
+
+
+class TestADXDMI:
+    def _serie(self, n, paso_pct, rango_pct=1.0, semilla=0):
+        rng = np.random.default_rng(semilla)
+        c = 100 * np.exp(np.cumsum(np.full(n, paso_pct / 100) + rng.normal(0, 0.0005, n)))
+        c = pd.Series(c)
+        h = c * (1 + rango_pct / 100)
+        lo = c * (1 - rango_pct / 100)
+        return h, lo, c
+
+    def test_tendencia_alcista_da_plus_di_mayor_y_adx_alto(self):
+        h, lo, c = self._serie(120, paso_pct=0.8)
+        adx, plus_di, minus_di = adx_dmi_serie(h, lo, c, 14)
+        assert adx.iloc[:14].isna().all()
+        assert plus_di.iloc[-1] > minus_di.iloc[-1]
+        assert adx.iloc[-1] > 25  # tendencia sostenida: ADX deberia marcar fuerza
+
+    def test_tendencia_bajista_da_minus_di_mayor(self):
+        h, lo, c = self._serie(120, paso_pct=-0.8)
+        adx, plus_di, minus_di = adx_dmi_serie(h, lo, c, 14)
+        assert minus_di.iloc[-1] > plus_di.iloc[-1]
+        assert adx.iloc[-1] > 25
+
+    def test_lateral_da_adx_bajo(self):
+        rng = np.random.default_rng(2)
+        n = 120
+        c = pd.Series(100 + rng.normal(0, 0.3, n).cumsum() * 0.05)  # ruido chico sin tendencia
+        h, lo = c + 1, c - 1
+        adx, _, _ = adx_dmi_serie(h, lo, c, 14)
+        assert adx.iloc[-1] < 25
+
+
+class TestDiasDistribucion:
+    def test_cuenta_bajas_con_volumen_mayor_al_dia_anterior(self):
+        # 5 ruedas: sube, baja 0.5% con volumen mayor (cuenta), sube,
+        # baja 1% con volumen MENOR al dia anterior (no cuenta), sube.
+        close = pd.Series([100.0, 101.0, 100.5, 101.5, 100.485, 101.5])
+        volumen = pd.Series([1_000_000, 1_000_000, 1_500_000, 1_000_000, 900_000, 1_000_000])
+        assert dias_distribucion(close, volumen, ventana=10, caida_pct=0.2) == 1
+
+    def test_baja_chica_no_cuenta(self):
+        # baja de solo 0.1% (< 0.2%) con volumen mayor: no es dia de distribucion.
+        close = pd.Series([100.0, 101.0, 100.9])
+        volumen = pd.Series([1_000_000, 1_000_000, 1_500_000])
+        assert dias_distribucion(close, volumen, ventana=10, caida_pct=0.2) == 0
+
+    def test_ventana_recorta_a_las_ultimas_n_ruedas(self):
+        # 1 dia de distribucion viejo (fuera de la ventana de 3) + ninguno reciente.
+        close = pd.Series([100.0, 101.0, 100.5, 101.0, 101.5, 102.0])
+        volumen = pd.Series([1_000_000, 1_000_000, 1_500_000, 1_000_000, 1_000_000, 1_000_000])
+        assert dias_distribucion(close, volumen, ventana=3, caida_pct=0.2) == 0
 
 
 class TestNumSig:

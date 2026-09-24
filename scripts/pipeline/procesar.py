@@ -247,7 +247,7 @@ def procesar_ticker(fila, sym, hist, info_datos, ctx):
     except Exception as e:  # noqa: BLE001
         print(f"  ! {sym}: señales sin calcular ({type(e).__name__}: {e})")
         senales = None
-    filas["senales"] = {"ticker": sym, "nombre": nombre, "senales": senales}
+    filas["senales"] = {"ticker": sym, "nombre": nombre, "industria": industria, "senales": senales}
     return filas
 
 

@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { fmtPct, fmtMarketCap, estiloValor } from '../lib/formato'
 import ComoSeCalcula, { Formula } from './ComoSeCalcula'
+import LogoTicker from './LogoTicker'
 
 // Heatmap "treemap" por ticker (no por promedio de industria): cada
 // recuadro es UN ticker, agrupado por industria en bloques (no un algoritmo
@@ -36,6 +37,7 @@ function Recuadro({ f, lado }) {
       style={{ ...estiloValor(f.var_pct, 6), width: lado, height: Math.round(lado * 0.62) }}
       className="flex shrink-0 flex-col items-center justify-center overflow-hidden rounded border border-black/20 px-1 text-center leading-tight hover:z-10 hover:scale-[1.06] hover:border-terminal-accent"
     >
+      {lado >= 64 && <LogoTicker ticker={f.ticker} tam={18} className="mb-0.5" />}
       <span className="truncate text-[10px] font-bold">{f.ticker}</span>
       {lado >= 64 && <span className="text-[9px] tabular opacity-90">{fmtPct(f.var_pct, { signo: true })}</span>}
     </Link>

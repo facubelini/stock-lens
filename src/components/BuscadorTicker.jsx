@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { inputCls } from '../lib/estilos'
+import LogoTicker from './LogoTicker'
 
 // Buscador con autocompletado por ticker/nombre — compartido entre
 // Herramientas.jsx (comparador, alertas, DCA) y TickerDetalle.jsx (competidores a mano).
@@ -34,10 +35,11 @@ export default function BuscadorTicker({ filas, excluir = [], onAdd, placeholder
                 onAdd(f.ticker)
                 setQ('')
               }}
-              className="block w-full truncate px-2.5 py-1.5 text-left text-sm hover:bg-terminal-panel2"
+              className="flex w-full items-center gap-1.5 truncate px-2.5 py-1.5 text-left text-sm hover:bg-terminal-panel2"
             >
+              <LogoTicker ticker={f.ticker} tam={16} />
               <span className="font-semibold text-terminal-text">{f.ticker}</span>{' '}
-              <span className="text-terminal-dim">{f.nombre}</span>
+              <span className="truncate text-terminal-dim">{f.nombre}</span>
             </button>
           ))}
         </div>

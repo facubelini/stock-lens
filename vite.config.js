@@ -6,15 +6,16 @@ import react from '@vitejs/plugin-react'
 // bloquearia. connect-src lista todos los hosts a los que la app hace fetch
 // (grep de fetch(/https:// en src/): GitHub API (alta/baja de tickers),
 // rss2json (noticias), Binance futuros/spot/data-api (cripto) y sus streams
-// websocket. Si se agrega un fetch a otro host, sumarlo aca o el navegador lo
-// bloquea en produccion.
+// websocket. img-src suma financialmodelingprep.com (logos de empresas,
+// LogoTicker.jsx). Si se agrega un fetch/imagen de otro host, sumarlo aca o
+// el navegador lo bloquea en produccion.
 const CSP = [
   "default-src 'self'",
   "script-src 'self'",
   // 'unsafe-inline' en estilos: React aplica style={{...}} en muchos componentes.
   "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
   "font-src 'self' https://fonts.gstatic.com",
-  "img-src 'self' data:",
+  "img-src 'self' data: https://financialmodelingprep.com",
   [
     "connect-src 'self'",
     'https://api.github.com',

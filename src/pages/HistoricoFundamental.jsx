@@ -15,6 +15,7 @@ import { fmtFecha } from '../lib/formato'
 import { exportarCSV } from '../lib/csv'
 import GraficoHistorico from '../components/GraficoHistorico'
 import BuscadorTicker from '../components/BuscadorTicker'
+import LogoTicker from '../components/LogoTicker'
 import ComoSeCalcula, { Formula } from '../components/ComoSeCalcula'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 import { btnCls } from '../lib/estilos'
@@ -212,6 +213,7 @@ export default function HistoricoFundamental() {
                 title={s.info?.nombre ?? ''}
               >
                 <span className="inline-block h-2.5 w-2.5 rounded-sm" style={{ backgroundColor: s.color }} />
+                <LogoTicker ticker={s.id} tam={16} />
                 <Link to={`/ticker/${encodeURIComponent(s.id)}`} className="font-semibold text-terminal-text hover:text-terminal-accent">
                   {s.id}
                 </Link>

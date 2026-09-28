@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useJson } from '../lib/useJson'
+import LogoTicker from './LogoTicker'
 
 const MAX_RESULTADOS = 8
 
@@ -141,8 +142,12 @@ export default function ComandoPaleta() {
                     i === activo ? 'bg-terminal-accent/15 text-terminal-text' : 'text-terminal-dim'
                   }`}
                 >
-                  <span className="font-semibold text-terminal-text">
-                    {item.tipo === 'crypto' ? '🪙 ' : '📈 '}
+                  <span className="flex items-center gap-1.5 font-semibold text-terminal-text">
+                    {item.tipo === 'crypto' ? (
+                      '🪙 '
+                    ) : (
+                      <LogoTicker ticker={item.ticker} tam={18} />
+                    )}
                     {item.tipo === 'crypto' ? item.ticker.replace('USDT', '/USDT') : item.ticker}
                   </span>
                   <span className="truncate text-xs text-terminal-dim">{item.nombre}</span>

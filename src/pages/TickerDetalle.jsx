@@ -33,6 +33,7 @@ import Sparkline from '../components/Sparkline'
 import BotonPin from '../components/BotonPin'
 import EditorClasificacion from '../components/EditorClasificacion'
 import TickerLink from '../components/TickerLink'
+import LogoTicker from '../components/LogoTicker'
 import BuscadorTicker from '../components/BuscadorTicker'
 import GraficoEstacionalidad from '../components/GraficoEstacionalidad'
 import MarcaStale, { fechaDeFila } from '../components/MarcaStale'
@@ -720,6 +721,7 @@ export default function TickerDetalle() {
       <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="flex flex-wrap items-center gap-2">
+            <LogoTicker ticker={ticker} tam={40} />
             <h1 className="text-2xl font-bold text-terminal-text">{ticker}</h1>
             {warrenFila?.rank != null && (
               <Link

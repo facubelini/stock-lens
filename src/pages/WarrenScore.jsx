@@ -5,6 +5,7 @@ import { fmtFecha, fmtNum, fmtPct } from '../lib/formato'
 import { compararValores } from '../lib/ordenar'
 import { inputCls, selectCls } from '../lib/estilos'
 import TickerLink from '../components/TickerLink'
+import LogoTicker from '../components/LogoTicker'
 import Modal from '../components/Modal'
 import EncabezadoOrdenable from '../components/EncabezadoOrdenable'
 import { Formula } from '../components/ComoSeCalcula'
@@ -86,6 +87,7 @@ function TarjetaPodio({ fila, puesto, onAbrir }) {
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-1.5">
             <span aria-hidden="true">{medalla}</span>
+            <LogoTicker ticker={fila.ticker} tam={28} />
             <span className="font-bold text-terminal-text">{fila.ticker}</span>
             {fila.penalizacion?.flags?.length > 0 && <Banderas flags={fila.penalizacion.flags} />}
           </div>
@@ -294,7 +296,7 @@ function PanelDetalle({ fila, onCerrar }) {
     >
       <div className="sticky top-0 z-10 flex items-center gap-2 border-b border-terminal-border bg-terminal-panel px-4 py-3">
         <div className="min-w-0 flex-1">
-          <TickerLink ticker={fila.ticker} className="font-semibold text-terminal-text" />
+          <TickerLink ticker={fila.ticker} className="font-semibold text-terminal-text" tamLogo={24} />
           <div className="truncate text-[11px] text-terminal-dim">{fila.nombre}</div>
         </div>
         <button

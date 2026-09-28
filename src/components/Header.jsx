@@ -23,6 +23,7 @@ const SECCIONES = [
     id: 'screening',
     label: 'Screening',
     items: [
+      { to: '/candidatos', label: '✅ Candidatos de Compra' },
       { to: '/screener', label: 'Screener técnico' },
       { to: '/scanner', label: '🔭 Scanner de setups' },
       { to: '/top', label: '🔥 Top Señales' },

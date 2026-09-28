@@ -1,18 +1,25 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { useJson } from '../lib/useJson'
-import { armarCandidatos, UMBRAL_FUERZA, UMBRAL_CONTRACCION, EMA200_DIARIO_MAX_HACE, EMA200_SEMANAL_MAX_HACE } from '../lib/candidatos'
+import { armarCandidatos, FILTROS_DEFAULT } from '../lib/candidatos'
+import { selectCls, inputCls, btnCls } from '../lib/estilos'
 import TickerLink from '../components/TickerLink'
 import LogoTicker from '../components/LogoTicker'
 import ComoSeCalcula, { Formula } from '../components/ComoSeCalcula'
-import { Anillo, colorScore } from '../components/WarrenScoreVisual'
+import { Anillo } from '../components/WarrenScoreVisual'
 import { TablaSkeleton, MensajeError } from '../components/Estados'
 import { fmtNum, fmtFecha } from '../lib/formato'
 
-// "Candidatos de compra": corre todo el embudo de una vez (Rotación -> Warren
-// Score -> gatillo tecnico -> Screener) y arma, por ticker, los positivos y
-// negativos con numeros reales. La logica del embudo vive entera en
-// lib/candidatos.js (funciones puras, testeadas aparte) — esta pagina solo
-// trae los datos y renderiza.
+// "Candidatos de compra": corre todo el embudo de la app de una vez (Warren
+// Score -> Rotación -> gatillo tecnico -> Screener) y arma, por ticker, los
+// positivos y negativos con numeros reales. La logica del embudo vive entera
+// en lib/candidatos.js (funciones puras, testeadas aparte, parametrizables
+// via `filtros`) — esta pagina trae los datos, guarda los filtros elegidos en
+// el estado y renderiza.
+//
+// El panel de parametros arranca siempre en FILTROS_DEFAULT ("el escenario
+// ideal" con el que se probo el embudo la primera vez) — mover una perilla
+// solo afecta a esta sesion del navegador, nunca cambia el default de nadie
+// mas ni se guarda.
 //
 // IMPORTANTE (ver charla con el usuario): pasar el embudo NO es una senal de
 // compra garantizada. Es una combinacion de reglas sobre señales que ya se
@@ -20,8 +27,116 @@ import { fmtNum, fmtFecha } from '../lib/formato'
 // Señales y Warren Score) — la mayoria de esas señales, solas, apenas le
 // ganan al azar. Juntarlas reduce el universo a los que alinean varias cosas
 // a la vez, que es lo unico que en el backtest mostro algo de ventaja real.
+// Aflojar los parametros deja ver "que aparecería" con un criterio mas laxo
+// — no que esos tickers tengan la misma evidencia detras.
+
+const OPCIONES_CUADRANTE = [
+  { valor: 'liderando', etiqueta: 'Liderando (estricto)' },
+  { valor: 'liderando_recuperando', etiqueta: 'Liderando o Recuperando' },
+  { valor: 'cualquiera', etiqueta: 'Cualquiera (sin filtro)' },
+]
+
+function PanelFiltros({ filtros, setFiltros }) {
+  const set = (patch) => setFiltros((f) => ({ ...f, ...patch }))
+  const esDefault = JSON.stringify(filtros) === JSON.stringify(FILTROS_DEFAULT)
+
+  return (
+    <details className="mb-4 rounded-lg border border-terminal-border bg-terminal-panel" open>
+      <summary className="cursor-pointer select-none px-3 py-2 text-xs font-semibold text-terminal-text hover:text-terminal-accent">
+        🎛️ Parámetros del embudo {!esDefault && <span className="ml-1 text-terminal-accent">(modificados)</span>}
+      </summary>
+      <div className="grid grid-cols-1 gap-3 border-t border-terminal-border p-3 sm:grid-cols-2 lg:grid-cols-3">
+        <label className="text-[11px] text-terminal-dim">
+          Fuerza RS mínima: <span className="text-terminal-text">{Math.round(filtros.umbralFuerza * 100)}%</span> de su
+          máximo
+          <input
+            type="range"
+            min={0}
+            max={100}
+            step={5}
+            value={Math.round(filtros.umbralFuerza * 100)}
+            onChange={(e) => set({ umbralFuerza: Number(e.target.value) / 100 })}
+            className="mt-1 w-full accent-terminal-accent"
+          />
+        </label>
+        <label className="text-[11px] text-terminal-dim">
+          Contracción mínima: <span className="text-terminal-text">{Math.round(filtros.umbralContraccion * 100)}%</span>{' '}
+          de su máximo
+          <input
+            type="range"
+            min={0}
+            max={100}
+            step={5}
+            value={Math.round(filtros.umbralContraccion * 100)}
+            onChange={(e) => set({ umbralContraccion: Number(e.target.value) / 100 })}
+            className="mt-1 w-full accent-terminal-accent"
+          />
+        </label>
+        <label className="text-[11px] text-terminal-dim">
+          Rotación: cuadrante exigido
+          <select value={filtros.cuadrante} onChange={(e) => set({ cuadrante: e.target.value })} className={`mt-1 w-full ${selectCls}`}>
+            {OPCIONES_CUADRANTE.map((o) => (
+              <option key={o.valor} value={o.valor}>
+                {o.etiqueta}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="text-[11px] text-terminal-dim">
+          Ventana del gatillo — EMA200 diaria (ruedas)
+          <input
+            type="number"
+            min={1}
+            max={60}
+            value={filtros.ema200DiarioMaxHace}
+            onChange={(e) => set({ ema200DiarioMaxHace: Math.max(1, Number(e.target.value) || 1) })}
+            className={`mt-1 w-full ${inputCls}`}
+          />
+        </label>
+        <label className="text-[11px] text-terminal-dim">
+          Ventana del gatillo — EMA200 semanal (semanas)
+          <input
+            type="number"
+            min={1}
+            max={26}
+            value={filtros.ema200SemanalMaxHace}
+            onChange={(e) => set({ ema200SemanalMaxHace: Math.max(1, Number(e.target.value) || 1) })}
+            className={`mt-1 w-full ${inputCls}`}
+          />
+        </label>
+        <label className="text-[11px] text-terminal-dim">
+          Screener: mínimo de temporalidades en COMPRA/CERCA
+          <select
+            value={filtros.minTemporalidadesScreener}
+            onChange={(e) => set({ minTemporalidadesScreener: Number(e.target.value) })}
+            className={`mt-1 w-full ${selectCls}`}
+          >
+            <option value={1}>1 de 3</option>
+            <option value={2}>2 de 3</option>
+            <option value={3}>3 de 3</option>
+          </select>
+        </label>
+        <label className="flex items-center gap-2 text-[11px] text-terminal-dim">
+          <input type="checkbox" checked={filtros.exigirSinVenta} onChange={(e) => set({ exigirSinVenta: e.target.checked })} />
+          Descartar si alguna temporalidad del Screener está en VENTA
+        </label>
+        <label className="flex items-center gap-2 text-[11px] text-terminal-dim">
+          <input type="checkbox" checked={filtros.modoEstricto} onChange={(e) => set({ modoEstricto: e.target.checked })} />
+          Modo estricto: excluir también banderas de agotamiento/sobreextensión (no solo 🩸/⛔)
+        </label>
+        <div className="flex items-end">
+          <button type="button" onClick={() => setFiltros(FILTROS_DEFAULT)} disabled={esDefault} className={`${btnCls} disabled:opacity-40`}>
+            ↺ Volver al escenario ideal
+          </button>
+        </div>
+      </div>
+    </details>
+  )
+}
 
 export default function Candidatos() {
+  const [filtros, setFiltros] = useState(FILTROS_DEFAULT)
+
   const { data: warrenData, cargando: c1, error: e1 } = useJson('warren_score.json')
   const { data: senalesData, cargando: c2, error: e2 } = useJson('senales.json')
   const { data: screenerData, cargando: c3, error: e3 } = useJson('screener.json')
@@ -44,8 +159,9 @@ export default function Candidatos() {
         comparablesRows: Array.isArray(comparablesData) ? comparablesData : [],
         fundamentalesRows: Array.isArray(fundamentalesData) ? fundamentalesData : (fundamentalesData?.acciones ?? []),
         fundamentalIndice: Array.isArray(indiceData) ? indiceData : [],
+        filtros,
       }),
-    [warrenData, senalesData, screenerData, rotacionData, comparablesData, fundamentalesData, indiceData]
+    [warrenData, senalesData, screenerData, rotacionData, comparablesData, fundamentalesData, indiceData, filtros]
   )
 
   const regimen = macroData?.regimen
@@ -77,6 +193,8 @@ export default function Candidatos() {
         </div>
       )}
 
+      <PanelFiltros filtros={filtros} setFiltros={setFiltros} />
+
       {cargando && <TablaSkeleton filas={4} columnas={4} />}
       {!cargando && error && <MensajeError mensaje={String(error)} />}
 
@@ -96,8 +214,8 @@ export default function Candidatos() {
 
           {candidatos.length === 0 ? (
             <div className="rounded-lg border border-terminal-border bg-terminal-panel p-8 text-center text-sm text-terminal-dim">
-              Ningún ticker pasa hoy los 5 filtros del embudo completo. Es un resultado válido — no siempre tiene que
-              haber candidatos, sobre todo con el mercado en un régimen bajo.
+              Ningún ticker pasa hoy estos filtros. Es un resultado válido — no siempre tiene que haber candidatos.
+              Probá aflojar algún parámetro de arriba para ver qué aparecería con un criterio menos exigente.
             </div>
           ) : (
             <div className="flex flex-col gap-3">
@@ -164,31 +282,36 @@ export default function Candidatos() {
       <ComoSeCalcula titulo="¿Cómo se arma este listado?" className="mt-4">
         <p>
           Cinco filtros en cadena, cada uno sobre el resultado del anterior. Un ticker que llega al final pasó los
-          cinco a la vez:
+          cinco a la vez. El panel <b className="text-terminal-text">🎛️ Parámetros del embudo</b> arranca siempre en
+          el escenario que se probó primero (los valores de abajo) — moverlo solo cambia lo que ves en esta sesión.
         </p>
         <p>
           <b className="text-terminal-text">1. Gate de tendencia</b>: mismo gate del Warren Score — precio sobre la
-          EMA200 (si no, ya quedó afuera del ranking con score topeado en 40).
+          EMA200 (si no, ya quedó afuera del ranking con score topeado en 40). No es ajustable.
         </p>
         <p>
           <b className="text-terminal-text">2. Pilares sólidos</b>:{' '}
-          <Formula>Fuerza RS ≥ {Math.round(UMBRAL_FUERZA * 100)}%</Formula> y{' '}
-          <Formula>Contracción ≥ {Math.round(UMBRAL_CONTRACCION * 100)}%</Formula> de su propio máximo, y sin las dos
-          banderas más graves del Warren Score (🩸 distribución, ⛔ breakout fallido).
+          <Formula>Fuerza RS ≥ {Math.round(FILTROS_DEFAULT.umbralFuerza * 100)}%</Formula> y{' '}
+          <Formula>Contracción ≥ {Math.round(FILTROS_DEFAULT.umbralContraccion * 100)}%</Formula> de su propio máximo
+          por defecto, y sin las dos banderas más graves del Warren Score (🩸 distribución, ⛔ breakout fallido) — en
+          modo estricto también sin 🎈 sobreextensión, 💥 reversión con volumen, 🐘 churning y las divergencias 📉/🪫.
         </p>
         <p>
-          <b className="text-terminal-text">3. Rotación</b>: cuadrante Liderando (o recién entrando ahí — "Recién a
-          Líderes"/"Aceleración inusual" de la pantalla Rotación).
+          <b className="text-terminal-text">3. Rotación</b>: cuadrante Liderando por defecto (o recién entrando ahí —
+          "Recién a Líderes"/"Aceleración inusual" de la pantalla Rotación); se puede aflojar a incluir Recuperando, o
+          sacar el filtro entero.
         </p>
         <p>
           <b className="text-terminal-text">4. Gatillo técnico</b>: al menos una de estas tres, que son las que
           mostraron ventaja real en el backtest de 5 años — base VCP en estado Armado/Recién rompió/Rompió y
-          confirmó, rebote o cruce de la EMA200 (diario ≤{EMA200_DIARIO_MAX_HACE} ruedas, semanal ≤
-          {EMA200_SEMANAL_MAX_HACE} semanas), o cruce alcista del RSI semanal sobre su propia media.
+          confirmó, rebote o cruce de la EMA200 (ventana ajustable, por defecto diario ≤{FILTROS_DEFAULT.ema200DiarioMaxHace}{' '}
+          ruedas y semanal ≤{FILTROS_DEFAULT.ema200SemanalMaxHace} semanas), o cruce alcista del RSI semanal sobre su
+          propia media.
         </p>
         <p>
-          <b className="text-terminal-text">5. Screener técnico alineado</b>: COMPRA o CERCA en al menos 2 de las 3
-          temporalidades (diario/semanal/mensual), y ninguna en VENTA.
+          <b className="text-terminal-text">5. Screener técnico alineado</b>: COMPRA o CERCA en al menos{' '}
+          {FILTROS_DEFAULT.minTemporalidadesScreener} de las 3 temporalidades (diario/semanal/mensual) por defecto, y
+          ninguna en VENTA (también ajustable).
         </p>
         <p>
           Los <b className="text-terminal-text">positivos y negativos</b> de cada candidato no son un texto genérico:
@@ -198,8 +321,8 @@ export default function Candidatos() {
         </p>
         <p>
           <b className="text-terminal-warn">Ojo</b>: esto combina reglas sobre señales que ya midió el backtest por
-          separado — la mayoría, solas, apenas superan al azar. Pasar los 5 filtros reduce el universo a los que
-          alinean varias cosas, que es lo único que mostró algo de ventaja real; no es una garantía de resultado.
+          separado — la mayoría, solas, apenas superan al azar. Aflojar un parámetro deja ver qué aparecería con un
+          criterio menos exigente, no que esos tickers tengan la misma evidencia detrás que el escenario por defecto.
         </p>
       </ComoSeCalcula>
     </div>

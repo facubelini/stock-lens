@@ -154,3 +154,60 @@ describe('armarCandidatos — embudo completo', () => {
     expect(candidatos.map((c) => c.ticker)).toEqual(['UNO', 'DOS'])
   })
 })
+
+describe('armarCandidatos — panel de parametros', () => {
+  it('aflojar el umbral de Fuerza RS deja pasar la etapa de pilares a alguien que antes no pasaba', () => {
+    const w = warrenBase('FLOJO', { pilares: { ...warrenBase('FLOJO').pilares, fuerza: pilar(10, 30) } }) // 33%
+    const conDefault = armarCandidatos({ warrenRows: [w] })
+    expect(conDefault.embudo[2].cantidad).toBe(0)
+    const conFiltroFlojo = armarCandidatos({ warrenRows: [w], filtros: { umbralFuerza: 0.3 } })
+    expect(conFiltroFlojo.embudo[2].cantidad).toBe(1)
+  })
+
+  it('cuadrante "cualquiera" salta el filtro de Rotación por completo', () => {
+    const w = warrenBase('REZAGADO')
+    const rotacion = { acciones: [{ ...rotacionLiderando('REZAGADO'), cuadrante: 'rezagando' }] }
+    expect(armarCandidatos({ warrenRows: [w], rotacion }).embudo[3].cantidad).toBe(0)
+    expect(armarCandidatos({ warrenRows: [w], rotacion, filtros: { cuadrante: 'cualquiera' } }).embudo[3].cantidad).toBe(1)
+  })
+
+  it('cuadrante "liderando_recuperando" deja pasar Recuperando ademas de Liderando', () => {
+    const w = warrenBase('RECUP')
+    const rotacion = { acciones: [{ ...rotacionLiderando('RECUP'), cuadrante: 'recuperando' }] }
+    expect(armarCandidatos({ warrenRows: [w], rotacion, filtros: { cuadrante: 'liderando_recuperando' } }).embudo[3].cantidad).toBe(1)
+  })
+
+  it('bajar minTemporalidadesScreener a 1 deja pasar con una sola temporalidad en COMPRA/CERCA', () => {
+    const w = warrenBase('UNASOLA')
+    const rotacion = { acciones: [rotacionLiderando('UNASOLA')] }
+    const senales = { vcp: [vcpArmado('UNASOLA')] }
+    const screenerRows = [{ ticker: 'UNASOLA', diario: { verdict: 'COMPRA' }, semanal: { verdict: 'NEUTRAL' }, mensual: { verdict: 'NEUTRAL' } }]
+    expect(armarCandidatos({ warrenRows: [w], rotacion, senales, screenerRows }).embudo[5].cantidad).toBe(0)
+    expect(armarCandidatos({ warrenRows: [w], rotacion, senales, screenerRows, filtros: { minTemporalidadesScreener: 1 } }).embudo[5].cantidad).toBe(1)
+  })
+
+  it('exigirSinVenta en false deja pasar aunque una temporalidad este en VENTA', () => {
+    const w = warrenBase('CONVENTA')
+    const rotacion = { acciones: [rotacionLiderando('CONVENTA')] }
+    const senales = { vcp: [vcpArmado('CONVENTA')] }
+    const screenerRows = [{ ticker: 'CONVENTA', diario: { verdict: 'COMPRA' }, semanal: { verdict: 'CERCA' }, mensual: { verdict: 'VENTA' } }]
+    expect(armarCandidatos({ warrenRows: [w], rotacion, senales, screenerRows }).embudo[5].cantidad).toBe(0)
+    expect(armarCandidatos({ warrenRows: [w], rotacion, senales, screenerRows, filtros: { exigirSinVenta: false } }).embudo[5].cantidad).toBe(1)
+  })
+
+  it('modoEstricto excluye ademas banderas de agotamiento (no solo 🩸/⛔)', () => {
+    const w = warrenBase('AGOTADO', { penalizacion: { pts: -6, flags: [{ emoji: '🎈', clave: 'sobreextension', pts: -6, detalle: 'x' }] } })
+    expect(armarCandidatos({ warrenRows: [w] }).embudo[2].cantidad).toBe(1) // por default no excluye 🎈
+    expect(armarCandidatos({ warrenRows: [w], filtros: { modoEstricto: true } }).embudo[2].cantidad).toBe(0)
+  })
+
+  it('sin filtros explicitos, arma el mismo resultado que con FILTROS_DEFAULT (el escenario ideal por defecto)', () => {
+    const w = warrenBase('IGUAL')
+    const rotacion = { acciones: [rotacionLiderando('IGUAL')] }
+    const senales = { vcp: [vcpArmado('IGUAL')] }
+    const screenerRows = [screenerAlineado('IGUAL')]
+    const a = armarCandidatos({ warrenRows: [w], rotacion, senales, screenerRows })
+    const b = armarCandidatos({ warrenRows: [w], rotacion, senales, screenerRows, filtros: {} })
+    expect(a.candidatos.map((c) => c.ticker)).toEqual(b.candidatos.map((c) => c.ticker))
+  })
+})

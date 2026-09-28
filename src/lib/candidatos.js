@@ -19,15 +19,29 @@ import { fmtNum } from './formato'
 import { TIMEFRAMES, tieneSenal } from './screenerEstilos'
 import { calcularDescuento, evaluarCalidad, señalesTrampaValor } from './valuacion'
 
-export const UMBRAL_FUERZA = 0.6 // fraccion del maximo del pilar Fuerza RS
-export const UMBRAL_CONTRACCION = 0.5 // idem Contraccion (mas ruidoso: umbral mas bajo)
 export const VCP_ESTADOS_GATILLO = new Set(['Armado', 'Recién rompió', 'Rompió y confirmó'])
-export const FLAGS_EXCLUYENTES = new Set(['distribucion', 'breakout_fallido']) // 🩸 y ⛔: se sacan del todo
-export const EMA200_DIARIO_MAX_HACE = 10 // ruedas
-export const EMA200_SEMANAL_MAX_HACE = 4 // semanas
+// 🩸 y ⛔ siempre se sacan del todo (son las dos banderas mas graves); en modo
+// estricto se suman las de agotamiento/sobreextension.
+export const FLAGS_EXCLUYENTES_BASE = new Set(['distribucion', 'breakout_fallido'])
+export const FLAGS_EXCLUYENTES_ESTRICTO = new Set(['sobreextension', 'reversion_volumen', 'churning', 'divergencia_rsi', 'divergencia_obv'])
 export const RATIOS_CAROS = { pe: 'P/E', ps: 'P/S', ev_sales: 'EV/Sales', ev_ebitda: 'EV/EBITDA', p_fcf: 'P/FCF', pb: 'P/B' }
 export const PERCENTIL_CARO = 80
 export const PERCENTIL_BARATO = 25
+
+// "Escenario ideal": los valores con los que se armo y probo el embudo la
+// primera vez. Es lo que ve el usuario por defecto en la pantalla; el panel
+// de parametros permite aflojar o endurecer cada corte para explorar que
+// aparece (o deja de aparecer) al mover cada perilla.
+export const FILTROS_DEFAULT = {
+  umbralFuerza: 0.6, // fraccion del maximo del pilar Fuerza RS
+  umbralContraccion: 0.5, // idem Contraccion (mas ruidoso: umbral mas bajo)
+  cuadrante: 'liderando', // 'liderando' | 'liderando_recuperando' | 'cualquiera'
+  ema200DiarioMaxHace: 10, // ruedas
+  ema200SemanalMaxHace: 4, // semanas
+  minTemporalidadesScreener: 2, // 1, 2 o 3
+  exigirSinVenta: true, // ninguna temporalidad del Screener en VENTA
+  modoEstricto: false, // tambien excluye banderas de agotamiento, no solo 🩸/⛔
+}
 
 const CUADRANTES = {
   liderando: 'Liderando',
@@ -52,42 +66,44 @@ function pasaGateTendencia(w) {
   return !(w.caps ?? []).some((c) => c === 'gate_ema200' || c === 'sin_52w')
 }
 
-function pasaPilares(w) {
+function pasaPilares(w, filtros, flagsExcluyentes) {
   const f = w.pilares?.fuerza
   const c = w.pilares?.contraccion
   if (!f || !c || !f.max || !c.max) return false
-  const flagsExcluyentes = (w.penalizacion?.flags ?? []).some((fl) => FLAGS_EXCLUYENTES.has(fl.clave))
-  if (flagsExcluyentes) return false
-  return f.pts / f.max >= UMBRAL_FUERZA && c.pts / c.max >= UMBRAL_CONTRACCION
+  const tieneFlagExcluyente = (w.penalizacion?.flags ?? []).some((fl) => flagsExcluyentes.has(fl.clave))
+  if (tieneFlagExcluyente) return false
+  return f.pts / f.max >= filtros.umbralFuerza && c.pts / c.max >= filtros.umbralContraccion
 }
 
-function pasaRotacion(ticker, rotacionPorTicker, recienALideres, aceleracionInusual) {
-  const r = rotacionPorTicker.get(ticker)
+function pasaRotacion(ticker, rotacionPorTicker, recienALideres, aceleracionInusual, filtros) {
+  if (filtros.cuadrante === 'cualquiera') return true
   if (recienALideres.has(ticker) || aceleracionInusual.has(ticker)) return true
-  return r?.cuadrante === 'liderando'
+  const cuadrante = rotacionPorTicker.get(ticker)?.cuadrante
+  if (filtros.cuadrante === 'liderando_recuperando') return cuadrante === 'liderando' || cuadrante === 'recuperando'
+  return cuadrante === 'liderando'
 }
 
-function gatillos(ticker, ctx) {
+function gatillos(ticker, ctx, filtros) {
   const salida = []
   const vcp = ctx.vcpPorTicker.get(ticker)
   if (vcp && VCP_ESTADOS_GATILLO.has(vcp.estado)) salida.push('vcp')
   const ed = ctx.senales.ema200?.diario ?? {}
   const es = ctx.senales.ema200?.semanal ?? {}
-  const rebDiario = (ed.rebote ?? []).find((r) => r.ticker === ticker && r.hace <= EMA200_DIARIO_MAX_HACE)
-  const cruceDiario = (ed.cruce ?? []).find((r) => r.ticker === ticker && r.hace <= EMA200_DIARIO_MAX_HACE)
-  const rebSemanal = (es.rebote ?? []).find((r) => r.ticker === ticker && r.hace <= EMA200_SEMANAL_MAX_HACE)
-  const cruceSemanal = (es.cruce ?? []).find((r) => r.ticker === ticker && r.hace <= EMA200_SEMANAL_MAX_HACE)
+  const rebDiario = (ed.rebote ?? []).find((r) => r.ticker === ticker && r.hace <= filtros.ema200DiarioMaxHace)
+  const cruceDiario = (ed.cruce ?? []).find((r) => r.ticker === ticker && r.hace <= filtros.ema200DiarioMaxHace)
+  const rebSemanal = (es.rebote ?? []).find((r) => r.ticker === ticker && r.hace <= filtros.ema200SemanalMaxHace)
+  const cruceSemanal = (es.cruce ?? []).find((r) => r.ticker === ticker && r.hace <= filtros.ema200SemanalMaxHace)
   if (rebDiario || cruceDiario || rebSemanal || cruceSemanal) salida.push('ema200')
   const rsiAlcista = (ctx.senales.rsi_semanal?.alcista ?? []).find((r) => r.ticker === ticker)
   if (rsiAlcista) salida.push('rsi_semanal')
   return salida
 }
 
-function pasaScreener(fila) {
+function pasaScreener(fila, filtros) {
   if (!fila) return false
   const conSenal = TIMEFRAMES.filter(({ key }) => tieneSenal(fila[key])).length
   const conVenta = TIMEFRAMES.some(({ key }) => fila[key]?.verdict === 'VENTA')
-  return conSenal >= 2 && !conVenta
+  return conSenal >= filtros.minTemporalidadesScreener && (!filtros.exigirSinVenta || !conVenta)
 }
 
 // --- Positivos / negativos, texto armado con los numeros reales -----------
@@ -177,6 +193,8 @@ function textosHistorico(indiceRow) {
  * (objeto completo), screener.json (array), rotacion.json (objeto completo,
  * puede faltar {}), comparables.json (array [{industria,pares,mediana}]) y
  * fundamentales.json (array) y fundamental/indice.json (array, opcional).
+ * `filtros` (opcional): parametros del embudo, ver FILTROS_DEFAULT — lo que
+ * no se pasa toma el valor por defecto (el "escenario ideal").
  */
 export function armarCandidatos({
   warrenRows = [],
@@ -186,7 +204,10 @@ export function armarCandidatos({
   comparablesRows = [],
   fundamentalesRows = [],
   fundamentalIndice = [],
+  filtros = {},
 } = {}) {
+  const f = { ...FILTROS_DEFAULT, ...filtros }
+  const flagsExcluyentes = f.modoEstricto ? new Set([...FLAGS_EXCLUYENTES_BASE, ...FLAGS_EXCLUYENTES_ESTRICTO]) : FLAGS_EXCLUYENTES_BASE
   const senalesSeguras = { ema200: {}, vcp: [], rsi_semanal: {}, ...senales }
   const vcpPorTicker = porTicker(senalesSeguras.vcp)
   const rotacionPorTicker = porTicker(rotacion.acciones)
@@ -203,16 +224,28 @@ export function armarCandidatos({
     return lista
   }
 
+  const tituloRotacion =
+    f.cuadrante === 'cualquiera'
+      ? 'Rotación: sin filtro (cualquier cuadrante)'
+      : f.cuadrante === 'liderando_recuperando'
+        ? 'En Liderando o Recuperando (o recién llegando a Liderando) de la Rotación'
+        : 'En el cuadrante Liderando (o recién llegando ahí) de la Rotación'
+  const tituloScreener = `Screener técnico alineado (COMPRA/CERCA en ${f.minTemporalidadesScreener}+ temporalidad(es)${f.exigirSinVenta ? ', sin VENTA' : ''})`
+
   let etapa = marcar('universo', 'Con Warren Score calculado', warrenRows.filter((w) => w.datos_suficientes && w.total_score != null))
   etapa = marcar('gate', 'Pasan el gate de tendencia (precio sobre la EMA200)', etapa.filter(pasaGateTendencia))
-  etapa = marcar('pilares', `Fuerza RS y Contracción sólidos (≥${Math.round(UMBRAL_FUERZA * 100)}%/${Math.round(UMBRAL_CONTRACCION * 100)}% de su máximo), sin 🩸/⛔`, etapa.filter(pasaPilares))
-  etapa = marcar('rotacion', 'En el cuadrante Liderando (o recién llegando ahí) de la Rotación', etapa.filter((w) => pasaRotacion(w.ticker, rotacionPorTicker, recienALideres, aceleracionInusual)))
+  etapa = marcar(
+    'pilares',
+    `Fuerza RS y Contracción sólidos (≥${Math.round(f.umbralFuerza * 100)}%/${Math.round(f.umbralContraccion * 100)}% de su máximo)${f.modoEstricto ? ', sin ninguna bandera de alerta' : ', sin 🩸/⛔'}`,
+    etapa.filter((w) => pasaPilares(w, f, flagsExcluyentes))
+  )
+  etapa = marcar('rotacion', tituloRotacion, etapa.filter((w) => pasaRotacion(w.ticker, rotacionPorTicker, recienALideres, aceleracionInusual, f)))
   const ctxGatillos = { vcpPorTicker, senales: senalesSeguras }
   const conGatillos = etapa
-    .map((w) => ({ w, g: gatillos(w.ticker, ctxGatillos) }))
+    .map((w) => ({ w, g: gatillos(w.ticker, ctxGatillos, f) }))
     .filter((x) => x.g.length > 0)
-  etapa = marcar('gatillo', 'Con al menos un gatillo técnico (VCP / EMA200 / RSI semanal)', conGatillos.map((x) => x.w))
-  etapa = marcar('screener', 'Screener técnico alineado (COMPRA/CERCA en 2+ temporalidades, sin VENTA)', etapa.filter((w) => pasaScreener(screenerPorTicker.get(w.ticker))))
+  etapa = marcar('gatillo', `Con al menos un gatillo técnico (VCP / EMA200 ≤${f.ema200DiarioMaxHace}r-${f.ema200SemanalMaxHace}s / RSI semanal)`, conGatillos.map((x) => x.w))
+  etapa = marcar('screener', tituloScreener, etapa.filter((w) => pasaScreener(screenerPorTicker.get(w.ticker), f)))
 
   const candidatos = etapa.map((w) => {
     const ticker = w.ticker
@@ -257,8 +290,8 @@ export function armarCandidatos({
       negativos.push(...nS)
     }
 
-    for (const f of w.penalizacion?.flags ?? []) {
-      if (!FLAGS_EXCLUYENTES.has(f.clave)) negativos.push(`${f.emoji} ${f.detalle}`)
+    for (const flag of w.penalizacion?.flags ?? []) {
+      if (!flagsExcluyentes.has(flag.clave)) negativos.push(`${flag.emoji} ${flag.detalle}`)
     }
     if (w.caps?.includes('rechazo_confirmado')) negativos.push('Vela de rechazo en máximos confirmada: el score quedó topeado en 70.')
 
@@ -278,7 +311,7 @@ export function armarCandidatos({
       negativos.push(...nH)
     }
 
-    const nGatillos = gatillos(ticker, ctxGatillos).length
+    const nGatillos = gatillos(ticker, ctxGatillos, f).length
     const puntaje = w.total_score + nGatillos * 4 + (rot?.cuadrante === 'liderando' ? 5 : 0) + (recienALideres.has(ticker) || aceleracionInusual.has(ticker) ? 6 : 0)
 
     return {

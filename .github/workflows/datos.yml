@@ -11,22 +11,27 @@ on:
 
   # Programado (GitHub Actions usa horario UTC). Mercado USA 9:30-16:00 ET
   # => 13:30-20:00 UTC (EDT) / 14:30-21:00 UTC (EST).
-  # OJO 1: GitHub arranca los crons con MUCHO atraso (medido: 2.5-4.6 h), y
-  # los minutos "redondos" (:00/:30) son los mas demorados. Por eso minutos
-  # raros y horarios corridos hacia atras: con atraso cero o maximo, cada
-  # corrida sigue cayendo en una sesion util.
-  # OJO 2: preMarketPrice/postMarketPrice solo se capturan si la corrida cae
-  # en esa sesion (marketState PRE / POST-POSTPOST); el pipeline conserva el
+  # Pedido del usuario (2026-09-29): actualizacion horaria en vez de las 5
+  # corridas puntuales de antes, para no tener que disparar a mano y esperar.
+  # Rango 9-21 UTC cubre pre-market (~05 ET) hasta post-market (~17 ET) con
+  # margen en ambas puntas, de lunes a viernes -- de noche/fin de semana no
+  # corre (no hay ruedas nuevas, solo gastaria llamadas a Yahoo sin sentido).
+  # Minuto :17 (no redondo): los minutos "redondos" (:00/:30) son los que mas
+  # atraso sufren en crons de GitHub (medido, hasta 2.5-4.6 h); al ser un cron
+  # que se repite cada hora, un atraso puntual se autocorrige solo en la
+  # proxima corrida, a diferencia del esquema viejo de 5 horarios fijos por
+  # dia (un atraso ahi podia dejar un hueco de horas sin corrida nueva).
+  # OJO: preMarketPrice/postMarketPrice solo se capturan si la corrida cae en
+  # esa sesion (marketState PRE / POST-POSTPOST); el pipeline conserva el
   # ultimo valor capturado con su timestamp, no lo pisa con null.
-  # Con cientos de tickers cada corrida hace muchas llamadas a Yahoo; mas
-  # corridas aumentan el riesgo de rate-limit. Repo publico = minutos de
-  # Actions ilimitados.
+  # Con cientos de tickers cada corrida hace muchas llamadas a Yahoo; correr
+  # cada hora en vez de 5 veces por dia mas que duplica el volumen diario de
+  # llamadas -- si empieza a rate-limitear seguido, el primer ajuste es
+  # espaciar este rango (por ejemplo cada 2 horas) antes que sacar el
+  # horario. Repo publico = minutos de Actions ilimitados (eso no es el
+  # limite; el limite real es el de Yahoo).
   schedule:
-    - cron: '17 9 * * 1-5'   # pre-market (sin atraso 05:17 ET; con 2.5-4.6 h, 07:47-09:53 ET)
-    - cron: '43 12 * * 1-5'  # ~apertura
-    - cron: '13 15 * * 1-5'  # ~mediodia
-    - cron: '37 17 * * 1-5'  # ~cierre
-    - cron: '47 20 * * 1-5'  # post-market (sin atraso 16:47 ET; con atraso cae en POST/POSTPOST)
+    - cron: '17 9-21 * * 1-5'
 
 permissions:
   contents: read

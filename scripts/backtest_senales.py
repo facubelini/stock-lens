@@ -40,6 +40,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from backtest_screener import ADVERTENCIAS_COMUNES, descargar_para_backtest, universo_usd  # noqa: E402
 from comun import DIR_DATOS_PUBLICOS, TZ, atr_serie, escribir_json, num  # noqa: E402
 from pipeline import warren as warren_mod  # noqa: E402
+from pipeline.figuras import BAJISTA as FIG_BAJISTA, FG_MIN_RUEDAS, TIPOS as FIG_TIPOS, fg_ciclo  # noqa: E402
 from pipeline.senales import SEN_EMA, sen_cruces_rsi, sen_eventos_ema, velas_semanales  # noqa: E402
 from pipeline.tecnico import calcular_beta_sharpe  # noqa: E402
 from pipeline.warren import WS_DESFASES_RS, WS_MIN_RUEDAS, calcular_warren_score, rs_percentiles, ws_calcular_ticker  # noqa: E402
@@ -63,6 +64,10 @@ ESTADOS_VCP = [
     "Formándose", "Armado", "Recién rompió", "Rompió y confirmó",
     "Rompió sin confirmar", "Falló antes de romper", "Rompió y falló",
 ]
+ESTADOS_FIGURAS = [
+    "Formándose", "Recién rompió", "Rompió y confirmó",
+    "Rompió sin confirmar", "Falló antes de romper", "Rompió y falló",
+]
 
 ADVERTENCIAS_SENALES = ADVERTENCIAS_COMUNES + [
     "El Warren Score y el estado de la base VCP se muestrean cada "
@@ -72,6 +77,11 @@ ADVERTENCIAS_SENALES = ADVERTENCIAS_COMUNES + [
     "calendario de feriados muy distinto al de Nueva York puede perder algunas ruedas de esa alineación.",
     "El intervalo de confianza (bootstrap, 95%) es de la MEDIANA del exceso vs. SPY, no del hit-rate; "
     "con menos de 30 observaciones no se calcula (se muestra vacío).",
+    "Las figuras chartistas (doble techo/piso, HCH/HCH invertido) tambien se muestrean cada "
+    f"{STRIDE_PESADO} ruedas (no son cross-sectional como el Warren Score, pero mantener la misma cadencia "
+    "evita otra pasada de calculo sobre el mismo universo). El backtest evalua TODAS las instancias con "
+    "estructura detectada (cualquier score), no solo las que se publican en Figuras Chartistas (score >= 55): "
+    "mide el patron geometrico en si, no el filtro de calidad del listado en vivo.",
 ]
 
 METODOLOGIA = (
@@ -275,6 +285,38 @@ def backtest_warren_y_vcp(joined, spy_df):
     return vcp_muestras, warren_muestras
 
 
+def backtest_figuras(joined, spy_df):
+    """Muestreo de las 4 figuras chartistas (doble techo/piso, HCH/HCH
+    invertido) con la MISMA cadencia (STRIDE_PESADO) y el MISMO 'joined' que
+    Warren/VCP, para no pagar otra descarga ni otro alineamiento con SPY.
+    A diferencia de Warren/VCP, cada ticker es independiente entre si (no hay
+    percentil cross-sectional de por medio), asi que no hace falta armar un
+    universo por fecha: se re-detecta figuras.fg_ciclo con los datos
+    cortados en cada fecha de muestra, con cache compartido POR (ticker,tipo)
+    entre las muestras del mismo ticker (igual idea que cache_vcp).
+    Devuelve {tipo: [(ticker, fecha, t, estado), ...]} sin deduplicar racha."""
+    fechas_muestra = spy_df.index[::STRIDE_PESADO]
+    muestras = {tipo: [] for tipo in FIG_TIPOS}
+    for sym, (j, atr_pct) in joined.items():
+        if len(j) < FG_MIN_RUEDAS:
+            continue
+        idx = j.index
+        for tipo in FIG_TIPOS:
+            cache = {}
+            for fecha_m in fechas_muestra:
+                pos = int(idx.searchsorted(fecha_m, side="right")) - 1
+                if pos < FG_MIN_RUEDAS or pos >= len(j) - 1:
+                    continue
+                sub = j.iloc[: pos + 1]
+                try:
+                    _, ciclo = fg_ciclo(tipo, sub, atr_pct.iloc[: pos + 1], cache=cache)
+                except Exception:  # noqa: BLE001
+                    continue
+                if ciclo and ciclo.get("estado"):
+                    muestras[tipo].append((sym, idx[pos].strftime("%Y-%m-%d"), pos, ciclo["estado"]))
+    return muestras
+
+
 def _filas_desde_muestras(muestras, joined, horizontes=HORIZ_D):
     """(ticker, fecha, t, valor) ya deduplicado por racha -> filas (valor, h,
     ret, ret_spy), calculando el retorno directo (sin pasar por
@@ -355,6 +397,15 @@ def main(argv=None, historicos=None):
     filas_vcp = _filas_desde_muestras(vcp_muestras, joined, HORIZ_D)
     filas_warren = _filas_desde_muestras(warren_muestras, joined, HORIZ_D)
 
+    print(f"Figuras chartistas: recalculando cada {STRIDE_PESADO} ruedas sobre {len(joined)} tickers...")
+    muestras_figuras = backtest_figuras(joined, spy_df)
+    stats_figuras = {}
+    for tipo in FIG_TIPOS:
+        filas_tipo = _filas_desde_muestras(muestras_figuras[tipo], joined, HORIZ_D)
+        bajistas = ESTADOS_FIGURAS if FIG_BAJISTA[tipo] else ()
+        stats_figuras[tipo] = agregar_stats(filas_tipo, HORIZ_D, bajistas=bajistas)
+        print(f"  {tipo}: {len(muestras_figuras[tipo])} muestra(s) (antes de deduplicar racha).")
+
     stats = {
         "ema_diario": {
             "rebote": agregar_stats(filas_por_grupo["ema_diario_rebote"], HORIZ_D),
@@ -370,6 +421,7 @@ def main(argv=None, historicos=None):
         },
         "vcp_estado": agregar_stats(filas_vcp, HORIZ_D),
         "warren_bucket": agregar_stats(filas_warren, HORIZ_D),
+        "figuras_chartistas": stats_figuras,
     }
 
     salida = {

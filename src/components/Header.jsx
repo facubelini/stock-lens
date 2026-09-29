@@ -30,6 +30,7 @@ const SECCIONES = [
       { to: '/oportunidades', label: '💡 Oportunidades' },
       { to: '/warren-score', label: '🏆 Warren Score' },
       { to: '/senales', label: '🎯 Señales' },
+      { to: '/figuras-chartistas', label: '📐 Figuras Chartistas' },
       { to: '/screeners', label: '📡 Radar de eventos' },
       { to: '/pre-post', label: '🌗 Pre/Post market' },
       { to: '/rotacion', label: '🔄 Rotación' },

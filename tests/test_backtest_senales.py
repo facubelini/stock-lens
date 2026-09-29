@@ -59,10 +59,11 @@ def test_campos_de_primer_nivel(salida):
 
 def test_grupos_de_senales_presentes(salida):
     stats = salida["stats"]
-    assert set(stats) == {"ema_diario", "ema_semanal", "rsi_semanal", "vcp_estado", "warren_bucket"}
+    assert set(stats) == {"ema_diario", "ema_semanal", "rsi_semanal", "vcp_estado", "warren_bucket", "figuras_chartistas"}
     assert set(stats["ema_diario"]) == {"rebote", "cruce"}
     assert set(stats["ema_semanal"]) == {"rebote", "cruce"}
     assert set(stats["rsi_semanal"]) == {"alcista", "bajista"}
+    assert set(stats["figuras_chartistas"]) == {"doble_techo", "doble_piso", "hch", "hch_invertido"}
 
 
 def _revisar_entradas(por_etiqueta, horizontes):
@@ -97,6 +98,12 @@ def test_forma_de_cada_grupo(salida):
         _revisar_entradas(stats["warren_bucket"], bts.HORIZ_D)
         for bucket in stats["warren_bucket"]:
             assert bucket == "BASELINE" or bucket in bts.BUCKETS_WARREN
+    for tipo, por_etiqueta in stats["figuras_chartistas"].items():
+        if not por_etiqueta:
+            continue
+        _revisar_entradas(por_etiqueta, bts.HORIZ_D)
+        for estado in por_etiqueta:
+            assert estado == "BASELINE" or estado in bts.ESTADOS_FIGURAS
 
 
 def test_json_serializable_sin_nan(historicos, tmp_path):

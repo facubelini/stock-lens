@@ -16,6 +16,7 @@ from .fundamentales import (
     extraer_pre_post_market,
     extraer_proximo_earnings,
 )
+from .figuras import figuras_ticker
 from .senales import senales_ticker
 from .tecnico import (
     calcular_beta_sharpe,
@@ -248,6 +249,19 @@ def procesar_ticker(fila, sym, hist, info_datos, ctx):
         print(f"  ! {sym}: señales sin calcular ({type(e).__name__}: {e})")
         senales = None
     filas["senales"] = {"ticker": sym, "nombre": nombre, "industria": industria, "senales": senales}
+    # Figuras chartistas (doble techo/piso, HCH/HCH invertido): feature aparte
+    # del Warren Score, misma logica de "una falla no tumba el ticker".
+    try:
+        figuras = figuras_ticker(hist)
+    except Exception as e:  # noqa: BLE001
+        print(f"  ! {sym}: figuras chartistas sin calcular ({type(e).__name__}: {e})")
+        figuras = []
+    filas["figuras"] = {
+        "ticker": sym,
+        "nombre": nombre,
+        "sector": sector or ("ETF" if es_fondo else industria),
+        "figuras": figuras,
+    }
     return filas
 
 
@@ -263,7 +277,10 @@ def procesar_universo(tickers, resueltos, infos, ctx, previos, simbolo_previo, t
     las listas de ARCHIVOS_POR_TICKER + mensuales, warren_datos,
     senales_datos, invalidos, sin_arrastre y descartados_viejos."""
     res = {clave: [] for clave in ARCHIVOS_POR_TICKER}
-    res.update(mensuales={}, warren_datos=[], senales_datos=[], invalidos=[], sin_arrastre=[], descartados_viejos=[])
+    res.update(
+        mensuales={}, warren_datos=[], senales_datos=[], figuras_datos=[],
+        invalidos=[], sin_arrastre=[], descartados_viejos=[],
+    )
     prev_listado = previos["listado"]
 
     def arrastrar(t):
@@ -312,5 +329,6 @@ def procesar_universo(tickers, resueltos, infos, ctx, previos, simbolo_previo, t
         res["mensuales"][sym] = filas["mensual"]
         res["warren_datos"].append(filas["warren"])
         res["senales_datos"].append(filas["senales"])
+        res["figuras_datos"].append(filas["figuras"])
         print(f"  ok {sym} ({filas['listado']['nombre']})")
     return res

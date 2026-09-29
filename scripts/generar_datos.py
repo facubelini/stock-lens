@@ -52,6 +52,7 @@ from pipeline.salida import (  # noqa: E402
     escribir_publicados,
     historial_screener,
 )
+from pipeline.figuras import construir_figuras  # noqa: E402
 from pipeline.rotacion import rot_actualizar_historial, rot_construir, rot_filas_semana, semana_iso  # noqa: E402
 from pipeline.senales import construir_senales  # noqa: E402
 from pipeline.seguimiento import actualizar_log, resumen_publicable  # noqa: E402
@@ -169,6 +170,8 @@ def main(argv=None):
             len(senales["vcp"]), len(senales["rsi_semanal"]["alcista"]), len(senales["rsi_semanal"]["bajista"]),
         )
     )
+    figuras = construir_figuras(res["figuras_datos"], rs_mapa, ahora_iso)
+    print(f"Figuras chartistas: {len(figuras['figuras'])} detectada(s) (doble techo/piso, HCH/HCH invertido).")
 
     print("Actualizando el historial semanal de Rotacion (RRG)...")
     filas_semana = rot_filas_semana(res["warren_datos"], rs_mapa, fundamentales)
@@ -217,6 +220,7 @@ def main(argv=None):
             "historial_oportunidades": historial_oportunidades,
             "warren_score": warren_score,
             "senales": senales,
+            "figuras": figuras,
             "rotacion": rotacion,
             "mensuales": res["mensuales"],
         },

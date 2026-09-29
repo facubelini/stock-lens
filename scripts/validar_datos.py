@@ -52,6 +52,11 @@ ESTADOS_VCP = {
     "Falló antes de romper",
 }
 CUADRANTES_ROTACION = {"liderando", "debilitando", "recuperando", "rezagando"}
+TIPOS_FIGURAS = {"doble_techo", "doble_piso", "hch", "hch_invertido"}
+ESTADOS_FIGURAS = {
+    "Formándose", "Recién rompió", "Rompió y confirmó",
+    "Rompió sin confirmar", "Falló antes de romper", "Rompió y falló",
+}
 
 BASE_TICKER = ["ticker", "nombre", "industria", "pais", "stale"]
 CAMPOS = {
@@ -70,7 +75,7 @@ CAMPOS = {
 ARCHIVOS_DATOS = ["listado", "medias", "fundamentales", "screener", "scanner_setups", "comparables", "warren_score",
                   "senales", "meta"]
 ARCHIVOS_OPCIONALES = ["mercado_macro", "historico_fundamental", "fundamental", "oportunidades_historial",
-                       "backtest_screener", "backtest_score", "rotacion"]
+                       "backtest_screener", "backtest_score", "rotacion", "figuras"]
 
 
 def _es_num(v):
@@ -336,6 +341,29 @@ class Validador:
                     self.rango(donde, "dias_alcistas", x.get("dias_alcistas"), 0, 10, nulo_ok=False)
                     self.rango(donde, "score", x.get("score"), 0, math.inf, nulo_ok=False)
 
+    def figuras(self):
+        d = self.cargar("figuras", obligatorio=False)
+        if d is None:
+            return
+        if not isinstance(d, dict) or not {"actualizado", "figuras"} <= set(d):
+            self.error("figuras.json: se esperaba {actualizado, figuras: [...]}")
+            return
+        lista = d.get("figuras")
+        if not isinstance(lista, list):
+            self.error("figuras.json figuras: se esperaba una lista")
+            return
+        for i, f in enumerate(lista):
+            donde = f"figuras.json figuras[{i}] ({f.get('ticker') if isinstance(f, dict) else '?'})"
+            if not isinstance(f, dict) or not {"ticker", "nombre", "tipo", "estado", "score", "detalle"} <= set(f):
+                self.error(f"{donde}: se esperaba {{ticker, nombre, sector, tipo, estado, score, detalle, rs_hoy}}")
+                continue
+            self.en(donde, "tipo", f.get("tipo"), TIPOS_FIGURAS)
+            self.en(donde, "estado", f.get("estado"), ESTADOS_FIGURAS)
+            self.rango(donde, "score", f.get("score"), 0, 100, nulo_ok=False)
+            self.rango(donde, "rs_hoy", f.get("rs_hoy"), 0, 100)
+            if not isinstance(f.get("detalle"), dict):
+                self.error(f"{donde}.detalle: se esperaba un objeto")
+
     def rotacion(self):
         d = self.cargar("rotacion", obligatorio=False)
         if d is None:
@@ -568,7 +596,7 @@ def validar(carpeta, solo=None, meta_previo=None):
     reglas = {
         "listado": v.listado, "medias": v.medias, "fundamentales": v.fundamentales, "screener": v.screener,
         "scanner_setups": v.scanner_setups, "comparables": v.comparables, "warren_score": v.warren_score,
-        "senales": v.senales, "rotacion": v.rotacion, "meta": lambda: v.meta(meta_previo), "mercado_macro": v.mercado_macro,
+        "senales": v.senales, "figuras": v.figuras, "rotacion": v.rotacion, "meta": lambda: v.meta(meta_previo), "mercado_macro": v.mercado_macro,
         "historico_fundamental": v.historico_fundamental, "oportunidades_historial": v.oportunidades_historial,
         "fundamental": lambda: v.fundamental(obligatorio=bool(solo)),
         "backtest_screener": lambda: v.backtest("backtest_screener"), "backtest_score": lambda: v.backtest("backtest_score"),

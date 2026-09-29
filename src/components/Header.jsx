@@ -42,6 +42,7 @@ const SECCIONES = [
     items: [
       { to: '/cripto', label: 'Crypto Screener' },
       { to: '/cruces', label: '🎯 Cruces' },
+      { to: '/cripto-figuras', label: '📐 Figuras Chartistas' },
       { to: '/tokenizadas', label: '🪙 Acciones Tokenizadas' },
     ],
   },

@@ -42,9 +42,25 @@ function colorPorExceso(diff) {
  * - señalVivo: clave de senales_seguimiento.json.stats (p.ej.
  *   "ema_diario_rebote"); si no se pasa, no se muestra la parte "en vivo".
  */
-export default function BadgeEvidencia({ ruta = [], valor, horizonte, señalVivo, unidad = 'ruedas', titulo }) {
-  const backtest = useBacktestSenales()
+// 'datos' (opcional): backtest ya calculado, en vez del que sale del hook
+// (useBacktestSenales -> fetch de backtest_senales.json). Lo usa la version
+// cripto de Figuras Chartistas para pasar el backtest corrido EN VIVO en el
+// navegador (sessionStorage, no un JSON estatico del pipeline) sin duplicar
+// este componente. 'benchmarkLabel' (opcional, default 'SPY'): el benchmark
+// contra el que se mide el exceso — cripto no tiene SPY, usa 'BTC'.
+export default function BadgeEvidencia({
+  ruta = [],
+  valor,
+  horizonte,
+  señalVivo,
+  unidad = 'ruedas',
+  titulo,
+  datos,
+  benchmarkLabel = 'SPY',
+}) {
+  const backtestFetch = useBacktestSenales()
   const seguimiento = useSeguimientoSenales()
+  const backtest = datos ?? backtestFetch
   if (!backtest?.stats) return null
 
   const grupo = ruta.reduce((d, k) => d?.[k], backtest.stats)
@@ -64,7 +80,7 @@ export default function BadgeEvidencia({ ruta = [], valor, horizonte, señalVivo
         📊 Backtest 5a: acierto {entrada.hit_rate}% a {horizonte} {unidad} · mediana{' '}
         {fmtPct(entrada.retorno_mediana, { signo: true })}
         {entrada.exceso_mediana_spy != null && (
-          <> (exceso {fmtPct(entrada.exceso_mediana_spy, { signo: true })} vs SPY)</>
+          <> (exceso {fmtPct(entrada.exceso_mediana_spy, { signo: true })} vs {benchmarkLabel})</>
         )}{' '}
         · n={entrada.n}
       </span>
@@ -74,7 +90,7 @@ export default function BadgeEvidencia({ ruta = [], valor, horizonte, señalVivo
           {vivo.hit_rate}%)
         </span>
       )}
-      <ComoSeCalculaEvidencia backtest={backtest} entrada={entrada} base={base} diff={diff} titulo={titulo} />
+      <ComoSeCalculaEvidencia backtest={backtest} entrada={entrada} base={base} diff={diff} titulo={titulo} benchmarkLabel={benchmarkLabel} />
     </div>
   )
 }
@@ -86,9 +102,19 @@ export default function BadgeEvidencia({ ruta = [], valor, horizonte, señalVivo
  * una única clave de senales_seguimiento.json (VCP y Warren no separan el
  * seguimiento en vivo por estado/bucket).
  */
-export function TablaEvidenciaMultiple({ ruta, etiquetas, horizonte, unidad = 'ruedas', señalVivo, titulo }) {
-  const backtest = useBacktestSenales()
+export function TablaEvidenciaMultiple({
+  ruta,
+  etiquetas,
+  horizonte,
+  unidad = 'ruedas',
+  señalVivo,
+  titulo,
+  datos,
+  benchmarkLabel = 'SPY',
+}) {
+  const backtestFetch = useBacktestSenales()
   const seguimiento = useSeguimientoSenales()
+  const backtest = datos ?? backtestFetch
   if (!backtest?.stats) return null
   const grupo = ruta.reduce((d, k) => d?.[k], backtest.stats)
   if (!grupo) return null
@@ -115,7 +141,7 @@ export function TablaEvidenciaMultiple({ ruta, etiquetas, horizonte, unidad = 'r
               <th className="px-1.5 py-1 font-semibold">{titulo}</th>
               <th className="px-1.5 py-1 text-right font-semibold">Acierto</th>
               <th className="px-1.5 py-1 text-right font-semibold">Mediana</th>
-              <th className="px-1.5 py-1 text-right font-semibold">Exceso vs SPY</th>
+              <th className="px-1.5 py-1 text-right font-semibold">Exceso vs {benchmarkLabel}</th>
               <th className="px-1.5 py-1 text-right font-semibold">n</th>
             </tr>
           </thead>
@@ -160,7 +186,7 @@ export function TablaEvidenciaMultiple({ ruta, etiquetas, horizonte, unidad = 'r
   )
 }
 
-function ComoSeCalculaEvidencia({ backtest, entrada, base, diff, titulo }) {
+function ComoSeCalculaEvidencia({ backtest, entrada, base, diff, titulo, benchmarkLabel = 'SPY' }) {
   return (
     <details className="w-full basis-full">
       <summary className="cursor-pointer select-none text-terminal-dim hover:text-terminal-accent">
@@ -173,20 +199,20 @@ function ComoSeCalculaEvidencia({ backtest, entrada, base, diff, titulo }) {
             Base (<Formula>BASELINE</Formula>, cualquier día del mismo universo, mismo horizonte): acierto{' '}
             {base.hit_rate}%, mediana {fmtPct(base.retorno_mediana, { signo: true })}
             {base.exceso_mediana_spy != null && (
-              <> (exceso {fmtPct(base.exceso_mediana_spy, { signo: true })} vs SPY)</>
+              <> (exceso {fmtPct(base.exceso_mediana_spy, { signo: true })} vs {benchmarkLabel})</>
             )}
             , n={base.n}.{' '}
             {diff != null && (
               <>
                 {titulo || 'Esta señal'} le {diff >= UMBRAL_COLOR ? 'gana' : diff <= -UMBRAL_COLOR ? 'pierde' : 'empata'}{' '}
-                a la base por {fmtPct(Math.abs(diff), { signo: false })} de exceso mediano vs. SPY.
+                a la base por {fmtPct(Math.abs(diff), { signo: false })} de exceso mediano vs. {benchmarkLabel}.
               </>
             )}
           </p>
         )}
         {entrada.ci95_exceso_mediana && (
           <p>
-            Intervalo de confianza (bootstrap, 95%) del exceso mediano vs. SPY:{' '}
+            Intervalo de confianza (bootstrap, 95%) del exceso mediano vs. {benchmarkLabel}:{' '}
             {fmtPct(entrada.ci95_exceso_mediana[0], { signo: true })} a{' '}
             {fmtPct(entrada.ci95_exceso_mediana[1], { signo: true })} (sobre {entrada.n_exceso} observaciones).
           </p>

@@ -20,6 +20,7 @@ const CryptoScreener = lazy(() => import('./pages/CryptoScreener'))
 const CryptoDetalle = lazy(() => import('./pages/CryptoDetalle'))
 const AccionesTokenizadas = lazy(() => import('./pages/AccionesTokenizadas'))
 const ScreenerCruces = lazy(() => import('./pages/ScreenerCruces'))
+const FigurasChartistasCripto = lazy(() => import('./pages/FigurasChartistasCripto'))
 const TopSenales = lazy(() => import('./pages/TopSenales'))
 const Cartera = lazy(() => import('./pages/Cartera'))
 const Macro = lazy(() => import('./pages/Macro'))
@@ -86,6 +87,7 @@ export default function App() {
             <Route path="/cripto" element={<CryptoScreener />} />
             <Route path="/cripto/:symbol" element={<CryptoDetalle />} />
             <Route path="/cruces" element={<ScreenerCruces />} />
+            <Route path="/cripto-figuras" element={<FigurasChartistasCripto />} />
             {/* La v2 y la v3 se reemplazaron por el screener de cruces; se
                 redirige para no romper enlaces guardados. */}
             <Route path="/cripto-v2" element={<Navigate to="/cruces" replace />} />

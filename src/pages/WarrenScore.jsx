@@ -10,6 +10,8 @@ import Modal from '../components/Modal'
 import EncabezadoOrdenable from '../components/EncabezadoOrdenable'
 import { Formula } from '../components/ComoSeCalcula'
 import { ExplicacionWarrenScore } from '../components/Explicaciones'
+import { entradaDesde, useCompraDesde } from '../lib/compraDesde'
+import DesdeCompra from '../components/DesdeCompra'
 import { PILARES, colorScore, Anillo, MiniBarra, Banderas } from '../components/WarrenScoreVisual'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 import { TablaEvidenciaMultiple } from '../components/BadgeEvidencia'
@@ -371,6 +373,20 @@ function PanelDetalle({ fila, onCerrar }) {
   )
 }
 
+// Racha en zona alta: la de ≥80 si el ticker está ahí; si no, la de ≥70.
+function ZonaAlta({ desde, ticker }) {
+  const e80 = entradaDesde(desde, 'warren_80', ticker)
+  const e70 = entradaDesde(desde, 'warren_70', ticker)
+  const entrada = e80 ?? e70
+  if (!entrada) return <span className="text-terminal-dim">—</span>
+  return (
+    <span className="inline-flex items-center justify-end gap-1">
+      <span className="text-[10px] font-semibold text-terminal-dim">{e80 ? '≥80' : '≥70'}</span>
+      <DesdeCompra entrada={entrada} />
+    </span>
+  )
+}
+
 export default function WarrenScore() {
   const { data, cargando, error } = useJson('warren_score.json')
   const { watchlist } = useWatchlist()
@@ -382,6 +398,7 @@ export default function WarrenScore() {
   const [universo, setUniverso] = useState('todos')
   const [orden, setOrden] = useState({ campo: 'score', dir: 'desc' })
   const [seleccionado, setSeleccionado] = useState(null)
+  const desde = useCompraDesde()
 
   const tickers = useMemo(() => (Array.isArray(data?.tickers) ? data.tickers : []), [data])
   const viejo = esFormatoViejo(tickers)
@@ -543,6 +560,12 @@ export default function WarrenScore() {
                     {th('pen', 'Penal.', 'left', 'Suma de penalizaciones; pasá el mouse por cada emoji para ver la regla')}
                     {th('rs', 'RS', 'right', 'Percentil de fuerza relativa vs SPY en el universo USD')}
                     {th('max52', 'vs máx 52s')}
+                    <th
+                      className="whitespace-nowrap px-2 py-2.5 text-right font-semibold"
+                      title="Desde cuándo el score viene en zona alta (≥80, o ≥70 si no llega) sin bajar de ahí, y variación del precio desde el cierre de ese día. El registro empezó en la primera corrida con esta función: “≥” = al menos desde ahí."
+                    >
+                      Zona alta desde
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -595,6 +618,9 @@ export default function WarrenScore() {
                       </td>
                       <td className="px-2 py-1.5 text-right tabular">{fmtNum(r.pilares?.fuerza?.rs, 0)}</td>
                       <td className="px-2 py-1.5 text-right tabular text-terminal-dim">{fmtPct(r.dist_max52_pct, { signo: true })}</td>
+                      <td className="px-2 py-1.5 text-right text-xs">
+                        <ZonaAlta desde={desde} ticker={r.ticker} />
+                      </td>
                     </tr>
                   ))}
                 </tbody>

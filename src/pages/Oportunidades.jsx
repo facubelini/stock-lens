@@ -5,9 +5,11 @@ import { usePins } from '../lib/usePins'
 import { useClasificacion, aplicarClasificacion } from '../lib/clasificacion'
 import { exportarCSV } from '../lib/csv'
 import { TIMEFRAMES, ESTILO_VERDICT, tieneSenal, prioridadScreener } from '../lib/screenerEstilos'
+import { entradaDesde, useCompraDesde } from '../lib/compraDesde'
 import { calcularDescuento, evaluarCalidad, señalesTrampaValor } from '../lib/valuacion'
 import Controles from '../components/Controles'
 import Tabla from '../components/Tabla'
+import DesdeCompra from '../components/DesdeCompra'
 import { columnaPin, columnaTicker } from '../components/columnas'
 import { ExplicacionConviccion, ExplicacionDescuento } from '../components/Explicaciones'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
@@ -22,6 +24,7 @@ export default function Oportunidades() {
   const { data: historialData } = useJson('oportunidades_historial.json')
   const { overrides } = useClasificacion()
   const { pins, isPinned, toggle } = usePins()
+  const desde = useCompraDesde()
 
   // "Hace cuántos días" que cada ticker viene apareciendo en Oportunidades:
   // se cuenta hacia atrás desde hoy mientras el ticker siga presente sin
@@ -209,7 +212,15 @@ export default function Oportunidades() {
       render: (r) => (r._diasEnLista <= 1 ? 'Nuevo hoy' : `${r._diasEnLista} días`),
       ayuda: 'Días consecutivos que este ticker viene cumpliendo las condiciones — se arma con el tiempo desde que se activó esta función.',
     },
-  ], [isPinned, toggle])
+    {
+      key: '_desde',
+      label: 'Desde → hoy',
+      align: 'right',
+      valor: (r) => entradaDesde(desde, 'oportunidades', r.ticker)?.desde ?? '',
+      render: (r) => <DesdeCompra entrada={entradaDesde(desde, 'oportunidades', r.ticker)} vacio="—" />,
+      ayuda: 'Desde cuándo cumple (barato vs. industria + señal del Screener) sin cortes, y variación del precio desde el cierre de ese día.',
+    },
+  ], [isPinned, toggle, desde])
 
   const cargando = cargF || cargC || cargS
   // Las 3 fuentes son necesarias (sin comparables no hay descuento, sin

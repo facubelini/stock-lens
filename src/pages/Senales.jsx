@@ -5,10 +5,12 @@ import { useTabla } from '../lib/useTabla'
 import { fmtFecha, fmtNum, fmtPct, fmtPrecio } from '../lib/formato'
 import { compararValores } from '../lib/ordenar'
 import { selectCls } from '../lib/estilos'
+import { entradaDeEvento, entradaDesde, useCompraDesde } from '../lib/compraDesde'
 import { PANELES, ESTADOS_VCP, COLOR_ESTADO_VCP, fmtHace, fmtUltimaVez } from '../lib/senales'
 import { useFiltroRapido } from '../lib/filtroGlobal'
 import Tabla from '../components/Tabla'
 import TickerLink from '../components/TickerLink'
+import DesdeCompra from '../components/DesdeCompra'
 import ComoSeCalcula, { Formula } from '../components/ComoSeCalcula'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 import BadgeEvidencia, { TablaEvidenciaMultiple } from '../components/BadgeEvidencia'
@@ -241,6 +243,14 @@ function PanelEma({ panel, datos, semanal }) {
         ),
       },
       {
+        key: 'desde',
+        label: 'Desde → hoy',
+        align: 'right',
+        ayuda: 'Fecha del contacto, días que pasaron y variación del precio desde el cierre de ese día (para ver si la señal funcionó)',
+        valor: (r) => r.fecha,
+        render: (r) => <DesdeCompra entrada={entradaDeEvento(r)} vacio="—" />,
+      },
+      {
         key: 'climax',
         label: 'Clímax',
         align: 'right',
@@ -384,6 +394,7 @@ function PanelEma({ panel, datos, semanal }) {
 // Bases VCP
 // ---------------------------------------------------------------------------
 function PanelVcp({ filasVcp }) {
+  const desde = useCompraDesde()
   const [estado, setEstado] = useState('')
   const filas = useMemo(() => (estado ? filasVcp.filter((f) => f.estado === estado) : filasVcp), [filasVcp, estado])
   const { filtradas, sortKey, sortDir, ordenar } = useTabla(filas, { ordenInicial: { key: 'score', dir: 'desc' } })
@@ -430,6 +441,14 @@ function PanelVcp({ filasVcp }) {
         render: (r) => (r.vol_decreciente ? <span className="text-terminal-up">✓</span> : <span className="text-terminal-dim">—</span>),
       },
       {
+        key: 'desde',
+        label: 'En lista desde',
+        align: 'right',
+        ayuda: 'Desde cuándo la base viene con VCP Score ≥60 sin interrupción, y variación del precio desde el cierre de ese día. El registro empezó en la primera corrida con esta función: “≥” = al menos desde ahí.',
+        valor: (r) => entradaDesde(desde, 'vcp', r.ticker)?.desde ?? '',
+        render: (r) => <DesdeCompra entrada={entradaDesde(desde, 'vcp', r.ticker)} vacio="—" />,
+      },
+      {
         key: 'estado',
         label: 'Estado',
         valor: (r) => ESTADOS_VCP.findIndex((e) => e.estado === r.estado),
@@ -442,7 +461,7 @@ function PanelVcp({ filasVcp }) {
         ),
       },
     ],
-    [],
+    [desde],
   )
 
   return (
@@ -553,9 +572,21 @@ function PanelRsiSemanal({ datos }) {
         valor: (r) => r.hace,
         render: (r) => <span title={`Semana que cierra el ${r.fecha}`}>{r.hace === 0 ? 'esta semana' : `hace ${fmtHace(r.hace, true)}`}</span>,
       },
+      ...(tab === 'alcista'
+        ? [
+            {
+              key: 'desde',
+              label: 'Desde → hoy',
+              align: 'right',
+              ayuda: 'Fecha del cruce, días que pasaron y variación del precio desde el cierre de esa semana (para ver si la señal funcionó)',
+              valor: (r) => r.fecha,
+              render: (r) => <DesdeCompra entrada={entradaDeEvento(r)} vacio="—" />,
+            },
+          ]
+        : []),
       { key: 'rs', label: 'RS', align: 'right', ayuda: 'RS Score hoy (percentil vs SPY, universo USD)', valor: (r) => r.rs, render: (r) => fmtRS(r.rs) },
     ],
-    [],
+    [tab],
   )
   return (
     <Panel panel={PANELES.rsiSemanal} subtitulo="Cruces del RSI semanal con su propia media (línea de señal), no con niveles fijos 30/70.">

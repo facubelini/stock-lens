@@ -27,6 +27,9 @@ def test_rebote_sobre_la_ema200():
     assert reb is not None and reb["hace"] == 1
     assert df["Low"].iloc[reb["pos"]] <= reb["ema"] * 1.01 < df["Close"].iloc[reb["pos"]] * 1.01
     assert reb["dist_ema_pct"] > 0
+    # precio del cierre del contacto y de hoy (para ver como le fue a la señal)
+    assert reb["precio"] == pytest.approx(df["Close"].iloc[reb["pos"]], abs=0.01)
+    assert reb["precio_hoy"] == pytest.approx(df["Close"].iloc[-1], abs=0.01)
     assert reb["ultima_vez_dias"] is None  # no hubo un contacto anterior
 
 

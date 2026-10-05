@@ -2,10 +2,12 @@ import { useMemo, useState } from 'react'
 import { useFilas } from '../lib/useFilas'
 import { useTabla } from '../lib/useTabla'
 import { exportarCSV } from '../lib/csv'
+import { entradaDesde, useCompraDesde } from '../lib/compraDesde'
 import { TIMEFRAMES, ESTILO_VERDICT, tieneSenal, prioridadScreener } from '../lib/screenerEstilos'
 import Controles from '../components/Controles'
 import TickerLink from '../components/TickerLink'
 import MarcaStale from '../components/MarcaStale'
+import DesdeCompra from '../components/DesdeCompra'
 import BotonActualizar from '../components/BotonActualizar'
 import Backtest from '../components/Backtest'
 import { ExplicacionConviccion } from '../components/Explicaciones'
@@ -22,7 +24,7 @@ function tieneSenalEnTodas(fila, tfKeys) {
   return tfKeys.every((key) => tieneSenal(fila[key]))
 }
 
-function Celda({ dato }) {
+function Celda({ dato, entradaDesdeTf }) {
   if (!dato) {
     return <span className="text-terminal-dim">N/D</span>
   }
@@ -35,6 +37,11 @@ function Celda({ dato }) {
       >
         {est.label}
       </span>
+      {tieneSenal(dato) && (
+        <span className="text-[11px]" title="Desde cuándo viene en COMPRA/CERCA en esta temporalidad sin cortes, y variación del precio desde el cierre de ese día">
+          <DesdeCompra entrada={entradaDesdeTf} />
+        </span>
+      )}
       <span className="text-[11px] leading-snug text-terminal-dim" title={dato.motivo}>
         {dato.motivo}
       </span>
@@ -48,6 +55,7 @@ export default function Screener() {
   const [exigirTodas, setExigirTodas] = useState(false)
   const toggleTf = (key) => setTfFiltro((prev) => ({ ...prev, [key]: !prev[key] }))
   const t = useTabla(filas, { camposBusqueda: CAMPOS })
+  const desde = useCompraDesde()
 
   const tfKeysActivas = useMemo(
     () => TIMEFRAMES.map((tf) => tf.key).filter((key) => tfFiltro[key]),
@@ -234,7 +242,7 @@ export default function Screener() {
                   </td>
                   {TIMEFRAMES.map((tf) => (
                     <td key={tf.key} className="px-2 py-1.5 align-top">
-                      <Celda dato={f[tf.key]} />
+                      <Celda dato={f[tf.key]} entradaDesdeTf={entradaDesde(desde, `screener_${tf.key}`, f.ticker)} />
                     </td>
                   ))}
                 </tr>

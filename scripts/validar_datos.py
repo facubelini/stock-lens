@@ -75,7 +75,7 @@ CAMPOS = {
 ARCHIVOS_DATOS = ["listado", "medias", "fundamentales", "screener", "scanner_setups", "comparables", "warren_score",
                   "senales", "meta"]
 ARCHIVOS_OPCIONALES = ["mercado_macro", "historico_fundamental", "fundamental", "oportunidades_historial",
-                       "backtest_screener", "backtest_score", "rotacion", "figuras"]
+                       "backtest_screener", "backtest_score", "rotacion", "figuras", "compra_desde"]
 
 
 def _es_num(v):
@@ -499,6 +499,22 @@ class Validador:
         ):
             self.error("oportunidades_historial.json: se esperaba [{fecha, tickers: [...]}]")
 
+    def compra_desde(self):
+        d = self.cargar("compra_desde", obligatorio=False)
+        if d is None:
+            return
+        claves = d.get("claves") if isinstance(d, dict) else None
+        if not isinstance(claves, dict) or any(
+            not isinstance(c, dict) or not isinstance(c.get("tickers"), dict) for c in claves.values()
+        ):
+            self.error("compra_desde.json: se esperaba {actualizado, claves: {clave: {inicio, tickers: {T: {...}}}}}")
+            return
+        for clave, c in claves.items():
+            for t, f in c["tickers"].items():
+                if not isinstance(f, dict) or not isinstance(f.get("desde"), str) or len(f["desde"]) != 10:
+                    self.error(f"compra_desde.json: {clave}/{t} sin 'desde' AAAA-MM-DD")
+                    return
+
     def backtest(self, nombre):
         d = self.cargar(nombre, obligatorio=False)
         if d is None:
@@ -598,7 +614,7 @@ def validar(carpeta, solo=None, meta_previo=None):
         "scanner_setups": v.scanner_setups, "comparables": v.comparables, "warren_score": v.warren_score,
         "senales": v.senales, "figuras": v.figuras, "rotacion": v.rotacion, "meta": lambda: v.meta(meta_previo), "mercado_macro": v.mercado_macro,
         "historico_fundamental": v.historico_fundamental, "oportunidades_historial": v.oportunidades_historial,
-        "fundamental": lambda: v.fundamental(obligatorio=bool(solo)),
+        "compra_desde": v.compra_desde, "fundamental": lambda: v.fundamental(obligatorio=bool(solo)),
         "backtest_screener": lambda: v.backtest("backtest_screener"), "backtest_score": lambda: v.backtest("backtest_score"),
     }
     elegidos = solo or (ARCHIVOS_DATOS + ARCHIVOS_OPCIONALES)

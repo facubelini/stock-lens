@@ -32,6 +32,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from comun import DIR_DATOS_PUBLICOS, DIR_ESTADO, TZ, escribir_json, leer_json, num  # noqa: E402
 from pipeline.comparables import calcular_oportunidades_hoy, construir_comparables, obtener_peers  # noqa: E402
+from pipeline.compra_desde import activos_hoy, actualizar_estado, construir as construir_compra_desde  # noqa: E402
 from pipeline.descarga import (  # noqa: E402
     PERIODO_HISTORICO,
     candidatos_cedear,
@@ -206,6 +207,18 @@ def main(argv=None):
     )
     print(f"  {len(calificados_hoy)} ticker(s) cumplen hoy valor+señal.")
 
+    print("Registrando desde cuando cumple cada señal de compra...")
+    estado_desde = actualizar_estado(
+        leer_json(estado / "compra_desde_estado.json", {}),
+        activos_hoy(warren_score, senales, screener, rotacion),
+        precios_hoy,
+        hoy,
+    )
+    escribir_json(estado / "compra_desde_estado.json", estado_desde)
+    compra_desde = construir_compra_desde(
+        estado_desde, historial, historial_oportunidades, closes_por_ticker, precios_hoy, ahora_iso
+    )
+
     # --- Escritura (atomica, minificada, solo si cambio) ---
     cambios = escribir_publicados(
         out,
@@ -222,6 +235,7 @@ def main(argv=None):
             "senales": senales,
             "figuras": figuras,
             "rotacion": rotacion,
+            "compra_desde": compra_desde,
             "mensuales": res["mensuales"],
         },
         historial,

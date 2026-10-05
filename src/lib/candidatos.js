@@ -43,6 +43,30 @@ export const FILTROS_DEFAULT = {
   modoEstricto: false, // tambien excluye banderas de agotamiento, no solo 🩸/⛔
 }
 
+// Escenario "laxo": el que más candidatos deja ver cuando el ideal no encuentra
+// ninguno. Junto con el ideal es lo que el pipeline registra día a día para
+// poder decir desde cuándo cumple cada ticker (scripts/pipeline/compra_desde.py
+// — FILTROS_CANDIDATOS: si se toca un valor acá, tocarlo allá).
+export const FILTROS_LAXO = {
+  umbralFuerza: 0.3,
+  umbralContraccion: 0.2,
+  cuadrante: 'liderando_recuperando',
+  ema200DiarioMaxHace: 20,
+  ema200SemanalMaxHace: 8,
+  minTemporalidadesScreener: 1,
+  exigirSinVenta: false,
+  modoEstricto: false,
+}
+
+// Clave de compra_desde.json del escenario elegido, o null si los parámetros
+// no coinciden con ninguno de los dos que se registran.
+export function claveEscenario(filtros) {
+  const igual = (a, b) => Object.keys(a).every((k) => a[k] === b?.[k])
+  if (igual(FILTROS_DEFAULT, filtros)) return 'candidato'
+  if (igual(FILTROS_LAXO, filtros)) return 'candidato_laxo'
+  return null
+}
+
 const CUADRANTES = {
   liderando: 'Liderando',
   debilitando: 'Debilitando',

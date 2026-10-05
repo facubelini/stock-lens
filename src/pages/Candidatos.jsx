@@ -1,13 +1,15 @@
 import { useMemo, useState } from 'react'
 import { useJson } from '../lib/useJson'
-import { armarCandidatos, FILTROS_DEFAULT } from '../lib/candidatos'
+import { armarCandidatos, claveEscenario, FILTROS_DEFAULT, FILTROS_LAXO } from '../lib/candidatos'
+import { entradaDesde, useCompraDesde } from '../lib/compraDesde'
 import { selectCls, inputCls, btnCls } from '../lib/estilos'
 import TickerLink from '../components/TickerLink'
 import LogoTicker from '../components/LogoTicker'
 import ComoSeCalcula, { Formula } from '../components/ComoSeCalcula'
 import { Anillo } from '../components/WarrenScoreVisual'
+import DesdeCompra from '../components/DesdeCompra'
 import { TablaSkeleton, MensajeError } from '../components/Estados'
-import { fmtNum, fmtFecha } from '../lib/formato'
+import { fmtNum, fmtFecha, fmtFechaCorta } from '../lib/formato'
 
 // "Candidatos de compra": corre todo el embudo de la app de una vez (Warren
 // Score -> Rotación -> gatillo tecnico -> Screener) y arma, por ticker, los
@@ -38,7 +40,7 @@ const OPCIONES_CUADRANTE = [
 
 function PanelFiltros({ filtros, setFiltros }) {
   const set = (patch) => setFiltros((f) => ({ ...f, ...patch }))
-  const esDefault = JSON.stringify(filtros) === JSON.stringify(FILTROS_DEFAULT)
+  const esDefault = claveEscenario(filtros) === 'candidato'
 
   return (
     <details className="mb-4 rounded-lg border border-terminal-border bg-terminal-panel" open>
@@ -125,9 +127,20 @@ function PanelFiltros({ filtros, setFiltros }) {
           Modo estricto: excluir también banderas de agotamiento/sobreextensión (no solo 🩸/⛔)
         </label>
         <div className="flex items-end">
-          <button type="button" onClick={() => setFiltros(FILTROS_DEFAULT)} disabled={esDefault} className={`${btnCls} disabled:opacity-40`}>
-            ↺ Volver al escenario ideal
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button type="button" onClick={() => setFiltros(FILTROS_DEFAULT)} disabled={esDefault} className={`${btnCls} disabled:opacity-40`}>
+              ↺ Escenario ideal
+            </button>
+            <button
+              type="button"
+              onClick={() => setFiltros(FILTROS_LAXO)}
+              disabled={claveEscenario(filtros) === 'candidato_laxo'}
+              className={`${btnCls} disabled:opacity-40`}
+              title="Aflojado: Liderando o Recuperando, pilares ≥30%/20%, 1 temporalidad del Screener, ventanas más largas y sin exigir 'sin VENTA'"
+            >
+              Escenario laxo
+            </button>
+          </div>
         </div>
       </div>
     </details>
@@ -165,6 +178,8 @@ export default function Candidatos() {
   )
 
   const regimen = macroData?.regimen
+  const desde = useCompraDesde()
+  const claveDesde = claveEscenario(filtros)
 
   return (
     <div>
@@ -194,6 +209,11 @@ export default function Candidatos() {
       )}
 
       <PanelFiltros filtros={filtros} setFiltros={setFiltros} />
+      {!claveDesde && (
+        <p className="mb-3 text-[11px] text-terminal-dim">
+          Con parámetros personalizados no hay fecha de “desde cuándo”: se registra solo para el escenario ideal y el laxo.
+        </p>
+      )}
 
       {cargando && <TablaSkeleton filas={4} columnas={4} />}
       {!cargando && error && <MensajeError mensaje={String(error)} />}
@@ -243,6 +263,11 @@ export default function Candidatos() {
                       )}
                       {c.cuadrante && <span className="rounded bg-terminal-border px-1.5 py-0.5">Rotación: {c.cuadrante}</span>}
                       <span className="rounded bg-terminal-border px-1.5 py-0.5">{c.nGatillos} gatillo(s) técnico(s)</span>
+                      {claveDesde && (
+                        <span className="rounded border border-terminal-border px-1.5 py-0.5" title="Desde cuándo pasa el embudo completo de forma continua, y qué hizo el precio desde ese día">
+                          En el embudo: <DesdeCompra entrada={entradaDesde(desde, claveDesde, c.ticker)} vacio="sin registro" />
+                        </span>
+                      )}
                     </div>
                   </div>
 
@@ -318,6 +343,13 @@ export default function Candidatos() {
           cada línea sale de un campo real (el propio VCP, el propio Screener, el percentil histórico del múltiplo,
           las banderas del Warren Score, insiders vendiendo, etc.) — si un dato no aplica, esa línea directamente no
           aparece.
+        </p>
+        <p>
+          <b className="text-terminal-text">“En el embudo: desde …”</b>: fecha desde la que el ticker pasa los cinco
+          filtros <i>sin interrupción</i> (si salió y volvió, cuenta desde la vuelta), los días que lleva y la variación
+          del precio desde el cierre de ese día — para chequear si la recomendación funcionó. Se registra en cada
+          corrida del pipeline para el escenario ideal y el laxo; el registro empezó {desde?.candidato?.inicio ? `el ${fmtFechaCorta(desde.candidato.inicio)}` : 'recién'}, así que las
+          marcadas con “≥” llevan al menos ese tiempo (no se puede reconstruir antes). Con otros parámetros no hay fecha.
         </p>
         <p>
           <b className="text-terminal-warn">Ojo</b>: esto combina reglas sobre señales que ya midió el backtest por

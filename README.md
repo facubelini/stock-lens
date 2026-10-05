@@ -51,6 +51,7 @@ scripts/
     vcp.py                 # ZigZag, detección de VCP y su ciclo de vida
     warren.py              # Warren Score (pilares, penalizaciones, percentiles de RS)
     senales.py             # EMA200 rebote/cruce, bases VCP, RSI semanal
+    compra_desde.py        # "desde cuándo cumple" cada señal de compra (+ precio ese día) → compra_desde.json
     comparables.py         # comparables por industria + Oportunidades
     procesar.py            # filas por ticker + arrastre de datos viejos (stale)
     salida.py              # estado previo, historiales y escritura de JSON / meta

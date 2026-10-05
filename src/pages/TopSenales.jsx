@@ -5,10 +5,13 @@ import { useCryptoScan } from '../lib/cryptoScan'
 import {
   TIMEFRAMES,
   prioridadScreener,
+  tieneSenal,
   tieneSenalAlcista,
   tieneSenalVenta,
 } from '../lib/screenerEstilos'
+import { entradaDesde, masAntigua, useCompraDesde } from '../lib/compraDesde'
 import TickerLink from '../components/TickerLink'
+import DesdeCompra from '../components/DesdeCompra'
 import { ExplicacionConviccion } from '../components/Explicaciones'
 import ComoSeCalcula, { Formula } from '../components/ComoSeCalcula'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
@@ -33,7 +36,7 @@ function resumenVeredictos(fila) {
   return TIMEFRAMES.map(({ key, label }) => `${label[0]}:${fila[key]?.verdict ?? '—'}`).join(' ')
 }
 
-function Fila({ item }) {
+function Fila({ item, conDesde }) {
   const positivo = item.valor >= 0
   return (
     <tr className="border-t border-terminal-border">
@@ -57,6 +60,11 @@ function Fila({ item }) {
       <td className="px-2 py-1.5 text-terminal-dim" title={item.titulo}>
         {item.detalle}
       </td>
+      {conDesde && (
+        <td className="whitespace-nowrap px-2 py-1.5 text-right text-xs">
+          <DesdeCompra entrada={item.entradaDesde} vacio="—" />
+        </td>
+      )}
       <td
         className="whitespace-nowrap px-2 py-1.5 text-right font-bold tabular"
         style={{ color: positivo ? '#7ee2a8' : '#ff9d9d' }}
@@ -68,7 +76,7 @@ function Fila({ item }) {
   )
 }
 
-function TablaRanking({ titulo, color, items, vacio, tipo, etiquetaValor }) {
+function TablaRanking({ titulo, color, items, vacio, tipo, etiquetaValor, conDesde = false }) {
   return (
     <div>
       <h3 className={`mb-2 text-sm font-semibold ${color}`}>{titulo}</h3>
@@ -90,6 +98,15 @@ function TablaRanking({ titulo, color, items, vacio, tipo, etiquetaValor }) {
                 <th scope="col" className="px-2 py-2 font-semibold">
                   Señal
                 </th>
+                {conDesde && (
+                  <th
+                    scope="col"
+                    className="px-2 py-2 text-right font-semibold"
+                    title="Desde cuándo viene en COMPRA/CERCA (la temporalidad que lleva más tiempo), días y variación del precio desde ese cierre"
+                  >
+                    Desde → hoy
+                  </th>
+                )}
                 <th scope="col" className="px-2 py-2 text-right font-semibold">
                   {etiquetaValor}
                 </th>
@@ -97,7 +114,7 @@ function TablaRanking({ titulo, color, items, vacio, tipo, etiquetaValor }) {
             </thead>
             <tbody>
               {items.map((it) => (
-                <Fila key={`${it.tipo}-${it.ticker}`} item={it} />
+                <Fila key={`${it.tipo}-${it.ticker}`} item={it} conDesde={conDesde} />
               ))}
             </tbody>
           </table>
@@ -114,6 +131,7 @@ function TablaRanking({ titulo, color, items, vacio, tipo, etiquetaValor }) {
 export default function TopSenales() {
   const { filas: screenerFilas, cargando, error } = useFilas('screener.json')
   const { ultimoScan } = useCryptoScan()
+  const desde = useCompraDesde()
 
   const acciones = useMemo(() => {
     const items = screenerFilas.map((f) => ({
@@ -123,6 +141,9 @@ export default function TopSenales() {
       valor: prioridadScreener(f),
       detalle: mejorMotivo(f),
       titulo: resumenVeredictos(f),
+      entradaDesde: masAntigua(
+        TIMEFRAMES.filter(({ key }) => tieneSenal(f[key])).map(({ key }) => entradaDesde(desde, `screener_${key}`, f.ticker)),
+      ),
       _alcista: tieneSenalAlcista(f),
       _venta: tieneSenalVenta(f),
     }))
@@ -139,7 +160,7 @@ export default function TopSenales() {
         .sort((a, b) => a.valor - b.valor)
         .slice(0, N_POR_LADO),
     }
-  }, [screenerFilas])
+  }, [screenerFilas, desde])
 
   const cripto = useMemo(() => {
     const items = (ultimoScan?.resultados ?? []).map((r) => ({
@@ -187,6 +208,7 @@ export default function TopSenales() {
             items={acciones.alcistas}
             vacio="Ninguna acción tiene hoy COMPRA o CERCA con convicción neta positiva."
             etiquetaValor="Conv."
+            conDesde
           />
           <TablaRanking
             titulo="▼ Bajistas (con VENTA en alguna temporalidad)"

@@ -105,6 +105,8 @@ def sen_contactos_ema(velas, cfg, adjust):
             "hace": n - 1 - i,
             "fecha": fechas[i].strftime("%Y-%m-%d"),
             "ema": num(ema.iloc[i], 2),
+            "precio": num(cc[i], 2),
+            "precio_hoy": num(cc[-1], 2),
             "climax_ratio": num(ratio, 2),
             "climax_pos_pct": num(pos * 100, 0) if pos is not None else None,
             "climax_ola": bool(ratio is not None and pos is not None and ratio >= SEN_CLIMAX_VOL and pos >= SEN_CLIMAX_POS),
@@ -151,6 +153,8 @@ def sen_rsi_semanal(sem):
             "tipo": "alcista" if cruces.iloc[i] > 0 else "bajista",
             "hace": hace,
             "fecha": sem.index[i].strftime("%Y-%m-%d"),
+            "precio": num(sem["Close"].iloc[i], 2),
+            "precio_hoy": num(sem["Close"].iloc[-1], 2),
             "rsi": num(rsi.iloc[-1], 1),
             "sma14": num(sma.iloc[-1], 1),
         }

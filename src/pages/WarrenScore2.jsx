@@ -1,15 +1,17 @@
 import { useMemo, useState } from 'react'
 import { useJson } from '../lib/useJson'
 import { entradaDesde, resumenClave, useCompraDesde } from '../lib/compraDesde'
+import { chipsRazones, razonesWs2 } from '../lib/razonesWs2'
 import { fmtFecha, fmtFechaCorta, fmtNum, fmtPct } from '../lib/formato'
 import { compararValores } from '../lib/ordenar'
 import { inputCls, selectCls } from '../lib/estilos'
 import TickerLink from '../components/TickerLink'
 import EncabezadoOrdenable from '../components/EncabezadoOrdenable'
+import Modal from '../components/Modal'
 import DesdeCompra from '../components/DesdeCompra'
 import ComoSeCalcula, { Formula } from '../components/ComoSeCalcula'
 import { TablaEvidenciaMultiple } from '../components/BadgeEvidencia'
-import { Banderas, MiniBarra, colorScore } from '../components/WarrenScoreVisual'
+import { Anillo, Banderas, MiniBarra, colorScore } from '../components/WarrenScoreVisual'
 import { TablaSkeleton, MensajeError, Vacio } from '../components/Estados'
 
 // Warren Score 2: variante que premia al LÍDER QUE RETROCEDIÓ en vez de al que
@@ -96,6 +98,80 @@ function PanelComparacion({ claves }) {
   )
 }
 
+function ListaRazones({ items, favorable, vacio }) {
+  if (!items.length) return <p className="text-[11px] text-terminal-dim">{vacio}</p>
+  return (
+    <ul className="flex flex-col gap-1.5 text-xs leading-snug text-terminal-text">
+      {items.map((it, i) => (
+        <li key={i} className="flex gap-1.5">
+          <span
+            className={`w-14 shrink-0 text-right font-bold tabular ${favorable ? 'text-terminal-up' : 'text-terminal-warn'}`}
+            title={it.max ? `${fmtNum(it.puntos, 1)} de ${it.max} puntos posibles` : undefined}
+          >
+            {it.max ? `${fmtNum(it.puntos, 1)}/${it.max}` : it.puntos ? fmtNum(it.puntos, 0) : '⚠'}
+          </span>
+          <span>{it.texto}</span>
+        </li>
+      ))}
+    </ul>
+  )
+}
+
+function DetalleRazones({ fila, onCerrar }) {
+  const { pros, contras } = razonesWs2(fila)
+  const enZona = fila.total_score >= 70
+  return (
+    <Modal
+      onClose={onCerrar}
+      etiqueta={`Por qué ${fila.ticker} puntúa ${fmtNum(fila.total_score, 1)} en el Warren Score 2`}
+      className="max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-lg border border-terminal-border bg-terminal-panel p-4"
+    >
+      <div className="mb-3 flex items-center gap-3">
+        <Anillo score={fila.total_score} />
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <TickerLink ticker={fila.ticker} className="text-base font-bold" />
+            <span className="text-xs text-terminal-dim">{fila.nombre}</span>
+          </div>
+          <div className="text-[11px] text-terminal-dim">
+            WS2 {fmtNum(fila.total_score, 1)}/100 · puesto #{fila.rank} de {fila.total} · original {fmtNum(fila.score_original, 1)} (#{fila.rank_original})
+          </div>
+          <div className={`text-xs font-semibold ${enZona ? 'text-terminal-up' : 'text-terminal-dim'}`}>
+            {enZona ? 'En zona alta del WS2 (≥70)' : 'Por debajo de la zona alta (70)'}
+          </div>
+        </div>
+        <button type="button" onClick={onCerrar} className="self-start rounded border border-terminal-border px-2 py-1 text-xs text-terminal-dim hover:text-terminal-text">
+          Cerrar
+        </button>
+      </div>
+
+      <div className="mb-3 grid grid-cols-3 gap-2">
+        {PILARES_WS2.map((p) => (
+          <div key={p.key} className="rounded border border-terminal-border p-2" title={p.ayuda}>
+            <div className="text-[10px] uppercase tracking-wide text-terminal-dim">{p.corto}</div>
+            <MiniBarra pts={fila.pilares?.[p.key]?.pts} max={p.max} ancho="w-full" />
+            <div className="text-right text-[10px] text-terminal-dim">de {p.max}</div>
+          </div>
+        ))}
+      </div>
+
+      <div className="mb-2 rounded border border-terminal-up/25 bg-terminal-up/5 p-2.5">
+        <div className="mb-1.5 text-[11px] font-bold uppercase tracking-wide text-terminal-up">✅ Por qué puntúa (suma)</div>
+        <ListaRazones items={pros} favorable vacio="Ningún componente suma más de la mitad de su tope." />
+      </div>
+      <div className="mb-2 rounded border border-terminal-warn/25 bg-terminal-warn/5 p-2.5">
+        <div className="mb-1.5 text-[11px] font-bold uppercase tracking-wide text-terminal-warn">⚠️ Qué le resta o no suma</div>
+        <ListaRazones items={contras} vacio="Sin puntos perdidos relevantes ni penalizaciones." />
+      </div>
+      <p className="text-[11px] leading-relaxed text-terminal-dim">
+        Cada línea sale de un número real del ticker (si un dato no está, la línea no aparece). Las fórmulas completas están en
+        “¿Cómo se calcula el Warren Score 2?”. Es una hipótesis de screening, no una recomendación de compra: mirá también el
+        seguimiento en vivo.
+      </p>
+    </Modal>
+  )
+}
+
 function ZonaAlta({ claves, ticker }) {
   const e80 = entradaDesde(claves, 'warren2_80', ticker)
   const e70 = entradaDesde(claves, 'warren2_70', ticker)
@@ -117,6 +193,7 @@ export default function WarrenScore2() {
   const [busqueda, setBusqueda] = useState('')
   const [topN, setTopN] = useState(50)
   const [orden, setOrden] = useState({ campo: 'score', dir: 'desc' })
+  const [seleccionado, setSeleccionado] = useState(null)
 
   const conDatos = useMemo(
     () => (Array.isArray(data?.tickers) ? data.tickers : []).filter((r) => r.datos_suficientes && r.total_score != null),
@@ -275,6 +352,9 @@ export default function WarrenScore2() {
                         className="whitespace-nowrap px-2 py-2.5 font-semibold"
                       />
                     ))}
+                    <th className="whitespace-nowrap px-2 py-2.5 text-left font-semibold" title="Los componentes que más puntos aportan; tocá la fila para ver todas las razones">
+                      Por qué
+                    </th>
                     {th('pen', 'Penal.', 'left', 'Penalizaciones del original sin la de sobreextensión; pasá el mouse por cada emoji')}
                     {th('rs', 'RS', 'right', 'Percentil de fuerza relativa vs SPY en el universo USD')}
                     {th('max52', 'vs máx 52s', 'right', 'Distancia al máximo de 52 semanas: WS2 premia −8% a −25%')}
@@ -288,7 +368,19 @@ export default function WarrenScore2() {
                 </thead>
                 <tbody>
                   {filtrados.map((r, i) => (
-                    <tr key={r.ticker} className="border-t border-terminal-border hover:bg-terminal-panel2/60">
+                    <tr
+                      key={r.ticker}
+                      onClick={() => setSeleccionado(r)}
+                      tabIndex={0}
+                      onKeyDown={(e) => {
+                        if (e.target !== e.currentTarget) return
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault()
+                          setSeleccionado(r)
+                        }
+                      }}
+                      className="cursor-pointer border-t border-terminal-border transition-colors hover:bg-terminal-panel2/60 focus:bg-terminal-panel2/60 focus:outline-none"
+                    >
                       <td className="px-2 py-1.5 text-right tabular text-terminal-dim">{i + 1}</td>
                       <td className="whitespace-nowrap px-2 py-1.5 font-semibold">
                         <TickerLink ticker={r.ticker} />
@@ -312,6 +404,15 @@ export default function WarrenScore2() {
                           <MiniBarra pts={r.pilares?.[p.key]?.pts} max={p.max} />
                         </td>
                       ))}
+                      <td className="px-2 py-1.5">
+                        <div className="flex flex-wrap gap-1">
+                          {chipsRazones(r).map((c) => (
+                            <span key={c} className="whitespace-nowrap rounded bg-terminal-border px-1.5 py-0.5 text-[10px] text-terminal-text">
+                              {c}
+                            </span>
+                          ))}
+                        </div>
+                      </td>
                       <td className="whitespace-nowrap px-2 py-1.5 text-xs">
                         <span className={`tabular ${r.penalizacion?.pts < 0 ? 'text-terminal-down' : 'text-terminal-dim'}`}>
                           {r.penalizacion?.pts < 0 ? fmtNum(r.penalizacion.pts, 0) : '0'}
@@ -331,6 +432,8 @@ export default function WarrenScore2() {
           )}
         </>
       )}
+
+      {seleccionado && <DetalleRazones fila={seleccionado} onCerrar={() => setSeleccionado(null)} />}
 
       <p className="mt-3 text-[11px] text-terminal-dim">
         Screener técnico/cuantitativo — no analiza fundamentales. Orientativo, no es recomendación de inversión.

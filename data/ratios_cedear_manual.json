@@ -1,0 +1,23 @@
+{
+  "_comentario": "Ratios de conversion CEDEAR (N certificados = 1 accion/ADR) cargados a mano, para especies que NO estan en el listado de programas de Banco Comafi (data automatica del pipeline). El listado de Comafi cubre solo sus propios programas (~357 especies): CEDEARs de otros custodios y varios ETFs quedan afuera. Comafi tiene prioridad: si un ticker aparece en las dos fuentes se usa el de Comafi y el pipeline avisa del conflicto por consola. Para agregar: una entrada \"TICKER\": ratio (entero, sin sufijo .BA). Las claves que empiezan con _ se ignoran.",
+  "_fuente": "Aportados por Facundo (2026-08-27).",
+
+  "GEV": 180,
+  "TLN": 63,
+  "KLAC": 34,
+  "DELL": 74,
+  "WDC": 92,
+  "MS": 41,
+  "IBKR": 17,
+  "WELL": 48,
+  "PLD": 29,
+  "LIN": 102,
+  "SHW": 69,
+  "NTRA": 51,
+  "BBCA": 20,
+  "BBAX": 13,
+  "GSG": 6,
+  "CORN": 4,
+  "SOYB": 5,
+  "SKHY": 25
+}

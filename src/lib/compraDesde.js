@@ -45,3 +45,26 @@ export function entradaDeEvento(fila) {
 export function masAntigua(entradas) {
   return entradas.filter(Boolean).sort((a, b) => a.desde.localeCompare(b.desde))[0] ?? null
 }
+
+/**
+ * Resumen de una clave de compra_desde.json para comparar señales en vivo:
+ * { n, conRetorno, promedio, mediana, positivas, inicio } (retornos desde el
+ * cierre del día en que cada ticker entró). null si la clave no existe.
+ */
+export function resumenClave(claves, clave) {
+  const filas = claves?.[clave]?.tickers
+  if (!filas) return null
+  const retornos = Object.values(filas)
+    .map((e) => infoDesde(e)?.retorno)
+    .filter((r) => r != null)
+    .sort((a, b) => a - b)
+  const m = retornos.length >> 1
+  return {
+    n: Object.keys(filas).length,
+    conRetorno: retornos.length,
+    promedio: retornos.length ? retornos.reduce((a, b) => a + b, 0) / retornos.length : null,
+    mediana: retornos.length ? (retornos.length % 2 ? retornos[m] : (retornos[m - 1] + retornos[m]) / 2) : null,
+    positivas: retornos.filter((r) => r > 0).length,
+    inicio: claves[clave].inicio ?? null,
+  }
+}

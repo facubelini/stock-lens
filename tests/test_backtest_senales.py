@@ -59,7 +59,7 @@ def test_campos_de_primer_nivel(salida):
 
 def test_grupos_de_senales_presentes(salida):
     stats = salida["stats"]
-    assert set(stats) == {"ema_diario", "ema_semanal", "rsi_semanal", "vcp_estado", "warren_bucket", "figuras_chartistas"}
+    assert set(stats) == {"ema_diario", "ema_semanal", "rsi_semanal", "vcp_estado", "warren_bucket", "warren2_bucket", "figuras_chartistas"}
     assert set(stats["ema_diario"]) == {"rebote", "cruce"}
     assert set(stats["ema_semanal"]) == {"rebote", "cruce"}
     assert set(stats["rsi_semanal"]) == {"alcista", "bajista"}
@@ -97,6 +97,10 @@ def test_forma_de_cada_grupo(salida):
     if stats["warren_bucket"]:
         _revisar_entradas(stats["warren_bucket"], bts.HORIZ_D)
         for bucket in stats["warren_bucket"]:
+            assert bucket == "BASELINE" or bucket in bts.BUCKETS_WARREN
+    if stats["warren2_bucket"]:
+        _revisar_entradas(stats["warren2_bucket"], bts.HORIZ_D)
+        for bucket in stats["warren2_bucket"]:
             assert bucket == "BASELINE" or bucket in bts.BUCKETS_WARREN
     for tipo, por_etiqueta in stats["figuras_chartistas"].items():
         if not por_etiqueta:

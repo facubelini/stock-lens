@@ -44,6 +44,7 @@ MAX_CAIDA_FRESCOS = 0.30
 RANGO_VAR_PCT = 60.0
 DIVIDEND_YIELD_MAX = 25.0  # mismo tope que pipeline/fundamentales.py
 MAX_PILARES = {"tendencia": 25, "fuerza": 30, "contraccion": 30, "gatillo": 15}
+MAX_PILARES_WS2 = {"liderazgo": 44, "tendencia": 17, "timing": 39}  # pipeline/warren2.py
 VEREDICTOS = {"COMPRA", "CERCA", "VENTA", "EXTENDIDO", "NEUTRAL"}
 STATUS_SCANNER = {"SETUP_LONG", "NEAR_SETUP", "OK", "NO_DATA"}
 STATUS_GLOBAL = {"BUY_BOTH", "BUY_CORTO", "BUY_LARGO", "NEAR_BOTH", "NEAR_CORTO", "NEAR_LARGO", "OK"}
@@ -75,7 +76,7 @@ CAMPOS = {
 ARCHIVOS_DATOS = ["listado", "medias", "fundamentales", "screener", "scanner_setups", "comparables", "warren_score",
                   "senales", "meta"]
 ARCHIVOS_OPCIONALES = ["mercado_macro", "historico_fundamental", "fundamental", "oportunidades_historial",
-                       "backtest_screener", "backtest_score", "rotacion", "figuras", "compra_desde"]
+                       "backtest_screener", "backtest_score", "rotacion", "figuras", "compra_desde", "warren_score2"]
 
 
 def _es_num(v):
@@ -297,6 +298,28 @@ class Validador:
                 self.rango(f"{donde}.pilares.{nombre}", "pts", p.get("pts"), 0, maximo, nulo_ok=False)
             if f.get("total_score") is not None:
                 self.rango(donde, "rank", f.get("rank"), 1, f.get("total") or 0, nulo_ok=False)
+
+    def warren_score2(self):
+        d = self.cargar("warren_score2", obligatorio=False)
+        if d is None:
+            return
+        if not isinstance(d, dict) or not isinstance(d.get("tickers"), list):
+            self.error("warren_score2.json: se esperaba {actualizado, tickers: [...]}")
+            return
+        for i, f in enumerate(d["tickers"]):
+            donde = f"warren_score2.json tickers[{i}]"
+            if not isinstance(f, dict) or "ticker" not in f:
+                self.error(f"{donde}: fila invalida")
+                return
+            self.rango(donde, "total_score", f.get("total_score"), 0, 100)
+            if f.get("datos_suficientes") != (f.get("total_score") is not None):
+                self.error(f"{donde}: datos_suficientes no coincide con total_score")
+            for nombre, p in (f.get("pilares") or {}).items():
+                maximo = MAX_PILARES_WS2.get(nombre)
+                if maximo is None or p.get("max") != maximo:
+                    self.error(f"{donde}.pilares.{nombre}: pilar o max inesperado ({p.get('max')!r})")
+                    continue
+                self.rango(f"{donde}.pilares.{nombre}", "pts", p.get("pts"), 0, maximo, nulo_ok=False)
 
     def senales(self):
         d = self.cargar("senales")
@@ -614,7 +637,7 @@ def validar(carpeta, solo=None, meta_previo=None):
         "scanner_setups": v.scanner_setups, "comparables": v.comparables, "warren_score": v.warren_score,
         "senales": v.senales, "figuras": v.figuras, "rotacion": v.rotacion, "meta": lambda: v.meta(meta_previo), "mercado_macro": v.mercado_macro,
         "historico_fundamental": v.historico_fundamental, "oportunidades_historial": v.oportunidades_historial,
-        "compra_desde": v.compra_desde, "fundamental": lambda: v.fundamental(obligatorio=bool(solo)),
+        "compra_desde": v.compra_desde, "warren_score2": v.warren_score2, "fundamental": lambda: v.fundamental(obligatorio=bool(solo)),
         "backtest_screener": lambda: v.backtest("backtest_screener"), "backtest_score": lambda: v.backtest("backtest_score"),
     }
     elegidos = solo or (ARCHIVOS_DATOS + ARCHIVOS_OPCIONALES)

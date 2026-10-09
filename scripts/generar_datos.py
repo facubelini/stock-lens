@@ -66,6 +66,7 @@ from pipeline.universo import (  # noqa: E402
     universo_desde_args,
 )
 from pipeline.warren import calcular_warren_score, rs_percentiles  # noqa: E402
+from pipeline.warren2 import calcular_warren_score2  # noqa: E402
 
 # Salvaguarda anti rate-limit: si los frescos quedan por debajo de esta
 # fraccion de los tickers intentados, se aborta sin escribir (exit 1).
@@ -164,6 +165,8 @@ def main(argv=None):
     print("\nCalculando Warren Score (percentil de fuerza relativa sobre el universo USD)...")
     rs_mapa = rs_percentiles(res["warren_datos"])
     warren_score = calcular_warren_score(res["warren_datos"], rs_mapa)
+    warren_score2 = calcular_warren_score2(warren_score)
+    print(f"  Warren Score 2: {sum(1 for f in warren_score2 if f.get('total_score') is not None)} con score (>=70: {sum(1 for f in warren_score2 if (f.get('total_score') or 0) >= 70)}).")
     senales = construir_senales(res["senales_datos"], rs_mapa, ahora_iso)
     print(
         "Señales: EMA200 diaria {}/{} · semanal {}/{} (rebote/cruce) · {} bases VCP · RSI semanal {}/{}".format(
@@ -210,7 +213,7 @@ def main(argv=None):
     print("Registrando desde cuando cumple cada señal de compra...")
     estado_desde = actualizar_estado(
         leer_json(estado / "compra_desde_estado.json", {}),
-        activos_hoy(warren_score, senales, screener, rotacion),
+        activos_hoy(warren_score, senales, screener, rotacion, warren_score2),
         precios_hoy,
         hoy,
     )
@@ -232,6 +235,7 @@ def main(argv=None):
             "scanner_setups": res["scanner_setups"],
             "historial_oportunidades": historial_oportunidades,
             "warren_score": warren_score,
+            "warren_score2": warren_score2,
             "senales": senales,
             "figuras": figuras,
             "rotacion": rotacion,

@@ -44,6 +44,7 @@ from pipeline.figuras import BAJISTA as FIG_BAJISTA, FG_MIN_RUEDAS, TIPOS as FIG
 from pipeline.senales import SEN_EMA, sen_cruces_rsi, sen_eventos_ema, velas_semanales  # noqa: E402
 from pipeline.tecnico import calcular_beta_sharpe  # noqa: E402
 from pipeline.warren import WS_DESFASES_RS, WS_MIN_RUEDAS, calcular_warren_score, rs_percentiles, ws_calcular_ticker  # noqa: E402
+from pipeline.warren2 import ws2_calcular  # noqa: E402
 
 # El backtest no necesita el RS "a la fecha del contacto" (desfases extendidos
 # de señales.json, ~37 valores): solo hoy/semana/mes (los 3 que usa el pilar
@@ -244,7 +245,9 @@ def _racha_por_ticker(muestras):
 def backtest_warren_y_vcp(joined, spy_df):
     """Pasada cross-sectional (Warren Score) + estado VCP (que sale gratis
     del mismo calc). 'joined' = {ticker: (frame_diario_alineado, atr_pct_s)}.
-    Devuelve (filas_vcp_por_estado, filas_warren_por_bucket)."""
+    Devuelve (muestras_vcp, muestras_warren, muestras_warren2): el Warren
+    Score 2 (pipeline/warren2.py) se evalua sobre las MISMAS filas y fechas
+    que el original, para que los dos buckets sean comparables."""
     fechas_muestra = spy_df.index[::STRIDE_PESADO]
     pass1 = {}  # fecha_str -> [dict tipo warren_datos]
     posiciones = {}  # (fecha_str, ticker) -> t
@@ -274,15 +277,19 @@ def backtest_warren_y_vcp(joined, spy_df):
             if estado:
                 vcp_muestras.append((sym, fecha_str, pos, estado))
 
-    warren_muestras = []
+    warren_muestras, warren2_muestras = [], []
     for fecha_str, lista in pass1.items():
         rs_mapa = rs_percentiles(lista)
         for fila in calcular_warren_score(lista, rs_mapa):
             bucket = _bucket_warren(fila.get("total_score"))
             if bucket:
                 warren_muestras.append((fila["ticker"], fecha_str, posiciones[(fecha_str, fila["ticker"])], bucket))
+            ws2 = ws2_calcular(fila)
+            bucket2 = _bucket_warren(ws2["total_score"]) if ws2 else None
+            if bucket2:
+                warren2_muestras.append((fila["ticker"], fecha_str, posiciones[(fecha_str, fila["ticker"])], bucket2))
 
-    return vcp_muestras, warren_muestras
+    return vcp_muestras, warren_muestras, warren2_muestras
 
 
 def backtest_figuras(joined, spy_df):
@@ -391,11 +398,12 @@ def main(argv=None, historicos=None):
 
     print(f"EMA200/RSI semanal: {ok} tickers ok, {fallidos} sin datos suficientes.")
     print(f"Warren Score / VCP: recalculando cross-sectional cada {STRIDE_PESADO} ruedas sobre {len(joined)} tickers...")
-    vcp_muestras, warren_muestras = backtest_warren_y_vcp(joined, spy_df)
+    vcp_muestras, warren_muestras, warren2_muestras = backtest_warren_y_vcp(joined, spy_df)
     print(f"  {len(vcp_muestras)} muestra(s) VCP, {len(warren_muestras)} muestra(s) Warren Score (antes de deduplicar racha).")
 
     filas_vcp = _filas_desde_muestras(vcp_muestras, joined, HORIZ_D)
     filas_warren = _filas_desde_muestras(warren_muestras, joined, HORIZ_D)
+    filas_warren2 = _filas_desde_muestras(warren2_muestras, joined, HORIZ_D)
 
     print(f"Figuras chartistas: recalculando cada {STRIDE_PESADO} ruedas sobre {len(joined)} tickers...")
     muestras_figuras = backtest_figuras(joined, spy_df)
@@ -421,6 +429,7 @@ def main(argv=None, historicos=None):
         },
         "vcp_estado": agregar_stats(filas_vcp, HORIZ_D),
         "warren_bucket": agregar_stats(filas_warren, HORIZ_D),
+        "warren2_bucket": agregar_stats(filas_warren2, HORIZ_D),
         "figuras_chartistas": stats_figuras,
     }
 

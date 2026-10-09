@@ -29,6 +29,7 @@ const SECCIONES = [
       { to: '/top', label: '🔥 Top Señales' },
       { to: '/oportunidades', label: '💡 Oportunidades' },
       { to: '/warren-score', label: '🏆 Warren Score' },
+      { to: '/warren-score-2', label: '🏆 Warren Score 2' },
       { to: '/senales', label: '🎯 Señales' },
       { to: '/figuras-chartistas', label: '📐 Figuras Chartistas' },
       { to: '/screeners', label: '📡 Radar de eventos' },

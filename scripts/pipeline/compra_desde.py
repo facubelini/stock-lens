@@ -107,10 +107,14 @@ def candidatos_hoy(warren_rows, senales, screener, rotacion, filtros):
     return salida
 
 
-def activos_hoy(warren_rows, senales, screener, rotacion):
+def activos_hoy(warren_rows, senales, screener, rotacion, warren2_rows=()):
     """{clave: set(tickers)} de las señales que se siguen con el log de estado."""
     con_score = [w for w in warren_rows if w.get("datos_suficientes") and w.get("total_score") is not None]
     activos = {f"warren_{int(u)}": {w["ticker"] for w in con_score if w["total_score"] >= u} for u in WARREN_UMBRALES}
+    # Warren Score 2 (pipeline/warren2.py): mismas zonas, para comparar los dos en vivo.
+    con_score2 = [w for w in warren2_rows if w.get("total_score") is not None]
+    for u in WARREN_UMBRALES:
+        activos[f"warren2_{int(u)}"] = {w["ticker"] for w in con_score2 if w["total_score"] >= u}
     activos["vcp"] = {f["ticker"] for f in senales.get("vcp", [])}
     for clave, filtros in FILTROS_CANDIDATOS.items():
         activos[clave] = candidatos_hoy(warren_rows, senales, screener, rotacion, filtros)

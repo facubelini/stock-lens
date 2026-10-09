@@ -28,3 +28,28 @@ describe('entradas', () => {
     expect(masAntigua([null])).toBeNull()
   })
 })
+
+import { resumenClave } from '../../src/lib/compraDesde.js'
+
+describe('resumenClave', () => {
+  const claves = {
+    a: {
+      inicio: '2026-10-05',
+      tickers: {
+        X: { desde: '2026-10-05', precio: 100, precio_hoy: 110 },
+        Y: { desde: '2026-10-05', precio: 100, precio_hoy: 96 },
+        Z: { desde: '2026-10-05', precio: null, precio_hoy: 5 },
+      },
+    },
+  }
+  it('promedia, saca mediana y cuenta ganadoras ignorando los sin precio', () => {
+    const r = resumenClave(claves, 'a')
+    expect(r).toMatchObject({ n: 3, conRetorno: 2, positivas: 1, inicio: '2026-10-05' })
+    expect(r.promedio).toBeCloseTo(3, 6)
+    expect(r.mediana).toBeCloseTo(3, 6)
+  })
+  it('clave inexistente devuelve null', () => {
+    expect(resumenClave(claves, 'b')).toBeNull()
+    expect(resumenClave(null, 'a')).toBeNull()
+  })
+})

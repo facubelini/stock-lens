@@ -30,6 +30,7 @@ const Screeners = lazy(() => import('./pages/Screeners'))
 const PrePostMarket = lazy(() => import('./pages/PrePostMarket'))
 const Scanner = lazy(() => import('./pages/Scanner'))
 const WarrenScore = lazy(() => import('./pages/WarrenScore'))
+const WarrenScore2 = lazy(() => import('./pages/WarrenScore2'))
 const Senales = lazy(() => import('./pages/Senales'))
 const FigurasChartistas = lazy(() => import('./pages/FigurasChartistas'))
 const Candidatos = lazy(() => import('./pages/Candidatos'))
@@ -79,6 +80,7 @@ export default function App() {
             <Route path="/pre-post" element={<PrePostMarket />} />
             <Route path="/scanner" element={<Scanner />} />
             <Route path="/warren-score" element={<WarrenScore />} />
+            <Route path="/warren-score-2" element={<WarrenScore2 />} />
             <Route path="/senales" element={<Senales />} />
             <Route path="/figuras-chartistas" element={<FigurasChartistas />} />
             <Route path="/candidatos" element={<Candidatos />} />
